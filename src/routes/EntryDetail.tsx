@@ -163,7 +163,7 @@ export function EntryDetail() {
 
         {entry.tools && (
           <Section title="Verktøy / tabeller" icon={Table2}>
-            <ToolCards tools={entry.tools} />
+            <ToolCards tools={entry.tools} tables={data.tables} />
           </Section>
         )}
 

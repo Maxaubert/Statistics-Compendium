@@ -24,9 +24,34 @@ describe("PythonSnippet", () => {
 
 describe("ToolCards", () => {
   it("renders each tool name", () => {
-    render(<ToolCards tools={["Tabell E.2", "Kalkulator"]} />);
+    render(
+      <MemoryRouter>
+        <ToolCards tools={["Tabell E.2", "Kalkulator"]} tables={[]} />
+      </MemoryRouter>
+    );
     expect(screen.getByText("Tabell E.2")).toBeInTheDocument();
     expect(screen.getByText("Kalkulator")).toBeInTheDocument();
+  });
+
+  it("links table tools to the corresponding /table route", () => {
+    const tables = [{
+      id: "E2-poisson-kumulativ",
+      name_no: "Poissontabell",
+      formal_name_no: "Kumulativ poissonfordeling",
+      code: "E.2",
+      description: "x",
+      inputs: [],
+      output: "P(X ≤ k)",
+      distribution: "poisson" as const,
+    }];
+    render(
+      <MemoryRouter>
+        <ToolCards tools={["Tabell E.2 — Kumulativ poissonfordeling", "Kalkulator: e^x"]} tables={tables} />
+      </MemoryRouter>
+    );
+    const link = screen.getByRole("link", { name: /Tabell E\.2/ });
+    expect(link).toHaveAttribute("href", "/table/E2-poisson-kumulativ");
+    expect(screen.queryByRole("link", { name: /Kalkulator/ })).toBeNull();
   });
 });
 
