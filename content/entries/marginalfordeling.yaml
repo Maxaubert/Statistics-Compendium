@@ -46,7 +46,8 @@ examples:
     excerpt: "Simultanfordeling i 3×3-tabell. Finn marginalfordelingene."
     solution_sketch: "P(X=0) = 0.2+0.1+0.1 = 0.4, P(X=1) = 0.3, P(X=2) = 0.3 (radsummer); P(Y=0) = 0.5, P(Y=5) = 0.1, P(Y=10) = 0.4 (kolonnesummer)"
   - source: "Eksamen mai25 · oppgave 1"
-    excerpt: "Annen simultanfordeling. P(X=x): {0.6, 0.2, 0.2}. P(Y=y): {0.5, 0.3, 0.2}."
+    excerpt: "Annen simultanfordeling. Finn marginalfordelingene."
+    solution_sketch: "P(X=x): {0.6, 0.2, 0.2} (radsummer); P(Y=y): {0.5, 0.3, 0.2} (kolonnesummer)"
 
 related:
   - { id: "forventningsverdi-diskret",    kind: "entry" }
