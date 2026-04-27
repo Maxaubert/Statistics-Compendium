@@ -1,2 +1,15 @@
 @import "./fonts.css";
+@import "./tokens.css";
 @import "tailwindcss";
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,46 @@
+@theme {
+  /* Neutrals (warm stone) */
+  --color-ink: #1c1917;
+  --color-ink-2: #44403c;
+  --color-ink-3: #78716c;
+  --color-ink-4: #a8a29e;
+  --color-paper: #fafaf7;
+  --color-paper-2: #f5f5f0;
+  --color-card: #ffffff;
+  --color-line: #e7e5e4;
+  --color-line-2: #d6d3d1;
+
+  /* Primary (indigo) */
+  --color-primary: #312e81;
+  --color-primary-2: #4338ca;
+  --color-primary-3: #6366f1;
+  --color-primary-soft: #eef2ff;
+
+  /* Cyan (highlights & results) */
+  --color-cyan: #22d3ee;
+  --color-cyan-2: #06b6d4;
+  --color-cyan-soft: #cffafe;
+  --color-cyan-deep: #0e7490;
+
+  /* Warn amber (warnings only) */
+  --color-warn: #b45309;
+  --color-warn-soft: #fef3c7;
+
+  /* Calc block (dark indigo, code-block role) */
+  --color-calc-bg: #1e1b4b;
+  --color-calc-border: #3730a3;
+  --color-calc-divider: rgba(165, 180, 252, 0.18);
+  --color-calc-label: #818cf8;
+  --color-calc-text: #e0e7ff;
+  --color-calc-comment: #94a3b8;
+  --color-calc-result: #22d3ee;
+  --color-calc-lookup-bg: rgba(165, 180, 252, 0.08);
+  --color-calc-lookup-border: #a5b4fc;
+  --color-calc-lookup-text: #c7d2fe;
+
+  /* Type scale */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-math: "Cambria Math", "STIX Two Math", Georgia, serif;
+}
