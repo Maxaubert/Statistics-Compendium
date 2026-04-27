@@ -73,4 +73,5 @@ related:
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:
-  - "Tabell E.4 — Z-kvantiltabell"
+  - "Tabell E.4 — Z-kvantiltabell (kritisk verdi)"
+  - "Tabell E.3 — Z-tabell (for p-verdi-utregning)"

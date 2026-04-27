@@ -69,4 +69,7 @@ related:
   - { id: "poisson-fordeling", kind: "entry" }
 
 tools:
+  - "Tabell E.1 — Kumulativ binomisk sannsynlighet (slå opp P(X ≤ k) for binomial)"
+  - "Tabell E.2 — Kumulativ poissonfordeling (slå opp P(X ≤ k) for poisson)"
+  - "Tabell E.3 — Z-tabell (slå opp G(z) når kontinuerlig)"
   - "Kalkulator: subtraksjon"
