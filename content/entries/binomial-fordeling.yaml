@@ -2,29 +2,41 @@ id: binomial-fordeling
 name_no: Binomialfordeling
 type: distribution
 category: discrete_distribution
-tagline: "Antall suksesser i n uavhengige forsøk med suksessannsynlighet p."
+tagline: "Antall suksesser i et fast antall n uavhengige forsøk med suksessannsynlighet p."
 
 formula_main: "P(X = k) = C(n, k) · p^k · (1-p)^(n-k)"
 formula_latex: "P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}"
 
-what_it_does: "Modellerer antall suksesser i et fast antall n uavhengige Bernoulli-forsøk."
-why_use: "Når du har fast antall forsøk, hver med samme suksessannsynlighet p og to mulige utfall."
+what_it_does: |
+  Modellerer antall suksesser i et fast antall n uavhengige Bernoulli-forsøk
+  hvor hvert forsøk har samme suksessannsynlighet p og to mulige utfall
+  (suksess eller fiasko).
+
+why_use: |
+  Brukes når problemet beskriver et fastlagt antall uavhengige forsøk og
+  spør etter sannsynligheten for et bestemt antall suksesser. Eksempler i
+  pensum: myntkast, trekk fra kortstokk med tilbakelegging, andel grantrær
+  med sykdom i et utplukk.
 
 recognition_cues:
-  - "Fast antall n forsøk er oppgitt"
+  - "Fast antall n forsøk er oppgitt eller kan bestemmes"
   - "Hvert forsøk har bare to utfall: suksess eller fiasko"
-  - "Suksessannsynligheten p er konstant"
+  - "Suksessannsynligheten p er konstant over forsøkene"
   - "Forsøkene er uavhengige av hverandre"
+  - "Spørsmålet handler om antall suksesser, ikke tid eller rate"
+  - "Med tilbakelegging eller fra populasjon der p er konstant"
 
 when_NOT_to_use:
-  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk"
-  - "Antall forsøk varierer eller er ikke fastlagt → bruk Poisson"
+  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk fordeling"
+  - "Antall forsøk varierer eller er ikke fastlagt → bruk Poissonfordeling"
+  - "Spørsmålet handler om antall hendelser pr. tidsenhet → bruk Poissonfordeling"
 
 symbols:
-  - { sym: "n", means: "antall forsøk" }
-  - { sym: "p", means: "suksessannsynlighet i hvert forsøk" }
-  - { sym: "k", means: "antall suksesser det spørres om" }
-  - { sym: "C(n,k)", means: "binomialkoeffisient n over k" }
+  - { sym: "n",      means: "antall forsøk (heltall)" }
+  - { sym: "p",      means: "suksessannsynlighet i hvert forsøk" }
+  - { sym: "1 - p",  means: "fiaskoannsynlighet i hvert forsøk" }
+  - { sym: "k",      means: "antall suksesser det spørres om (heltall, 0 ≤ k ≤ n)" }
+  - { sym: "C(n,k)", means: "binomialkoeffisient n over k, antall måter å plukke k blant n" }
 
 properties:
   expected_value: "E[X] = np"
@@ -34,13 +46,94 @@ properties:
 filters:
   computes: [exact_probability, at_least_k]
   random_variable: [discrete_count]
-  setup: [fixed_n_trials]
+  setup: [fixed_n_trials, with_replacement]
   structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events]
   distribution_assumption: [binomial]
   tooling: [cumulative_binomial_table_E1]
 
+solution_template:
+  - "Identifiser antall forsøk n og suksessannsynligheten p i hvert forsøk"
+  - "Skriv X ~ Bin(n, p)"
+  - "Bestem hva spørsmålet ber om: P(X = k), P(X ≤ k), P(X ≥ k), eller 'finn n'"
+  - "For 'minst k': bruk komplementregelen P(X ≥ k) = 1 - P(X ≤ k-1)"
+  - "Slå opp P(X ≤ k) i tabell E.1 (Binomialtabell) eller regn direkte med formelen"
+  - "Hvis 'finn minste n' for et terskelkrav: løs ulikhet med tabell eller logaritmer"
+
+common_traps: |
+  Vær sikker på at p er konstant fra forsøk til forsøk. Hvis du trekker
+  uten tilbakelegging fra et lite utvalg, endrer p seg underveis og du
+  bør bruke hypergeometrisk i stedet. Tabell E.1 gir P(X ≤ k); for andre
+  spørsmålsformer må du bruke komplement eller differanse.
+
+python_snippet: |
+  from scipy.stats import binom
+
+  n, p = 10, 0.2
+
+  # P(X = k)
+  binom.pmf(2, n, p)        # 0.302
+
+  # P(X ≤ k) — kumulativ
+  binom.cdf(1, n, p)        # 0.376
+
+  # P(X ≥ k) = 1 − P(X ≤ k−1)
+  1 - binom.cdf(1, n, p)    # 0.624
+
+examples:
+  - source: "Eksamen jan26 · oppgave 1c"
+    excerpt: "En mynt kastes. Hvor mange ganger må den kastes for at sannsynligheten for at man får 'kron' minst én gang overstiger 0.99?"
+    solution_sketch: "X ~ Bin(n, 0.5). 1 − 0.5^n > 0.99 → 0.5^n < 0.01 → n > log(0.01)/log(0.5) ≈ 6.6 → n ≥ 7"
+  - source: "Eksamen mai25 · oppgave 3a"
+    excerpt: "En andel p = 0.2 av grantrær har en sykdom. Sannsynlighet for at minst 2 av 10 tilfeldig sjekkede har sykdommen."
+    solution_sketch: "X ~ Bin(10, 0.2). P(X ≥ 2) = 1 − P(X ≤ 1) = 1 − 0.376 = 0.624 (fra tabell E.1)"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 1c"
+    question: "En mynt kastes. Hvor mange ganger må den kastes for at sannsynligheten for at man får 'kron' minst én gang overstiger 0.99?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X = antall kron i n kast" }
+          - { text: "X ~ Bin(n, 0.5)" }
+          - { comment: "vi vil ha P(X ≥ 1) > 0.99" }
+      - label: "Komplementregelen"
+        lines:
+          - { text: "P(X ≥ 1) > 0.99" }
+          - { text: "1 − P(X = 0) > 0.99" }
+          - { text: "P(X = 0) < 0.01" }
+      - label: "Innsatt"
+        lines:
+          - { text: "P(X = 0) = (1-p)^n = 0.5^n" }
+          - { text: "0.5^n < 0.01" }
+          - { text: "n · ln(0.5) < ln(0.01)" }
+          - { table_lookup: { ref: "E.1", text: "Alternativt: slå opp i Binomialtabellen for n=2..10 ved p=0.5; n=7 er minste n med P(X≤0)=0.008<0.01" } }
+          - { text: "n > ln(0.01) / ln(0.5) ≈ -4.605 / -0.693 ≈ 6.64" }
+    result: "n ≥ 7 (mynten må kastes minst 7 ganger)"
+
+  - source: "Eksamen mai25 · oppgave 3a"
+    question: "En andel p = 0.2 av grantrær har en sykdom. Vi sjekker tilfeldig 10 grantrær. Hva er sannsynligheten for at minst 2 av disse har sykdommen?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X = antall syke i utplukk på 10" }
+          - { text: "X ~ Bin(10, 0.2)" }
+      - label: "Komplementregelen"
+        lines:
+          - { text: "P(X ≥ 2) = 1 − P(X ≤ 1)" }
+      - label: "Innsatt"
+        lines:
+          - { table_lookup: { ref: "E.1", text: "Slå opp P(X ≤ 1) for n=10, p=0.2 → 0.376" } }
+          - { text: "P(X ≥ 2) = 1 − 0.376" }
+    result: "P(X ≥ 2) ≈ 0.624"
+
 related:
-  - { id: "poisson-fordeling", kind: "entry" }
+  - { id: "poisson-fordeling",      kind: "entry" }
+  - { id: "hypergeometrisk-fordeling", kind: "entry" }
+  - { id: "komplementregelen",      kind: "concept" }
+  - { id: "ki-andel-binomial",      kind: "entry" }
+  - { id: "en-utvalg-z-test-andel", kind: "entry" }
+  - { id: "E1-binomial-kumulativ",  kind: "table" }
 
 tools:
   - "Tabell E.1 — Kumulativ binomisk sannsynlighet"
+  - "Kalkulator: potens, binomialkoeffisient C(n,k)"

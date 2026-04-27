@@ -1,0 +1,152 @@
+id: normalfordeling
+name_no: Normalfordeling
+type: distribution
+category: continuous_distribution
+tagline: "Klokkeformet kontinuerlig fordeling — den vanligste antakelsen i statistikk."
+
+formula_main: "X ~ N(μ, σ);  Z = (X - μ) / σ ~ N(0, 1);  P(X ≤ x) = G((x - μ) / σ)"
+formula_latex: "X \\sim N(\\mu, \\sigma), \\quad Z = \\frac{X - \\mu}{\\sigma} \\sim N(0, 1)"
+
+what_it_does: |
+  Beskriver en kontinuerlig stokastisk variabel som er symmetrisk om
+  forventningsverdien μ, med spredning gitt av standardavviket σ.
+  Standardisering Z = (X - μ)/σ omformer til standardnormalfordelingen,
+  som tabuleres i E.3 (kumulativ G(z)).
+
+why_use: |
+  Mange naturlige fenomener er tilnærmet normalfordelte (vekt, høyde,
+  målefeil, gjennomsnittsresultater). Sentralgrenseteoremet sier at
+  gjennomsnittet av mange uavhengige variabler er tilnærmet normalfordelt
+  uansett underliggende fordeling. Brukes også i z-test, konfidensintervall
+  og som referansefordeling.
+
+recognition_cues:
+  - "Oppgaven sier 'normalfordelt med forventningsverdi μ og standardavvik σ'"
+  - "Du har en kontinuerlig variabel og er gitt μ og σ"
+  - "Spørsmålet er på formen P(X < x), P(X > x) eller P(a < X < b)"
+  - "Stort antall observasjoner (n ≥ 30) — sentralgrenseteoremet"
+  - "Du skal beregne sannsynlighet via z-tabell"
+
+when_NOT_to_use:
+  - "Variabelen er diskret (heltall) → bruk binomial, Poisson, eller hypergeometrisk"
+  - "Datamaterialet ser klart skjevt ut (qq-plott avviker) → vurder bootstrap"
+  - "Variabelen er bare positiv tid mellom hendelser → bruk eksponentialfordeling"
+
+symbols:
+  - { sym: "μ",     means: "forventningsverdien (sentrum av klokken)" }
+  - { sym: "σ",     means: "standardavviket (spredning)" }
+  - { sym: "σ²",    means: "variansen" }
+  - { sym: "Z",     means: "standardnormalisert variabel, Z = (X − μ)/σ" }
+  - { sym: "G(z)",  means: "kumulativ standardnormalfordeling, P(Z ≤ z)" }
+  - { sym: "z_α",   means: "α-kvantilet, slik at P(Z > z_α) = α" }
+
+properties:
+  expected_value: "E[X] = μ"
+  variance: "Var[X] = σ²"
+  std_dev: "σ"
+
+filters:
+  computes: [exact_probability, range_probability]
+  random_variable: [continuous]
+  setup: [single_population]
+  structural_cues: [normal_assumed, mean_and_sd_given]
+  distribution_assumption: [normal]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+
+solution_template:
+  - "Bekreft at X ~ N(μ, σ) (eksplisitt antatt eller fra sentralgrenseteoremet)"
+  - "Standardiser: P(X ≤ x) = P(Z ≤ (x − μ)/σ) = G((x − μ)/σ)"
+  - "Slå opp G(z) i tabell E.3 (positive eller negative z-verdier)"
+  - "For området mellom to verdier: P(a < X ≤ b) = G((b−μ)/σ) − G((a−μ)/σ)"
+  - "For 'finn x slik at P(X<x) = p': bruk invers, x = μ + σ · z_p (eventuelt -z_p)"
+
+common_traps: |
+  Forveksle gjerne ikke σ (standardavvik) med σ² (varians). Husk at G(z) gir
+  arealet til VENSTRE for z. For området til høyre, bruk 1 - G(z). For
+  negative z, kan symmetrien G(-z) = 1 - G(z) være nyttig. Husk hvilken
+  enhet x og μ er gitt i.
+
+python_snippet: |
+  from scipy.stats import norm
+
+  mu, sigma = 25, 0.48
+
+  # P(X ≤ x)
+  norm.cdf(24, loc=mu, scale=sigma)         # 0.0188
+
+  # P(a < X ≤ b)
+  norm.cdf(310, loc=302, scale=5) - norm.cdf(305, loc=302, scale=5)  # 0.2195
+
+  # Invers: finn x slik at P(X ≤ x) = p
+  norm.ppf(0.001, loc=300, scale=5)         # finne x for P(X<x)=0.001
+
+examples:
+  - source: "Eksamen jan25 · oppgave 5a"
+    excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
+    solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
+  - source: "Eksamen mai25 · oppgave 4a"
+    excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
+    solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
+  - source: "Eksamen mai25 · oppgave 4d"
+    excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
+    solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090 → μ = 300 + 15.45 = 315.45 ml"
+
+detailed_solutions:
+  - source: "Eksamen jan25 · oppgave 5a"
+    question: "X er normalfordelt med μ = 25 cl og σ = 0.48 cl. Finn P(X < 24)."
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X ~ N(25, 0.48)" }
+      - label: "Standardisering"
+        lines:
+          - { text: "P(X < 24) = P(Z < (24 - 25)/0.48)" }
+          - { indent: "= P(Z < -2.0833)" }
+      - label: "Tabelloppslag"
+        lines:
+          - { table_lookup: { ref: "E.3", text: "G(-2.08) ≈ 0.0188" } }
+    result: "P(X < 24) ≈ 0.0188"
+
+  - source: "Eksamen mai25 · oppgave 4a"
+    question: "X er normalfordelt med μ = 302 ml og σ = 5 ml. Finn P(305 < X ≤ 310)."
+    sections:
+      - label: "Standardisering"
+        lines:
+          - { text: "P(305 < X ≤ 310) = G((310-302)/5) - G((305-302)/5)" }
+          - { indent: "= G(1.6) - G(0.6)" }
+      - label: "Tabelloppslag"
+        lines:
+          - { table_lookup: { ref: "E.3", text: "G(1.6) ≈ 0.9452" } }
+          - { table_lookup: { ref: "E.3", text: "G(0.6) ≈ 0.7257" } }
+          - { text: "= 0.9452 - 0.7257" }
+    result: "P(305 < X ≤ 310) ≈ 0.2195"
+
+  - source: "Eksamen mai25 · oppgave 4d"
+    question: "Standardavviket er σ = 5 ml. Hva må forventningsverdien μ være for at P(X < 300) < 0.001?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "Vi vil ha P(X < 300) = 0.001 (grenseverdien)" }
+          - { text: "G((300 - μ)/5) = 0.001" }
+      - label: "Tabelloppslag"
+        lines:
+          - { table_lookup: { ref: "E.4", text: "z_0.001 = 3.090, så det venstresidige kvantilet er -z_0.001 = -3.090" } }
+      - label: "Innsatt"
+        lines:
+          - { text: "(300 - μ)/5 = -3.090" }
+          - { text: "300 - μ = -15.45" }
+          - { text: "μ = 315.45" }
+    result: "μ må justeres opp til minst 315.45 ml"
+
+related:
+  - { id: "standardnormalisering",   kind: "concept" }
+  - { id: "sentralgrenseteoremet",   kind: "concept" }
+  - { id: "sum-uavhengige-normaler", kind: "entry" }
+  - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "E3-z-tabell",             kind: "table" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+
+tools:
+  - "Tabell E.3 — Kumulativ standardnormalfordeling (Z-tabell)"
+  - "Tabell E.4 — Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"

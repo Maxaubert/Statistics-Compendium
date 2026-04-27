@@ -1,0 +1,103 @@
+id: hypergeometrisk-fordeling
+name_no: Hypergeometrisk fordeling
+type: distribution
+category: discrete_distribution
+tagline: "Antall 'vellykkede' i et utplukk uten tilbakelegging fra endelig pott."
+
+formula_main: "P(X = k) = C(K, k) · C(N-K, n-k) / C(N, n)"
+formula_latex: "P(X = k) = \\frac{\\binom{K}{k} \\binom{N-K}{n-k}}{\\binom{N}{n}}"
+
+what_it_does: |
+  Modellerer antall "vellykkede" trekninger når man trekker n elementer
+  uten tilbakelegging fra en endelig populasjon med N elementer, hvorav
+  K er "vellykkede".
+
+why_use: |
+  Korrekt fordeling for trekning fra endelig pott uten tilbakelegging,
+  for eksempel kortspill, utplukk av varer fra en kasse, kvalitetskontroll.
+  Skiller seg fra binomial nettopp ved at p endrer seg etter hver trekning.
+
+recognition_cues:
+  - "Trekker fra endelig populasjon UTEN tilbakelegging"
+  - "Det er gitt et antall N totalt og K 'vellykkede' i populasjonen"
+  - "Du trekker n stykker"
+  - "Spørsmålet handler om antall vellykkede k blant de n trukne"
+  - "I praksis: trekninger ut av en hatt, kort fra kortstokk, utplukk av varer"
+
+when_NOT_to_use:
+  - "Trekker MED tilbakelegging eller fra uendelig populasjon → bruk binomial"
+  - "Antall trekninger er ikke fastlagt → vurder geometrisk eller annet"
+  - "n/N er liten (< 5%) — da er binomial en god tilnærming"
+
+symbols:
+  - { sym: "N",  means: "total antall i populasjonen" }
+  - { sym: "K",  means: "antall 'vellykkede' i populasjonen" }
+  - { sym: "n",  means: "antall trekninger" }
+  - { sym: "k",  means: "antall vellykkede blant de n trukne (det vi spør om)" }
+  - { sym: "C(a,b)", means: "binomialkoeffisient a over b" }
+
+properties:
+  expected_value: "E[X] = n · K/N"
+  variance: "Var[X] = n · K/N · (N-K)/N · (N-n)/(N-1)"
+
+filters:
+  computes: [exact_probability, at_least_k]
+  random_variable: [discrete_count]
+  setup: [without_replacement, finite_pool]
+  structural_cues: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser N (totalt), K (vellykkede), n (trekninger), k (spørsmål)"
+  - "Skriv X ~ Hyp(N, K, n)"
+  - "Sett inn i formelen: g/m = C(K,k)·C(N-K,n-k) / C(N,n)"
+  - "Forenkle binomialkoeffisienten der mulig før du multipliserer"
+
+common_traps: |
+  Pass på rollene: K er vellykkede i populasjonen, n er antall trekninger,
+  k er antall vellykkede blant de trukne. Lett å forveksle K og n.
+  Ikke bland sammen med binomial: binomial har konstant p; hypergeometrisk
+  har p som endrer seg etter hver trekning.
+
+python_snippet: |
+  from scipy.stats import hypergeom
+
+  # P(X = k) for trekning av n=5 fra N=52 med K=13 'gunstige'
+  hypergeom.pmf(5, 52, 13, 5)        # 0.000495 (alle 5 hjerter)
+
+examples:
+  - source: "Eksamen jan25 · oppgave 1a"
+    excerpt: "Trekker 5 kort fra 52, hvorav 13 er hjerter. Sannsynlighet for at alle 5 er hjerter."
+    solution_sketch: "C(13,5)·C(39,0)/C(52,5) = 1287/2598960 ≈ 0.000495"
+  - source: "Eksamen jan25 · oppgave 1c"
+    excerpt: "Sannsynlighet for at INGEN av de 5 trukne kortene er hjerter."
+    solution_sketch: "C(13,0)·C(39,5)/C(52,5) = 575757/2598960 ≈ 0.2215"
+
+detailed_solutions:
+  - source: "Eksamen jan25 · oppgave 1a"
+    question: "Vi trekker 5 kort fra en kortstokk på 52 kort. 13 av kortene er hjerter. Hva er sannsynligheten for at alle 5 trukne er hjerter?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X = antall hjerter blant de 5 trukne" }
+          - { text: "X ~ Hypergeometrisk(N=52, K=13, n=5)" }
+      - label: "Formel"
+        lines:
+          - { text: "P(X = 5) = C(13,5) · C(39,0) / C(52,5)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "C(13,5) = 1287" }
+          - { text: "C(39,0) = 1" }
+          - { text: "C(52,5) = 2 598 960" }
+          - { text: "P(X = 5) = 1287 · 1 / 2 598 960" }
+    result: "P(X = 5) ≈ 0.000495 (≈ 4.95 · 10⁻⁴)"
+
+related:
+  - { id: "binomial-fordeling",   kind: "entry" }
+  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "concept" }
+  - { id: "gunstige-pa-mulige",   kind: "concept" }
+  - { id: "uten-tilbakelegging",  kind: "concept" }
+
+tools:
+  - "Kalkulator: binomialkoeffisient C(n,k) (også skrevet som nCk eller komb.)"

@@ -9,30 +9,34 @@ formula_latex: "P(X = k) = \\frac{e^{-\\lambda t}(\\lambda t)^k}{k!}"
 
 what_it_does: |
   Modellerer antall uavhengige hendelser som inntreffer med konstant rate
-  i et fast tidsvindu eller område.
+  i et fast tidsvindu eller område. Antallet kan i prinsippet være null,
+  én, eller hvor som helst opp til et stort heltall.
 
 why_use: |
   Naturlig valg når hendelsene "kommer som de kommer" og det ikke finnes
-  noen forhåndsbestemt øvre grense for antallet.
+  noen forhåndsbestemt øvre grense for antallet. Eksempler i pensum:
+  vulkanutbrudd, sommerfugler i felle, kunder som kommer til en kasse.
 
 recognition_cues:
-  - "Oppgaven nevner Poissonprosess eller rate λ pr. tidsenhet"
+  - "Oppgaven nevner eksplisitt 'Poissonprosess' eller 'rate λ pr. [tidsenhet]'"
   - "Du teller hendelser i et fast tidsvindu eller område"
-  - "Hendelser inntreffer uavhengig og kontinuerlig"
-  - "Spørsmålet ber om nøyaktig k, minst k, ingen, eller høyst k"
-  - "Ikke fast antall forsøk"
+  - "Hendelser inntreffer uavhengig og kontinuerlig over tid eller rom"
+  - "Spørsmålet ber om 'nøyaktig k', 'minst k', 'ingen', eller 'høyst k'"
+  - "Ikke fast antall forsøk: hendelser kommer som de kommer"
+  - "Total tid eller område er gitt (timer, uker, måneder, m², osv.)"
 
 when_NOT_to_use:
-  - "Fast antall n forsøk er gitt → bruk binomial i stedet"
-  - "Spørsmålet handler om tid TIL første hendelse → bruk eksponentialfordeling"
-  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk"
+  - "Fast antall n forsøk er gitt → bruk binomialfordeling i stedet"
+  - "Spørsmålet handler om TID TIL første hendelse → bruk eksponentialfordeling"
+  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk fordeling"
 
 symbols:
-  - { sym: "λ",  means: "rate (gjennomsnittlig antall hendelser pr. tidsenhet)" }
-  - { sym: "t",  means: "lengden på vinduet" }
-  - { sym: "λt", means: "forventet antall hendelser i vinduet (ofte μ)" }
-  - { sym: "k",  means: "antallet det spørres om" }
+  - { sym: "λ",  means: "rate (gjennomsnittlig antall hendelser pr. tidsenhet eller pr. arealenhet)" }
+  - { sym: "t",  means: "lengden på vinduet (samme enhet som raten)" }
+  - { sym: "λt", means: "forventet antall hendelser i vinduet (skrives ofte som μ)" }
+  - { sym: "k",  means: "antallet det spørres om (heltall ≥ 0)" }
   - { sym: "e",  means: "Eulers tall ≈ 2.71828" }
+  - { sym: "k!", means: "k-fakultet, k · (k-1) · (k-2) · ... · 1" }
 
 properties:
   expected_value: "E[X] = λt"
@@ -48,24 +52,34 @@ filters:
   tooling: [cumulative_poisson_table_E2]
 
 solution_template:
-  - "Identifiser raten λ og enheten den er gitt i"
-  - "Identifiser vinduets størrelse t i samme enhet"
-  - "Regn ut μ = λt"
-  - "Bestem hva spørsmålet ber om"
-  - "For minst eller ingen, bruk komplementregelen med tabell E.2"
-  - "Slå opp P(X ≤ k) i tabell E.2 eller regn direkte"
+  - "Identifiser raten λ og enheten den er gitt i (pr. time, dag, m², osv.)"
+  - "Identifiser vinduets størrelse t i samme enhet som raten"
+  - "Regn ut forventet antall μ = λt"
+  - "Bestem hva spørsmålet ber om: P(X = k), P(X ≤ k), P(X ≥ k), eller P(X = 0)"
+  - "For 'minst k' eller 'ingen': bruk komplementregelen P(X ≥ k) = 1 - P(X ≤ k-1)"
+  - "Slå opp P(X ≤ k) i tabell E.2 (Poissontabell) eller regn direkte med formelen"
 
 common_traps: |
   Husk å multiplisere raten med vindusstørrelsen før innsetting (μ = λt,
   ikke bare λ). Hvis raten er pr. time og vinduet er en uke, må t omregnes
-  til timer (168). Bruk samme tidsenhet for begge.
+  til timer (168). Bruk samme tidsenhet for begge. Tabell E.2 leser opp
+  P(X ≤ k), så spørsmål om "nøyaktig k" eller "minst k" må regnes om via
+  komplement eller ved å ta differanse mellom to tabelloppslag.
 
 python_snippet: |
   from scipy.stats import poisson
+
+  # μ = λt = forventet antall hendelser i vinduet
   mu = 0.01 * 168          # 1.68
+
+  # P(X = k)
   poisson.pmf(0, mu)        # 0.1864
-  poisson.cdf(2, mu)        # 0.7681
-  1 - poisson.cdf(2, mu)    # 0.2319
+
+  # P(X ≤ k) — kumulativ
+  poisson.cdf(2, mu)        # 0.7625
+
+  # P(X ≥ k) = 1 − P(X ≤ k−1)
+  1 - poisson.cdf(2, mu)    # 0.2375
 
 examples:
   - source: "Eksamen jan26 · oppgave 4a"
@@ -73,7 +87,13 @@ examples:
     solution_sketch: "X ~ Poisson(λt), λ = 0.01/t, t = 168 t → μ = 1.68 → P(X = 0) = e^(-1.68) ≈ 0.186"
   - source: "Eksamen jan26 · oppgave 4b"
     excerpt: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
-    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2). Slå opp i tabell E.2 med μ = 1.68 → 1 − 0.7681 ≈ 0.232"
+    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2) = 1 − (P(0) + P(1) + P(2)) ≈ 1 − 0.7625 ≈ 0.2375"
+  - source: "Eksamen jan25 · oppgave 4a"
+    excerpt: "Vulkanutbrudd med rate 0.0261 pr. måned. Sannsynlighet for ett eller to utbrudd over 5 år (60 måneder)."
+    solution_sketch: "μ = 0.0261·60 = 1.5678 → P(X = 1) + P(X = 2) = 0.327 + 0.256 = 0.583"
+  - source: "Eksamen jan25 · oppgave 4b"
+    excerpt: "Sannsynlighet for minst ett vulkanutbrudd i løpet av 5 år."
+    solution_sketch: "P(X ≥ 1) = 1 − P(X = 0) = 1 − e^(-1.5678) = 1 − 0.2085 = 0.792"
 
 detailed_solutions:
   - source: "Eksamen jan26 · oppgave 4a"
@@ -92,25 +112,44 @@ detailed_solutions:
           - { text: "P(X = 0) = e^(-1.68) · (1.68)^0 / 0!" }
           - { indent: "= e^(-1.68) · 1 / 1" }
           - { indent: "= e^(-1.68)" }
-    result: "P(X = 0) ≈ 0.186"
+    result: "P(X = 0) ≈ 0.1864"
 
   - source: "Eksamen jan26 · oppgave 4b"
     question: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
     sections:
       - label: "Komplementregelen"
         lines:
-          - { text: "P(X ≥ 3) = 1 − P(X ≤ 2)" }
+          - { text: "P(X ≥ 3) = 1 − P(X ≤ 2) = 1 − (P(X=0) + P(X=1) + P(X=2))" }
       - label: "Innsatt"
         lines:
-          - { text: "μ = λt = 0.01 · 168 = 1.68" }
-          - { table_lookup: { ref: "E.2", text: "Slå opp P(X ≤ 2) i kolonnen for μ ≈ 1.7 → 0.7681" } }
-          - { text: "P(X ≥ 3) = 1 − 0.7681" }
-    result: "P(X ≥ 3) ≈ 0.232"
+          - { text: "μ = λt = 1.68" }
+          - { text: "P(X = 0) = e^(-1.68) ≈ 0.1864" }
+          - { text: "P(X = 1) = 1.68 · e^(-1.68) ≈ 0.3131" }
+          - { text: "P(X = 2) = 1.68²/2 · e^(-1.68) ≈ 0.2630" }
+          - { text: "Sum: 0.1864 + 0.3131 + 0.2630 = 0.7625" }
+          - { text: "P(X ≥ 3) = 1 − 0.7625" }
+    result: "P(X ≥ 3) ≈ 0.2375"
+
+  - source: "Eksamen jan25 · oppgave 4a"
+    question: "Vulkanen Mauna Loa har en rate på 0.0261 utbrudd pr. måned. Hva er sannsynligheten for ett eller to vulkanutbrudd i en periode på fem år (60 måneder)?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X ~ Poisson(λt), 5 år = 60 måneder" }
+      - label: "Innsatt"
+        lines:
+          - { text: "μ = λt = 0.0261 · 60 = 1.5678" }
+          - { text: "P(X = 1) = 1.5678 · e^(-1.5678) ≈ 0.327" }
+          - { text: "P(X = 2) = 1.5678²/2 · e^(-1.5678) ≈ 0.256" }
+    result: "P(X = 1) + P(X = 2) ≈ 0.583"
 
 related:
-  - { id: "poisson-prosess",         kind: "concept" }
-  - { id: "binomial-fordeling",      kind: "entry" }
-  - { id: "E2-poisson-kumulativ",    kind: "table" }
+  - { id: "poisson-prosess",      kind: "concept" }
+  - { id: "eksponential-fordeling", kind: "entry" }
+  - { id: "binomial-fordeling",   kind: "entry" }
+  - { id: "komplementregelen",    kind: "concept" }
+  - { id: "ki-poissonrate",       kind: "entry" }
+  - { id: "E2-poisson-kumulativ", kind: "table" }
 
 tools:
   - "Tabell E.2 — Kumulativ poissonfordeling"

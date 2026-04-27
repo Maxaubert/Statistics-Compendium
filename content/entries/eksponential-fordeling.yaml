@@ -1,0 +1,114 @@
+id: eksponential-fordeling
+name_no: Eksponentialfordeling
+type: distribution
+category: continuous_distribution
+tagline: "Tiden mellom hendelser i en poissonprosess (ventetidsfordelingen)."
+
+formula_main: "f(t) = λ · e^(-λt) (tetthet),  F(t) = 1 - e^(-λt) (kumulativ)"
+formula_latex: "f(t) = \\lambda e^{-\\lambda t}, \\quad F(t) = 1 - e^{-\\lambda t}"
+
+what_it_does: |
+  Modellerer ventetiden T fra et tilfeldig punkt i en poissonprosess til
+  neste hendelse, eller mellom to påfølgende hendelser. Verdien er
+  kontinuerlig og positiv (T > 0).
+
+why_use: |
+  Når problemet handler om TID TIL noe skjer (i kontrast til antall ting
+  som skjer), og vi vet eller antar at hendelsene følger en poissonprosess.
+  Tett knyttet sammen med Poissonfordeling: hvis antall hendelser er
+  Poisson(λt), så er ventetiden eksponentialfordelt med parameter λ.
+
+recognition_cues:
+  - "Spørsmålet handler om tid TIL første hendelse, eller mellom to hendelser"
+  - "T er en kontinuerlig stokastisk variabel (positivt reelt tall)"
+  - "Det er allerede etablert i oppgaven at hendelsene er en poissonprosess"
+  - "Spørsmålet er på formen P(T > t), P(T < t) eller P(a < T < b)"
+  - "Rate λ er gitt"
+
+when_NOT_to_use:
+  - "Spørsmålet teller hendelser i et fast vindu → bruk Poissonfordeling"
+  - "Tiden er ikke knyttet til en poissonprosess → annen kontinuerlig fordeling"
+
+symbols:
+  - { sym: "λ",  means: "rate (samme λ som i den underliggende poissonprosessen)" }
+  - { sym: "t",  means: "ventetiden (alltid > 0)" }
+  - { sym: "f(t)", means: "sannsynlighetstettheten — areal under = sannsynlighet" }
+  - { sym: "F(t)", means: "kumulativ fordelingsfunksjon, P(T ≤ t)" }
+  - { sym: "e",  means: "Eulers tall ≈ 2.71828" }
+
+properties:
+  expected_value: "E[T] = 1/λ"
+  variance: "Var[T] = 1/λ²"
+  std_dev: "σ = 1/λ"
+
+filters:
+  computes: [exact_probability, range_probability]
+  random_variable: [continuous, time_until_event]
+  setup: [events_in_window]
+  structural_cues: [rate_given, process_over_time, independent_events]
+  distribution_assumption: [exponential]
+  tooling: [calculator_only]
+
+solution_template:
+  - "Bekreft at problemet handler om tid TIL første hendelse i en poissonprosess"
+  - "Identifiser raten λ med riktig enhet"
+  - "Bestem hvilken sannsynlighet som etterspørres: P(T > t), P(T < t), eller P(a < T < b)"
+  - "Bruk F(t) = 1 - e^(-λt) for kumulativ; P(T > t) = e^(-λt)"
+  - "Sjekk enheten på t (samme som rate)"
+
+common_traps: |
+  Eksponentialfordeling og Poissonfordeling deler samme λ men måler ulike
+  ting: Poisson teller hendelser, eksponential måler ventetid. Dobbelsjekk
+  at oppgaven faktisk spør om TID, ikke ANTALL. P(T > t) (overlevelse) er
+  e^(-λt), ikke 1 - e^(-λt). Husk samme tidsenhet som raten.
+
+python_snippet: |
+  from scipy.stats import expon
+
+  lam = 0.01    # rate pr. time
+  t = 48        # timer
+
+  # P(T > t) = e^(-λt)
+  expon.sf(t, scale=1/lam)        # 0.6188
+
+  # P(T ≤ t) = 1 - e^(-λt)
+  expon.cdf(t, scale=1/lam)       # 0.3812
+
+examples:
+  - source: "Eksamen jan26 · oppgave 4c"
+    excerpt: "La T være tiden, målt i timer, til den første klippeblåvingen blir fanget i fellen. Hvilken fordeling har T?"
+    solution_sketch: "Siden vi har en poissonprosess med rate λ = 0.01/t, vil T være eksponentialfordelt med samme λ = 0.01 pr. time."
+  - source: "Eksamen jan26 · oppgave 4d"
+    excerpt: "Hva er sannsynligheten for at ingen klippeblåvinger fanges i løpet av de første 48 timene?"
+    solution_sketch: "P(T > 48) = e^(-0.01·48) = e^(-0.48) ≈ 0.6188"
+  - source: "Eksamen jan25 · oppgave 4b (alternativ utregning)"
+    excerpt: "Sannsynlighet for minst ett vulkanutbrudd over 5 år er ekvivalent med ventetiden er kortere enn 5 år."
+    solution_sketch: "P(T < 60 mnd) = F(60) = 1 - e^(-0.0261·60) = 0.792 (samme som via P(X ≥ 1) i Poisson)"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 4d"
+    question: "Hva er sannsynligheten for at ingen klippeblåvinger fanges i løpet av de første 48 timene? Bruk λ = 0.01 pr. time."
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "T = tid til første hendelse" }
+          - { text: "T ~ Eksponential(λ = 0.01/t)" }
+          - { comment: "spørres om P(T > 48)" }
+      - label: "Formel"
+        lines:
+          - { text: "F(t) = 1 - e^(-λt)" }
+          - { text: "P(T > t) = 1 - F(t) = e^(-λt)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "P(T > 48) = e^(-0.01 · 48)" }
+          - { indent: "= e^(-0.48)" }
+    result: "P(T > 48) ≈ 0.6188"
+
+related:
+  - { id: "poisson-fordeling",  kind: "entry" }
+  - { id: "poisson-prosess",    kind: "concept" }
+  - { id: "normalfordeling",    kind: "entry" }
+  - { id: "komplementregelen",  kind: "concept" }
+
+tools:
+  - "Kalkulator: e^x"
