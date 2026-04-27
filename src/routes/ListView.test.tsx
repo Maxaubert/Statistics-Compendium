@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { ListView } from "./ListView";
 
+
 describe("ListView", () => {
   it("renders the banner, tabs, and at least one entry from fixtures", () => {
     render(
@@ -27,5 +28,15 @@ describe("ListView", () => {
     fireEvent.click(screen.getByLabelText(/Sannsynlighet \(eksakt\)/));
     expect(screen.getByText("Poissonfordeling")).toBeInTheDocument();
     expect(screen.getByText("Binomialfordeling")).toBeInTheDocument();
+  });
+
+  it("shows the Tabeller tab content when selected", () => {
+    render(
+      <MemoryRouter>
+        <ListView />
+      </MemoryRouter>
+    );
+    fireEvent.click(screen.getByRole("tab", { name: /Tabeller/i }));
+    expect(screen.getByText("Poissontabell")).toBeInTheDocument();
   });
 });
