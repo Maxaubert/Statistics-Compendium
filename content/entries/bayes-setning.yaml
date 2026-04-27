@@ -1,0 +1,70 @@
+id: bayes-setning
+name_no: "Bayes' setning"
+type: rule
+category: probability_rule
+tagline: "Vender om en betinget sannsynlighet: P(A|B) ut fra P(B|A), P(A) og P(B)."
+
+formula_main: "P(A | B) = P(A) · P(B | A) / P(B)"
+formula_latex: "P(A | B) = \\frac{P(A) \\cdot P(B | A)}{P(B)}"
+
+what_it_does: |
+  Snur retningen på en betinget sannsynlighet. Hvis du vet P(B|A) og
+  marginalsannsynlighetene P(A) og P(B), gir Bayes' setning P(A|B).
+
+why_use: |
+  Standard verktøy når oppgaven snur "kausal" retning: f.eks. fra
+  "spireprosent for ringblomster" til "sjansen for at en spirer er en
+  ringblomst". Også sentralt i statistikk og maskinlæring (klassifisering).
+
+recognition_cues:
+  - "Du er gitt P(B|A), P(A), og enten P(B) direkte eller via total sannsynlighet"
+  - "Spørsmålet snur retningen: ber om P(A|B) der du naturlig har P(B|A)"
+  - "Diagnose-typen oppgaver: 'gitt at testen er positiv, hva er sjansen for sykdom?'"
+
+symbols:
+  - { sym: "P(A | B)",  means: "betinget sannsynlighet for A gitt B" }
+  - { sym: "P(B | A)",  means: "betinget sannsynlighet for B gitt A" }
+
+filters:
+  computes: [conditional_probability]
+  random_variable: []
+  setup: []
+  structural_cues: [conditional_given]
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Skriv ned P(A), P(B|A), og P(B) (eller utled P(B) via total sannsynlighet)"
+  - "P(A|B) = P(A)·P(B|A) / P(B)"
+
+common_traps: |
+  P(A|B) er IKKE P(B|A). Glemmer man å snu, gjør man en av de mest vanlige
+  feilslutningene i sannsynlighetsregning ('confusion of the inverse').
+  Hvis P(B) ikke er gitt, regn det ut først via total sannsynlighet.
+
+examples:
+  - source: "Eksamen jan25 · oppgave 3a"
+    excerpt: "P(spire) = 0.8, P(ringblomst) = 0.6, P(spire|ringblomst) = 0.9. Finn P(ringblomst|spire)."
+    solution_sketch: "P(R|S) = P(R)·P(S|R)/P(S) = 0.6·0.9/0.8 = 0.675"
+
+detailed_solutions:
+  - source: "Eksamen jan25 · oppgave 3a"
+    question: "P(S) = 0.8, P(R) = 0.6, P(S|R) = 0.9. Finn P(R|S)."
+    sections:
+      - label: "Bayes' setning"
+        lines:
+          - { text: "P(R|S) = P(R)·P(S|R) / P(S)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "= 0.6 · 0.9 / 0.8" }
+          - { indent: "= 0.54 / 0.8" }
+    result: "P(R|S) = 0.675"
+
+related:
+  - { id: "produktregel",         kind: "entry" }
+  - { id: "total-sannsynlighet",  kind: "entry" }
+  - { id: "betinget-sannsynlighet", kind: "concept" }
+
+tools:
+  - "Kalkulator: multiplikasjon, divisjon"

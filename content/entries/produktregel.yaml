@@ -1,0 +1,69 @@
+id: produktregel
+name_no: "Produktregelen og betinget sannsynlighet"
+type: rule
+category: probability_rule
+tagline: "P(A ∩ B) = P(A) · P(B|A) — sannsynlighet for at to hendelser begge inntreffer."
+
+formula_main: "P(A ∩ B) = P(A) · P(B | A);  P(B | A) = P(A ∩ B) / P(A)"
+formula_latex: "P(A \\cap B) = P(A) \\cdot P(B|A), \\quad P(B|A) = \\frac{P(A \\cap B)}{P(A)}"
+
+what_it_does: |
+  Definerer betinget sannsynlighet og produktregelen som en omformulering
+  av samme regel. Sier hvordan sannsynligheter kombineres når hendelser
+  skjer i sekvens. For uavhengige hendelser er P(B|A) = P(B), så
+  P(A ∩ B) = P(A)·P(B).
+
+why_use: |
+  Grunnleggende verktøy for sekvensielle hendelser (f.eks. trekninger fra
+  en kortstokk uten tilbakelegging) og for å regne om mellom betinget
+  og felles sannsynlighet.
+
+recognition_cues:
+  - "Sekvensielle hendelser, der den andre avhenger av den første"
+  - "Spørsmålet involverer 'gitt at A inntreffer' eller 'først, så'"
+  - "Du har P(A) og P(B|A), eller du vil finne P(B|A)"
+  - "Trekning uten tilbakelegging der p endrer seg etter første trekning"
+
+when_NOT_to_use:
+  - "Hendelsene er uavhengige → P(A ∩ B) = P(A)·P(B) er enklere"
+
+symbols:
+  - { sym: "P(A ∩ B)",   means: "sannsynlighet for at både A og B inntreffer" }
+  - { sym: "P(B | A)",    means: "betinget sannsynlighet for B, gitt at A inntreffer" }
+
+filters:
+  computes: [exact_probability, conditional_probability]
+  random_variable: []
+  setup: []
+  structural_cues: [conditional_given]
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser hendelsene A og B"
+  - "Avgjør om hendelsene er sekvensielle eller du vil finne en betinget sannsynlighet"
+  - "Hvis A og B er uavhengige: P(A ∩ B) = P(A)·P(B)"
+  - "Ellers: P(A ∩ B) = P(A) · P(B|A) (eller via P(A|B))"
+
+common_traps: |
+  P(B|A) er IKKE det samme som P(A|B) generelt — bytte rekkefølge gir
+  feil svar (med mindre A og B er uavhengige). For å konvertere mellom
+  dem, bruk Bayes' setning.
+
+examples:
+  - source: "Eksamen jan26 · oppgave 1b (alternativ utregning)"
+    excerpt: "P(høyresko først) · P(venstresko gitt høyre først) + symmetrisk."
+    solution_sketch: "P(H₁ ∩ V₂) = P(H₁)·P(V₂|H₁) = (5/10)·(5/9) = 25/90"
+  - source: "Eksamen jan25 · oppgave 1a (alternativ utregning)"
+    excerpt: "P(alle 5 hjerter) som produkt av betinget sannsynligheter for hver trekning."
+    solution_sketch: "(13/52)·(12/51)·(11/50)·(10/49)·(9/48) ≈ 4.95·10⁻⁴"
+
+related:
+  - { id: "betinget-sannsynlighet", kind: "concept" }
+  - { id: "uavhengighet-hendelser", kind: "concept" }
+  - { id: "bayes-setning",          kind: "entry" }
+  - { id: "total-sannsynlighet",    kind: "entry" }
+
+tools:
+  - "Kalkulator: multiplikasjon"

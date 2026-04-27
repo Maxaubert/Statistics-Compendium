@@ -1,0 +1,66 @@
+id: uordnet-utvalg-uten-tilbakelegging
+name_no: "Uordnet utvalg uten tilbakelegging (binomialkoeffisient)"
+type: combinatorics
+category: combinatorics
+tagline: "Antall måter å velge k elementer blant n, der rekkefølge ikke teller."
+
+formula_main: "C(n, k) = n! / (k! · (n - k)!)"
+formula_latex: "\\binom{n}{k} = \\frac{n!}{k! (n-k)!}"
+
+what_it_does: |
+  Beregner antall mulige utvalg av k elementer fra en mengde av n
+  forskjellige elementer, når rekkefølgen ikke spiller noen rolle og
+  ingen elementer kan trekkes flere ganger.
+
+why_use: |
+  Brukes for å telle antall gunstige eller mulige utvalg i sannsynlighetsberegninger
+  med "uniform sannsynlighetsfordeling og uten tilbakelegging" (kort fra
+  kortstokk, baller fra urne, etc.). Direkte forbundet med hypergeometrisk
+  fordeling og binomial sannsynlighet.
+
+recognition_cues:
+  - "Du trekker eller velger ut k elementer fra n"
+  - "Rekkefølgen er IKKE viktig (samme utvalg uansett rekkefølge)"
+  - "UTEN tilbakelegging: hvert element kan velges maksimalt én gang"
+  - "Ofte blir det gunstige/mulige med C(K,k)·C(N-K,n-k) / C(N,n)"
+
+when_NOT_to_use:
+  - "Rekkefølge er viktig (permutasjoner) → bruk n!/(n-k)! (P(n,k))"
+  - "Tilbakelegging er tillatt (multinomial-typer) → andre formler"
+
+symbols:
+  - { sym: "n",       means: "antall elementer i populasjonen" }
+  - { sym: "k",       means: "antall vi trekker ut" }
+  - { sym: "n!",      means: "n-fakultet, n·(n-1)·...·1" }
+  - { sym: "C(n,k)",  means: "binomialkoeffisient, også skrevet som ⁿCₖ eller (n velg k)" }
+
+filters:
+  computes: [combinatorial_count, exact_probability]
+  random_variable: []
+  setup: [without_replacement, finite_pool]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser n (totalt) og k (det som skal velges)"
+  - "Beregn C(n,k) — på kalkulator typisk 'nCr' eller 'COMB'"
+  - "Hvis sannsynlighetsoppgave: kombiner med antall mulige utvalg, P = gunstige/mulige"
+
+common_traps: |
+  C(n,k) er ikke det samme som n^k. Pass på at n og k er heltall og 0 ≤ k ≤ n.
+  Symmetrien C(n,k) = C(n, n-k) er nyttig for å forenkle beregninger.
+
+examples:
+  - source: "Eksamen jan25 · oppgave 1"
+    excerpt: "Trekker 5 kort fra 52, hvorav 13 er hjerter. Antall mulige uordnete utvalg av 5 kort er C(52,5) = 2 598 960."
+    solution_sketch: "P(alle hjerter) = C(13,5)/C(52,5) = 1287/2598960 ≈ 4.95·10⁻⁴"
+
+related:
+  - { id: "hypergeometrisk-fordeling",  kind: "entry" }
+  - { id: "binomial-fordeling",         kind: "entry" }
+  - { id: "gunstige-pa-mulige",         kind: "concept" }
+
+tools:
+  - "Kalkulator: nCr / COMB / binomialkoeffisient-funksjon"

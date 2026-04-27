@@ -1,0 +1,66 @@
+id: komplementregelen
+name_no: "Komplementregelen"
+type: rule
+category: probability_rule
+tagline: "Sannsynligheten for at en hendelse IKKE inntreffer."
+
+formula_main: "P(A̅) = 1 − P(A)"
+formula_latex: "P(\\overline{A}) = 1 - P(A)"
+
+what_it_does: |
+  Sier at sannsynligheten for at hendelse A IKKE inntreffer er 1 minus
+  sannsynligheten for at A inntreffer. Brukes ofte indirekte for å regne
+  ut P(A) når A̅ er enklere å regne ut, og spesielt for "minst én"-typen
+  problemer.
+
+why_use: |
+  Mange oppgaver er enklere å løse via komplementet. Klassisk eksempel:
+  "minst én suksess i n forsøk" — direkte beregning er en sum over flere
+  k-verdier; via komplement er det bare 1 minus P(0 suksesser).
+
+recognition_cues:
+  - "Spørsmålet inneholder 'minst én', 'minst k', 'ingen', 'høyst k'"
+  - "Direkte beregning ville kreve sum over mange utfall"
+  - "P(A̅) er enklere å regne ut enn P(A)"
+
+symbols:
+  - { sym: "A",     means: "en hendelse" }
+  - { sym: "A̅",     means: "komplementet av A (A̅ inntreffer hvis A ikke gjør det)" }
+
+filters:
+  computes: [exact_probability, at_least_k]
+  random_variable: []
+  setup: []
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser hendelsen A"
+  - "Bestem A̅ (det motsatte av A)"
+  - "Beregn P(A̅) — ofte enklere enn P(A)"
+  - "P(A) = 1 − P(A̅)"
+
+common_traps: |
+  "Minst k" via komplement: P(X ≥ k) = 1 − P(X ≤ k − 1). NB: 'ikke alle'
+  betyr 'minst én ikke', ikke 'ingen'.
+
+examples:
+  - source: "Eksamen jan25 · oppgave 1b"
+    excerpt: "P(alle 5 trukne kort er hjerter) = 0.000495. Sannsynlighet for at IKKE alle er hjerter?"
+    solution_sketch: "P(ikke alle) = 1 − 0.000495 = 0.999505"
+  - source: "Eksamen jan26 · oppgave 1c"
+    excerpt: "P(minst én kron i n kast) > 0.99 ekvivalent med 1 − P(0 kron) > 0.99."
+    solution_sketch: "P(X ≥ 1) > 0.99 ⇔ P(X = 0) < 0.01 ⇔ 0.5^n < 0.01"
+  - source: "Eksamen jan26 · oppgave 4b"
+    excerpt: "P(minst tre klippeblåvinger). Bruk komplement."
+    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2)"
+
+related:
+  - { id: "unionssetningen",   kind: "entry" }
+  - { id: "binomial-fordeling", kind: "entry" }
+  - { id: "poisson-fordeling", kind: "entry" }
+
+tools:
+  - "Kalkulator: subtraksjon"

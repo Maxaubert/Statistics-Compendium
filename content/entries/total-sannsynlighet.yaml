@@ -1,0 +1,80 @@
+id: total-sannsynlighet
+name_no: "Setningen om total sannsynlighet"
+type: rule
+category: probability_rule
+tagline: "Total sannsynlighet for B summert over alle 'måter' den kan inntreffe."
+
+formula_main: "P(B) = P(A) · P(B|A) + P(A̅) · P(B|A̅)"
+formula_latex: "P(B) = P(A) \\cdot P(B|A) + P(\\overline{A}) \\cdot P(B|\\overline{A})"
+
+what_it_does: |
+  Bryter sannsynligheten for B opp i bidrag fra to disjunkte tilfeller A
+  og A̅ (eller mer generelt fra en partisjon av utfallsrommet). Brukes
+  ofte når B kan inntreffe på flere "måter" og betingede sannsynligheter
+  er gitt for hver.
+
+why_use: |
+  Standardteknikken når oppgaven gir P(B|A), P(B|A̅), og marginalsannsynlighetene
+  P(A), P(A̅), og spør etter P(B). Også grunnsteinen i Bayes' setning.
+
+recognition_cues:
+  - "Du er gitt betingede sannsynligheter P(B|A) og P(B|A̅)"
+  - "Du vil finne den marginale (totale) sannsynligheten P(B)"
+  - "Spørsmålet handler om 'hva er sjansen for B totalt sett?'"
+  - "Populasjonen er delt i grupper (kjønn, type, kategori) og du vil utlede en samlet rate"
+
+symbols:
+  - { sym: "A, A̅",    means: "to disjunkte hendelser som dekker hele utfallsrommet" }
+  - { sym: "P(B|A)",  means: "sannsynlighet for B gitt A" }
+  - { sym: "P(B)",    means: "den marginale (totale) sannsynligheten for B" }
+
+filters:
+  computes: [exact_probability]
+  random_variable: []
+  setup: []
+  structural_cues: [conditional_given]
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser partisjonen (typisk A og A̅ — eller flere disjunkte hendelser)"
+  - "Skriv ned P(A), P(A̅), P(B|A), P(B|A̅)"
+  - "P(B) = ΣP(A_i)·P(B|A_i) over partisjonen"
+
+common_traps: |
+  Pass på at A og A̅ er DISJUNKTE og dekker hele utfallsrommet. For mer enn
+  to grupper, summer over alle: P(B) = Σ P(A_i)·P(B|A_i). Sjekk at
+  P(A) + P(A̅) = 1.
+
+examples:
+  - source: "Eksamen jan25 · oppgave 3b"
+    excerpt: "P(spire) = 0.8, P(ringblomst) = 0.6, P(spire|ringblomst) = 0.9. Finn P(spire|ikke ringblomst)."
+    solution_sketch: "0.8 = 0.6·0.9 + 0.4·P(spire|R̄) → P(spire|R̄) = (0.8 - 0.54)/0.4 = 0.65"
+  - source: "Eksamen mai25 · oppgave 2c"
+    excerpt: "P(jente) = 0.52, P(gutt) = 0.48, P(tran|jente) = 0.23, P(tran|gutt) = 0.34. Finn P(tran)."
+    solution_sketch: "P(tran) = 0.52·0.23 + 0.48·0.34 = 0.2828"
+
+detailed_solutions:
+  - source: "Eksamen mai25 · oppgave 2c"
+    question: "23 % av jentene og 34 % av guttene drikker tran daglig. Populasjonen er 52 % jenter og 48 % gutter. Finn P(tran)."
+    sections:
+      - label: "Definerte hendelser"
+        lines:
+          - { text: "J: tilfeldig valgt barn er jente. T: drikker tran." }
+          - { text: "P(J) = 0.52, P(J̄) = 0.48" }
+          - { text: "P(T|J) = 0.23, P(T|J̄) = 0.34" }
+      - label: "Innsatt"
+        lines:
+          - { text: "P(T) = P(J)·P(T|J) + P(J̄)·P(T|J̄)" }
+          - { indent: "= 0.52·0.23 + 0.48·0.34" }
+          - { indent: "= 0.1196 + 0.1632" }
+    result: "P(T) = 0.2828 (28.28 %)"
+
+related:
+  - { id: "produktregel",          kind: "entry" }
+  - { id: "betinget-sannsynlighet", kind: "concept" }
+  - { id: "bayes-setning",         kind: "entry" }
+
+tools:
+  - "Kalkulator: multiplikasjon, addisjon"

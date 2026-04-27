@@ -1,0 +1,72 @@
+id: unionssetningen
+name_no: "Unionssetningen"
+type: rule
+category: probability_rule
+tagline: "Sannsynligheten for at minst én av to hendelser inntreffer."
+
+formula_main: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+formula_latex: "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)"
+
+what_it_does: |
+  Beregner sannsynligheten for at hendelse A eller B (eller begge) inntreffer.
+  Trekker fra P(A ∩ B) for å unngå dobbelttelling av overlappet. For
+  disjunkte hendelser er P(A ∩ B) = 0, så P(A ∪ B) = P(A) + P(B).
+
+why_use: |
+  Standardregel når oppgaven spør om "minst én av A eller B" eller "A
+  eller B inntreffer". Også grunnsteinen for den utvidede inkludering-
+  ekskludering for tre eller flere hendelser.
+
+recognition_cues:
+  - "Spørsmålet ber om P(A ∪ B), 'A eller B', eller 'minst én av to hendelser'"
+  - "Du har P(A), P(B), og P(A ∩ B) (eventuelt 0 hvis disjunkte)"
+  - "Venndiagram med to overlappende sirkler"
+
+symbols:
+  - { sym: "P(A)",       means: "sannsynlighet for hendelse A" }
+  - { sym: "P(B)",       means: "sannsynlighet for hendelse B" }
+  - { sym: "P(A ∩ B)",   means: "sannsynlighet for at begge inntreffer" }
+  - { sym: "P(A ∪ B)",   means: "sannsynlighet for at minst én inntreffer" }
+
+filters:
+  computes: [exact_probability]
+  random_variable: []
+  setup: []
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Identifiser hendelsene A og B"
+  - "Finn P(A), P(B), P(A ∩ B)"
+  - "Hvis disjunkte: P(A ∩ B) = 0"
+  - "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+
+common_traps: |
+  Glem ikke å trekke fra P(A ∩ B). For tre hendelser: P(A ∪ B ∪ C) =
+  P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C).
+
+examples:
+  - source: "Eksamen jan26 · oppgave 3a"
+    excerpt: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
+    solution_sketch: "P(A ∪ B) = 0.30 + 0.25 − 0.15 = 0.40"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 3a"
+    question: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
+    sections:
+      - label: "Innsatt"
+        lines:
+          - { text: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)" }
+          - { indent: "= 0.30 + 0.25 − 0.15" }
+    result: "P(A ∪ B) = 0.40"
+
+related:
+  - { id: "komplementregelen",  kind: "entry" }
+  - { id: "produktregel",       kind: "entry" }
+  - { id: "disjunkte-hendelser", kind: "concept" }
+  - { id: "de-morgans-lov",     kind: "concept" }
+
+tools:
+  - "Kalkulator: addisjon"
