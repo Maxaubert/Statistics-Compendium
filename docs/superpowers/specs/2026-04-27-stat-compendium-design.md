@@ -370,8 +370,8 @@ The full sequence (in this order, top to bottom):
     - Section labels (`FORMEL`, `INNSATT`, `RESULTAT`, etc.) in soft indigo monospace uppercase.
     - Body lines in light indigo monospace.
     - Comments in muted slate, italic.
-    - **Table lookups** rendered as amber-bordered callouts inside the dark block (visually distinct from computed values).
-    - **Result** rendered as bold amber text only — no border, no background box. (Matches `dashboard-react` calculator style.)
+    - **Table lookups** rendered as light-indigo-bordered callouts inside the dark block (visually distinct from both the result and the body lines).
+    - **Result** rendered as bold cyan text only — no border, no background box. (Same role as the amber result in `dashboard-react`'s calculator, but the project accent here is cyan instead of gold.)
 12. **Vanlige feller** — yellow alert box.
 13. **Python (scipy.stats)** — code snippet in indigo block with simple syntax highlighting.
 14. **Verktøy / tabeller** — clickable cards linking to the relevant interactive lookup widgets.
@@ -420,8 +420,13 @@ Fonts are self-hosted in `public/fonts/` and loaded via `@font-face` to satisfy 
 --primary-3: #6366f1;   /* indigo-500, hover */
 --primary-soft: #eef2ff;
 
---accent:        #b45309;   /* amber-700 */
---accent-soft:   #fef3c7;   /* amber-100 */
+--cyan:          #22d3ee;   /* cyan-400, primary accent for highlights/results */
+--cyan-2:        #06b6d4;   /* cyan-500, hover/active */
+--cyan-soft:     #cffafe;   /* cyan-100, soft surface */
+--cyan-deep:     #0e7490;   /* cyan-700, text on cyan surfaces */
+
+--warn:          #b45309;   /* amber-700, reserved for warning context only */
+--warn-soft:     #fef3c7;   /* amber-100, warning surface only */
 
 /* Calc block (dark indigo, matches Python code block) */
 --calc-bg:        #1e1b4b;
@@ -430,13 +435,20 @@ Fonts are self-hosted in `public/fonts/` and loaded via `@font-face` to satisfy 
 --calc-label:     #818cf8;
 --calc-text:      #e0e7ff;
 --calc-comment:   #94a3b8;
---calc-result:    #fbbf24;   /* amber result text only — no box */
---calc-lookup-bg:     rgba(251, 191, 36, 0.06);
---calc-lookup-border: #f59e0b;
---calc-lookup-text:   #fde68a;
+--calc-result:    #22d3ee;   /* cyan result text only — no box */
+--calc-lookup-bg:     rgba(165, 180, 252, 0.08);
+--calc-lookup-border: #a5b4fc;   /* indigo-300, distinct from result */
+--calc-lookup-text:   #c7d2fe;
+--calc-lookup-label:  #a5b4fc;
 ```
 
-A dark theme inverts the neutral palette while keeping the indigo / amber accents identical. The calc block always uses its own dark indigo regardless of theme — it functions like a code block.
+**Color roles** (important — these are NOT interchangeable):
+
+- **Cyan (`--cyan` / `--calc-result`)** — used for *answers and highlights*: the result line in a calc block, focused input borders, the highlighted cell in a printed-table view, the cyan glow on the banner and hero formula card.
+- **Warn amber (`--warn` / `--warn-soft`)** — used *only* for warning context: "IKKE bruk når" cue list, "Vanlige feller" alert box. Conventional warn semantics; does not appear elsewhere.
+- **Indigo light (`#a5b4fc`)** — used for *secondary callouts inside calc blocks*: table-lookup callouts, bonus-value boxes. Distinct from both cyan result and indigo body text.
+
+A dark theme inverts the neutral palette while keeping the indigo / cyan accents identical. The calc block always uses its own dark indigo regardless of theme — it functions like a code block.
 
 ### 8.3 Iconography
 
