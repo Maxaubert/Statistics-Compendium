@@ -1,0 +1,72 @@
+id: ki-mu-kjent-sigma
+name_no: "Konfidensintervall for μ (kjent σ)"
+type: identity
+category: confidence_interval
+tagline: "(1-α)·100 % KI for forventningsverdien når populasjonens σ er kjent."
+
+formula_main: "x̄ ± z_(α/2) · σ/√n"
+formula_latex: "\\overline{x} \\pm z_{\\alpha/2} \\cdot \\frac{\\sigma}{\\sqrt{n}}"
+
+what_it_does: |
+  Gir et intervall som med (1-α)·100 % sikkerhet inneholder den ukjente
+  forventningsverdien μ, basert på et utvalgsgjennomsnitt x̄ og kjent σ.
+
+why_use: |
+  Brukes når vi vil estimere μ med usikkerhetsangivelse, og vi har en
+  trygg verdi for σ (oppgitt eller historisk). Forutsetter normalfordelte
+  observasjoner eller stort utvalg (n ≥ 30).
+
+recognition_cues:
+  - "Spørsmålet ber om et konfidensintervall for μ (eller en gjennomsnittlig verdi)"
+  - "Standardavviket σ er gitt eksplisitt"
+  - "Konfidensnivå er gitt (90 %, 95 %, 99 %, osv.)"
+
+when_NOT_to_use:
+  - "σ er ukjent → bruk t-basert KI"
+  - "Du estimerer en andel → bruk KI for andel"
+  - "Du estimerer en rate i en poissonprosess → bruk KI for poissonrate"
+
+symbols:
+  - { sym: "x̄",       means: "utvalgsgjennomsnittet" }
+  - { sym: "σ",        means: "kjent populasjonsstandardavvik" }
+  - { sym: "n",        means: "antall observasjoner" }
+  - { sym: "α",        means: "signifikansnivået; 1 - α er konfidensnivået" }
+  - { sym: "z_(α/2)",  means: "kvantil i standardnormal slik at P(Z > z_(α/2)) = α/2" }
+
+filters:
+  computes: [confidence_interval]
+  random_variable: [mean_of_samples]
+  setup: [single_sample]
+  structural_cues: [normal_assumed, mean_and_sd_given]
+  parameters_known: [population_variance_known]
+  distribution_assumption: [normal]
+  tooling: [normal_quantile_table_E4]
+
+solution_template:
+  - "Identifiser konfidensnivå (1-α) og finn α (f.eks. 90 % gir α = 0.10)"
+  - "Slå opp z_(α/2) i tabell E.4 (f.eks. α/2 = 0.05 gir 1.645)"
+  - "Beregn marginen z_(α/2) · σ/√n"
+  - "Sett opp intervallet x̄ ± margin"
+
+common_traps: |
+  Bruk z_(α/2), ikke z_α (vi vil ha α/2 i hver hale i et tosidig intervall).
+  Konfidensnivå 90 % betyr α = 0.10, så z_(α/2) = z_0.05 = 1.645.
+
+python_snippet: |
+  from scipy.stats import norm
+  import math
+
+  x_bar, sigma, n, alpha = 25, 0.48, 100, 0.05
+  z = norm.ppf(1 - alpha/2)
+  margin = z * sigma / math.sqrt(n)
+  ci = (x_bar - margin, x_bar + margin)
+
+related:
+  - { id: "normalfordeling",         kind: "entry" }
+  - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "ki-mu-ukjent-sigma",      kind: "entry" }
+  - { id: "signifikansnivaa",        kind: "concept" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+
+tools:
+  - "Tabell E.4 — Z-kvantiltabell"

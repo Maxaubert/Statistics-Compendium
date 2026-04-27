@@ -1,0 +1,106 @@
+id: ki-poissonrate
+name_no: "Konfidensintervall for poissonrate λ"
+type: identity
+category: confidence_interval
+tagline: "(1-α)·100 % KI for raten λ basert på Y observerte hendelser i tid t."
+
+formula_main: "λ̂ ± z_(α/2) · √(λ̂/t);  λ̂ = Y/t"
+formula_latex: "\\hat{\\lambda} \\pm z_{\\alpha/2} \\cdot \\sqrt{\\frac{\\hat{\\lambda}}{t}}, \\quad \\hat{\\lambda} = \\frac{Y}{t}"
+
+what_it_does: |
+  Tilnærmet KI for raten λ i en poissonprosess, basert på at Y hendelser
+  ble observert i et vindu av lengde t. Bruker normalapproksimasjon, som
+  er gyldig når λt > 10.
+
+why_use: |
+  Standardvalg når oppgaven gir antall observerte hendelser i en
+  tidsperiode og spør etter et intervallestimat for raten.
+
+recognition_cues:
+  - "Du har observert Y hendelser i en kjent tidsperiode t (eller område)"
+  - "Du vil estimere raten λ med usikkerhetsmål"
+  - "Konfidensnivå er gitt"
+  - "Det er etablert at hendelsene følger en poissonprosess"
+
+when_NOT_to_use:
+  - "Du estimerer en andel/sannsynlighet (av n forsøk) → bruk KI for andel"
+  - "λt < 10 — normalapproksimasjon for unøyaktig"
+
+symbols:
+  - { sym: "λ",        means: "raten (det vi vil estimere)" }
+  - { sym: "λ̂",        means: "punktestimat, λ̂ = Y/t" }
+  - { sym: "Y",         means: "antall hendelser observert i tidsperioden" }
+  - { sym: "t",         means: "lengden på observasjonsperioden" }
+  - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
+
+filters:
+  computes: [confidence_interval]
+  random_variable: [discrete_count]
+  setup: [events_in_window]
+  structural_cues: [rate_given, process_over_time]
+  parameters_known: [rate_lambda]
+  distribution_assumption: [poisson, normal]
+  tooling: [normal_quantile_table_E4]
+
+solution_template:
+  - "Beregn punktestimat λ̂ = Y/t"
+  - "Sjekk at λ̂·t > 10 (Y > 10) for at normalapproksimasjon er gyldig"
+  - "Slå opp z_(α/2) i E.4"
+  - "Beregn margin: z_(α/2) · √(λ̂/t) = z_(α/2) · √Y / t"
+  - "KI: λ̂ ± margin"
+
+common_traps: |
+  Sjekk at t er i samme enhet som raten (timer, dager, måneder, osv.).
+  Variansformelen i nevneren bruker √(λ̂/t), ekvivalent med √Y / t.
+  Hvis Y er liten, er normalapproksimasjon for unøyaktig — men i pensum
+  forutsettes ofte at det er ok.
+
+python_snippet: |
+  import math
+  from scipy.stats import norm
+
+  Y, t, alpha = 15, 840, 0.10
+  lam_hat = Y / t                       # 0.01786
+  z = norm.ppf(1 - alpha/2)             # 1.645
+  margin = z * math.sqrt(lam_hat / t)
+  ci = (lam_hat - margin, lam_hat + margin)
+
+examples:
+  - source: "Eksamen jan26 · oppgave 4e"
+    excerpt: "15 klippeblåvinger fanget i 5 uker (840 timer). Finn 90 % KI for λ."
+    solution_sketch: "λ̂ = 15/840 = 0.01786. z_0.05 = 1.645. Margin = 1.645·√(0.01786/840) = 0.00758. CI = [0.0103, 0.0254]"
+  - source: "Eksamen jan25 · oppgave 4c"
+    excerpt: "37 vulkanutbrudd over 118 år (1416 mnd). Finn 90 % KI for raten pr. måned."
+    solution_sketch: "λ̂ = 37/1416 = 0.0261. Margin = 1.645·√37/1416 = 0.0071. CI = [0.0190, 0.0332]"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 4e"
+    question: "Biologen lar fellen stå i fem uker og fanger 15 klippeblåvinger. Finn et tilnærmet 90 % konfidensintervall for raten λ."
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "Y = 15 hendelser, t = 5 uker = 5·168 = 840 timer" }
+          - { text: "Konfidensnivå 90 % → α = 0.10" }
+      - label: "Punktestimat"
+        lines:
+          - { text: "λ̂ = Y/t = 15/840 = 0.01786" }
+          - { comment: "Y > 10, så approksimasjonen er god nok" }
+      - label: "Tabelloppslag"
+        lines:
+          - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.05 = 1.645" } }
+      - label: "Innsatt"
+        lines:
+          - { text: "Margin = 1.645 · √(0.01786 / 840)" }
+          - { indent: "= 1.645 · √(2.126·10⁻⁵)" }
+          - { indent: "= 1.645 · 0.00461 = 0.00758" }
+          - { text: "CI = 0.01786 ± 0.00758" }
+    result: "λ ∈ [0.0103, 0.0254] pr. time"
+
+related:
+  - { id: "poisson-fordeling",       kind: "entry" }
+  - { id: "poisson-prosess",         kind: "concept" }
+  - { id: "ki-andel-binomial",       kind: "entry" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+
+tools:
+  - "Tabell E.4 — Z-kvantiltabell"
