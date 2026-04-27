@@ -57,7 +57,7 @@ export function ListView() {
               { key: "tabeller", label: "Tabeller", count: data.tables.length },
             ]}
             active={tab}
-            onChange={setTab}
+            onChange={(key) => { setTab(key); setQuery(""); }}
           />
 
           {tab === "formler" && (
@@ -84,7 +84,6 @@ export function ListView() {
 
           {tab === "konsepter" && (
             <>
-              <SearchBox value={query} onChange={setQuery} placeholder="Søk i konsepter..." />
               <p className="mb-4 text-[13px] text-ink-3">
                 <strong className="mr-1 font-serif text-[17px] font-semibold text-ink">
                   {data.concepts.length}
@@ -108,7 +107,6 @@ export function ListView() {
 
           {tab === "tabeller" && (
             <>
-              <SearchBox value={query} onChange={setQuery} placeholder="Søk i tabeller... (prøv 'Z', 't', 'binomial')" />
               <div className="mb-4 rounded-r-md border-l-[3px] border-primary-2 bg-primary-soft px-3.5 py-2.5 font-serif text-[13px] text-primary">
                 Tabellene er interaktive. Klikk for å slå opp en verdi direkte.
               </div>

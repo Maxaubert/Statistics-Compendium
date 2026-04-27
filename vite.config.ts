@@ -8,6 +8,9 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   plugins: [react(), yaml(), tailwindcss()],
   base: "./",
+  build: {
+    chunkSizeWarningLimit: 700,
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),

@@ -1,9 +1,9 @@
-interface Symbol {
+interface SymbolItem {
   sym: string;
   means: string;
 }
 
-export function SymbolGrid({ symbols }: { symbols: Symbol[] }) {
+export function SymbolGrid({ symbols }: { symbols: SymbolItem[] }) {
   return (
     <div
       className="grid gap-y-2.5 gap-x-5 rounded-lg border border-line bg-paper-2 px-5 py-4"

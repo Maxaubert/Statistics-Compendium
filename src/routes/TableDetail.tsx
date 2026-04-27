@@ -1,5 +1,4 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
 import { Search, Table2, Link2 } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
 import { Section } from "@/components/detail/Section";
@@ -14,13 +13,11 @@ export function TableDetail() {
   const data = loadAllContent();
   const table = data.tables.find((t) => t.id === id);
 
-  // Track inputs here so PrintedTable can highlight the same row.
-  // Note: TableLookupWidget tracks its own inputs separately for now;
-  // a future enhancement will hoist this state up to share live highlighting.
-  const initialInputs = Object.fromEntries(
+  // Initial inputs only — TableLookupWidget tracks live values internally.
+  // Sharing live state will be wired in the content-extraction phase.
+  const inputs: Record<string, number> = Object.fromEntries(
     (table?.inputs ?? []).map((i) => [i.name, i.min ?? 0])
   );
-  const [inputs] = useState<Record<string, number>>(initialInputs);
 
   if (!table) {
     return (
