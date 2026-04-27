@@ -1,0 +1,27 @@
+id: standardnormalisering
+name_no: "Standardnormalisering"
+type: concept
+tagline: "Z = (X − μ) / σ konverterer en normalfordeling til standardnormal N(0, 1)."
+
+what_it_means: |
+  Hvis X ~ N(μ, σ), så er Z = (X − μ)/σ standardnormal N(0, 1).
+  Dette er nøkkelen til å bruke standardnormaltabellen E.3:
+
+    P(X ≤ x) = P(Z ≤ (x − μ)/σ) = G((x − μ)/σ)
+
+  Brukes for:
+  - Sannsynlighetsberegning fra vilkårlig N(μ, σ) ved hjelp av tabellen.
+  - Z-test (testobservatoren er standardnormalisert).
+  - KI for μ med kjent σ (z_(α/2) er kvantil i standardnormal).
+
+recognition_cues:
+  - "Du skal bruke Z-tabell for en N(μ, σ)-fordeling"
+  - "Spørsmål om P(X < x), P(X > x), P(a < X < b)"
+
+filters: {}
+
+related:
+  - { id: "normalfordeling",      kind: "entry" }
+  - { id: "en-utvalg-z-test",     kind: "entry" }
+  - { id: "ki-mu-kjent-sigma",    kind: "entry" }
+  - { id: "E3-z-tabell",          kind: "table" }

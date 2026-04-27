@@ -1,0 +1,36 @@
+id: bootstrapping
+name_no: "Bootstrapping"
+type: concept
+tagline: "Metode for å estimere usikkerhet uten å anta normalfordeling — gjenta utvalg med tilbakelegging fra dataene."
+
+what_it_means: |
+  Bootstrapping er en metode for å estimere usikkerheten i en statistisk
+  estimator (typisk gjennomsnitt eller median) når dataene er for få eller
+  for skjevtfordelt til at sentralgrenseteoremet kan brukes.
+
+  Prosedyre:
+  1. Behandle de N observasjonene som om de var "populasjonen".
+  2. Plukk et tilfeldig utvalg på N elementer MED TILBAKELEGGING. Samme observasjon kan dukke opp flere ganger.
+  3. Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet.
+  4. Gjenta steg 2-3 mange ganger (typisk 999 eller 1000).
+  5. Den empiriske fordelingen til disse statistikkene er bootstrap-fordelingen.
+
+  To måter å lage 95 % KI:
+  - Tradisjonelt: x̄ ± z_(α/2) · standardfeil (= utvalgsstd.av av bootstrap-statistikker).
+    Antar at bootstrap-fordelingen er tilnærmet normal.
+  - Prosentilintervall: 2.5 % og 97.5 % prosentilen i sortert bootstrap-fordeling.
+    Antar ingen ting om formen.
+
+  Forutsetning: at de opprinnelige observasjonene er representative for populasjonen.
+
+recognition_cues:
+  - "Få observasjoner og fordelingen ser ikke normalfordelt ut (qq-plott avviker)"
+  - "Spørsmål om bootstrap-konfidensintervall"
+  - "Python-bruk av numpy.random.choice(replace=True)"
+
+filters: {}
+
+related:
+  - { id: "prosentilintervall",     kind: "concept" }
+  - { id: "sentralgrenseteoremet",  kind: "concept" }
+  - { id: "ki-mu-kjent-sigma",      kind: "entry" }

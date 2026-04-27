@@ -1,0 +1,31 @@
+id: gunstige-pa-mulige
+name_no: "Gunstige på mulige (uniform sannsynlighetsfordeling)"
+type: concept
+tagline: "Når alle utfall er like sannsynlige: P(A) = antall gunstige / antall mulige."
+
+what_it_means: |
+  I en uniform sannsynlighetsfordeling — der alle utfall er like sannsynlige
+  — kan vi regne ut sannsynligheten for en hendelse A som:
+
+    P(A) = antall gunstige utfall / antall mulige utfall
+
+  Mer formelt: hvis utfallsrommet Ω har |Ω| utfall som alle er like
+  sannsynlige, og |A| er antallet utfall som tilhører A, så er
+  P(A) = |A| / |Ω|.
+
+  Dette er fundamentalt for kombinatoriske sannsynlighetsoppgaver
+  (kortspill, terningkast, urnemodeller). Telling av "gunstige" og
+  "mulige" gjøres typisk med binomialkoeffisienten.
+
+recognition_cues:
+  - "Hver elementært utfall er likt sannsynlig"
+  - "Trekning fra urne, kortstokk, eller annen 'tilfeldig' kilde"
+  - "Spørsmål om sannsynlighet uten en navngitt fordeling"
+  - "Det første steget er å telle 'gunstige' og 'mulige'"
+
+filters:
+  setup: [without_replacement]
+
+related:
+  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "hypergeometrisk-fordeling",          kind: "entry" }

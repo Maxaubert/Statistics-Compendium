@@ -1,0 +1,29 @@
+id: frihetsgrader
+name_no: "Frihetsgrader (df, ν)"
+type: concept
+tagline: "Antall uavhengige verdier i en sum eller modell etter at parametre er estimert."
+
+what_it_means: |
+  Frihetsgrader (df, ν) angir hvor mange uavhengige biter informasjon vi
+  har igjen etter at noe er estimert fra dataene. Brukes typisk som
+  parameter i t-fordelingen, χ²-fordelingen og F-fordelingen.
+
+  Vanlige tilfeller i pensum:
+  - Én-utvalg t-test og KI for μ: ν = n - 1 (én parameter μ̂ estimert).
+  - To-utvalgs t-test (pooled): ν = n_X + n_Y - 2 (to gjennomsnitt estimert).
+  - Lineær regresjon (slope test, prediksjonsintervall): ν = n - 2 (to parametre α̂, β̂).
+  - Kjikvadrattest: ν = (rader - 1)(kolonner - 1) eller k - 1.
+
+  Større df → t-fordelingen ligner mer på normalfordeling.
+
+recognition_cues:
+  - "Du skal slå opp i t-tabellen eller χ²-tabellen"
+  - "Spørsmål om hvilken ν som skal brukes"
+
+filters: {}
+
+related:
+  - { id: "en-utvalg-t-test",          kind: "entry" }
+  - { id: "to-utvalgs-t-test",         kind: "entry" }
+  - { id: "regresjon-test-stigningstall", kind: "entry" }
+  - { id: "regresjon-prediksjonsintervall", kind: "entry" }

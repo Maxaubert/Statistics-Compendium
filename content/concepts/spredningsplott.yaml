@@ -1,0 +1,25 @@
+id: spredningsplott
+name_no: "Spredningsplott (scatter plot)"
+type: concept
+tagline: "Visualisering av to variabler ved å plotte (x_i, y_i) som punkter i et koordinatsystem."
+
+what_it_means: |
+  Et spredningsplott (scatter plot) viser parene av observasjoner (x_i, y_i)
+  som punkter i et 2D-koordinatsystem. Brukes til å:
+  - Vurdere om en sammenheng mellom x og y er lineær eller ikke.
+  - Identifisere uteliggere som kan påvirke regresjonsanalysen.
+  - Visualisere styrken og retningen av sammenheng (positiv, negativ, ingen).
+
+  Et typisk steg før man kjører regresjon: hvis spredningsplottet ikke
+  ser ut som "rette skyer", er en lineær modell ikke nødvendigvis god.
+
+recognition_cues:
+  - "Oppgaven ber om 'spredningsplott' eller 'scatter plot'"
+  - "Du har par av (x, y) observasjoner og skal undersøke sammenheng"
+
+filters: {}
+
+related:
+  - { id: "regresjon-estimat-alpha-beta",  kind: "entry" }
+  - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }
+  - { id: "qq-plott",                      kind: "concept" }

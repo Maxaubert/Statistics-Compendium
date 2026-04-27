@@ -1,0 +1,25 @@
+id: de-morgans-lov
+name_no: "De Morgans lov"
+type: concept
+tagline: "Komplementet av union er snitt av komplement: A̅ ∩ B̅ = A ∪ B̅, og omvendt."
+
+what_it_means: |
+  De Morgans lover sier:
+  - A̅ ∩ B̅ = A ∪ B̅  (komplementet av union er snittet av komplementene)
+  - A̅ ∪ B̅ = A ∩ B̅  (komplementet av snitt er unionen av komplementene)
+
+  Brukes ofte for å forenkle uttrykk som "ingen av A og B" eller
+  "ikke begge". Sammen med komplementregelen gir det en kraftig måte
+  å regne ut sammensatte sannsynligheter.
+
+  Eksempel: P(M̅ ∩ F̅) = P(M ∪ F̅) = 1 − P(M ∪ F).
+
+recognition_cues:
+  - "Spørsmål om 'verken A eller B' eller 'ingen av to hendelser'"
+  - "Du må regne ut P(A̅ ∩ B̅) eller P(A̅ ∪ B̅)"
+
+filters: {}
+
+related:
+  - { id: "unionssetningen",       kind: "entry" }
+  - { id: "komplementregelen",     kind: "entry" }

@@ -1,0 +1,29 @@
+id: betinget-sannsynlighet
+name_no: "Betinget sannsynlighet"
+type: concept
+tagline: "Sannsynligheten for A gitt at vi vet at B har inntruffet."
+
+what_it_means: |
+  Betinget sannsynlighet P(A | B) er sannsynligheten for at hendelse A
+  inntreffer, gitt at vi har informasjon om at B inntreffer (eller har
+  inntruffet). Definisjon:
+
+    P(A | B) = P(A ∩ B) / P(B), forutsatt P(B) > 0.
+
+  Tett knyttet til produktregelen P(A ∩ B) = P(B) · P(A | B).
+  Snur til Bayes' setning: P(A | B) = P(A) · P(B | A) / P(B).
+  Setningen om total sannsynlighet bryter P(B) over partisjon.
+
+recognition_cues:
+  - "Oppgaveformulering 'gitt at A inntreffer' eller 'sannsynlighet for A når B er sann'"
+  - "Tegn på snudd retning sammenlignet med det 'naturlige' (gunstig for Bayes)"
+  - "Trekk uten tilbakelegging: andre trekning er betinget av første"
+
+filters:
+  structural_cues: [conditional_given]
+
+related:
+  - { id: "produktregel",          kind: "entry" }
+  - { id: "bayes-setning",         kind: "entry" }
+  - { id: "total-sannsynlighet",   kind: "entry" }
+  - { id: "uavhengighet-hendelser", kind: "concept" }

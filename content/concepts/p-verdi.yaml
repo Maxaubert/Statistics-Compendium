@@ -1,0 +1,29 @@
+id: p-verdi
+name_no: "P-verdi (signifikanssannsynlighet)"
+type: concept
+tagline: "Sannsynligheten for å observere en testobservator like ekstrem (eller mer) som det vi observerte, gitt H₀."
+
+what_it_means: |
+  P-verdien (også kalt signifikanssannsynligheten) er en alternativ måte
+  å presentere konklusjonen i en hypotesetest. Definisjon:
+
+    p = P(observere noe minst like ekstrem som dataene | H₀ er sann)
+
+  For en venstresidig z-test: p = P(Z ≤ z_observert | H₀) = G(z_obs).
+  For en høyresidig: p = 1 - G(z_obs). For tosidig: p = 2·(1 - G(|z_obs|)).
+
+  Beslutningsregelen: forkast H₀ hvis p < α. Mindre p betyr sterkere evidens
+  mot H₀. P-verdien tolkes IKKE som "sannsynligheten for at H₀ er sann"!
+
+recognition_cues:
+  - "Oppgaven ber om p-verdi eller signifikanssannsynlighet"
+  - "Du har utført en hypotesetest og skal angi p"
+  - "Spørsmål som 'hvor sterk er evidensen mot H₀?'"
+
+filters:
+  computes: [hypothesis_test]
+
+related:
+  - { id: "en-utvalg-z-test",     kind: "entry" }
+  - { id: "en-utvalg-t-test",     kind: "entry" }
+  - { id: "signifikansnivaa",     kind: "concept" }

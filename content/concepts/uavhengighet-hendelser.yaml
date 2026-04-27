@@ -1,0 +1,32 @@
+id: uavhengighet-hendelser
+name_no: "Uavhengighet av hendelser"
+type: concept
+tagline: "P(A ∩ B) = P(A)·P(B), eller ekvivalent: P(B|A) = P(B)."
+
+what_it_means: |
+  To hendelser A og B er uavhengige hvis kunnskap om at A inntreffer
+  ikke endrer sannsynligheten for B. Tre ekvivalente definisjoner:
+  - P(A ∩ B) = P(A) · P(B)
+  - P(B | A) = P(B)
+  - P(A | B) = P(A)
+
+  For å TESTE om to hendelser er uavhengige: regn ut P(A)·P(B) og
+  sammenlign med oppgitt eller observert P(A ∩ B). Hvis de er like, er
+  hendelsene uavhengige.
+
+  Uavhengighet er IKKE det samme som disjunkte. Disjunkte hendelser
+  er sterkt avhengige (når den ene inntreffer kan den andre ikke).
+
+recognition_cues:
+  - "Oppgaven spør 'er hendelsene uavhengige?'"
+  - "Du har P(A), P(B), og P(A ∩ B) — sjekk om P(A∩B) = P(A)·P(B)"
+  - "Eller du har P(B|A) og P(B) — sjekk om de er like"
+  - "Hvis uavhengighet kan forutsettes (f.eks. uavhengige forsøk), kan multiplikasjonsregelen brukes direkte"
+
+filters:
+  structural_cues: [independent_events]
+
+related:
+  - { id: "produktregel",            kind: "entry" }
+  - { id: "betinget-sannsynlighet",  kind: "concept" }
+  - { id: "disjunkte-hendelser",     kind: "concept" }

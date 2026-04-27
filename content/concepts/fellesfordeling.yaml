@@ -1,0 +1,31 @@
+id: fellesfordeling
+name_no: "Fellesfordeling (simultanfordeling)"
+type: concept
+tagline: "Sannsynlighetsfordeling for to (eller flere) stokastiske variabler samtidig."
+
+what_it_means: |
+  En fellesfordeling (også kalt simultanfordeling) gir P(X = x_i, Y = y_j)
+  for hver kombinasjon av X- og Y-verdi. Vises ofte som en 2D-tabell der
+  X-verdier er rader, Y-verdier er kolonner. Summen av alle cellesannsynligheter
+  er 1.
+
+  Fra fellesfordelingen kan vi utlede:
+  - Marginalfordelinger (P(X=x), P(Y=y)) ved rad- eller kolonnesummer
+  - E[X], E[Y], E[XY]
+  - Var(X), Var(Y), Cov(X,Y), ρ(X,Y)
+  - Betingede fordelinger P(Y=y | X=x) = P(X=x, Y=y) / P(X=x)
+
+recognition_cues:
+  - "Oppgaven viser en simultanfordelingstabell med rader og kolonner"
+  - "Spørsmålet involverer to stokastiske variabler X og Y samtidig"
+  - "Du skal beregne forventning, varians, kovarians, eller korrelasjon"
+
+filters:
+  random_variable: [discrete_count]
+  setup: [joint_table_given]
+
+related:
+  - { id: "marginalfordeling",            kind: "entry" }
+  - { id: "forventningsverdi-diskret",    kind: "entry" }
+  - { id: "kovarians",                    kind: "entry" }
+  - { id: "korrelasjon-joint",            kind: "entry" }
