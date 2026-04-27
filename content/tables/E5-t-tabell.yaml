@@ -1,0 +1,16 @@
+id: E5-t-tabell
+name_no: "t-tabell"
+formal_name_no: "t-fordelingens kvantiltabell"
+code: "E.5"
+description: "Slår opp kritiske t-verdier t_α for ulike frihetsgrader ν og signifikansnivåer α. Brukes når populasjonsvariansen er ukjent."
+inputs:
+  - { name: "df", type: integer, min: 1,     max: 1000, step: 1 }
+  - { name: "α",  type: number,  min: 0.005, max: 0.25, step: any }
+output: "t_(α, df)"
+distribution: t_quantile
+related_entries:
+  - en-utvalg-t-test
+  - to-utvalgs-t-test
+  - regresjon-test-stigningstall
+  - regresjon-prediksjonsintervall
+  - ki-mu-ukjent-sigma

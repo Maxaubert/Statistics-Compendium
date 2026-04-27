@@ -1,0 +1,11 @@
+id: E6-kjikvadrattabell
+name_no: "Kjikvadrattabell"
+formal_name_no: "Kjikvadratfordelingens kvantiltabell"
+code: "E.6"
+description: "Kritiske χ²-verdier for ulike frihetsgrader og signifikansnivåer. Brukes i kjikvadrattester (goodness of fit, uavhengighet) og konfidensintervall for varians."
+inputs:
+  - { name: "df", type: integer, min: 1,     max: 100,  step: 1 }
+  - { name: "α",  type: number,  min: 0.002, max: 0.998, step: any }
+output: "χ²_(α, df)"
+distribution: chi_squared_quantile
+related_entries: []

@@ -1,0 +1,16 @@
+id: E4-z-kvantiltabell
+name_no: "Z-kvantiltabell"
+formal_name_no: "Standardnormalfordelingens kvantiltabell"
+code: "E.4"
+description: "Inverse av Z-tabellen. Slår opp z_α slik at P(Z > z_α) = α (areal i høyre hale). Brukes typisk i konfidensintervaller og ensidige hypotesetester."
+inputs:
+  - { name: "α", type: number, min: 0.001, max: 0.5, step: any }
+output: "z_α"
+distribution: normal_quantile
+related_entries:
+  - normalfordeling
+  - ki-mu-kjent-sigma
+  - ki-andel-binomial
+  - ki-poissonrate
+  - en-utvalg-z-test
+  - en-utvalg-z-test-andel
