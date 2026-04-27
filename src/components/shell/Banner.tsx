@@ -1,6 +1,9 @@
-import { Moon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 export function Banner() {
+  const { theme, toggle } = useTheme();
+  const Icon = theme === "light" ? Moon : Sun;
   return (
     <header
       className="relative overflow-hidden text-paper-2"
@@ -37,9 +40,10 @@ export function Banner() {
         <button
           type="button"
           aria-label="Bytt tema"
+          onClick={toggle}
           className="flex h-8 w-8 items-center justify-center rounded-md border border-white/20 bg-white/10"
         >
-          <Moon size={16} />
+          <Icon size={16} />
         </button>
       </div>
     </header>
