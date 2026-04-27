@@ -1,0 +1,118 @@
+id: regresjon-test-stigningstall
+name_no: "Hypotesetest for stigningstallet β i lineær regresjon"
+type: test
+category: hypothesis_test
+tagline: "Tester om det er en lineær sammenheng mellom x og y, dvs. om stigningstallet β er forskjellig fra null."
+
+formula_main: "T = (β̂ - β₀) / SE(β̂);  SE(β̂) = √(S_E² / Σ(x_i - x̄)²)"
+formula_latex: "T = \\frac{\\hat{\\beta} - \\beta_0}{\\text{SE}(\\hat{\\beta})}, \\quad \\text{SE}(\\hat{\\beta}) = \\sqrt{\\frac{S_E^2}{\\sum (x_i - \\bar{x})^2}}"
+
+what_it_does: |
+  Tester om regresjonsparametern β (stigningstallet) er forskjellig fra
+  en gitt verdi β₀ (vanligvis 0, dvs. om det er sammenheng i det hele tatt).
+  Testobservatoren er t-fordelt med ν = n - 2 frihetsgrader.
+
+why_use: |
+  Etter du har estimert en regresjonslinje ŷ = α̂ + β̂·x, er det viktig å
+  vurdere om sammenhengen kan skyldes tilfeldigheter. Hvis vi ikke kan
+  forkaste H₀: β = 0, har vi ikke statistisk grunnlag for å si at det
+  faktisk er en lineær sammenheng.
+
+recognition_cues:
+  - "Du har en regresjonslinje og vil teste om sammenhengen er signifikant"
+  - "Spørsmålet er av type: 'kan sammenhengen skyldes tilfeldigheter?'"
+  - "Du har β̂ og SE(β̂) gitt, eller du kan beregne dem"
+  - "n - 2 frihetsgrader nevnes (kjennetegn på regresjonstest)"
+
+when_NOT_to_use:
+  - "Du vil teste om μ = en verdi → bruk én-utvalgs t-test"
+  - "Du sammenligner to grupper → to-utvalgs t-test"
+  - "Du estimerer Y for en x-verdi (ikke selve sammenhengen) → prediksjonsintervall"
+
+symbols:
+  - { sym: "β̂",    means: "estimert stigningstall" }
+  - { sym: "β₀",    means: "verdien vi tester mot, ofte 0" }
+  - { sym: "SE(β̂)", means: "standardfeilen til β̂" }
+  - { sym: "S_E²",   means: "estimat for residualenes varians" }
+  - { sym: "ν",     means: "frihetsgrader, ν = n - 2" }
+  - { sym: "T",     means: "testobservator, t-fordelt under H₀" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [slope_estimate]
+  setup: [single_sample]
+  structural_cues: [linear_relationship_suspected]
+  parameters_known: [slope_se, residual_variance]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
+
+solution_template:
+  - "Formuler hypotesene H₀: β = 0 vs H₁: β ≠ 0 (typisk tosidig test)"
+  - "Beregn SE(β̂) = √(S_E² / Σ(x_i - x̄)²) hvis ikke gitt"
+  - "Beregn testobservator t = (β̂ - 0)/SE(β̂)"
+  - "Finn kvantil t_(α/2, n-2) i tabell E.5 (tosidig)"
+  - "Forkast H₀ hvis |t| > t_(α/2, n-2)"
+  - "Konkluder om hvorvidt det er statistisk grunnlag for lineær sammenheng"
+
+common_traps: |
+  Frihetsgrader i regresjon: ν = n - 2 (ikke n - 1). Dette er fordi to
+  parametre er estimert (α̂ og β̂). Glem ikke kvadratroten i SE(β̂).
+
+python_snippet: |
+  import numpy as np
+  from scipy.stats import t
+
+  x = np.array([5,6,7,8,6,7,8,5,9,7])
+  y = np.array([68,75,80,85,72,78,92,70,95,82])
+
+  beta_hat = np.cov(x, y, ddof=1)[0,1] / np.var(x, ddof=1)
+  alpha_hat = y.mean() - beta_hat * x.mean()
+  y_hat = alpha_hat + beta_hat * x
+  SSE = ((y - y_hat) ** 2).sum()
+  n = len(x)
+  SE2 = SSE / (n - 2)
+  SE_beta = (SE2 / ((x - x.mean()) ** 2).sum()) ** 0.5
+
+  t_obs = beta_hat / SE_beta              # 10.61
+  t_crit = t.ppf(0.975, df=n-2)            # 2.306
+
+examples:
+  - source: "Eksamen mai25 · oppgave 5d"
+    excerpt: "ŷ = 34.6 + 6.63·x. SSE = 48.7437, Σ(x-x̄)² = 15.6. Test om β ≠ 0 på α = 0.05."
+    solution_sketch: "S_E² = 48.7437/8 = 6.093. SE(β̂) = √(6.093/15.6) = 0.625. t = 6.63/0.625 = 10.61 ≫ t_0.025,8 = 2.306 → forkast H₀."
+
+detailed_solutions:
+  - source: "Eksamen mai25 · oppgave 5d"
+    question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med SSE = 48.7437 og Σ(x_i - x̄)² = 15.6, n = 10. Test om sammenhengen mellom søvn og eksamensresultat er signifikant på α = 0.05."
+    sections:
+      - label: "Hypoteser"
+        lines:
+          - { text: "H₀: β = 0 (ingen sammenheng)" }
+          - { text: "H₁: β ≠ 0 (det ER en sammenheng)" }
+          - { comment: "tosidig test" }
+      - label: "Frihetsgrader"
+        lines:
+          - { text: "ν = n - 2 = 10 - 2 = 8" }
+      - label: "Innsatt"
+        lines:
+          - { text: "S_E² = SSE / (n-2) = 48.7437 / 8 = 6.093" }
+          - { text: "SE(β̂) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625" }
+          - { text: "t = (β̂ - 0) / SE(β̂) = 6.63 / 0.625 = 10.61" }
+      - label: "Kritisk verdi"
+        lines:
+          - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306 (tosidig)" } }
+      - label: "Sammenligning"
+        lines:
+          - { text: "|10.61| > 2.306 ✓" }
+    result: "Forkast H₀ på α = 0.05. Det er statistisk signifikant lineær sammenheng."
+
+related:
+  - { id: "regresjon-estimat-alpha-beta",      kind: "entry" }
+  - { id: "regresjon-residualvarians",         kind: "entry" }
+  - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
+  - { id: "regresjon-prediksjonsintervall",    kind: "entry" }
+  - { id: "frihetsgrader",                     kind: "concept" }
+  - { id: "E5-t-tabell",                       kind: "table" }
+
+tools:
+  - "Tabell E.5 — t-fordelingens kvantiltabell"

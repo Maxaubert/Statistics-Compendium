@@ -1,0 +1,137 @@
+id: en-utvalg-z-test
+name_no: "Én-utvalg z-test"
+type: test
+category: hypothesis_test
+tagline: "Tester forventningsverdien μ mot en gitt verdi μ₀ når σ er kjent."
+
+formula_main: "Z = (X̄ - μ₀) / (σ/√n)"
+formula_latex: "Z = \\frac{\\overline{X} - \\mu_0}{\\sigma / \\sqrt{n}}"
+
+what_it_does: |
+  Tester nullhypotesen om forventningsverdien μ er lik (eller minst/høyst)
+  en gitt verdi μ₀, basert på et utvalg med kjent populasjonsstandardavvik
+  σ. Forutsetter normalfordelte observasjoner eller stort utvalg (n ≥ 30
+  ved sentralgrenseteoremet).
+
+why_use: |
+  Velg z-test framfor t-test når populasjonens standardavvik σ er kjent
+  (oppgitt i problemet, ikke estimert fra utvalget). I praksis betyr dette
+  ofte at vi har et stort utvalg eller en historisk verdi for σ.
+
+recognition_cues:
+  - "Du skal teste forventningsverdien μ mot en bestemt verdi μ₀"
+  - "Standardavviket σ er gitt eksplisitt (ikke estimert fra utvalget)"
+  - "Antall observasjoner n er stort (ofte ≥ 30) eller observasjonene er normalfordelte"
+  - "Spørsmålet kan være: 'er gjennomsnittet høyere/lavere/forskjellig fra μ₀?'"
+
+when_NOT_to_use:
+  - "σ er ukjent (kun s estimert fra utvalg) → bruk én-utvalgs t-test"
+  - "Du sammenligner to grupper → bruk to-utvalgs t-test"
+  - "Du tester en andel/proporsjon → bruk z-test for andel"
+
+symbols:
+  - { sym: "X̄", means: "utvalgsgjennomsnittet" }
+  - { sym: "μ₀", means: "verdien vi tester mot (fra nullhypotesen)" }
+  - { sym: "σ",  means: "populasjonens standardavvik (kjent)" }
+  - { sym: "n",  means: "antall observasjoner" }
+  - { sym: "Z",  means: "testobservatoren, standardnormalfordelt under H₀" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [mean_of_samples]
+  setup: [single_sample]
+  structural_cues: [normal_assumed, mean_and_sd_given]
+  parameters_known: [population_variance_known, sample_size_large]
+  distribution_assumption: [normal]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+
+solution_template:
+  - "Formuler hypotesene H₀ og H₁ (én- eller tosidig)"
+  - "Begrunn valget av z-test (σ kjent og normalfordelt eller stort n)"
+  - "Beregn testobservatoren z = (x̄ - μ₀) / (σ/√n)"
+  - "Finn riktig kvantil i tabell E.4: z_α (ensidig) eller z_(α/2) (tosidig)"
+  - "Sammenlign z med kvantilet og bruk forkastingsregelen"
+  - "Konkluder: forkast H₀ hvis kriteriet er oppfylt; ellers ikke"
+  - "Eventuelt: regn ut p-verdien via tabell E.3 og tolk i forhold til α"
+
+common_traps: |
+  Husk å skille mellom ensidig (én-halet) og tosidig (to-halet) test.
+  Sjekkverdien for en venstresidig test er −z_α, ikke z_α (negativt).
+  For tosidig test brukes |z| > z_(α/2). Forkastingsretningen følger
+  alternativhypotesen H₁.
+
+python_snippet: |
+  from scipy.stats import norm
+  import math
+
+  x_bar, mu0, sigma, n, alpha = 48, 50, 5, 40, 0.05
+  z = (x_bar - mu0) / (sigma / math.sqrt(n))   # -2.53
+
+  # Venstresidig: forkast hvis z < -z_alpha
+  z_alpha = norm.ppf(1 - alpha)                # 1.645
+  reject = z < -z_alpha                        # True
+
+  # p-verdi (venstresidig)
+  p_value = norm.cdf(z)                        # 0.0057
+
+examples:
+  - source: "Eksamen jan25 · oppgave 6"
+    excerpt: "Standardavviket er σ = 5 W (kjent). Utvalg n = 40, x̄ = 48 W. Test om ny julelys har lavere energiforbruk enn 50 W på α = 0.05."
+    solution_sketch: "z = (48-50)/(5/√40) = -2.53. -2.53 < -z_0.05 = -1.645 → forkast H₀."
+  - source: "Eksamen mai25 · oppgave 4b"
+    excerpt: "σ = 5 ml (kjent). Utvalg n = 6, x̄ = 298.67 ml. Test om μ < 302 på α = 0.05."
+    solution_sketch: "z = (298.67-302)/(5/√6) = -1.63. -1.63 ikke < -1.645 → IKKE forkast H₀."
+
+detailed_solutions:
+  - source: "Eksamen jan25 · oppgave 6c"
+    question: "Forventet forbruk på standardmodellen er 50 W. Utvalg på 40 målinger av ny julelys gir x̄ = 48 W, σ = 5 W kjent. Test H₀: μ ≥ 50 mot H₁: μ < 50 på α = 0.05."
+    sections:
+      - label: "Hypoteser"
+        lines:
+          - { text: "H₀: μ ≥ 50 W (ny er IKKE bedre)" }
+          - { text: "H₁: μ < 50 W (ny er bedre)" }
+      - label: "Testobservator"
+        lines:
+          - { text: "Z = (X̄ - μ₀) / (σ/√n)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "z = (48 - 50) / (5/√40)" }
+          - { indent: "= -2 / 0.7906" }
+          - { indent: "= -2.53" }
+      - label: "Kritisk verdi"
+        lines:
+          - { table_lookup: { ref: "E.4", text: "z_0.05 = 1.645 → forkastningsregel: forkast hvis z < -1.645" } }
+      - label: "Sammenligning"
+        lines:
+          - { text: "-2.53 < -1.645 ✓" }
+    result: "Forkast H₀ på α = 0.05. Tallene tyder på at ny julelys har lavere forbruk."
+
+  - source: "Eksamen mai25 · oppgave 4b"
+    question: "X̄ = 298.67, n = 6, σ = 5 (kjent). Test H₀: μ ≥ 302 mot H₁: μ < 302 på α = 0.05."
+    sections:
+      - label: "Hypoteser"
+        lines:
+          - { text: "H₀: μ ≥ 302" }
+          - { text: "H₁: μ < 302" }
+      - label: "Innsatt"
+        lines:
+          - { text: "z = (298.67 - 302) / (5/√6) = -3.33/2.041 = -1.63" }
+      - label: "Kritisk verdi"
+        lines:
+          - { table_lookup: { ref: "E.4", text: "z_0.05 = 1.645" } }
+      - label: "Sammenligning"
+        lines:
+          - { text: "-1.63 IKKE < -1.645" }
+    result: "Vi kan IKKE forkaste H₀ på α = 0.05."
+
+related:
+  - { id: "normalfordeling",         kind: "entry" }
+  - { id: "en-utvalg-t-test",        kind: "entry" }
+  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "signifikansnivaa",        kind: "concept" }
+  - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+
+tools:
+  - "Tabell E.4 — Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"
+  - "Tabell E.3 — Z-tabell (for p-verdi-utregning)"

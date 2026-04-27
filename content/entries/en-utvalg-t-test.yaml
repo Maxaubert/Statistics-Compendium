@@ -1,0 +1,85 @@
+id: en-utvalg-t-test
+name_no: "Én-utvalg t-test"
+type: test
+category: hypothesis_test
+tagline: "Tester forventningsverdien μ mot en gitt verdi μ₀ når σ er ukjent."
+
+formula_main: "T = (X̄ - μ₀) / (S/√n)"
+formula_latex: "T = \\frac{\\overline{X} - \\mu_0}{S / \\sqrt{n}}"
+
+what_it_does: |
+  Tester nullhypotesen om forventningsverdien μ er lik (eller minst/høyst)
+  en gitt verdi μ₀, når populasjonsstandardavviket σ er ukjent og må
+  estimeres med utvalgsstandardavviket S. Testobservatoren er t-fordelt
+  med ν = n - 1 frihetsgrader.
+
+why_use: |
+  Brukes når man ikke kjenner populasjonens σ, og kun har utvalgsstørrelse
+  og utvalgs-statistikk. Standardvalget i praksis siden σ sjelden er kjent.
+  Forutsetter normalfordelte observasjoner eller stort utvalg (n ≥ 30).
+
+recognition_cues:
+  - "Du skal teste forventningsverdien μ mot en bestemt verdi μ₀"
+  - "Standardavviket σ er IKKE oppgitt; kun s² eller s kan beregnes fra utvalg"
+  - "Eller σ er et estimat fra dataene, ikke en kjent populasjonsverdi"
+  - "Spørsmålet kan være: 'er gjennomsnittet høyere/lavere/forskjellig fra μ₀?'"
+
+when_NOT_to_use:
+  - "σ er kjent (oppgitt eksplisitt) → bruk z-test"
+  - "Du sammenligner to grupper → bruk to-utvalgs t-test"
+  - "Du tester en andel → bruk z-test for andel"
+
+symbols:
+  - { sym: "X̄",   means: "utvalgsgjennomsnittet" }
+  - { sym: "μ₀",   means: "verdien vi tester mot (fra nullhypotesen)" }
+  - { sym: "S",    means: "utvalgs-standardavviket (estimat for σ)" }
+  - { sym: "n",    means: "antall observasjoner" }
+  - { sym: "ν",    means: "frihetsgrader, ν = n - 1" }
+  - { sym: "T",    means: "testobservatoren, t-fordelt under H₀" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [mean_of_samples]
+  setup: [single_sample]
+  structural_cues: [normal_assumed]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
+
+solution_template:
+  - "Formuler hypotesene H₀ og H₁ (én- eller tosidig)"
+  - "Begrunn t-test (σ ukjent og normalfordelt eller stort n)"
+  - "Beregn x̄ og s² fra dataene (s² = (1/(n-1))·Σ(xi - x̄)²)"
+  - "Beregn testobservatoren t = (x̄ - μ₀)/(s/√n)"
+  - "Finn kvantil i tabell E.5: t_(α,ν) for ensidig eller t_(α/2,ν) for tosidig"
+  - "Sammenlign t med kvantilet og bruk forkastingsregelen"
+  - "Konkluder"
+
+common_traps: |
+  Husk frihetsgrader: ν = n - 1 for én-utvalgs t-test (ikke n - 2 som i
+  regresjon, og ikke n_X + n_Y - 2 som i to-utvalgs). Pass på fortegn:
+  for venstresidig test sammenlignes med -t_α, for høyresidig med +t_α.
+  Tosidig: |t| > t_(α/2,ν).
+
+python_snippet: |
+  from scipy.stats import t
+
+  x_bar, mu0, s, n, alpha = 71.30, 70, 14.33, 10, 0.05
+  t_obs = (x_bar - mu0) / (s / (n ** 0.5))     # 0.287
+
+  # Tosidig kritisk verdi
+  t_crit = t.ppf(1 - alpha/2, df=n-1)          # 2.262
+
+  reject = abs(t_obs) > t_crit                 # False
+
+related:
+  - { id: "normalfordeling",       kind: "entry" }
+  - { id: "en-utvalg-z-test",      kind: "entry" }
+  - { id: "to-utvalgs-t-test",     kind: "entry" }
+  - { id: "frihetsgrader",         kind: "concept" }
+  - { id: "p-verdi",               kind: "concept" }
+  - { id: "ki-mu-ukjent-sigma",    kind: "entry" }
+  - { id: "E5-t-tabell",           kind: "table" }
+
+tools:
+  - "Tabell E.5 — t-fordelingens kvantiltabell (t-tabell)"

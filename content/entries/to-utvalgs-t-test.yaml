@@ -1,0 +1,124 @@
+id: to-utvalgs-t-test
+name_no: "To-utvalgs t-test (uparet, pooled)"
+type: test
+category: hypothesis_test
+tagline: "Sammenligner forventningsverdiene i to uavhengige normalfordelte grupper."
+
+formula_main: "T = (X̄ - Ȳ) / (S_P · √(1/n_X + 1/n_Y));  S_P² = ((n_X - 1)·S_X² + (n_Y - 1)·S_Y²) / (n_X + n_Y - 2)"
+formula_latex: "T = \\frac{\\overline{X} - \\overline{Y}}{S_P \\sqrt{\\frac{1}{n_X} + \\frac{1}{n_Y}}}, \\quad S_P^2 = \\frac{(n_X - 1)S_X^2 + (n_Y - 1)S_Y^2}{n_X + n_Y - 2}"
+
+what_it_does: |
+  Tester om forventningsverdiene i to uavhengige populasjoner er like, gitt
+  to utvalg fra normalfordelinger med ukjente, men antatt like, standardavvik.
+  Den interpolerte (pooled) variansen S_P² kombinerer informasjon fra begge
+  utvalg. Testobservatoren T er t-fordelt med ν = n_X + n_Y - 2 frihetsgrader.
+
+why_use: |
+  Standardvalg når man har to grupper og vil sammenligne gjennomsnittene
+  uten å kjenne σ. Pooled-formen forutsetter at variansene er like (eller
+  i hvert fall sammenlignbare) i de to gruppene; den er typisk konvensjon
+  i pensum for to-utvalgs t-test.
+
+recognition_cues:
+  - "To uavhengige grupper med separate observasjoner"
+  - "Begge grupper antas normalfordelte"
+  - "Standardavvikene er ukjente og må estimeres fra dataene"
+  - "Spørsmålet sammenligner to gjennomsnitt: 'er den ene høyere/lavere/forskjellig?'"
+  - "Antall observasjoner kan være ulike i de to gruppene"
+
+when_NOT_to_use:
+  - "Du tester ett utvalg mot en kjent verdi → bruk én-utvalg z- eller t-test"
+  - "Observasjonene er paret (samme individ målt to ganger) → bruk paret t-test"
+  - "Variansene er klart forskjellige → vurder Welch (uten pooling)"
+  - "Andelen testes, ikke gjennomsnitt → bruk z-test for andel"
+
+symbols:
+  - { sym: "X̄, Ȳ",    means: "gjennomsnittene i de to utvalgene" }
+  - { sym: "S_X², S_Y²", means: "variansene i de to utvalgene (estimert fra dataene)" }
+  - { sym: "n_X, n_Y", means: "antall observasjoner i hver gruppe" }
+  - { sym: "S_P²",     means: "interpolert (pooled) varians, vektet snitt av S_X² og S_Y²" }
+  - { sym: "ν",        means: "frihetsgrader, ν = n_X + n_Y - 2" }
+  - { sym: "T",        means: "testobservatoren, t-fordelt under H₀" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [difference_of_means]
+  setup: [two_independent_samples]
+  structural_cues: [normal_assumed]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
+
+solution_template:
+  - "Formuler hypotesene: H₀: μ_X = μ_Y vs H₁ (ensidig eller tosidig)"
+  - "Begrunn uparet t-test (to grupper, ukjent σ, normalfordelte)"
+  - "Beregn x̄, ȳ, s_X², s_Y² fra dataene"
+  - "Beregn pooled varians: s_P² = ((n_X-1)s_X² + (n_Y-1)s_Y²) / (n_X + n_Y - 2)"
+  - "Beregn testobservatoren t = (x̄ - ȳ) / (s_P · √(1/n_X + 1/n_Y))"
+  - "Finn kvantil t_(α,ν) eller t_(α/2,ν) i tabell E.5 med ν = n_X + n_Y - 2"
+  - "Sammenlign og konkluder"
+
+common_traps: |
+  Tegnet på testobservatoren avhenger av rekkefølgen X − Y vs Y − X. Hvis
+  H₁ sier μ_Y > μ_X (ny er bedre), så vil T = (X̄ - Ȳ) være negativ, og
+  forkastningsregelen blir t < -t_α (venstresidig på X-Y), eller du kan
+  reformulere som T = (Ȳ - X̄) og bruke høyresidig regel. Hold styr på
+  retningen.
+
+python_snippet: |
+  from scipy.stats import t
+  import numpy as np
+
+  X = [77,66,49,64,81,82,64,59,100,71]
+  Y = [82,62,77,94,32,62,91,89,81]
+  nX, nY = len(X), len(Y)
+  x_bar, y_bar = np.mean(X), np.mean(Y)
+  sX2, sY2 = np.var(X, ddof=1), np.var(Y, ddof=1)
+
+  sP2 = ((nX-1)*sX2 + (nY-1)*sY2) / (nX + nY - 2)
+  sP = sP2 ** 0.5
+
+  t_obs = (x_bar - y_bar) / (sP * (1/nX + 1/nY) ** 0.5)
+  df = nX + nY - 2
+
+examples:
+  - source: "Eksamen jan26 · oppgave 5"
+    excerpt: "Klasse med gammel metode: x̄ = 71.30, s_X² = 205.34, n_X = 10. Ny metode: 9 observasjoner. Test om μ_Y > μ_X på α = 0.01."
+    solution_sketch: "ȳ = 74.44, s_Y² = 385.78. s_P² = 290.25, s_P = 17.04. t = (71.30-74.44)/(17.04·√(1/10+1/9)) = -0.40. -0.40 ikke < -t_0.01,17 = -2.567 → IKKE forkast."
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 5"
+    question: "To klasser, gammel metode: 77,66,49,64,81,82,64,59,100,71 (n_X=10) og ny metode: 82,62,77,94,32,62,91,89,81 (n_Y=9). Test om ny er bedre på α = 0.01."
+    sections:
+      - label: "Hypoteser"
+        lines:
+          - { text: "H₀: μ_Y ≤ μ_X (ny er IKKE bedre)" }
+          - { text: "H₁: μ_Y > μ_X (ny er bedre)" }
+          - { comment: "Ekvivalent: forkast hvis t = (X̄-Ȳ)/SE er tilstrekkelig negativ" }
+      - label: "Innsatt"
+        lines:
+          - { text: "x̄ = 71.30, ȳ = 74.44" }
+          - { text: "s_X² = 205.34, s_Y² = 385.78" }
+          - { text: "s_P² = (9·205.34 + 8·385.78)/17 = 290.25" }
+          - { text: "s_P = 17.04" }
+          - { text: "t = (71.30 - 74.44) / (17.04 · √(1/10 + 1/9))" }
+          - { indent: "= -3.14 / 7.83 = -0.40" }
+      - label: "Frihetsgrader og kvantil"
+        lines:
+          - { text: "ν = 10 + 9 - 2 = 17" }
+          - { table_lookup: { ref: "E.5", text: "t_(0.01, 17) = 2.567 (forkast hvis t < -2.567)" } }
+      - label: "Sammenligning"
+        lines:
+          - { text: "-0.40 IKKE < -2.567" }
+    result: "Vi kan IKKE forkaste H₀ på α = 0.01. Ingen grunn til å hevde at ny metode er bedre."
+
+related:
+  - { id: "en-utvalg-t-test",        kind: "entry" }
+  - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "interpolert-varians",     kind: "concept" }
+  - { id: "frihetsgrader",           kind: "concept" }
+  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "E5-t-tabell",             kind: "table" }
+
+tools:
+  - "Tabell E.5 — t-fordelingens kvantiltabell (t-tabell)"
