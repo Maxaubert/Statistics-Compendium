@@ -1,0 +1,35 @@
+id: qq-plott
+name_no: "Normaltestplott (qq-plott)"
+type: concept
+tagline: "Visuell test for om data er hentet fra en normalfordeling."
+
+what_it_means: |
+  Et qq-plott (kvantil-kvantil-plott) eller normaltestplott plotter
+  observasjonenes empiriske kvantiler mot teoretiske kvantiler fra
+  standardnormalfordelingen. Hvis dataene er hentet fra en normalfordeling,
+  vil punktene ligge tilnærmet på en rett linje (som regel inntegnet
+  som referanselinje).
+
+  Avvik fra rett linje viser hvordan dataene avviker fra normalfordelingen:
+  - "S-kurve" → tunge eller lette haler
+  - Krumning → skjevhet (positiv eller negativ)
+
+  Brukes som rask visuell sjekk før man bruker statistiske metoder som
+  forutsetter normalfordeling (z-test, t-test, KI for μ).
+
+  Hvis qq-plottet viser klart avvik fra normalfordeling, og utvalget er
+  for lite til å bruke sentralgrenseteoremet, må man typisk bruke
+  bootstrapping eller ikke-parametriske metoder.
+
+recognition_cues:
+  - "Oppgaven viser et qq-plott eller normaltestplott"
+  - "Spørsmål om dataene 'kan antas normalfordelte'"
+  - "Avgjøre hvilken metode som passer (z/t-test vs bootstrap)"
+
+filters: {}
+
+related:
+  - { id: "normalfordeling",       kind: "entry" }
+  - { id: "bootstrapping",         kind: "concept" }
+  - { id: "sentralgrenseteoremet", kind: "concept" }
+  - { id: "spredningsplott",       kind: "concept" }

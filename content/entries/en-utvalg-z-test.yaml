@@ -39,9 +39,9 @@ symbols:
 filters:
   computes: [hypothesis_test]
   random_variable: [mean_of_samples]
-  setup: [single_sample]
-  structural_cues: [normal_assumed, mean_and_sd_given]
-  parameters_known: [population_variance_known, sample_size_large]
+  setup: [single_population]
+  structural_cues: [normal_assumed, mean_and_sd_given, total_observations_n]
+  parameters_known: [population_variance_known, sample_size_large, mean_known, alpha_significance]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4]
 

@@ -36,9 +36,9 @@ symbols:
 filters:
   computes: [confidence_interval]
   random_variable: [proportion]
-  setup: [single_sample, fixed_n_trials]
-  structural_cues: [success_probability_given]
-  parameters_known: [success_p, sample_size_large]
+  setup: [single_population, fixed_n_trials]
+  structural_cues: [total_observations_n]
+  parameters_known: [sample_size_large, confidence_level]
   distribution_assumption: [binomial, normal]
   tooling: [normal_quantile_table_E4]
 

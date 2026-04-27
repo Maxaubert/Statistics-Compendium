@@ -40,9 +40,9 @@ symbols:
 filters:
   computes: [hypothesis_test]
   random_variable: [slope_estimate]
-  setup: [single_sample]
-  structural_cues: [linear_relationship_suspected]
-  parameters_known: [slope_se, residual_variance]
+  setup: [single_population, linear_relationship]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given]
+  parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy]
   distribution_assumption: [t_distribution]
   tooling: [t_quantile_table_E5]
 

@@ -29,10 +29,10 @@ filters:
   computes: [correlation]
   random_variable: [discrete_count]
   setup: [joint_table_given]
-  structural_cues: []
+  structural_cues: [joint_table_present, summary_stats_given]
   parameters_known: []
-  distribution_assumption: []
-  tooling: [calculator_only]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_sqrt]
 
 solution_template:
   - "Beregn først μ_X, μ_Y, σ_X, σ_Y"

@@ -28,10 +28,10 @@ symbols:
 filters:
   computes: [conditional_probability]
   random_variable: []
-  setup: []
+  setup: [single_population]
   structural_cues: [conditional_given]
   parameters_known: []
-  distribution_assumption: []
+  distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_template:

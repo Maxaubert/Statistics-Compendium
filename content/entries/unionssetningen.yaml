@@ -31,10 +31,10 @@ symbols:
 filters:
   computes: [exact_probability]
   random_variable: []
-  setup: []
-  structural_cues: []
+  setup: [single_population]
+  structural_cues: [disjoint_events]
   parameters_known: []
-  distribution_assumption: []
+  distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_template:

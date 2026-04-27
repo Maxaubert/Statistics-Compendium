@@ -46,12 +46,13 @@ properties:
   std_dev: "σ"
 
 filters:
-  computes: [exact_probability, range_probability]
+  computes: [exact_probability, range_probability, find_mu_for_threshold]
   random_variable: [continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, mean_and_sd_given]
+  parameters_known: [population_variance_known, mean_known]
   distribution_assumption: [normal]
-  tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
 solution_template:
   - "Bekreft at X ~ N(μ, σ) (eksplisitt antatt eller fra sentralgrenseteoremet)"

@@ -32,12 +32,12 @@ symbols:
   - { sym: "P(B | A)",    means: "betinget sannsynlighet for B, gitt at A inntreffer" }
 
 filters:
-  computes: [exact_probability, conditional_probability]
+  computes: [exact_probability, conditional_probability, joint_probability]
   random_variable: []
-  setup: []
-  structural_cues: [conditional_given]
+  setup: [single_population, without_replacement]
+  structural_cues: [conditional_given, independent_events]
   parameters_known: []
-  distribution_assumption: []
+  distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_template:

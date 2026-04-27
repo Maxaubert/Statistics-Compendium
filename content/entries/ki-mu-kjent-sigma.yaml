@@ -36,9 +36,9 @@ symbols:
 filters:
   computes: [confidence_interval]
   random_variable: [mean_of_samples]
-  setup: [single_sample]
-  structural_cues: [normal_assumed, mean_and_sd_given]
-  parameters_known: [population_variance_known]
+  setup: [single_population]
+  structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, total_observations_n]
+  parameters_known: [population_variance_known, sample_size_large, confidence_level]
   distribution_assumption: [normal]
   tooling: [normal_quantile_table_E4]
 

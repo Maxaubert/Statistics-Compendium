@@ -30,13 +30,13 @@ symbols:
   - { sym: "Y = ΣX_i", means: "summen, normalfordelt N(nμ, σ√n)" }
 
 filters:
-  computes: [exact_probability]
+  computes: [exact_probability, range_probability]
   random_variable: [sum_of_samples, continuous]
-  setup: [fixed_n_trials]
-  structural_cues: [normal_assumed, independent_events]
+  setup: [single_population, fixed_n_trials]
+  structural_cues: [normal_assumed, independent_events, mean_and_sd_given]
   parameters_known: [mean_known, population_variance_known]
   distribution_assumption: [normal]
-  tooling: [standard_normal_table_E3]
+  tooling: [standard_normal_table_E3, calculator_sqrt]
 
 solution_template:
   - "Bekreft at X_i er uavhengige og N(μ, σ)"

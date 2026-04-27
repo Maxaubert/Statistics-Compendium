@@ -30,9 +30,9 @@ filters:
   computes: [expected_value]
   random_variable: [discrete_count]
   setup: [single_population, joint_table_given]
-  structural_cues: []
+  structural_cues: [joint_table_present, summary_stats_given]
   parameters_known: []
-  distribution_assumption: []
+  distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_template:

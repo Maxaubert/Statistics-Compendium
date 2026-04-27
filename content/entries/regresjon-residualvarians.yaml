@@ -33,11 +33,11 @@ symbols:
 filters:
   computes: [parameter_estimate]
   random_variable: [slope_estimate]
-  setup: [single_sample]
-  structural_cues: [linear_relationship_suspected]
+  setup: [single_population, linear_relationship]
+  structural_cues: [linear_relationship_suspected, data_as_list]
   parameters_known: []
-  distribution_assumption: []
-  tooling: [calculator_only]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_sqrt]
 
 solution_template:
   - "Beregn SSE = Σ(y_i - α̂ - β̂·x_i)² (eller hent fra tabell)"

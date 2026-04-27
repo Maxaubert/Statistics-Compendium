@@ -41,12 +41,13 @@ properties:
   variance: "Var[X] = n · K/N · (N-K)/N · (N-n)/(N-1)"
 
 filters:
-  computes: [exact_probability, at_least_k]
+  computes: [exact_probability, at_least_k, combinatorial_count]
   random_variable: [discrete_count]
-  setup: [without_replacement, finite_pool]
-  structural_cues: []
-  distribution_assumption: []
-  tooling: [calculator_only]
+  setup: [single_population, without_replacement, finite_pool]
+  structural_cues: [total_observations_n, complement_pattern]
+  parameters_known: []
+  distribution_assumption: [hypergeometric]
+  tooling: [calculator_binomial_coef]
 
 solution_template:
   - "Identifiser N (totalt), K (vellykkede), n (trekninger), k (spørsmål)"

@@ -44,8 +44,8 @@ filters:
   computes: [hypothesis_test]
   random_variable: [difference_of_means]
   setup: [two_independent_samples]
-  structural_cues: [normal_assumed]
-  parameters_known: [population_variance_unknown]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
   distribution_assumption: [t_distribution]
   tooling: [t_quantile_table_E5]
 

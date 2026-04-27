@@ -40,9 +40,9 @@ symbols:
 filters:
   computes: [hypothesis_test]
   random_variable: [mean_of_samples]
-  setup: [single_sample]
-  structural_cues: [normal_assumed]
-  parameters_known: [population_variance_unknown]
+  setup: [single_population]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+  parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, alpha_significance]
   distribution_assumption: [t_distribution]
   tooling: [t_quantile_table_E5]
 

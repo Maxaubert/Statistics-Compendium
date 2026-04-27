@@ -37,11 +37,11 @@ symbols:
 filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: []
-  setup: [without_replacement, finite_pool]
-  structural_cues: []
+  setup: [single_population, without_replacement, finite_pool]
+  structural_cues: [total_observations_n]
   parameters_known: []
-  distribution_assumption: []
-  tooling: [calculator_only]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_binomial_coef, calculator_factorial]
 
 solution_template:
   - "Identifiser n (totalt) og k (det som skal velges)"

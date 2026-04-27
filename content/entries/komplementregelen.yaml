@@ -30,10 +30,10 @@ symbols:
 filters:
   computes: [exact_probability, at_least_k]
   random_variable: []
-  setup: []
-  structural_cues: []
+  setup: [single_population]
+  structural_cues: [complement_pattern]
   parameters_known: []
-  distribution_assumption: []
+  distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_template:
