@@ -39,8 +39,8 @@ export function ListView() {
   return (
     <div data-testid="list-view" className="min-h-screen bg-paper">
       <Banner />
-      <div className={showSidebar ? "grid grid-cols-1 md:grid-cols-[280px_1fr]" : "grid grid-cols-1"}>
-        {showSidebar && (
+      <div className="grid grid-cols-1 md:grid-cols-[280px_1fr]">
+        {showSidebar ? (
           <FilterSidebar
             filters={data.filters}
             selection={selection}
@@ -48,6 +48,8 @@ export function ListView() {
             onToggle={toggle}
             onClear={clear}
           />
+        ) : (
+          <div aria-hidden className="hidden md:block bg-paper border-r border-line" />
         )}
         <main className="bg-card px-7 py-5">
           <TabBar

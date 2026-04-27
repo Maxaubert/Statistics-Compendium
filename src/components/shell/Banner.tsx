@@ -1,4 +1,5 @@
 import { Moon, Sun } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
 export function Banner() {
@@ -20,14 +21,18 @@ export function Banner() {
         }}
         aria-hidden
       />
-      <div className="relative z-10 mx-auto flex max-w-screen-xl items-center justify-between px-7 py-4">
-        <div className="flex items-center gap-3">
+      <div className="relative z-10 flex items-center justify-between px-7 py-4">
+        <Link
+          to="/"
+          aria-label="Til forsiden"
+          className="flex items-center gap-3 text-paper-2 no-underline transition-opacity hover:opacity-90"
+        >
           <div
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10"
             aria-hidden
           >
             <span
-              className="font-serif text-xl font-semibold italic text-amber-100"
+              className="font-serif text-xl font-semibold italic"
               style={{ color: "#fef3c7" }}
             >
               σ
@@ -36,7 +41,7 @@ export function Banner() {
           <h1 className="m-0 font-serif text-[17px] font-semibold tracking-tight">
             Statistikk-kompendium
           </h1>
-        </div>
+        </Link>
         <button
           type="button"
           aria-label="Bytt tema"
