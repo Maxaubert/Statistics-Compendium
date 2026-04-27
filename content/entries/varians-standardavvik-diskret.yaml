@@ -1,0 +1,75 @@
+id: varians-standardavvik-diskret
+name_no: "Varians og standardavvik (diskret stokastisk variabel)"
+type: identity
+category: distribution_property
+tagline: "σ² = E[X²] - μ²; σ = √σ². Mål for spredning rundt forventningsverdien."
+
+formula_main: "Var(X) = E[X²] - μ² = Σ x_i² · P(X = x_i) - μ²;  σ = √Var(X)"
+formula_latex: "\\text{Var}(X) = E[X^2] - \\mu^2 = \\sum_i x_i^2 \\cdot P(X = x_i) - \\mu^2"
+
+what_it_does: |
+  Beregner variansen og standardavviket til en diskret stokastisk variabel.
+  Variansen er forventet kvadratavvik fra μ; standardavviket σ er
+  kvadratroten og er målt i samme enhet som X.
+
+why_use: |
+  Mål for spredning. Inngår i nesten all videre statistisk inferens
+  (z-test, t-test, KI, kovarians, korrelasjon).
+
+recognition_cues:
+  - "Diskret stokastisk variabel med kjent sannsynlighetsfordeling"
+  - "Spørsmålet ber om Var(X), σ², σ, eller standardavviket"
+
+symbols:
+  - { sym: "Var(X), σ²", means: "variansen" }
+  - { sym: "σ",          means: "standardavviket, σ = √Var(X)" }
+  - { sym: "μ",          means: "forventningsverdien E[X]" }
+  - { sym: "E[X²]",      means: "Σ x_i² · P(X = x_i)" }
+
+filters:
+  computes: [variance, std_dev]
+  random_variable: [discrete_count]
+  setup: [single_population, joint_table_given]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Finn først E[X] = μ"
+  - "Beregn E[X²] = Σ x_i²·P(X=x_i)"
+  - "Var(X) = E[X²] - μ²"
+  - "σ = √Var(X)"
+
+common_traps: |
+  Pass på rekkefølgen: σ² = E[X²] - μ², ikke E[(X-μ)²] uten utledning. Begge er
+  ekvivalente, men førsteformen er mer praktisk for utregning. Husk å kvadrere
+  μ til slutt: μ², ikke 2μ.
+
+examples:
+  - source: "Eksamen jan26 · oppgave 2b"
+    excerpt: "X-verdier {0,1,2} med sannsynligheter {0.4,0.3,0.3}. E[X] = 0.9. Finn σ_X."
+    solution_sketch: "E[X²] = 0 + 0.3 + 1.2 = 1.5. Var = 1.5 - 0.81 = 0.69. σ = √0.69 ≈ 0.831"
+  - source: "Eksamen jan25 · oppgave 2c"
+    excerpt: "X-verdier {-2,-1,0,1,2} med sannsynligheter {0.3,0.2,0.2,0.1,0.2}, μ = -0.3. Finn Var(X)."
+    solution_sketch: "Var(X) = 0.3·4 + 0.2·1 + 0 + 0.1·1 + 0.2·4 - (-0.3)² = 1.2+0.2+0.1+0.8 - 0.09 = 2.21"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 2b"
+    question: "X har marginalsannsynligheter P(X=0)=0.4, P(X=1)=0.3, P(X=2)=0.3, μ=0.9. Finn σ_X."
+    sections:
+      - label: "Innsatt"
+        lines:
+          - { text: "E[X²] = 0²·0.4 + 1²·0.3 + 2²·0.3" }
+          - { indent: "= 0 + 0.3 + 1.2 = 1.5" }
+          - { text: "Var(X) = E[X²] - μ² = 1.5 - 0.9² = 1.5 - 0.81 = 0.69" }
+          - { text: "σ = √0.69" }
+    result: "σ_X ≈ 0.831"
+
+related:
+  - { id: "forventningsverdi-diskret", kind: "entry" }
+  - { id: "kovarians",                 kind: "entry" }
+  - { id: "korrelasjon-joint",         kind: "entry" }
+
+tools:
+  - "Kalkulator: kvadrering, kvadratrot, summer"

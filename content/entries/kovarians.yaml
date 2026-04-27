@@ -1,0 +1,61 @@
+id: kovarians
+name_no: "Kovarians Cov(X,Y)"
+type: identity
+category: distribution_property
+tagline: "Mål for hvor mye to variabler 'beveger seg sammen'."
+
+formula_main: "Cov(X,Y) = E[XY] - μ_X · μ_Y;  E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j)"
+formula_latex: "\\text{Cov}(X, Y) = E[XY] - \\mu_X \\mu_Y, \\quad E[XY] = \\sum_i \\sum_j x_i y_j P(X=x_i, Y=y_j)"
+
+what_it_does: |
+  Beregner kovariansen mellom to stokastiske variabler X og Y fra en
+  simultanfordeling. Positiv kovarians: variablene øker sammen.
+  Negativ: når X er stor, er Y typisk liten. Null: ingen lineær sammenheng.
+
+why_use: |
+  Mellomberegning for korrelasjon ρ. Også del av variansformelen for
+  Var(X+Y) = Var(X) + Var(Y) + 2·Cov(X,Y).
+
+recognition_cues:
+  - "Du har en simultanfordeling for X og Y"
+  - "Spørsmålet ber om Cov(X,Y) eller du trenger den til ρ"
+
+symbols:
+  - { sym: "Cov(X,Y)", means: "kovariansen" }
+  - { sym: "E[XY]",     means: "Σ x_i·y_j·P(X=x_i, Y=y_j) over hele simultantabellen" }
+  - { sym: "μ_X, μ_Y",  means: "forventningsverdiene" }
+
+filters:
+  computes: [covariance]
+  random_variable: [discrete_count]
+  setup: [joint_table_given]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Beregn μ_X og μ_Y fra marginalfordelingene"
+  - "Beregn E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j) — kun celler med positiv sannsynlighet bidrar"
+  - "Cov(X,Y) = E[XY] - μ_X·μ_Y"
+
+common_traps: |
+  Du kan dropp celler med x_i = 0 eller y_j = 0 (bidraget er null) og
+  celler med p = 0. Pass på fortegn — kovarians kan være negativ.
+
+examples:
+  - source: "Eksamen jan26 · oppgave 2c"
+    excerpt: "μ_X = 0.9, μ_Y = 4.5. E[XY] = 1·10·0.2 + 2·10·0.1 = 4. Finn Cov."
+    solution_sketch: "Cov = 4 - 0.9·4.5 = 4 - 4.05 = -0.05"
+  - source: "Eksamen mai25 · oppgave 1c"
+    excerpt: "μ_X = 0.6, μ_Y = 0.7. E[XY] = 1·1·0.1 + 1·2·0.1 = 0.3. Finn Cov."
+    solution_sketch: "Cov = 0.3 - 0.6·0.7 = 0.3 - 0.42 = -0.12"
+
+related:
+  - { id: "forventningsverdi-diskret",   kind: "entry" }
+  - { id: "korrelasjon-joint",           kind: "entry" }
+  - { id: "marginalfordeling",           kind: "entry" }
+  - { id: "fellesfordeling",             kind: "concept" }
+
+tools:
+  - "Kalkulator: multiplikasjon"

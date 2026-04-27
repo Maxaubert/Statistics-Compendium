@@ -1,0 +1,61 @@
+id: forventningsverdi-diskret
+name_no: "Forventningsverdi for diskret stokastisk variabel"
+type: identity
+category: distribution_property
+tagline: "E[X] = veid gjennomsnitt av verdiene, vektet med sannsynlighetene."
+
+formula_main: "E[X] = Σ x_i · P(X = x_i)"
+formula_latex: "E[X] = \\sum_i x_i \\cdot P(X = x_i)"
+
+what_it_does: |
+  Beregner forventningsverdien (gjennomsnittet på lang sikt) til en
+  diskret stokastisk variabel X som gjennomsnittet av X-verdiene vektet
+  med deres sannsynligheter.
+
+why_use: |
+  Mest grunnleggende egenskap til en stokastisk variabel. Brukes som
+  inngangsdata i variansberegninger, kovariansberegninger og videre.
+
+recognition_cues:
+  - "Diskret stokastisk variabel med kjent sannsynlighetsfordeling"
+  - "Spørsmålet ber om E[X], μ, eller forventningsverdien"
+  - "Du har en tabell med x-verdier og P(X=x)-verdier"
+
+symbols:
+  - { sym: "x_i",      means: "verdiene X kan ta" }
+  - { sym: "P(X=x_i)", means: "sannsynlighet for hver verdi" }
+  - { sym: "E[X], μ",   means: "forventningsverdien" }
+
+filters:
+  computes: [expected_value]
+  random_variable: [discrete_count]
+  setup: [single_population, joint_table_given]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "List opp alle verdier x_i og P(X = x_i)"
+  - "Multipliser hver x_i med P(X = x_i)"
+  - "Summer alle produktene"
+
+common_traps: |
+  For en simultanfordeling må du først finne marginalfordelingen P(X=x)
+  ved å summere over y. Ikke vekt med rad-summer i stedet for marginalsumane.
+
+examples:
+  - source: "Eksamen jan26 · oppgave 2a"
+    excerpt: "Marginalfordelingen P(X=x): {0.4, 0.3, 0.3} for x ∈ {0,1,2}. Finn E[X]."
+    solution_sketch: "E[X] = 0·0.4 + 1·0.3 + 2·0.3 = 0.9"
+  - source: "Eksamen jan25 · oppgave 2b"
+    excerpt: "Sannsynligheter {0.3, 0.2, 0.2, 0.1, 0.2} for x ∈ {-2,-1,0,1,2}."
+    solution_sketch: "E[X] = -0.6 - 0.2 + 0 + 0.1 + 0.4 = -0.3"
+
+related:
+  - { id: "varians-standardavvik-diskret", kind: "entry" }
+  - { id: "marginalfordeling",             kind: "entry" }
+  - { id: "kovarians",                     kind: "entry" }
+
+tools:
+  - "Kalkulator: multiplikasjon, addisjon"

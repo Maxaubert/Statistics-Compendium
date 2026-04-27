@@ -1,0 +1,62 @@
+id: korrelasjon-joint
+name_no: "Korrelasjon ρ(X,Y) for fellesfordeling"
+type: identity
+category: distribution_property
+tagline: "ρ = Cov(X,Y) / (σ_X · σ_Y) — normalisert kovarians, mellom -1 og 1."
+
+formula_main: "ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)"
+formula_latex: "\\rho(X, Y) = \\frac{\\text{Cov}(X, Y)}{\\sigma_X \\cdot \\sigma_Y}"
+
+what_it_does: |
+  Skalerer kovariansen til et tall mellom -1 og 1 ved å dele på produktet
+  av standardavvikene. Korrelasjonen er enhetsuavhengig og lar oss
+  sammenligne styrken på lineær sammenheng på tvers av problemer.
+
+why_use: |
+  Standardmål for lineær avhengighet. Kovariansen alene er enhetssensitiv
+  og vanskelig å tolke; korrelasjonen er normalisert.
+
+recognition_cues:
+  - "Du har en simultanfordeling og spørsmålet ber om korrelasjon"
+  - "Du har allerede beregnet Cov(X,Y), σ_X, σ_Y"
+
+symbols:
+  - { sym: "ρ(X,Y)",   means: "korrelasjonskoeffisient (mellom -1 og 1)" }
+  - { sym: "Cov(X,Y)", means: "kovariansen mellom X og Y" }
+  - { sym: "σ_X, σ_Y", means: "standardavvikene til X og Y" }
+
+filters:
+  computes: [correlation]
+  random_variable: [discrete_count]
+  setup: [joint_table_given]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Beregn først μ_X, μ_Y, σ_X, σ_Y"
+  - "Beregn Cov(X,Y)"
+  - "ρ = Cov(X,Y) / (σ_X · σ_Y)"
+
+common_traps: |
+  ρ er for FELLESFORDELING (teoretisk modell). For utvalg av (x,y)-par
+  i regresjon er det utvalgs-korrelasjonskoeffisient r som brukes — disse
+  er konseptuelt forskjellige selv om formelen ligner.
+
+examples:
+  - source: "Eksamen jan26 · oppgave 2c"
+    excerpt: "Cov = -0.05, σ_X = 0.831, σ_Y = 4.717. Finn ρ."
+    solution_sketch: "ρ = -0.05 / (0.831 · 4.717) = -0.013"
+  - source: "Eksamen mai25 · oppgave 1c"
+    excerpt: "Cov = -0.12, σ_X = 0.8, σ_Y = 0.781. Finn ρ."
+    solution_sketch: "ρ = -0.12 / (0.8 · 0.781) = -0.192"
+
+related:
+  - { id: "kovarians",                       kind: "entry" }
+  - { id: "varians-standardavvik-diskret",   kind: "entry" }
+  - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }
+  - { id: "fellesfordeling",                 kind: "concept" }
+
+tools:
+  - "Kalkulator: divisjon"

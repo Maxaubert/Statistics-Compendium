@@ -1,0 +1,58 @@
+id: marginalfordeling
+name_no: "Marginalfordeling fra simultanfordeling"
+type: identity
+category: distribution_property
+tagline: "P(X = x) = Σ_y P(X = x, Y = y) — summer raden eller kolonnen i simultanfordelingen."
+
+formula_main: "P(X = x) = Σ_y P(X = x, Y = y);  P(Y = y) = Σ_x P(X = x, Y = y)"
+formula_latex: "P(X = x) = \\sum_y P(X = x, Y = y), \\quad P(Y = y) = \\sum_x P(X = x, Y = y)"
+
+what_it_does: |
+  Henter ut den ene variabelens (X eller Y) sannsynlighetsfordeling fra
+  en simultanfordeling, ved å summere ut den andre. Marginalfordelingen
+  for X er rad-summene; for Y er kolonnesummene.
+
+why_use: |
+  Første steg når du jobber med en simultanfordeling: å regne ut
+  marginalsannsynlighetene gir deg byggeklossene for E[X], E[Y], variansene,
+  og kovariansen.
+
+recognition_cues:
+  - "Du har en simultanfordeling i tabellform"
+  - "Spørsmålet ber om P(X = x) eller P(Y = y) for individuelle verdier"
+  - "Du trenger marginalsannsynligheter som mellomberegning til E, σ, Cov"
+
+symbols:
+  - { sym: "P(X = x, Y = y)", means: "simultansannsynlighet i en celle" }
+  - { sym: "P(X = x)",        means: "marginalsannsynlighet for X (radsum)" }
+  - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
+
+filters:
+  computes: [exact_probability]
+  random_variable: [discrete_count]
+  setup: [joint_table_given]
+  structural_cues: []
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "For P(X=x): summer langs raden i simultantabellen"
+  - "For P(Y=y): summer langs kolonnen"
+  - "Sjekk at marginalsummene tilsammen blir 1"
+
+examples:
+  - source: "Eksamen jan26 · oppgave 2"
+    excerpt: "Simultanfordeling i 3×3-tabell. Finn marginalfordelingene."
+    solution_sketch: "P(X=0) = 0.2+0.1+0.1 = 0.4, P(X=1) = 0.3, P(X=2) = 0.3 (radsummer); P(Y=0) = 0.5, P(Y=5) = 0.1, P(Y=10) = 0.4 (kolonnesummer)"
+  - source: "Eksamen mai25 · oppgave 1"
+    excerpt: "Annen simultanfordeling. P(X=x): {0.6, 0.2, 0.2}. P(Y=y): {0.5, 0.3, 0.2}."
+
+related:
+  - { id: "forventningsverdi-diskret",    kind: "entry" }
+  - { id: "varians-standardavvik-diskret", kind: "entry" }
+  - { id: "kovarians",                    kind: "entry" }
+  - { id: "fellesfordeling",              kind: "concept" }
+
+tools:
+  - "Kalkulator: addisjon"

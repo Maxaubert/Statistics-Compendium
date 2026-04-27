@@ -1,0 +1,90 @@
+id: sum-uavhengige-normaler
+name_no: "Sum av uavhengige normalfordelte variabler"
+type: identity
+category: distribution_property
+tagline: "Hvis X_i ~ N(μ, σ) og uavhengige, er ΣX_i ~ N(nμ, σ·√n)."
+
+formula_main: "Hvis X_1, ..., X_n er uavhengige, identisk fordelte N(μ, σ), så er Y = X_1 + ... + X_n ~ N(n·μ, σ·√n)"
+formula_latex: "Y = \\sum_{i=1}^n X_i \\sim N(n\\mu, \\sigma \\sqrt{n}) \\text{ når } X_i \\text{ iid } N(\\mu, \\sigma)"
+
+what_it_does: |
+  Sier at summen av n uavhengige, identisk fordelte normalfordelte
+  variabler er igjen normalfordelt. Forventningsverdien skaleres med n,
+  standardavviket med √n (variansen med n).
+
+why_use: |
+  Brukes når flere uavhengige målinger skal slås sammen — typisk
+  "fyller flere ganger" eller "totalt antall" der hver del er normalfordelt.
+
+recognition_cues:
+  - "Oppgaven beskriver gjentatte uavhengige målinger fra samme normalfordeling"
+  - "Du skal regne ut sannsynlighet for SUMMEN, ikke gjennomsnittet"
+  - "Begrunnelse for å bruke z-test ved store n følger samme prinsipp"
+
+when_NOT_to_use:
+  - "Du jobber med GJENNOMSNITTET av flere observasjoner — da blir σ → σ/√n (mindre spredning, ikke større)"
+  - "Variablene er ikke uavhengige eller ikke normalfordelte"
+
+symbols:
+  - { sym: "X_i",      means: "iid normalfordelte (μ, σ)" }
+  - { sym: "Y = ΣX_i", means: "summen, normalfordelt N(nμ, σ√n)" }
+
+filters:
+  computes: [exact_probability]
+  random_variable: [sum_of_samples, continuous]
+  setup: [fixed_n_trials]
+  structural_cues: [normal_assumed, independent_events]
+  parameters_known: [mean_known, population_variance_known]
+  distribution_assumption: [normal]
+  tooling: [standard_normal_table_E3]
+
+solution_template:
+  - "Bekreft at X_i er uavhengige og N(μ, σ)"
+  - "Beregn forventningsverdi for summen: μ_Y = n·μ"
+  - "Beregn standardavvik for summen: σ_Y = σ·√n"
+  - "Y ~ N(n·μ, σ·√n) — bruk normalfordelingstabell videre"
+
+common_traps: |
+  Variansen for sum: Var(Y) = n·σ², altså σ_Y = σ·√n (IKKE n·σ).
+  For gjennomsnittet X̄ = (1/n)·ΣX_i er σ_(X̄) = σ/√n (mindre, ikke større).
+
+python_snippet: |
+  from scipy.stats import norm
+  import math
+
+  mu, sigma, n = 25, 0.48, 5
+  mu_Y, sigma_Y = n * mu, sigma * math.sqrt(n)   # 125, 1.0733
+
+  # P(Y > 127)
+  1 - norm.cdf(127, loc=mu_Y, scale=sigma_Y)     # 0.0314
+
+examples:
+  - source: "Eksamen jan25 · oppgave 5b"
+    excerpt: "X ~ N(25, 0.48). 5 trykker etter hverandre, totalt Y. Sannsynlighet for at Y > 127 cl?"
+    solution_sketch: "Y ~ N(125, √5·0.48) = N(125, 1.0733). P(Y > 127) = 1 - G((127-125)/1.0733) = 1 - G(1.86) = 0.0314"
+
+detailed_solutions:
+  - source: "Eksamen jan25 · oppgave 5b"
+    question: "X (mengde kaffe ett trykk) ~ N(25, 0.48) cl. Etter 5 trykker, total Y. Sannsynlighet for Y > 127 cl?"
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "Y = X_1 + ... + X_5, alle iid N(25, 0.48)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "μ_Y = 5 · 25 = 125" }
+          - { text: "σ_Y = 0.48 · √5 = 1.0733" }
+          - { text: "P(Y > 127) = 1 - G((127-125)/1.0733)" }
+          - { indent: "= 1 - G(1.86)" }
+      - label: "Tabelloppslag"
+        lines:
+          - { table_lookup: { ref: "E.3", text: "G(1.86) ≈ 0.9686" } }
+    result: "P(Y > 127) ≈ 0.0314"
+
+related:
+  - { id: "normalfordeling",          kind: "entry" }
+  - { id: "sentralgrenseteoremet",    kind: "concept" }
+  - { id: "standardnormalisering",    kind: "concept" }
+
+tools:
+  - "Tabell E.3 — Z-tabell"
