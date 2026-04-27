@@ -1,0 +1,30 @@
+@media print {
+  /* Hide interactive shell */
+  header,
+  nav,
+  [role="tablist"],
+  aside,
+  button {
+    display: none !important;
+  }
+
+  /* Reset layout */
+  html, body {
+    background: white !important;
+    color: black !important;
+  }
+
+  article {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Avoid orphans/widows */
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  ul, ol, table {
+    page-break-inside: avoid;
+  }
+}
