@@ -1,0 +1,117 @@
+id: poisson-fordeling
+name_no: Poissonfordeling
+type: distribution
+category: discrete_distribution
+tagline: "Antall hendelser i et tidsvindu, gitt en konstant rate."
+
+formula_main: "P(X = k) = e^(-λt) · (λt)^k / k!"
+formula_latex: "P(X = k) = \\frac{e^{-\\lambda t}(\\lambda t)^k}{k!}"
+
+what_it_does: |
+  Modellerer antall uavhengige hendelser som inntreffer med konstant rate
+  i et fast tidsvindu eller område.
+
+why_use: |
+  Naturlig valg når hendelsene "kommer som de kommer" og det ikke finnes
+  noen forhåndsbestemt øvre grense for antallet.
+
+recognition_cues:
+  - "Oppgaven nevner Poissonprosess eller rate λ pr. tidsenhet"
+  - "Du teller hendelser i et fast tidsvindu eller område"
+  - "Hendelser inntreffer uavhengig og kontinuerlig"
+  - "Spørsmålet ber om nøyaktig k, minst k, ingen, eller høyst k"
+  - "Ikke fast antall forsøk"
+
+when_NOT_to_use:
+  - "Fast antall n forsøk er gitt → bruk binomial i stedet"
+  - "Spørsmålet handler om tid TIL første hendelse → bruk eksponentialfordeling"
+  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk"
+
+symbols:
+  - { sym: "λ",  means: "rate (gjennomsnittlig antall hendelser pr. tidsenhet)" }
+  - { sym: "t",  means: "lengden på vinduet" }
+  - { sym: "λt", means: "forventet antall hendelser i vinduet (ofte μ)" }
+  - { sym: "k",  means: "antallet det spørres om" }
+  - { sym: "e",  means: "Eulers tall ≈ 2.71828" }
+
+properties:
+  expected_value: "E[X] = λt"
+  variance: "Var[X] = λt"
+  std_dev: "σ = √(λt)"
+
+filters:
+  computes: [exact_probability, at_least_k]
+  random_variable: [discrete_count]
+  setup: [events_in_window]
+  structural_cues: [rate_given, process_over_time, independent_events]
+  distribution_assumption: [poisson]
+  tooling: [cumulative_poisson_table_E2]
+
+solution_template:
+  - "Identifiser raten λ og enheten den er gitt i"
+  - "Identifiser vinduets størrelse t i samme enhet"
+  - "Regn ut μ = λt"
+  - "Bestem hva spørsmålet ber om"
+  - "For minst eller ingen, bruk komplementregelen med tabell E.2"
+  - "Slå opp P(X ≤ k) i tabell E.2 eller regn direkte"
+
+common_traps: |
+  Husk å multiplisere raten med vindusstørrelsen før innsetting (μ = λt,
+  ikke bare λ). Hvis raten er pr. time og vinduet er en uke, må t omregnes
+  til timer (168). Bruk samme tidsenhet for begge.
+
+python_snippet: |
+  from scipy.stats import poisson
+  mu = 0.01 * 168          # 1.68
+  poisson.pmf(0, mu)        # 0.1864
+  poisson.cdf(2, mu)        # 0.7681
+  1 - poisson.cdf(2, mu)    # 0.2319
+
+examples:
+  - source: "Eksamen jan26 · oppgave 4a"
+    excerpt: "Poissonprosess med rate λ sommerfugler pr. time. Finn sannsynligheten for at biologen ikke vil finne noen individer i fellen etter en uke."
+    solution_sketch: "X ~ Poisson(λt), λ = 0.01/t, t = 168 t → μ = 1.68 → P(X = 0) = e^(-1.68) ≈ 0.186"
+  - source: "Eksamen jan26 · oppgave 4b"
+    excerpt: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
+    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2). Slå opp i tabell E.2 med μ = 1.68 → 1 − 0.7681 ≈ 0.232"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 4a"
+    question: "Klippeblåvinger fanges som en poissonprosess med rate λ = 0.01 sommerfugler pr. time. La X være antall i fellen etter én uke (168 timer). Finn sannsynligheten for at biologen ikke vil finne noen individer i fellen."
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "X ~ Poisson(λt)" }
+          - { comment: "spørres om P(X = 0)" }
+      - label: "Formel"
+        lines:
+          - { text: "P(X = k) = e^(-λt) · (λt)^k / k!" }
+      - label: "Innsatt"
+        lines:
+          - { text: "μ = λt = 0.01 · 168 = 1.68" }
+          - { text: "P(X = 0) = e^(-1.68) · (1.68)^0 / 0!" }
+          - { indent: "= e^(-1.68) · 1 / 1" }
+          - { indent: "= e^(-1.68)" }
+    result: "P(X = 0) ≈ 0.186"
+
+  - source: "Eksamen jan26 · oppgave 4b"
+    question: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
+    sections:
+      - label: "Komplementregelen"
+        lines:
+          - { text: "P(X ≥ 3) = 1 − P(X ≤ 2)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "μ = λt = 0.01 · 168 = 1.68" }
+          - { table_lookup: { ref: "E.2", text: "Slå opp P(X ≤ 2) i kolonnen for μ ≈ 1.7 → 0.7681" } }
+          - { text: "P(X ≥ 3) = 1 − 0.7681" }
+    result: "P(X ≥ 3) ≈ 0.232"
+
+related:
+  - { id: "poisson-prosess",         kind: "concept" }
+  - { id: "binomial-fordeling",      kind: "entry" }
+  - { id: "E2-poisson-kumulativ",    kind: "table" }
+
+tools:
+  - "Tabell E.2 — Kumulativ poissonfordeling"
+  - "Kalkulator: e^x, k!"

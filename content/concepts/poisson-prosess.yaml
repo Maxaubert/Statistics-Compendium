@@ -1,0 +1,22 @@
+id: poisson-prosess
+name_no: Poissonprosess
+type: concept
+tagline: "En tellestrøm med konstant rate og uavhengige hendelser."
+
+what_it_means: |
+  En stokastisk prosess der hendelser inntreffer uavhengig av hverandre med
+  konstant rate λ over tid eller område. Antallet hendelser i et tidsvindu
+  følger en Poissonfordeling, og tiden mellom påfølgende hendelser følger
+  en eksponentialfordeling.
+
+recognition_cues:
+  - "Oppgaven sier eksplisitt 'Poissonprosess' eller 'poissonprosess'"
+  - "Det er en rate (hendelser pr. tidsenhet eller pr. arealenhet) gitt"
+  - "Hendelser inntreffer kontinuerlig og uavhengig"
+
+filters:
+  random_variable: [discrete_count, time_until_event]
+  structural_cues: [rate_given, process_over_time, independent_events]
+
+related:
+  - { id: "poisson-fordeling", kind: "entry" }

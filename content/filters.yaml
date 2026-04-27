@@ -1,0 +1,53 @@
+dimensions:
+  - key: computes
+    label_no: Beregner
+    options:
+      - { key: exact_probability,    label_no: "Sannsynlighet (eksakt)" }
+      - { key: at_least_k,           label_no: '"Minst k" / "høyst k"' }
+      - { key: expected_value,       label_no: "Forventningsverdi" }
+      - { key: std_dev,              label_no: "Standardavvik / varians" }
+      - { key: confidence_interval,  label_no: "Konfidensintervall" }
+      - { key: hypothesis_test,      label_no: "Hypotesetest" }
+  - key: random_variable
+    label_no: "Tilfeldig variabel"
+    options:
+      - { key: discrete_count,       label_no: "Diskret antall" }
+      - { key: continuous,           label_no: "Kontinuerlig" }
+      - { key: time_until_event,     label_no: "Tid til hendelse" }
+      - { key: mean_of_samples,      label_no: "Gjennomsnitt av utvalg" }
+  - key: setup
+    label_no: "Oppsett"
+    options:
+      - { key: with_replacement,        label_no: "Med tilbakelegging" }
+      - { key: without_replacement,     label_no: "Uten tilbakelegging" }
+      - { key: single_sample,           label_no: "Ett utvalg" }
+      - { key: two_independent_samples, label_no: "To uavhengige utvalg" }
+      - { key: events_in_window,        label_no: "Hendelser i et vindu" }
+      - { key: fixed_n_trials,          label_no: "Fast antall forsøk" }
+  - key: structural_cues
+    label_no: "Kjennetegn i oppgaven"
+    options:
+      - { key: rate_given,             label_no: "Rate gitt" }
+      - { key: two_outcomes_per_trial, label_no: "To utfall per forsøk" }
+      - { key: success_probability_given, label_no: "Suksessannsynlighet p gitt" }
+      - { key: normal_assumed,         label_no: "Normalfordeling antatt" }
+      - { key: independent_events,     label_no: "Uavhengige hendelser" }
+      - { key: process_over_time,      label_no: "Prosess over tid" }
+  - key: distribution_assumption
+    label_no: "Fordeling antatt"
+    options:
+      - { key: binomial,    label_no: "Binomial" }
+      - { key: poisson,     label_no: "Poisson" }
+      - { key: normal,      label_no: "Normal" }
+      - { key: exponential, label_no: "Eksponential" }
+      - { key: t_distribution, label_no: "t-fordeling" }
+  - key: tooling
+    label_no: "Verktøy / tabell"
+    options:
+      - { key: cumulative_binomial_table_E1, label_no: "Binomialtabell (E.1)" }
+      - { key: cumulative_poisson_table_E2,  label_no: "Poissontabell (E.2)" }
+      - { key: standard_normal_table_E3,     label_no: "Z-tabell (E.3)" }
+      - { key: normal_quantile_table_E4,     label_no: "Z-kvantiltabell (E.4)" }
+      - { key: t_quantile_table_E5,          label_no: "t-tabell (E.5)" }
+      - { key: chi_square_quantile_table_E6, label_no: "Kjikvadrattabell (E.6)" }
+      - { key: calculator_only,              label_no: "Kun kalkulator" }

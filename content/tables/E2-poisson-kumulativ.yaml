@@ -1,0 +1,12 @@
+id: E2-poisson-kumulativ
+name_no: Poissontabell
+formal_name_no: "Kumulativ poissonfordeling"
+code: "E.2"
+description: "Slår opp P(X ≤ k) for poissonfordeling. Inputene er forventningsverdien μ (= λt) og k."
+inputs:
+  - { name: "μ", type: number, min: 0.02, max: 20, step: any }
+  - { name: "k", type: integer, min: 0, max: 20 }
+output: "P(X ≤ k)"
+distribution: poisson
+related_entries:
+  - poisson-fordeling

@@ -1,0 +1,46 @@
+id: binomial-fordeling
+name_no: Binomialfordeling
+type: distribution
+category: discrete_distribution
+tagline: "Antall suksesser i n uavhengige forsøk med suksessannsynlighet p."
+
+formula_main: "P(X = k) = C(n, k) · p^k · (1-p)^(n-k)"
+formula_latex: "P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}"
+
+what_it_does: "Modellerer antall suksesser i et fast antall n uavhengige Bernoulli-forsøk."
+why_use: "Når du har fast antall forsøk, hver med samme suksessannsynlighet p og to mulige utfall."
+
+recognition_cues:
+  - "Fast antall n forsøk er oppgitt"
+  - "Hvert forsøk har bare to utfall: suksess eller fiasko"
+  - "Suksessannsynligheten p er konstant"
+  - "Forsøkene er uavhengige av hverandre"
+
+when_NOT_to_use:
+  - "Trekker uten tilbakelegging fra endelig pott → bruk hypergeometrisk"
+  - "Antall forsøk varierer eller er ikke fastlagt → bruk Poisson"
+
+symbols:
+  - { sym: "n", means: "antall forsøk" }
+  - { sym: "p", means: "suksessannsynlighet i hvert forsøk" }
+  - { sym: "k", means: "antall suksesser det spørres om" }
+  - { sym: "C(n,k)", means: "binomialkoeffisient n over k" }
+
+properties:
+  expected_value: "E[X] = np"
+  variance: "Var[X] = np(1-p)"
+  std_dev: "σ = √(np(1-p))"
+
+filters:
+  computes: [exact_probability, at_least_k]
+  random_variable: [discrete_count]
+  setup: [fixed_n_trials]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events]
+  distribution_assumption: [binomial]
+  tooling: [cumulative_binomial_table_E1]
+
+related:
+  - { id: "poisson-fordeling", kind: "entry" }
+
+tools:
+  - "Tabell E.1 — Kumulativ binomisk sannsynlighet"
