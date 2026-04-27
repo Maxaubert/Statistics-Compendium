@@ -1,0 +1,83 @@
+id: regresjon-korrelasjonskoeffisient
+name_no: "Korrelasjonskoeffisient r (Pearson)"
+type: regression
+category: regression_estimate
+tagline: "Mål på styrken og retningen av en lineær sammenheng mellom x og y."
+
+formula_main: "r = S_XY / (√S_XX · √S_YY) = Σ(x_i - x̄)(y_i - ȳ) / √(Σ(x_i - x̄)² · Σ(y_i - ȳ)²)"
+formula_latex: "r = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum (x_i - \\bar{x})^2 \\cdot \\sum (y_i - \\bar{y})^2}}"
+
+what_it_does: |
+  Beregner Pearson-korrelasjonskoeffisient r mellom to variabler basert
+  på n observasjonspar. r ligger mellom -1 og 1: r = 1 perfekt positiv
+  lineær sammenheng, r = -1 perfekt negativ, r = 0 ingen lineær
+  sammenheng.
+
+why_use: |
+  Etter du har sett et spredningsplott, kvantifiserer r styrken av den
+  lineære sammenhengen. Skiller seg fra ρ (korrelasjon for fellesfordeling
+  fra populasjon) ved at r er et ESTIMAT basert på utvalg, og brukes i
+  regresjonsanalyse.
+
+recognition_cues:
+  - "Du har n par av observasjoner (x_i, y_i)"
+  - "Spørsmålet ber om 'korrelasjonskoeffisient' eller 'styrken av sammenhengen'"
+  - "Datatabell viser S_XX, S_YY, S_XY eller summer som lar deg regne dem ut"
+
+when_NOT_to_use:
+  - "Du jobber med en simultanfordeling (felles teoretisk fordeling) → bruk ρ"
+  - "Du forventer en ikke-lineær sammenheng → r kan være misvisende"
+
+symbols:
+  - { sym: "r",       means: "korrelasjonskoeffisient (utvalgsestimat)" }
+  - { sym: "S_XX",    means: "Σ(x_i - x̄)²" }
+  - { sym: "S_YY",    means: "Σ(y_i - ȳ)²" }
+  - { sym: "S_XY",    means: "Σ(x_i - x̄)(y_i - ȳ)" }
+
+filters:
+  computes: [correlation]
+  random_variable: [slope_estimate]
+  setup: [single_sample]
+  structural_cues: [linear_relationship_suspected]
+  parameters_known: []
+  distribution_assumption: []
+  tooling: [calculator_only]
+
+solution_template:
+  - "Beregn x̄, ȳ"
+  - "Beregn S_XX, S_YY, S_XY (eller hent fra datatabell)"
+  - "r = S_XY / √(S_XX · S_YY)"
+  - "Tolk: nær 1 = sterk positiv, nær -1 = sterk negativ, nær 0 = ingen lineær sammenheng"
+
+common_traps: |
+  r måler bare LINEÆR sammenheng. Sterk ikke-lineær sammenheng (f.eks.
+  kvadratisk) kan gi r ≈ 0. Husk forskjellen på r og ρ: r er estimat
+  fra utvalg av (x,y)-par; ρ er korrelasjon fra en fellesfordeling.
+
+examples:
+  - source: "Eksamen mai25 · oppgave 5b"
+    excerpt: "Datatabell gir S_XX = 15.6, S_YY = 734.1, S_XY = 103.4. Finn r."
+    solution_sketch: "r = 103.4 / (√15.6 · √734.1) = 103.4 / (3.95 · 27.09) = 0.966 → sterk positiv lineær sammenheng"
+
+detailed_solutions:
+  - source: "Eksamen mai25 · oppgave 5b"
+    question: "Datatabellen gir Σ(x-x̄)² = 15.6, Σ(y-ȳ)² = 734.1, Σ(x-x̄)(y-ȳ) = 103.4. Beregn korrelasjonskoeffisient r."
+    sections:
+      - label: "Formel"
+        lines:
+          - { text: "r = S_XY / √(S_XX · S_YY)" }
+      - label: "Innsatt"
+        lines:
+          - { text: "r = 103.4 / √(15.6 · 734.1)" }
+          - { indent: "= 103.4 / √11451.96" }
+          - { indent: "= 103.4 / 107.01" }
+    result: "r ≈ 0.966 (sterk positiv lineær sammenheng)"
+
+related:
+  - { id: "regresjon-estimat-alpha-beta",  kind: "entry" }
+  - { id: "korrelasjon-joint",             kind: "entry" }
+  - { id: "spredningsplott",               kind: "concept" }
+  - { id: "regresjon-test-stigningstall",  kind: "entry" }
+
+tools:
+  - "Kalkulator: kvadratrot, divisjon"

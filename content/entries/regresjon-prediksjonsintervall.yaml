@@ -1,0 +1,110 @@
+id: regresjon-prediksjonsintervall
+name_no: "Prediksjonsintervall for Y i lineær regresjon"
+type: regression
+category: regression_estimate
+tagline: "(1-α)·100 % intervall for hvor en NY observasjon Y vil ligge gitt en x-verdi."
+
+formula_main: "α̂ + β̂·x ± t_(α/2, n-2) · S_E · √(1 + 1/n + ((x - x̄) / (S_E / SE(β̂)))²)"
+formula_latex: "\\hat{\\alpha} + \\hat{\\beta} x \\pm t_{\\alpha/2, n-2} \\cdot S_E \\cdot \\sqrt{1 + \\frac{1}{n} + \\left(\\frac{x - \\bar{x}}{S_E / \\text{SE}(\\hat{\\beta})}\\right)^2}"
+
+what_it_does: |
+  Gir et intervall som med (1-α)·100 % sikkerhet inneholder en ENKELT
+  fremtidig observasjon Y for en gitt x-verdi. Forskjellig fra
+  konfidensintervall for E[Y|x], som gjelder forventningsverdien.
+
+why_use: |
+  Brukes når du vil predikere et nytt utfall (en enkel observasjon Y),
+  ikke gjennomsnittet. Bredere intervall enn KI for E[Y|x] fordi det
+  inneholder både usikkerhet i regresjonslinjen og naturlig spredning.
+
+recognition_cues:
+  - "Spørsmålet ber om prediksjonsintervall for en enkel ny y-verdi gitt x"
+  - "Spørsmålet er typisk 'er det sannsynlig at y > 75 % når x = 5?'"
+  - "Du har α̂, β̂, S_E (eller S_E²), og SE(β̂)"
+
+when_NOT_to_use:
+  - "Du vil ha intervall for forventningsverdien E[Y|x] → bruk KI for E[Y|x]"
+  - "Du vil teste om β = 0 → bruk hypotesetest for stigningstallet"
+
+symbols:
+  - { sym: "α̂, β̂",         means: "estimerte regresjonskoeffisienter" }
+  - { sym: "x̄",              means: "gjennomsnitt av x-observasjonene" }
+  - { sym: "S_E",             means: "estimat for residualenes standardavvik" }
+  - { sym: "SE(β̂)",          means: "standardfeil til stigningstallet" }
+  - { sym: "t_(α/2, n-2)",    means: "kvantil i t-fordelingen med n-2 frihetsgrader" }
+
+filters:
+  computes: [prediction_interval]
+  random_variable: [slope_estimate]
+  setup: [single_sample]
+  structural_cues: [linear_relationship_suspected]
+  parameters_known: [slope_se, residual_variance]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
+
+solution_template:
+  - "Identifiser α̂, β̂, S_E (eller S_E²), SE(β̂), x̄, n, x-verdien som det skal predikeres for"
+  - "Slå opp t_(α/2, n-2) i tabell E.5"
+  - "Beregn punkt: α̂ + β̂·x"
+  - "Beregn margin: t · S_E · √(1 + 1/n + ((x-x̄) / (S_E/SE(β̂)))²)"
+  - "Intervall: punkt ± margin"
+
+common_traps: |
+  Frihetsgrader er n - 2 (lineær regresjon). Tall under kvadratroten
+  må regnes nøye: 1 + 1/n + ((x-x̄)/(S_E/SE(β̂)))². Husk at
+  S_E/SE(β̂) = √(S_XX). Dette er viktig — ekvivalent formulering:
+  punkt ± t·S_E·√(1 + 1/n + (x-x̄)²/S_XX).
+
+python_snippet: |
+  import math
+  from scipy.stats import t
+
+  alpha_hat, beta_hat = 34.6, 6.63
+  SE = (6.093) ** 0.5     # 2.4684
+  SE_beta = 0.625
+  x_bar, n, alpha = 6.8, 10, 0.05
+  x = 5
+
+  t_crit = t.ppf(1 - alpha/2, df=n-2)   # 2.306
+  punkt = alpha_hat + beta_hat * x       # 67.75
+  margin = t_crit * SE * math.sqrt(1 + 1/n + ((x - x_bar) / (SE / SE_beta)) ** 2)
+
+examples:
+  - source: "Eksamen jan26 · oppgave 6"
+    excerpt: "ŷ = 34.6 + 6.63·x, S_E² = 6.093, SE(β̂) = 0.625, n = 10. Finn 95 % prediksjonsintervall for Y når x = 5."
+    solution_sketch: "Punkt = 67.75, margin = 2.306·2.4684·√(1 + 1/10 + ((5-6.8)/(2.4684/0.625))²) = 6.51. CI = [61.24, 74.26]"
+
+detailed_solutions:
+  - source: "Eksamen jan26 · oppgave 6"
+    question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(β̂) = 0.625, n = 10. Finn et 95 % prediksjonsintervall for Y når x = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+    sections:
+      - label: "Identifisering"
+        lines:
+          - { text: "α̂ = 34.6, β̂ = 6.63, S_E² = 6.093, SE(β̂) = 0.625" }
+          - { text: "n = 10, x̄ = 6.8, x = 5, α = 0.05" }
+      - label: "Frihetsgrader og kvantil"
+        lines:
+          - { text: "ν = n - 2 = 8" }
+          - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306" } }
+      - label: "Innsatt"
+        lines:
+          - { text: "S_E = √6.093 = 2.4684" }
+          - { text: "Punkt: 34.6 + 6.63·5 = 67.75" }
+          - { text: "Under rotuttrykket: 1 + 1/10 + ((5-6.8)/(2.4684/0.625))²" }
+          - { indent: "= 1 + 0.1 + (-1.8/3.949)²" }
+          - { indent: "= 1 + 0.1 + 0.207 = 1.308" }
+          - { text: "Margin: 2.306 · 2.4684 · √1.308 = 5.692 · 1.143 = 6.51" }
+          - { text: "Intervall: 67.75 ± 6.51" }
+    result: "95 % prediksjonsintervall: [61.24, 74.26]. Siden 75 ligger UTENFOR intervallet, er det usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+
+related:
+  - { id: "regresjon-estimat-alpha-beta",   kind: "entry" }
+  - { id: "regresjon-residualvarians",      kind: "entry" }
+  - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
+  - { id: "regresjon-test-stigningstall",   kind: "entry" }
+  - { id: "frihetsgrader",                  kind: "concept" }
+  - { id: "E5-t-tabell",                    kind: "table" }
+
+tools:
+  - "Tabell E.5 — t-fordelingens kvantiltabell"
+  - "Kalkulator: kvadratrot, kvadrering"
