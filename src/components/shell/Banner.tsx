@@ -1,0 +1,47 @@
+import { Moon } from "lucide-react";
+
+export function Banner() {
+  return (
+    <header
+      className="relative overflow-hidden text-paper-2"
+      style={{
+        background:
+          "linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%)",
+      }}
+    >
+      <div
+        className="absolute -right-10 -top-10 h-[220px] w-[220px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <div className="relative z-10 mx-auto flex max-w-screen-xl items-center justify-between px-7 py-4">
+        <div className="flex items-center gap-3">
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10"
+            aria-hidden
+          >
+            <span
+              className="font-serif text-xl font-semibold italic text-amber-100"
+              style={{ color: "#fef3c7" }}
+            >
+              σ
+            </span>
+          </div>
+          <h1 className="m-0 font-serif text-[17px] font-semibold tracking-tight">
+            Statistikk-kompendium
+          </h1>
+        </div>
+        <button
+          type="button"
+          aria-label="Bytt tema"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-white/20 bg-white/10"
+        >
+          <Moon size={16} />
+        </button>
+      </div>
+    </header>
+  );
+}
