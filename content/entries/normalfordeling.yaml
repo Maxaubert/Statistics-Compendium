@@ -8,24 +8,30 @@ formula_main: "X ~ N(μ, σ);  Z = (X - μ) / σ ~ N(0, 1);  P(X ≤ x) = G((x -
 formula_latex: "X \\sim N(\\mu, \\sigma), \\quad Z = \\frac{X - \\mu}{\\sigma} \\sim N(0, 1)"
 
 what_it_does: |
-  Beskriver en kontinuerlig stokastisk variabel som er symmetrisk om
-  forventningsverdien μ, med spredning gitt av standardavviket σ.
-  Standardisering Z = (X - μ)/σ omformer til standardnormalfordelingen,
-  som tabuleres i E.3 (kumulativ G(z)).
+  Den klassiske "klokkeformede" fordelingen. Beskriver en kontinuerlig
+  variabel X (en målbar verdi som kan være hva som helst innenfor et
+  intervall — vekt, høyde, kaffemengde, testresultater) som er symmetrisk
+  rundt midtverdien μ, med spredning angitt av σ.
+
+  Sannsynligheter under normalfordelingen regnes ikke direkte ut, men slås
+  opp i en tabell (E.3 — Z-tabell) etter at variabelen er "standardisert"
+  med transformasjonen Z = (X - μ)/σ. Z-verdien forteller hvor mange
+  standardavvik over eller under gjennomsnittet observasjonen ligger.
 
 why_use: |
   Mange naturlige fenomener er tilnærmet normalfordelte (vekt, høyde,
   målefeil, gjennomsnittsresultater). Sentralgrenseteoremet sier at
   gjennomsnittet av mange uavhengige variabler er tilnærmet normalfordelt
-  uansett underliggende fordeling. Brukes også i z-test, konfidensintervall
-  og som referansefordeling.
+  uansett underliggende fordeling, så normalfordelingen brukes også indirekte
+  i z-tester, t-tester og konfidensintervaller.
 
 recognition_cues:
-  - "Oppgaven sier 'normalfordelt med forventningsverdi μ og standardavvik σ'"
-  - "Du har en kontinuerlig variabel og er gitt μ og σ"
-  - "Spørsmålet er på formen P(X < x), P(X > x) eller P(a < X < b)"
-  - "Stort antall observasjoner (n ≥ 30) — sentralgrenseteoremet"
-  - "Du skal beregne sannsynlighet via z-tabell"
+  - "Oppgaven sier eksplisitt 'normalfordelt med forventningsverdi μ og standardavvik σ'"
+  - "Oppgaven oppgir både en gjennomsnittsverdi μ og en spredning σ for en kontinuerlig størrelse"
+  - "Spørsmålet er på formen P(X < x), P(X > x) eller P(a < X < b) for kontinuerlig X"
+  - "Stort antall observasjoner (n ≥ 30) der man ser på gjennomsnittet — sentralgrenseteoremet gir tilnærmet normalfordeling"
+  - "Spørsmålet ber om 'sannsynligheten for at en tilfeldig valgt X overstiger / underskrider en verdi'"
+  - "Skjult variant: 'finn x slik at P(X < x) = p' (invers normal — bruk z-kvantiltabellen E.4)"
 
 when_NOT_to_use:
   - "Variabelen er diskret (heltall) → bruk binomial, Poisson, eller hypergeometrisk"
@@ -55,17 +61,21 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
 solution_template:
-  - "Bekreft at X ~ N(μ, σ) (eksplisitt antatt eller fra sentralgrenseteoremet)"
-  - "Standardiser: P(X ≤ x) = P(Z ≤ (x − μ)/σ) = G((x − μ)/σ)"
-  - "Slå opp G(z) i tabell E.3 (positive eller negative z-verdier)"
-  - "For området mellom to verdier: P(a < X ≤ b) = G((b−μ)/σ) − G((a−μ)/σ)"
-  - "For 'finn x slik at P(X<x) = p': bruk invers, x = μ + σ · z_p (eventuelt -z_p)"
+  - "Skriv ned hva X representerer og hvilke verdier μ og σ har (les nøye gjennom oppgaven)"
+  - "Bekreft at X ~ N(μ, σ) er antatt — enten direkte oppgitt, eller via sentralgrenseteoremet for store n"
+  - "Identifiser hva spørsmålet etterspør: P(X < x), P(X > x), P(a < X < b), eller en x-verdi som oppfyller en betingelse"
+  - "Standardiser: erstatt X med Z og verdiene med (verdi − μ)/σ. F.eks. P(X < 24) = P(Z < (24 − 25)/0.48) = P(Z < -2.08)"
+  - "Slå opp G(z) i tabell E.3 (Z-tabell). Tabellen gir P(Z ≤ z), arealet til VENSTRE for z"
+  - "For 'høyre hale' P(Z > z), bruk 1 − G(z). For tosidig 'mellom a og b': G(b-standardisert) − G(a-standardisert)"
+  - "For invers (finn x når P(X < x) = p er gitt): finn z_p i E.4 og regn x = μ + σ · z (eller −z hvis venstre hale)"
 
 common_traps: |
-  Forveksle gjerne ikke σ (standardavvik) med σ² (varians). Husk at G(z) gir
-  arealet til VENSTRE for z. For området til høyre, bruk 1 - G(z). For
-  negative z, kan symmetrien G(-z) = 1 - G(z) være nyttig. Husk hvilken
-  enhet x og μ er gitt i.
+  - **Forveksle ikke σ (standardavvik) med σ² (varians).** Hvis oppgaven sier "varians 25", er σ = 5, ikke 25.
+  - **G(z) gir arealet til VENSTRE.** For "større enn z", bruk 1 − G(z).
+  - **Symmetri**: G(−z) = 1 − G(z). Brukes for negative z hvis tabellen kun viser positive (vår tabell viser begge).
+  - **Standardisering må gjøres riktig**: Z = (X − μ)/σ, ikke (μ − X)/σ. Sjekk fortegnet.
+  - **Avrunding av z**: rund til 2 desimaler for å passe tabellen (z = -2.08, ikke -2.0833).
+  - **Invers-oppgaver**: hvis P(X < 300) er liten (< 0.5) og verdien står til venstre for μ, må z være negativ. Ikke bare bruk z fra tabellen direkte; reflekter fortegnet.
 
 python_snippet: |
   from scipy.stats import norm

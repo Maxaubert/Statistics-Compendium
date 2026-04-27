@@ -8,18 +8,26 @@ formula_main: "P(A | B) = P(A) · P(B | A) / P(B)"
 formula_latex: "P(A | B) = \\frac{P(A) \\cdot P(B | A)}{P(B)}"
 
 what_it_does: |
-  Snur retningen på en betinget sannsynlighet. Hvis du vet P(B|A) og
-  marginalsannsynlighetene P(A) og P(B), gir Bayes' setning P(A|B).
+  Snur retningen på en betinget sannsynlighet. Hvis du vet sjansen for
+  symptom B GITT sykdom A, så lar Bayes' setning deg regne ut sjansen
+  for sykdom A GITT symptom B — som er det vi egentlig vil vite.
+
+  Mer generelt: gitt P(B|A), P(A), og P(B), finner du P(A|B). Hvis P(B)
+  ikke er oppgitt direkte, må du først regne det ut via setningen om
+  total sannsynlighet (se related).
 
 why_use: |
-  Standard verktøy når oppgaven snur "kausal" retning: f.eks. fra
-  "spireprosent for ringblomster" til "sjansen for at en spirer er en
-  ringblomst". Også sentralt i statistikk og maskinlæring (klassifisering).
+  Standard verktøy når oppgaven "snur" retningen: fra "av alle som har
+  sykdom, hvor mange tester positivt" til "av alle som tester positivt,
+  hvor mange har faktisk sykdom". Også sentralt i diagnostikk, maskinlæring
+  og spam-klassifisering.
 
 recognition_cues:
-  - "Du er gitt P(B|A), P(A), og enten P(B) direkte eller via total sannsynlighet"
-  - "Spørsmålet snur retningen: ber om P(A|B) der du naturlig har P(B|A)"
-  - "Diagnose-typen oppgaver: 'gitt at testen er positiv, hva er sjansen for sykdom?'"
+  - "Oppgaven gir deg en betinget sannsynlighet i én retning (P(B|A)) og spør etter den motsatte (P(A|B))"
+  - "Ord som 'gitt at det spirer, hva er sannsynligheten for ringblomst?'"
+  - "Diagnose- eller test-oppgaver: 'gitt at testen er positiv, hva er sannsynligheten for sykdom?'"
+  - "Du har P(A) og P(B|A), men spør etter P(A|B)"
+  - "Spørsmålet starter med 'gitt at ...' og du må snu informasjonen om"
 
 symbols:
   - { sym: "P(A | B)",  means: "betinget sannsynlighet for A gitt B" }
@@ -35,13 +43,17 @@ filters:
   tooling: [calculator_only]
 
 solution_template:
-  - "Skriv ned P(A), P(B|A), og P(B) (eller utled P(B) via total sannsynlighet)"
-  - "P(A|B) = P(A)·P(B|A) / P(B)"
+  - "Identifiser hendelsene A og B, og se hvilken retning oppgaven gir og hvilken den ber om"
+  - "Skriv ned P(A) (en marginalsannsynlighet) og P(B|A) (den retningen som er gitt)"
+  - "Finn eller regn ut P(B). Hvis ikke direkte gitt, bruk total sannsynlighet: P(B) = P(A)·P(B|A) + P(A̅)·P(B|A̅)"
+  - "Beregn P(A|B) = P(A) · P(B|A) / P(B)"
+  - "Sjekk: er svaret en sannsynlighet mellom 0 og 1?"
 
 common_traps: |
-  P(A|B) er IKKE P(B|A). Glemmer man å snu, gjør man en av de mest vanlige
-  feilslutningene i sannsynlighetsregning ('confusion of the inverse').
-  Hvis P(B) ikke er gitt, regn det ut først via total sannsynlighet.
+  - **Snud retning**: P(A|B) er IKKE det samme som P(B|A). Dette er den klassiske 'confusion of the inverse'-feilslutningen. Eksempel: P(testen er positiv | sykdom) er ikke det samme som P(sykdom | testen er positiv).
+  - **Mangler P(B)**: Hvis P(B) ikke er gitt direkte, MÅ du regne det ut via total sannsynlighet før du bruker Bayes. Ikke bruk noe annet for P(B).
+  - **Disjunkte vs. uavhengige**: Hvis A og B er uavhengige er P(A|B) = P(A); ingen Bayes nødvendig.
+  - **Sjekk størrelsen**: Hvis P(A) er liten (sjelden sykdom) og P(B) er stor (mange falske positive), kan P(A|B) bli overraskende liten. Det er da Bayes' setning er nyttigst.
 
 examples:
   - source: "Eksamen jan25 · oppgave 3a"

@@ -8,20 +8,23 @@ formula_main: "P(A̅) = 1 − P(A)"
 formula_latex: "P(\\overline{A}) = 1 - P(A)"
 
 what_it_does: |
-  Sier at sannsynligheten for at hendelse A IKKE inntreffer er 1 minus
-  sannsynligheten for at A inntreffer. Brukes ofte indirekte for å regne
-  ut P(A) når A̅ er enklere å regne ut, og spesielt for "minst én"-typen
-  problemer.
+  Den enkleste, men kraftigste, regelen i sannsynlighetsregning. Sier at
+  sannsynligheten for at noe IKKE skjer er én minus sannsynligheten for
+  at det skjer. Brukes nesten alltid når oppgaven inneholder ord som
+  "minst" eller "ingen", fordi direkte beregning blir mye vanskeligere.
 
 why_use: |
-  Mange oppgaver er enklere å løse via komplementet. Klassisk eksempel:
-  "minst én suksess i n forsøk" — direkte beregning er en sum over flere
-  k-verdier; via komplement er det bare 1 minus P(0 suksesser).
+  Mange oppgaver er enklere å løse via komplementet enn direkte. Klassisk
+  eksempel: "minst én suksess i n forsøk". Direkte ville krevet sum over
+  alle k = 1, 2, ..., n. Via komplement: bare 1 - P(0 suksesser), én enkel
+  utregning.
 
 recognition_cues:
-  - "Spørsmålet inneholder 'minst én', 'minst k', 'ingen', 'høyst k'"
-  - "Direkte beregning ville kreve sum over mange utfall"
-  - "P(A̅) er enklere å regne ut enn P(A)"
+  - "Spørsmålet inneholder ord som 'minst én', 'minst k', 'ingen', 'høyst k', 'ikke alle'"
+  - "Direkte beregning av det som spørres etter ville kreve sum over mange utfall"
+  - "Negasjonen (det motsatte) er enklere å beskrive enn det spørsmålet ber om"
+  - "Du har en kumulativ tabell (E.1, E.2, E.3) som gir P(X ≤ k), men spørsmålet er om P(X ≥ k)"
+  - "Spørsmål som starter med 'finn n slik at sannsynligheten for ... overstiger ...' (terskelproblem)"
 
 symbols:
   - { sym: "A",     means: "en hendelse" }
@@ -37,14 +40,17 @@ filters:
   tooling: [calculator_only]
 
 solution_template:
-  - "Identifiser hendelsen A"
-  - "Bestem A̅ (det motsatte av A)"
-  - "Beregn P(A̅) — ofte enklere enn P(A)"
-  - "P(A) = 1 − P(A̅)"
+  - "Identifiser hendelsen A som du vil ha sannsynligheten for"
+  - "Beskriv A̅ — det motsatte av A. Tenk: 'hva er det A IKKE er?'"
+  - "Beregn P(A̅) — sjekk om dette er enklere enn å regne ut P(A) direkte"
+  - "Bruk regelen: P(A) = 1 − P(A̅)"
+  - "For 'minst k' i en kumulativ tabell: P(X ≥ k) = 1 − P(X ≤ k - 1). Husk å trekke fra 1, ikke k!"
 
 common_traps: |
-  "Minst k" via komplement: P(X ≥ k) = 1 − P(X ≤ k − 1). NB: 'ikke alle'
-  betyr 'minst én ikke', ikke 'ingen'.
+  - **"Minst k" indeks-feil**: P(X ≥ k) = 1 − P(X ≤ k − 1), IKKE 1 − P(X ≤ k). For k = 3: P(X ≥ 3) = 1 − P(X ≤ 2).
+  - **"Ikke alle" ≠ "ingen"**: Hvis A er "alle 5 kort er hjerter", så er A̅ "minst ett kort er IKKE hjerter" (ikke "ingen er hjerter"). De to siste er forskjellige hendelser.
+  - **Komplement av disjunkt union**: P(A̅ ∩ B̅) = 1 − P(A ∪ B), via De Morgans lov. Brukes for "verken A eller B".
+  - **Komplement i tellinger**: For "minst én suksess", komplementet er "null suksesser" (ofte enkelt å regne).
 
 examples:
   - source: "Eksamen jan25 · oppgave 1b"

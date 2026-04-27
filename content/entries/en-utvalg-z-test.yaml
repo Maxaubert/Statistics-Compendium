@@ -8,21 +8,26 @@ formula_main: "Z = (X̄ - μ₀) / (σ/√n)"
 formula_latex: "Z = \\frac{\\overline{X} - \\mu_0}{\\sigma / \\sqrt{n}}"
 
 what_it_does: |
-  Tester nullhypotesen om forventningsverdien μ er lik (eller minst/høyst)
-  en gitt verdi μ₀, basert på et utvalg med kjent populasjonsstandardavvik
-  σ. Forutsetter normalfordelte observasjoner eller stort utvalg (n ≥ 30
-  ved sentralgrenseteoremet).
+  Tester en påstand (hypotese) om forventningsverdien μ i en populasjon.
+  Du har en "påstandsverdi" μ₀ (f.eks. "gjennomsnittlig forbruk er 50 W") og
+  data fra et utvalg med kjent standardavvik σ. Z-testen sammenligner
+  utvalgets gjennomsnitt X̄ med μ₀ og angir om forskjellen er stor nok til
+  å forkaste påstanden.
 
 why_use: |
   Velg z-test framfor t-test når populasjonens standardavvik σ er kjent
   (oppgitt i problemet, ikke estimert fra utvalget). I praksis betyr dette
-  ofte at vi har et stort utvalg eller en historisk verdi for σ.
+  ofte at oppgaven sier noe som "antar at standardavviket er 5 watt" eller
+  at utvalget er stort (n ≥ 30) slik at sentralgrenseteoremet gjør det
+  tilnærmet samme test.
 
 recognition_cues:
-  - "Du skal teste forventningsverdien μ mot en bestemt verdi μ₀"
-  - "Standardavviket σ er gitt eksplisitt (ikke estimert fra utvalget)"
-  - "Antall observasjoner n er stort (ofte ≥ 30) eller observasjonene er normalfordelte"
-  - "Spørsmålet kan være: 'er gjennomsnittet høyere/lavere/forskjellig fra μ₀?'"
+  - "Oppgaven oppgir en standardverdi/påstandsverdi μ₀ (typisk navngitt 'forventet' eller 'standardmodellen')"
+  - "Oppgaven oppgir at standardavviket σ er kjent eller 'antas kjent' (ofte med et tall — f.eks. 'σ = 5')"
+  - "Oppgaven oppgir et utvalg med n observasjoner (typisk n ≥ 30) og dets gjennomsnitt x̄"
+  - "Spørsmålet ber om en hypotesetest: 'undersøk om μ er høyere/lavere/forskjellig fra μ₀'"
+  - "Signifikansnivå α er gitt (vanligvis 0.05 eller 0.01)"
+  - "Spørsmål om p-verdi (signifikanssannsynlighet) er ofte med"
 
 when_NOT_to_use:
   - "σ er ukjent (kun s estimert fra utvalg) → bruk én-utvalgs t-test"
@@ -46,19 +51,21 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4]
 
 solution_template:
-  - "Formuler hypotesene H₀ og H₁ (én- eller tosidig)"
-  - "Begrunn valget av z-test (σ kjent og normalfordelt eller stort n)"
-  - "Beregn testobservatoren z = (x̄ - μ₀) / (σ/√n)"
-  - "Finn riktig kvantil i tabell E.4: z_α (ensidig) eller z_(α/2) (tosidig)"
-  - "Sammenlign z med kvantilet og bruk forkastingsregelen"
-  - "Konkluder: forkast H₀ hvis kriteriet er oppfylt; ellers ikke"
-  - "Eventuelt: regn ut p-verdien via tabell E.3 og tolk i forhold til α"
+  - "Formuler hypotesene. H₀ er 'status quo' (typisk μ ≥ μ₀, μ ≤ μ₀, eller μ = μ₀). H₁ er det du vil bevise (μ < μ₀, μ > μ₀, eller μ ≠ μ₀)"
+  - "Bestem retning: en-sidig hvis H₁ er 'mindre enn' eller 'større enn'; tosidig hvis 'forskjellig fra'"
+  - "Begrunn z-testen: σ er kjent (oppgitt) og enten observasjonene er normalfordelte eller n ≥ 30"
+  - "Beregn z = (x̄ − μ₀) / (σ/√n). Pass på fortegnet: hvis x̄ < μ₀ blir z negativ"
+  - "Slå opp kritisk verdi i tabell E.4 (Z-kvantiltabell). Ensidig: z_α; tosidig: z_(α/2)"
+  - "Forkastingsregel: Venstresidig (μ < μ₀) → forkast hvis z < −z_α. Høyresidig (μ > μ₀) → forkast hvis z > z_α. Tosidig (μ ≠ μ₀) → forkast hvis |z| > z_(α/2)"
+  - "Konkluder med en setning: 'Vi forkaster H₀ på α = ... ' eller 'Vi kan ikke forkaste H₀ på α = ...', og hva det betyr i sammenheng med oppgavens kontekst"
+  - "Hvis p-verdi etterspørres: For venstresidig p = G(z); for høyresidig p = 1 − G(z); for tosidig p = 2·(1 − G(|z|))"
 
 common_traps: |
-  Husk å skille mellom ensidig (én-halet) og tosidig (to-halet) test.
-  Sjekkverdien for en venstresidig test er −z_α, ikke z_α (negativt).
-  For tosidig test brukes |z| > z_(α/2). Forkastingsretningen følger
-  alternativhypotesen H₁.
+  - **Ensidig vs. tosidig**: Hvis H₁ er "mindre enn" eller "større enn", er testen ensidig (bruk z_α). Hvis H₁ er "forskjellig fra", er den tosidig (bruk z_(α/2)).
+  - **Fortegn på sjekkverdi**: For venstresidig test (μ < μ₀) er sjekkverdien −z_α (negativ), ikke +z_α. Forkast hvis z < −z_α.
+  - **z_α vs. z_(α/2)**: Vanlig feil å bruke z_α også for tosidig test. For tosidig MÅ du bruke z_(α/2) (halvdelen av α i hver hale).
+  - **σ vs. s**: Hvis σ ikke er oppgitt og du må regne s² fra dataene, er det t-test du skal bruke, ikke z-test.
+  - **Konklusjonen tilbake til kontekst**: "Forkast H₀" er ikke nok. Si hva det betyr: "Det er grunn til å hevde at den nye produkten har lavere energiforbruk."
 
 python_snippet: |
   from scipy.stats import norm
