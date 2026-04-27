@@ -1,6 +1,7 @@
 @import "./fonts.css";
 @import "./tokens.css";
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 html {
   font-family: var(--font-sans);
