@@ -1,3 +1,20 @@
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { ListView } from "./routes/ListView";
+import { EntryDetail } from "./routes/EntryDetail";
+import { ConceptDetail } from "./routes/ConceptDetail";
+import { TableDetail } from "./routes/TableDetail";
+import { NotFound } from "./routes/NotFound";
+
 export function App() {
-  return <div>Statistikk-kompendium</div>;
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<ListView />} />
+        <Route path="/entry/:id" element={<EntryDetail />} />
+        <Route path="/concept/:id" element={<ConceptDetail />} />
+        <Route path="/table/:id" element={<TableDetail />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </HashRouter>
+  );
 }
