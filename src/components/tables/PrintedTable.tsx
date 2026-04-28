@@ -65,7 +65,7 @@ function PoissonPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                 key={kv}
                 className={clsx(
                   "px-2.5 py-1.5 text-center text-[11px] font-semibold",
-                  kv === k ? "bg-cyan text-ink" : "bg-primary-soft text-primary"
+                  kv === k ? "bg-primary text-white" : "bg-primary-soft text-primary"
                 )}
               >
                 {kv}
@@ -94,7 +94,7 @@ function PoissonPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                     className={clsx(
                       "px-2.5 py-1.5 text-center",
                       isCell
-                        ? "bg-cyan font-bold text-ink shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                        ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
                         : isCol
                           ? "bg-primary-2/[0.04]"
                           : ""
@@ -155,7 +155,7 @@ function ZPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                 key={c}
                 className={clsx(
                   "px-1.5 py-1.5 text-center text-[11px] font-semibold",
-                  Math.abs(c - closestCol) < 0.005 ? "bg-cyan text-ink" : "bg-primary-soft text-primary"
+                  Math.abs(c - closestCol) < 0.005 ? "bg-primary text-white" : "bg-primary-soft text-primary"
                 )}
               >
                 {c.toFixed(2)}
@@ -186,7 +186,7 @@ function ZPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                     className={clsx(
                       "px-1.5 py-1.5 text-center",
                       isCell
-                        ? "bg-cyan font-bold text-ink shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                        ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
                         : isCol
                           ? "bg-primary-2/[0.04]"
                           : ""
@@ -271,7 +271,7 @@ function TPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                 key={a}
                 className={clsx(
                   "px-2.5 py-1.5 text-center text-[11px] font-semibold",
-                  Math.abs(a - closestα) < 1e-6 ? "bg-cyan text-ink" : "bg-primary-soft text-primary"
+                  Math.abs(a - closestα) < 1e-6 ? "bg-primary text-white" : "bg-primary-soft text-primary"
                 )}
               >
                 {a}
@@ -300,7 +300,7 @@ function TPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                     className={clsx(
                       "px-2.5 py-1.5 text-center",
                       isCell
-                        ? "bg-cyan font-bold text-ink shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                        ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
                         : isCol
                           ? "bg-primary-2/[0.04]"
                           : ""
@@ -350,7 +350,7 @@ function ChiSquaredPrintedTable({ inputs }: { inputs: Record<string, number> }) 
                   key={a}
                   className={clsx(
                     "px-2.5 py-1.5 text-center text-[11px] font-semibold",
-                    Math.abs(a - closestα) < 1e-6 ? "bg-cyan text-ink" : "bg-primary-soft text-primary"
+                    Math.abs(a - closestα) < 1e-6 ? "bg-primary text-white" : "bg-primary-soft text-primary"
                   )}
                 >
                   {a}
@@ -379,7 +379,7 @@ function ChiSquaredPrintedTable({ inputs }: { inputs: Record<string, number> }) 
                       className={clsx(
                         "px-2.5 py-1.5 text-center",
                         isCell
-                          ? "bg-cyan font-bold text-ink shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                          ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
                           : isCol
                             ? "bg-primary-2/[0.04]"
                             : ""
@@ -428,7 +428,7 @@ function BinomialPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                   key={kv}
                   className={clsx(
                     "px-1.5 py-1.5 text-center text-[11px] font-semibold",
-                    kv === k ? "bg-cyan text-ink" : "bg-primary-soft text-primary"
+                    kv === k ? "bg-primary text-white" : "bg-primary-soft text-primary"
                   )}
                 >
                   {kv}
@@ -461,7 +461,7 @@ function BinomialPrintedTable({ inputs }: { inputs: Record<string, number> }) {
                       className={clsx(
                         "px-1.5 py-1.5 text-center",
                         isCell
-                          ? "bg-cyan font-bold text-ink shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                          ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
                           : isCol
                             ? "bg-primary-2/[0.04]"
                             : ""
