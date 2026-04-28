@@ -80,12 +80,7 @@ export function TableDetail() {
         </Section>
 
         <Section title="Trykt tabell" icon={Table2}>
-          <PrintedTable
-            distribution={
-              table.distribution === "binomial" ? "binomial" : "poisson"
-            }
-            inputs={inputs}
-          />
+          <PrintedTable distribution={table.distribution} inputs={inputs} />
         </Section>
 
         {related.length > 0 && (
