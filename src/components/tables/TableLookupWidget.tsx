@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import type { Table } from "@/data/schema";
 import { lookupCumulative, computeBonus } from "./distributions";
@@ -9,6 +10,34 @@ interface Props {
 }
 
 export function TableLookupWidget({ table, vals, setVals }: Props) {
+  // Local string state per input so the user can temporarily clear/edit
+  // without forcing a numeric value back into the field.
+  const [text, setText] = useState<Record<string, string>>(() =>
+    Object.fromEntries(Object.entries(vals).map(([k, v]) => [k, String(v)]))
+  );
+
+  // Sync local text when vals change from outside (e.g., new table loaded)
+  useEffect(() => {
+    setText((prev) => {
+      const next = { ...prev };
+      for (const [k, v] of Object.entries(vals)) {
+        if (Number(prev[k]) !== v) next[k] = String(v);
+      }
+      return next;
+    });
+  }, [vals]);
+
+  const handleChange = (name: string, raw: string) => {
+    setText((prev) => ({ ...prev, [name]: raw }));
+    // Only push to vals when the input is a parseable number.
+    // Empty / "-" / "0." stay in local text but vals retains the previous valid number.
+    if (raw === "" || raw === "-" || raw === "." || raw === "-.") return;
+    const num = Number(raw);
+    if (!Number.isNaN(num)) {
+      setVals({ ...vals, [name]: num });
+    }
+  };
+
   const result = lookupCumulative({ distribution: table.distribution, inputs: vals });
   const bonuses = computeBonus({ distribution: table.distribution, inputs: vals });
 
@@ -49,13 +78,11 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
             </span>
             <input
               type="number"
-              value={vals[inp.name]}
+              value={text[inp.name] ?? ""}
               min={inp.min}
               max={inp.max}
               step={inp.type === "integer" ? 1 : "any"}
-              onChange={(e) =>
-                setVals({ ...vals, [inp.name]: Number(e.target.value) })
-              }
+              onChange={(e) => handleChange(inp.name, e.target.value)}
               onFocus={(e) => e.target.select()}
               className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5"
             />
