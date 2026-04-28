@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { Search } from "lucide-react";
 import type { Table } from "@/data/schema";
 import { lookupCumulative, computeBonus } from "./distributions";
 
 interface Props {
   table: Table;
+  vals: Record<string, number>;
+  setVals: (next: Record<string, number>) => void;
 }
 
-export function TableLookupWidget({ table }: Props) {
-  const initial = Object.fromEntries(
-    table.inputs.map((i) => [i.name, i.min ?? 0])
-  );
-  const [vals, setVals] = useState<Record<string, number>>(initial);
-
+export function TableLookupWidget({ table, vals, setVals }: Props) {
   const result = lookupCumulative({ distribution: table.distribution, inputs: vals });
   const bonuses = computeBonus({ distribution: table.distribution, inputs: vals });
 
@@ -58,7 +54,7 @@ export function TableLookupWidget({ table }: Props) {
               max={inp.max}
               step={inp.type === "integer" ? 1 : "any"}
               onChange={(e) =>
-                setVals((v) => ({ ...v, [inp.name]: Number(e.target.value) }))
+                setVals({ ...vals, [inp.name]: Number(e.target.value) })
               }
               className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5"
             />

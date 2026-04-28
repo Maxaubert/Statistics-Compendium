@@ -1,4 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 import { Search, Table2, Link2 } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
 import { Section } from "@/components/detail/Section";
@@ -7,16 +8,30 @@ import { TableLookupWidget } from "@/components/tables/TableLookupWidget";
 import { PrintedTable } from "@/components/tables/PrintedTable";
 import { loadAllContent } from "@/data/loadContent";
 
+function pickInitial(table: { inputs: { name: string; min?: number; max?: number }[] }): Record<string, number> {
+  return Object.fromEntries(
+    table.inputs.map((i) => {
+      // Pick a "central" starting value rather than the min, so the printed
+      // table opens with values that are interesting to look at.
+      if (typeof i.min === "number" && typeof i.max === "number") {
+        // For symmetric ranges (like z), start at 0; otherwise lean toward middle
+        if (i.min < 0 && i.max > 0) return [i.name, 0];
+        return [i.name, i.min];
+      }
+      return [i.name, i.min ?? 0];
+    })
+  );
+}
+
 export function TableDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const data = loadAllContent();
   const table = data.tables.find((t) => t.id === id);
 
-  // Initial inputs only — TableLookupWidget tracks live values internally.
-  // Sharing live state will be wired in the content-extraction phase.
-  const inputs: Record<string, number> = Object.fromEntries(
-    (table?.inputs ?? []).map((i) => [i.name, i.min ?? 0])
+  // Single source of truth for inputs, shared between widget and printed table.
+  const [inputs, setInputs] = useState<Record<string, number>>(() =>
+    table ? pickInitial(table) : {}
   );
 
   if (!table) {
@@ -76,7 +91,7 @@ export function TableDetail() {
         </header>
 
         <Section title="Interaktivt oppslag" icon={Search}>
-          <TableLookupWidget table={table} />
+          <TableLookupWidget table={table} vals={inputs} setVals={setInputs} />
         </Section>
 
         <Section title="Trykt tabell" icon={Table2}>

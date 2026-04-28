@@ -115,9 +115,13 @@ function PoissonPrintedTable({ inputs }: { inputs: Record<string, number> }) {
 // ===================== Z-tabell (kumulativ standardnormal) =====================
 function ZPrintedTable({ inputs }: { inputs: Record<string, number> }) {
   const z = inputs.z ?? 0;
-  // Standard textbook layout: rows are z to one decimal, columns are second decimal (0.00..0.09)
-  const zRow = Math.floor(z * 10) / 10;
-  const zCol = +(z - zRow).toFixed(2);
+  // Standard textbook convention: rows are z to one decimal of |z|, with sign;
+  // columns are the second decimal of |z| (0.00..0.09).
+  const sign = z >= 0 ? 1 : -1;
+  const absZ = Math.abs(z);
+  const absRow = Math.floor(absZ * 10 + 1e-9) / 10;
+  const zRow = +(sign * absRow).toFixed(1);
+  const zCol = +(absZ - absRow).toFixed(2);
 
   // Show 7 rows centered on the user's z (one decimal)
   const rowOffsets = [-3, -2, -1, 0, 1, 2, 3];

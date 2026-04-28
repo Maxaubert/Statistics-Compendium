@@ -19,7 +19,10 @@ const poissonTable: Table = {
 
 describe("TableLookupWidget", () => {
   it("renders inputs for each table input and shows a result", () => {
-    render(<TableLookupWidget table={poissonTable} />);
+    const vals = { μ: 1.68, k: 2 };
+    render(
+      <TableLookupWidget table={poissonTable} vals={vals} setVals={() => {}} />
+    );
     expect(screen.getByText("μ")).toBeInTheDocument();
     expect(screen.getByText("k")).toBeInTheDocument();
     expect(screen.getByText(/P\(X ≤ k\) ≈/)).toBeInTheDocument();
