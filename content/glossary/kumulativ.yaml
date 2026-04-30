@@ -1,0 +1,11 @@
+id: kumulativ
+term_no: Kumulativ fordeling
+short_def: "F(x) = P(X ≤ x) — sannsynligheten for at X er mindre enn eller lik x."
+long_def: |
+  Standardnormaltabellen E.3 gir G(z) = P(Z ≤ z). For å finne P(X > x)
+  ta 1 − F(x). For å finne P(a < X ≤ b) ta F(b) − F(a). Pass på om
+  tabellen er kumulativ eller halekumulativ — de fleste i pensum er P(X ≤ x).
+see_also:
+  - { id: E1-binomial-kumulativ, kind: table }
+  - { id: E2-poisson-kumulativ, kind: table }
+  - { id: E3-z-tabell, kind: table }

@@ -1,0 +1,9 @@
+id: intercept
+term_no: Intercept (α, konstantledd)
+short_def: "Skjæringspunktet med y-aksen i en regresjonslinje — Y når X = 0."
+long_def: |
+  I Y = α + β·X + ε er α intercept. Estimatet er α̂ = ȳ − β̂·x̄.
+  Tolkning som "verdien når X=0" gir mening bare hvis X=0 ligger innenfor
+  observerte data; ellers er det en matematisk konstant.
+see_also:
+  - { id: regresjon-estimat-alpha-beta, kind: entry }

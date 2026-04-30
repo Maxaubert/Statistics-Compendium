@@ -1,0 +1,11 @@
+id: konfidensintervall
+term_no: Konfidensintervall (KI)
+short_def: "Intervall som med (1 − α)·100 % sikkerhet inneholder den ukjente parameteren."
+long_def: |
+  Form: estimat ± kvantil · standardfeil. 95 % KI for μ med kjent σ:
+  X̄ ± 1.96·σ/√n. Tolking: hvis vi gjentok eksperimentet mange ganger,
+  ville (1 − α)·100 % av intervallene fange den sanne parameteren.
+see_also:
+  - { id: ki-mu-kjent-sigma, kind: entry }
+  - { id: ki-mu-ukjent-sigma, kind: entry }
+  - { id: ki-andel-binomial, kind: entry }

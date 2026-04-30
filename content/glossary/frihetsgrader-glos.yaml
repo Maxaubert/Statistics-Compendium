@@ -1,0 +1,11 @@
+id: frihetsgrader-glos
+term_no: Frihetsgrader (df, ν)
+short_def: "Hvor mange uavhengige biter informasjon som er igjen etter at noe er estimert fra dataene."
+long_def: |
+  Frihetsgrader velger riktig rad i t-tabellen og χ²-tabellen.
+  Tommelfingerregler: t-test for ett utvalg → ν = n − 1.
+  To-utvalgs t (pooled) → ν = n_X + n_Y − 2.
+  Lineær regresjon → ν = n − 2. Kjikvadrat → (rader − 1)(kolonner − 1).
+see_also:
+  - { id: frihetsgrader, kind: concept }
+  - { id: en-utvalg-t-test, kind: entry }
