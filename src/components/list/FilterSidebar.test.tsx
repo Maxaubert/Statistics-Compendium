@@ -60,4 +60,18 @@ describe("FilterSidebar", () => {
     fireEvent.click(screen.getByLabelText(/Sannsynlighet/));
     expect(onToggle).toHaveBeenCalledWith("computes", "exact_probability");
   });
+
+  it("renders prominent clear-all button when filters active", () => {
+    render(
+      <FilterSidebar
+        filters={filtersConfig}
+        selection={{ computes: ["expected_value"] }}
+        counts={{}}
+        onToggle={() => {}}
+        onClear={() => {}}
+      />
+    );
+    const btn = screen.getByRole("button", { name: /nullstill alle filtere/i });
+    expect(btn).toBeInTheDocument();
+  });
 });

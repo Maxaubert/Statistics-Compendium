@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { FilterGroup } from "./FilterGroup";
 import type { Filters } from "@/data/schema";
 import type { FilterSelection } from "@/data/filtering";
@@ -20,18 +21,19 @@ export function FilterSidebar({
   const hasAny = Object.values(selection).some((arr) => arr && arr.length > 0);
   return (
     <aside className="border-r border-line bg-paper-2 p-3.5 text-sm">
-      <div className="mb-2 flex items-center justify-between border-b border-line pb-2 font-serif text-sm font-semibold text-ink-2">
+      <div className="mb-2 border-b border-line pb-2 font-serif text-sm font-semibold text-ink-2">
         Filter
-        {hasAny && (
-          <button
-            type="button"
-            onClick={onClear}
-            className="font-sans text-[11px] font-medium text-primary-2"
-          >
-            Nullstill
-          </button>
-        )}
       </div>
+      {hasAny && (
+        <button
+          type="button"
+          onClick={onClear}
+          className="mb-3 flex w-full items-center justify-center gap-2 rounded-md border border-primary-2 bg-primary-soft px-3 py-2 text-[13px] font-medium text-primary hover:bg-primary-2 hover:text-white"
+        >
+          <X size={14} />
+          Nullstill alle filtere
+        </button>
+      )}
       {filters.dimensions.map((d) => (
         <FilterGroup
           key={d.key}
