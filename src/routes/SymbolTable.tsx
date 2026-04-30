@@ -189,7 +189,7 @@ export function SymbolTable() {
   return (
     <div className="min-h-screen bg-paper">
       <Banner />
-      <main className="mx-auto max-w-[920px] bg-card px-12 py-8">
+      <main className="bg-card px-12 py-8">
         <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
           Symboler
         </h1>
