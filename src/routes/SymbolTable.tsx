@@ -199,26 +199,20 @@ export function SymbolTable() {
           signifikansnivå og konstantledd, og β både stigningstall og
           sannsynligheten for type-2-feil.
         </p>
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
-          {symbols.map((s) => {
-            const hint = s.contexts[0]?.usage ?? "";
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setOpenId(s.id)}
-                aria-label={`Vis detaljer for ${s.sym}`}
-                className="group flex aspect-[5/6] flex-col items-center justify-center rounded-lg border border-line bg-paper-2 p-2 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
-              >
-                <span className="font-math text-[36px] font-medium leading-none text-primary group-hover:text-primary-2">
-                  {s.sym}
-                </span>
-                <span className="mt-2 line-clamp-2 text-[10.5px] font-medium uppercase tracking-wide text-ink-3 group-hover:text-ink-2">
-                  {hint.replace(/\s*\(.*?\)\s*/g, " ").trim()}
-                </span>
-              </button>
-            );
-          })}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {symbols.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setOpenId(s.id)}
+              aria-label={`Vis detaljer for ${s.sym}`}
+              className="group flex aspect-square items-center justify-center rounded-xl border border-line bg-paper-2 p-4 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
+            >
+              <span className="font-math text-[64px] font-medium leading-none text-primary group-hover:text-primary-2">
+                {s.sym}
+              </span>
+            </button>
+          ))}
         </div>
       </main>
       {open && <SymbolModal symbol={open} onClose={() => setOpenId(null)} />}
