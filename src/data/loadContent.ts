@@ -1,8 +1,8 @@
 import {
   EntrySchema, ConceptSchema, TableSchema, FiltersSchema,
-  GlossaryTermSchema, PatternSchema, WizardSchema,
+  GlossaryTermSchema, PatternSchema, SymbolEntrySchema, WizardSchema,
   type Entry, type Concept, type Table, type Filters,
-  type GlossaryTerm, type Pattern, type Wizard,
+  type GlossaryTerm, type Pattern, type SymbolEntry, type Wizard,
 } from "./schema";
 
 const entryModules    = import.meta.glob("/content/entries/*.yaml",   { eager: true, import: "default" });
@@ -10,6 +10,7 @@ const conceptModules  = import.meta.glob("/content/concepts/*.yaml",  { eager: t
 const tableModules    = import.meta.glob("/content/tables/*.yaml",    { eager: true, import: "default" });
 const glossaryModules = import.meta.glob("/content/glossary/*.yaml",  { eager: true, import: "default" });
 const patternModules  = import.meta.glob("/content/patterns/*.yaml",  { eager: true, import: "default" });
+const symbolModules   = import.meta.glob("/content/symbols/*.yaml",   { eager: true, import: "default" });
 const filtersModule   = import.meta.glob("/content/filters.yaml",     { eager: true, import: "default" });
 const wizardModule    = import.meta.glob("/content/wizard.yaml",      { eager: true, import: "default" });
 
@@ -19,6 +20,7 @@ export interface ContentBundle {
   tables: Table[];
   glossary: GlossaryTerm[];
   patterns: Pattern[];
+  symbols: SymbolEntry[];
   wizard: Wizard | null;
   filters: Filters;
 }
@@ -51,6 +53,8 @@ export function loadAllContent(): ContentBundle {
     .filter((g) => g.id !== "stub");
   const patterns = parseAll(patternModules, PatternSchema, "pattern")
     .filter((p) => p.id !== "stub");
+  const symbols = parseAll(symbolModules, SymbolEntrySchema, "symbol")
+    .filter((s) => s.id !== "stub");
 
   const filtersFiles = Object.values(filtersModule);
   if (filtersFiles.length === 0) throw new Error("content/filters.yaml is missing");
@@ -66,10 +70,11 @@ export function loadAllContent(): ContentBundle {
     ...tables.map((t) => `table:${t.id}`),
     ...glossary.map((g) => `glossary:${g.id}`),
     ...patterns.map((p) => `pattern:${p.id}`),
+    ...symbols.map((s) => `symbol:${s.id}`),
   ];
   const dupes = allIds.filter((id, i) => allIds.indexOf(id) !== i);
   if (dupes.length > 0) throw new Error(`Duplicate ids found: ${dupes.join(", ")}`);
 
-  cached = { entries, concepts, tables, glossary, patterns, wizard, filters };
+  cached = { entries, concepts, tables, glossary, patterns, symbols, wizard, filters };
   return cached;
 }

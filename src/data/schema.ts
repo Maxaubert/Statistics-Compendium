@@ -151,6 +151,24 @@ export const GlossaryTermSchema = z.object({
 });
 export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
 
+// ============ Symbol Entry ============
+
+export const SymbolEntryContextSchema = z.object({
+  usage: z.string(),       // e.g. "Signifikansnivå (hypotesetest)"
+  detail: z.string(),       // 2-3 sentence explanation
+  entry_refs: z.array(z.string()).optional(), // entry ids that use this meaning
+});
+
+export const SymbolEntrySchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),  // e.g. "alpha"
+  sym: z.string(),                         // the actual symbol: "α"
+  short_def: z.string(),                    // one-line summary
+  contexts: z.array(SymbolEntryContextSchema).min(1), // ≥1
+  see_also: z.array(RelatedRefSchema).optional(),
+});
+export type SymbolEntryContext = z.infer<typeof SymbolEntryContextSchema>;
+export type SymbolEntry = z.infer<typeof SymbolEntrySchema>;
+
 // ============ Pattern ============
 
 export const PatternSchema = z.object({
