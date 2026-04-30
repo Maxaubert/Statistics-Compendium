@@ -2,17 +2,15 @@
 
 # Statistikk-kompendium
 
-**An offline, searchable formula and concept reference for ITD20218 (HiØ, V26).**
+**A compendium that helps students learn statistics.**
+
+The goal: a student who does not yet recognize a concept or task can still find the right formula, either by filtering on what they observe in the problem, by walking through the *veiviser*, or by browsing the entries.
 
 <img src="screenshots/01-list.png" alt="Browse view" width="820">
 
 </div>
 
 ---
-
-## Why
-
-The exam permits local websites but not the internet. This compendium lets you identify the correct formula from what is visible in a problem (filters like *with replacement*, *rate given*, *two outcomes per trial*), even for problem types you have not solved before.
 
 ## What's inside
 
@@ -45,15 +43,6 @@ The exam permits local websites but not the internet. This compendium lets you i
 
 React 18, TypeScript, Vite, Tailwind, KaTeX, Fuse.js, Zod. Content is one YAML file per entry, validated at build time so a malformed entry fails loudly.
 
-## Quick start
-
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # static dist/, runs from file:// or USB
-npm test
-```
-
 ## Layout
 
 ```
@@ -66,19 +55,3 @@ content/
 src/            React app
 screenshots/    captured via capture.sh
 ```
-
-## Regenerating screenshots
-
-With the dev server running on `:5173`:
-
-```bash
-bash screenshots/capture.sh
-```
-
-Drives headless Edge against each route at 1440 by 900.
-
----
-
-<div align="center">
-<sub>Built for ITD20218 Statistikk og statistisk programmering, HiØ V26.</sub>
-</div>
