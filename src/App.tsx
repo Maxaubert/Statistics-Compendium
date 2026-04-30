@@ -6,6 +6,8 @@ import { TableDetail } from "./routes/TableDetail";
 import { SymbolTable } from "./routes/SymbolTable";
 import { Cheatsheet } from "./routes/Cheatsheet";
 import { Glossary } from "./routes/Glossary";
+import { Patterns } from "./routes/Patterns";
+import { PatternDetail } from "./routes/PatternDetail";
 import { NotFound } from "./routes/NotFound";
 
 export function App() {
@@ -19,6 +21,8 @@ export function App() {
         <Route path="/symboler" element={<SymbolTable />} />
         <Route path="/cheatsheet" element={<Cheatsheet />} />
         <Route path="/ordliste" element={<Glossary />} />
+        <Route path="/monstre" element={<Patterns />} />
+        <Route path="/monstre/:id" element={<PatternDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
