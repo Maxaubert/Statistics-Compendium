@@ -11,7 +11,7 @@
 - **Step-by-step pages.** Every formula and concept page walks through how to apply it.
 
 <p align="center">
-  <img src="screenshots/01-list.png" alt="Browse view" width="820">
+  <img src="screenshots/01-list.png" alt="Browse view" width="100%">
 </p>
 
 ---
@@ -38,11 +38,8 @@
 <td><img src="screenshots/veiviser%20svar.png" alt="Veiviser anbefaling"><br><sub><b>Wizard recommendation</b> after answering the survey questions.</sub></td>
 </tr>
 <tr>
-<td><img src="screenshots/06-symboler.png" alt="Symboler"><br><sub><b>Symbols</b> grid, disambiguating overloaded glyphs like &alpha; and &beta;.</sub></td>
+<td><img src="screenshots/05-table-z.png" alt="Z-tabell"><br><sub><b>Interactive table</b> for E.1 through E.6, with live lookup.</sub></td>
 <td><img src="screenshots/07-ordliste.png" alt="Ordliste"><br><sub><b>Glossary</b> of Norwegian statistics terms.</sub></td>
-</tr>
-<tr>
-<td colspan="2" align="center"><img src="screenshots/05-table-z.png" alt="Z-tabell" width="82%"><br><sub><b>Interactive table</b> for E.1 through E.6, with live lookup.</sub></td>
 </tr>
 </table>
 
