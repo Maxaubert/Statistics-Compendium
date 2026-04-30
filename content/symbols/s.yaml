@@ -1,12 +1,27 @@
 id: s
 sym: "s"
-short_def: "Utvalgsstandardavvik — estimat for σ regnet ut fra dataene dine."
+short_def: "Utvalgsstandardavvik — estimat for populasjonsstandardavviket σ, regnet ut fra dataene dine."
 contexts:
   - usage: "Utvalgsstandardavvik"
     detail: |
-      s = √[Σ(xᵢ − x̄)² / (n − 1)]. Bruker n − 1 (Bessels korreksjon)
-      for å gi et forventningsrett estimat. Hvis σ er ukjent, brukes s
-      og man bytter z-fordelingen ut med t-fordelingen i tester og KI.
+      s er ditt anslag på hvor mye datapunktene typisk avviker fra
+      gjennomsnittet, regnet fra utvalget. Det er den 'praktiske'
+      versjonen av σ — du bruker s når σ er ukjent (som det nesten
+      alltid er).
+
+      Formel: s = √[ Σ(xᵢ − x̄)² / (n − 1) ]
+
+      Hvorfor n − 1 og ikke n? Det heter Bessels korreksjon, og det
+      gir et forventningsrett estimat for σ². Hvis du delte på n
+      ville du systematisk underestimere variansen.
+
+      Konsekvens i praksis: når σ er ukjent, erstatter du σ med s
+      i formler — og samtidig bytter du z-fordelingen ut med
+      t-fordelingen (med n − 1 frihetsgrader) i tester og KI.
+
+      Pass på: s (latinsk liten s, utvalgsstandardavvik) vs σ
+      (gresk sigma, populasjonsstandardavvik). Liten forskjell
+      grafisk, viktig forskjell i mening.
     entry_refs:
       - en-utvalg-t-test
       - to-utvalgs-t-test

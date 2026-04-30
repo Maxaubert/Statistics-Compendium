@@ -1,12 +1,23 @@
 id: p
 sym: "p"
-short_def: "Tre vanlige bruk avhengig av kontekst: populasjonsandel, suksesssannsynlighet (binomial), eller p-verdi i en hypotesetest."
+short_def: "Tre vanlige roller avhengig av kontekst: populasjonsandel, suksesssannsynlighet i binomial, eller p-verdi i en hypotesetest."
 contexts:
   - usage: "Populasjonsandel / suksesssannsynlighet"
     detail: |
-      Den 'sanne' andelen i populasjonen som har egenskapen du måler
-      (eller sannsynligheten for suksess i ett binomialt forsøk).
-      Estimeres med utvalgsandelen p̂ = X/n.
+      Den 'sanne' andelen i populasjonen som har en bestemt egenskap —
+      eller, ekvivalent, sannsynligheten for suksess i ett enkelt
+      binomialt forsøk.
+
+      Eksempel: hvis 30 % av norske velgere støtter et parti, er
+      p = 0.30. Du kjenner sjelden p direkte, men estimerer den
+      med utvalgsandelen p̂ = X/n.
+
+      I binomial: Bin(n, p) — p er sannsynligheten i hvert forsøk,
+      og X teller antall suksesser totalt.
+
+      Pass på: p uten hatt er den ukjente, sanne verdien. p̂ er ditt
+      estimat. Og — verre — p betyr p-verdi i hypotesetester. Sjekk
+      konteksten.
     entry_refs:
       - binomial-fordeling
       - en-utvalg-z-test-andel
@@ -14,9 +25,17 @@ contexts:
       - hypergeometrisk-fordeling
   - usage: "p-verdi i hypotesetest"
     detail: |
-      Sannsynligheten for å observere noe minst like ekstremt som det du så,
-      gitt at H₀ er sann. Liten p-verdi (< α) gir grunnlag for å forkaste H₀.
-      Forveksles ofte med P(H₀ er sann) — det er ikke det samme.
+      p-verdien er sannsynligheten for å observere noe minst like
+      ekstremt som det du så, gitt at H₀ er sann. Lav p-verdi betyr
+      at dataene er overraskende under H₀ — derfor mistanke mot H₀.
+
+      Beslutningsregel: hvis p < α, forkast H₀; ellers behold H₀.
+
+      VANLIG MISFORSTÅELSE: p-verdien er IKKE sannsynligheten for at
+      H₀ er sann. Den sier hvor uvanlige dataene er HVIS H₀ er sann.
+      Det er en stor forskjell.
+
+      Eksempel: p = 0.03 og α = 0.05 → forkast H₀.
     entry_refs:
       - en-utvalg-t-test
       - en-utvalg-z-test

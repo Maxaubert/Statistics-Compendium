@@ -4,10 +4,22 @@ short_def: "Antall frihetsgrader — bestemmer formen på t-, kjikvadrat- og F-f
 contexts:
   - usage: "Frihetsgrader i t- og kjikvadrat-fordelinger"
     detail: |
-      Et heltall som indekserer hvilken t- eller χ²-fordeling du slår opp i.
-      For en-utvalgs t-test er ν = n − 1. For χ²-godhetstest er ν = k − 1
-      (k = antall kategorier). For uavhengighetstest er ν = (r − 1)(c − 1).
-      Mer ν → tabellverdiene nærmer seg standardnormalen.
+      Tenk på ν som 'hvilken side av tabellen du slår opp i'. Det er
+      et heltall som velger riktig versjon av t-fordelingen eller
+      χ²-fordelingen (eller F-fordelingen med to ν-er).
+
+      Hvilket tall? Det avhenger av testen:
+      - En-utvalgs t-test: ν = n − 1
+      - Regresjonstest for stigningstall: ν = n − 2
+      - χ²-godhetstest: ν = k − 1 (k = antall kategorier)
+      - χ²-uavhengighetstest: ν = (r − 1)(c − 1) (r rader, c kolonner)
+
+      Intuisjon: jo flere frihetsgrader, desto 'tynnere' haler i
+      t-fordelingen. Når ν blir stor (~30+), blir t-fordelingen
+      praktisk talt lik standardnormalen.
+
+      Pass på: ν er gresk 'ny' (ser ut som en kursiv v), ikke å
+      forveksle med v eller y.
     entry_refs:
       - en-utvalg-t-test
       - to-utvalgs-t-test

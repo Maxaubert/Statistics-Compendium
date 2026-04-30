@@ -1,13 +1,25 @@
 id: h-null
 sym: "H₀"
-short_def: "Nullhypotesen — påstanden du tester mot. Det 'kjedelige' utgangspunktet (ingen effekt, ingen forskjell)."
+short_def: "Nullhypotesen — den 'kjedelige' påstanden du tester mot. Sier at det ikke er noen effekt eller forskjell."
 contexts:
   - usage: "Nullhypotesen i hypotesetest"
     detail: |
-      Påstanden vi forsøker å motbevise. Eksempler: H₀: μ = μ₀, H₀: p = p₀,
-      H₀: β = 0. Forkaster H₀ hvis testobservatoren faller i forkastningsområdet
-      eller p-verdi < α. Å 'beholde H₀' er ikke det samme som å bevise H₀ — det
-      betyr bare at dataene ikke ga sterke nok bevis mot den.
+      Tenk på H₀ som status quo: 'ingenting har skjedd, ingen forskjell,
+      ingen effekt'. Hele hypotesetesten handler om å se om dataene
+      gir sterkt nok bevis til å forkaste denne kjedelige påstanden.
+
+      Vanlige former: H₀: μ = μ₀ (gjennomsnittet er som forventet),
+      H₀: p = p₀ (andelen er som antatt), H₀: β = 0 (x har ingen
+      lineær effekt på y).
+
+      Du forkaster H₀ hvis testobservatoren havner i forkastningsområdet,
+      eller p-verdien er mindre enn α.
+
+      Viktig: 'beholde H₀' er IKKE det samme som å bevise H₀. Det betyr
+      bare at du ikke fant sterke nok bevis mot den. Som i en rettssak:
+      'ikke skyldig' er ikke det samme som 'uskyldig'.
+
+      Ikke bland med H₁ — H₀ har alltid likhetstegn (=), H₁ har ulikhet.
     entry_refs:
       - en-utvalg-z-test
       - en-utvalg-t-test

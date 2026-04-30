@@ -1,12 +1,21 @@
 id: beta
 sym: "β"
-short_def: "To vanlige bruk: stigningstallet i en regresjonslinje, eller sannsynligheten for type-2-feil."
+short_def: "Den greske bokstaven beta har to vanlige roller: stigningstallet i en regresjonslinje, eller sannsynligheten for type-2-feil i en hypotesetest."
 contexts:
   - usage: "Stigningstall i regresjonslinje"
     detail: |
-      I modellen y = α + βx er β endringen i y når x øker med én enhet.
-      Estimeres fra data som β̂. Hypotesetesten H₀: β = 0 sjekker om x i det
-      hele tatt har en lineær effekt på y.
+      I modellen y = α + βx er β stigningstallet — altså hvor mye y
+      endres når x øker med én enhet. Det er β som forteller om x
+      faktisk har en effekt på y.
+
+      Eksempel: hvis y er karakter og x er antall timer studert, og
+      β = 0.4, så øker karakteren med 0.4 poeng per ekstra time.
+      Den 'sanne' β kjenner du ikke — du estimerer den fra dataene
+      som β̂. Hypotesetesten H₀: β = 0 sjekker om x i det hele tatt
+      har en lineær effekt.
+
+      Pass på: β (uten hatt) er den teoretiske verdien, β̂ er ditt
+      estimat fra utvalget.
     entry_refs:
       - regresjon-estimat-alpha-beta
       - regresjon-test-stigningstall
@@ -14,8 +23,16 @@ contexts:
       - regresjon-prediksjonsintervall
   - usage: "Sannsynlighet for type-2-feil"
     detail: |
-      β = P(beholde H₀ | H₁ er sann). Altså sjansen for å overse en reell effekt.
-      Teststyrken er 1 − β. Mindre β krever større utvalg eller større sann effekt.
+      Her er β sjansen for at du beholder H₀ selv om H₁ faktisk er
+      sann — du overser en reell effekt. Skrives β = P(beholde H₀ | H₁ sann).
+
+      Det relaterte begrepet teststyrke (1 − β) er sannsynligheten
+      for å oppdage en effekt som faktisk finnes. Vil du ha mindre
+      β må du enten ha større utvalg eller en større faktisk effekt.
+
+      Ikke forveksle med β som regresjonskoeffisient — kontekst avgjør:
+      i en hypotesetest om feiltyper er det type-2-feil; i en linje
+      y = α + βx er det stigningstallet.
     entry_refs: []
 see_also:
   - { id: type-2-feil, kind: glossary }

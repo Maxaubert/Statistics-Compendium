@@ -1,12 +1,22 @@
 id: q
 sym: "q"
-short_def: "Komplementsannsynlighet: q = 1 − p. 'Fiasko' i et binomialt forsøk."
+short_def: "Komplementsannsynlighet: q = 1 − p. Sannsynligheten for 'fiasko' i et binomialt forsøk."
 contexts:
   - usage: "Komplementsannsynlighet i binomial"
     detail: |
-      Hvis p er sannsynligheten for suksess i ett forsøk, er q = 1 − p
-      sannsynligheten for fiasko. Brukes i punktformelen
-      P(X = k) = C(n,k)·pᵏ·qⁿ⁻ᵏ og i variansen np·q.
+      q er bare en kortform for 1 − p. Hvis p er sannsynligheten for
+      suksess, er q sannsynligheten for fiasko (det motsatte
+      utfallet). De summerer alltid til 1: p + q = 1.
+
+      Eksempel: kaster du en terning og 'suksess' er en sekser, er
+      p = 1/6 og q = 5/6.
+
+      Du møter q i punktformelen for binomial:
+      P(X = k) = C(n, k) · pᵏ · qⁿ⁻ᵏ
+      og i variansen Var(X) = n · p · q.
+
+      Notasjonen sparer skriving — mange formler er vesentlig
+      kortere med q enn med (1 − p).
     entry_refs:
       - binomial-fordeling
       - en-utvalg-z-test-andel

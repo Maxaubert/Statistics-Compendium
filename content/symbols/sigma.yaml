@@ -1,13 +1,25 @@
 id: sigma
 sym: "σ"
-short_def: "Populasjonsstandardavvik — typisk avstand fra μ. Måler spredning i populasjonen."
+short_def: "Populasjonsstandardavvik — den typiske avstanden fra μ. Måler spredning i hele populasjonen."
 contexts:
   - usage: "Populasjonsstandardavvik"
     detail: |
-      Kvadratroten av variansen σ². Sier hvor mye en typisk observasjon
-      avviker fra gjennomsnittet, målt i samme enhet som dataene.
-      Hvis σ er kjent på forhånd, brukes z-test eller z-konfidensintervall;
-      ellers estimeres den med utvalgsstandardavviket s.
+      σ sier hvor 'spredt' populasjonen er rundt sin egen middelverdi μ,
+      målt i samme enhet som dataene (kr, cm, sekunder ...). Et lite σ
+      betyr at observasjonene ligger tett rundt μ; et stort σ at de
+      sprer seg mye.
+
+      σ er kvadratroten av variansen σ², og er den 'sanne' verdien i
+      hele populasjonen — som du sjelden kjenner direkte.
+
+      Praktisk konsekvens:
+      - Hvis σ er kjent på forhånd: bruk z-test og z-konfidensintervall.
+      - Hvis σ er ukjent (vanligst): erstatt med utvalgsstandardavviket
+        s, og bruk t-fordeling i stedet for z-fordeling.
+
+      VIKTIG forveksling: σ (liten gresk sigma) er standardavvik. Σ
+      (stor gresk sigma) er summetegn — helt annen rolle. Sjekk om
+      bokstaven er stor eller liten.
     entry_refs:
       - en-utvalg-z-test
       - ki-mu-kjent-sigma

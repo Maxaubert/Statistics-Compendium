@@ -1,12 +1,24 @@
 id: mu
 sym: "μ"
-short_def: "Populasjonsgjennomsnitt — den 'sanne' forventede verdien. Også brukt for forventet antall i poissonfordeling (μ = λt)."
+short_def: "Populasjonsgjennomsnitt — den 'sanne' forventede verdien i hele populasjonen. Brukes også for forventet antall i poissonfordelingen (μ = λt)."
 contexts:
   - usage: "Populasjonsgjennomsnitt"
     detail: |
-      Den teoretiske/sanne middelverdien i hele populasjonen. Vi kjenner
-      sjelden μ direkte, men estimerer den med utvalgsgjennomsnittet X̄.
-      Hypotesetester på gjennomsnitt har formen H₀: μ = μ₀.
+      μ er gjennomsnittet i HELE populasjonen — den sanne, teoretiske
+      verdien du sjelden klarer å måle direkte. Tenk: 'hva ville
+      gjennomsnittet vært om jeg kunne målt absolutt alle?'
+
+      I praksis kjenner du ikke μ. Du tar et utvalg, regner ut
+      utvalgsgjennomsnittet X̄, og bruker det som estimat for μ.
+
+      Hypotesetester på gjennomsnitt har formen H₀: μ = μ₀ — du
+      tester om den sanne μ er lik en bestemt verdi μ₀.
+
+      Eksempel: skal du teste om gjennomsnittlig høyde for norske
+      menn er 180 cm, er H₀: μ = 180.
+
+      Pass på: ikke forveksle μ (sann gjennomsnitt) med X̄ (utvalgsgjennomsnitt),
+      eller med n (utvalgsstørrelse) som ligner litt grafisk.
     entry_refs:
       - en-utvalg-z-test
       - en-utvalg-t-test
@@ -17,8 +29,12 @@ contexts:
       - sum-uavhengige-normaler
   - usage: "Forventet antall i poissonfordeling"
     detail: |
-      I en poissonprosess med rate λ over tidsvindu t er forventet antall
-      hendelser μ = λt. Tabell E.2 er ofte indeksert med μ.
+      I en poissonprosess med rate λ over tidsvindu t er forventet
+      antall hendelser μ = λt. Tabell E.2 er ofte indeksert med μ,
+      ikke λ.
+
+      Samme bokstav, helt annen rolle: her er μ et antall (kan være
+      desimaltall som 3.5), ikke et gjennomsnitt av målte verdier.
     entry_refs:
       - poisson-fordeling
       - ki-poissonrate

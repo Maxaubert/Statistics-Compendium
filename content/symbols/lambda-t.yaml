@@ -1,12 +1,22 @@
 id: lambda-t
 sym: "λt"
-short_def: "Forventet antall hendelser i en poissonprosess over tidsvindu t. Lik μ i poissonfordelingen."
+short_def: "Forventet antall hendelser i en poissonprosess over et tidsvindu av lengde t. Lik μ i poissonfordelingen."
 contexts:
   - usage: "Forventet antall i poissonvindu"
     detail: |
-      Hvis hendelser kommer med rate λ per tidsenhet, er antall hendelser i et
-      vindu av lengde t poissonfordelt med parameter μ = λt. Kalkulator: regn
-      ut λt først, slå deretter opp i tabell E.2 med μ = λt.
+      Når hendelser kommer med rate λ per tidsenhet, blir forventet
+      antall over et lengre vindu rett og slett λ · t. Det er λt.
+
+      Eksempel: får du i snitt λ = 2 kunder per minutt, er forventet
+      antall i et 15-minutters vindu λt = 2 · 15 = 30 kunder. Antall
+      kunder i vinduet er da Poisson(30).
+
+      Praktisk på kalkulator: regn ut λt først, slå deretter opp i
+      tabell E.2 med μ = λt. Mange formler skriver derfor μ der
+      vi mener λt.
+
+      Husk konsistente enheter: hvis λ er per minutt, må t også
+      være i minutter.
     entry_refs:
       - poisson-fordeling
       - eksponential-fordeling

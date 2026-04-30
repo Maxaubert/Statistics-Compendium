@@ -1,12 +1,23 @@
 id: n
 sym: "n"
-short_def: "Utvalgsstørrelse — antall observasjoner. Også fast antall forsøk i binomial."
+short_def: "Utvalgsstørrelse — antall observasjoner du har samlet inn. Også fast antall forsøk i en binomialfordeling."
 contexts:
   - usage: "Antall observasjoner i et utvalg"
     detail: |
-      Antall datapunkter du har samlet. Større n gir mer presise estimater
-      og smalere konfidensintervall (typisk √n i nevneren av standardfeilen).
-      Frihetsgrader er ofte n − 1 eller n − 2.
+      Helt enkelt: hvor mange datapunkter har du? Hvis du har målt
+      høyden til 25 personer, er n = 25.
+
+      Større n gir mer presise estimater og smalere konfidensintervall —
+      ofte fordi standardfeilen har √n i nevneren. Doble utvalget,
+      og standardfeilen halveres ikke, men krymper med faktor √2.
+
+      Frihetsgrader regnes nesten alltid ut fra n: ν = n − 1 i
+      en-utvalgs t-test, ν = n − 2 i regresjon (fordi to parametre
+      er estimert).
+
+      Pass på: ikke forveksle n (utvalgsstørrelse, latinsk bokstav)
+      med μ (sann gjennomsnitt, gresk my). De ligner grafisk men er
+      helt forskjellige ting.
     entry_refs:
       - en-utvalg-t-test
       - en-utvalg-z-test
@@ -16,8 +27,12 @@ contexts:
       - regresjon-estimat-alpha-beta
   - usage: "Antall forsøk i binomial"
     detail: |
-      Fast antall uavhengige forsøk, hver med samme suksessannsynlighet p.
-      Antall suksesser er da X ~ Bin(n, p) med E[X] = np og Var(X) = np(1−p).
+      I en binomialfordeling er n et fast antall uavhengige forsøk,
+      hver med samme suksessannsynlighet p. Antall suksesser er
+      X ~ Bin(n, p) med E[X] = np og Var(X) = np(1−p).
+
+      Eksempel: kaster du en mynt 20 ganger, er n = 20 og p = 0.5.
+      Forventet antall kron er np = 10.
     entry_refs:
       - binomial-fordeling
       - hypergeometrisk-fordeling

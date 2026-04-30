@@ -1,12 +1,25 @@
 id: t
 sym: "t"
-short_def: "T-statistikk i hypotesetester når σ er ukjent. Også brukt for tidsvindu i poissonprosess."
+short_def: "T-statistikken i hypotesetester når σ er ukjent. Brukes også som betegnelse på et tidsvindu i en poissonprosess."
 contexts:
   - usage: "T-statistikk (test/KI med ukjent σ)"
     detail: |
-      t = (x̄ − μ₀) / (s/√n). Følger en t-fordeling med n − 1 frihetsgrader.
-      Sammenlign med kritisk verdi i tabell E.4. Brukes når populasjonsstandardavviket
-      er ukjent og må erstattes med s.
+      Tenk på t som 'z-statistikkens fetter for når du ikke kjenner σ'.
+      Strukturen er den samme, men du erstatter σ med utvalgs-
+      standardavviket s — og betalingen er at du får en bredere
+      fordeling (t-fordelingen) i stedet for standardnormalen.
+
+      Formel for én utvalg: t = (x̄ − μ₀) / (s/√n)
+
+      Følger en t-fordeling med ν = n − 1 frihetsgrader. Sammenlign
+      med kritisk verdi i tabell E.4, eller regn ut p-verdi fra
+      samme tabell.
+
+      Når kjenner du σ? Sjelden. Derfor er t-test mye vanligere enn
+      z-test i praksis.
+
+      Når n blir stort (~30+), er t-fordelingen og standardnormalen
+      praktisk talt like.
     entry_refs:
       - en-utvalg-t-test
       - to-utvalgs-t-test
@@ -14,8 +27,14 @@ contexts:
       - regresjon-test-stigningstall
   - usage: "Tidsvindu i poissonprosess"
     detail: |
-      Lengden på tidsperioden du teller hendelser i. Antall hendelser i et
-      vindu av lengde t er Poisson(λt). Forventet antall: μ = λt.
+      I poisson-sammenheng er t lengden på tidsperioden du teller
+      hendelser i. Antall hendelser i et vindu av lengde t er
+      Poisson(λt), og forventet antall er μ = λt.
+
+      Eksempel: med rate λ = 2 hendelser per minutt og et vindu
+      t = 5 minutter, er forventet antall μ = 10.
+
+      Helt annen rolle enn t-statistikken — kontekst avgjør.
     entry_refs:
       - poisson-fordeling
       - eksponential-fordeling

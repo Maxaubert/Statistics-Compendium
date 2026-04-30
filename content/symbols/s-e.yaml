@@ -1,12 +1,26 @@
 id: s-e
 sym: "S_E"
-short_def: "Residualstandardavvik i regresjon — typisk avstand fra observasjon yᵢ til modellinjen ŷᵢ."
+short_def: "Residualstandardavvik i regresjon — den typiske avstanden fra et observert punkt yᵢ til regresjonslinjen ŷᵢ."
 contexts:
   - usage: "Residualstandardavvik"
     detail: |
-      S_E = √[Σ(yᵢ − ŷᵢ)² / (n − 2)]. Estimat for spredningen rundt
-      regresjonslinjen. Brukes i standardfeilen for β̂ og for prediksjonsintervaller.
-      Frihetsgrader er n − 2 fordi to parametre (α, β) er estimert.
+      Tenk på S_E som 'spredningen rundt regresjonslinja'. Når
+      datapunktene ligger tett inntil linja er S_E lite; når de
+      sprer seg som en sky er S_E stort.
+
+      Formel: S_E = √[ Σ(yᵢ − ŷᵢ)² / (n − 2) ]
+
+      Tellersummen er kvadrerte residualer (avstanden fra hvert punkt
+      til linja). Hvorfor n − 2 i nevneren? Fordi du har estimert
+      to parametre (α og β) — de stjeler hver sin frihetsgrad.
+
+      S_E brukes videre som byggestein i:
+      - standardfeilen for β̂ (i hypotesetest om stigning)
+      - prediksjonsintervaller for nye y-verdier
+
+      Ikke å forveksle med s (vanlig utvalgsstandardavvik for én
+      variabel) eller standardfeilen for β̂ (en annen, men relatert
+      størrelse).
     entry_refs:
       - regresjon-residualvarians
       - regresjon-standardfeil-stigningstall
