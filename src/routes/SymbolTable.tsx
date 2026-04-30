@@ -200,26 +200,19 @@ export function SymbolTable() {
           sannsynligheten for type-2-feil.
         </p>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {symbols.map((s) => {
-            const len = s.sym.length;
-            const fontSize = len > 7 ? 32 : len > 4 ? 44 : 60;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setOpenId(s.id)}
-                aria-label={`Vis detaljer for ${s.sym}`}
-                className="group flex min-h-[120px] items-center justify-center rounded-xl border border-line bg-paper-2 p-4 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
-              >
-                <span
-                  className="font-math whitespace-nowrap font-medium leading-none text-primary group-hover:text-primary-2"
-                  style={{ fontSize: `${fontSize}px` }}
-                >
-                  {s.sym}
-                </span>
-              </button>
-            );
-          })}
+          {symbols.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setOpenId(s.id)}
+              aria-label={`Vis detaljer for ${s.sym}`}
+              className="group flex min-h-[120px] items-center justify-center rounded-xl border border-line bg-paper-2 p-4 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
+            >
+              <span className="font-math whitespace-nowrap text-[40px] font-medium leading-none text-primary group-hover:text-primary-2">
+                {s.sym}
+              </span>
+            </button>
+          ))}
         </div>
       </main>
       {open && <SymbolModal symbol={open} onClose={() => setOpenId(null)} />}
