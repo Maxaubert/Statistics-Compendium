@@ -17,7 +17,7 @@ export const FilterSelectionSchema = z.record(z.string(), z.array(z.string())).d
 
 export const RelatedRefSchema = z.object({
   id: z.string(),
-  kind: z.enum(["entry", "concept", "table"]),
+  kind: z.enum(["entry", "concept", "table", "glossary", "pattern"]),
 });
 
 export const ExampleSchema = z.object({
