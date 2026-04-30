@@ -14,7 +14,7 @@ export function Banner() {
   const Icon = theme === "light" ? Moon : Sun;
   return (
     <header
-      className="relative overflow-hidden text-paper-2"
+      className="relative overflow-hidden text-white"
       style={{
         background:
           "linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%)",
@@ -32,7 +32,7 @@ export function Banner() {
         <Link
           to="/"
           aria-label="Til forsiden"
-          className="flex items-center gap-3 text-paper-2 no-underline transition-opacity hover:opacity-90"
+          className="flex items-center gap-3 text-white no-underline transition-opacity hover:opacity-90"
         >
           <div
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-white/10"
@@ -63,7 +63,7 @@ export function Banner() {
           <Link
             key={to}
             to={to}
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-paper-2/85 no-underline hover:bg-white/10 hover:text-white"
+            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-white/85 no-underline hover:bg-white/10 hover:text-white"
           >
             <NavIcon size={13} />
             {label}
