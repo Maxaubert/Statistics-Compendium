@@ -6,6 +6,7 @@ import {
 import { Banner } from "@/components/shell/Banner";
 import { Section } from "@/components/detail/Section";
 import { HeroFormula } from "@/components/detail/HeroFormula";
+import { DistributionThumbnail } from "@/components/detail/DistributionThumbnail";
 import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
@@ -92,6 +93,7 @@ export function EntryDetail() {
           </div>
         </header>
 
+        <DistributionThumbnail entry={entry} />
         <HeroFormula latex={entry.formula_latex} />
 
         <Section title="Hva den gjør" icon={Info}>
