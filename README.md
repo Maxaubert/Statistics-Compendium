@@ -1,14 +1,18 @@
 <div align="center">
 
 # Statistikk-kompendium
-The main goal og the site is to provide a tool to help anyone, no matter they're prior knowledge, to identify which formula to use and how to do it. This is achieved in three main ways:
-* Filter - Lets you narrow down the formula based on characteristics.
-* Guide(Veiviser) - A dynamic survey that asks questions to help you identify the formula/concept. After the survery it will recommend the most likely formula/concept.
-* Within each concept and formula page there are detailed step by step guides on how to complete the task.
-
-<img src="screenshots/01-list.png" alt="Browse view" width="820">
 
 </div>
+
+**A tool that helps anyone, regardless of prior knowledge, identify which formula to use and how to apply it.** Three ways in:
+
+- **Filter.** Narrow the catalog by characteristics observable in the problem.
+- **Guide (*Veiviser*).** A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.
+- **Step-by-step pages.** Every formula and concept page walks through how to apply it.
+
+<p align="center">
+  <img src="screenshots/01-list.png" alt="Browse view" width="820">
+</p>
 
 ---
 
