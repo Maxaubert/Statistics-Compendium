@@ -30,20 +30,19 @@
 
 <table>
 <tr>
-<td width="50%"><img src="screenshots/08-veiviser.png" alt="Veiviser"><br><sub><b>Wizard</b> that helps you pick the right test or distribution.</sub></td>
-<td width="50%"><img src="screenshots/veiviser%20svar.png" alt="Veiviser anbefaling"><br><sub><b>Wizard recommendation</b> after answering the survey questions.</sub></td>
+<td width="50%"><img src="screenshots/02-entry-normalfordeling.png" alt="Normalfordeling"><br><sub><b>Formula entry</b> with a KaTeX hero formula and cited sources.</sub></td>
+<td width="50%"><img src="screenshots/04-concept-p-verdi.png" alt="P-verdi"><br><sub><b>Concept page</b> for cross-cutting ideas like p-verdi.</sub></td>
+</tr>
+<tr>
+<td><img src="screenshots/08-veiviser.png" alt="Veiviser"><br><sub><b>Wizard</b> that helps you pick the right test or distribution.</sub></td>
+<td><img src="screenshots/veiviser%20svar.png" alt="Veiviser anbefaling"><br><sub><b>Wizard recommendation</b> after answering the survey questions.</sub></td>
 </tr>
 <tr>
 <td><img src="screenshots/06-symboler.png" alt="Symboler"><br><sub><b>Symbols</b> grid, disambiguating overloaded glyphs like &alpha; and &beta;.</sub></td>
-<td><img src="screenshots/symboler_popupvindu.png" alt="Symbol detalj"><br><sub><b>Symbol detail</b> with definition and the entries it appears in.</sub></td>
-</tr>
-<tr>
-<td><img src="screenshots/02-entry-normalfordeling.png" alt="Normalfordeling"><br><sub><b>Formula entry</b> with a KaTeX hero formula and cited sources.</sub></td>
-<td><img src="screenshots/04-concept-p-verdi.png" alt="P-verdi"><br><sub><b>Concept page</b> for cross-cutting ideas like p-verdi.</sub></td>
-</tr>
-<tr>
-<td><img src="screenshots/05-table-z.png" alt="Z-tabell"><br><sub><b>Interactive table</b> for E.1 through E.6, with live lookup.</sub></td>
 <td><img src="screenshots/07-ordliste.png" alt="Ordliste"><br><sub><b>Glossary</b> of Norwegian statistics terms.</sub></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><img src="screenshots/05-table-z.png" alt="Z-tabell" width="82%"><br><sub><b>Interactive table</b> for E.1 through E.6, with live lookup.</sub></td>
 </tr>
 </table>
 
