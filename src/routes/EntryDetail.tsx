@@ -10,7 +10,7 @@ import { DistributionThumbnail } from "@/components/detail/DistributionThumbnail
 import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
-import { StepByStep } from "@/components/detail/StepByStep";
+import { TemplateMode } from "@/components/detail/TemplateMode";
 import { ExampleCard } from "@/components/detail/ExampleCard";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
 import { TrapAlert } from "@/components/detail/TrapAlert";
@@ -126,7 +126,7 @@ export function EntryDetail() {
 
         {entry.solution_template && (
           <Section title="Steg for steg" icon={ClipboardList}>
-            <StepByStep steps={entry.solution_template} />
+            <TemplateMode steps={entry.solution_template} />
           </Section>
         )}
 
