@@ -4,6 +4,9 @@ import {
   ConceptSchema,
   TableSchema,
   FiltersSchema,
+  GlossaryTermSchema,
+  PatternSchema,
+  WizardSchema,
 } from "./schema";
 
 describe("EntrySchema", () => {
@@ -143,5 +146,63 @@ describe("TableSchema", () => {
       related_entries: ["poisson-fordeling"],
     };
     expect(TableSchema.parse(t).id).toBe("E2-poisson-kumulativ");
+  });
+});
+
+describe("GlossaryTermSchema", () => {
+  it("parses minimal valid term", () => {
+    const r = GlossaryTermSchema.parse({
+      id: "p-verdi",
+      term_no: "P-verdi",
+      short_def: "Sannsynligheten for å observere så ekstrem en verdi gitt H0.",
+    });
+    expect(r.term_no).toBe("P-verdi");
+  });
+  it("rejects bad id", () => {
+    expect(() =>
+      GlossaryTermSchema.parse({ id: "BadId", term_no: "x", short_def: "y" })
+    ).toThrow();
+  });
+});
+
+describe("PatternSchema", () => {
+  it("parses minimal valid pattern", () => {
+    const r = PatternSchema.parse({
+      id: "rate-til-poisson",
+      name_no: "Rate gitt, antall hendelser i vindu",
+      cue: "Oppgaven gir en rate λ pr. tidsenhet.",
+      procedure: ["Identifiser λ og t", "Regn μ = λt"],
+      entry_refs: ["poisson-fordeling"],
+    });
+    expect(r.entry_refs).toEqual(["poisson-fordeling"]);
+  });
+});
+
+describe("WizardSchema", () => {
+  it("parses minimal valid tree", () => {
+    const r = WizardSchema.parse({
+      start: "n0",
+      nodes: [
+        {
+          id: "n0",
+          question: "Diskret eller kontinuerlig?",
+          options: [
+            { label: "Diskret", next: "n1" },
+            {
+              label: "Kontinuerlig",
+              leads_to: [{ id: "normalfordeling", kind: "entry" }],
+            },
+          ],
+        },
+        {
+          id: "n1",
+          question: "Fast antall forsøk?",
+          options: [
+            { label: "Ja", leads_to: [{ id: "binomial-fordeling", kind: "entry" }] },
+          ],
+        },
+      ],
+    });
+    expect(r.nodes).toHaveLength(2);
   });
 });

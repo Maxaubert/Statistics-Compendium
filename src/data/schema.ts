@@ -140,6 +140,50 @@ export const FilterDimensionSchema = z.object({
   options: z.array(FilterOptionSchema),
 });
 
+// ============ Glossary ============
+
+export const GlossaryTermSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/, "id must be kebab-case"),
+  term_no: z.string(),
+  short_def: z.string(),
+  long_def: z.string().optional(),
+  see_also: z.array(RelatedRefSchema).optional(),
+});
+export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
+
+// ============ Pattern ============
+
+export const PatternSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  name_no: z.string(),
+  cue: z.string(),
+  procedure: z.array(z.string()),
+  entry_refs: z.array(z.string()),
+  example: z.string().optional(),
+});
+export type Pattern = z.infer<typeof PatternSchema>;
+
+// ============ Wizard ============
+
+export const WizardOptionSchema = z.object({
+  label: z.string(),
+  next: z.string().optional(),
+  leads_to: z.array(RelatedRefSchema).optional(),
+});
+
+export const WizardNodeSchema = z.object({
+  id: z.string(),
+  question: z.string(),
+  options: z.array(WizardOptionSchema),
+});
+
+export const WizardSchema = z.object({
+  start: z.string(),
+  nodes: z.array(WizardNodeSchema),
+});
+export type WizardNode = z.infer<typeof WizardNodeSchema>;
+export type Wizard = z.infer<typeof WizardSchema>;
+
 export const FiltersSchema = z.object({
   dimensions: z.array(FilterDimensionSchema),
 });
