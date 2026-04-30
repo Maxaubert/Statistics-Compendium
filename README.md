@@ -4,7 +4,7 @@
 
 </div>
 
-**A tool that helps anyone, regardless of prior knowledge, identify which formula to use and how to apply it.** Three ways in:
+**A tool that helps anyone, regardless of prior knowledge, identify which formula to use and how to apply it.** This is achieved in three primary ways:
 
 - **Filter.** Narrow the catalog by characteristics observable in the problem.
 - **Guide (*Veiviser*).** A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.
