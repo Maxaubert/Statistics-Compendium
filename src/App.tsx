@@ -5,8 +5,6 @@ import { ConceptDetail } from "./routes/ConceptDetail";
 import { TableDetail } from "./routes/TableDetail";
 import { SymbolTable } from "./routes/SymbolTable";
 import { Glossary } from "./routes/Glossary";
-import { Patterns } from "./routes/Patterns";
-import { PatternDetail } from "./routes/PatternDetail";
 import { Wizard } from "./routes/Wizard";
 import { NotFound } from "./routes/NotFound";
 
@@ -20,8 +18,6 @@ export function App() {
         <Route path="/table/:id" element={<TableDetail />} />
         <Route path="/symboler" element={<SymbolTable />} />
         <Route path="/ordliste" element={<Glossary />} />
-        <Route path="/monstre" element={<Patterns />} />
-        <Route path="/monstre/:id" element={<PatternDetail />} />
         <Route path="/veiviser" element={<Wizard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

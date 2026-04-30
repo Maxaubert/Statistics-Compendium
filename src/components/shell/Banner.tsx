@@ -1,4 +1,4 @@
-import { Moon, Sun, Compass, BookA, Sigma, Layers } from "lucide-react";
+import { Moon, Sun, Compass, BookA, Sigma } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -6,7 +6,6 @@ const NAV_LINKS = [
   { to: "/veiviser", label: "Veiviser", Icon: Compass },
   { to: "/ordliste", label: "Ordliste", Icon: BookA },
   { to: "/symboler", label: "Symboler", Icon: Sigma },
-  { to: "/monstre", label: "Mønstre", Icon: Layers },
 ];
 
 export function Banner() {

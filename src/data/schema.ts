@@ -169,18 +169,6 @@ export const SymbolEntrySchema = z.object({
 export type SymbolEntryContext = z.infer<typeof SymbolEntryContextSchema>;
 export type SymbolEntry = z.infer<typeof SymbolEntrySchema>;
 
-// ============ Pattern ============
-
-export const PatternSchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/),
-  name_no: z.string(),
-  cue: z.string(),
-  procedure: z.array(z.string()),
-  entry_refs: z.array(z.string()),
-  example: z.string().optional(),
-});
-export type Pattern = z.infer<typeof PatternSchema>;
-
 // ============ Wizard ============
 
 export const WizardOptionSchema = z.object({

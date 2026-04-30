@@ -32,10 +32,10 @@ describe("loadAllContent", () => {
     expect(data.concepts.find((c) => c.id === rel!.id)).toBeDefined();
   });
 
-  it("loads glossary, patterns, and wizard", () => {
+  it("loads glossary, symbols, and wizard", () => {
     const bundle = loadAllContent();
     expect(bundle.glossary).toBeInstanceOf(Array);
-    expect(bundle.patterns).toBeInstanceOf(Array);
+    expect(bundle.symbols).toBeInstanceOf(Array);
     expect(bundle.wizard).not.toBeNull();
   });
 });

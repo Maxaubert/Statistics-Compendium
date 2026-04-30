@@ -5,7 +5,6 @@ import {
   TableSchema,
   FiltersSchema,
   GlossaryTermSchema,
-  PatternSchema,
   WizardSchema,
 } from "./schema";
 
@@ -162,19 +161,6 @@ describe("GlossaryTermSchema", () => {
     expect(() =>
       GlossaryTermSchema.parse({ id: "BadId", term_no: "x", short_def: "y" })
     ).toThrow();
-  });
-});
-
-describe("PatternSchema", () => {
-  it("parses minimal valid pattern", () => {
-    const r = PatternSchema.parse({
-      id: "rate-til-poisson",
-      name_no: "Rate gitt, antall hendelser i vindu",
-      cue: "Oppgaven gir en rate λ pr. tidsenhet.",
-      procedure: ["Identifiser λ og t", "Regn μ = λt"],
-      entry_refs: ["poisson-fordeling"],
-    });
-    expect(r.entry_refs).toEqual(["poisson-fordeling"]);
   });
 });
 
