@@ -44,3 +44,36 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-math: "Cambria Math", "STIX Two Math", Georgia, serif;
 }
+
+[data-theme="dark"] {
+  /* Neutrals — invert lightness */
+  --color-ink:        #f5f5f4;
+  --color-ink-2:      #d6d3d1;
+  --color-ink-3:      #a8a29e;
+  --color-ink-4:      #78716c;
+  --color-paper:      #0c0a09;
+  --color-paper-2:    #1c1917;
+  --color-card:       #18181b;
+  --color-line:       #292524;
+  --color-line-2:     #44403c;
+
+  /* Primary indigo — bump up brightness */
+  --color-primary:        #818cf8;
+  --color-primary-2:      #a5b4fc;
+  --color-primary-3:      #c7d2fe;
+  --color-primary-soft:   #1e1b4b;
+
+  /* Cyan stays vivid */
+  --color-cyan:           #67e8f9;
+  --color-cyan-2:         #22d3ee;
+  --color-cyan-soft:      #155e75;
+  --color-cyan-deep:      #cffafe;
+
+  /* Warn — softer in dark */
+  --color-warn:           #fbbf24;
+  --color-warn-soft:      #451a03;
+
+  /* Calc block — keep dark bg, slightly lift contrast */
+  --color-calc-bg:        #0f0d2e;
+  --color-calc-border:    #4338ca;
+}
