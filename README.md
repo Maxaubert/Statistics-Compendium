@@ -4,11 +4,15 @@
 
 </div>
 
-**A tool that helps anyone, regardless of prior knowledge, identify which formula to use and how to apply it.** This is achieved in three primary ways:
+<p align="center"><b>A tool that helps anyone, regardless of prior knowledge, identify which formula to use and how to apply it.</b><br><i>This is achieved in three primary ways:</i></p>
 
-- **Filter.** Narrow the catalog by characteristics observable in the problem.
-- **Guide (*Veiviser*).** A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.
-- **Step-by-step pages.** Every formula and concept page walks through how to apply it.
+<table>
+<tr>
+<td width="33%" valign="top" align="center"><b>Filter.</b><br><sub>Narrow the catalog by characteristics observable in the problem.</sub></td>
+<td width="34%" valign="top" align="center"><b>Guide <i>(Veiviser)</i>.</b><br><sub>A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.</sub></td>
+<td width="33%" valign="top" align="center"><b>Step-by-step pages.</b><br><sub>Every formula and concept page walks through how to apply it.</sub></td>
+</tr>
+</table>
 
 <p align="center">
   <img src="screenshots/01-list.png" alt="Browse view" width="100%">
