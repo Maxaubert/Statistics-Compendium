@@ -35,6 +35,5 @@ describe("Banner", () => {
     expect(screen.getByRole("link", { name: /Ordliste/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Symboler/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Mønstre/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Cheat-?sheet/i })).toBeInTheDocument();
   });
 });
