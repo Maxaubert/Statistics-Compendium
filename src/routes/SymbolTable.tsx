@@ -5,8 +5,23 @@ import { Banner } from "@/components/shell/Banner";
 import { loadAllContent } from "@/data/loadContent";
 import type { Entry, SymbolEntry } from "@/data/schema";
 
+// Count distinct entries that reference a symbol — both via entry.symbols[].sym
+// matches and via the curator's entry_refs in each context. Used to sort the
+// grid so the symbols a panicking student is most likely to see come first.
+function popularityOf(symbol: SymbolEntry, entries: Entry[]): number {
+  const refs = new Set<string>();
+  for (const ctx of symbol.contexts) {
+    for (const id of ctx.entry_refs ?? []) refs.add(id);
+  }
+  for (const e of entries) {
+    if ((e.symbols ?? []).some((s) => s.sym === symbol.sym)) refs.add(e.id);
+  }
+  return refs.size;
+}
+
 // Aggregate curated symbols + a fallback built from entry.symbols[].
 // Curated wins; fallback fills gaps so the grid stays comprehensive.
+// Sort by popularity (entry-count) desc, then alphabetically as a tiebreaker.
 function aggregateSymbols(): SymbolEntry[] {
   const data = loadAllContent();
 
@@ -51,7 +66,11 @@ function aggregateSymbols(): SymbolEntry[] {
   );
 
   const all = [...data.symbols, ...fallbacks];
-  return all.sort((a, b) => a.sym.localeCompare(b.sym, "nb"));
+  return all.sort((a, b) => {
+    const diff = popularityOf(b, data.entries) - popularityOf(a, data.entries);
+    if (diff !== 0) return diff;
+    return a.sym.localeCompare(b.sym, "nb");
+  });
 }
 
 function lookupEntryName(id: string): string | null {
