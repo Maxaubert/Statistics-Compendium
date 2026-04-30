@@ -1,11 +1,11 @@
 id: med-tilbakelegging
 term_no: Med tilbakelegging
-short_def: "Du putter trekningen tilbake før neste — hver trekning er uavhengig og har samme sannsynlighet."
+short_def: "Du putter trekningen tilbake før neste – hver trekning er uavhengig og har samme sannsynlighet."
 long_def: |
   Klassisk eksempel: trekke kuler fra en urne og legge dem tilbake mellom
   hver trekning. Hver trekning er uavhengig, og p forblir konstant. Bruker
   binomialfordeling for antall suksesser i n trekninger. Hvis trekningene
-  IKKE legges tilbake, brukes hypergeometrisk fordeling — sjekk derfor
+  IKKE legges tilbake, brukes hypergeometrisk fordeling – sjekk derfor
   alltid om oppgaven sier 'med' eller 'uten' tilbakelegging.
 see_also:
   - { id: binomial-fordeling, kind: entry }

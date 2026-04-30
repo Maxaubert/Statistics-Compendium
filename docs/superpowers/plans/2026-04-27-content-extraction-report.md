@@ -51,7 +51,7 @@ extracted from the øvinger in a future pass.
 All user-facing content (`name_no`, `tagline`, `recognition_cues`,
 `what_it_does`, etc.) is written in Norwegian to match the language of
 the exam questions. Schema field names stay in English for development
-ergonomics — this matches the spec.
+ergonomics – this matches the spec.
 
 ### Cross-reference style
 
@@ -93,10 +93,10 @@ Updated the fixture to the correct value with a note.
 ## Known limitations (and fixes for future passes)
 
 - **Some entries have only 1 example.** Entries like `hypergeometrisk-fordeling`, `bayes-setning`, `unionssetningen` would benefit from more diverse examples. Can be added by extracting from øvinger.
-- **Hypothesis test for andel (`en-utvalg-z-test-andel`) has no detailed solution** — the 3 exams I read didn't include this directly. Adding one from øvinger would round it out.
-- **`en-utvalg-t-test` has no concrete worked example** — same situation. Pensum-required but not in these 3 exams.
-- **No entries for chi-squared tests** — the curriculum may include them; the 3 exams I read didn't use them. If the upcoming exam tests these, content extraction needs another pass for goodness-of-fit and independence tests.
-- **Concept `qq-plott` referenced but not yet written** — minor gap; can be added trivially.
+- **Hypothesis test for andel (`en-utvalg-z-test-andel`) has no detailed solution** – the 3 exams I read didn't include this directly. Adding one from øvinger would round it out.
+- **`en-utvalg-t-test` has no concrete worked example** – same situation. Pensum-required but not in these 3 exams.
+- **No entries for chi-squared tests** – the curriculum may include them; the 3 exams I read didn't use them. If the upcoming exam tests these, content extraction needs another pass for goodness-of-fit and independence tests.
+- **Concept `qq-plott` referenced but not yet written** – minor gap; can be added trivially.
 - **Schema-time validation only.** All YAML validates against the Zod schema and the test suite passes. There is NO runtime check that, e.g., `formula_main` is mathematically correct or that worked-solution numbers add up. These rely on the source documents and my reading of them.
 
 ## Suggested next steps

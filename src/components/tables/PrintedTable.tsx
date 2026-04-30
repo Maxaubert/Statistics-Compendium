@@ -26,7 +26,7 @@ export function PrintedTable({ distribution, inputs }: Props) {
     default:
       return (
         <p className="px-4 py-3 italic text-ink-3">
-          Trykt tabell ikke implementert for denne fordelingen — bruk det interaktive oppslaget over.
+          Trykt tabell ikke implementert for denne fordelingen – bruk det interaktive oppslaget over.
         </p>
       );
   }

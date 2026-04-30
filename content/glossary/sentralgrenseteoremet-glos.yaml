@@ -1,6 +1,6 @@
 id: sentralgrenseteoremet-glos
 term_no: Sentralgrenseteoremet (CLT)
-short_def: "Gjennomsnittet av mange uavhengige variabler er tilnærmet normalfordelt — uansett original fordeling."
+short_def: "Gjennomsnittet av mange uavhengige variabler er tilnærmet normalfordelt – uansett original fordeling."
 long_def: |
   Hvis X_1, ..., X_n er uavhengige og identisk fordelte med forventning μ
   og standardavvik σ, så er X̄ ≈ N(μ, σ/√n) for stor n. Tommelfingerregel:

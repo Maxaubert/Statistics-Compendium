@@ -1,6 +1,6 @@
 id: r
 sym: "r"
-short_def: "Utvalgskorrelasjonskoeffisient (Pearsons r) — måler styrken og retningen på den lineære sammenhengen mellom to variabler."
+short_def: "Utvalgskorrelasjonskoeffisient (Pearsons r) – måler styrken og retningen på den lineære sammenhengen mellom to variabler."
 contexts:
   - usage: "Utvalgskorrelasjon (Pearson)"
     detail: |

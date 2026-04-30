@@ -52,7 +52,7 @@ solution_template:
 common_traps: |
   Frihetsgrader er n - 2 (lineær regresjon). Tall under kvadratroten
   må regnes nøye: 1 + 1/n + ((x-x̄)/(S_E/SE(β̂)))². Husk at
-  S_E/SE(β̂) = √(S_XX). Dette er viktig — ekvivalent formulering:
+  S_E/SE(β̂) = √(S_XX). Dette er viktig – ekvivalent formulering:
   punkt ± t·S_E·√(1 + 1/n + (x-x̄)²/S_XX).
 
 python_snippet: |
@@ -106,5 +106,5 @@ related:
   - { id: "E5-t-tabell",                    kind: "table" }
 
 tools:
-  - "Tabell E.5 — t-fordelingens kvantiltabell"
+  - "Tabell E.5 – t-fordelingens kvantiltabell"
   - "Kalkulator: kvadratrot, kvadrering"

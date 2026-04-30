@@ -1,13 +1,13 @@
 id: n
 sym: "n"
-short_def: "Utvalgsstørrelse — antall observasjoner du har samlet inn. Også fast antall forsøk i en binomialfordeling."
+short_def: "Utvalgsstørrelse – antall observasjoner du har samlet inn. Også fast antall forsøk i en binomialfordeling."
 contexts:
   - usage: "Antall observasjoner i et utvalg"
     detail: |
       Helt enkelt: hvor mange datapunkter har du? Hvis du har målt
       høyden til 25 personer, er n = 25.
 
-      Større n gir mer presise estimater og smalere konfidensintervall —
+      Større n gir mer presise estimater og smalere konfidensintervall –
       ofte fordi standardfeilen har √n i nevneren. Doble utvalget,
       og standardfeilen halveres ikke, men krymper med faktor √2.
 

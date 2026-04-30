@@ -1,6 +1,6 @@
 id: z
 sym: "z"
-short_def: "Z-statistikk eller standardisert verdi — antall standardavvik fra gjennomsnittet, regnet som (X − μ)/σ."
+short_def: "Z-statistikk eller standardisert verdi – antall standardavvik fra gjennomsnittet, regnet som (X − μ)/σ."
 contexts:
   - usage: "Z-statistikk i hypotesetest (kjent σ)"
     detail: |
@@ -17,7 +17,7 @@ contexts:
       Eksempel: hvis z = 2.1 og du har en tosidig test med α = 0.05,
       er kritisk verdi ±1.96. |2.1| > 1.96 → forkast H₀.
 
-      Kjent σ er sjelden i praksis — derfor brukes t-test oftere
+      Kjent σ er sjelden i praksis – derfor brukes t-test oftere
       enn z-test. Men z dukker opp i andelstest og når n er stor.
     entry_refs:
       - en-utvalg-z-test

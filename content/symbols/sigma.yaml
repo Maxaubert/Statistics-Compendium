@@ -1,6 +1,6 @@
 id: sigma
 sym: "σ"
-short_def: "Populasjonsstandardavvik — den typiske avstanden fra μ. Måler spredning i hele populasjonen."
+short_def: "Populasjonsstandardavvik – den typiske avstanden fra μ. Måler spredning i hele populasjonen."
 contexts:
   - usage: "Populasjonsstandardavvik"
     detail: |
@@ -10,7 +10,7 @@ contexts:
       sprer seg mye.
 
       σ er kvadratroten av variansen σ², og er den 'sanne' verdien i
-      hele populasjonen — som du sjelden kjenner direkte.
+      hele populasjonen – som du sjelden kjenner direkte.
 
       Praktisk konsekvens:
       - Hvis σ er kjent på forhånd: bruk z-test og z-konfidensintervall.
@@ -18,7 +18,7 @@ contexts:
         s, og bruk t-fordeling i stedet for z-fordeling.
 
       VIKTIG forveksling: σ (liten gresk sigma) er standardavvik. Σ
-      (stor gresk sigma) er summetegn — helt annen rolle. Sjekk om
+      (stor gresk sigma) er summetegn – helt annen rolle. Sjekk om
       bokstaven er stor eller liten.
     entry_refs:
       - en-utvalg-z-test

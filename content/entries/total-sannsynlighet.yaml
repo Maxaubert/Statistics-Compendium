@@ -38,7 +38,7 @@ filters:
   tooling: [calculator_only]
 
 solution_template:
-  - "Identifiser partisjonen (typisk A og A̅ — eller flere disjunkte hendelser)"
+  - "Identifiser partisjonen (typisk A og A̅ – eller flere disjunkte hendelser)"
   - "Skriv ned P(A), P(A̅), P(B|A), P(B|A̅)"
   - "P(B) = ΣP(A_i)·P(B|A_i) over partisjonen"
 

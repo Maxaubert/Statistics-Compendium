@@ -2,7 +2,7 @@ id: regresjon-standardfeil-stigningstall
 name_no: "Standardfeil til stigningstallet, SE(β̂)"
 type: regression
 category: regression_estimate
-tagline: "Mål for usikkerheten i estimatet av β̂ — inngår i hypotesetest og KI for β."
+tagline: "Mål for usikkerheten i estimatet av β̂ – inngår i hypotesetest og KI for β."
 
 formula_main: "SE(β̂) = √(S_E² / Σ(x_i - x̄)²) = √(S_E² / S_XX)"
 formula_latex: "\\text{SE}(\\hat{\\beta}) = \\sqrt{\\frac{S_E^2}{\\sum (x_i - \\bar{x})^2}}"

@@ -1,6 +1,6 @@
 id: beta-hat
 sym: "β̂"
-short_def: "Estimert stigningstall i regresjon — det β-verdien minste kvadraters metode gir deg ut fra dataene."
+short_def: "Estimert stigningstall i regresjon – det β-verdien minste kvadraters metode gir deg ut fra dataene."
 contexts:
   - usage: "Estimert stigningstall i regresjon"
     detail: |
@@ -9,11 +9,11 @@ contexts:
       fra dine målepunkter (xᵢ, yᵢ).
 
       Formelen: β̂ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)². Den velger linja
-      som minimerer summen av kvadrerte residualer — derfor 'beste' i
+      som minimerer summen av kvadrerte residualer – derfor 'beste' i
       forventningsrett, lineær forstand.
 
       β̂ brukes både i hypotesetest H₀: β = 0 (er det noen sammenheng?)
-      og i konfidensintervall for β. Husk: β̂ er en tilfeldig variabel —
+      og i konfidensintervall for β. Husk: β̂ er en tilfeldig variabel –
       den varierer fra utvalg til utvalg, og har derfor en standardfeil.
 
       Ikke bland med β (uten hatt): β er den sanne, ukjente verdien;

@@ -1,4 +1,4 @@
-# Content Extraction — Plan of Action
+# Content Extraction – Plan of Action
 
 **Date:** 2026-04-27
 **Status:** Solo run, user is AFK. No clarifying questions possible. "Best of ability" target.
@@ -9,12 +9,12 @@ For each concept, formula, and table that appears in the ITD20218 statistics cou
 
 The user explicitly said: *"create local documents one for each concept/formula/table. Go through exams and assignments collect questions for example tasks, find out how we mostly use it, then after collecting create a document locally like a text document where you outline what you want on that concepts specific page, it should use like a template of requirements it needs to follow so its easy to filter and so on."*
 
-YAML files matching the structure-phase Zod schema satisfy this — they are the per-entry text documents AND they're directly usable by the app.
+YAML files matching the structure-phase Zod schema satisfy this – they are the per-entry text documents AND they're directly usable by the app.
 
 ## Non-goals
 
 - I will NOT invent content not grounded in the source materials. Every formula, recognition cue, and example must trace to something in the PDFs.
-- I will NOT exhaustively cover every parametric distribution in statistics — only those the course actually uses.
+- I will NOT exhaustively cover every parametric distribution in statistics – only those the course actually uses.
 - I will NOT polish UI / styling / app code. Pure content work.
 - I will NOT lock in cumulative table data tables (E.1, E.3–E.6) beyond what the test fixture E.2 already does. The PrintedTable component handles only Poisson today; the rest is deferred per the structure plan.
 
@@ -40,13 +40,13 @@ Located in `C:\Users\Admin\Documents\School\CanvasFiles\ITD20218-1 26V Statistik
 | `bootstrapping.pdf` (course handout) | Pending |
 | `hypotesetest_oversikt.pdf` (course handout) | Pending |
 
-Plus `Documents\School\SSP\Oblig_1\` — student's own work + Python code, used as reference for Python conventions and confirmation of which formulas the student has actively practiced.
+Plus `Documents\School\SSP\Oblig_1\` – student's own work + Python code, used as reference for Python conventions and confirmation of which formulas the student has actively practiced.
 
 That's roughly 20 PDFs + 1 oblig folder. I expect ~50 distinct exam/oblig oppgaver in total.
 
 ## Phases
 
-### Phase A — Reconnaissance
+### Phase A – Reconnaissance
 
 For each PDF in turn:
 1. Read the PDF.
@@ -55,7 +55,7 @@ For each PDF in turn:
 
 This produces a complete catalog of "what's actually used in this course".
 
-### Phase B — Inventory
+### Phase B – Inventory
 
 Synthesize WORKING_NOTES into a structured inventory at `docs/superpowers/plans/2026-04-27-content-inventory.md`:
 - Master list of every distinct entry needed (formula / concept / test / table) with proposed `id` and `name_no`.
@@ -64,7 +64,7 @@ Synthesize WORKING_NOTES into a structured inventory at `docs/superpowers/plans/
 
 This is human-readable and committed.
 
-### Phase C — Templates
+### Phase C – Templates
 
 Define one example YAML per entry-type to lock conventions:
 - Distribution template (re-use `poisson-fordeling.yaml` as the canonical reference, expanded if needed).
@@ -80,43 +80,43 @@ Conventions to lock:
 - `id` is kebab-case Norwegian: `poisson-fordeling`, `to-utvalgs-t-test`, `regresjon-prediksjonsintervall`. Tables prefix with code: `E1-binomial-kumulativ`.
 - `name_no` is the spoken Norwegian short name: `Poissonfordeling`, `To-utvalgs t-test`, `Z-tabell`.
 - `tagline` is one sentence in italic-ready prose, present tense.
-- `recognition_cues` are written as the user would think them while reading the exam question — phrases visible in the prompt or quick mental tests, NOT formal definitions.
+- `recognition_cues` are written as the user would think them while reading the exam question – phrases visible in the prompt or quick mental tests, NOT formal definitions.
 - `when_NOT_to_use` items use arrow `→` to point at the alternative.
 - `examples` use short solution sketches; `detailed_solutions` use the structured FORMEL/INNSATT/RESULTAT calc-block format.
 - Cross-references in `related` use the actual id of the target.
 - Sources cited as: `Eksamen <month><year> · oppgave <X><letter>` or `Oppgave <N> · oppg. <X><letter>` for øvinger.
 
-### Phase D — Drafting
+### Phase D – Drafting
 
 Write YAML files in batches grouped by category. After each batch, run `npm test` to confirm Zod validation passes. Commit each batch separately.
 
 Order (priority by exam frequency, easiest-to-extract-first):
 
-1. **Sannsynlighetsregler & kombinatorikk** (probability rules, set theory, basic combinatorics) — ~6 entries
-2. **Diskrete fordelinger** (binomial, Poisson, hypergeometric, geometric) — ~4 entries
-3. **Kontinuerlige fordelinger** (normal, exponential, uniform, t, chi²) — ~5 entries
-4. **Forventning/varians/kovarians/korrelasjon for fellesfordeling** — ~4 entries
-5. **Konfidensintervall** (mean known σ, mean unknown σ, proportion, variance, rate) — ~5 entries
-6. **Hypotesetest** (one-sample z, one-sample t, two-sample t pooled/unpooled, paired t, proportion, chi² goodness of fit, chi² independence) — ~7 entries
-7. **Lineær regresjon** (slope/intercept estimates, residual variance, slope SE, slope CI, slope hypothesis test, prediction interval, confidence interval for E[Y|X], R²) — ~6 entries
-8. **Bootstrapping** (concept + procedure) — ~2 entries
-9. **Konsepter** (Poissonprosess, fellesfordeling, uten/med tilbakelegging, marginalfordeling, betinget sannsynlighet, uavhengighet, signifikansnivå, p-verdi, frihetsgrader, standardnormalisering, sentralgrenseteorem, etc.) — ~12-15 entries
-10. **Tabeller E.1-E.6** — replace placeholder E.2 with full version, add 5 more — 6 entries
+1. **Sannsynlighetsregler & kombinatorikk** (probability rules, set theory, basic combinatorics) – ~6 entries
+2. **Diskrete fordelinger** (binomial, Poisson, hypergeometric, geometric) – ~4 entries
+3. **Kontinuerlige fordelinger** (normal, exponential, uniform, t, chi²) – ~5 entries
+4. **Forventning/varians/kovarians/korrelasjon for fellesfordeling** – ~4 entries
+5. **Konfidensintervall** (mean known σ, mean unknown σ, proportion, variance, rate) – ~5 entries
+6. **Hypotesetest** (one-sample z, one-sample t, two-sample t pooled/unpooled, paired t, proportion, chi² goodness of fit, chi² independence) – ~7 entries
+7. **Lineær regresjon** (slope/intercept estimates, residual variance, slope SE, slope CI, slope hypothesis test, prediction interval, confidence interval for E[Y|X], R²) – ~6 entries
+8. **Bootstrapping** (concept + procedure) – ~2 entries
+9. **Konsepter** (Poissonprosess, fellesfordeling, uten/med tilbakelegging, marginalfordeling, betinget sannsynlighet, uavhengighet, signifikansnivå, p-verdi, frihetsgrader, standardnormalisering, sentralgrenseteorem, etc.) – ~12-15 entries
+10. **Tabeller E.1-E.6** – replace placeholder E.2 with full version, add 5 more – 6 entries
 
 Estimated total: ~55-60 entries.
 
-### Phase E — Review and iterate
+### Phase E – Review and iterate
 
 For each batch and at end:
-1. Visual sanity check — read each YAML I drafted with fresh eyes. Are recognition cues phrased from the *student's* perspective (what they'd see in the question), not the textbook's perspective?
-2. Cross-reference check — every `related: [{ id: ... }]` resolves to an existing entry/concept/table.
-3. Filter consistency — are filter values used consistently across entries? (e.g., is `discrete_count` used everywhere appropriate?)
+1. Visual sanity check – read each YAML I drafted with fresh eyes. Are recognition cues phrased from the *student's* perspective (what they'd see in the question), not the textbook's perspective?
+2. Cross-reference check – every `related: [{ id: ... }]` resolves to an existing entry/concept/table.
+3. Filter consistency – are filter values used consistently across entries? (e.g., is `discrete_count` used everywhere appropriate?)
 4. Run the existing test suite to confirm Zod validation passes for every YAML.
 5. Verify `npm run build` still succeeds.
 
 If issues are found, fix in place, re-run validation.
 
-### Phase F — Final report
+### Phase F – Final report
 
 Write `docs/superpowers/plans/2026-04-27-content-extraction-report.md`:
 - Statistics: how many entries, concepts, tables, examples.
@@ -124,7 +124,7 @@ Write `docs/superpowers/plans/2026-04-27-content-extraction-report.md`:
 - Known limitations: parts of the course material not covered (e.g., specific øving exercises with no clear formula match), any speculative content that needs user verification.
 - Suggested next steps: which entries are thinnest and would benefit from another pass.
 
-### Phase G — Commit and tag
+### Phase G – Commit and tag
 
 After review passes, commit the final state and tag `v0.2.0-content`. Leave the worktree on the `structure` branch (don't merge to master without user approval).
 
@@ -138,10 +138,10 @@ After review passes, commit the final state and tag `v0.2.0-content`. Leave the 
 
 ## Working files (created during this run)
 
-- `WORKING_NOTES.md` — scratch (will be deleted at the end; not committed long-term but intermediate commits OK)
-- `docs/superpowers/plans/2026-04-27-content-inventory.md` — committed inventory
-- `content/entries/*.yaml`, `content/concepts/*.yaml`, `content/tables/*.yaml` — drafted entries
-- `docs/superpowers/plans/2026-04-27-content-extraction-report.md` — final report
+- `WORKING_NOTES.md` – scratch (will be deleted at the end; not committed long-term but intermediate commits OK)
+- `docs/superpowers/plans/2026-04-27-content-inventory.md` – committed inventory
+- `content/entries/*.yaml`, `content/concepts/*.yaml`, `content/tables/*.yaml` – drafted entries
+- `docs/superpowers/plans/2026-04-27-content-extraction-report.md` – final report
 
 ## Risk register
 

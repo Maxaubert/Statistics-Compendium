@@ -23,7 +23,7 @@ why_use: |
 
 recognition_cues:
   - "Oppgaven oppgir en standardverdi/påstandsverdi μ₀ (typisk navngitt 'forventet' eller 'standardmodellen')"
-  - "Oppgaven oppgir at standardavviket σ er kjent eller 'antas kjent' (ofte med et tall — f.eks. 'σ = 5')"
+  - "Oppgaven oppgir at standardavviket σ er kjent eller 'antas kjent' (ofte med et tall – f.eks. 'σ = 5')"
   - "Oppgaven oppgir et utvalg med n observasjoner (typisk n ≥ 30) og dets gjennomsnitt x̄"
   - "Spørsmålet ber om en hypotesetest: 'undersøk om μ er høyere/lavere/forskjellig fra μ₀'"
   - "Signifikansnivå α er gitt (vanligvis 0.05 eller 0.01)"
@@ -140,5 +140,5 @@ related:
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:
-  - "Tabell E.4 — Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"
-  - "Tabell E.3 — Z-tabell (for p-verdi-utregning)"
+  - "Tabell E.4 – Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"
+  - "Tabell E.3 – Z-tabell (for p-verdi-utregning)"

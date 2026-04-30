@@ -2,7 +2,7 @@ id: produktregel
 name_no: "Produktregelen og betinget sannsynlighet"
 type: rule
 category: probability_rule
-tagline: "P(A ∩ B) = P(A) · P(B|A) — sannsynlighet for at to hendelser begge inntreffer."
+tagline: "P(A ∩ B) = P(A) · P(B|A) – sannsynlighet for at to hendelser begge inntreffer."
 
 formula_main: "P(A ∩ B) = P(A) · P(B | A);  P(B | A) = P(A ∩ B) / P(A)"
 formula_latex: "P(A \\cap B) = P(A) \\cdot P(B|A), \\quad P(B|A) = \\frac{P(A \\cap B)}{P(A)}"
@@ -47,7 +47,7 @@ solution_template:
   - "Ellers: P(A ∩ B) = P(A) · P(B|A) (eller via P(A|B))"
 
 common_traps: |
-  P(B|A) er IKKE det samme som P(A|B) generelt — bytte rekkefølge gir
+  P(B|A) er IKKE det samme som P(A|B) generelt – bytte rekkefølge gir
   feil svar (med mindre A og B er uavhengige). For å konvertere mellom
   dem, bruk Bayes' setning.
 

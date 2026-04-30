@@ -1,12 +1,12 @@
 id: s
 sym: "s"
-short_def: "Utvalgsstandardavvik — estimat for populasjonsstandardavviket σ, regnet ut fra dataene dine."
+short_def: "Utvalgsstandardavvik – estimat for populasjonsstandardavviket σ, regnet ut fra dataene dine."
 contexts:
   - usage: "Utvalgsstandardavvik"
     detail: |
       s er ditt anslag på hvor mye datapunktene typisk avviker fra
       gjennomsnittet, regnet fra utvalget. Det er den 'praktiske'
-      versjonen av σ — du bruker s når σ er ukjent (som det nesten
+      versjonen av σ – du bruker s når σ er ukjent (som det nesten
       alltid er).
 
       Formel: s = √[ Σ(xᵢ − x̄)² / (n − 1) ]
@@ -16,7 +16,7 @@ contexts:
       ville du systematisk underestimere variansen.
 
       Konsekvens i praksis: når σ er ukjent, erstatter du σ med s
-      i formler — og samtidig bytter du z-fordelingen ut med
+      i formler – og samtidig bytter du z-fordelingen ut med
       t-fordelingen (med n − 1 frihetsgrader) i tester og KI.
 
       Pass på: s (latinsk liten s, utvalgsstandardavvik) vs σ

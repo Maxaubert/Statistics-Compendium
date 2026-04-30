@@ -4,8 +4,8 @@ type: concept
 tagline: "Når alle utfall er like sannsynlige: P(A) = antall gunstige / antall mulige."
 
 what_it_means: |
-  I en uniform sannsynlighetsfordeling — der alle utfall er like sannsynlige
-  — kan vi regne ut sannsynligheten for en hendelse A som:
+  I en uniform sannsynlighetsfordeling – der alle utfall er like sannsynlige
+  – kan vi regne ut sannsynligheten for en hendelse A som:
 
     P(A) = antall gunstige utfall / antall mulige utfall
 

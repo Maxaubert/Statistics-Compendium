@@ -6,7 +6,7 @@ contexts:
     detail: |
       Tenk på t som 'z-statistikkens fetter for når du ikke kjenner σ'.
       Strukturen er den samme, men du erstatter σ med utvalgs-
-      standardavviket s — og betalingen er at du får en bredere
+      standardavviket s – og betalingen er at du får en bredere
       fordeling (t-fordelingen) i stedet for standardnormalen.
 
       Formel for én utvalg: t = (x̄ − μ₀) / (s/√n)
@@ -34,7 +34,7 @@ contexts:
       Eksempel: med rate λ = 2 hendelser per minutt og et vindu
       t = 5 minutter, er forventet antall μ = 10.
 
-      Helt annen rolle enn t-statistikken — kontekst avgjør.
+      Helt annen rolle enn t-statistikken – kontekst avgjør.
     entry_refs:
       - poisson-fordeling
       - eksponential-fordeling

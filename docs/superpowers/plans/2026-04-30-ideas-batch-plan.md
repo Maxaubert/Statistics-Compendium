@@ -6,7 +6,7 @@
 
 **Architecture:** Three new content schemas (Glossary, Pattern, Wizard) loaded alongside existing entries/concepts/tables. Five new routes (`/cheatsheet`, `/symboler`, `/ordliste`, `/monstre`, `/veiviser`). One new banner sub-nav. Dark-mode tokens. Static SVG distribution thumbnails. Three new chi-squared entries.
 
-**Tech Stack:** Existing — React 18 + TypeScript + Vite 6, TailwindCSS v4 with @theme tokens, Zod, Vitest, lucide-react icons. No new dependencies.
+**Tech Stack:** Existing – React 18 + TypeScript + Vite 6, TailwindCSS v4 with @theme tokens, Zod, Vitest, lucide-react icons. No new dependencies.
 
 ---
 
@@ -90,7 +90,7 @@ describe("WizardSchema", () => {
 - [ ] **Step 2: Run failing test**
 
 Run: `npm test -- schema`
-Expected: FAIL — schemas not exported
+Expected: FAIL – schemas not exported
 
 - [ ] **Step 3: Add schemas to `src/data/schema.ts`**
 
@@ -282,7 +282,7 @@ it("loads glossary, patterns, and wizard", () => {
 - [ ] **Step 4: Run tests**
 
 Run: `npm test`
-Expected: PASS — all existing tests + new ones
+Expected: PASS – all existing tests + new ones
 
 - [ ] **Step 5: Commit**
 
@@ -305,7 +305,7 @@ git commit -m "feat: load glossary, patterns, wizard content alongside existing 
 Append to `src/styles/tokens.css`:
 ```css
 [data-theme="dark"] {
-  /* Neutrals — invert lightness */
+  /* Neutrals – invert lightness */
   --color-ink:        #f5f5f4;
   --color-ink-2:      #d6d3d1;
   --color-ink-3:      #a8a29e;
@@ -316,7 +316,7 @@ Append to `src/styles/tokens.css`:
   --color-line:       #292524;
   --color-line-2:     #44403c;
 
-  /* Primary indigo — bump up brightness */
+  /* Primary indigo – bump up brightness */
   --color-primary:        #818cf8;
   --color-primary-2:      #a5b4fc;
   --color-primary-3:      #c7d2fe;
@@ -328,11 +328,11 @@ Append to `src/styles/tokens.css`:
   --color-cyan-soft:      #155e75;
   --color-cyan-deep:      #cffafe;
 
-  /* Warn — softer in dark */
+  /* Warn – softer in dark */
   --color-warn:           #fbbf24;
   --color-warn-soft:      #451a03;
 
-  /* Calc block — keep dark bg, slightly lift contrast */
+  /* Calc block – keep dark bg, slightly lift contrast */
   --color-calc-bg:        #0f0d2e;
   --color-calc-border:    #4338ca;
 }
@@ -506,7 +506,7 @@ related:
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:
-  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadrat, divisjon, sum"
 ```
 
@@ -577,7 +577,7 @@ related:
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:
-  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadrat, divisjon, sum"
 ```
 
@@ -637,7 +637,7 @@ solution_template:
   - "For KI for σ: ta kvadratroten av begge grensene"
 
 common_traps: |
-  KI er asymmetrisk — ikke prøv å sentrere det. Den lille kvantilen
+  KI er asymmetrisk – ikke prøv å sentrere det. Den lille kvantilen
   (1 − α/2) går i nevneren for ØVRE grense, og den store (α/2) i
   nevneren for nedre grense. Lett å bytte om.
 
@@ -647,14 +647,14 @@ related:
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:
-  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadratrot, divisjon"
 ```
 
 - [ ] **Step 4: Run typecheck and tests**
 
 Run: `npm run typecheck && npm test`
-Expected: PASS — content loads, no schema violations
+Expected: PASS – content loads, no schema violations
 
 - [ ] **Step 5: Commit**
 
@@ -667,7 +667,7 @@ git commit -m "feat: add three chi-squared entries (goodness-of-fit, uavhengighe
 
 ## Phase 4: Symbol table (B4) and Cheat-sheet (B9)
 
-### Task 6: Symbol table route — derived view
+### Task 6: Symbol table route – derived view
 
 **Files:**
 - Create: `src/routes/SymbolTable.tsx`
@@ -689,7 +689,7 @@ describe("SymbolTable", () => {
         <SymbolTable />
       </MemoryRouter>
     );
-    // λ appears in poisson, eksponential — should be listed
+    // λ appears in poisson, eksponential – should be listed
     expect(screen.getAllByText("λ").length).toBeGreaterThan(0);
     // μ appears in normal, etc.
     expect(screen.getAllByText("μ").length).toBeGreaterThan(0);
@@ -802,10 +802,10 @@ Expected: PASS
 
 ```bash
 git add src/routes/SymbolTable.tsx src/routes/SymbolTable.test.tsx src/App.tsx
-git commit -m "feat: add /symboler route — aggregated symbol reference across entries"
+git commit -m "feat: add /symboler route – aggregated symbol reference across entries"
 ```
 
-### Task 7: Cheat-sheet route — compact view
+### Task 7: Cheat-sheet route – compact view
 
 **Files:**
 - Create: `src/routes/Cheatsheet.tsx`
@@ -906,14 +906,14 @@ Expected: PASS
 
 ```bash
 git add src/routes/Cheatsheet.tsx src/routes/Cheatsheet.test.tsx src/App.tsx
-git commit -m "feat: add /cheatsheet route — compact all-formulas view, print-friendly"
+git commit -m "feat: add /cheatsheet route – compact all-formulas view, print-friendly"
 ```
 
 ---
 
 ## Phase 5: Glossary (B3)
 
-### Task 8: Glossary content — write ~30 terms
+### Task 8: Glossary content – write ~30 terms
 
 **Files:**
 - Create: `content/glossary/<term>.yaml` for each term
@@ -937,7 +937,7 @@ short_def: "Ett tall som er beste gjet av en parameter, regnet ut fra dataene."
 long_def: |
   Når du har data fra et utvalg, regner du ut et "best guess" for en
   ukjent parameter (μ, p, σ, β...). Dette ene tallet kalles et
-  punktestimat. Punktestimater alene sier ingenting om usikkerheten —
+  punktestimat. Punktestimater alene sier ingenting om usikkerheten –
   for det trenger du et konfidensintervall.
 see_also:
   - { id: konfidensintervall, kind: glossary }
@@ -949,7 +949,7 @@ see_also:
 - [ ] **Step 2: Verify schema parses all of them**
 
 Run: `npm test`
-Expected: PASS — `loadContent` parses all glossary files
+Expected: PASS – `loadContent` parses all glossary files
 
 - [ ] **Step 3: Commit**
 
@@ -964,7 +964,7 @@ git commit -m "feat: author 30 glossary terms covering core stat vocabulary"
 - Create: `src/routes/Glossary.tsx`
 - Create: `src/routes/Glossary.test.tsx`
 - Modify: `src/App.tsx`
-- Modify: `src/data/schema.ts` — extend `RelatedRefSchema` to allow `kind: "glossary"`
+- Modify: `src/data/schema.ts` – extend `RelatedRefSchema` to allow `kind: "glossary"`
 
 - [ ] **Step 1: Extend RelatedRefSchema**
 
@@ -1027,7 +1027,7 @@ export function Glossary() {
           Ordliste
         </h1>
         <p className="mb-6 font-serif italic text-ink-3">
-          Norske statistiske termer i klartekst — for når du gjenkjenner ordet
+          Norske statistiske termer i klartekst – for når du gjenkjenner ordet
           fra eksamen og må finne ut hva det betyr.
         </p>
         <input
@@ -1103,14 +1103,14 @@ Expected: PASS
 
 ```bash
 git add src/data/schema.ts src/routes/Glossary.tsx src/routes/Glossary.test.tsx src/App.tsx
-git commit -m "feat: add /ordliste route — searchable glossary of stat terms"
+git commit -m "feat: add /ordliste route – searchable glossary of stat terms"
 ```
 
 ---
 
 ## Phase 6: Patterns (B5)
 
-### Task 10: Patterns content — write ~12 task patterns
+### Task 10: Patterns content – write ~12 task patterns
 
 **Files:**
 - Create: `content/patterns/<id>.yaml` × 12
@@ -1120,7 +1120,7 @@ git commit -m "feat: add /ordliste route — searchable glossary of stat terms"
 Format example:
 ```yaml
 id: rate-til-poisson
-name_no: "Rate gitt — antall hendelser i et tidsvindu"
+name_no: "Rate gitt – antall hendelser i et tidsvindu"
 cue: "Oppgaven gir en rate λ pr. tidsenhet, og spør om P(X = k), P(X ≤ k), eller 'minst k'."
 procedure:
   - "Identifiser raten λ og enheten den er gitt i"
@@ -1207,7 +1207,7 @@ export function Patterns() {
         <p className="mb-6 font-serif italic text-ink-3">
           Vanlige oppgavetyper med fast prosedyre og lenker til relevante
           formler. Når du gjenkjenner mønsteret, slipper du å lete etter
-          formelen — du vet hvilken side du skal til.
+          formelen – du vet hvilken side du skal til.
         </p>
         <ul className="m-0 grid list-none gap-3 p-0 sm:grid-cols-2">
           {patterns.map((p) => (
@@ -1334,7 +1334,7 @@ Expected: PASS
 
 ```bash
 git add src/routes/Patterns.tsx src/routes/PatternDetail.tsx src/routes/Patterns.test.tsx src/App.tsx
-git commit -m "feat: add /monstre route — pattern catalog and detail pages"
+git commit -m "feat: add /monstre route – pattern catalog and detail pages"
 ```
 
 ---
@@ -1354,11 +1354,11 @@ nodes:
   - id: n_start
     question: "Er den tilfeldige variabelen diskret (du teller noe) eller kontinuerlig?"
     options:
-      - label: "Diskret — jeg teller hendelser eller forsøk"
+      - label: "Diskret – jeg teller hendelser eller forsøk"
         next: n_diskret
-      - label: "Kontinuerlig — målinger på en skala"
+      - label: "Kontinuerlig – målinger på en skala"
         next: n_kontinuerlig
-      - label: "Ikke sikker — jeg har data og skal estimere eller teste"
+      - label: "Ikke sikker – jeg har data og skal estimere eller teste"
         next: n_inferens
 
   - id: n_diskret
@@ -1406,16 +1406,16 @@ nodes:
         leads_to:
           - { id: normalfordeling, kind: entry }
           - { id: standardnormalisering, kind: concept }
-      - label: "Konfidensintervall for μ — σ kjent"
+      - label: "Konfidensintervall for μ – σ kjent"
         leads_to:
           - { id: ki-mu-kjent-sigma, kind: entry }
-      - label: "Konfidensintervall for μ — σ ukjent"
+      - label: "Konfidensintervall for μ – σ ukjent"
         leads_to:
           - { id: ki-mu-ukjent-sigma, kind: entry }
-      - label: "Hypotesetest om μ — σ ukjent"
+      - label: "Hypotesetest om μ – σ ukjent"
         leads_to:
           - { id: en-utvalg-t-test, kind: entry }
-      - label: "Hypotesetest om μ — σ kjent"
+      - label: "Hypotesetest om μ – σ kjent"
         leads_to:
           - { id: en-utvalg-z-test, kind: entry }
 
@@ -1643,7 +1643,7 @@ export function Wizard() {
 }
 ```
 
-Note: this requires `WizardOption` type export — add `export type WizardOption = z.infer<typeof WizardOptionSchema>;` to schema.ts.
+Note: this requires `WizardOption` type export – add `export type WizardOption = z.infer<typeof WizardOptionSchema>;` to schema.ts.
 
 - [ ] **Step 3: Add route**
 
@@ -1662,7 +1662,7 @@ Expected: PASS
 
 ```bash
 git add src/routes/Wizard.tsx src/routes/Wizard.test.tsx src/data/schema.ts src/App.tsx
-git commit -m "feat: add /veiviser route — interactive distribution-finder wizard"
+git commit -m "feat: add /veiviser route – interactive distribution-finder wizard"
 ```
 
 ---
@@ -1921,13 +1921,13 @@ import { TemplateMode } from "@/components/detail/TemplateMode";
 - [ ] **Step 3: Run tests**
 
 Run: `npm test`
-Expected: PASS — existing StepByStep tests still pass since component still exists; TemplateMode wraps it.
+Expected: PASS – existing StepByStep tests still pass since component still exists; TemplateMode wraps it.
 
 - [ ] **Step 4: Commit**
 
 ```bash
 git add src/components/detail/TemplateMode.tsx src/routes/EntryDetail.tsx
-git commit -m "feat: add Mal-modus toggle on entry pages — switch between prose and fill-in template"
+git commit -m "feat: add Mal-modus toggle on entry pages – switch between prose and fill-in template"
 ```
 
 ---
@@ -2000,7 +2000,7 @@ If anything diverged from the plan, note it in `docs/superpowers/plans/2026-04-3
 
 **Placeholders:** None. Each task has explicit code or content patterns.
 
-**Type consistency:** `WizardOption` type referenced in Task 13 — Task 1 has the schema; Task 13 explicitly notes adding the `export type WizardOption` line.
+**Type consistency:** `WizardOption` type referenced in Task 13 – Task 1 has the schema; Task 13 explicitly notes adding the `export type WizardOption` line.
 
 **File-path consistency:** All routes referenced in App.tsx match the Banner sub-nav links.
 

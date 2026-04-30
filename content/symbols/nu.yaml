@@ -1,6 +1,6 @@
 id: nu
 sym: "ν"
-short_def: "Antall frihetsgrader — bestemmer formen på t-, kjikvadrat- og F-fordelingene. Skrives også df eller k."
+short_def: "Antall frihetsgrader – bestemmer formen på t-, kjikvadrat- og F-fordelingene. Skrives også df eller k."
 contexts:
   - usage: "Frihetsgrader i t- og kjikvadrat-fordelinger"
     detail: |

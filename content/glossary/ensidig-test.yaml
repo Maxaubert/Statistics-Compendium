@@ -1,6 +1,6 @@
 id: ensidig-test
 term_no: Ensidig test (én-sidig)
-short_def: "Hypotesen ser bare i én retning — H₁: μ > μ₀ eller H₁: μ < μ₀."
+short_def: "Hypotesen ser bare i én retning – H₁: μ > μ₀ eller H₁: μ < μ₀."
 long_def: |
   En ensidig test forkaster bare hvis observatoren ligger langt nok ut i
   én hale. Hele α legges i den ene halen. Bruk når oppgaven sier 'større

@@ -27,7 +27,7 @@ recognition_cues:
 when_NOT_to_use:
   - "Trekker MED tilbakelegging eller fra uendelig populasjon → bruk binomial"
   - "Antall trekninger er ikke fastlagt → vurder geometrisk eller annet"
-  - "n/N er liten (< 5%) — da er binomial en god tilnærming"
+  - "n/N er liten (< 5%) – da er binomial en god tilnærming"
 
 symbols:
   - { sym: "N",  means: "total antall i populasjonen" }

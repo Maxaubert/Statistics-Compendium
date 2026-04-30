@@ -1,10 +1,10 @@
 id: s-kvadrat
 sym: "s²"
-short_def: "Utvalgsvarians — estimat for populasjonsvariansen σ², regnet ut fra dataene dine."
+short_def: "Utvalgsvarians – estimat for populasjonsvariansen σ², regnet ut fra dataene dine."
 contexts:
   - usage: "Utvalgsvarians"
     detail: |
-      s² er bare s opphøyd i andre — utvalgsstandardavviket i
+      s² er bare s opphøyd i andre – utvalgsstandardavviket i
       kvadrert form. Hvor s sier 'typisk avvik fra gjennomsnittet',
       sier s² 'gjennomsnittlig kvadrert avvik'.
 
@@ -17,7 +17,7 @@ contexts:
       formler er enklere i s² enn i s. For eksempel: konfidensintervall
       og test for σ² bygger på at (n−1)s²/σ² ~ χ²(n−1).
 
-      Pass på enheter: hvis x er målt i kr, er s² i kr² — derfor
+      Pass på enheter: hvis x er målt i kr, er s² i kr² – derfor
       tas roten til slutt så vi får tilbake kr (det er s).
     entry_refs:
       - ki-varians

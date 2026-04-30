@@ -4,13 +4,13 @@ short_def: "Den greske bokstaven beta har to vanlige roller: stigningstallet i e
 contexts:
   - usage: "Stigningstall i regresjonslinje"
     detail: |
-      I modellen y = α + βx er β stigningstallet — altså hvor mye y
+      I modellen y = α + βx er β stigningstallet – altså hvor mye y
       endres når x øker med én enhet. Det er β som forteller om x
       faktisk har en effekt på y.
 
       Eksempel: hvis y er karakter og x er antall timer studert, og
       β = 0.4, så øker karakteren med 0.4 poeng per ekstra time.
-      Den 'sanne' β kjenner du ikke — du estimerer den fra dataene
+      Den 'sanne' β kjenner du ikke – du estimerer den fra dataene
       som β̂. Hypotesetesten H₀: β = 0 sjekker om x i det hele tatt
       har en lineær effekt.
 
@@ -24,13 +24,13 @@ contexts:
   - usage: "Sannsynlighet for type-2-feil"
     detail: |
       Her er β sjansen for at du beholder H₀ selv om H₁ faktisk er
-      sann — du overser en reell effekt. Skrives β = P(beholde H₀ | H₁ sann).
+      sann – du overser en reell effekt. Skrives β = P(beholde H₀ | H₁ sann).
 
       Det relaterte begrepet teststyrke (1 − β) er sannsynligheten
       for å oppdage en effekt som faktisk finnes. Vil du ha mindre
       β må du enten ha større utvalg eller en større faktisk effekt.
 
-      Ikke forveksle med β som regresjonskoeffisient — kontekst avgjør:
+      Ikke forveksle med β som regresjonskoeffisient – kontekst avgjør:
       i en hypotesetest om feiltyper er det type-2-feil; i en linje
       y = α + βx er det stigningstallet.
     entry_refs: []

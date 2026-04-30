@@ -32,7 +32,7 @@ when_NOT_to_use:
 symbols:
   - { sym: "λ",  means: "rate (samme λ som i den underliggende poissonprosessen)" }
   - { sym: "t",  means: "ventetiden (alltid > 0)" }
-  - { sym: "f(t)", means: "sannsynlighetstettheten — areal under = sannsynlighet" }
+  - { sym: "f(t)", means: "sannsynlighetstettheten – areal under = sannsynlighet" }
   - { sym: "F(t)", means: "kumulativ fordelingsfunksjon, P(T ≤ t)" }
   - { sym: "e",  means: "Eulers tall ≈ 2.71828" }
 

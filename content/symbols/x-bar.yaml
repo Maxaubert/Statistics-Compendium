@@ -1,6 +1,6 @@
 id: x-bar
 sym: "X̄"
-short_def: "Utvalgsgjennomsnittet — punktestimat for populasjonsgjennomsnittet μ. Det aritmetiske snittet av målingene dine."
+short_def: "Utvalgsgjennomsnittet – punktestimat for populasjonsgjennomsnittet μ. Det aritmetiske snittet av målingene dine."
 contexts:
   - usage: "Utvalgsgjennomsnitt"
     detail: |
@@ -18,7 +18,7 @@ contexts:
       - Standardfeilen er σ/√n
 
       Sentralgrenseteoremet sier at X̄ er tilnærmet normalfordelt
-      når n er stor — uansett hvordan den underliggende fordelingen
+      når n er stor – uansett hvordan den underliggende fordelingen
       ser ut. Det er det som gjør z- og t-tester mulige i praksis.
 
       Pass på: X̄ (utvalgsgjennomsnitt) vs μ (populasjonsgjennomsnitt).

@@ -1,6 +1,6 @@
 id: sigma-sum
 sym: "Σ"
-short_def: "Summetegn — 'sum av alle ledd som følger'. Stor gresk sigma — IKKE standardavviket σ."
+short_def: "Summetegn – 'sum av alle ledd som følger'. Stor gresk sigma – IKKE standardavviket σ."
 contexts:
   - usage: "Sumoperator"
     detail: |

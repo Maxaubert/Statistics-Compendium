@@ -74,7 +74,7 @@ python_snippet: |
   # P(X = k)
   binom.pmf(2, n, p)        # 0.302
 
-  # P(X ≤ k) — kumulativ
+  # P(X ≤ k) – kumulativ
   binom.cdf(1, n, p)        # 0.376
 
   # P(X ≥ k) = 1 − P(X ≤ k−1)
@@ -136,5 +136,5 @@ related:
   - { id: "E1-binomial-kumulativ",  kind: "table" }
 
 tools:
-  - "Tabell E.1 — Kumulativ binomisk sannsynlighet"
+  - "Tabell E.1 – Kumulativ binomisk sannsynlighet"
   - "Kalkulator: potens, binomialkoeffisient C(n,k)"

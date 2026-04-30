@@ -24,7 +24,7 @@ recognition_cues:
 
 when_NOT_to_use:
   - "Du estimerer en andel/sannsynlighet (av n forsøk) → bruk KI for andel"
-  - "λt < 10 — normalapproksimasjon for unøyaktig"
+  - "λt < 10 – normalapproksimasjon for unøyaktig"
 
 symbols:
   - { sym: "λ",        means: "raten (det vi vil estimere)" }
@@ -52,7 +52,7 @@ solution_template:
 common_traps: |
   Sjekk at t er i samme enhet som raten (timer, dager, måneder, osv.).
   Variansformelen i nevneren bruker √(λ̂/t), ekvivalent med √Y / t.
-  Hvis Y er liten, er normalapproksimasjon for unøyaktig — men i pensum
+  Hvis Y er liten, er normalapproksimasjon for unøyaktig – men i pensum
   forutsettes ofte at det er ok.
 
 python_snippet: |
@@ -103,4 +103,4 @@ related:
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:
-  - "Tabell E.4 — Z-kvantiltabell"
+  - "Tabell E.4 – Z-kvantiltabell"

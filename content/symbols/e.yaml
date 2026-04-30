@@ -4,7 +4,7 @@ short_def: "Eulers tall, e ≈ 2.71828. En matematisk konstant som dukker opp i 
 contexts:
   - usage: "Eulers tall (matematisk konstant)"
     detail: |
-      e er bare et tall — omtrent 2.71828 — på samme måte som π er
+      e er bare et tall – omtrent 2.71828 – på samme måte som π er
       omtrent 3.14159. Du trenger ikke å forstå hvor det kommer fra
       for å bruke det; behandle det som en knapp på kalkulatoren
       (typisk merket e^x eller exp).

@@ -1,8 +1,8 @@
-# Content Review Report — Pedagogical & Filter Optimization
+# Content Review Report – Pedagogical & Filter Optimization
 
 **Date:** 2026-04-27
 **Branch:** `structure`
-**Goal of this round:** Push the compendium toward the user's stated north star — a person with **no prior statistics knowledge** should be able to (1) find the right entry from filter cues alone, and (2) apply the formula using only the entry text and its related links.
+**Goal of this round:** Push the compendium toward the user's stated north star – a person with **no prior statistics knowledge** should be able to (1) find the right entry from filter cues alone, and (2) apply the formula using only the entry text and its related links.
 
 ## Summary of changes
 
@@ -39,7 +39,7 @@ Four entries got significant upgrades to make them novice-friendly:
 
 ### New concept added
 
-- **`qq-plott`** (normaltestplott) — referenced in `bootstrapping` and `spredningsplott` concepts but not previously written. Now exists with explanation, recognition cues, and links.
+- **`qq-plott`** (normaltestplott) – referenced in `bootstrapping` and `spredningsplott` concepts but not previously written. Now exists with explanation, recognition cues, and links.
 
 ## Statistics
 
@@ -64,9 +64,9 @@ Three filter clicks → the right entry. This matches the user's vision: "selv o
 
 ## Limitations remaining
 
-- **Some entries still have empty `parameters_known: []`** (e.g., `marginalfordeling`, where no parameters are really "known"). That's intentional — empty filter arrays are honest signals, not bugs.
+- **Some entries still have empty `parameters_known: []`** (e.g., `marginalfordeling`, where no parameters are really "known"). That's intentional – empty filter arrays are honest signals, not bugs.
 - **Pedagogical depth**: 4 of the most foundational entries got the deep pedagogical pass. 27 entries still have their original (already-good) text. If user finds specific entries feel thin during exam study, they can be deepened with the same pattern (rewrite `what_it_does`, expand `solution_template`, restructure `common_traps`).
-- **Recognition cues are still one-line phrases**, not paragraphs. This is by design — they should be scannable, not absorptive — but a future pass could add a "how to recognize this from scratch" prose block if needed.
+- **Recognition cues are still one-line phrases**, not paragraphs. This is by design – they should be scannable, not absorptive – but a future pass could add a "how to recognize this from scratch" prose block if needed.
 - **No detailed solutions added**. The 4 entries that got pedagogical passes already had detailed solutions; the entries without (`en-utvalg-t-test`, `en-utvalg-z-test-andel`) still don't, since I don't have øving examples loaded into context.
 
 ## Verification
@@ -74,16 +74,16 @@ Three filter clicks → the right entry. This matches the user's vision: "selv o
 ```
 npm run typecheck   ✓ exits 0
 npm test            ✓ 67 tests pass across 28 test files
-npm run build       ✓ produces dist/ (732 kB / 219 kB gzip — same as before; chunk-size warning informational only)
+npm run build       ✓ produces dist/ (732 kB / 219 kB gzip – same as before; chunk-size warning informational only)
 All YAML files validate against Zod schemas at build time.
 All cross-reference IDs resolve to existing entries.
 ```
 
 ## Suggested next steps for the user
 
-1. **Browser walkthrough** with the new filters. Start at `/`, open the Filter sidebar, click through all the new options to see what's there. The "Parametre kjent / gitt" group is brand new — try ticking "σ kjent" to find z-tester and KI-er.
+1. **Browser walkthrough** with the new filters. Start at `/`, open the Filter sidebar, click through all the new options to see what's there. The "Parametre kjent / gitt" group is brand new – try ticking "σ kjent" to find z-tester and KI-er.
 
-2. **Acid test**: take a problem from one of the øvinger you haven't seen yet, read it once, and try to navigate the compendium using only the filter sidebar (no search, no remembered jargon). Note where it gets stuck — those are the next pedagogical gaps to fix.
+2. **Acid test**: take a problem from one of the øvinger you haven't seen yet, read it once, and try to navigate the compendium using only the filter sidebar (no search, no remembered jargon). Note where it gets stuck – those are the next pedagogical gaps to fix.
 
 3. **If specific entries feel thin** during exam practice: the pattern from `normalfordeling` / `en-utvalg-z-test` / `komplementregelen` / `bayes-setning` (rewrite `what_it_does` with intuition, expand `solution_template`, structure `common_traps` as bullets) can be applied entry-by-entry. ~10-15 minutes per entry.
 

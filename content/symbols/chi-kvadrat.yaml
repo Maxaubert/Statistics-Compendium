@@ -1,12 +1,12 @@
 id: chi-kvadrat
 sym: "χ²"
-short_def: "Kjikvadrat — både navnet på en familie sannsynlighetsfordelinger og navnet på testobservatoren som følger den."
+short_def: "Kjikvadrat – både navnet på en familie sannsynlighetsfordelinger og navnet på testobservatoren som følger den."
 contexts:
   - usage: "Testobservator i kjikvadrat-tester"
     detail: |
       Tenk på χ² som et 'avstandsmål' mellom det du observerte og det
       H₀ forutsa. Stor χ² betyr at dataene avviker mye fra det modellen
-      tilsa — mistenkelig nok til kanskje å forkaste H₀.
+      tilsa – mistenkelig nok til kanskje å forkaste H₀.
 
       Formel: χ² = Σ (O − E)² / E, der O er observert antall i hver
       kategori og E er forventet antall under H₀. Kvadrering gjør at

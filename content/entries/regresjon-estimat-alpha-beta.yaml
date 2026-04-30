@@ -1,5 +1,5 @@
 id: regresjon-estimat-alpha-beta
-name_no: "Lineær regresjon — estimater for α og β"
+name_no: "Lineær regresjon – estimater for α og β"
 type: regression
 category: regression_estimate
 tagline: "Punktestimater for skjæringspunktet α̂ og stigningstallet β̂ i ŷ = α̂ + β̂·x."

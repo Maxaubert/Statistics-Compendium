@@ -10,7 +10,7 @@ formula_latex: "P(A | B) = \\frac{P(A) \\cdot P(B | A)}{P(B)}"
 what_it_does: |
   Snur retningen på en betinget sannsynlighet. Hvis du vet sjansen for
   symptom B GITT sykdom A, så lar Bayes' setning deg regne ut sjansen
-  for sykdom A GITT symptom B — som er det vi egentlig vil vite.
+  for sykdom A GITT symptom B – som er det vi egentlig vil vite.
 
   Mer generelt: gitt P(B|A), P(A), og P(B), finner du P(A|B). Hvis P(B)
   ikke er oppgitt direkte, må du først regne det ut via setningen om

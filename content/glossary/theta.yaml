@@ -2,7 +2,7 @@ id: theta
 term_no: Theta (θ)
 short_def: "Generelt symbol for en ukjent parameter du vil estimere."
 long_def: |
-  θ brukes som plassholder for «hvilken som helst parameter» — det kan
+  θ brukes som plassholder for «hvilken som helst parameter» – det kan
   være μ, σ², λ, p eller noe annet, avhengig av modellen. Estimatoren
   skrives ofte θ̂ (theta-hatt). Når en oppgave snakker om
   'forventningsrett estimator for θ' eller 'KI for θ', betyr θ den

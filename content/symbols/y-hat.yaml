@@ -1,6 +1,6 @@
 id: y-hat
 sym: "ŷ"
-short_def: "Predikert verdi i regresjon — det modellen sier y bør være for en gitt x. Punktet på regresjonslinja."
+short_def: "Predikert verdi i regresjon – det modellen sier y bør være for en gitt x. Punktet på regresjonslinja."
 contexts:
   - usage: "Predikert verdi fra regresjonslinje"
     detail: |
@@ -12,7 +12,7 @@ contexts:
       Eksempel: estimerte du α̂ = 2 og β̂ = 0.5, og spør om y for
       x = 10, så er ŷ = 2 + 0.5 · 10 = 7.
 
-      Det observerte y for samme x stemmer ikke nødvendigvis med ŷ —
+      Det observerte y for samme x stemmer ikke nødvendigvis med ŷ –
       forskjellen yᵢ − ŷᵢ kalles residualet (avstanden fra punkt
       til linje).
 

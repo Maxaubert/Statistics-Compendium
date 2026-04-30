@@ -1,11 +1,11 @@
-# Content Review — Pedagogical & Filter Optimization Plan
+# Content Review – Pedagogical & Filter Optimization Plan
 
 **Date:** 2026-04-27
 **Goal:** A person with **zero prior statistics knowledge** should, just by reading an exam question, be able to (1) find the correct entry via filters/search/cues, and (2) apply the formula correctly using only the entry text and its related links.
 
 ## Two-axis review
 
-### Axis A — Pedagogical clarity per entry
+### Axis A – Pedagogical clarity per entry
 
 Every formula entry should pass the "novice test": a reader without statistics background, given only the entry page and its related links, should be able to:
 
@@ -14,23 +14,23 @@ Every formula entry should pass the "novice test": a reader without statistics b
 3. Apply the formula step-by-step and arrive at the right answer.
 
 For each entry, audit:
-- **what_it_does** — plain-language, jargon-free intuition
-- **why_use** — motivates choosing THIS over related entries
-- **recognition_cues** — written as "phrases visible in the exam question text", not as definitions
-- **when_NOT_to_use** — explicit fork to alternatives with reasons
-- **symbols** — every symbol in `formula_main` is explained, and the explanation defines any embedded jargon
-- **solution_template** — every step is concrete enough that a novice can follow without looking up vocabulary
-- **common_traps** — gotchas a beginner will hit
-- **examples / detailed_solutions** — at least one fully worked example with all substitution steps shown
+- **what_it_does** – plain-language, jargon-free intuition
+- **why_use** – motivates choosing THIS over related entries
+- **recognition_cues** – written as "phrases visible in the exam question text", not as definitions
+- **when_NOT_to_use** – explicit fork to alternatives with reasons
+- **symbols** – every symbol in `formula_main` is explained, and the explanation defines any embedded jargon
+- **solution_template** – every step is concrete enough that a novice can follow without looking up vocabulary
+- **common_traps** – gotchas a beginner will hit
+- **examples / detailed_solutions** – at least one fully worked example with all substitution steps shown
 
-### Axis B — Filter taxonomy
+### Axis B – Filter taxonomy
 
 The filter sidebar is the primary "I don't know what this is, but I see X in the question" tool. It must be **layerable** so users can stack filters and narrow to a small set.
 
 Audit:
-- **Dimensions present** — are there missing categories? (Currently 6 dims in `filters.yaml`; entries use a 7th, `parameters_known`, that isn't declared — gap to close.)
-- **Values per dimension** — are there missing options? Especially situational cues a novice would notice ("data is gitt as a list of observations", "summary statistics are gitt", "joint table gitt").
-- **Coverage per entry** — are filter blocks filled out conservatively (good) or sparsely (bad)? Entries with mostly empty filter arrays will not show up under any filter and are findable only by search/browsing.
+- **Dimensions present** – are there missing categories? (Currently 6 dims in `filters.yaml`; entries use a 7th, `parameters_known`, that isn't declared – gap to close.)
+- **Values per dimension** – are there missing options? Especially situational cues a novice would notice ("data is gitt as a list of observations", "summary statistics are gitt", "joint table gitt").
+- **Coverage per entry** – are filter blocks filled out conservatively (good) or sparsely (bad)? Entries with mostly empty filter arrays will not show up under any filter and are findable only by search/browsing.
 
 ## Plan
 
@@ -66,9 +66,9 @@ For each entry in priority order:
 - Beef up `recognition_cues` with at least 5 cues, each phrased as visible-in-question.
 - Make sure `when_NOT_to_use` covers the obvious sister-entries.
 - Audit `symbols` for completeness (every variable in `formula_main` defined).
-- Walk `solution_template` step-by-step — is each step actionable?
+- Walk `solution_template` step-by-step – is each step actionable?
 - Check `common_traps` for the genuinely common errors.
-- Update `filters` block — fill in missed dimensions.
+- Update `filters` block – fill in missed dimensions.
 
 ### Phase 4: Fill cross-reference gaps
 
@@ -79,8 +79,8 @@ For each entry in priority order:
 ### Phase 5: Verification
 
 - `npm run typecheck`
-- `npm test` — must all pass
-- `npm run build` — must succeed
+- `npm test` – must all pass
+- `npm run build` – must succeed
 - Manual sanity: open ListView and pick a filter combination, confirm reasonable narrowing.
 
 ### Phase 6: Commit + report

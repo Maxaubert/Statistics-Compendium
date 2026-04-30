@@ -1,4 +1,4 @@
-# Working notes — content extraction (do not commit long-term)
+# Working notes – content extraction (do not commit long-term)
 
 Scratch space for observations as I read source PDFs. Will be synthesized into `docs/superpowers/plans/2026-04-27-content-inventory.md` and then deleted.
 
@@ -12,7 +12,7 @@ Scratch space for observations as I read source PDFs. Will be synthesized into `
 
 ## Eksamen jan26 (read + løsning read)
 
-### Oppgave 1 — kombinatorikk, basic sannsynlighet, binomial
+### Oppgave 1 – kombinatorikk, basic sannsynlighet, binomial
 Setup: 5 par sko (10 sko totalt) i en haug. Plukker tilfeldig 2.
 
 **1a)** P(skoene hører sammen?). Method: gunstige/mulige with sequential thinking. After 1st pick, 9 remain, 1 favorable. **= 1/9 ≈ 0.111**.
@@ -26,7 +26,7 @@ Setup: 5 par sko (10 sko totalt) i en haug. Plukker tilfeldig 2.
 - Alternative: lookup in cumulative binomial tabell.
 - Concept: binomial-fordeling, komplementregelen, "minst én"-trikset.
 
-### Oppgave 2 — fellesfordeling, E, Var, σ, Cov, ρ
+### Oppgave 2 – fellesfordeling, E, Var, σ, Cov, ρ
 Setup: simultanfordeling for X,Y i 3×3-tabell. X ∈ {0,1,2}, Y ∈ {0,5,10}.
 
 **2a)** Beregn E(X) og E(Y).
@@ -44,7 +44,7 @@ Setup: simultanfordeling for X,Y i 3×3-tabell. X ∈ {0,1,2}, Y ∈ {0,5,10}.
 - ρ = Cov/(σXσY) = -0.05/(0.831·4.717) = **-0.013**.
 - Concepts: marginalfordeling, kovarians, korrelasjon, formel σ²=E(X²)-μ².
 
-### Oppgave 3 — sannsynlighetsregler (union, betinget med komplement, disjunkte)
+### Oppgave 3 – sannsynlighetsregler (union, betinget med komplement, disjunkte)
 Setup: P(A)=0.30, P(B)=0.25, P(C)=0.40, P(A∩B)=0.15. A og C disjunkte. B og C disjunkte.
 
 **3a)** Finn P(A∪B). Method: P(A∪B) = P(A)+P(B)-P(A∩B) = 0.3+0.25-0.15 = **0.40**.
@@ -52,7 +52,7 @@ Setup: P(A)=0.30, P(B)=0.25, P(C)=0.40, P(A∩B)=0.15. A og C disjunkte. B og C 
 **3b)** Finn P(A | C̄). Tricky: A og C disjunkte → A ⊆ C̄ → P(A∩C̄)=P(A). Da P(A|C̄) = P(A)/(1-P(C)) = 0.3/0.6 = **0.5**.
 - Concepts: betinget sannsynlighet, disjunkte hendelser, komplementregelen, unionssetningen.
 
-### Oppgave 4 — Poissonprosess, Poissonfordeling, Eksponentialfordeling, KI for rate
+### Oppgave 4 – Poissonprosess, Poissonfordeling, Eksponentialfordeling, KI for rate
 Setup: klippeblåvinger fanges som poissonprosess med rate λ pr. time. X = antall i 1 uke (168 t).
 
 **4a)** P(X=0) når λ=0.01/t. λt = 1.68. **= e^(-1.68) = 0.1864**.
@@ -66,7 +66,7 @@ Setup: klippeblåvinger fanges som poissonprosess med rate λ pr. time. X = anta
 
 **4e)** 90% KI for λ basert på 15 fanger i 5 uker (840 t). Formula: λ̂ ± z_(α/2) · √(λ̂/t). λ̂=15/840=0.01786. z_0.05=1.645. CI = 0.01786 ± 0.00758 = **[0.010, 0.025]**. Krav: λt > 10 for god approximation (her λ̂t = 15, OK).
 
-### Oppgave 5 — to-utvalgs t-test (uparet, pooled variance)
+### Oppgave 5 – to-utvalgs t-test (uparet, pooled variance)
 Setup: gammel metode n=10, ny metode n=9 (én syk). To utvalg, normalfordelte, ukjent σ.
 
 **5a)** Hypoteser. H₀: μY ≤ μX, H₁: μY > μX (venstresidig på X-Y, høyresidig på Y-X). Type: uparet T-test.
@@ -82,7 +82,7 @@ Setup: gammel metode n=10, ny metode n=9 (én syk). To utvalg, normalfordelte, u
 - Konklusjon: ingen grunnlag for å hevde at ny metode er bedre.
 - Concepts: pooled variance (interpolert varians), df calculation, one-sided test direction.
 
-### Oppgave 6 — lineær regresjon, prediksjonsintervall
+### Oppgave 6 – lineær regresjon, prediksjonsintervall
 Setup: 10 obs av (søvntimer x, eksamensresultat y%). Regresjonslinje ŷ = 34.6 + 6.63x. SE² = 6.093. SE(β̂) = 0.625.
 **Spm:** 95% prediksjonsintervall for Y ved x=5. Er 75% sannsynlig?
 - Formel: α̂ + β̂·x ± t_(α/2,ν) · s · √(1 + 1/n + ((x-x̄)/(s/SE(β̂)))²)  (this textbook's specific form)
@@ -92,7 +92,7 @@ Setup: 10 obs av (søvntimer x, eksamensresultat y%). Regresjonslinje ŷ = 34.6 
 - Intervall: 67.75 ± 6.51 = **[61.24, 74.26]**
 - Konklusjon: 75% er utenfor intervallet → IKKE sannsynlig at student med 5t søvn får 75%+.
 - Concepts: prediksjonsintervall, t-fordeling df=n-2, residualenes varians, standard error of slope.
-- Note: This textbook's formulation is unusual — uses (x-x̄)/(s/SE(β̂)) inside the squared term, where most textbooks write Sxx directly. Mathematically equivalent but distinctive notation. Preserve in entry.
+- Note: This textbook's formulation is unusual – uses (x-x̄)/(s/SE(β̂)) inside the squared term, where most textbooks write Sxx directly. Mathematically equivalent but distinctive notation. Preserve in entry.
 
 ---
 
@@ -106,31 +106,31 @@ Distinct entries identified so far:
 5. betinget-sannsynlighet (1b, 3b)
 6. produktregel (1b)
 7. komplementregelen (1c, 4b)
-8. fellesfordeling (2a-c) — concept
-9. marginalfordeling (2a) — concept
+8. fellesfordeling (2a-c) – concept
+9. marginalfordeling (2a) – concept
 10. forventningsverdi (2a)
 11. varians-formel (2b)
 12. kovarians (2c)
 13. korrelasjon (2c)
 14. konfidensintervall-poisson-rate (4e)
 15. to-utvalgs-t-test (5)
-16. interpolert-varians-pooled (5b) — formula component
+16. interpolert-varians-pooled (5b) – formula component
 17. lineaer-regresjon-prediksjonsintervall (6)
-18. poisson-prosess (4) — concept
-19. uniform-sannsynlighetsfordeling (1a) — concept
-20. disjunkte-hendelser (3) — concept
+18. poisson-prosess (4) – concept
+19. uniform-sannsynlighetsfordeling (1a) – concept
+20. disjunkte-hendelser (3) – concept
 
 Tables used:
-- E.1 binomialtabell (1c — for n=7)
-- E.2 poissontabell (4b — checking, but not used since exact computation preferred)
-- E.4 normal-kvantiltabell (4e — z_0.05=1.645)
-- E.5 t-tabell (5b — t_0.01,17=2.567; 6 — t_0.025,8=2.306)
+- E.1 binomialtabell (1c – for n=7)
+- E.2 poissontabell (4b – checking, but not used since exact computation preferred)
+- E.4 normal-kvantiltabell (4e – z_0.05=1.645)
+- E.5 t-tabell (5b – t_0.01,17=2.567; 6 – t_0.025,8=2.306)
 
 ---
 
 ## Eksamen jan25 (read + løsning read)
 
-### Oppgave 1 — kombinatorikk uten tilbakelegging (kortstokk)
+### Oppgave 1 – kombinatorikk uten tilbakelegging (kortstokk)
 Setup: Trekker 5 kort fra 52, 13 av disse er hjerter.
 
 **1a)** P(alle 5 er hjerter)? Method: gunstige/mulige. g=C(13,5)=1287, m=C(52,5)=2598960. **= 1287/2598960 ≈ 0.000495**.
@@ -144,7 +144,7 @@ Setup: Trekker 5 kort fra 52, 13 av disse er hjerter.
 **1d)** Disjunkte hendelser? Ja (ikke mulig at 5 er hjerter OG 0 er hjerter samtidig).
 - Concept: disjunkte (gjensidig utelukkende) hendelser, definisjon.
 
-### Oppgave 2 — diskret sannsynlighetsfordeling, P(X>0), E, Var
+### Oppgave 2 – diskret sannsynlighetsfordeling, P(X>0), E, Var
 Setup: X-verdier {-2,-1,0,1,2} med sannsynligheter {0.3,0.2,0.2,0.1,0.2}.
 
 **2a)** P(X>0) = P(X=1)+P(X=2) = **0.3**.
@@ -152,23 +152,23 @@ Setup: X-verdier {-2,-1,0,1,2} med sannsynligheter {0.3,0.2,0.2,0.1,0.2}.
 **2c)** Var(X) = Σ xi²·P(X=xi) - μ² = 1.2+0.2+0+0.1+0.8-0.09 = **2.21**.
 - Concept: diskret stokastisk variabel, formler for forventning og varians.
 
-### Oppgave 3 — Bayes' setning, total sannsynlighet
+### Oppgave 3 – Bayes' setning, total sannsynlighet
 Setup: P(spire) = 0.8 (totalt), P(ringblomst) = 0.6, P(spire|ringblomst) = 0.9. Finn P(R|S) og P(spire | ikke-ringblomst).
 
 **3a)** P(R|S) = Bayes: P(R)·P(S|R)/P(S) = 0.6·0.9/0.8 = **0.675**.
 **3b)** P(S|R̄). Method: setningen om total sannsynlighet P(S) = P(R)·P(S|R) + P(R̄)·P(S|R̄). Solve: P(S|R̄) = (P(S)-P(R)·P(S|R))/(1-P(R)) = (0.8-0.54)/0.4 = **0.65**.
 - Concepts: Bayes' setning, total sannsynlighet, betinget sannsynlighet (full pakke).
 
-### Oppgave 4 — Poissonprosess (vulkan)
+### Oppgave 4 – Poissonprosess (vulkan)
 Setup: rate 0.0261 utbrudd/måned. 5 års leiekontrakt = 60 måneder.
 
 **4a)** P(X=1) + P(X=2) når λt = 0.0261·60 = 1.5678. P(X=1) = 1.5678·e^(-1.5678) = 0.327. P(X=2) = 1.5678²/2·e^(-1.5678) = 0.256. **Sum = 0.583**.
 **4b)** P(minst ett utbrudd) = 1 - P(X=0) = 1 - e^(-1.5678) = 1 - 0.2085 = **0.792**.
-- Note: Same answer via P(T<60) = F(60) = 1-e^(-λt) for ventetid T eksp.fordelt — illustrerer ekvivalens mellom poissonfordeling og eksponential.
+- Note: Same answer via P(T<60) = F(60) = 1-e^(-λt) for ventetid T eksp.fordelt – illustrerer ekvivalens mellom poissonfordeling og eksponential.
 **4c)** 90% KI for λ. Formula: λ̂ ± z_(α/2) · √(λ̂/t) eller ekvivalent λ̂ ± z_(α/2) · √X / t. λ̂ = 37/(118·12) = 0.0261. z_0.05 = 1.645. CI = 0.0261 ± 0.0071 = **[0.0190, 0.0332] utbrudd/måned**.
 - Concepts: poissonfordeling, eksponentialfordeling, KI for poissonrate.
 
-### Oppgave 5 — normalfordeling (kaffeautomat), sum av iid normaler
+### Oppgave 5 – normalfordeling (kaffeautomat), sum av iid normaler
 Setup: X = mengde kaffe ~ N(25, 0.48) cl.
 
 **5a)** P(X<24) = P(Z < (24-25)/0.48) = P(Z<-2.08) = **0.0188** fra E.3.
@@ -176,7 +176,7 @@ Setup: X = mengde kaffe ~ N(25, 0.48) cl.
 **5b)** Y = sum av 5 trykker (5 iid). Y ~ N(5·25, √5·0.48) = N(125, 1.0733). P(Y>127) = 1-P(Z<(127-125)/1.0733) = 1-P(Z<1.86) = 1-0.9686 = **0.0314**.
 - Concept: sum av uavhengige normalfordelte SV. **Notational gotcha:** the løsning writes "Y=5X" but means the SUM of 5 iid copies, not 5 times one X. Variance = n·σ² (not n²·σ²). Important to clarify in entry.
 
-### Oppgave 6 — z-test (én utvalg, kjent σ)
+### Oppgave 6 – z-test (én utvalg, kjent σ)
 Setup: Standardmodell μ₀ = 50W, σ = 5W (kjent). Ny type: utvalg n=40, x̄=48W. Signifikansnivå 0.05.
 
 **6a)** H₀: μ ≥ 50, H₁: μ < 50 (venstresidig).
@@ -193,23 +193,23 @@ Setup: Standardmodell μ₀ = 50W, σ = 5W (kjent). Ny type: utvalg n=40, x̄=48
 - total-sannsynlighet (3b)
 - diskret-sannsynlighetsfordeling (2)
 - normalfordeling (5)
-- standardnormalisering (5a) — concept
+- standardnormalisering (5a) – concept
 - en-utvalg-z-test (6)
-- p-verdi (6d) — concept
-- sum-av-uavhengige-normaler (5b) — formula/concept
-- uordnet-utvalg-uten-tilbakelegging (1) — concept (links to binomialkoeffisient)
-- binomialkoeffisient (1) — formula
-- komplementregelen (1b — already noted)
+- p-verdi (6d) – concept
+- sum-av-uavhengige-normaler (5b) – formula/concept
+- uordnet-utvalg-uten-tilbakelegging (1) – concept (links to binomialkoeffisient)
+- binomialkoeffisient (1) – formula
+- komplementregelen (1b – already noted)
 
 Tables used in jan25:
-- E.3 standardnormaltabell (5a, 6d) — looking up G(z) values
-- E.4 normal-kvantiltabell (4c — z_0.05; 6c — z_0.05)
+- E.3 standardnormaltabell (5a, 6d) – looking up G(z) values
+- E.4 normal-kvantiltabell (4c – z_0.05; 6c – z_0.05)
 
 ---
 
 ## Eksamen mai25 (read + løsning read)
 
-### Oppgave 1 — fellesfordeling (samme template som jan26 oppg 2)
+### Oppgave 1 – fellesfordeling (samme template som jan26 oppg 2)
 Different probability table. Marginalfordeling: P(X=x): {0.6, 0.2, 0.2}, P(Y=y): {0.5, 0.3, 0.2}.
 - E(X) = 0.6, E(Y) = 0.7
 - σX = √0.64 = 0.8, σY = √0.61 = 0.781
@@ -218,7 +218,7 @@ Different probability table. Marginalfordeling: P(X=x): {0.6, 0.2, 0.2}, P(Y=y):
 - ρ = -0.12 / (0.8·0.781) = **-0.192**
 - Same concepts as jan26 oppg 2.
 
-### Oppgave 2 — uavhengighet, De Morgan, total sannsynlighet
+### Oppgave 2 – uavhengighet, De Morgan, total sannsynlighet
 Setup: P(F)=0.45, P(M)=0.8, P(F∩M)=0.41.
 
 **2a)** Er F og M uavhengige? Sjekk: P(F∩M) = 0.41 vs P(F)·P(M) = 0.36. **Forskjellige → ikke uavhengige.**
@@ -231,26 +231,26 @@ Setup: P(F)=0.45, P(M)=0.8, P(F∩M)=0.41.
 **2c)** P(T) = total sannsynlighet over kjønn. P(T|J)=0.23, P(T|J̄)=0.34, P(J)=0.52, P(J̄)=0.48. P(T) = 0.52·0.23 + 0.48·0.34 = **0.2828**.
 - Concept: total sannsynlighet (samme som jan25 oppg 3b).
 
-### Oppgave 3 — binomial + KI for andel
+### Oppgave 3 – binomial + KI for andel
 **3a)** X ~ Bin(10, 0.2). P(X≥2) = 1 - P(X≤1) = 1 - 0.376 (fra E.1) = **0.624**. Eller direkte: P(X=0) = 0.8^10 = 0.107, P(X=1) = 10·0.2·0.8^9 = 0.268, sum=0.375, da P(X≥2) = 0.625.
 
 **3b)** 90% KI for p basert på 23/80. Formula: p̂ ± z_(α/2) · √(p̂(1-p̂)/n). p̂ = 23/80 = 0.2875. z_0.05 = 1.645. CI = 0.2875 ± 0.0832 = **[0.204, 0.371]**.
 - Concept: KI for binomial andel (different from KI for poissonrate).
 
-### Oppgave 4 — normalfordeling, z-test, finn-mu
+### Oppgave 4 – normalfordeling, z-test, finn-mu
 Setup: X ~ N(302, 5).
 
 **4a)** P(305 < X ≤ 310) = G((310-302)/5) - G((305-302)/5) = G(1.6) - G(0.6) = 0.9452 - 0.7257 = **0.2195**.
-- Concept: probability between two values for normal RV — split into two G() lookups.
+- Concept: probability between two values for normal RV – split into two G() lookups.
 
 **4b)** Z-test of μ < 302 with sample of 6 (data: 297,300,293,296,304,302). H₀: μ ≥ 302, H₁: μ < 302. x̄ = 298.67. z = (298.67-302)/(5/√6) = **-1.63**. -1.63 not < -1.645 → IKKE forkast.
 
 **4c)** p-value = G(-1.63) = **0.0516**. Just slightly above α=0.05.
 
 **4d)** Find μ such that P(X<300) < 0.001. Set P(X<300) = 0.001 → (300-μ)/5 = -z_0.001 = -3.090 → μ = 300 + 15.45 = **315.45 ml**.
-- Concept: inverse normal — given a probability, find the μ.
+- Concept: inverse normal – given a probability, find the μ.
 
-### Oppgave 5 — full lineær regresjon (correlation, regression line, hypothesis test)
+### Oppgave 5 – full lineær regresjon (correlation, regression line, hypothesis test)
 Setup: 10 obs (søvntimer, eksamensresultat). Data table including column for (yi - α̂ - β̂·xi)² (squared residuals).
 
 **5a)** Spredningsplott. Concept: data visualization.
@@ -271,15 +271,15 @@ Setup: 10 obs (søvntimer, eksamensresultat). Data table including column for (y
 
 ## New entries identified from mai25
 
-- uavhengighet-hendelser (2a) — concept
+- uavhengighet-hendelser (2a) – concept
 - de-morgans-lov (2b)
-- normalfordeling-mellom-to-verdier (4a) — variation on normal probability lookup
+- normalfordeling-mellom-to-verdier (4a) – variation on normal probability lookup
 - ki-andel-binomial (3b)
-- finn-mu-gitt-sannsynlighet (4d) — procedure
-- lineær-regresjon-estimering (5c) — α̂, β̂ formler
-- korrelasjonskoeffisient-r (5b) — formula (different from ρ for joint distrib)
+- finn-mu-gitt-sannsynlighet (4d) – procedure
+- lineær-regresjon-estimering (5c) – α̂, β̂ formler
+- korrelasjonskoeffisient-r (5b) – formula (different from ρ for joint distrib)
 - lineær-regresjon-hypotesetest-beta (5d)
-- spredningsplott (5a) — concept
+- spredningsplott (5a) – concept
 
 Tables used: E.1 (3a), E.3 (4a), E.4 (3b, 4b), E.5 (5d)
 
@@ -299,7 +299,7 @@ After reading 3 exams (jan25, mai25, jan26), here's the picture:
 
 **Combinatorics:** uordnet utvalg uten tilbakelegging (jan25 oppg 1, jan26 oppg 1ab), counting "favorable/possible".
 
-**Joint distribution:** marginal, E, σ, Cov, ρ from a 3×3 or 3×3 simultanfordelingstabell — appears in BOTH jan26 oppg 2 and mai25 oppg 1 (same exact template, different numbers).
+**Joint distribution:** marginal, E, σ, Cov, ρ from a 3×3 or 3×3 simultanfordelingstabell – appears in BOTH jan26 oppg 2 and mai25 oppg 1 (same exact template, different numbers).
 
 **Regression:** full pipeline. Scatter plot, correlation r, β̂ and α̂ estimates, residual variance, slope SE, slope hypothesis test, prediction interval (jan26 oppg 6, mai25 oppg 5).
 
@@ -328,7 +328,7 @@ This is the canonical course summary of hypothesis tests. Three test types cover
 - Forutsetning: n·p̂(1-p̂) ≥ 5
 - Three rejection rules
 
-This is the official course curriculum for hypothesis tests. The two-sample t-test from jan26 oppg 5 isn't in this oversikt — it's a curriculum extension. Linear regression slope test (mai25 oppg 5d) also extends beyond.
+This is the official course curriculum for hypothesis tests. The two-sample t-test from jan26 oppg 5 isn't in this oversikt – it's a curriculum extension. Linear regression slope test (mai25 oppg 5d) also extends beyond.
 
 ---
 
@@ -349,10 +349,10 @@ Python code provided. Uses np.random.choice and np.std with ddof=1.
 
 Concepts:
 - bootstrapping (concept)
-- prosentilintervall (concept) — alternative to z-based CI
-- normaltestplott / qq-plott (concept) — used to verify normality assumption
+- prosentilintervall (concept) – alternative to z-based CI
+- normaltestplott / qq-plott (concept) – used to verify normality assumption
 - standardfeil for bootstrap mean (concept)
-- sentralgrenseteoremet (concept) — referenced as the alternative when n is large enough
+- sentralgrenseteoremet (concept) – referenced as the alternative when n is large enough
 
 ---
 
@@ -369,10 +369,10 @@ I'll proceed to drafting now, and revisit øvinger only if a category I'm drafti
 
 ### Distributions (5)
 1. **Binomialfordeling** (jan25 1ab indirectly + mai25 3a + jan26 1c)
-2. **Poissonfordeling** (jan25 4a + jan26 4ab) — already partial fixture, expand
+2. **Poissonfordeling** (jan25 4a + jan26 4ab) – already partial fixture, expand
 3. **Eksponentialfordeling** (jan25 4b + jan26 4cd)
 4. **Normalfordeling** (jan25 5 + mai25 4)
-5. **Hypergeometrisk fordeling** (mentioned in jan26 4 IKKE-bruk; not directly used in any exam — include because it's a curriculum staple and the IKKE-bruk distinction matters)
+5. **Hypergeometrisk fordeling** (mentioned in jan26 4 IKKE-bruk; not directly used in any exam – include because it's a curriculum staple and the IKKE-bruk distinction matters)
 
 ### Hypothesis tests (5)
 6. **Én-utvalg z-test** (jan25 6 + mai25 4b)
@@ -384,16 +384,16 @@ I'll proceed to drafting now, and revisit øvinger only if a category I'm drafti
 ### Confidence intervals (3-4)
 11. **KI for poissonrate λ** (jan25 4c + jan26 4e)
 12. **KI for andel p (binomial)** (mai25 3b)
-13. **KI for forventningsverdi μ (kjent σ)** — z-based (curriculum)
-14. **KI for forventningsverdi μ (ukjent σ)** — t-based (curriculum)
+13. **KI for forventningsverdi μ (kjent σ)** – z-based (curriculum)
+14. **KI for forventningsverdi μ (ukjent σ)** – t-based (curriculum)
 
 ### Linear regression (5)
-15. **Lineær regresjon — estimat for α og β** (mai25 5c)
-16. **Lineær regresjon — korrelasjonskoeffisient r** (mai25 5b)
-17. **Lineær regresjon — residualenes varians SE²** (mai25 5d)
-18. **Lineær regresjon — standardfeil til β̂, SE(β̂)** (jan26 6 + mai25 5d)
-19. **Lineær regresjon — prediksjonsintervall for Y** (jan26 6)
-20. **Lineær regresjon — hypotesetest β = 0** (mai25 5d)
+15. **Lineær regresjon – estimat for α og β** (mai25 5c)
+16. **Lineær regresjon – korrelasjonskoeffisient r** (mai25 5b)
+17. **Lineær regresjon – residualenes varians SE²** (mai25 5d)
+18. **Lineær regresjon – standardfeil til β̂, SE(β̂)** (jan26 6 + mai25 5d)
+19. **Lineær regresjon – prediksjonsintervall for Y** (jan26 6)
+20. **Lineær regresjon – hypotesetest β = 0** (mai25 5d)
 
 ### Probability rules (5)
 21. **Unionssetningen** (jan26 3a)
@@ -436,9 +436,9 @@ I'll proceed to drafting now, and revisit øvinger only if a category I'm drafti
 50. Spredningsplott
 51. De Morgan's lov
 
-### Tables (6) — already have placeholder for E.2, expand
+### Tables (6) – already have placeholder for E.2, expand
 52. Binomialtabell (E.1)
-53. Poissontabell (E.2) — expand existing fixture
+53. Poissontabell (E.2) – expand existing fixture
 54. Z-tabell (E.3)
 55. Z-kvantiltabell (E.4)
 56. t-tabell (E.5)
@@ -446,5 +446,5 @@ I'll proceed to drafting now, and revisit øvinger only if a category I'm drafti
 
 **Total target: ~50-57 entries** across formler, hypothesis tests, regression, probability rules, joint dist, concepts, and tables.
 
-Plenty for the exam. Some entries (like hypergeometric) are included for completeness even though not directly in exams — they're part of the curriculum and the user may meet them in the exam.
+Plenty for the exam. Some entries (like hypergeometric) are included for completeness even though not directly in exams – they're part of the curriculum and the user may meet them in the exam.
 

@@ -1,6 +1,6 @@
 id: joint
 term_no: Joint (felles)
-short_def: "Engelsk for 'felles' — som i joint distribution = simultanfordeling."
+short_def: "Engelsk for 'felles' – som i joint distribution = simultanfordeling."
 long_def: |
   Lærebøker veksler mellom 'joint', 'simultan' og 'felles'. Alle betyr det
   samme: fordelingen til to (eller flere) variabler sammen, P(X=x, Y=y).

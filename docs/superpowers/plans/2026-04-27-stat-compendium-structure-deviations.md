@@ -12,7 +12,7 @@ A handful of small deviations from `2026-04-27-stat-compendium-structure.md` wer
 
 **Why:** The original script `tsc -b --noEmit` triggered TS6310 ("referenced project may not disable emit") in TS 5.9 with composite project references. Splitting into `tsc --noEmit && tsc -p tsconfig.node.json --noEmit` checks both project files without the build-mode composite conflict.
 
-**Knock-on:** `npm run build` had to be repointed from `tsc -b && vite build` to `npm run typecheck && vite build`. The old form silently emitted `.js` files into `src/` before failing — caught and fixed in commit `f102762`.
+**Knock-on:** `npm run build` had to be repointed from `tsc -b && vite build` to `npm run typecheck && vite build`. The old form silently emitted `.js` files into `src/` before failing – caught and fixed in commit `f102762`.
 
 **Where:** `package.json` scripts.
 
@@ -26,7 +26,7 @@ A handful of small deviations from `2026-04-27-stat-compendium-structure.md` wer
 
 ## 4. Math primitive double-pass normalization
 
-**Why:** JSX string attributes pass `\\` as two literal backslashes (no JS escape processing), but YAML-parsed strings already contain single backslashes for LaTeX commands. The plan's test wrote `latex="\\unknownmacro{}"` expecting a fallback path, but with `\\` literally delivered, KaTeX rendered `\\` as a line break and `unknownmacro` as text — no error, no fallback.
+**Why:** JSX string attributes pass `\\` as two literal backslashes (no JS escape processing), but YAML-parsed strings already contain single backslashes for LaTeX commands. The plan's test wrote `latex="\\unknownmacro{}"` expecting a fallback path, but with `\\` literally delivered, KaTeX rendered `\\` as a line break and `unknownmacro` as text – no error, no fallback.
 
 **Mitigation:** `src/components/primitives/Math.tsx` first validates the LaTeX after normalizing `\\` → `\` (`latex.replace(/\\\\/g, "\\")`). If KaTeX errors on the normalized form with `strict: "error"`, the fallback renders. Otherwise, the original LaTeX renders with `strict: "warn"`. Net effect: real YAML usage (single backslashes) is unaffected; JSX-passed test fixtures with double backslashes work.
 
@@ -34,7 +34,7 @@ A handful of small deviations from `2026-04-27-stat-compendium-structure.md` wer
 
 ## 5. Fonts via `@fontsource/*` instead of self-hosted woff2 downloads
 
-**Why:** The original Task 2 instructed manual download of three variable woff2 files into `public/fonts/`. A subagent cannot click "Download" on Google Fonts. Switched to `@fontsource/inter`, `@fontsource/source-serif-4`, `@fontsource/jetbrains-mono` — npm-bundled font packages that ship the same fonts and are equally offline-capable. Plan Task 2 was updated in place to reflect this.
+**Why:** The original Task 2 instructed manual download of three variable woff2 files into `public/fonts/`. A subagent cannot click "Download" on Google Fonts. Switched to `@fontsource/inter`, `@fontsource/source-serif-4`, `@fontsource/jetbrains-mono` – npm-bundled font packages that ship the same fonts and are equally offline-capable. Plan Task 2 was updated in place to reflect this.
 
 **Caveat:** Only static-weight (not variable) packages were available; we import the specific weights we use (400/500/600/700 for Inter; 400/400-italic/600 for Source Serif 4; 400/500/600 for JetBrains Mono).
 
@@ -48,7 +48,7 @@ A round of fixes was applied after the final code review (commit `218ba87`):
 
 - **SearchBox removed from non-Formler tabs.** Konsepter and Tabeller search boxes were rendered but didn't filter (the search index is entries-only). Hiding them until the content-extraction plan wires concept/table search.
 - **Tab change clears the query** so a leftover query doesn't unexpectedly filter Formler when switching back.
-- **TableDetail's `useState` for inputs simplified to a plain `const`** — the setter was destructured away so the state was effectively constant.
+- **TableDetail's `useState` for inputs simplified to a plain `const`** – the setter was destructured away so the state was effectively constant.
 - **`useTheme` validates `localStorage` value** instead of using an `as Theme` cast.
 - **`SymbolGrid` interface renamed** from `Symbol` (shadowed global) to `SymbolItem`.
 - **`vite.config.ts` raises `chunkSizeWarningLimit` to 700 kB.** The current 613 kB initial bundle is acceptable for an offline `file://` deployment; raising the limit silences the warning until the content-extraction phase has a real reason to code-split.

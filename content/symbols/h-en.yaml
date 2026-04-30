@@ -1,6 +1,6 @@
 id: h-en
 sym: "H₁"
-short_def: "Alternativhypotesen — påstanden du vil 'bevise'. Den utfordrer nullhypotesen H₀."
+short_def: "Alternativhypotesen – påstanden du vil 'bevise'. Den utfordrer nullhypotesen H₀."
 contexts:
   - usage: "Alternativhypotese i hypotesetest"
     detail: |
@@ -12,12 +12,12 @@ contexts:
       fordelingen du leter etter ekstreme verdier:
       - Ensidig høyre: H₁: μ > μ₀ (ser i høyre hale)
       - Ensidig venstre: H₁: μ < μ₀ (ser i venstre hale)
-      - Tosidig: H₁: μ ≠ μ₀ (begge haler — α deles på 2)
+      - Tosidig: H₁: μ ≠ μ₀ (begge haler – α deles på 2)
 
       Eksempel: tror du nytt mat senker blodtrykket, blir H₀: μ = μ₀
       og H₁: μ < μ₀. Velg form på H₁ før du ser dataene.
 
-      Ikke bland med H₀ — H₀ har likhetstegn (=), H₁ har ulikhet (<, >, ≠).
+      Ikke bland med H₀ – H₀ har likhetstegn (=), H₁ har ulikhet (<, >, ≠).
     entry_refs:
       - en-utvalg-z-test
       - en-utvalg-t-test

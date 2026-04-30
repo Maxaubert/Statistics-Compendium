@@ -4,7 +4,7 @@ short_def: "Tre vanlige roller avhengig av kontekst: populasjonsandel, suksesssa
 contexts:
   - usage: "Populasjonsandel / suksesssannsynlighet"
     detail: |
-      Den 'sanne' andelen i populasjonen som har en bestemt egenskap —
+      Den 'sanne' andelen i populasjonen som har en bestemt egenskap –
       eller, ekvivalent, sannsynligheten for suksess i ett enkelt
       binomialt forsøk.
 
@@ -12,11 +12,11 @@ contexts:
       p = 0.30. Du kjenner sjelden p direkte, men estimerer den
       med utvalgsandelen p̂ = X/n.
 
-      I binomial: Bin(n, p) — p er sannsynligheten i hvert forsøk,
+      I binomial: Bin(n, p) – p er sannsynligheten i hvert forsøk,
       og X teller antall suksesser totalt.
 
       Pass på: p uten hatt er den ukjente, sanne verdien. p̂ er ditt
-      estimat. Og — verre — p betyr p-verdi i hypotesetester. Sjekk
+      estimat. Og – verre – p betyr p-verdi i hypotesetester. Sjekk
       konteksten.
     entry_refs:
       - binomial-fordeling
@@ -27,7 +27,7 @@ contexts:
     detail: |
       p-verdien er sannsynligheten for å observere noe minst like
       ekstremt som det du så, gitt at H₀ er sann. Lav p-verdi betyr
-      at dataene er overraskende under H₀ — derfor mistanke mot H₀.
+      at dataene er overraskende under H₀ – derfor mistanke mot H₀.
 
       Beslutningsregel: hvis p < α, forkast H₀; ellers behold H₀.
 

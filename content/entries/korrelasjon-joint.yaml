@@ -2,7 +2,7 @@ id: korrelasjon-joint
 name_no: "Korrelasjon ρ(X,Y) for fellesfordeling"
 type: identity
 category: distribution_property
-tagline: "ρ = Cov(X,Y) / (σ_X · σ_Y) — normalisert kovarians, mellom -1 og 1."
+tagline: "ρ = Cov(X,Y) / (σ_X · σ_Y) – normalisert kovarians, mellom -1 og 1."
 
 formula_main: "ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)"
 formula_latex: "\\rho(X, Y) = \\frac{\\text{Cov}(X, Y)}{\\sigma_X \\cdot \\sigma_Y}"
@@ -41,7 +41,7 @@ solution_template:
 
 common_traps: |
   ρ er for FELLESFORDELING (teoretisk modell). For utvalg av (x,y)-par
-  i regresjon er det utvalgs-korrelasjonskoeffisient r som brukes — disse
+  i regresjon er det utvalgs-korrelasjonskoeffisient r som brukes – disse
   er konseptuelt forskjellige selv om formelen ligner.
 
 examples:

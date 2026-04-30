@@ -13,7 +13,7 @@ what_it_does: |
   standardavviket med √n (variansen med n).
 
 why_use: |
-  Brukes når flere uavhengige målinger skal slås sammen — typisk
+  Brukes når flere uavhengige målinger skal slås sammen – typisk
   "fyller flere ganger" eller "totalt antall" der hver del er normalfordelt.
 
 recognition_cues:
@@ -22,7 +22,7 @@ recognition_cues:
   - "Begrunnelse for å bruke z-test ved store n følger samme prinsipp"
 
 when_NOT_to_use:
-  - "Du jobber med GJENNOMSNITTET av flere observasjoner — da blir σ → σ/√n (mindre spredning, ikke større)"
+  - "Du jobber med GJENNOMSNITTET av flere observasjoner – da blir σ → σ/√n (mindre spredning, ikke større)"
   - "Variablene er ikke uavhengige eller ikke normalfordelte"
 
 symbols:
@@ -42,7 +42,7 @@ solution_template:
   - "Bekreft at X_i er uavhengige og N(μ, σ)"
   - "Beregn forventningsverdi for summen: μ_Y = n·μ"
   - "Beregn standardavvik for summen: σ_Y = σ·√n"
-  - "Y ~ N(n·μ, σ·√n) — bruk normalfordelingstabell videre"
+  - "Y ~ N(n·μ, σ·√n) – bruk normalfordelingstabell videre"
 
 common_traps: |
   Variansen for sum: Var(Y) = n·σ², altså σ_Y = σ·√n (IKKE n·σ).
@@ -87,4 +87,4 @@ related:
   - { id: "standardnormalisering",    kind: "concept" }
 
 tools:
-  - "Tabell E.3 — Z-tabell"
+  - "Tabell E.3 – Z-tabell"

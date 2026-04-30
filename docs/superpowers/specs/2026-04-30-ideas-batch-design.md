@@ -16,11 +16,11 @@
 | B9  | Cheat-sheet / compact view        | Medium   | Derived view: render all entries compactly; new route `/cheatsheet`, print-friendly |
 | B5  | Common task patterns catalog      | Medium   | New content type `PatternSchema`; ~12 patterns; new route `/monstre` |
 | B1  | Distribution wizard               | Medium   | New content type `WizardNodeSchema` (decision tree); new route `/veiviser` |
-| B7  | Distribution shape thumbnails     | Smaller  | Scope-cut version: static SVG shapes per distribution rendered on relevant entry pages — no interactivity |
-| C5  | Step-by-step templates            | Smaller  | Most entries already have `solution_template` — add a "Mal-modus" toggle on entry pages that highlights the template steps as fill-in slots |
+| B7  | Distribution shape thumbnails     | Smaller  | Scope-cut version: static SVG shapes per distribution rendered on relevant entry pages – no interactivity |
+| C5  | Step-by-step templates            | Smaller  | Most entries already have `solution_template` – add a "Mal-modus" toggle on entry pages that highlights the template steps as fill-in slots |
 
 ### Out of scope
-- Full interactive distribution visualizers (B7's original "drag μ and σ" version) — replaced with static thumbnails. Rationale: drag-interactive widgets add a lot of code for a feature you'd use mostly while studying, not during the 4-hour exam. The static thumbnails give the visual recognition value at a fraction of the cost.
+- Full interactive distribution visualizers (B7's original "drag μ and σ" version) – replaced with static thumbnails. Rationale: drag-interactive widgets add a lot of code for a feature you'd use mostly while studying, not during the 4-hour exam. The static thumbnails give the visual recognition value at a fraction of the cost.
 
 ## Architecture
 
@@ -100,12 +100,12 @@ src/
 /entry/:id          existing
 /concept/:id        existing
 /table/:id          existing
-/cheatsheet         B9 — compact all-in-one view, print-friendly
-/symboler           B4 — symbol reference
-/ordliste           B3 — glossary
-/monstre            B5 — patterns catalog
+/cheatsheet         B9 – compact all-in-one view, print-friendly
+/symboler           B4 – symbol reference
+/ordliste           B3 – glossary
+/monstre            B5 – patterns catalog
 /monstre/:id        single pattern detail
-/veiviser           B1 — wizard
+/veiviser           B1 – wizard
 ```
 
 ### Banner navigation
@@ -131,12 +131,12 @@ Same placement, less hunting.
 
 ### Distribution thumbnails (B7 scoped down)
 Six tiny SVG components, one per distribution shape:
-- `PoissonShape` — bars dropping off
-- `BinomialShape` — symmetric bars
-- `NormalShape` — bell curve
-- `TShape` — heavier-tailed bell
-- `ChiSquaredShape` — right-skewed
-- `ExponentialShape` — exponential decay
+- `PoissonShape` – bars dropping off
+- `BinomialShape` – symmetric bars
+- `NormalShape` – bell curve
+- `TShape` – heavier-tailed bell
+- `ChiSquaredShape` – right-skewed
+- `ExponentialShape` – exponential decay
 
 Render at 100×60 px next to the formula on the entry detail page when entry's `distribution_assumption` filter matches.
 
@@ -203,7 +203,7 @@ START: Diskret eller kontinuerlig?
 1. Foundation: extend schema, extend `loadContent`, add empty content folders (no UI yet)
 2. Trivial wins: A5, A9 (dark mode)
 3. Content: C1 (3 chi-squared entries)
-4. Derived views: B4 (symbol table), B9 (cheatsheet) — these don't need new content
+4. Derived views: B4 (symbol table), B9 (cheatsheet) – these don't need new content
 5. New content + UI: B3 (glossary), B5 (patterns)
 6. Wizard: B1
 7. Polish: B7 thumbnails, C5 template mode
@@ -212,6 +212,6 @@ START: Diskret eller kontinuerlig?
 ## Self-review
 
 **Spec coverage:** All 10 requested ideas have an in-scope row or are addressed in the architecture. ✓
-**Placeholders:** None — every section has concrete file paths and approach. ✓
+**Placeholders:** None – every section has concrete file paths and approach. ✓
 **Internal consistency:** Schemas referenced match what's added; route names are consistent across architecture and order sections. ✓
-**Scope focus:** This is a single coherent batch — adding navigational helpers + dark mode + content gaps. Each piece is self-contained and shippable independently. ✓
+**Scope focus:** This is a single coherent batch – adding navigational helpers + dark mode + content gaps. Each piece is self-contained and shippable independently. ✓

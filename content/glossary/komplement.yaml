@@ -1,6 +1,6 @@
 id: komplement
 term_no: Komplement (Ā, A^c)
-short_def: "Hendelsen 'ikke A' — alle utfall som ikke ligger i A. P(Ā) = 1 − P(A)."
+short_def: "Hendelsen 'ikke A' – alle utfall som ikke ligger i A. P(Ā) = 1 − P(A)."
 long_def: |
   Komplementet skrives Ā, A^c eller A'. Komplementregelen sier
   P(Ā) = 1 − P(A) og er en av de enkleste, men mest nyttige reglene.

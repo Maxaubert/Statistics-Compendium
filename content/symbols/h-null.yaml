@@ -1,6 +1,6 @@
 id: h-null
 sym: "H₀"
-short_def: "Nullhypotesen — den 'kjedelige' påstanden du tester mot. Sier at det ikke er noen effekt eller forskjell."
+short_def: "Nullhypotesen – den 'kjedelige' påstanden du tester mot. Sier at det ikke er noen effekt eller forskjell."
 contexts:
   - usage: "Nullhypotesen i hypotesetest"
     detail: |
@@ -19,7 +19,7 @@ contexts:
       bare at du ikke fant sterke nok bevis mot den. Som i en rettssak:
       'ikke skyldig' er ikke det samme som 'uskyldig'.
 
-      Ikke bland med H₁ — H₀ har alltid likhetstegn (=), H₁ har ulikhet.
+      Ikke bland med H₁ – H₀ har alltid likhetstegn (=), H₁ har ulikhet.
     entry_refs:
       - en-utvalg-z-test
       - en-utvalg-t-test

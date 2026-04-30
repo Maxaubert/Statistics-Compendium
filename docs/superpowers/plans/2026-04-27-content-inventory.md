@@ -1,4 +1,4 @@
-# Content Inventory — ITD20218 Statistikk-kompendium
+# Content Inventory – ITD20218 Statistikk-kompendium
 
 **Date drafted:** 2026-04-27
 **Source materials covered:**
@@ -19,23 +19,23 @@
 - **20+ worked detailed solutions** drawn from real exam problems
 - **Approximately 35 example excerpts** with one-line solution sketches
 
-## Coverage matrix — which entry exemplifies which exam oppgave
+## Coverage matrix – which entry exemplifies which exam oppgave
 
 ### Eksamen jan26 (most recent, primary anchor)
 
 | Oppgave | Entry/entries used | Detailed solution? |
 |--------|-------------------|--------------------|
-| 1a (skopar) | gunstige-pa-mulige | — (concept) |
+| 1a (skopar) | gunstige-pa-mulige | – (concept) |
 | 1b (høyre/venstresko) | produktregel, betinget-sannsynlighet | example sketch |
 | 1c (myntkast) | binomial-fordeling, komplementregelen | yes |
-| 2a (E[X], E[Y]) | forventningsverdi-diskret, marginalfordeling | — |
+| 2a (E[X], E[Y]) | forventningsverdi-diskret, marginalfordeling | – |
 | 2b (σ_X, σ_Y) | varians-standardavvik-diskret | yes |
 | 2c (ρ) | kovarians, korrelasjon-joint | example sketch |
 | 3a (P(A∪B)) | unionssetningen | yes |
-| 3b (P(A\|C̄)) | betinget-sannsynlighet, komplementregelen, disjunkte-hendelser | — |
+| 3b (P(A\|C̄)) | betinget-sannsynlighet, komplementregelen, disjunkte-hendelser | – |
 | 4a (P(X=0)) | poisson-fordeling | yes |
 | 4b (P(X≥3)) | poisson-fordeling, komplementregelen | yes |
-| 4c (T fordeling?) | eksponential-fordeling, poisson-prosess | — |
+| 4c (T fordeling?) | eksponential-fordeling, poisson-prosess | – |
 | 4d (P(T>48)) | eksponential-fordeling | yes |
 | 4e (KI for λ) | ki-poissonrate | yes |
 | 5 (uparet t-test) | to-utvalgs-t-test, interpolert-varians | yes |
@@ -46,14 +46,14 @@
 | Oppgave | Entry/entries used | Detailed solution? |
 |--------|-------------------|--------------------|
 | 1a-c (E,σ,ρ joint) | forventningsverdi-diskret, varians-standardavvik-diskret, kovarians, korrelasjon-joint | example sketch |
-| 2a (uavhengighet) | uavhengighet-hendelser | — |
-| 2b (P(M̄\|F̄)) | de-morgans-lov, betinget-sannsynlighet | — |
+| 2a (uavhengighet) | uavhengighet-hendelser | – |
+| 2b (P(M̄\|F̄)) | de-morgans-lov, betinget-sannsynlighet | – |
 | 2c (P(tran)) | total-sannsynlighet | yes |
 | 3a (P(X≥2) binomial) | binomial-fordeling | yes |
 | 3b (KI for p) | ki-andel-binomial | yes |
 | 4a (normal mellom 305-310) | normalfordeling | yes |
 | 4b (z-test μ<302) | en-utvalg-z-test | yes |
-| 4c (p-verdi) | p-verdi (concept) | — |
+| 4c (p-verdi) | p-verdi (concept) | – |
 | 4d (finn μ) | normalfordeling | yes |
 | 5b (korrelasjon r) | regresjon-korrelasjonskoeffisient | yes |
 | 5c (regresjonslinje) | regresjon-estimat-alpha-beta | yes |
@@ -66,10 +66,10 @@
 | 1a (alle hjerter) | hypergeometrisk-fordeling, uordnet-utvalg-uten-tilbakelegging | yes |
 | 1b (ikke alle) | komplementregelen | example sketch |
 | 1c (ingen hjerter) | hypergeometrisk-fordeling | example sketch |
-| 1d (disjunkte?) | disjunkte-hendelser | — |
+| 1d (disjunkte?) | disjunkte-hendelser | – |
 | 2a-c (E, Var, ...) | forventningsverdi-diskret, varians-standardavvik-diskret | example sketches |
 | 3a (Bayes) | bayes-setning | yes |
-| 3b (total sannsynlighet) | total-sannsynlighet | — |
+| 3b (total sannsynlighet) | total-sannsynlighet | – |
 | 4a (Poisson 1 eller 2) | poisson-fordeling | yes |
 | 4b (minst ett) | poisson-fordeling, eksponential-fordeling | example sketch |
 | 4c (KI for rate) | ki-poissonrate | example sketch |
@@ -81,10 +81,10 @@
 
 These entries exist for completeness even though they don't appear directly in the 3 exams I read:
 
-- **hypergeometrisk-fordeling** — used in jan25 oppg 1 implicitly via gunstige/mulige; full distribution rarely named in these exams.
-- **en-utvalg-t-test** — appears in `hypotesetest_oversikt.pdf` as the second of three core tests; not used in the exams I read but pensum-required.
-- **en-utvalg-z-test-andel** — third in `hypotesetest_oversikt.pdf`; same situation.
-- **ki-mu-kjent-sigma** and **ki-mu-ukjent-sigma** — implicit in pensum even when not used directly in these exams.
+- **hypergeometrisk-fordeling** – used in jan25 oppg 1 implicitly via gunstige/mulige; full distribution rarely named in these exams.
+- **en-utvalg-t-test** – appears in `hypotesetest_oversikt.pdf` as the second of three core tests; not used in the exams I read but pensum-required.
+- **en-utvalg-z-test-andel** – third in `hypotesetest_oversikt.pdf`; same situation.
+- **ki-mu-kjent-sigma** and **ki-mu-ukjent-sigma** – implicit in pensum even when not used directly in these exams.
 
 ## Entries grouped by category
 

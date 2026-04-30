@@ -1,7 +1,7 @@
 id: bootstrapping
 name_no: "Bootstrapping"
 type: concept
-tagline: "Metode for å estimere usikkerhet uten å anta normalfordeling — gjenta utvalg med tilbakelegging fra dataene."
+tagline: "Metode for å estimere usikkerhet uten å anta normalfordeling – gjenta utvalg med tilbakelegging fra dataene."
 
 what_it_means: |
   Bootstrapping er en metode for å estimere usikkerheten i en statistisk

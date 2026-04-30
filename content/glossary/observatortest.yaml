@@ -1,6 +1,6 @@
 id: observatortest
 term_no: Testobservator
-short_def: "Tallet du regner ut fra dataene og sammenligner mot tabell — typisk Z, T eller χ²."
+short_def: "Tallet du regner ut fra dataene og sammenligner mot tabell – typisk Z, T eller χ²."
 long_def: |
   Testobservatoren standardiserer dataene under H₀ slik at du kan slå opp
   i en tabell. Z-test: Z = (X̄ − μ₀)/(σ/√n). T-test: bytt σ med S.

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { lookupCumulative, computeBonus } from "./distributions";
 
-describe("lookupCumulative — poisson", () => {
+describe("lookupCumulative – poisson", () => {
   it("returns P(X ≤ 2) for μ = 1.68", () => {
     const v = lookupCumulative({ distribution: "poisson", inputs: { μ: 1.68, k: 2 } });
     expect(v).toBeCloseTo(0.7625, 3);
@@ -12,7 +12,7 @@ describe("lookupCumulative — poisson", () => {
   });
 });
 
-describe("lookupCumulative — binomial", () => {
+describe("lookupCumulative – binomial", () => {
   it("returns P(X ≤ 5) for n=10, p=0.5", () => {
     const v = lookupCumulative({
       distribution: "binomial",
@@ -22,7 +22,7 @@ describe("lookupCumulative — binomial", () => {
   });
 });
 
-describe("computeBonus — poisson", () => {
+describe("computeBonus – poisson", () => {
   it("provides P(X = k) and P(X > k)", () => {
     const bonus = computeBonus({ distribution: "poisson", inputs: { μ: 1.68, k: 2 } });
     expect(bonus.find((b) => b.label.includes("="))?.value).toBeDefined();

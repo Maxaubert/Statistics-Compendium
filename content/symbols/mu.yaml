@@ -1,17 +1,17 @@
 id: mu
 sym: "μ"
-short_def: "Populasjonsgjennomsnitt — den 'sanne' forventede verdien i hele populasjonen. Brukes også for forventet antall i poissonfordelingen (μ = λt)."
+short_def: "Populasjonsgjennomsnitt – den 'sanne' forventede verdien i hele populasjonen. Brukes også for forventet antall i poissonfordelingen (μ = λt)."
 contexts:
   - usage: "Populasjonsgjennomsnitt"
     detail: |
-      μ er gjennomsnittet i HELE populasjonen — den sanne, teoretiske
+      μ er gjennomsnittet i HELE populasjonen – den sanne, teoretiske
       verdien du sjelden klarer å måle direkte. Tenk: 'hva ville
       gjennomsnittet vært om jeg kunne målt absolutt alle?'
 
       I praksis kjenner du ikke μ. Du tar et utvalg, regner ut
       utvalgsgjennomsnittet X̄, og bruker det som estimat for μ.
 
-      Hypotesetester på gjennomsnitt har formen H₀: μ = μ₀ — du
+      Hypotesetester på gjennomsnitt har formen H₀: μ = μ₀ – du
       tester om den sanne μ er lik en bestemt verdi μ₀.
 
       Eksempel: skal du teste om gjennomsnittlig høyde for norske

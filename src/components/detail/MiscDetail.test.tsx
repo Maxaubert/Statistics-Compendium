@@ -46,7 +46,7 @@ describe("ToolCards", () => {
     }];
     render(
       <MemoryRouter>
-        <ToolCards tools={["Tabell E.2 — Kumulativ poissonfordeling", "Kalkulator: e^x"]} tables={tables} />
+        <ToolCards tools={["Tabell E.2 – Kumulativ poissonfordeling", "Kalkulator: e^x"]} tables={tables} />
       </MemoryRouter>
     );
     const link = screen.getByRole("link", { name: /Tabell E\.2/ });

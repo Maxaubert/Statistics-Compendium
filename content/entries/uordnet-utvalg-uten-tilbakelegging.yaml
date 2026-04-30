@@ -45,7 +45,7 @@ filters:
 
 solution_template:
   - "Identifiser n (totalt) og k (det som skal velges)"
-  - "Beregn C(n,k) — på kalkulator typisk 'nCr' eller 'COMB'"
+  - "Beregn C(n,k) – på kalkulator typisk 'nCr' eller 'COMB'"
   - "Hvis sannsynlighetsoppgave: kombiner med antall mulige utvalg, P = gunstige/mulige"
 
 common_traps: |

@@ -1,6 +1,6 @@
 id: p-hat
 sym: "p̂"
-short_def: "Utvalgsandel — estimat for populasjonsandelen p, regnet som antall suksesser delt på antall forsøk."
+short_def: "Utvalgsandel – estimat for populasjonsandelen p, regnet som antall suksesser delt på antall forsøk."
 contexts:
   - usage: "Utvalgsandel"
     detail: |
@@ -14,7 +14,7 @@ contexts:
 
       p̂ er en tilfeldig variabel (varierer fra utvalg til utvalg)
       med E[p̂] = p og Var(p̂) = p(1−p)/n. For store n er p̂ tilnærmet
-      normalfordelt — det er grunnlaget for z-tester på andel.
+      normalfordelt – det er grunnlaget for z-tester på andel.
 
       Ikke å forveksle med p (uten hatt) som er den sanne andelen,
       eller med p-verdi (helt annet konsept).

@@ -41,8 +41,8 @@ filters:
 
 solution_template:
   - "Identifiser hendelsen A som du vil ha sannsynligheten for"
-  - "Beskriv A̅ — det motsatte av A. Tenk: 'hva er det A IKKE er?'"
-  - "Beregn P(A̅) — sjekk om dette er enklere enn å regne ut P(A) direkte"
+  - "Beskriv A̅ – det motsatte av A. Tenk: 'hva er det A IKKE er?'"
+  - "Beregn P(A̅) – sjekk om dette er enklere enn å regne ut P(A) direkte"
   - "Bruk regelen: P(A) = 1 − P(A̅)"
   - "For 'minst k' i en kumulativ tabell: P(X ≥ k) = 1 − P(X ≤ k - 1). Husk å trekke fra 1, ikke k!"
 
@@ -69,7 +69,7 @@ related:
   - { id: "poisson-fordeling", kind: "entry" }
 
 tools:
-  - "Tabell E.1 — Kumulativ binomisk sannsynlighet (slå opp P(X ≤ k) for binomial)"
-  - "Tabell E.2 — Kumulativ poissonfordeling (slå opp P(X ≤ k) for poisson)"
-  - "Tabell E.3 — Z-tabell (slå opp G(z) når kontinuerlig)"
+  - "Tabell E.1 – Kumulativ binomisk sannsynlighet (slå opp P(X ≤ k) for binomial)"
+  - "Tabell E.2 – Kumulativ poissonfordeling (slå opp P(X ≤ k) for poisson)"
+  - "Tabell E.3 – Z-tabell (slå opp G(z) når kontinuerlig)"
   - "Kalkulator: subtraksjon"

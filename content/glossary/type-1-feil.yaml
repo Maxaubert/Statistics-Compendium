@@ -1,6 +1,6 @@
 id: type-1-feil
 term_no: Type-I-feil
-short_def: "Å forkaste H₀ når H₀ faktisk er sann — falsk alarm."
+short_def: "Å forkaste H₀ når H₀ faktisk er sann – falsk alarm."
 long_def: |
   Sannsynligheten for type-I-feil er lik signifikansnivået α. Hvis du
   setter α = 0.05, godtar du 5 % sjanse for falsk alarm. Lavere α →

@@ -1,6 +1,6 @@
 id: gjennomsnitt
 term_no: Gjennomsnitt (X̄, μ)
-short_def: "Summen av observasjoner delt på antallet — det aritmetiske midlet."
+short_def: "Summen av observasjoner delt på antallet – det aritmetiske midlet."
 long_def: |
   Utvalgsgjennomsnitt: X̄ = (1/n) · Σ x_i. Forventningsverdi: μ = E[X].
   Sentralgrenseteoremet: X̄ er tilnærmet N(μ, σ/√n) for store n,

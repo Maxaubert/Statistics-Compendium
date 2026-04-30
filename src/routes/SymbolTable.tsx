@@ -5,7 +5,7 @@ import { Banner } from "@/components/shell/Banner";
 import { loadAllContent } from "@/data/loadContent";
 import type { Entry, SymbolEntry } from "@/data/schema";
 
-// Count distinct entries that reference a symbol — both via entry.symbols[].sym
+// Count distinct entries that reference a symbol – both via entry.symbols[].sym
 // matches and via the curator's entry_refs in each context. Used to sort the
 // grid so the symbols a panicking student is most likely to see come first.
 function popularityOf(symbol: SymbolEntry, entries: Entry[]): number {
@@ -214,7 +214,7 @@ export function SymbolTable() {
         </h1>
         <p className="mb-8 font-serif italic text-ink-3">
           Klikk et symbol for å se hva det betyr i ulike sammenhenger. Mange
-          symboler har flere betydninger — for eksempel betyr α både
+          symboler har flere betydninger – for eksempel betyr α både
           signifikansnivå og konstantledd, og β både stigningstall og
           sannsynligheten for type-2-feil.
         </p>

@@ -2,7 +2,7 @@ id: regresjon-residualvarians
 name_no: "Residualenes varians S_E²"
 type: regression
 category: regression_estimate
-tagline: "Variansen til feilene rundt regresjonslinjen — mål for hvor godt linjen passer."
+tagline: "Variansen til feilene rundt regresjonslinjen – mål for hvor godt linjen passer."
 
 formula_main: "S_E² = SSE / (n - 2);  SSE = Σ(y_i - α̂ - β̂·x_i)²"
 formula_latex: "S_E^2 = \\frac{\\text{SSE}}{n - 2}, \\quad \\text{SSE} = \\sum (y_i - \\hat{\\alpha} - \\hat{\\beta} x_i)^2"
@@ -46,7 +46,7 @@ solution_template:
 
 common_traps: |
   Frihetsgrader er n - 2 (ikke n - 1), fordi to parametre (α̂, β̂) er
-  estimert. SSE forveksles ofte med S_XX = Σ(x-x̄)² — disse er HELT
+  estimert. SSE forveksles ofte med S_XX = Σ(x-x̄)² – disse er HELT
   forskjellige.
 
 python_snippet: |

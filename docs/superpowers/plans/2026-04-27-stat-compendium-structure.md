@@ -1,4 +1,4 @@
-# Statistikk-kompendium — Structure Implementation Plan
+# Statistikk-kompendium – Structure Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -26,7 +26,7 @@
 
 ---
 
-## Phase A — Foundation
+## Phase A – Foundation
 
 ### Task 1: Scaffold Vite + React + TypeScript project
 
@@ -446,7 +446,7 @@ git commit -m "chore: add Vitest + Testing Library setup with smoke test"
 
 ---
 
-## Phase B — Schema and Data Loading
+## Phase B – Schema and Data Loading
 
 ### Task 5: Zod schemas for Entry, Concept, Table, Filters
 
@@ -966,7 +966,7 @@ related:
   - { id: "E2-poisson-kumulativ",    kind: "table" }
 
 tools:
-  - "Tabell E.2 — Kumulativ poissonfordeling"
+  - "Tabell E.2 – Kumulativ poissonfordeling"
   - "Kalkulator: e^x, k!"
 ```
 
@@ -1018,7 +1018,7 @@ related:
   - { id: "poisson-fordeling", kind: "entry" }
 
 tools:
-  - "Tabell E.1 — Kumulativ binomisk sannsynlighet"
+  - "Tabell E.1 – Kumulativ binomisk sannsynlighet"
 ```
 
 - [ ] **Step 4: Write `content/concepts/poisson-prosess.yaml`**
@@ -1242,7 +1242,7 @@ git commit -m "feat: load and validate all YAML content at build time"
 
 ---
 
-## Phase C — Logic (search, filter)
+## Phase C – Logic (search, filter)
 
 ### Task 8: Filter logic with match counts
 
@@ -1523,7 +1523,7 @@ git commit -m "feat: fuzzy search index with weighted fields"
 
 ---
 
-## Phase D — Routing and Shell
+## Phase D – Routing and Shell
 
 ### Task 10: React Router setup with placeholder routes
 
@@ -1842,7 +1842,7 @@ git commit -m "feat: TabBar component with icons and counts"
 
 ---
 
-## Phase E — List View
+## Phase E – List View
 
 ### Task 13: SearchBox component
 
@@ -2567,7 +2567,7 @@ Run `npm test`. Expected: passes.
 ```bash
 npm run dev
 ```
-Visit `http://localhost:5173`. You should see banner, tabs, filter sidebar with "Beregner" group, search bar, and two rows (Poissonfordeling, Binomialfordeling). Click a filter checkbox — the count updates. Click a row — URL changes to `#/entry/poisson-fordeling`.
+Visit `http://localhost:5173`. You should see banner, tabs, filter sidebar with "Beregner" group, search bar, and two rows (Poissonfordeling, Binomialfordeling). Click a filter checkbox – the count updates. Click a row – URL changes to `#/entry/poisson-fordeling`.
 
 - [ ] **Step 5: Commit**
 
@@ -2578,7 +2578,7 @@ git commit -m "feat: ListView wires filter sidebar, search, and table"
 
 ---
 
-## Phase F — Detail page primitives
+## Phase F – Detail page primitives
 
 ### Task 18: KaTeX math primitive
 
@@ -3830,7 +3830,7 @@ git commit -m "feat: EntryDetail page composes all detail components"
 
 ---
 
-## Phase G — Concept and Tables
+## Phase G – Concept and Tables
 
 ### Task 29: ConceptDetail page
 
@@ -3993,7 +3993,7 @@ git commit -m "feat: ConceptDetail page (lighter variant of entry detail)"
 import { describe, it, expect } from "vitest";
 import { lookupCumulative, computeBonus } from "./distributions";
 
-describe("lookupCumulative — poisson", () => {
+describe("lookupCumulative – poisson", () => {
   it("returns P(X ≤ 2) for μ = 1.68", () => {
     const v = lookupCumulative({ distribution: "poisson", inputs: { μ: 1.68, k: 2 } });
     expect(v).toBeCloseTo(0.7681, 3);
@@ -4004,7 +4004,7 @@ describe("lookupCumulative — poisson", () => {
   });
 });
 
-describe("lookupCumulative — binomial", () => {
+describe("lookupCumulative – binomial", () => {
   it("returns P(X ≤ 5) for n=10, p=0.5", () => {
     const v = lookupCumulative({
       distribution: "binomial",
@@ -4014,7 +4014,7 @@ describe("lookupCumulative — binomial", () => {
   });
 });
 
-describe("computeBonus — poisson", () => {
+describe("computeBonus – poisson", () => {
   it("provides P(X = k) and P(X > k)", () => {
     const bonus = computeBonus({ distribution: "poisson", inputs: { μ: 1.68, k: 2 } });
     expect(bonus.find((b) => b.label.includes("="))?.value).toBeDefined();
@@ -4639,7 +4639,7 @@ git commit -m "feat: TableDetail page with interactive lookup + printed table"
 
 ---
 
-## Phase H — Polish
+## Phase H – Polish
 
 ### Task 33: Print stylesheet
 
@@ -4803,7 +4803,7 @@ git commit -m "feat: theme toggle hook with localStorage persistence"
 
 ---
 
-### Task 35: Final verification — typecheck, tests, build, smoke walkthrough
+### Task 35: Final verification – typecheck, tests, build, smoke walkthrough
 
 **Files:** none (manual checks only)
 
@@ -4844,9 +4844,9 @@ Verify each:
 - [ ] Click Poissonfordeling row → URL becomes `/#/entry/poisson-fordeling` → full page renders with all sections.
 - [ ] Click a related pill (Poissonprosess) → URL becomes `/#/concept/poisson-prosess` → concept page renders.
 - [ ] Click `Tabeller` tab → 1 table card visible → click → `/#/table/E2-poisson-kumulativ` opens with interactive widget computing a result and printed table.
-- [ ] Toggle theme button — `data-theme="dark"` appears on `<html>` and persists across reloads.
-- [ ] Open Print Preview — list view prints without sidebar/buttons/banner.
-- [ ] Open `dist/index.html` directly with `file://` — site renders. (Some browsers require running it through `npx serve dist` to allow font loads; document if so.)
+- [ ] Toggle theme button – `data-theme="dark"` appears on `<html>` and persists across reloads.
+- [ ] Open Print Preview – list view prints without sidebar/buttons/banner.
+- [ ] Open `dist/index.html` directly with `file://` – site renders. (Some browsers require running it through `npx serve dist` to allow font loads; document if so.)
 
 - [ ] **Step 6: Tag the structure release**
 

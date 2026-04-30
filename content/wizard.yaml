@@ -3,11 +3,11 @@ nodes:
   - id: n_start
     question: "Er den tilfeldige variabelen diskret (du teller noe) eller kontinuerlig?"
     options:
-      - label: "Diskret — jeg teller hendelser eller forsøk"
+      - label: "Diskret – jeg teller hendelser eller forsøk"
         next: n_diskret
-      - label: "Kontinuerlig — målinger på en skala"
+      - label: "Kontinuerlig – målinger på en skala"
         next: n_kontinuerlig
-      - label: "Ikke sikker — jeg har data og skal estimere eller teste"
+      - label: "Ikke sikker – jeg har data og skal estimere eller teste"
         next: n_inferens
 
   - id: n_diskret
@@ -55,16 +55,16 @@ nodes:
         leads_to:
           - { id: normalfordeling, kind: entry }
           - { id: standardnormalisering, kind: concept }
-      - label: "Konfidensintervall for μ — σ kjent"
+      - label: "Konfidensintervall for μ – σ kjent"
         leads_to:
           - { id: ki-mu-kjent-sigma, kind: entry }
-      - label: "Konfidensintervall for μ — σ ukjent"
+      - label: "Konfidensintervall for μ – σ ukjent"
         leads_to:
           - { id: ki-mu-ukjent-sigma, kind: entry }
-      - label: "Hypotesetest om μ — σ ukjent"
+      - label: "Hypotesetest om μ – σ ukjent"
         leads_to:
           - { id: en-utvalg-t-test, kind: entry }
-      - label: "Hypotesetest om μ — σ kjent"
+      - label: "Hypotesetest om μ – σ kjent"
         leads_to:
           - { id: en-utvalg-z-test, kind: entry }
 

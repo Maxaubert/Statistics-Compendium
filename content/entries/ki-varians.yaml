@@ -51,7 +51,7 @@ solution_template:
   - "For KI for σ: ta kvadratroten av begge grensene"
 
 common_traps: |
-  KI er asymmetrisk — ikke prøv å sentrere det. Den lille kvantilen
+  KI er asymmetrisk – ikke prøv å sentrere det. Den lille kvantilen
   (1 − α/2) går i nevneren for ØVRE grense, og den store (α/2) i
   nevneren for nedre grense. Lett å bytte om.
 
@@ -61,5 +61,5 @@ related:
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:
-  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadratrot, divisjon"

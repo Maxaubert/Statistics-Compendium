@@ -1,6 +1,6 @@
 id: s-e
 sym: "S_E"
-short_def: "Residualstandardavvik i regresjon — den typiske avstanden fra et observert punkt yᵢ til regresjonslinjen ŷᵢ."
+short_def: "Residualstandardavvik i regresjon – den typiske avstanden fra et observert punkt yᵢ til regresjonslinjen ŷᵢ."
 contexts:
   - usage: "Residualstandardavvik"
     detail: |
@@ -12,7 +12,7 @@ contexts:
 
       Tellersummen er kvadrerte residualer (avstanden fra hvert punkt
       til linja). Hvorfor n − 2 i nevneren? Fordi du har estimert
-      to parametre (α og β) — de stjeler hver sin frihetsgrad.
+      to parametre (α og β) – de stjeler hver sin frihetsgrad.
 
       S_E brukes videre som byggestein i:
       - standardfeilen for β̂ (i hypotesetest om stigning)

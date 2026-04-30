@@ -1,6 +1,6 @@
 id: k
 sym: "k"
-short_def: "Antall — vanligvis antall suksesser eller hendelser, men kan også bety antall kategorier eller frihetsgrader avhengig av kontekst."
+short_def: "Antall – vanligvis antall suksesser eller hendelser, men kan også bety antall kategorier eller frihetsgrader avhengig av kontekst."
 contexts:
   - usage: "Antall suksesser/hendelser"
     detail: |

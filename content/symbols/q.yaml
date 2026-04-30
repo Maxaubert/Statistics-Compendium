@@ -15,7 +15,7 @@ contexts:
       P(X = k) = C(n, k) · pᵏ · qⁿ⁻ᵏ
       og i variansen Var(X) = n · p · q.
 
-      Notasjonen sparer skriving — mange formler er vesentlig
+      Notasjonen sparer skriving – mange formler er vesentlig
       kortere med q enn med (1 − p).
     entry_refs:
       - binomial-fordeling

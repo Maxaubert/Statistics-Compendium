@@ -19,8 +19,8 @@ what_it_means: |
 
 recognition_cues:
   - "Oppgaven spør 'er hendelsene uavhengige?'"
-  - "Du har P(A), P(B), og P(A ∩ B) — sjekk om P(A∩B) = P(A)·P(B)"
-  - "Eller du har P(B|A) og P(B) — sjekk om de er like"
+  - "Du har P(A), P(B), og P(A ∩ B) – sjekk om P(A∩B) = P(A)·P(B)"
+  - "Eller du har P(B|A) og P(B) – sjekk om de er like"
   - "Hvis uavhengighet kan forutsettes (f.eks. uavhengige forsøk), kan multiplikasjonsregelen brukes direkte"
 
 filters:

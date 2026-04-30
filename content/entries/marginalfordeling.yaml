@@ -2,7 +2,7 @@ id: marginalfordeling
 name_no: "Marginalfordeling fra simultanfordeling"
 type: identity
 category: distribution_property
-tagline: "P(X = x) = Σ_y P(X = x, Y = y) — summer raden eller kolonnen i simultanfordelingen."
+tagline: "P(X = x) = Σ_y P(X = x, Y = y) – summer raden eller kolonnen i simultanfordelingen."
 
 formula_main: "P(X = x) = Σ_y P(X = x, Y = y);  P(Y = y) = Σ_x P(X = x, Y = y)"
 formula_latex: "P(X = x) = \\sum_y P(X = x, Y = y), \\quad P(Y = y) = \\sum_x P(X = x, Y = y)"

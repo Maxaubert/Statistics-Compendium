@@ -14,8 +14,8 @@ what_it_does: |
   er gyldig når n·p̂·(1-p̂) ≥ 5.
 
 why_use: |
-  Når problemet handler om en andel — andelen syke i en populasjon,
-  andelen velgere som støtter en kandidat, andelen defekte enheter —
+  Når problemet handler om en andel – andelen syke i en populasjon,
+  andelen velgere som støtter en kandidat, andelen defekte enheter –
   og ikke et gjennomsnitt. Vanlig type test i offentlige undersøkelser.
 
 recognition_cues:
@@ -25,8 +25,8 @@ recognition_cues:
   - "Antall forsøk er stort nok: n·p̂·(1-p̂) ≥ 5"
 
 when_NOT_to_use:
-  - "n er liten og normalapproksimasjon ikke gyldig — bruk eksakt binomial"
-  - "Du tester gjennomsnitt, ikke andel — bruk z- eller t-test for μ"
+  - "n er liten og normalapproksimasjon ikke gyldig – bruk eksakt binomial"
+  - "Du tester gjennomsnitt, ikke andel – bruk z- eller t-test for μ"
 
 symbols:
   - { sym: "X",   means: "antall suksesser observert i utvalget" }
@@ -48,14 +48,14 @@ solution_template:
   - "Formuler hypotesene H₀: p = p₀ vs H₁ (én- eller tosidig)"
   - "Bekreft normalapproksimasjon: n·p̂·(1-p̂) ≥ 5"
   - "Beregn p̂ = x/n"
-  - "Beregn z = (x - n·p₀) / √(n·p₀·(1-p₀)) — eller ekvivalent z = (p̂ - p₀) / √(p₀(1-p₀)/n)"
+  - "Beregn z = (x - n·p₀) / √(n·p₀·(1-p₀)) – eller ekvivalent z = (p̂ - p₀) / √(p₀(1-p₀)/n)"
   - "Finn kvantil z_α (ensidig) eller z_(α/2) (tosidig) i tabell E.4"
   - "Sammenlign og konkluder"
 
 common_traps: |
   Variansen i nevneren bruker p₀ (verdien fra H₀), IKKE p̂. Dette er
   forskjellig fra konfidensintervall for andel, som bruker p̂. Husk
-  rotuttrykket — vanlig feil å glemme kvadratroten.
+  rotuttrykket – vanlig feil å glemme kvadratroten.
 
 python_snippet: |
   from scipy.stats import norm
@@ -73,5 +73,5 @@ related:
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:
-  - "Tabell E.4 — Z-kvantiltabell (kritisk verdi)"
-  - "Tabell E.3 — Z-tabell (for p-verdi-utregning)"
+  - "Tabell E.4 – Z-kvantiltabell (kritisk verdi)"
+  - "Tabell E.3 – Z-tabell (for p-verdi-utregning)"
