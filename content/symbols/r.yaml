@@ -1,0 +1,16 @@
+id: r
+sym: "r"
+short_def: "Utvalgskorrelasjonskoeffisient — måler styrken og retningen på en lineær sammenheng mellom to variabler."
+contexts:
+  - usage: "Utvalgskorrelasjon (Pearson)"
+    detail: |
+      r ligger mellom −1 og 1. Tegn forteller retning, |r| forteller styrke.
+      r² (forklart varians) tolkes som andelen av variasjonen i y som kan
+      forklares ved den lineære sammenhengen med x. r er invariant for
+      lineære transformasjoner av x og y.
+    entry_refs:
+      - regresjon-korrelasjonskoeffisient
+      - korrelasjon-joint
+see_also:
+  - { id: korrelasjon-glos, kind: glossary }
+  - { id: spredningsplott, kind: concept }

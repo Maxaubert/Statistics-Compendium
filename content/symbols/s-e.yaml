@@ -1,0 +1,16 @@
+id: s-e
+sym: "S_E"
+short_def: "Residualstandardavvik i regresjon — typisk avstand fra observasjon yᵢ til modellinjen ŷᵢ."
+contexts:
+  - usage: "Residualstandardavvik"
+    detail: |
+      S_E = √[Σ(yᵢ − ŷᵢ)² / (n − 2)]. Estimat for spredningen rundt
+      regresjonslinjen. Brukes i standardfeilen for β̂ og for prediksjonsintervaller.
+      Frihetsgrader er n − 2 fordi to parametre (α, β) er estimert.
+    entry_refs:
+      - regresjon-residualvarians
+      - regresjon-standardfeil-stigningstall
+      - regresjon-prediksjonsintervall
+see_also:
+  - { id: standardfeil, kind: glossary }
+  - { id: residual, kind: glossary }

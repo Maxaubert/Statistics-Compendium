@@ -1,0 +1,12 @@
+id: e
+sym: "e"
+short_def: "Eulers tall ≈ 2.71828. Naturlig konstant som dukker opp i poisson- og eksponentialformler."
+contexts:
+  - usage: "Eulers tall (matematisk konstant)"
+    detail: |
+      Basisen for naturlig logaritme. I poisson-punktformelen
+      P(X = k) = e⁻μ μᵏ / k! og i eksponentialfordelingens
+      tetthet f(t) = λe⁻λᵗ. Kalkulator: knappen e^x.
+    entry_refs:
+      - poisson-fordeling
+      - eksponential-fordeling

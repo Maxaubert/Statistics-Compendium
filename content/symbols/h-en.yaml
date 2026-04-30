@@ -1,0 +1,17 @@
+id: h-en
+sym: "H₁"
+short_def: "Alternativhypotesen — påstanden du vil bevise. Den utfordrer H₀."
+contexts:
+  - usage: "Alternativhypotese i hypotesetest"
+    detail: |
+      Kan være ensidig (H₁: μ > μ₀ eller H₁: μ < μ₀) eller tosidig (H₁: μ ≠ μ₀).
+      Form på H₁ bestemmer hvor i fordelingen vi ser etter ekstreme verdier:
+      høyre hale, venstre hale, eller begge. Tosidig test halverer α i hver hale.
+    entry_refs:
+      - en-utvalg-z-test
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - regresjon-test-stigningstall
+see_also:
+  - { id: alternativhypotese, kind: glossary }
+  - { id: nullhypotese, kind: glossary }

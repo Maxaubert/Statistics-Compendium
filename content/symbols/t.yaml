@@ -1,0 +1,21 @@
+id: t
+sym: "t"
+short_def: "T-statistikk i hypotesetester når σ er ukjent. Også brukt for tidsvindu i poissonprosess."
+contexts:
+  - usage: "T-statistikk (test/KI med ukjent σ)"
+    detail: |
+      t = (x̄ − μ₀) / (s/√n). Følger en t-fordeling med n − 1 frihetsgrader.
+      Sammenlign med kritisk verdi i tabell E.4. Brukes når populasjonsstandardavviket
+      er ukjent og må erstattes med s.
+    entry_refs:
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - ki-mu-ukjent-sigma
+      - regresjon-test-stigningstall
+  - usage: "Tidsvindu i poissonprosess"
+    detail: |
+      Lengden på tidsperioden du teller hendelser i. Antall hendelser i et
+      vindu av lengde t er Poisson(λt). Forventet antall: μ = λt.
+    entry_refs:
+      - poisson-fordeling
+      - eksponential-fordeling

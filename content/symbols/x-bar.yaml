@@ -1,0 +1,20 @@
+id: x-bar
+sym: "X̄"
+short_def: "Utvalgsgjennomsnitt — punktestimat for populasjonsgjennomsnittet μ."
+contexts:
+  - usage: "Utvalgsgjennomsnitt"
+    detail: |
+      X̄ = (1/n) Σxᵢ. Tilfeldig variabel med E[X̄] = μ og Var(X̄) = σ²/n.
+      Sentralgrenseteoremet sikrer at X̄ er tilnærmet normalfordelt
+      når n er stor, uansett underliggende fordeling.
+    entry_refs:
+      - en-utvalg-z-test
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - ki-mu-kjent-sigma
+      - ki-mu-ukjent-sigma
+      - sum-uavhengige-normaler
+see_also:
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: sentralgrenseteoremet, kind: concept }
+  - { id: punktestimat, kind: glossary }

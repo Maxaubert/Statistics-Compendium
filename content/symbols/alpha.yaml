@@ -1,0 +1,28 @@
+id: alpha
+sym: "α"
+short_def: "To vanlige bruk: signifikansnivå i hypotesetest, eller konstantleddet i en regresjonslinje."
+contexts:
+  - usage: "Signifikansnivå i hypotesetest"
+    detail: |
+      Sannsynligheten for å forkaste H₀ når den faktisk er sann (type-1-feil).
+      Vanligvis 0.05 eller 0.01. Hvis p-verdien er mindre enn α, forkast H₀.
+      α settes på forhånd og bestemmer hvor strengt testen er.
+    entry_refs:
+      - en-utvalg-t-test
+      - en-utvalg-z-test
+      - en-utvalg-z-test-andel
+      - to-utvalgs-t-test
+      - kjikvadrat-goodness-of-fit
+      - kjikvadrat-uavhengighet
+      - regresjon-test-stigningstall
+  - usage: "Konstantleddet i regresjonslinje"
+    detail: |
+      I modellen y = α + βx er α verdien y har når x = 0 — selve skjæringspunktet
+      med y-aksen. Også kalt intercept. Estimeres fra data som α̂.
+    entry_refs:
+      - regresjon-estimat-alpha-beta
+      - regresjon-prediksjonsintervall
+see_also:
+  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }
+  - { id: intercept, kind: glossary }

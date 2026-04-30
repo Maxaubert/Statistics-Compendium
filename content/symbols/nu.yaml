@@ -1,0 +1,21 @@
+id: nu
+sym: "ν"
+short_def: "Antall frihetsgrader — bestemmer formen på t-, kjikvadrat- og F-fordelingene. Skrives også df eller k."
+contexts:
+  - usage: "Frihetsgrader i t- og kjikvadrat-fordelinger"
+    detail: |
+      Et heltall som indekserer hvilken t- eller χ²-fordeling du slår opp i.
+      For en-utvalgs t-test er ν = n − 1. For χ²-godhetstest er ν = k − 1
+      (k = antall kategorier). For uavhengighetstest er ν = (r − 1)(c − 1).
+      Mer ν → tabellverdiene nærmer seg standardnormalen.
+    entry_refs:
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - ki-mu-ukjent-sigma
+      - ki-varians
+      - kjikvadrat-goodness-of-fit
+      - kjikvadrat-uavhengighet
+      - regresjon-test-stigningstall
+see_also:
+  - { id: frihetsgrader, kind: concept }
+  - { id: frihetsgrader-glos, kind: glossary }

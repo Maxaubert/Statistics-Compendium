@@ -1,0 +1,22 @@
+id: beta
+sym: "β"
+short_def: "To vanlige bruk: stigningstallet i en regresjonslinje, eller sannsynligheten for type-2-feil."
+contexts:
+  - usage: "Stigningstall i regresjonslinje"
+    detail: |
+      I modellen y = α + βx er β endringen i y når x øker med én enhet.
+      Estimeres fra data som β̂. Hypotesetesten H₀: β = 0 sjekker om x i det
+      hele tatt har en lineær effekt på y.
+    entry_refs:
+      - regresjon-estimat-alpha-beta
+      - regresjon-test-stigningstall
+      - regresjon-standardfeil-stigningstall
+      - regresjon-prediksjonsintervall
+  - usage: "Sannsynlighet for type-2-feil"
+    detail: |
+      β = P(beholde H₀ | H₁ er sann). Altså sjansen for å overse en reell effekt.
+      Teststyrken er 1 − β. Mindre β krever større utvalg eller større sann effekt.
+    entry_refs: []
+see_also:
+  - { id: type-2-feil, kind: glossary }
+  - { id: beta-koeffisient, kind: glossary }

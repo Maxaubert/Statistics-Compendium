@@ -1,0 +1,16 @@
+id: s-kvadrat
+sym: "s²"
+short_def: "Utvalgsvarians — estimat for σ² regnet ut fra dataene dine."
+contexts:
+  - usage: "Utvalgsvarians"
+    detail: |
+      s² = Σ(xᵢ − x̄)² / (n − 1). Brukes som estimator for populasjonsvariansen σ².
+      Følger en (n−1)·s²/σ² ~ χ²(n−1) fordeling, noe som er grunnlaget
+      for konfidensintervall og test for σ².
+    entry_refs:
+      - ki-varians
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - regresjon-residualvarians
+see_also:
+  - { id: varians, kind: glossary }

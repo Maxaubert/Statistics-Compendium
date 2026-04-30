@@ -1,0 +1,19 @@
+id: k
+sym: "k"
+short_def: "Antall suksesser eller hendelser — også brukt for antall kategorier eller frihetsgrader."
+contexts:
+  - usage: "Antall suksesser/hendelser"
+    detail: |
+      Verdien du slår opp i tabellene: P(X ≤ k), P(X = k), P(X ≥ k).
+      I binomial og poisson er k et heltall. Husk at 'minst k' betyr X ≥ k,
+      som ofte regnes via komplement: 1 − P(X ≤ k − 1).
+    entry_refs:
+      - binomial-fordeling
+      - poisson-fordeling
+      - hypergeometrisk-fordeling
+  - usage: "Antall kategorier"
+    detail: |
+      I kjikvadrat-godhetstest er k antall kategorier dataene faller i,
+      og frihetsgrader er ν = k − 1.
+    entry_refs:
+      - kjikvadrat-goodness-of-fit

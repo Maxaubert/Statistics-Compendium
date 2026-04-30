@@ -1,0 +1,18 @@
+id: sigma
+sym: "σ"
+short_def: "Populasjonsstandardavvik — typisk avstand fra μ. Måler spredning i populasjonen."
+contexts:
+  - usage: "Populasjonsstandardavvik"
+    detail: |
+      Kvadratroten av variansen σ². Sier hvor mye en typisk observasjon
+      avviker fra gjennomsnittet, målt i samme enhet som dataene.
+      Hvis σ er kjent på forhånd, brukes z-test eller z-konfidensintervall;
+      ellers estimeres den med utvalgsstandardavviket s.
+    entry_refs:
+      - en-utvalg-z-test
+      - ki-mu-kjent-sigma
+      - normalfordeling
+      - sum-uavhengige-normaler
+see_also:
+  - { id: standardavvik, kind: glossary }
+  - { id: varians, kind: glossary }

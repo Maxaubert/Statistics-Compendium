@@ -1,0 +1,22 @@
+id: lambda
+sym: "λ"
+short_def: "Rate — antall hendelser per tidsenhet. Hovedparameter i poisson- og eksponentialfordelingen."
+contexts:
+  - usage: "Rate i poissonprosess"
+    detail: |
+      Forventet antall hendelser per tidsenhet (eller per arealenhet,
+      lengdeenhet, osv). Antall hendelser i et vindu t er Poisson(λt),
+      og tiden mellom hendelser er Exp(λ). Estimeres som λ̂ = totalt antall / total tid.
+    entry_refs:
+      - poisson-fordeling
+      - eksponential-fordeling
+      - ki-poissonrate
+  - usage: "Rate i eksponentialfordeling"
+    detail: |
+      Hvis ventetiden T er Exp(λ), så er E[T] = 1/λ og Var(T) = 1/λ².
+      Stor λ betyr at hendelser kommer hyppig, korte ventetider.
+    entry_refs:
+      - eksponential-fordeling
+see_also:
+  - { id: poisson-prosess, kind: concept }
+  - { id: lambda, kind: glossary }

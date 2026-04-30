@@ -1,0 +1,22 @@
+id: h-null
+sym: "H₀"
+short_def: "Nullhypotesen — påstanden du tester mot. Det 'kjedelige' utgangspunktet (ingen effekt, ingen forskjell)."
+contexts:
+  - usage: "Nullhypotesen i hypotesetest"
+    detail: |
+      Påstanden vi forsøker å motbevise. Eksempler: H₀: μ = μ₀, H₀: p = p₀,
+      H₀: β = 0. Forkaster H₀ hvis testobservatoren faller i forkastningsområdet
+      eller p-verdi < α. Å 'beholde H₀' er ikke det samme som å bevise H₀ — det
+      betyr bare at dataene ikke ga sterke nok bevis mot den.
+    entry_refs:
+      - en-utvalg-z-test
+      - en-utvalg-t-test
+      - en-utvalg-z-test-andel
+      - to-utvalgs-t-test
+      - kjikvadrat-goodness-of-fit
+      - kjikvadrat-uavhengighet
+      - regresjon-test-stigningstall
+see_also:
+  - { id: nullhypotese, kind: glossary }
+  - { id: alternativhypotese, kind: glossary }
+  - { id: forkastningsomrade, kind: glossary }

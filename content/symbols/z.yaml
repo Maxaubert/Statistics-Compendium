@@ -1,0 +1,23 @@
+id: z
+sym: "z"
+short_def: "Z-statistikk eller standardisert verdi. (X − μ)/σ — antall standardavvik fra gjennomsnittet."
+contexts:
+  - usage: "Z-statistikk i hypotesetest (kjent σ)"
+    detail: |
+      z = (x̄ − μ₀) / (σ/√n). Følger standard normalfordeling under H₀.
+      Brukes når σ er kjent, eller når n er stor nok til at sentralgrenseteoremet
+      slår inn. Slå opp i tabell E.3 (kumulativ standardnormal).
+    entry_refs:
+      - en-utvalg-z-test
+      - en-utvalg-z-test-andel
+      - ki-mu-kjent-sigma
+      - ki-andel-binomial
+  - usage: "Standardisert verdi"
+    detail: |
+      z = (X − μ)/σ uttrykker hvor mange standardavvik X ligger fra μ.
+      Standardisering lar oss bruke én tabell (E.3) uansett μ og σ.
+    entry_refs:
+      - normalfordeling
+see_also:
+  - { id: standardnormalisering, kind: concept }
+  - { id: kritisk-verdi, kind: glossary }

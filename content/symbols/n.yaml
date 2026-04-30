@@ -1,0 +1,27 @@
+id: n
+sym: "n"
+short_def: "Utvalgsstørrelse — antall observasjoner. Også fast antall forsøk i binomial."
+contexts:
+  - usage: "Antall observasjoner i et utvalg"
+    detail: |
+      Antall datapunkter du har samlet. Større n gir mer presise estimater
+      og smalere konfidensintervall (typisk √n i nevneren av standardfeilen).
+      Frihetsgrader er ofte n − 1 eller n − 2.
+    entry_refs:
+      - en-utvalg-t-test
+      - en-utvalg-z-test
+      - to-utvalgs-t-test
+      - ki-mu-kjent-sigma
+      - ki-mu-ukjent-sigma
+      - regresjon-estimat-alpha-beta
+  - usage: "Antall forsøk i binomial"
+    detail: |
+      Fast antall uavhengige forsøk, hver med samme suksessannsynlighet p.
+      Antall suksesser er da X ~ Bin(n, p) med E[X] = np og Var(X) = np(1−p).
+    entry_refs:
+      - binomial-fordeling
+      - hypergeometrisk-fordeling
+      - en-utvalg-z-test-andel
+      - ki-andel-binomial
+see_also:
+  - { id: utvalg, kind: glossary }

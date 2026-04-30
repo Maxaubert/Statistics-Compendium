@@ -1,0 +1,21 @@
+id: chi-kvadrat
+sym: "χ²"
+short_def: "Kjikvadrat — både navnet på en familie sannsynlighetsfordelinger og navnet på testobservatoren som følger den."
+contexts:
+  - usage: "Testobservator i kjikvadrat-tester"
+    detail: |
+      χ² = Σ (O − E)² / E, der O er observerte og E er forventede frekvenser.
+      Stor χ² betyr at dataene avviker mye fra det H₀ predikerer. Sammenlign
+      med kritisk verdi fra χ²-tabellen (vedlegg E.5) med ν frihetsgrader.
+    entry_refs:
+      - kjikvadrat-goodness-of-fit
+      - kjikvadrat-uavhengighet
+  - usage: "Kjikvadratfordelingen"
+    detail: |
+      Fordelingen til en sum av kvadrerte uavhengige standard normalvariabler.
+      Brukes også for konfidensintervall for varians: (n−1)s²/σ² ~ χ²(n−1).
+    entry_refs:
+      - ki-varians
+see_also:
+  - { id: kritisk-verdi, kind: glossary }
+  - { id: frihetsgrader, kind: concept }

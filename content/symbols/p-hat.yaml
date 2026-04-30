@@ -1,0 +1,14 @@
+id: p-hat
+sym: "p̂"
+short_def: "Utvalgsandel — estimat for populasjonsandelen p. Antall suksesser delt på antall forsøk."
+contexts:
+  - usage: "Utvalgsandel"
+    detail: |
+      p̂ = X / n der X er antall suksesser. Tilfeldig variabel med
+      E[p̂] = p og Var(p̂) = p(1−p)/n. For store n er p̂ tilnærmet
+      normalfordelt — grunnlaget for z-tester på andel.
+    entry_refs:
+      - en-utvalg-z-test-andel
+      - ki-andel-binomial
+see_also:
+  - { id: punktestimat, kind: glossary }

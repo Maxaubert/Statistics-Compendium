@@ -1,0 +1,28 @@
+id: p
+sym: "p"
+short_def: "Tre vanlige bruk avhengig av kontekst: populasjonsandel, suksesssannsynlighet (binomial), eller p-verdi i en hypotesetest."
+contexts:
+  - usage: "Populasjonsandel / suksesssannsynlighet"
+    detail: |
+      Den 'sanne' andelen i populasjonen som har egenskapen du måler
+      (eller sannsynligheten for suksess i ett binomialt forsøk).
+      Estimeres med utvalgsandelen p̂ = X/n.
+    entry_refs:
+      - binomial-fordeling
+      - en-utvalg-z-test-andel
+      - ki-andel-binomial
+      - hypergeometrisk-fordeling
+  - usage: "p-verdi i hypotesetest"
+    detail: |
+      Sannsynligheten for å observere noe minst like ekstremt som det du så,
+      gitt at H₀ er sann. Liten p-verdi (< α) gir grunnlag for å forkaste H₀.
+      Forveksles ofte med P(H₀ er sann) — det er ikke det samme.
+    entry_refs:
+      - en-utvalg-t-test
+      - en-utvalg-z-test
+      - en-utvalg-z-test-andel
+      - kjikvadrat-goodness-of-fit
+      - kjikvadrat-uavhengighet
+see_also:
+  - { id: p-verdi, kind: concept }
+  - { id: p-verdi-glos, kind: glossary }

@@ -1,0 +1,14 @@
+id: sigma-sum
+sym: "Σ"
+short_def: "Summetegn — 'sum av alle ledd som følger'. Stor gresk sigma, ikke å forveksle med standardavviket σ."
+contexts:
+  - usage: "Sumoperator"
+    detail: |
+      Σᵢ₌₁ⁿ xᵢ betyr x₁ + x₂ + ... + xₙ. Dukker opp overalt:
+      gjennomsnitt (Σxᵢ / n), varians (Σ(xᵢ − x̄)²), kjikvadrat (Σ(O − E)²/E),
+      og forventningsverdi for diskrete fordelinger (Σ x·P(X = x)).
+    entry_refs:
+      - forventningsverdi-diskret
+      - varians-standardavvik-diskret
+      - kjikvadrat-goodness-of-fit
+      - regresjon-estimat-alpha-beta

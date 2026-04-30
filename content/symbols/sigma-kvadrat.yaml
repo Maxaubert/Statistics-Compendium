@@ -1,0 +1,18 @@
+id: sigma-kvadrat
+sym: "σ²"
+short_def: "Populasjonsvarians — gjennomsnittlig kvadrert avvik fra μ. Standardavviket i kvadrert form."
+contexts:
+  - usage: "Populasjonsvarians"
+    detail: |
+      σ² = E[(X − μ)²]. Måler spredning, men i kvadrerte enheter
+      (kr² hvis X er kr). Brukes i variansformler og når man legger
+      sammen uavhengige variabler: Var(X + Y) = σ²_X + σ²_Y.
+      Estimeres fra utvalg med s².
+    entry_refs:
+      - varians-standardavvik-diskret
+      - sum-uavhengige-normaler
+      - ki-varians
+      - normalfordeling
+see_also:
+  - { id: varians, kind: glossary }
+  - { id: standardavvik, kind: glossary }

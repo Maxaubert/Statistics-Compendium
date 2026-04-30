@@ -1,0 +1,27 @@
+id: mu
+sym: "μ"
+short_def: "Populasjonsgjennomsnitt — den 'sanne' forventede verdien. Også brukt for forventet antall i poissonfordeling (μ = λt)."
+contexts:
+  - usage: "Populasjonsgjennomsnitt"
+    detail: |
+      Den teoretiske/sanne middelverdien i hele populasjonen. Vi kjenner
+      sjelden μ direkte, men estimerer den med utvalgsgjennomsnittet X̄.
+      Hypotesetester på gjennomsnitt har formen H₀: μ = μ₀.
+    entry_refs:
+      - en-utvalg-z-test
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - ki-mu-kjent-sigma
+      - ki-mu-ukjent-sigma
+      - normalfordeling
+      - sum-uavhengige-normaler
+  - usage: "Forventet antall i poissonfordeling"
+    detail: |
+      I en poissonprosess med rate λ over tidsvindu t er forventet antall
+      hendelser μ = λt. Tabell E.2 er ofte indeksert med μ.
+    entry_refs:
+      - poisson-fordeling
+      - ki-poissonrate
+see_also:
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: poisson-prosess, kind: concept }

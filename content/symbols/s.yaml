@@ -1,0 +1,18 @@
+id: s
+sym: "s"
+short_def: "Utvalgsstandardavvik — estimat for σ regnet ut fra dataene dine."
+contexts:
+  - usage: "Utvalgsstandardavvik"
+    detail: |
+      s = √[Σ(xᵢ − x̄)² / (n − 1)]. Bruker n − 1 (Bessels korreksjon)
+      for å gi et forventningsrett estimat. Hvis σ er ukjent, brukes s
+      og man bytter z-fordelingen ut med t-fordelingen i tester og KI.
+    entry_refs:
+      - en-utvalg-t-test
+      - to-utvalgs-t-test
+      - ki-mu-ukjent-sigma
+      - regresjon-residualvarians
+      - regresjon-standardfeil-stigningstall
+see_also:
+  - { id: standardavvik, kind: glossary }
+  - { id: standardfeil, kind: glossary }

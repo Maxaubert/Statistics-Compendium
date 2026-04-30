@@ -1,0 +1,16 @@
+id: y-hat
+sym: "ŷ"
+short_def: "Predikert verdi i regresjon — det modellen sier y burde være for en gitt x."
+contexts:
+  - usage: "Predikert verdi fra regresjonslinje"
+    detail: |
+      ŷ = α̂ + β̂x. Forskjellen yᵢ − ŷᵢ kalles residual. Brukes til
+      prediksjon for nye x-verdier; for et prediksjonsintervall må man
+      huske å inkludere både modellusikkerhet og residualspredning.
+    entry_refs:
+      - regresjon-estimat-alpha-beta
+      - regresjon-prediksjonsintervall
+      - regresjon-residualvarians
+see_also:
+  - { id: residual, kind: glossary }
+  - { id: prediksjonsintervall-glos, kind: glossary }

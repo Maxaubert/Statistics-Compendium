@@ -1,0 +1,16 @@
+id: beta-hat
+sym: "β̂"
+short_def: "Estimert stigningstall i regresjon — det β-verdien minste-kvadraters-metoden gir."
+contexts:
+  - usage: "Estimert stigningstall i regresjon"
+    detail: |
+      β̂ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)². Beste lineære, forventningsrette
+      estimator for det 'sanne' β. Standardfeilen til β̂ brukes både i
+      hypotesetest H₀: β = 0 og i konfidensintervall for β.
+    entry_refs:
+      - regresjon-estimat-alpha-beta
+      - regresjon-test-stigningstall
+      - regresjon-standardfeil-stigningstall
+see_also:
+  - { id: beta-koeffisient, kind: glossary }
+  - { id: punktestimat, kind: glossary }
