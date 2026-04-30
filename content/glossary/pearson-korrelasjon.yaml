@@ -1,0 +1,15 @@
+id: pearson-korrelasjon
+term_no: Pearson-korrelasjon (r)
+short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom −1 og 1."
+long_def: |
+  r = Cov(X, Y) / (σ_X · σ_Y). r = 1: perfekt positiv lineær sammenheng;
+  r = −1: perfekt negativ; r = 0: ingen lineær sammenheng (kan likevel
+  finnes ikke-lineær!). r² er forklaringsgraden i enkel lineær regresjon.
+  Pearson måler kun lineære relasjoner og er sårbar for uteliggere — sjekk
+  alltid spredningsplottet før du stoler på r.
+see_also:
+  - { id: korrelasjon-glos, kind: glossary }
+  - { id: kovarians-glos, kind: glossary }
+  - { id: r-kvadrat, kind: glossary }
+  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: spredningsplott, kind: concept }

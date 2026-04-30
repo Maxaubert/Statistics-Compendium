@@ -1,0 +1,13 @@
+id: beta
+term_no: Beta (β)
+short_def: "Stigningstall i regresjon — også sannsynligheten for type-2-feil i hypotesetesting."
+long_def: |
+  β har to betydninger. (1) Regresjon: stigningstallet i Y = α + β·X + ε,
+  altså hvor mye Y endres når X øker med én enhet. (2) Hypotesetesting:
+  sannsynligheten for type-2-feil (å beholde H₀ når H₁ er sann).
+  Teststyrke = 1 − β. Lærebøker er ofte tvetydige — sjekk konteksten.
+see_also:
+  - { id: beta-koeffisient, kind: glossary }
+  - { id: type-2-feil, kind: glossary }
+  - { id: regresjon-estimat-alpha-beta, kind: entry }
+  - { id: regresjon-test-stigningstall, kind: entry }

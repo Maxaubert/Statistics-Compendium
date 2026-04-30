@@ -1,0 +1,12 @@
+id: sigma-kvadrat
+term_no: Sigma-kvadrat (σ²)
+short_def: "Populasjonsvariansen — forventet kvadrert avvik fra μ."
+long_def: |
+  σ² = Var(X) = E[(X − μ)²]. Estimeres med utvalgsvariansen S² der vi
+  deler på (n − 1), ikke n. KI for σ² bruker kjikvadrat-fordeling med
+  n − 1 frihetsgrader. Standardavvik σ er kvadratroten av σ². Variansen
+  legges sammen for uavhengige variabler: Var(X + Y) = σ²_X + σ²_Y.
+see_also:
+  - { id: varians, kind: glossary }
+  - { id: sigma, kind: glossary }
+  - { id: ki-varians, kind: entry }

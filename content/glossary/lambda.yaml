@@ -1,0 +1,13 @@
+id: lambda
+term_no: Lambda (λ)
+short_def: "Rate — antall hendelser per tids- eller romenhet i poisson- og eksponentialfordelingen."
+long_def: |
+  λ er rateparameteren. Poisson: P(X = k) = e^(−λ)·λ^k / k!, hvor λ er
+  forventet antall hendelser i intervallet. Eksponential: tid mellom
+  hendelser med rate λ har forventning 1/λ. Pass på enheter — hvis raten
+  er per minutt, må t også være i minutter. Når oppgaven gir 'rate' eller
+  'gjennomsnittlig antall', er det λ.
+see_also:
+  - { id: poisson-fordeling, kind: entry }
+  - { id: eksponential-fordeling, kind: entry }
+  - { id: poisson-prosess, kind: concept }

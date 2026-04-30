@@ -1,0 +1,12 @@
+id: estimator
+term_no: Estimator
+short_def: "En funksjon av dataene som gir et tallestimat for en ukjent parameter."
+long_def: |
+  En estimator er regelen (formelen), mens estimatet er tallet du får ut.
+  Eksempel: X̄ = (1/n)·ΣXᵢ er en estimator for μ; for konkrete data blir
+  X̄ = 4.2 et estimat. En god estimator er forventningsrett (E[θ̂] = θ)
+  og har lav varians. Vi noterer estimatorer ofte med hatt: μ̂, σ̂², β̂.
+see_also:
+  - { id: punktestimat, kind: glossary }
+  - { id: forventningsrett, kind: glossary }
+  - { id: parameter, kind: glossary }

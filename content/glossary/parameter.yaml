@@ -1,0 +1,14 @@
+id: parameter
+term_no: Parameter
+short_def: "En ukjent populasjonsstørrelse (μ, σ², p, λ) som du vil estimere fra data."
+long_def: |
+  Parametere beskriver populasjonen og er konstante (ikke tilfeldige).
+  Vanlige parametere: μ (forventning), σ² (varians), p (andel), λ (rate),
+  α og β (regresjonskoeffisienter). Du kan ikke se parameteren direkte —
+  du estimerer den. En statistikk beregnet fra utvalget er en estimator
+  for parameteren.
+see_also:
+  - { id: estimator, kind: glossary }
+  - { id: punktestimat, kind: glossary }
+  - { id: theta, kind: glossary }
+  - { id: populasjon, kind: glossary }

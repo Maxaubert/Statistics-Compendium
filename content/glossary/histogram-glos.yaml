@@ -1,0 +1,12 @@
+id: histogram-glos
+term_no: Histogram
+short_def: "Stolpediagram der hver stolpe viser frekvensen (eller tettheten) i et tallintervall."
+long_def: |
+  Histogrammet deler dataene i kasser (bins) og tegner en stolpe med
+  høyde lik antall observasjoner i hver kasse. Brukes til å vurdere
+  fordelingsform: symmetrisk, skjev, multimodal? For tetthet (relativ
+  frekvens delt på bredde) blir samlet areal = 1, slik at det kan
+  sammenlignes med en teoretisk tetthetsfunksjon.
+see_also:
+  - { id: boksplott, kind: glossary }
+  - { id: spredningsplott, kind: concept }
