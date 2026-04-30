@@ -1,0 +1,7 @@
+id: stub
+name_no: stub
+cue: placeholder
+procedure:
+  - placeholder
+entry_refs:
+  - poisson-fordeling

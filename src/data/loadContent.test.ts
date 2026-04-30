@@ -31,4 +31,11 @@ describe("loadAllContent", () => {
     expect(rel?.id).toBe("poisson-prosess");
     expect(data.concepts.find((c) => c.id === rel!.id)).toBeDefined();
   });
+
+  it("loads glossary, patterns, and wizard", () => {
+    const bundle = loadAllContent();
+    expect(bundle.glossary).toBeInstanceOf(Array);
+    expect(bundle.patterns).toBeInstanceOf(Array);
+    expect(bundle.wizard).not.toBeNull();
+  });
 });

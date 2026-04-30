@@ -1,0 +1,13 @@
+start: n0
+nodes:
+  - id: n0
+    question: Diskret eller kontinuerlig?
+    options:
+      - label: Diskret
+        leads_to:
+          - id: poisson-fordeling
+            kind: entry
+      - label: Kontinuerlig
+        leads_to:
+          - id: normalfordeling
+            kind: entry
