@@ -181,6 +181,7 @@ export const WizardSchema = z.object({
   start: z.string(),
   nodes: z.array(WizardNodeSchema),
 });
+export type WizardOption = z.infer<typeof WizardOptionSchema>;
 export type WizardNode = z.infer<typeof WizardNodeSchema>;
 export type Wizard = z.infer<typeof WizardSchema>;
 
