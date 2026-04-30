@@ -2,9 +2,9 @@
 
 # Statistikk-kompendium
 
-**A compendium that helps students learn statistics.**
+**An indexed library of statistical formulas, concepts, tables, and symbols.** Three ways in: filter on what you observe, follow the wizard, or browse the catalog.
 
-The goal: a student who does not yet recognize a concept or task can still find the right formula, either by filtering on what they observe in the problem, by walking through the *veiviser*, or by browsing the entries.
+The goal: find the right formula even when you cannot yet name what you are looking for.
 
 <img src="screenshots/01-list.png" alt="Browse view" width="820">
 
