@@ -1,10 +1,10 @@
 <div align="center">
 
 # Statistikk-kompendium
-
-**An indexed library of statistical formulas, concepts, tables, and symbols.** Three ways in: filter on what you observe, follow the wizard, or browse the catalog.
-
-The goal: find the right formula even when you cannot yet name what you are looking for.
+The main goal og the site is to provide a tool to help anyone, no matter they're prior knowledge, to identify which formula to use and how to do it. This is achieved in three main ways:
+* Filter - Lets you narrow down the formula based on characteristics.
+* Guide(Veiviser) - A dynamic survey that asks questions to help you identify the formula/concept. After the survery it will recommend the most likely formula/concept.
+* Within each concept and formula page there are detailed step by step guides on how to complete the task.
 
 <img src="screenshots/01-list.png" alt="Browse view" width="820">
 
