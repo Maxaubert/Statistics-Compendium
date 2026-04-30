@@ -1,29 +1,77 @@
 start: n_start
 nodes:
   - id: n_start
-    question: "Er den tilfeldige variabelen diskret (du teller noe) eller kontinuerlig?"
+    question: "Hva slags oppgave er dette?"
+    options:
+      - label: "Sannsynlighetsregning – kombinere hendelser (P(A∪B), P(A|B), Bayes...)"
+        next: n_regler
+      - label: "Tilfeldig variabel med en kjent fordeling (poisson, binomial, normal...)"
+        next: n_fordeling
+      - label: "Simultanfordeling – tabell over P(X=x, Y=y)"
+        next: n_joint
+      - label: "Telle utfall – gunstige/mulige, kombinatorikk"
+        next: n_telling
+      - label: "Lineær regresjon – data med (x, y)-par"
+        next: n_regresjon
+      - label: "Hypotesetest eller konfidensintervall"
+        next: n_inferens
+
+  - id: n_regler
+    question: "Hva er du på jakt etter?"
+    options:
+      - label: "P(A ∪ B) – union, eller 'minst ett av flere'"
+        leads_to:
+          - { id: unionssetningen, kind: entry }
+      - label: "P(A ∩ B) – begge skjer, eller sekvensiell trekking"
+        leads_to:
+          - { id: produktregel, kind: entry }
+      - label: "P(A | B) – betinget sannsynlighet"
+        leads_to:
+          - { id: betinget-sannsynlighet, kind: concept }
+          - { id: produktregel, kind: entry }
+      - label: "P(Ā) – komplement, 'ikke A', eller 'minst én' via 1 − P(ingen)"
+        leads_to:
+          - { id: komplementregelen, kind: entry }
+      - label: "Total sannsynlighet (P(B|A_i) og P(A_i) gitt for flere i)"
+        leads_to:
+          - { id: total-sannsynlighet, kind: entry }
+      - label: "Bayes – snu en betinget sannsynlighet (gitt P(B|A), finn P(A|B))"
+        leads_to:
+          - { id: bayes-setning, kind: entry }
+      - label: "Sjekk om hendelser er uavhengige"
+        leads_to:
+          - { id: uavhengighet-hendelser, kind: concept }
+      - label: "De Morgan – komplement av union eller snitt"
+        leads_to:
+          - { id: de-morgans-lov, kind: concept }
+      - label: "Sjekk om hendelser er disjunkte (gjensidig utelukkende)"
+        leads_to:
+          - { id: disjunkte-hendelser, kind: concept }
+
+  - id: n_fordeling
+    question: "Diskret eller kontinuerlig?"
     options:
       - label: "Diskret – jeg teller hendelser eller forsøk"
         next: n_diskret
       - label: "Kontinuerlig – målinger på en skala"
         next: n_kontinuerlig
-      - label: "Ikke sikker – jeg har data og skal estimere eller teste"
-        next: n_inferens
 
   - id: n_diskret
-    question: "Hva slags telling? Vinduet er bestemt på forhånd?"
+    question: "Hva karakteriserer oppgaven?"
     options:
       - label: "Fast antall n forsøk, hver med samme suksesssannsynlighet p"
         next: n_diskret_fast_n
-      - label: "Hendelser kommer som de kommer, rate λ er gitt"
+      - label: "Hendelser kommer som de kommer, rate λ gitt (poissonprosess)"
         leads_to:
           - { id: poisson-fordeling, kind: entry }
+          - { id: poisson-prosess, kind: concept }
       - label: "Trekker uten tilbakelegging fra endelig pott"
         leads_to:
           - { id: hypergeometrisk-fordeling, kind: entry }
-      - label: "Forsøk gjentas til første suksess"
+      - label: "Fordelingen er gitt som en tabell P(X=x_i) – ingen kjent navngitt fordeling"
         leads_to:
-          - { id: binomial-fordeling, kind: entry }
+          - { id: forventningsverdi-diskret, kind: entry }
+          - { id: varians-standardavvik-diskret, kind: entry }
 
   - id: n_diskret_fast_n
     question: "Med tilbakelegging?"
@@ -43,15 +91,18 @@ nodes:
           - { id: eksponential-fordeling, kind: entry }
       - label: "Normalfordeling antatt eller mistenkt"
         next: n_normal
-      - label: "Sammenheng mellom to variable (x, y)"
+      - label: "Sum av flere uavhengige normalfordelte (Y = X₁+X₂+...+Xₙ)"
         leads_to:
-          - { id: regresjon-estimat-alpha-beta, kind: entry }
-          - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+          - { id: sum-uavhengige-normaler, kind: entry }
 
   - id: n_normal
-    question: "Hva spørres det om?"
+    question: "Hva spørres det om for X ~ N(μ, σ)?"
     options:
-      - label: "Sannsynlighet for et område"
+      - label: "Sannsynlighet for et område P(X<a), P(a<X<b), P(X>a)"
+        leads_to:
+          - { id: normalfordeling, kind: entry }
+          - { id: standardnormalisering, kind: concept }
+      - label: "Finn μ slik at en gitt sannsynlighet oppfylles (invers)"
         leads_to:
           - { id: normalfordeling, kind: entry }
           - { id: standardnormalisering, kind: concept }
@@ -61,29 +112,97 @@ nodes:
       - label: "Konfidensintervall for μ – σ ukjent"
         leads_to:
           - { id: ki-mu-ukjent-sigma, kind: entry }
-      - label: "Hypotesetest om μ – σ ukjent"
-        leads_to:
-          - { id: en-utvalg-t-test, kind: entry }
       - label: "Hypotesetest om μ – σ kjent"
         leads_to:
           - { id: en-utvalg-z-test, kind: entry }
+      - label: "Hypotesetest om μ – σ ukjent"
+        leads_to:
+          - { id: en-utvalg-t-test, kind: entry }
+
+  - id: n_joint
+    question: "Hva spørres det om fra simultanfordelingstabellen?"
+    options:
+      - label: "Marginalfordeling P(X=x) eller P(Y=y) – rad/kolonne-summer"
+        leads_to:
+          - { id: marginalfordeling, kind: entry }
+          - { id: fellesfordeling, kind: concept }
+      - label: "Forventningsverdi E(X), E(Y), eller E(XY)"
+        leads_to:
+          - { id: forventningsverdi-diskret, kind: entry }
+      - label: "Varians eller standardavvik for X eller Y"
+        leads_to:
+          - { id: varians-standardavvik-diskret, kind: entry }
+      - label: "Kovarians Cov(X, Y)"
+        leads_to:
+          - { id: kovarians, kind: entry }
+      - label: "Korrelasjon ρ(X, Y)"
+        leads_to:
+          - { id: korrelasjon-joint, kind: entry }
+      - label: "Er X og Y uavhengige?"
+        leads_to:
+          - { id: kjikvadrat-uavhengighet, kind: entry }
+          - { id: uavhengighet-hendelser, kind: concept }
+
+  - id: n_telling
+    question: "Hva slags telleproblem?"
+    options:
+      - label: "Trekker k objekter fra n uten tilbakelegging (uordnet, kortstokk-stil)"
+        leads_to:
+          - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
+      - label: "Beregne P som gunstige/mulige (uniform sannsynlighet)"
+        leads_to:
+          - { id: gunstige-pa-mulige, kind: concept }
+
+  - id: n_regresjon
+    question: "Hva er du på jakt etter?"
+    options:
+      - label: "Estimere regresjonslinja (α̂, β̂) ut fra data"
+        leads_to:
+          - { id: regresjon-estimat-alpha-beta, kind: entry }
+      - label: "Korrelasjonskoeffisient r"
+        leads_to:
+          - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+      - label: "Test om β = 0 (er det signifikant lineær sammenheng?)"
+        leads_to:
+          - { id: regresjon-test-stigningstall, kind: entry }
+      - label: "Prediksjonsintervall for ŷ ved gitt x"
+        leads_to:
+          - { id: regresjon-prediksjonsintervall, kind: entry }
+      - label: "Standardfeil for stigningstallet SE(β̂)"
+        leads_to:
+          - { id: regresjon-standardfeil-stigningstall, kind: entry }
+      - label: "Residualvarians S_E²"
+        leads_to:
+          - { id: regresjon-residualvarians, kind: entry }
+      - label: "Spredningsplott / visualisere data"
+        leads_to:
+          - { id: spredningsplott, kind: concept }
 
   - id: n_inferens
     question: "Hva slags inferens?"
     options:
-      - label: "Test eller KI for andel"
-        next: n_andel
-      - label: "Test eller KI for gjennomsnitt"
+      - label: "Test eller KI for gjennomsnitt μ"
         next: n_normal
-      - label: "Test for sammenheng / uavhengighet av kategorier"
+      - label: "Test eller KI for andel p"
+        next: n_andel
+      - label: "KI for poissonrate λ"
         leads_to:
-          - { id: kjikvadrat-uavhengighet, kind: entry }
-      - label: "Test om to grupper har samme μ"
+          - { id: ki-poissonrate, kind: entry }
+      - label: "KI for varians σ²"
+        leads_to:
+          - { id: ki-varians, kind: entry }
+      - label: "Test om to grupper har samme μ (to-utvalgs t-test)"
         leads_to:
           - { id: to-utvalgs-t-test, kind: entry }
-      - label: "Goodness-of-fit (passer dataene en fordeling?)"
+      - label: "Goodness-of-fit (passer dataene en gitt fordeling?)"
         leads_to:
           - { id: kjikvadrat-goodness-of-fit, kind: entry }
+      - label: "Test for sammenheng/uavhengighet av kategorier (kontingenstabell)"
+        leads_to:
+          - { id: kjikvadrat-uavhengighet, kind: entry }
+      - label: "Hypotesetest om regresjons-stigningstall β = 0"
+        leads_to:
+          - { id: regresjon-test-stigningstall, kind: entry }
 
   - id: n_andel
     question: "Hva spørres det om for andelen p?"
