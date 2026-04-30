@@ -1,0 +1,13 @@
+id: tid-til-hendelse
+name_no: "Tid TIL første hendelse, rate gitt"
+cue: "Oppgaven gir en rate λ og spør om TIDEN T til neste hendelse — ikke om antall hendelser. Typiske formuleringer: 'sannsynligheten for at det går mer enn t timer før …', 'ventetid til første kunde', 'levetid'. Hendelsene følger en poissonprosess."
+procedure:
+  - "Identifiser raten λ (samme enhet som tiden t i spørsmålet)"
+  - "Skriv om spørsmålet: P(T > t), P(T ≤ t), eller P(t₁ < T ≤ t₂)"
+  - "Bruk kumulativ: F(t) = P(T ≤ t) = 1 − e^(−λt)"
+  - "P(T > t) = e^(−λt) (ofte enklest)"
+  - "P(t₁ < T ≤ t₂) = F(t₂) − F(t₁) = e^(−λt₁) − e^(−λt₂)"
+  - "Husk: E[T] = 1/λ kan brukes til sanity check"
+entry_refs:
+  - eksponential-fordeling
+example: "Klippeblåvinger fanges med rate λ = 0.01 pr. time. Sannsynlighet for at det går mer enn 100 timer før første fangst: P(T > 100) = e^(−0.01·100) = e^(−1) ≈ 0.368."

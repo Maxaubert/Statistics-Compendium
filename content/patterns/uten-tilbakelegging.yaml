@@ -1,0 +1,14 @@
+id: uten-tilbakelegging
+name_no: "Uten tilbakelegging fra endelig pott"
+cue: "Oppgaven beskriver en endelig pott på N elementer, hvorav K er av en gitt 'type'. Du trekker n elementer uten tilbakelegging og spør hvor mange av dem som er av typen. Typiske scenarier: kortspill, kvalitetskontroll, utplukk fra varelager."
+procedure:
+  - "Identifiser populasjonsstørrelsen N (totalt antall i potten)"
+  - "Identifiser antall 'vellykkede' K i populasjonen"
+  - "Identifiser utvalgsstørrelsen n (antall som trekkes)"
+  - "Avgjør hva k er — antall vellykkede du spør etter"
+  - "Sjekk grenser: max(0, n − (N − K)) ≤ k ≤ min(n, K)"
+  - "Regn P(X = k) = C(K, k)·C(N−K, n−k) / C(N, n)"
+  - "For 'minst k' eller flere verdier: summer eller bruk komplement"
+entry_refs:
+  - hypergeometrisk-fordeling
+example: "Fra et kortspill med N = 52 kort, hvorav K = 13 ruter, trekkes n = 5 kort. P(nøyaktig 2 ruter) = C(13,2)·C(39,3) / C(52,5)."

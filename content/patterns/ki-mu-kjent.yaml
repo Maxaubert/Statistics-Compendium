@@ -1,0 +1,13 @@
+id: ki-mu-kjent
+name_no: "Normal antatt, σ kjent — KI for μ"
+cue: "Oppgaven ber om et konfidensintervall for forventningsverdien μ, og populasjonens standardavvik σ er oppgitt eller skal antas kjent. Observasjonene er normalfordelte, eller utvalget er stort nok (n ≥ 30) til å påberope sentralgrenseteoremet."
+procedure:
+  - "Identifiser konfidensnivået (1 − α)·100 %"
+  - "Slå opp z_(α/2) i standardnormaltabell (95 % → 1.96, 99 % → 2.576)"
+  - "Regn utvalgsgjennomsnitt x̄ hvis ikke gitt"
+  - "Regn standardfeilen σ/√n"
+  - "Regn marginalfeilen E = z_(α/2) · σ/√n"
+  - "Skriv intervallet: x̄ ± E, dvs. [x̄ − E, x̄ + E]"
+entry_refs:
+  - ki-mu-kjent-sigma
+example: "n = 25, x̄ = 18.4, σ = 3 kjent. 95 % KI for μ: 18.4 ± 1.96·3/√25 = 18.4 ± 1.176 = [17.22, 19.58]."

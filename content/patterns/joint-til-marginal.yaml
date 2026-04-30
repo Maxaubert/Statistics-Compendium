@@ -1,0 +1,12 @@
+id: joint-til-marginal
+name_no: "Joint table gitt, finn marginal"
+cue: "Oppgaven gir en simultanfordeling P(X = x, Y = y) som tabell med rader (verdier av X) og kolonner (verdier av Y), og ber deg finne marginalfordelingen for X og/eller Y — eller en størrelse som forutsetter at marginalene er kjent (E[X], Var[X])."
+procedure:
+  - "For marginalfordelingen til X: summer hver rad → P(X = x_i) = Σ_j P(X = x_i, Y = y_j)"
+  - "For marginalfordelingen til Y: summer hver kolonne → P(Y = y_j) = Σ_i P(X = x_i, Y = y_j)"
+  - "Sjekk: alle marginalsannsynligheter skal summere til 1"
+  - "Hvis du trenger E[X]: bruk marginalen til X, E[X] = Σ x_i · P(X = x_i)"
+  - "Tilsvarende for E[Y], Var[X], Var[Y]"
+entry_refs:
+  - marginalfordeling
+example: "P(X=0, Y=0) = 0.1, P(X=0, Y=1) = 0.2, P(X=1, Y=0) = 0.3, P(X=1, Y=1) = 0.4. Marginal X: P(X=0) = 0.3, P(X=1) = 0.7. Marginal Y: P(Y=0) = 0.4, P(Y=1) = 0.6."

@@ -1,0 +1,14 @@
+id: test-stigningstall
+name_no: "Test om β = 0"
+cue: "Etter å ha estimert en regresjonslinje ŷ = α̂ + β̂·x, ber oppgaven deg vurdere om sammenhengen er statistisk signifikant — typisk formulert som 'test om det er en lineær sammenheng' eller 'test om β = 0'. Du trenger β̂, S_xx, og residualvariansen S_E²."
+procedure:
+  - "Sett opp H₀: β = 0 og H₁: β ≠ 0 (eller ensidig hvis spesifisert)"
+  - "Regn residualvariansen S_E² = SSE / (n − 2) hvis ikke gitt"
+  - "Regn standardfeilen SE(β̂) = √(S_E² / S_xx)"
+  - "Regn testobservatoren T = β̂ / SE(β̂)"
+  - "Bestem frihetsgrader ν = n − 2"
+  - "Slå opp kritisk verdi i t-tabell (tosidig: t_(α/2, n−2))"
+  - "Forkast H₀ hvis |T| ≥ kritisk verdi"
+entry_refs:
+  - regresjon-test-stigningstall
+example: "n = 10, β̂ = 2, S_xx = 40, S_E² = 4. SE(β̂) = √(4/40) = 0.316. T = 2/0.316 = 6.32. Kritisk t_(0.025, 8) = 2.306 → forkast H₀, klar lineær sammenheng."

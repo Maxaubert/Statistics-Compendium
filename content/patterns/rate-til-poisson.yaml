@@ -1,0 +1,14 @@
+id: rate-til-poisson
+name_no: "Rate gitt — antall hendelser i et tidsvindu"
+cue: "Oppgaven gir en rate λ pr. tidsenhet (eller pr. areal), og spør om antall hendelser i et vindu av lengde t. Typiske formuleringer: 'nøyaktig k', 'minst k', 'høyst k', eller 'ingen'. Hendelsene kommer som de kommer — det er ingen fast øvre grense for antallet."
+procedure:
+  - "Identifiser raten λ og enheten den er gitt i (pr. time, dag, måned, m², osv.)"
+  - "Identifiser vinduets lengde t i samme enhet som raten"
+  - "Regn forventet antall μ = λt"
+  - "Avgjør hva spørsmålet ber om: P(X = k), P(X ≤ k), P(X ≥ k), eller P(X = 0)"
+  - "For 'minst k' eller 'ingen': bruk komplementregelen P(X ≥ k) = 1 − P(X ≤ k−1)"
+  - "Slå opp P(X ≤ k) i tabell E.2, eller regn direkte: P(X = k) = e^(−μ) · μ^k / k!"
+entry_refs:
+  - poisson-fordeling
+  - komplementregelen
+example: "Vulkanutbrudd med rate 0.0261 pr. måned. Finn sannsynligheten for minst ett utbrudd i 5 år (60 måneder). μ = 0.0261·60 = 1.5678, P(X ≥ 1) = 1 − e^(−1.5678) ≈ 0.792."
