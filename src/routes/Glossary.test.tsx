@@ -10,7 +10,7 @@ describe("Glossary", () => {
         <Glossary />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Ordliste/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Ordliste/i })).toBeInTheDocument();
     expect(screen.getByText("P-verdi")).toBeInTheDocument();
   });
 });

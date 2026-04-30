@@ -11,7 +11,7 @@ describe("Patterns", () => {
         <Patterns />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Mønstre/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Mønstre/i })).toBeInTheDocument();
   });
 
   it("shows detail for a pattern", () => {

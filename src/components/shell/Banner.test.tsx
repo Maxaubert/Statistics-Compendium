@@ -29,4 +29,12 @@ describe("Banner", () => {
     const link = screen.getByRole("link", { name: /forsiden/i });
     expect(link).toHaveAttribute("href", "/");
   });
+  it("renders secondary navigation links to helper pages", () => {
+    renderBanner();
+    expect(screen.getByRole("link", { name: /Veiviser/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Ordliste/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Symboler/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Mønstre/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Cheat-?sheet/i })).toBeInTheDocument();
+  });
 });

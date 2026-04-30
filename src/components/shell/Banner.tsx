@@ -1,6 +1,14 @@
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Compass, BookA, Sigma, Layers, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
+
+const NAV_LINKS = [
+  { to: "/veiviser", label: "Veiviser", Icon: Compass },
+  { to: "/ordliste", label: "Ordliste", Icon: BookA },
+  { to: "/symboler", label: "Symboler", Icon: Sigma },
+  { to: "/monstre", label: "Mønstre", Icon: Layers },
+  { to: "/cheatsheet", label: "Cheat-sheet", Icon: FileText },
+];
 
 export function Banner() {
   const { theme, toggle } = useTheme();
@@ -51,6 +59,18 @@ export function Banner() {
           <Icon size={16} />
         </button>
       </div>
+      <nav className="relative z-10 flex flex-wrap gap-1 border-t border-white/10 px-7 py-2 text-[12.5px]">
+        {NAV_LINKS.map(({ to, label, Icon: NavIcon }) => (
+          <Link
+            key={to}
+            to={to}
+            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-paper-2/85 no-underline hover:bg-white/10 hover:text-white"
+          >
+            <NavIcon size={13} />
+            {label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

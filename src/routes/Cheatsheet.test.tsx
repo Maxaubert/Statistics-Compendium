@@ -10,7 +10,7 @@ describe("Cheatsheet", () => {
         <Cheatsheet />
       </MemoryRouter>
     );
-    expect(screen.getByText(/Cheat-?sheet/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Cheat-?sheet/i })).toBeInTheDocument();
     // Should contain at least poisson and normal entry names
     expect(screen.getByText("Poissonfordeling")).toBeInTheDocument();
     expect(screen.getByText("Normalfordeling")).toBeInTheDocument();

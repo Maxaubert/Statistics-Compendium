@@ -22,7 +22,7 @@ describe("EntryDetail", () => {
     expect(screen.getByText("Hva den gjør")).toBeInTheDocument();
     expect(screen.getByText("Slik gjenkjenner du den i en oppgave")).toBeInTheDocument();
     expect(screen.getByText("IKKE bruk når")).toBeInTheDocument();
-    expect(screen.getByText("Symboler")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Symboler" })).toBeInTheDocument();
     expect(screen.getByText("Egenskaper")).toBeInTheDocument();
     expect(screen.getByText("Steg for steg")).toBeInTheDocument();
     expect(screen.getByText("Eksempler fra obliger og eksamener")).toBeInTheDocument();
