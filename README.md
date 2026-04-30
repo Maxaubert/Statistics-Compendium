@@ -8,9 +8,9 @@
 
 <table>
 <tr>
-<td width="33%" valign="top" align="center"><b>Filter.</b><br><sub>Narrow the catalog by characteristics observable in the problem.</sub></td>
-<td width="34%" valign="top" align="center"><b>Guide <i>(Veiviser)</i>.</b><br><sub>A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.</sub></td>
-<td width="33%" valign="top" align="center"><b>Step-by-step pages.</b><br><sub>Every formula and concept page walks through how to apply it.</sub></td>
+<td width="33%" valign="top" align="center"><b>Filter</b><br><sub>Narrow the catalog by characteristics observable in the problem.</sub></td>
+<td width="34%" valign="top" align="center"><b>Guide<i>(Veiviser)</i></b><br><sub>A dynamic survey that asks questions to identify the right formula or concept, then recommends the most likely match.</sub></td>
+<td width="33%" valign="top" align="center"><b>Step-by-step pages</b><br><sub>Every formula and concept page walks through how to apply it.</sub></td>
 </tr>
 </table>
 
