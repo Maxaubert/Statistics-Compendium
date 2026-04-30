@@ -1,0 +1,66 @@
+id: kjikvadrat-uavhengighet
+name_no: Kjikvadrat-test for uavhengighet
+type: test
+category: hypothesis_test
+tagline: "Tester om to kategoriske variable er uavhengige (kontingenstabell)."
+
+formula_main: "χ² = Σ (O_ij − E_ij)² / E_ij,    E_ij = (rad_i · kol_j) / n"
+formula_latex: "\\chi^2 = \\sum_{i,j} \\frac{(O_{ij} - E_{ij})^2}{E_{ij}}, \\quad E_{ij} = \\frac{r_i \\cdot c_j}{n}"
+
+what_it_does: |
+  Tester om to kategoriske variable (f.eks. røyking × kreft, kjønn × stemmegivning)
+  er uavhengige i populasjonen. Bruker en r×c-kontingenstabell der hver celle har
+  observert antall O_ij og forventet antall E_ij regnet som rad-sum × kol-sum / n.
+
+why_use: |
+  Når du har en simultan-kategori-tabell og vil teste H0: variablene er uavhengige.
+
+recognition_cues:
+  - "Data oppgis som en r×c-kontingenstabell (rader × kolonner)"
+  - "Spørsmålet handler om sammenheng mellom to kategoriske egenskaper"
+  - "'Er X og Y uavhengige?' eller 'er det en sammenheng mellom X og Y?'"
+
+when_NOT_to_use:
+  - "Bare én variabel → bruk goodness-of-fit-test"
+  - "Variablene er kontinuerlige → bruk korrelasjon eller regresjon"
+  - "n liten og noen E_ij < 5 → testen er ikke pålitelig"
+
+symbols:
+  - { sym: "O_ij", means: "observert antall i celle (rad i, kolonne j)" }
+  - { sym: "E_ij", means: "forventet antall = (rad-sum_i × kol-sum_j) / n" }
+  - { sym: "r",    means: "antall rader" }
+  - { sym: "c",    means: "antall kolonner" }
+  - { sym: "ν",    means: "frihetsgrader = (r − 1)(c − 1)" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [discrete_count]
+  setup: [joint_table_given]
+  structural_cues: [joint_table_present, more_than_two_categories]
+  parameters_known: [alpha_significance]
+  distribution_assumption: [chi_squared]
+  tooling: [chi_square_quantile_table_E6]
+
+solution_template:
+  - "Skriv ned H0: X og Y er uavhengige"
+  - "Regn marginalsummene (rad-summer og kol-summer)"
+  - "Regn forventede antall E_ij = (rad_i · kol_j) / n for hver celle"
+  - "Sjekk at alle E_ij ≥ 5"
+  - "Regn observatoren χ² = Σ (O_ij − E_ij)² / E_ij over alle celler"
+  - "Bestem frihetsgrader ν = (r − 1)(c − 1)"
+  - "Slå opp kritisk verdi χ²_(α, ν) i tabell E.6"
+  - "Forkast H0 (= konkluder at variablene er avhengige) hvis χ² > kritisk verdi"
+
+common_traps: |
+  Frihetsgradene er (r−1)(c−1), ikke r·c−1. Pass også på at marginalsummene
+  i regningen treffer totalt n. Hvis flere E_ij < 5 må du slå sammen
+  kategorier eller bruke en eksakt test (Fisher).
+
+related:
+  - { id: frihetsgrader, kind: concept }
+  - { id: marginalfordeling, kind: entry }
+  - { id: E6-kjikvadrattabell, kind: table }
+
+tools:
+  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Kalkulator: kvadrat, divisjon, sum"

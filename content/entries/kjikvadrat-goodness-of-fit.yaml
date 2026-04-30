@@ -1,0 +1,75 @@
+id: kjikvadrat-goodness-of-fit
+name_no: Kjikvadrat-tilpasningstest
+type: test
+category: hypothesis_test
+tagline: "Tester om observerte frekvenser passer en forventet fordeling."
+
+formula_main: "χ² = Σ (O_i − E_i)² / E_i"
+formula_latex: "\\chi^2 = \\sum_{i=1}^{k} \\frac{(O_i - E_i)^2}{E_i}"
+
+what_it_does: |
+  Sammenligner observerte antall i k kategorier mot forventede antall under
+  en gitt nullhypotese (f.eks. lik fordeling, eller en bestemt teoretisk
+  fordeling). Stor χ²-verdi → observasjonene avviker fra forventningen.
+
+why_use: |
+  Når du har data i kategorier (ikke kontinuerlige målinger) og vil
+  teste om fordelingen samsvarer med en hypotese.
+
+recognition_cues:
+  - "Data oppgis som antall i kategorier (k > 2)"
+  - "Spørsmålet sier 'tester om fordelingen er ...' eller 'er det forskjell mellom kategoriene'"
+  - "Forventede antall E_i kan regnes fra nullhypotesen"
+  - "Alle E_i ≥ 5 (tommelfingerregel for at testen er gyldig)"
+
+when_NOT_to_use:
+  - "Bare to kategorier → bruk z-test for andel i stedet"
+  - "Kontinuerlige målinger → bruk normaltest eller t-test"
+  - "Forventede antall E_i < 5 i flere celler → testen er ikke pålitelig"
+
+symbols:
+  - { sym: "O_i", means: "observert antall i kategori i" }
+  - { sym: "E_i", means: "forventet antall i kategori i under H0" }
+  - { sym: "k",   means: "antall kategorier" }
+  - { sym: "ν",   means: "frihetsgrader = k − 1 (eller k − 1 − m hvis m parametre er estimert)" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [discrete_count]
+  setup: [single_population]
+  structural_cues: [more_than_two_categories, summary_stats_given]
+  parameters_known: [alpha_significance]
+  distribution_assumption: [chi_squared]
+  tooling: [chi_square_quantile_table_E6]
+
+solution_template:
+  - "Skriv ned H0 (forventet fordeling) og H1 (avvik)"
+  - "Regn forventede antall E_i under H0"
+  - "Sjekk at alle E_i ≥ 5"
+  - "Regn observatoren χ² = Σ (O_i − E_i)² / E_i"
+  - "Bestem frihetsgrader ν = k − 1 (minus m hvis estimerte parametre)"
+  - "Slå opp kritisk verdi χ²_(α, ν) i tabell E.6"
+  - "Forkast H0 hvis χ² > kritisk verdi"
+
+common_traps: |
+  Frihetsgradene faller med 1 for hver parameter du har estimert fra
+  dataene (ikke bare k − 1). Forventede antall, ikke observerte antall,
+  i nevneren. Pass på at totalsummen er det samme på begge sider når du
+  regner forventet.
+
+python_snippet: |
+  from scipy.stats import chisquare
+
+  observed = [18, 22, 30, 25, 15]
+  expected = [22, 22, 22, 22, 22]
+
+  chisq, p = chisquare(observed, f_exp=expected)
+
+related:
+  - { id: frihetsgrader, kind: concept }
+  - { id: signifikansnivaa, kind: concept }
+  - { id: E6-kjikvadrattabell, kind: table }
+
+tools:
+  - "Tabell E.6 — Kjikvadrat-kvantiltabell"
+  - "Kalkulator: kvadrat, divisjon, sum"
