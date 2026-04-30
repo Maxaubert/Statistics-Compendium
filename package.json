@@ -40,6 +40,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "jsdom": "^25.0.1",
     "postcss": "^8.4.49",
+    "puppeteer-core": "^24.42.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.6.3",
     "vite": "^6.0.0",
