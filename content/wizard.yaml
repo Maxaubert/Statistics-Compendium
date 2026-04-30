@@ -1,13 +1,96 @@
-start: n0
+start: n_start
 nodes:
-  - id: n0
-    question: Diskret eller kontinuerlig?
+  - id: n_start
+    question: "Er den tilfeldige variabelen diskret (du teller noe) eller kontinuerlig?"
     options:
-      - label: Diskret
+      - label: "Diskret — jeg teller hendelser eller forsøk"
+        next: n_diskret
+      - label: "Kontinuerlig — målinger på en skala"
+        next: n_kontinuerlig
+      - label: "Ikke sikker — jeg har data og skal estimere eller teste"
+        next: n_inferens
+
+  - id: n_diskret
+    question: "Hva slags telling? Vinduet er bestemt på forhånd?"
+    options:
+      - label: "Fast antall n forsøk, hver med samme suksesssannsynlighet p"
+        next: n_diskret_fast_n
+      - label: "Hendelser kommer som de kommer, rate λ er gitt"
         leads_to:
-          - id: poisson-fordeling
-            kind: entry
-      - label: Kontinuerlig
+          - { id: poisson-fordeling, kind: entry }
+      - label: "Trekker uten tilbakelegging fra endelig pott"
         leads_to:
-          - id: normalfordeling
-            kind: entry
+          - { id: hypergeometrisk-fordeling, kind: entry }
+      - label: "Forsøk gjentas til første suksess"
+        leads_to:
+          - { id: binomial-fordeling, kind: entry }
+
+  - id: n_diskret_fast_n
+    question: "Med tilbakelegging?"
+    options:
+      - label: "Ja (eller uavhengige forsøk)"
+        leads_to:
+          - { id: binomial-fordeling, kind: entry }
+      - label: "Nei (endelig pott)"
+        leads_to:
+          - { id: hypergeometrisk-fordeling, kind: entry }
+
+  - id: n_kontinuerlig
+    question: "Hva slags variabel?"
+    options:
+      - label: "Tid TIL første hendelse, rate gitt"
+        leads_to:
+          - { id: eksponential-fordeling, kind: entry }
+      - label: "Normalfordeling antatt eller mistenkt"
+        next: n_normal
+      - label: "Sammenheng mellom to variable (x, y)"
+        leads_to:
+          - { id: regresjon-estimat-alpha-beta, kind: entry }
+          - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+
+  - id: n_normal
+    question: "Hva spørres det om?"
+    options:
+      - label: "Sannsynlighet for et område"
+        leads_to:
+          - { id: normalfordeling, kind: entry }
+          - { id: standardnormalisering, kind: concept }
+      - label: "Konfidensintervall for μ — σ kjent"
+        leads_to:
+          - { id: ki-mu-kjent-sigma, kind: entry }
+      - label: "Konfidensintervall for μ — σ ukjent"
+        leads_to:
+          - { id: ki-mu-ukjent-sigma, kind: entry }
+      - label: "Hypotesetest om μ — σ ukjent"
+        leads_to:
+          - { id: en-utvalg-t-test, kind: entry }
+      - label: "Hypotesetest om μ — σ kjent"
+        leads_to:
+          - { id: en-utvalg-z-test, kind: entry }
+
+  - id: n_inferens
+    question: "Hva slags inferens?"
+    options:
+      - label: "Test eller KI for andel"
+        next: n_andel
+      - label: "Test eller KI for gjennomsnitt"
+        next: n_normal
+      - label: "Test for sammenheng / uavhengighet av kategorier"
+        leads_to:
+          - { id: kjikvadrat-uavhengighet, kind: entry }
+      - label: "Test om to grupper har samme μ"
+        leads_to:
+          - { id: to-utvalgs-t-test, kind: entry }
+      - label: "Goodness-of-fit (passer dataene en fordeling?)"
+        leads_to:
+          - { id: kjikvadrat-goodness-of-fit, kind: entry }
+
+  - id: n_andel
+    question: "Hva spørres det om for andelen p?"
+    options:
+      - label: "Konfidensintervall for p"
+        leads_to:
+          - { id: ki-andel-binomial, kind: entry }
+      - label: "Test om p = p₀"
+        leads_to:
+          - { id: en-utvalg-z-test-andel, kind: entry }
