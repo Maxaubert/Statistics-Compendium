@@ -3,6 +3,7 @@ import { ListView } from "./routes/ListView";
 import { EntryDetail } from "./routes/EntryDetail";
 import { ConceptDetail } from "./routes/ConceptDetail";
 import { TableDetail } from "./routes/TableDetail";
+import { SymbolTable } from "./routes/SymbolTable";
 import { NotFound } from "./routes/NotFound";
 
 export function App() {
@@ -13,6 +14,7 @@ export function App() {
         <Route path="/entry/:id" element={<EntryDetail />} />
         <Route path="/concept/:id" element={<ConceptDetail />} />
         <Route path="/table/:id" element={<TableDetail />} />
+        <Route path="/symboler" element={<SymbolTable />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
