@@ -291,7 +291,7 @@ detailed_solution_variants:
               - { text: "`μ = 60`, `σ = 5`, mål `p = 0.95`. Vi trenger 95-kvantilet." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 (slik at G(1.645) = 0.95)" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.95`: `z = 1.645`." } }
           - label: "Innsetting"
             lines:
               - { text: "`x = μ + σ · z = 60 + 5 · 1.645`" }
@@ -306,7 +306,7 @@ detailed_solution_variants:
               - { text: "`μ = 100`, `σ = 15`, mål `p = 0.99`." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.01} = 2.326 (slik at G(2.326) = 0.99)" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.99`: `z = 2.326`." } }
           - label: "Innsetting"
             lines:
               - { text: "`x = 100 + 15 · 2.326`" }
@@ -318,10 +318,10 @@ detailed_solution_variants:
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`μ = 170`, `σ = 6`, mål `p = 0.10 < 0.5` ⇒ `z` blir negativ." }
+              - { text: "`μ = 170`, `σ = 6`, mål `p = 0.10`. Siden `p < 0.5` blir `z` negativ." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.10} = 1.282 ⇒ venstrekvantilet er −1.282" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.10`: `z = −1.282` (bruk symmetri eller E.4 i `p`-modus)." } }
           - label: "Innsetting"
             lines:
               - { text: "`x = 170 + 6 · (−1.282)`" }
@@ -339,7 +339,7 @@ detailed_solution_variants:
               - { text: "`G((300 − μ)/5) = 0.001`" }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.001} = 3.090 ⇒ venstrekvantilet er −3.090" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.001`: `z = −3.090` (siden `p < 0.5` er `z` negativ)." } }
           - label: "Innsetting"
             lines:
               - { text: "`(300 − μ)/5 = −3.090`" }
@@ -356,7 +356,7 @@ detailed_solution_variants:
               - { text: "`G((40 − 50)/σ) = 0.05`" }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 ⇒ venstrekvantilet er −1.645" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.05`: `z = −1.645`." } }
           - label: "Innsetting"
             lines:
               - { text: "`(40 − 50)/σ = −1.645`" }
@@ -373,7 +373,7 @@ detailed_solution_variants:
               - { text: "Sett likhet i grensen: `G((100 − μ)/5) = 0.05`." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 ⇒ venstrekvantilet er −1.645" } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.05`: `z = −1.645`." } }
           - label: "Innsetting"
             lines:
               - { text: "`(100 − μ)/5 = −1.645`" }
