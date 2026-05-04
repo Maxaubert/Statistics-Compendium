@@ -76,35 +76,88 @@ python_snippet: |
   t_obs = beta_hat / SE_beta              # 10.61
   t_crit = t.ppf(0.975, df=n-2)            # 2.306
 
-examples:
-  - source: "Eksamen mai25 · oppgave 5d"
-    excerpt: "ŷ = 34.6 + 6.63·x. SSE = 48.7437, Σ(x-x̄)² = 15.6. Test om β ≠ 0 på α = 0.05."
-    solution_sketch: "S_E² = 48.7437/8 = 6.093. SE(β̂) = √(6.093/15.6) = 0.625. t = 6.63/0.625 = 10.61 ≫ t_0.025,8 = 2.306 → forkast H₀."
+detailed_solution_variants:
+  - label: "Test β = 0 (lineær sammenheng?)"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d"
+        question: "Regresjonslinjen er `ŷ = 34.6 + 6.63·x` med `SSE = 48.7437` og `Σ(x_i - x̄)² = 15.6`, `n = 10`. Test om sammenhengen mellom søvn og eksamensresultat er signifikant på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 6.63`, `SSE = 48.7437`, `Σ(x_i - x̄)² = 15.6`" }
+              - { text: "`n = 10`, `α = 0.05`" }
+              - { comment: "SE(β̂) må beregnes fra SSE og Σ(x-x̄)²" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
+              - { text: "`H₁: β ≠ 0` (det ER en lineær sammenheng)" }
+              - { comment: "tosidig test" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`S_E² = SSE / (n-2) = 48.7437 / 8 = 6.093`" }
+              - { text: "`SE(β̂) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625`" }
+              - { text: "`T = β̂ / SE(β̂) = 6.63 / 0.625 = 10.61`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = n - 2 = 10 - 2 = 8`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 8) = 2.306` (tosidig kritisk verdi)" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 10.61 > 2.306` ✓ → forkast `H₀`" }
+              - { comment: "klart signifikant resultat" }
+        result: "Forkast `H₀` på `α = 0.05`. Det er statistisk signifikant lineær sammenheng mellom søvn og eksamensresultat."
 
-detailed_solutions:
-  - source: "Eksamen mai25 · oppgave 5d"
-    question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med SSE = 48.7437 og Σ(x_i - x̄)² = 15.6, n = 10. Test om sammenhengen mellom søvn og eksamensresultat er signifikant på α = 0.05."
-    sections:
-      - label: "Hypoteser"
-        lines:
-          - { text: "H₀: β = 0 (ingen sammenheng)" }
-          - { text: "H₁: β ≠ 0 (det ER en sammenheng)" }
-          - { comment: "tosidig test" }
-      - label: "Frihetsgrader"
-        lines:
-          - { text: "ν = n - 2 = 10 - 2 = 8" }
-      - label: "Innsatt"
-        lines:
-          - { text: "S_E² = SSE / (n-2) = 48.7437 / 8 = 6.093" }
-          - { text: "SE(β̂) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625" }
-          - { text: "t = (β̂ - 0) / SE(β̂) = 6.63 / 0.625 = 10.61" }
-      - label: "Kritisk verdi"
-        lines:
-          - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306 (tosidig)" } }
-      - label: "Sammenligning"
-        lines:
-          - { text: "|10.61| > 2.306 ✓" }
-    result: "Forkast H₀ på α = 0.05. Det er statistisk signifikant lineær sammenheng."
+      - source: "Praksis · klar sammenheng"
+        question: "Datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)` gir `β̂ = 1.5` og `SE(β̂) = 0.1`. Test om det er en lineær sammenheng på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 1.5`, `SE(β̂) = 0.1`" }
+              - { text: "`n = 5`, `α = 0.05`" }
+              - { comment: "begge størrelser er gitt direkte" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
+              - { text: "`H₁: β ≠ 0` (lineær sammenheng)" }
+              - { comment: "tosidig test" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = β̂ / SE(β̂) = 1.5 / 0.1 = 15.0`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = n - 2 = 5 - 2 = 3`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 3) = 3.182` (tosidig kritisk verdi)" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 15.0 ≫ 3.182` ✓ → forkast `H₀` med god margin" }
+              - { comment: "selv med kun n=5 er sammenhengen overveldende" }
+        result: "Forkast `H₀` på `α = 0.05`. Det er sterk statistisk signifikant lineær sammenheng mellom `x` og `y`."
+
+      - source: "Praksis · svak sammenheng"
+        question: "I et datasett med `n = 12` observasjoner finner vi `β̂ = 0.35` og `SE(β̂) = 0.28`. Test om det er en lineær sammenheng på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 0.35`, `SE(β̂) = 0.28`" }
+              - { text: "`n = 12`, `α = 0.05`" }
+              - { comment: "merk at SE er stor relativt til β̂" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
+              - { text: "`H₁: β ≠ 0` (lineær sammenheng)" }
+              - { comment: "tosidig test" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = β̂ / SE(β̂) = 0.35 / 0.28 = 1.25`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = n - 2 = 12 - 2 = 10`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 10) = 2.228` (tosidig kritisk verdi)" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 1.25 < 2.228` ✗ → kan IKKE forkaste `H₀`" }
+              - { comment: "punktet ligger innenfor akseptanseområdet" }
+        result: "Vi forkaster ikke `H₀` på `α = 0.05`. Det er ikke statistisk grunnlag for å hevde at det finnes en lineær sammenheng mellom `x` og `y`."
 
 related:
   - { id: "regresjon-estimat-alpha-beta",      kind: "entry" }

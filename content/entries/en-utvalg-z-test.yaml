@@ -108,55 +108,184 @@ python_snippet: |
   # p-verdi (venstresidig)
   p_value = norm.cdf(z)                        # 0.0057
 
-examples:
-  - source: "Eksamen jan25 · oppgave 6"
-    excerpt: "Standardavviket er σ = 5 W (kjent). Utvalg n = 40, x̄ = 48 W. Test om ny julelys har lavere energiforbruk enn 50 W på α = 0.05."
-    solution_sketch: "z = (48-50)/(5/√40) = -2.53. -2.53 < -z_0.05 = -1.645 → forkast H₀."
-  - source: "Eksamen mai25 · oppgave 4b"
-    excerpt: "σ = 5 ml (kjent). Utvalg n = 6, x̄ = 298.67 ml. Test om μ < 302 på α = 0.05."
-    solution_sketch: "z = (298.67-302)/(5/√6) = -1.63. -1.63 ikke < -1.645 → IKKE forkast H₀."
+detailed_solution_variants:
+  - label: "H₁: μ < μ₀ (venstre)"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 6c"
+        question: "Forventet forbruk på standardmodellen er `μ₀ = 50 W`. Et utvalg på `n = 40` målinger av ny julelys gir `x̄ = 48 W`, og `σ = 5 W` antas kjent. Test H₀: μ ≥ 50 mot H₁: μ < 50 på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 40`, `x̄ = 48`, `σ = 5` (kjent), `μ₀ = 50`, `α = 0.05`." }
+              - { text: "Z-test forutsetter kjent populasjonsstandardavvik σ — oppgaven oppgir dette eksplisitt." }
+              - { text: "Med `n = 40 ≥ 30` gir sentralgrenseteoremet at X̄ er tilnærmet normalfordelt." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ ≥ 50 W (ny julelys er IKKE bedre enn standard)" }
+              - { text: "H₁: μ < 50 W (ny julelys bruker mindre energi — venstresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (48 − 50) / (5/√40)`" }
+              - { indent: "= `−2 / 0.7906`" }
+              - { indent: "= `−2.53`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 → kritisk grense for venstresidig test er `−z_{0.05} = −1.645`. Forkast H₀ hvis `z < −1.645`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `z = −2.53 < −1.645` ✓" }
+              - { text: "Beslutning: Forkast H₀ på signifikansnivå `α = 0.05`." }
+              - { text: "Tolkning: Tallene gir grunn til å hevde at ny julelys har lavere forventet energiforbruk enn standardmodellen på 50 W." }
+        result: "Forkast H₀. Ny julelys bruker signifikant mindre energi enn 50 W."
 
-detailed_solutions:
-  - source: "Eksamen jan25 · oppgave 6c"
-    question: "Forventet forbruk på standardmodellen er 50 W. Utvalg på 40 målinger av ny julelys gir x̄ = 48 W, σ = 5 W kjent. Test H₀: μ ≥ 50 mot H₁: μ < 50 på α = 0.05."
-    sections:
-      - label: "Hypoteser"
-        lines:
-          - { text: "H₀: μ ≥ 50 W (ny er IKKE bedre)" }
-          - { text: "H₁: μ < 50 W (ny er bedre)" }
-      - label: "Testobservator"
-        lines:
-          - { text: "Z = (X̄ - μ₀) / (σ/√n)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "z = (48 - 50) / (5/√40)" }
-          - { indent: "= -2 / 0.7906" }
-          - { indent: "= -2.53" }
-      - label: "Kritisk verdi"
-        lines:
-          - { table_lookup: { ref: "E.4", text: "z_0.05 = 1.645 → forkastningsregel: forkast hvis z < -1.645" } }
-      - label: "Sammenligning"
-        lines:
-          - { text: "-2.53 < -1.645 ✓" }
-    result: "Forkast H₀ på α = 0.05. Tallene tyder på at ny julelys har lavere forbruk."
+      - source: "Praksis · produsentpåstand om snittvekt"
+        question: "En produsent påstår at gjennomsnittsvekten på sjokoladeplater er `μ₀ = 250 g`, og populasjonens standardavvik er `σ = 5 g` (kjent). En kunde mistenker at platene veier mindre. Et utvalg på `n = 25` plater gir `x̄ = 248 g`. Test H₀: μ ≥ 250 mot H₁: μ < 250 på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 25`, `x̄ = 248`, `σ = 5` (kjent), `μ₀ = 250`, `α = 0.05`." }
+              - { text: "Z-test forutsetter kjent σ — oppfylt." }
+              - { text: "`n = 25 < 30`, men vekt antas tilnærmet normalfordelt, så testen er gyldig." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ ≥ 250 g (produsentens påstand holder)" }
+              - { text: "H₁: μ < 250 g (platene veier i snitt mindre — venstresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (248 − 250) / (5/√25)`" }
+              - { indent: "= `−2 / 1`" }
+              - { indent: "= `−2.00`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 → kritisk grense `−z_{0.05} = −1.645`. Forkast H₀ hvis `z < −1.645`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `z = −2.00 < −1.645` ✓" }
+              - { text: "Beslutning: Forkast H₀ på `α = 0.05`." }
+              - { text: "Tolkning: Det er statistisk grunnlag for å hevde at gjennomsnittsvekten er lavere enn produsentens påstand om 250 g." }
+        result: "Forkast H₀. Sjokoladeplatene veier i gjennomsnitt mindre enn 250 g."
 
-  - source: "Eksamen mai25 · oppgave 4b"
-    question: "X̄ = 298.67, n = 6, σ = 5 (kjent). Test H₀: μ ≥ 302 mot H₁: μ < 302 på α = 0.05."
-    sections:
-      - label: "Hypoteser"
-        lines:
-          - { text: "H₀: μ ≥ 302" }
-          - { text: "H₁: μ < 302" }
-      - label: "Innsatt"
-        lines:
-          - { text: "z = (298.67 - 302) / (5/√6) = -3.33/2.041 = -1.63" }
-      - label: "Kritisk verdi"
-        lines:
-          - { table_lookup: { ref: "E.4", text: "z_0.05 = 1.645" } }
-      - label: "Sammenligning"
-        lines:
-          - { text: "-1.63 IKKE < -1.645" }
-    result: "Vi kan IKKE forkaste H₀ på α = 0.05."
+  - label: "H₁: μ > μ₀ (høyre)"
+    solutions:
+      - source: "Praksis · maskinkomponenter"
+        question: "En maskin produserer komponenter med kjent standardavvik `σ = 0.5 mm`. En ingeniør mistenker at gjennomsnittsstørrelsen overstiger `μ₀ = 10 mm`. Et utvalg på `n = 36` komponenter gir `x̄ = 10.15 mm`. Test H₀: μ ≤ 10 mot H₁: μ > 10 på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 36`, `x̄ = 10.15`, `σ = 0.5` (kjent), `μ₀ = 10`, `α = 0.05`." }
+              - { text: "Z-test forutsetter kjent σ — oppfylt." }
+              - { text: "`n = 36 ≥ 30` gir tilnærmet normalitet via SGT." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ ≤ 10 mm (komponentene er innenfor mål)" }
+              - { text: "H₁: μ > 10 mm (komponentene er for store — høyresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (10.15 − 10) / (0.5/√36)`" }
+              - { indent: "= `0.15 / (0.5/6)`" }
+              - { indent: "= `0.15 / 0.0833`" }
+              - { indent: "= `1.80`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 → forkastningsregel for høyresidig: forkast H₀ hvis `z > 1.645`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `z = 1.80 > 1.645` ✓" }
+              - { text: "Beslutning: Forkast H₀ på `α = 0.05`." }
+              - { text: "Tolkning: Det er statistisk grunnlag for å hevde at maskinen produserer komponenter med snittstørrelse over 10 mm — kalibrering bør vurderes." }
+        result: "Forkast H₀. Maskinen produserer komponenter med snittstørrelse signifikant over 10 mm."
+
+      - source: "Praksis · medikamentstudie"
+        question: "En forsker tester om et nytt medikament gir høyere snittverdi for en biomarkør enn referanseverdien `μ₀ = 70`. Standardavviket er kjent `σ = 10`. Et utvalg på `n = 49` pasienter gir `x̄ = 73`. Test H₀: μ ≤ 70 mot H₁: μ > 70 på `α = 0.01`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 49`, `x̄ = 73`, `σ = 10` (kjent), `μ₀ = 70`, `α = 0.01`." }
+              - { text: "Z-test forutsetter kjent σ — oppgitt eksplisitt." }
+              - { text: "`n = 49 ≥ 30` gir tilnærmet normalitet." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ ≤ 70 (medikamentet gir ikke høyere biomarkørverdi)" }
+              - { text: "H₁: μ > 70 (medikamentet gir høyere verdi — høyresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (73 − 70) / (10/√49)`" }
+              - { indent: "= `3 / (10/7)`" }
+              - { indent: "= `3 / 1.4286`" }
+              - { indent: "= `2.10`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.01} = 2.326 → forkastningsregel: forkast H₀ hvis `z > 2.326`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `z = 2.10` er IKKE `> 2.326`." }
+              - { text: "Beslutning: Vi kan IKKE forkaste H₀ på `α = 0.01`." }
+              - { text: "Tolkning: På et strengt 1 %-nivå er det ikke tilstrekkelig bevis for at medikamentet hever biomarkørverdien. (Merk: på `α = 0.05` ville H₀ blitt forkastet.)" }
+        result: "Behold H₀. Ikke nok statistisk bevis på `α = 0.01` for at medikamentet hever snittverdien."
+
+  - label: "H₁: μ ≠ μ₀ (tosidig)"
+    solutions:
+      - source: "Praksis · kvalitetskontroll på flaskefylling"
+        question: "En tappemaskin skal fylle flasker med `μ₀ = 500 ml`. Standardavviket er kjent `σ = 4 ml`. Kvalitetsavdelingen ønsker å undersøke om maskinen avviker fra mål (over eller under). Et utvalg på `n = 25` flasker gir `x̄ = 502 ml`. Test H₀: μ = 500 mot H₁: μ ≠ 500 på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 25`, `x̄ = 502`, `σ = 4` (kjent), `μ₀ = 500`, `α = 0.05`." }
+              - { text: "Z-test forutsetter kjent σ — oppfylt." }
+              - { text: "Fyllvolum antas normalfordelt, så `n = 25` er tilstrekkelig." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ = 500 ml (maskinen fyller riktig)" }
+              - { text: "H₁: μ ≠ 500 ml (maskinen avviker — tosidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (502 − 500) / (4/√25)`" }
+              - { indent: "= `2 / (4/5)`" }
+              - { indent: "= `2 / 0.8`" }
+              - { indent: "= `2.50`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "Tosidig på `α = 0.05` → bruk `z_{α/2} = z_{0.025} = 1.96`. Forkastningsregel: forkast H₀ hvis `|z| > 1.96`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `|z| = 2.50 > 1.96` ✓" }
+              - { text: "Beslutning: Forkast H₀ på `α = 0.05`." }
+              - { text: "Tolkning: Maskinen avviker signifikant fra målverdien 500 ml — fyller i snitt for mye. Kalibrering anbefales." }
+        result: "Forkast H₀. Tappemaskinen avviker fra 500 ml-målet."
+
+      - source: "Praksis · kalibreringssjekk på vekt"
+        question: "En laboratorievekt skal vise `μ₀ = 100 g` for et standardlodd. Standardavviket er kjent `σ = 0.2 g`. En tekniker ønsker å sjekke om vekta er kalibrert (avvik i begge retninger er problematisk). Et utvalg på `n = 16` veiinger gir `x̄ = 99.85 g`. Test H₀: μ = 100 mot H₁: μ ≠ 100 på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 16`, `x̄ = 99.85`, `σ = 0.2` (kjent), `μ₀ = 100`, `α = 0.05`." }
+              - { text: "Z-test forutsetter kjent σ — oppfylt." }
+              - { text: "`n = 16 < 30`, men måleavlesninger antas normalfordelt, så testen er gyldig." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ = 100 g (vekta er kalibrert)" }
+              - { text: "H₁: μ ≠ 100 g (vekta er ute av kalibrering — tosidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (99.85 − 100) / (0.2/√16)`" }
+              - { indent: "= `−0.15 / (0.2/4)`" }
+              - { indent: "= `−0.15 / 0.05`" }
+              - { indent: "= `−3.00`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "Tosidig på `α = 0.05` → `z_{α/2} = z_{0.025} = 1.96`. Forkastningsregel: forkast H₀ hvis `|z| > 1.96`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenligning: `|z| = 3.00 > 1.96` ✓" }
+              - { text: "Beslutning: Forkast H₀ på `α = 0.05`." }
+              - { text: "Tolkning: Vekta avviker signifikant fra standardloddet på 100 g — den viser systematisk for lite og må kalibreres på nytt." }
+        result: "Forkast H₀. Vekta er ute av kalibrering og må justeres."
 
 related:
   - { id: "normalfordeling",         kind: "entry" }

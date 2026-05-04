@@ -69,21 +69,101 @@ python_snippet: |
   beta_hat = Sxy / Sxx                   # 6.63
   alpha_hat = y_bar - beta_hat * x_bar   # 34.6
 
-examples:
-  - source: "Eksamen mai25 · oppgave 5c"
-    excerpt: "Tabell viser Σ(x-x̄)² = 15.6, Σ(x-x̄)(y-ȳ) = 103.4, x̄ = 6.8, ȳ = 79.7. Finn regresjonslinjen."
-    solution_sketch: "β̂ = 103.4/15.6 = 6.63. α̂ = 79.7 - 6.63·6.8 = 34.6. ŷ = 34.6 + 6.63·x"
+detailed_solution_variants:
+  - label: "Estimater α̂ og β̂"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5c"
+        question: "Fra datatabellen oppgis: `Σ(x_i - x̄)² = 15.6`, `Σ(x_i - x̄)(y_i - ȳ) = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`. Finn den estimerte regresjonslinjen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Datasett med `n = 10` par `(x_i, y_i)`. Mellom-summene er allerede oppgitt i tabellen." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "`x̄ = 6.8`, `ȳ = 79.7` (gitt)" }
+              - { text: "`S_XX = Σ(x_i - x̄)² = 15.6`" }
+              - { text: "`S_XY = Σ(x_i - x̄)(y_i - ȳ) = 103.4`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 103.4 / 15.6`" }
+              - { indent: "`= 6.628...`" }
+              - { indent: "`≈ 6.63`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 79.7 - 6.63·6.8`" }
+              - { indent: "`= 79.7 - 45.08`" }
+              - { indent: "`≈ 34.62`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn estimatene i `ŷ = α̂ + β̂·x`:" }
+              - { indent: "`ŷ = 34.62 + 6.63·x`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Stigningstallet er positivt, så `y` øker med x." }
+        result: "`ŷ = 34.62 + 6.63·x`"
 
-detailed_solutions:
-  - source: "Eksamen mai25 · oppgave 5c"
-    question: "Fra datatabellen: Σ(x_i - x̄)² = 15.6, Σ(x_i - x̄)(y_i - ȳ) = 103.4, x̄ = 6.8, ȳ = 79.7. Finn den estimerte regresjonslinjen."
-    sections:
-      - label: "Innsatt"
-        lines:
-          - { text: "β̂ = Σ(x-x̄)(y-ȳ) / Σ(x-x̄)² = 103.4 / 15.6 = 6.63" }
-          - { text: "α̂ = ȳ - β̂·x̄ = 79.7 - 6.63·6.8" }
-          - { indent: "= 79.7 - 45.1 = 34.6" }
-    result: "ŷ = 34.6 + 6.63·x"
+      - source: "Praksis · 5 datapunkter"
+        question: "Gitt datapunktene `(1, 2)`, `(2, 3)`, `(3, 5)`, `(4, 6)`, `(5, 8)`. Estimer `α̂` og `β̂` i den enkle lineære regresjonsmodellen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par `(x_i, y_i)`: `(1,2)`, `(2,3)`, `(3,5)`, `(4,6)`, `(5,8)`." }
+              - { text: "Vi må regne ut mellom-summene fra rådata." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (1+2+3+4+5)/5 = 15/5 = 3`" }
+              - { indent: "`ȳ = (2+3+5+6+8)/5 = 24/5 = 4.8`" }
+              - { text: "Sum av kvadrater og krysssum:" }
+              - { indent: "`Σx_i² = 1 + 4 + 9 + 16 + 25 = 55`" }
+              - { indent: "`Σx_i·y_i = 2 + 6 + 15 + 24 + 40 = 87`" }
+              - { text: "Bruker beregningsformlene:" }
+              - { indent: "`S_XX = Σx_i² - n·x̄² = 55 - 5·9 = 10`" }
+              - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 87 - 5·3·4.8 = 87 - 72 = 15`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 15 / 10 = 1.5`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 4.8 - 1.5·3`" }
+              - { indent: "`= 4.8 - 4.5 = 0.3`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn i `ŷ = α̂ + β̂·x`:" }
+              - { indent: "`ŷ = 0.3 + 1.5·x`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Sjekk: ved `x = 3` gir linjen `ŷ = 0.3 + 4.5 = 4.8 = ȳ` (linjen går gjennom `(x̄, ȳ)`)." }
+        result: "`α̂ = 0.3`, `β̂ = 1.5`, `ŷ = 0.3 + 1.5·x`"
+
+      - source: "Praksis · lab-data (strekk vs. last)"
+        question: "I et fysikkforsøk måles forlengelsen `y` (mm) av en fjær for ulike laster `x` (N). Data: `(2, 4.2)`, `(4, 7.8)`, `(6, 12.1)`, `(8, 15.9)`. Finn regresjonslinjen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 4` målepar `(x_i, y_i)` fra fjærforsøk." }
+              - { text: "Hooke's lov antyder lineær sammenheng `y ≈ β·x` (med `α ≈ 0` ideelt sett)." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (2+4+6+8)/4 = 20/4 = 5`" }
+              - { indent: "`ȳ = (4.2+7.8+12.1+15.9)/4 = 40.0/4 = 10.0`" }
+              - { text: "Sum av kvadrater og krysssum:" }
+              - { indent: "`Σx_i² = 4 + 16 + 36 + 64 = 120`" }
+              - { indent: "`Σx_i·y_i = 2·4.2 + 4·7.8 + 6·12.1 + 8·15.9`" }
+              - { indent: "`= 8.4 + 31.2 + 72.6 + 127.2 = 239.4`" }
+              - { text: "Beregningsformler:" }
+              - { indent: "`S_XX = Σx_i² - n·x̄² = 120 - 4·25 = 20`" }
+              - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 239.4 - 4·5·10 = 239.4 - 200 = 39.4`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 39.4 / 20 = 1.97`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 10.0 - 1.97·5`" }
+              - { indent: "`= 10.0 - 9.85 = 0.15`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn estimatene:" }
+              - { indent: "`ŷ = 0.15 + 1.97·x`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Skjæringspunktet `α̂ = 0.15` er nær 0 (i tråd med Hooke's lov), og fjærkonstanten estimeres til `β̂ ≈ 1.97 mm/N`." }
+        result: "`α̂ ≈ 0.15`, `β̂ ≈ 1.97`, `ŷ = 0.15 + 1.97·x`"
 
 related:
   - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }

@@ -54,24 +54,105 @@ common_traps: |
   kvadratisk) kan gi r ≈ 0. Husk forskjellen på r og ρ: r er estimat
   fra utvalg av (x,y)-par; ρ er korrelasjon fra en fellesfordeling.
 
-examples:
-  - source: "Eksamen mai25 · oppgave 5b"
-    excerpt: "Datatabell gir S_XX = 15.6, S_YY = 734.1, S_XY = 103.4. Finn r."
-    solution_sketch: "r = 103.4 / (√15.6 · √734.1) = 103.4 / (3.95 · 27.09) = 0.966 → sterk positiv lineær sammenheng"
+detailed_solution_variants:
+  - label: "Korrelasjonskoeffisient r"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5b"
+        question: "Datatabellen gir `Σ(x-x̄)² = 15.6`, `Σ(y-ȳ)² = 734.1`, `Σ(x-x̄)(y-ȳ) = 103.4`. Beregn korrelasjonskoeffisient `r` og tolk resultatet."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har `n` par av observasjoner og oppsummerte mellom-summer." }
+              - { text: "Spørsmålet ber om Pearson-korrelasjonskoeffisient `r` — et mål på styrken av den lineære sammenhengen." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gitt direkte fra datatabellen:" }
+              - { indent: "`S_XX = Σ(x-x̄)² = 15.6`" }
+              - { indent: "`S_YY = Σ(y-ȳ)² = 734.1`" }
+              - { indent: "`S_XY = Σ(x-x̄)(y-ȳ) = 103.4`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "Formel: `r = S_XY / √(S_XX · S_YY)`" }
+              - { text: "Sett inn:" }
+              - { indent: "`r = 103.4 / √(15.6 · 734.1)`" }
+              - { indent: "`= 103.4 / √11451.96`" }
+              - { indent: "`= 103.4 / 107.01`" }
+              - { indent: "`≈ 0.966`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ 0.966` ligger svært nær 1 — sterk positiv lineær sammenheng mellom `x` og `y`." }
+              - { text: "Forklart variasjon: `r² ≈ 0.933` — ca. 93 % av variasjonen i `y` forklares av lineær regresjon på `x`." }
+          - label: "Resultat"
+            lines:
+              - { text: "`r ≈ 0.966`, sterk positiv lineær sammenheng." }
+        result: "`r ≈ 0.966` (sterk positiv lineær sammenheng, `r² ≈ 0.933`)"
 
-detailed_solutions:
-  - source: "Eksamen mai25 · oppgave 5b"
-    question: "Datatabellen gir Σ(x-x̄)² = 15.6, Σ(y-ȳ)² = 734.1, Σ(x-x̄)(y-ȳ) = 103.4. Beregn korrelasjonskoeffisient r."
-    sections:
-      - label: "Formel"
-        lines:
-          - { text: "r = S_XY / √(S_XX · S_YY)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "r = 103.4 / √(15.6 · 734.1)" }
-          - { indent: "= 103.4 / √11451.96" }
-          - { indent: "= 103.4 / 107.01" }
-    result: "r ≈ 0.966 (sterk positiv lineær sammenheng)"
+      - source: "Praksisoppgave (samme data som regresjon-estimat #2)"
+        question: "Gitt datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)`. Beregn korrelasjonskoeffisient `r` og tolk."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par av observasjoner." }
+              - { text: "Vi skal kvantifisere styrken av den lineære sammenhengen mellom `x` og `y`." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (1+2+3+4+5)/5 = 3`" }
+              - { indent: "`ȳ = (2+3+5+6+8)/5 = 4.8`" }
+              - { text: "`S_XX = Σ(x-x̄)² = 4 + 1 + 0 + 1 + 4 = 10`" }
+              - { text: "`S_XY = Σ(x-x̄)(y-ȳ) = (-2)(-2.8)+(-1)(-1.8)+0·0.2+1·1.2+2·3.2`" }
+              - { indent: "`= 5.6 + 1.8 + 0 + 1.2 + 6.4 = 15`" }
+              - { text: "`S_YY = Σy² − n·ȳ² = (4+9+25+36+64) − 5·(4.8)² = 138 − 5·23.04 = 138 − 115.2 = 22.8`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "Formel: `r = S_XY / √(S_XX · S_YY)`" }
+              - { text: "Sett inn:" }
+              - { indent: "`r = 15 / √(10 · 22.8)`" }
+              - { indent: "`= 15 / √228`" }
+              - { indent: "`= 15 / 15.0997`" }
+              - { indent: "`≈ 0.987`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ 0.987` — meget sterk positiv lineær sammenheng." }
+              - { text: "`r² ≈ 0.975` — ca. 97.5 % av variasjonen i `y` forklares av regresjonen på `x`." }
+              - { text: "Punktene ligger nesten på en rett linje (jf. spredningsplott)." }
+          - label: "Resultat"
+            lines:
+              - { text: "`r ≈ 0.987`, meget sterk positiv lineær sammenheng (`r² ≈ 0.975`)." }
+        result: "`r ≈ 0.987` (`r² ≈ 0.975`)"
+
+      - source: "Praksisoppgave (svak/negativ korrelasjon for kontrast)"
+        question: "Datasett `(1,5), (2,4), (3,5), (4,3), (5,3)`. Beregn `r` og tolk hva en negativ verdi betyr."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par. Spørsmålet ber om `r` for å se om sammenhengen er positiv, negativ eller svak." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (1+2+3+4+5)/5 = 3`" }
+              - { indent: "`ȳ = (5+4+5+3+3)/5 = 4`" }
+              - { text: "`S_XX = 4 + 1 + 0 + 1 + 4 = 10`" }
+              - { text: "`S_XY = (-2)(1)+(-1)(0)+0·1+1·(-1)+2·(-1)`" }
+              - { indent: "`= -2 + 0 + 0 - 1 - 2 = -5`" }
+              - { text: "`S_YY = Σ(y-ȳ)² = 1 + 0 + 1 + 1 + 1 = 4`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "Formel: `r = S_XY / √(S_XX · S_YY)`" }
+              - { text: "Sett inn:" }
+              - { indent: "`r = -5 / √(10 · 4)`" }
+              - { indent: "`= -5 / √40`" }
+              - { indent: "`= -5 / 6.3246`" }
+              - { indent: "`≈ -0.791`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ -0.791` — moderat til sterk NEGATIV lineær sammenheng: når `x` øker, har `y` en tendens til å avta." }
+              - { text: "`r² ≈ 0.625` — ca. 62.5 % av variasjonen i `y` forklares av lineær regresjon på `x`. Resten (≈37.5 %) er uforklart støy." }
+              - { text: "MERK: `r` måler bare lineær sammenheng. Ved et ikke-lineært mønster kan `r` være liten selv om punktene følger en tydelig kurve." }
+          - label: "Resultat"
+            lines:
+              - { text: "`r ≈ -0.791`, moderat sterk negativ lineær sammenheng (`r² ≈ 0.625`)." }
+        result: "`r ≈ -0.791` (`r² ≈ 0.625`, negativ retning)"
 
 related:
   - { id: "regresjon-estimat-alpha-beta",  kind: "entry" }

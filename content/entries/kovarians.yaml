@@ -43,13 +43,90 @@ common_traps: |
   Du kan dropp celler med x_i = 0 eller y_j = 0 (bidraget er null) og
   celler med p = 0. Pass på fortegn – kovarians kan være negativ.
 
-examples:
-  - source: "Eksamen jan26 · oppgave 2c"
-    excerpt: "μ_X = 0.9, μ_Y = 4.5. E[XY] = 1·10·0.2 + 2·10·0.1 = 4. Finn Cov."
-    solution_sketch: "Cov = 4 - 0.9·4.5 = 4 - 4.05 = -0.05"
-  - source: "Eksamen mai25 · oppgave 1c"
-    excerpt: "μ_X = 0.6, μ_Y = 0.7. E[XY] = 1·1·0.1 + 1·2·0.1 = 0.3. Finn Cov."
-    solution_sketch: "Cov = 0.3 - 0.6·0.7 = 0.3 - 0.42 = -0.12"
+detailed_solution_variants:
+  - label: "Kovarians fra simultantabell"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 1c"
+        question: "Gitt simultanfordelingen for `X` og `Y` der `μ_X = 0.6` og `μ_Y = 0.7`. Cellene med positiv sannsynlighet er `P(X=1, Y=1) = 0.1` og `P(X=1, Y=2) = 0.1`. Finn `Cov(X, Y)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Vi har en simultantabell for to diskrete variabler `X` og `Y`."
+              - text: "Marginalforventningene `μ_X` og `μ_Y` er gitt fra deloppgaver."
+              - text: "Vi skal beregne `Cov(X, Y) = E[XY] − μ_X · μ_Y`."
+          - label: "Forventningsverdier"
+            lines:
+              - text: "`μ_X = E[X] = 0.6` (gitt fra marginalfordelingen til `X`)."
+              - text: "`μ_Y = E[Y] = 0.7` (gitt fra marginalfordelingen til `Y`)."
+              - text: "Beregn `E[XY]` ved å summere `x · y · P(X=x, Y=y)` over alle celler:"
+              - indent: "`E[XY] = 1 · 1 · 0.1 + 1 · 2 · 0.1`"
+              - indent: "`     = 0.1 + 0.2 = 0.3`"
+              - comment: "Celler med `x = 0` eller `y = 0` bidrar ikke."
+          - label: "Kovarians"
+            lines:
+              - text: "Sett inn i kovariansformelen:"
+              - indent: "`Cov(X, Y) = E[XY] − μ_X · μ_Y`"
+              - indent: "`         = 0.3 − 0.6 · 0.7`"
+              - indent: "`         = 0.3 − 0.42 = −0.12`"
+          - label: "Tolkning"
+            lines:
+              - text: "`Cov(X, Y) = −0.12 < 0`, så `X` og `Y` er negativt assosierte."
+              - text: "Når `X` er stor, har `Y` tendens til å være liten, og omvendt."
+        result: "`Cov(X, Y) = −0.12`"
+
+      - source: "Praksis · simultanfordeling 2 × 2"
+        question: "La `X ∈ {0, 1}` og `Y ∈ {0, 1}` med simultanfordeling `P(0,0) = 0.4`, `P(0,1) = 0.1`, `P(1,0) = 0.2`, `P(1,1) = 0.3`. Finn `Cov(X, Y)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Diskret simultantabell for to binære variabler."
+              - text: "Vi må først finne marginalforventningene, deretter `E[XY]`."
+          - label: "Forventningsverdier"
+            lines:
+              - text: "Marginalfordeling for `X`: `P(X=0) = 0.4 + 0.1 = 0.5`, `P(X=1) = 0.2 + 0.3 = 0.5`."
+              - indent: "`E[X] = 0 · 0.5 + 1 · 0.5 = 0.5`"
+              - text: "Marginalfordeling for `Y`: `P(Y=0) = 0.4 + 0.2 = 0.6`, `P(Y=1) = 0.1 + 0.3 = 0.4`."
+              - indent: "`E[Y] = 0 · 0.6 + 1 · 0.4 = 0.4`"
+              - text: "Beregn `E[XY]` (kun cellen `(1, 1)` bidrar siden andre celler har `x = 0` eller `y = 0`):"
+              - indent: "`E[XY] = 1 · 1 · 0.3 = 0.3`"
+          - label: "Kovarians"
+            lines:
+              - text: "Sett inn i `Cov(X, Y) = E[XY] − E[X] · E[Y]`:"
+              - indent: "`Cov(X, Y) = 0.3 − 0.5 · 0.4`"
+              - indent: "`         = 0.3 − 0.20 = 0.10`"
+          - label: "Tolkning"
+            lines:
+              - text: "`Cov(X, Y) = 0.10 > 0`: `X` og `Y` er positivt assosierte."
+              - text: "Høy verdi av `X` opptrer typisk sammen med høy verdi av `Y`."
+        result: "`Cov(X, Y) = 0.10`"
+
+      - source: "Praksis · tolkning av fortegn"
+        question: "Forklar hva fortegnet til `Cov(X, Y)` betyr, og illustrer med et tilfelle der `Cov(X, Y) = 0` men `X` og `Y` ikke er uavhengige."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Vi tolker `Cov(X, Y) = E[XY] − μ_X · μ_Y` som mål for lineær samvariasjon."
+              - text: "Tre tilfeller: positiv, negativ, og null kovarians."
+          - label: "Forventningsverdier"
+            lines:
+              - text: "Eksempel: `X ∈ {−1, 0, 1}` uniformt, og `Y = X²`."
+              - indent: "`E[X] = (−1 + 0 + 1)/3 = 0`"
+              - indent: "`E[Y] = E[X²] = (1 + 0 + 1)/3 = 2/3`"
+              - text: "Beregn `E[XY] = E[X · X²] = E[X³]`:"
+              - indent: "`E[X³] = ((−1)³ + 0³ + 1³)/3 = 0`"
+          - label: "Kovarians"
+            lines:
+              - text: "Sett inn i formelen:"
+              - indent: "`Cov(X, Y) = E[XY] − μ_X · μ_Y = 0 − 0 · 2/3 = 0`"
+              - comment: "Likevel er `Y` fullstendig bestemt av `X` (ikke uavhengige)."
+          - label: "Tolkning"
+            lines:
+              - text: "Fortegnsregler:"
+              - indent: "`Cov > 0`: positivt assosierte – store `X` følger store `Y`."
+              - indent: "`Cov < 0`: negativt assosierte – store `X` følger små `Y`."
+              - indent: "`Cov = 0`: ukorrelerte (ingen lineær sammenheng)."
+              - text: "Viktig: `Cov = 0` betyr ikke uavhengighet. Eksempelet over viser ikke-lineær avhengighet med null kovarians."
+        result: "Fortegnet til `Cov(X, Y)` indikerer retning på lineær samvariasjon; `Cov = 0` utelukker ikke avhengighet."
 
 related:
   - { id: "forventningsverdi-diskret",   kind: "entry" }

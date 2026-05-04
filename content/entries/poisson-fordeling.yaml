@@ -127,67 +127,215 @@ python_snippet: |
   # P(X ≥ k) = 1 − P(X ≤ k−1)
   1 - poisson.cdf(2, mu)    # 0.2375
 
-examples:
-  - source: "Eksamen jan26 · oppgave 4a"
-    excerpt: "Poissonprosess med rate λ sommerfugler pr. time. Finn sannsynligheten for at biologen ikke vil finne noen individer i fellen etter en uke."
-    solution_sketch: "X ~ Poisson(λt), λ = 0.01/t, t = 168 t → μ = 1.68 → P(X = 0) = e^(-1.68) ≈ 0.186"
-  - source: "Eksamen jan26 · oppgave 4b"
-    excerpt: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
-    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2) = 1 − (P(0) + P(1) + P(2)) ≈ 1 − 0.7625 ≈ 0.2375"
-  - source: "Eksamen jan25 · oppgave 4a"
-    excerpt: "Vulkanutbrudd med rate 0.0261 pr. måned. Sannsynlighet for ett eller to utbrudd over 5 år (60 måneder)."
-    solution_sketch: "μ = 0.0261·60 = 1.5678 → P(X = 1) + P(X = 2) = 0.327 + 0.256 = 0.583"
-  - source: "Eksamen jan25 · oppgave 4b"
-    excerpt: "Sannsynlighet for minst ett vulkanutbrudd i løpet av 5 år."
-    solution_sketch: "P(X ≥ 1) = 1 − P(X = 0) = 1 − e^(-1.5678) = 1 − 0.2085 = 0.792"
+detailed_solution_variants:
+  - label: "P(X = k)"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 4 (tilpasset)"
+        question: "Klippeblåvinger fanges som en poissonprosess med rate `λ = 0.01` sommerfugler pr. time. La `X` være antall i fellen etter én uke (168 timer). Finn `P(X = 2)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X ~ Poisson(λt)`" }
+              - { text: "`λ = 0.01` pr. time, `t = 168` timer" }
+              - { text: "`μ = λt = 0.01 · 168 = 1.68`" }
+              - { comment: "spørres om k = 2" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = k) = e^(-μ) · μ^k / k!`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 2) = e^(-1.68) · 1.68² / 2!`" }
+              - { indent: "`= 0.1864 · 2.8224 / 2`" }
+              - { indent: "`= 0.1864 · 1.4112`" }
+        result: "`P(X = 2) ≈ 0.263`"
 
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 4a"
-    question: "Klippeblåvinger fanges som en poissonprosess med rate λ = 0.01 sommerfugler pr. time. La X være antall i fellen etter én uke (168 timer). Finn sannsynligheten for at biologen ikke vil finne noen individer i fellen."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "X ~ Poisson(λt)" }
-          - { comment: "spørres om P(X = 0)" }
-      - label: "Formel"
-        lines:
-          - { text: "P(X = k) = e^(-λt) · (λt)^k / k!" }
-      - label: "Innsatt"
-        lines:
-          - { text: "μ = λt = 0.01 · 168 = 1.68" }
-          - { text: "P(X = 0) = e^(-1.68) · (1.68)^0 / 0!" }
-          - { indent: "= e^(-1.68) · 1 / 1" }
-          - { indent: "= e^(-1.68)" }
-    result: "P(X = 0) ≈ 0.1864"
+      - source: "Praksis · vulkanutbrudd"
+        question: "Vulkanen Mauna Loa har rate `λ = 0.0261` utbrudd pr. måned. Finn sannsynligheten for nøyaktig to utbrudd i løpet av fem år (60 måneder)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 0.0261` pr. måned, `t = 60` måneder" }
+              - { text: "`μ = λt = 0.0261 · 60 = 1.5678`" }
+              - { text: "`k = 2`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = k) = e^(-μ) · μ^k / k!`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 2) = e^(-1.5678) · 1.5678² / 2!`" }
+              - { indent: "`= 0.2085 · 2.4580 / 2`" }
+              - { indent: "`= 0.2085 · 1.2290`" }
+        result: "`P(X = 2) ≈ 0.255`"
 
-  - source: "Eksamen jan26 · oppgave 4b"
-    question: "Hva er sannsynligheten for at det er minst tre klippeblåvinger i fellen?"
-    sections:
-      - label: "Komplementregelen"
-        lines:
-          - { text: "P(X ≥ 3) = 1 − P(X ≤ 2) = 1 − (P(X=0) + P(X=1) + P(X=2))" }
-      - label: "Innsatt"
-        lines:
-          - { text: "μ = λt = 1.68" }
-          - { text: "P(X = 0) = e^(-1.68) ≈ 0.1864" }
-          - { text: "P(X = 1) = 1.68 · e^(-1.68) ≈ 0.3131" }
-          - { text: "P(X = 2) = 1.68²/2 · e^(-1.68) ≈ 0.2630" }
-          - { text: "Sum: 0.1864 + 0.3131 + 0.2630 = 0.7625" }
-          - { text: "P(X ≥ 3) = 1 − 0.7625" }
-    result: "P(X ≥ 3) ≈ 0.2375"
+      - source: "Praksis · kundeanrop"
+        question: "Et kundesenter mottar i snitt `λ = 3` anrop pr. time. Finn sannsynligheten for nøyaktig 4 anrop i løpet av én time."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 3` pr. time, `t = 1` time" }
+              - { text: "`μ = λt = 3`" }
+              - { text: "`k = 4`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = k) = e^(-μ) · μ^k / k!`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 4) = e^(-3) · 3⁴ / 4!`" }
+              - { indent: "`= 0.04979 · 81 / 24`" }
+              - { indent: "`= 0.04979 · 3.375`" }
+        result: "`P(X = 4) ≈ 0.168`"
 
-  - source: "Eksamen jan25 · oppgave 4a"
-    question: "Vulkanen Mauna Loa har en rate på 0.0261 utbrudd pr. måned. Hva er sannsynligheten for ett eller to vulkanutbrudd i en periode på fem år (60 måneder)?"
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "X ~ Poisson(λt), 5 år = 60 måneder" }
-      - label: "Innsatt"
-        lines:
-          - { text: "μ = λt = 0.0261 · 60 = 1.5678" }
-          - { text: "P(X = 1) = 1.5678 · e^(-1.5678) ≈ 0.327" }
-          - { text: "P(X = 2) = 1.5678²/2 · e^(-1.5678) ≈ 0.256" }
-    result: "P(X = 1) + P(X = 2) ≈ 0.583"
+  - label: "P(X ≤ k)"
+    solutions:
+      - source: "Praksis · kundeanrop (kumulativ)"
+        question: "Et kundesenter har rate `λ = 1` anrop pr. minutt. I et 2-minutters vindu er `μ = λt = 2`. Finn `P(X ≤ 3)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 1` pr. minutt, `t = 2` min" }
+              - { text: "`μ = λt = 2`" }
+              - { text: "Spørres om `P(X ≤ 3)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ k) = Σ_{i=0}^{k} e^(-μ) · μ^i / i!`" }
+              - { comment: "leses direkte i tabell E.2" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 2, k = 3 → P(X ≤ 3) = 0.857" } }
+        result: "`P(X ≤ 3) ≈ 0.857`"
+
+      - source: "Praksis · defekter på samlebånd"
+        question: "Defekter inntreffer med rate `λ = 0.5` pr. time. Finn sannsynligheten for høyst én defekt i et 4-timers skift."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 0.5` pr. time, `t = 4` timer" }
+              - { text: "`μ = λt = 2`" }
+              - { text: "Høyst 1 defekt = `P(X ≤ 1)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ 1) = P(X = 0) + P(X = 1)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 2, k = 1 → P(X ≤ 1) = 0.406" } }
+              - { comment: "verifiser: e^(-2)(1 + 2) = 0.1353 · 3 = 0.406" }
+        result: "`P(X ≤ 1) ≈ 0.406`"
+
+  - label: "P(X ≥ k)"
+    solutions:
+      - source: "Praksis · komplement med formel"
+        question: "Hendelser inntreffer med `μ = 1.5` i et gitt vindu. Finn `P(X ≥ 2)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 1.5`, `k = 2`" }
+              - { text: "Bruk komplement fordi `P(X ≥ k)` ikke står direkte i E.2" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≥ 2) = 1 − P(X ≤ 1)`" }
+              - { indent: "`= 1 − (P(X = 0) + P(X = 1))`" }
+              - { indent: "`= 1 − (e^(-1.5) + 1.5 · e^(-1.5))`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`e^(-1.5) ≈ 0.2231`" }
+              - { text: "`P(X = 0) = 0.2231`" }
+              - { text: "`P(X = 1) = 1.5 · 0.2231 = 0.3347`" }
+              - { text: "`P(X ≤ 1) = 0.2231 + 0.3347 = 0.5578`" }
+              - { text: "`P(X ≥ 2) = 1 − 0.5578`" }
+        result: "`P(X ≥ 2) ≈ 0.442`"
+
+      - source: "Praksis · kundeanrop (E.2)"
+        question: "Et kundesenter har `μ = 4` anrop i et gitt tidsvindu. Finn `P(X ≥ 6)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 4`, `k = 6`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≥ 6) = 1 − P(X ≤ 5)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 4, k = 5 → P(X ≤ 5) = 0.785" } }
+              - { text: "`P(X ≥ 6) = 1 − 0.785`" }
+        result: "`P(X ≥ 6) ≈ 0.215`"
+
+  - label: "P(X = 0)"
+    solutions:
+      - source: "Praksis · ingen kundeanrop"
+        question: "Et kundesenter har rate `λ = 2` anrop pr. time. Finn sannsynligheten for ingen anrop i løpet av én time."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 2` pr. time, `t = 1` time" }
+              - { text: "`μ = λt = 2`" }
+              - { comment: "k = 0 → forenklet formel" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = 0) = e^(-μ)`" }
+              - { comment: "fordi μ⁰ = 1 og 0! = 1" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 0) = e^(-2)`" }
+        result: "`P(X = 0) ≈ 0.135`"
+
+      - source: "Praksis · ingen vulkanutbrudd"
+        question: "Vulkanen har `μ = 1.5` utbrudd over et gitt vindu. Finn sannsynligheten for null utbrudd."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 1.5`, `k = 0`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = 0) = e^(-μ)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 0) = e^(-1.5)`" }
+        result: "`P(X = 0) ≈ 0.223`"
+
+  - label: "Finn k for terskel"
+    solutions:
+      - source: "Praksis · forsikringskrav"
+        question: "Et forsikringsselskap mottar `μ = 5` krav pr. uke. Finn minste `k` slik at `P(X ≥ k) < 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 5` pr. uke" }
+              - { text: "Søker minste `k` slik at `P(X ≥ k) < 0.05`" }
+              - { text: "Ekvivalent: `P(X ≤ k − 1) > 0.95`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≥ k) = 1 − P(X ≤ k − 1)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 5, k = 8 → P(X ≤ 8) = 0.932" } }
+              - { text: "`P(X ≥ 9) = 1 − 0.932 = 0.068` (for høyt)" }
+              - { table_lookup: { ref: "E.2", text: "μ = 5, k = 9 → P(X ≤ 9) = 0.968" } }
+              - { text: "`P(X ≥ 10) = 1 − 0.968 = 0.032 < 0.05` ✓" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Minste `k` er 10" }
+        result: "`k = 10` med `P(X ≥ 10) ≈ 0.032`"
+
+      - source: "Praksis · kapasitetsplanlegging"
+        question: "Et serverkluster håndterer i snitt `μ = 8` jobber pr. time. Finn minste `k` slik at `P(X > k) ≤ 0.10`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 8` pr. time" }
+              - { text: "`P(X > k) = P(X ≥ k + 1) = 1 − P(X ≤ k)`" }
+              - { text: "Krav: `1 − P(X ≤ k) ≤ 0.10`, dvs. `P(X ≤ k) ≥ 0.90`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 8, k = 10 → P(X ≤ 10) = 0.816" } }
+              - { comment: "for lavt" }
+              - { table_lookup: { ref: "E.2", text: "μ = 8, k = 11 → P(X ≤ 11) = 0.888" } }
+              - { comment: "fortsatt under 0.90" }
+              - { table_lookup: { ref: "E.2", text: "μ = 8, k = 12 → P(X ≤ 12) = 0.936" } }
+              - { text: "`P(X > 12) = 1 − 0.936 = 0.064 ≤ 0.10` ✓" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Minste `k` er 12" }
+        result: "`k = 12` med `P(X > 12) ≈ 0.064`"
 
 related:
   - { id: "poisson-prosess",      kind: "concept" }

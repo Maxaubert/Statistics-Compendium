@@ -51,13 +51,88 @@ common_traps: |
   feil svar (med mindre A og B er uavhengige). For å konvertere mellom
   dem, bruk Bayes' setning.
 
-examples:
-  - source: "Eksamen jan26 · oppgave 1b (alternativ utregning)"
-    excerpt: "P(høyresko først) · P(venstresko gitt høyre først) + symmetrisk."
-    solution_sketch: "P(H₁ ∩ V₂) = P(H₁)·P(V₂|H₁) = (5/10)·(5/9) = 25/90"
-  - source: "Eksamen jan25 · oppgave 1a (alternativ utregning)"
-    excerpt: "P(alle 5 hjerter) som produkt av betinget sannsynligheter for hver trekning."
-    solution_sketch: "(13/52)·(12/51)·(11/50)·(10/49)·(9/48) ≈ 4.95·10⁻⁴"
+detailed_solution_variants:
+  - label: "Produktregel for snitt"
+    solutions:
+      - source: "Praksis · trekk uten tilbakelegging"
+        question: "En urne inneholder 5 røde og 3 hvite kuler. Vi trekker to kuler uten tilbakelegging. Hva er sannsynligheten for at begge er røde?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `A` = «første kule er rød» og `B` = «andre kule er rød»." }
+              - { text: "Hendelsene er sekvensielle og IKKE uavhengige – sammensetningen i urnen endrer seg etter første trekning." }
+              - { text: "Vi skal bruke produktregelen med betinget sannsynlighet." }
+          - label: "Formel"
+            lines:
+              - { text: "Generell produktregel:" }
+              - { indent: "`P(A ∩ B) = P(A) · P(B | A)`" }
+              - { text: "Sannsynligheter:" }
+              - { indent: "`P(A) = 5/8`  (5 røde av 8 totalt ved første trekning)" }
+              - { indent: "`P(B | A) = 4/7`  (etter at en rød er trukket: 4 røde av 7 igjen)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Sett inn i produktregelen:" }
+              - { indent: "`P(A ∩ B) = (5/8) · (4/7)`" }
+              - { indent: "`= 20/56`" }
+              - { indent: "`= 5/14`" }
+              - { comment: "Forkort brøken med felles faktor 4." }
+          - label: "Resultat"
+            lines:
+              - { text: "Sannsynligheten for to røde kuler er `5/14 ≈ 0.357`." }
+        result: "`P(begge røde) = 5/14 ≈ 0.357`"
+
+      - source: "Praksis · kortstokk uten tilbakelegging"
+        question: "Vi trekker to kort fra en standard kortstokk (52 kort) uten tilbakelegging. Hva er sannsynligheten for at begge er ess?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `A` = «første kort er ess» og `B` = «andre kort er ess»." }
+              - { text: "Trekning uten tilbakelegging ⇒ hendelsene er avhengige." }
+              - { text: "Det finnes 4 ess i en kortstokk på 52 kort." }
+          - label: "Formel"
+            lines:
+              - { text: "Produktregel for avhengige hendelser:" }
+              - { indent: "`P(A ∩ B) = P(A) · P(B | A)`" }
+              - { text: "Sannsynligheter:" }
+              - { indent: "`P(A) = 4/52`  (4 ess av 52 kort)" }
+              - { indent: "`P(B | A) = 3/51`  (3 ess igjen av 51 kort etter første trekning)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Sett inn i formelen:" }
+              - { indent: "`P(A ∩ B) = (4/52) · (3/51)`" }
+              - { indent: "`= 12/2652`" }
+              - { indent: "`= 1/221`" }
+              - { indent: "`≈ 0.00452`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Sannsynligheten for to ess på rad er omtrent `0.45 %`." }
+        result: "`P(to ess) = 1/221 ≈ 0.0045`"
+
+      - source: "Praksis · uavhengige hendelser"
+        question: "Vi kaster en mynt og en terning samtidig. Hva er sannsynligheten for å få krone OG en sekser?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `A` = «mynten viser krone» og `B` = «terningen viser 6»." }
+              - { text: "Mynt og terning påvirker ikke hverandre ⇒ hendelsene er uavhengige." }
+              - { text: "Da forenkles produktregelen til `P(A ∩ B) = P(A) · P(B)`." }
+          - label: "Formel"
+            lines:
+              - { text: "Produktregel for uavhengige hendelser:" }
+              - { indent: "`P(A ∩ B) = P(A) · P(B)`" }
+              - { text: "Sannsynligheter:" }
+              - { indent: "`P(A) = 1/2`  (krone på en rettferdig mynt)" }
+              - { indent: "`P(B) = 1/6`  (sekser på en rettferdig terning)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Sett inn:" }
+              - { indent: "`P(A ∩ B) = (1/2) · (1/6)`" }
+              - { indent: "`= 1/12`" }
+              - { indent: "`≈ 0.0833`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Sannsynligheten for krone og sekser er `1/12 ≈ 8.3 %`." }
+        result: "`P(krone ∩ sekser) = 1/12 ≈ 0.083`"
 
 related:
   - { id: "betinget-sannsynlighet", kind: "concept" }

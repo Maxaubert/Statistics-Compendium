@@ -93,23 +93,260 @@ common_traps: |
   - **Disjunkte vs. uavhengige**: Hvis A og B er uavhengige er P(A|B) = P(A); ingen Bayes nødvendig.
   - **Sjekk størrelsen**: Hvis P(A) er liten (sjelden sykdom) og P(B) er stor (mange falske positive), kan P(A|B) bli overraskende liten. Det er da Bayes' setning er nyttigst.
 
-examples:
-  - source: "Eksamen jan25 · oppgave 3a"
-    excerpt: "P(spire) = 0.8, P(ringblomst) = 0.6, P(spire|ringblomst) = 0.9. Finn P(ringblomst|spire)."
-    solution_sketch: "P(R|S) = P(R)·P(S|R)/P(S) = 0.6·0.9/0.8 = 0.675"
+detailed_solution_variants:
+  - label: "Standard 2-veis"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 3a"
+        question: "La S være hendelsen 'frøet spirer' og R være hendelsen 'frøet er en ringblomst'. Det er gitt at `P(S) = 0.8`, `P(R) = 0.6` og `P(S|R) = 0.9`. Finn `P(R|S)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Oppgaven gir `P(S|R)` (spire gitt ringblomst), men spør om `P(R|S)` (ringblomst gitt spire) – retningen må snus." }
+              - { comment: "Klassisk Bayes-mønster: én betinget sannsynlighet i hver retning." }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(R|S) = P(R) · P(S|R) / P(S)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(R|S) = 0.6 · 0.9 / 0.8`" }
+              - { indent: "= 0.54 / 0.8" }
+              - { indent: "= 0.675" }
+          - label: "Sjekk"
+            lines:
+              - { text: "Svaret 0.675 ligger mellom 0 og 1, og er større enn prior `P(R) = 0.6` – det stemmer fordi spiring er mer sannsynlig hos ringblomster enn generelt (`P(S|R) > P(S)`)." }
+        result: "`P(R|S) = 0.675`"
 
-detailed_solutions:
-  - source: "Eksamen jan25 · oppgave 3a"
-    question: "P(S) = 0.8, P(R) = 0.6, P(S|R) = 0.9. Finn P(R|S)."
-    sections:
-      - label: "Bayes' setning"
-        lines:
-          - { text: "P(R|S) = P(R)·P(S|R) / P(S)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "= 0.6 · 0.9 / 0.8" }
-          - { indent: "= 0.54 / 0.8" }
-    result: "P(R|S) = 0.675"
+      - source: "Praksis · defekt-deteksjon"
+        question: "I en produksjon er 2 % av delene defekte. En detektor merker 95 % av defekte deler, men merker også feilaktig 3 % av OK-deler. En del blir merket – hva er sannsynligheten for at den faktisk er defekt?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `D` = defekt og `M` = merket. Gitt: `P(D) = 0.02`, `P(M|D) = 0.95`, `P(M|Dᶜ) = 0.03`. Søker `P(D|M)`." }
+              - { comment: "Nevneren `P(M)` er ikke gitt – må regnes med total sannsynlighet." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(M) = P(D)·P(M|D) + P(Dᶜ)·P(M|Dᶜ)`" }
+              - { indent: "= 0.02 · 0.95 + 0.98 · 0.03" }
+              - { indent: "= 0.019 + 0.0294" }
+              - { indent: "= 0.0484" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(D|M) = P(D)·P(M|D) / P(M)`" }
+              - { indent: "= 0.019 / 0.0484" }
+              - { indent: "≈ 0.3926" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Selv med en ganske god detektor er bare ~39 % av merkede deler faktisk defekte – fordi grunnraten er lav (2 %)." }
+        result: "`P(D|M) ≈ 0.392`"
+
+      - source: "Praksis · spam-filter"
+        question: "30 % av all e-post er spam. Ordet 'free' forekommer i 80 % av spam-meldinger og i 5 % av legitim e-post (ham). En e-post inneholder ordet 'free'. Hva er sannsynligheten for at den er spam?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `S` = spam og `F` = inneholder 'free'. Gitt: `P(S) = 0.30`, `P(F|S) = 0.80`, `P(F|Sᶜ) = 0.05`. Søker `P(S|F)`." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(F) = P(S)·P(F|S) + P(Sᶜ)·P(F|Sᶜ)`" }
+              - { indent: "= 0.30 · 0.80 + 0.70 · 0.05" }
+              - { indent: "= 0.24 + 0.035" }
+              - { indent: "= 0.275" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(S|F) = P(S)·P(F|S) / P(F)`" }
+              - { indent: "= 0.24 / 0.275" }
+              - { indent: "≈ 0.8727" }
+          - label: "Sjekk"
+            lines:
+              - { text: "Posterior (0.87) er mye høyere enn prior (0.30) – ordet 'free' er sterk evidens for spam." }
+        result: "`P(S|F) ≈ 0.873`"
+
+  - label: "Diagnose-/test-mønster"
+    solutions:
+      - source: "Praksis · sjelden sykdom"
+        question: "En sykdom har prevalens 1 %. En test har sensitivitet 99 % (`P(positiv|syk) = 0.99`) og spesifisitet 95 % (`P(negativ|frisk) = 0.95`). En person tester positivt. Hva er sannsynligheten for at hen faktisk er syk?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `P(syk) = 0.01`, sensitivitet `= 0.99`, spesifisitet `= 0.95`. Søker `P(syk|positiv)`." }
+              - { comment: "Komplementer: `P(frisk) = 0.99`, falsk positiv-rate `= 1 − 0.95 = 0.05`." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)`" }
+              - { indent: "= 0.01 · 0.99 + 0.99 · 0.05" }
+              - { indent: "= 0.0099 + 0.0495" }
+              - { indent: "= 0.0594" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(syk|positiv) = P(syk)·sensitivitet / P(positiv)`" }
+              - { indent: "= 0.0099 / 0.0594" }
+              - { indent: "≈ 0.1667" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Til tross for 99 % sensitivitet er bare ~16.7 % av positive faktisk syke. Dette er base-rate-fellen: sjelden sykdom + småfrekvent falsk positiv = de falske positive dominerer." }
+        result: "`P(syk|positiv) ≈ 16.7 %`"
+
+      - source: "Praksis · vanligere sykdom"
+        question: "Samme test (sensitivitet 99 %, spesifisitet 95 %) brukes nå på en sykdom med prevalens 10 %. En person tester positivt. Hva er `P(syk|positiv)`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `P(syk) = 0.10`, sensitivitet `= 0.99`, spesifisitet `= 0.95`. Søker `P(syk|positiv)`." }
+              - { comment: "Eneste forskjell fra forrige eksempel er prevalensen – la oss se hvor mye det betyr." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)`" }
+              - { indent: "= 0.10 · 0.99 + 0.90 · 0.05" }
+              - { indent: "= 0.099 + 0.045" }
+              - { indent: "= 0.144" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(syk|positiv) = 0.099 / 0.144`" }
+              - { indent: "≈ 0.6875" }
+          - label: "Sammenligning"
+            lines:
+              - { comment: "Med 10 × høyere prevalens hopper posterior fra 16.7 % til 68.8 %. Prior-en (prevalensen) styrer veldig sterkt." }
+        result: "`P(syk|positiv) ≈ 68.8 %`"
+
+      - source: "Praksis · negativ test"
+        question: "Sykdommen har prevalens 5 %. Test: sensitivitet 90 %, spesifisitet 98 %. En person tester negativt. Hva er sannsynligheten for at hen er frisk?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `P(syk) = 0.05`, `P(positiv|syk) = 0.90`, `P(negativ|frisk) = 0.98`. Søker `P(frisk|negativ)`." }
+              - { comment: "Ved negativ test bruker vi komplementene direkte: `P(negativ|syk) = 0.10`, `P(negativ|frisk) = 0.98`." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(negativ) = P(syk)·0.10 + P(frisk)·0.98`" }
+              - { indent: "= 0.05 · 0.10 + 0.95 · 0.98" }
+              - { indent: "= 0.005 + 0.931" }
+              - { indent: "= 0.936" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(frisk|negativ) = P(frisk)·P(negativ|frisk) / P(negativ)`" }
+              - { indent: "= 0.931 / 0.936" }
+              - { indent: "≈ 0.9947" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Negativ test gir nesten 99.5 % sikkerhet for å være frisk – negative prediktive verdier er ofte høye når sykdommen er sjelden." }
+        result: "`P(frisk|negativ) ≈ 99.5 %`"
+
+  - label: "Multi-hypotese (3+ partisjoner)"
+    solutions:
+      - source: "Praksis · tre maskiner"
+        question: "En fabrikk har tre maskiner: A produserer 50 % av delene (1 % defekte), B produserer 30 % (2 % defekte), og C produserer 20 % (5 % defekte). En tilfeldig del er defekt. Hva er sannsynligheten for at den kommer fra maskin C?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hypoteser: `A`, `B`, `C` (partisjon, summerer til 1). La `D` = defekt." }
+              - { text: "Priorer: `P(A) = 0.50`, `P(B) = 0.30`, `P(C) = 0.20`." }
+              - { text: "Likelihooder: `P(D|A) = 0.01`, `P(D|B) = 0.02`, `P(D|C) = 0.05`." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(D) = P(A)·P(D|A) + P(B)·P(D|B) + P(C)·P(D|C)`" }
+              - { indent: "= 0.50 · 0.01 + 0.30 · 0.02 + 0.20 · 0.05" }
+              - { indent: "= 0.005 + 0.006 + 0.010" }
+              - { indent: "= 0.021" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(C|D) = P(C)·P(D|C) / P(D)`" }
+              - { indent: "= 0.010 / 0.021" }
+              - { indent: "≈ 0.4762" }
+          - label: "Normaliseringssjekk"
+            lines:
+              - { text: "`P(A|D) = 0.005/0.021 ≈ 0.238`, `P(B|D) = 0.006/0.021 ≈ 0.286`, `P(C|D) ≈ 0.476`." }
+              - { indent: "Sum = 0.238 + 0.286 + 0.476 = 1.000  OK" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Maskin C har lavest produksjonsandel (20 %), men høyest defektrate, så posterior for C er størst." }
+        result: "`P(C|D) ≈ 0.476`"
+
+      - source: "Praksis · tre leverandører"
+        question: "En butikk får skruer fra tre leverandører: X (40 %, 3 % defekte), Y (35 %, 1 % defekte) og Z (25 %, 4 % defekte). En kunde returnerer en defekt skrue. Hva er sannsynligheten for at den kom fra leverandør Y?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hypoteser `X`, `Y`, `Z` (partisjon). `F` = defekt." }
+              - { text: "Priorer: `P(X) = 0.40`, `P(Y) = 0.35`, `P(Z) = 0.25`." }
+              - { text: "Likelihooder: `P(F|X) = 0.03`, `P(F|Y) = 0.01`, `P(F|Z) = 0.04`." }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(F) = 0.40·0.03 + 0.35·0.01 + 0.25·0.04`" }
+              - { indent: "= 0.012 + 0.0035 + 0.010" }
+              - { indent: "= 0.0255" }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(Y|F) = P(Y)·P(F|Y) / P(F)`" }
+              - { indent: "= 0.0035 / 0.0255" }
+              - { indent: "≈ 0.1373" }
+          - label: "Normaliseringssjekk"
+            lines:
+              - { text: "`P(X|F) ≈ 0.471`, `P(Y|F) ≈ 0.137`, `P(Z|F) ≈ 0.392`. Sum ≈ 1.000  OK" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Leverandør Y har lavest defektrate, så selv om markedsandelen er ~midt på, er posterior for Y minst." }
+        result: "`P(Y|F) ≈ 0.137`"
+
+  - label: "Tre-diagram-arbeidsflyt"
+    solutions:
+      - source: "Praksis · forsikringskrav etter aldersgruppe"
+        question: "Et forsikringsselskap har 60 % unge sjåfører og 40 % eldre sjåfører. Sannsynligheten for å melde et krav i løpet av et år er 15 % for unge og 5 % for eldre. Et tilfeldig krav meldes. Hva er sannsynligheten for at det kommer fra en ung sjåfør?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `U` = ung, `E` = eldre, `K` = krav meldes. Gitt: `P(U) = 0.60`, `P(E) = 0.40`, `P(K|U) = 0.15`, `P(K|E) = 0.05`. Søker `P(U|K)`." }
+          - label: "Tre-diagram"
+            lines:
+              - { text: "Nivå 1 (alder): `U (0.60)` og `E (0.40)`." }
+              - { text: "Nivå 2 (krav): under `U` har vi `K (0.15)` og `Kᶜ (0.85)`; under `E` har vi `K (0.05)` og `Kᶜ (0.95)`." }
+              - { comment: "Fire endenoder: U∩K, U∩Kᶜ, E∩K, E∩Kᶜ." }
+          - label: "Stiprodukter"
+            lines:
+              - { text: "`P(U ∩ K) = 0.60 · 0.15 = 0.090`" }
+              - { indent: "`P(E ∩ K) = 0.40 · 0.05 = 0.020`" }
+              - { indent: "`P(U ∩ Kᶜ) = 0.60 · 0.85 = 0.510`" }
+              - { indent: "`P(E ∩ Kᶜ) = 0.40 · 0.95 = 0.380`" }
+              - { comment: "Sjekk: 0.090 + 0.020 + 0.510 + 0.380 = 1.000  OK" }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "Summer K-stier: `P(K) = 0.090 + 0.020 = 0.110`." }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(U|K) = P(U ∩ K) / P(K)`" }
+              - { indent: "= 0.090 / 0.110" }
+              - { indent: "≈ 0.8182" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Selv om bare 60 % av sjåførene er unge, kommer ~82 % av kravene fra dem – fordi kravraten er 3 ganger høyere." }
+        result: "`P(U|K) ≈ 0.818`"
+
+      - source: "Praksis · sekvensiell medisinsk testing"
+        question: "En sykdom har prevalens 2 %. En screening-test har sensitivitet 95 % og spesifisitet 90 %. Hvis screening er positiv, gjøres en bekreftende test med sensitivitet 99 % og spesifisitet 99 % (uavhengig betinget på sykdomsstatus). En pasient er positiv på begge testene. Hva er sannsynligheten for at hen er syk?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `D` = syk, `T₁` = positiv screening, `T₂` = positiv bekreftende. Gitt: `P(D) = 0.02`, `P(T₁|D) = 0.95`, `P(T₁|Dᶜ) = 0.10`, `P(T₂|D) = 0.99`, `P(T₂|Dᶜ) = 0.01`." }
+              - { comment: "Tester betraktes som betinget uavhengige gitt sykdomsstatus." }
+          - label: "Tre-diagram"
+            lines:
+              - { text: "Nivå 1: `D (0.02)` vs. `Dᶜ (0.98)`." }
+              - { text: "Nivå 2 (screening): under `D` blir `T₁ = 0.95`; under `Dᶜ` blir `T₁ = 0.10`." }
+              - { text: "Nivå 3 (bekreftende): under `D ∩ T₁` blir `T₂ = 0.99`; under `Dᶜ ∩ T₁` blir `T₂ = 0.01`." }
+          - label: "Stiprodukter (begge positive)"
+            lines:
+              - { text: "`P(D ∩ T₁ ∩ T₂) = 0.02 · 0.95 · 0.99 = 0.018810`" }
+              - { indent: "`P(Dᶜ ∩ T₁ ∩ T₂) = 0.98 · 0.10 · 0.01 = 0.000980`" }
+          - label: "Total sannsynlighet"
+            lines:
+              - { text: "`P(T₁ ∩ T₂) = 0.018810 + 0.000980 = 0.019790`." }
+          - label: "Bayes' setning"
+            lines:
+              - { text: "`P(D | T₁ ∩ T₂) = 0.018810 / 0.019790`" }
+              - { indent: "≈ 0.9505" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Etter én positiv screening alene ville posterior vært ~16 %; en spesifikk bekreftende test løfter den til ~95 %. Slik virker sekvensiell testing for sjeldne sykdommer." }
+        result: "`P(D | T₁ ∩ T₂) ≈ 0.951`"
 
 related:
   - { id: "produktregel",         kind: "entry" }

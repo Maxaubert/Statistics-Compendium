@@ -81,36 +81,233 @@ python_snippet: |
   t_obs = (x_bar - y_bar) / (sP * (1/nX + 1/nY) ** 0.5)
   df = nX + nY - 2
 
-examples:
-  - source: "Eksamen jan26 · oppgave 5"
-    excerpt: "Klasse med gammel metode: x̄ = 71.30, s_X² = 205.34, n_X = 10. Ny metode: 9 observasjoner. Test om μ_Y > μ_X på α = 0.01."
-    solution_sketch: "ȳ = 74.44, s_Y² = 385.78. s_P² = 290.25, s_P = 17.04. t = (71.30-74.44)/(17.04·√(1/10+1/9)) = -0.40. -0.40 ikke < -t_0.01,17 = -2.567 → IKKE forkast."
-
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 5"
-    question: "To klasser, gammel metode: 77,66,49,64,81,82,64,59,100,71 (n_X=10) og ny metode: 82,62,77,94,32,62,91,89,81 (n_Y=9). Test om ny er bedre på α = 0.01."
-    sections:
-      - label: "Hypoteser"
-        lines:
-          - { text: "H₀: μ_Y ≤ μ_X (ny er IKKE bedre)" }
-          - { text: "H₁: μ_Y > μ_X (ny er bedre)" }
-          - { comment: "Ekvivalent: forkast hvis t = (X̄-Ȳ)/SE er tilstrekkelig negativ" }
-      - label: "Innsatt"
-        lines:
-          - { text: "x̄ = 71.30, ȳ = 74.44" }
-          - { text: "s_X² = 205.34, s_Y² = 385.78" }
-          - { text: "s_P² = (9·205.34 + 8·385.78)/17 = 290.25" }
-          - { text: "s_P = 17.04" }
-          - { text: "t = (71.30 - 74.44) / (17.04 · √(1/10 + 1/9))" }
-          - { indent: "= -3.14 / 7.83 = -0.40" }
-      - label: "Frihetsgrader og kvantil"
-        lines:
-          - { text: "ν = 10 + 9 - 2 = 17" }
-          - { table_lookup: { ref: "E.5", text: "t_(0.01, 17) = 2.567 (forkast hvis t < -2.567)" } }
-      - label: "Sammenligning"
-        lines:
-          - { text: "-0.40 IKKE < -2.567" }
-    result: "Vi kan IKKE forkaste H₀ på α = 0.01. Ingen grunn til å hevde at ny metode er bedre."
+detailed_solution_variants:
+  - label: "H₁: μ_X < μ_Y (venstre)"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 5"
+        question: "To klasser, gammel metode X: 77,66,49,64,81,82,64,59,100,71 (n_X=10) og ny metode Y: 82,62,77,94,32,62,91,89,81 (n_Y=9). Test om ny metode (Y) gir høyere skåre enn gammel (X), dvs. μ_X < μ_Y, på α = 0.01."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 10, n_Y = 9" }
+              - { text: "x̄ = 71.30, ȳ = 74.44" }
+              - { text: "s_X² = 205.34 → s_X ≈ 14.33" }
+              - { text: "s_Y² = 385.78 → s_Y ≈ 19.64" }
+              - { text: "α = 0.01, ensidig (venstre på X-Y)" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X < μ_Y (ny metode er bedre)" }
+              - { comment: "Forkast H₀ hvis t = (X̄-Ȳ)/SE er tilstrekkelig negativ" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (9·205.34 + 8·385.78) / 17" }
+              - { indent: "= (1848.06 + 3086.24) / 17" }
+              - { indent: "= 4934.30 / 17 = 290.25" }
+              - { text: "S_P = √290.25 ≈ 17.04" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (71.30 - 74.44) / √(290.25·(1/10 + 1/9))" }
+              - { indent: "= -3.14 / √(290.25·0.2111)" }
+              - { indent: "= -3.14 / √61.27" }
+              - { indent: "= -3.14 / 7.83 ≈ -0.40" }
+              - { text: "df = 10 + 9 - 2 = 17" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.01, 17) = 2.567; forkast H₀ hvis t < -2.567" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "-0.40 IKKE < -2.567" }
+              - { comment: "Testobservatoren ligger langt unna forkastningsområdet" }
+        result: "Vi kan IKKE forkaste H₀ på α = 0.01. Det er ikke statistisk grunnlag for å hevde at den nye metoden gir høyere skåre."
+      - source: "Praksis: blodtrykksbehandling"
+        question: "To grupper pasienter får hver sin behandling for å redusere blodtrykk. Behandling A (X): n_X = 10, x̄ = 25 mmHg reduksjon, s_X = 3. Behandling B (Y): n_Y = 12, ȳ = 28 mmHg, s_Y = 4. Test om A gir mindre reduksjon enn B, dvs. μ_X < μ_Y, på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 10, n_Y = 12" }
+              - { text: "x̄ = 25, ȳ = 28" }
+              - { text: "s_X = 3 → s_X² = 9" }
+              - { text: "s_Y = 4 → s_Y² = 16" }
+              - { text: "α = 0.05, ensidig (venstre)" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X < μ_Y (B reduserer mer enn A)" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (9·9 + 11·16) / 20" }
+              - { indent: "= (81 + 176) / 20" }
+              - { indent: "= 257 / 20 = 12.85" }
+              - { text: "S_P = √12.85 ≈ 3.585" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (25 - 28) / √(12.85·(1/10 + 1/12))" }
+              - { indent: "= -3 / √(12.85·0.1833)" }
+              - { indent: "= -3 / √2.356" }
+              - { indent: "= -3 / 1.535 ≈ -1.954" }
+              - { text: "df = 10 + 12 - 2 = 20" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.05, 20) = 1.725; forkast H₀ hvis t < -1.725" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "-1.954 < -1.725 → forkast H₀" }
+        result: "Vi forkaster H₀ på α = 0.05. Det er statistisk grunnlag for å hevde at behandling B gir større blodtrykksreduksjon enn behandling A."
+  - label: "H₁: μ_X > μ_Y (høyre)"
+    solutions:
+      - source: "Praksis: nytt fôr"
+        question: "Et nytt fôr X testes mot kontrollfôr Y. n_X = 8 dyr, x̄ = 5.4 kg/dag, s_X = 0.5. n_Y = 8 dyr, ȳ = 4.9 kg/dag, s_Y = 0.6. Test om det nye fôret gir høyere vektøkning, dvs. μ_X > μ_Y, på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 8, n_Y = 8" }
+              - { text: "x̄ = 5.4, ȳ = 4.9" }
+              - { text: "s_X = 0.5 → s_X² = 0.25" }
+              - { text: "s_Y = 0.6 → s_Y² = 0.36" }
+              - { text: "α = 0.05, ensidig (høyre)" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X > μ_Y (nytt fôr er bedre)" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (7·0.25 + 7·0.36) / 14" }
+              - { indent: "= (1.75 + 2.52) / 14" }
+              - { indent: "= 4.27 / 14 ≈ 0.305" }
+              - { text: "S_P = √0.305 ≈ 0.5523" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (5.4 - 4.9) / √(0.305·(1/8 + 1/8))" }
+              - { indent: "= 0.5 / √(0.305·0.25)" }
+              - { indent: "= 0.5 / √0.0763" }
+              - { indent: "= 0.5 / 0.2762 ≈ 1.810" }
+              - { text: "df = 8 + 8 - 2 = 14" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.05, 14) = 1.761; forkast H₀ hvis t > 1.761" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "1.810 > 1.761 → forkast H₀ (akkurat)" }
+              - { comment: "Resultatet er signifikant, men marginalt" }
+        result: "Vi forkaster H₀ på α = 0.05. Dataene støtter at det nye fôret gir høyere daglig vektøkning enn kontrollen."
+      - source: "Praksis: ekstra-kurs"
+        question: "Studentene som tok et frivillig ekstra-kurs (X) sammenlignes med dem uten kurs (Y) på samme prøve. n_X = 15, x̄ = 78, s_X = 8. n_Y = 20, ȳ = 73, s_Y = 9. Test om kurset hever skåren, dvs. μ_X > μ_Y, på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 15, n_Y = 20" }
+              - { text: "x̄ = 78, ȳ = 73" }
+              - { text: "s_X = 8 → s_X² = 64" }
+              - { text: "s_Y = 9 → s_Y² = 81" }
+              - { text: "α = 0.05, ensidig (høyre)" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X > μ_Y (ekstra-kurs gir høyere skåre)" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (14·64 + 19·81) / 33" }
+              - { indent: "= (896 + 1539) / 33" }
+              - { indent: "= 2435 / 33 ≈ 73.79" }
+              - { text: "S_P = √73.79 ≈ 8.591" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (78 - 73) / √(73.79·(1/15 + 1/20))" }
+              - { indent: "= 5 / √(73.79·0.1167)" }
+              - { indent: "= 5 / √8.609" }
+              - { indent: "= 5 / 2.934 ≈ 1.704" }
+              - { text: "df = 15 + 20 - 2 = 33" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.05, 33) ≈ 1.692 (interpolert); forkast H₀ hvis t > 1.692" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "1.704 > 1.692 → forkast H₀ (såvidt)" }
+        result: "Vi forkaster H₀ på α = 0.05. Det er marginal støtte for at ekstra-kurset hever skåren på prøven."
+  - label: "H₁: μ_X ≠ μ_Y (tosidig)"
+    solutions:
+      - source: "Praksis: belastning på to maskiner"
+        question: "Daglig belastning logges på to identiske maskiner. Maskin X: n_X = 15, x̄ = 12.5, s_X = 2.1. Maskin Y: n_Y = 18, ȳ = 11.2, s_Y = 2.4. Test om gjennomsnittlig belastning er forskjellig, μ_X ≠ μ_Y, på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 15, n_Y = 18" }
+              - { text: "x̄ = 12.5, ȳ = 11.2" }
+              - { text: "s_X = 2.1 → s_X² = 4.41" }
+              - { text: "s_Y = 2.4 → s_Y² = 5.76" }
+              - { text: "α = 0.05, tosidig" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X ≠ μ_Y (belastningene er ulike)" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (14·4.41 + 17·5.76) / 31" }
+              - { indent: "= (61.74 + 97.92) / 31" }
+              - { indent: "= 159.66 / 31 ≈ 5.150" }
+              - { text: "S_P = √5.150 ≈ 2.269" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (12.5 - 11.2) / √(5.150·(1/15 + 1/18))" }
+              - { indent: "= 1.3 / √(5.150·0.1222)" }
+              - { indent: "= 1.3 / √0.6296" }
+              - { indent: "= 1.3 / 0.7935 ≈ 1.638" }
+              - { text: "df = 15 + 18 - 2 = 31" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 31) ≈ 2.040; forkast H₀ hvis |t| > 2.040" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "|1.638| = 1.638 IKKE > 2.040" }
+              - { comment: "Testobservatoren ligger innenfor akseptområdet" }
+        result: "Vi kan IKKE forkaste H₀ på α = 0.05. Dataene gir ikke statistisk grunnlag for å hevde at de to maskinene har forskjellig gjennomsnittlig belastning."
+      - source: "Praksis: produktivitet før/etter modifikasjon"
+        question: "To uavhengige utvalg av enheter måles før (X) og etter (Y) en designmodifikasjon. n_X = 12, x̄ = 48.6 enheter/time, s_X = 5.2. n_Y = 14, ȳ = 52.1, s_Y = 4.8. Test om produktiviteten er forskjellig, μ_X ≠ μ_Y, på α = 0.05. (Brukes her som upart sammenligning.)"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n_X = 12, n_Y = 14" }
+              - { text: "x̄ = 48.6, ȳ = 52.1" }
+              - { text: "s_X = 5.2 → s_X² = 27.04" }
+              - { text: "s_Y = 4.8 → s_Y² = 23.04" }
+              - { text: "α = 0.05, tosidig" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₁: μ_X ≠ μ_Y (modifikasjonen endrer produktiviteten)" }
+          - label: "Pooled varians"
+            lines:
+              - { text: "S_P² = ((n_X-1)·s_X² + (n_Y-1)·s_Y²) / (n_X + n_Y - 2)" }
+              - { text: "S_P² = (11·27.04 + 13·23.04) / 24" }
+              - { indent: "= (297.44 + 299.52) / 24" }
+              - { indent: "= 596.96 / 24 ≈ 24.873" }
+              - { text: "S_P = √24.873 ≈ 4.987" }
+          - label: "Testobservator"
+            lines:
+              - { text: "T = (X̄ - Ȳ) / √(S_P²·(1/n_X + 1/n_Y))" }
+              - { text: "t = (48.6 - 52.1) / √(24.873·(1/12 + 1/14))" }
+              - { indent: "= -3.5 / √(24.873·0.1548)" }
+              - { indent: "= -3.5 / √3.850" }
+              - { indent: "= -3.5 / 1.962 ≈ -1.784" }
+              - { text: "df = 12 + 14 - 2 = 24" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 24) = 2.064; forkast H₀ hvis |t| > 2.064" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "|-1.784| = 1.784 IKKE > 2.064" }
+        result: "Vi kan IKKE forkaste H₀ på α = 0.05. Dataene gir ikke tilstrekkelig grunnlag for å hevde at modifikasjonen har endret produktiviteten."
 
 related:
   - { id: "en-utvalg-t-test",        kind: "entry" }

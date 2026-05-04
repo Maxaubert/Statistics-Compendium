@@ -67,32 +67,75 @@ python_snippet: |
   # P(X = k) for trekning av n=5 fra N=52 med K=13 'gunstige'
   hypergeom.pmf(5, 52, 13, 5)        # 0.000495 (alle 5 hjerter)
 
-examples:
-  - source: "Eksamen jan25 · oppgave 1a"
-    excerpt: "Trekker 5 kort fra 52, hvorav 13 er hjerter. Sannsynlighet for at alle 5 er hjerter."
-    solution_sketch: "C(13,5)·C(39,0)/C(52,5) = 1287/2598960 ≈ 0.000495"
-  - source: "Eksamen jan25 · oppgave 1c"
-    excerpt: "Sannsynlighet for at INGEN av de 5 trukne kortene er hjerter."
-    solution_sketch: "C(13,0)·C(39,5)/C(52,5) = 575757/2598960 ≈ 0.2215"
-
-detailed_solutions:
-  - source: "Eksamen jan25 · oppgave 1a"
-    question: "Vi trekker 5 kort fra en kortstokk på 52 kort. 13 av kortene er hjerter. Hva er sannsynligheten for at alle 5 trukne er hjerter?"
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "X = antall hjerter blant de 5 trukne" }
-          - { text: "X ~ Hypergeometrisk(N=52, K=13, n=5)" }
-      - label: "Formel"
-        lines:
-          - { text: "P(X = 5) = C(13,5) · C(39,0) / C(52,5)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "C(13,5) = 1287" }
-          - { text: "C(39,0) = 1" }
-          - { text: "C(52,5) = 2 598 960" }
-          - { text: "P(X = 5) = 1287 · 1 / 2 598 960" }
-    result: "P(X = 5) ≈ 0.000495 (≈ 4.95 · 10⁻⁴)"
+detailed_solution_variants:
+  - label: "Hypergeometrisk: P(X = k)"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 1a"
+        question: "Vi trekker 5 kort fra en kortstokk på 52 kort. 13 av kortene er hjerter. Hva er sannsynligheten for at alle 5 trukne er hjerter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "X = antall hjerter blant de 5 trukne" }
+              - { text: "N = 52 (totalt antall kort)" }
+              - { text: "K = 13 (antall hjerter i populasjonen)" }
+              - { text: "n = 5 (antall trekninger)" }
+              - { text: "k = 5 (antall vellykkede vi spør om)" }
+              - { text: "X ~ Hypergeometrisk(N=52, K=13, n=5)" }
+          - label: "Formel"
+            lines:
+              - { text: "P(X = k) = C(K, k) · C(N-K, n-k) / C(N, n)" }
+              - { text: "P(X = 5) = C(13, 5) · C(39, 0) / C(52, 5)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "C(13, 5) = 1287" }
+              - { text: "C(39, 0) = 1" }
+              - { text: "C(52, 5) = 2 598 960" }
+              - { text: "P(X = 5) = 1287 · 1 / 2 598 960" }
+        result: "P(X = 5) ≈ 0.000495 (≈ 4.95 · 10⁻⁴)"
+      - source: "Praksis · lotto-sjanse"
+        question: "I et lotto trekkes 7 av 34 tall. Du leverer en kupong med 7 valgte tall. Hva er sannsynligheten for at du gjetter nøyaktig 5 riktige?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "X = antall riktige blant dine 7 valgte tall" }
+              - { text: "N = 34 (totalt antall tall)" }
+              - { text: "K = 7 (antall vinnertall i populasjonen)" }
+              - { text: "n = 7 (antall tall du har valgt)" }
+              - { text: "k = 5 (antall riktige vi spør om)" }
+              - { text: "X ~ Hypergeometrisk(N=34, K=7, n=7)" }
+          - label: "Formel"
+            lines:
+              - { text: "P(X = k) = C(K, k) · C(N-K, n-k) / C(N, n)" }
+              - { text: "P(X = 5) = C(7, 5) · C(27, 2) / C(34, 7)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "C(7, 5) = 21" }
+              - { text: "C(27, 2) = 351" }
+              - { text: "C(34, 7) = 5 379 616" }
+              - { text: "P(X = 5) = 21 · 351 / 5 379 616 = 7371 / 5 379 616" }
+        result: "P(X = 5) ≈ 0.00137 (≈ 1.37 · 10⁻³)"
+      - source: "Praksis · kvalitetskontroll"
+        question: "Et parti består av 100 deler, hvorav 8 er defekte. Det trekkes 10 deler uten tilbakelegging. Hva er sannsynligheten for at akkurat 1 av de trukne er defekt?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "X = antall defekte blant de 10 trukne" }
+              - { text: "N = 100 (totalt antall deler i partiet)" }
+              - { text: "K = 8 (antall defekte i populasjonen)" }
+              - { text: "n = 10 (antall trukne deler)" }
+              - { text: "k = 1 (antall defekte vi spør om)" }
+              - { text: "X ~ Hypergeometrisk(N=100, K=8, n=10)" }
+          - label: "Formel"
+            lines:
+              - { text: "P(X = k) = C(K, k) · C(N-K, n-k) / C(N, n)" }
+              - { text: "P(X = 1) = C(8, 1) · C(92, 9) / C(100, 10)" }
+          - label: "Innsatt"
+            lines:
+              - { text: "C(8, 1) = 8" }
+              - { text: "C(92, 9) ≈ 1.260 · 10¹¹" }
+              - { text: "C(100, 10) ≈ 1.731 · 10¹³" }
+              - { text: "P(X = 1) ≈ 8 · 1.260 · 10¹¹ / 1.731 · 10¹³" }
+        result: "P(X = 1) ≈ 0.3823 (≈ 38.2 %)"
 
 related:
   - { id: "binomial-fordeling",   kind: "entry" }

@@ -131,113 +131,300 @@ python_snippet: |
   # Invers: finn x slik at P(X ≤ x) = p
   norm.ppf(0.001, loc=300, scale=5)         # finne x for P(X<x)=0.001
 
-example_variants:
+detailed_solution_variants:
   - label: "P(X < x)"
-    examples:
+    solutions:
       - source: "Eksamen jan25 · oppgave 5a"
-        excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
-        solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
-      - source: "Praksis · positiv z"
-        excerpt: "Voksenhøyde X i en populasjon: X ~ N(170, 6²) cm. Sannsynlighet for at en tilfeldig person er under 175 cm?"
-        solution_sketch: "P(X < 175) = G((175-170)/6) = G(0.83) = 0.7967"
-      - source: "Praksis · IQ"
-        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ under 90?"
-        solution_sketch: "P(X < 90) = G((90-100)/15) = G(-0.67) = 1 − G(0.67) = 1 − 0.7486 = 0.2514"
+        question: "Mengden kaffe X er normalfordelt med μ = 25 cl og σ = 0.48 cl. Finn `P(X < 24)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X ~ N(25, 0.48)`, terskel `x = 24`." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`P(X < 24) = P(Z < (24 − 25)/0.48)`" }
+              - { indent: "`= P(Z < −2.0833) ≈ P(Z < −2.08)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(−2.08) ≈ 0.0188" } }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(X < 24) ≈ 0.0188`." }
+        result: "`P(X < 24) ≈ 0.0188` (om lag 1.9 % av koppene har mindre enn 24 cl)."
+
+      - source: "Praksis · høyde, positiv z"
+        question: "Voksenhøyde `X ~ N(170, 6²)` cm. Finn sannsynligheten for at en tilfeldig voksen er under 175 cm."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 170`, `σ = 6`, terskel `x = 175`." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`P(X < 175) = G((175 − 170)/6)`" }
+              - { indent: "`= G(0.8333) ≈ G(0.83)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(0.83) ≈ 0.7967" } }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(X < 175) ≈ 0.7967`." }
+        result: "`P(X < 175) ≈ 0.7967` (om lag 80 % er under 175 cm)."
+
+      - source: "Praksis · IQ, negativ z"
+        question: "IQ er `X ~ N(100, 15²)`. Finn `P(X < 90)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 100`, `σ = 15`, terskel `x = 90` (under gjennomsnittet ⇒ negativ z)." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`P(X < 90) = G((90 − 100)/15)`" }
+              - { indent: "`= G(−0.6667) ≈ G(−0.67)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(−0.67) ≈ 0.2514 (alternativt 1 − G(0.67) = 1 − 0.7486)" } }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(X < 90) ≈ 0.2514`." }
+        result: "`P(X < 90) ≈ 0.2514` (rundt 25 % har IQ under 90)."
 
   - label: "P(X > x)"
-    examples:
+    solutions:
       - source: "Praksis · IQ-grense"
-        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ over 130 ('begavet')?"
-        solution_sketch: "P(X > 130) = 1 − G((130-100)/15) = 1 − G(2.00) = 1 − 0.9772 = 0.0228"
+        question: "IQ er `X ~ N(100, 15²)`. Finn `P(X > 130)` (klassisk 'begavet'-grense)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 100`, `σ = 15`, terskel `x = 130`. Vi vil ha høyrearealet, så bruk komplement." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`z = (130 − 100)/15 = 2.00`" }
+              - { text: "`P(X > 130) = 1 − G(2.00)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(2.00) ≈ 0.9772" } }
+              - { text: "`= 1 − 0.9772`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(X > 130) ≈ 0.0228`." }
+        result: "`P(X > 130) ≈ 0.0228` (vel 2 % har IQ over 130)."
+
       - source: "Praksis · høyde"
-        excerpt: "Voksenhøyde X ~ N(170, 6²). Sannsynlighet for at en tilfeldig person er over 180 cm?"
-        solution_sketch: "P(X > 180) = 1 − G((180-170)/6) = 1 − G(1.67) = 1 − 0.9525 = 0.0475"
+        question: "Voksenhøyde `X ~ N(170, 6²)` cm. Finn `P(X > 180)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 170`, `σ = 6`, terskel `x = 180`. Høyresidig hale ⇒ komplement." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`z = (180 − 170)/6 = 1.6667 ≈ 1.67`" }
+              - { text: "`P(X > 180) = 1 − G(1.67)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.67) ≈ 0.9525" } }
+              - { text: "`= 1 − 0.9525`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(X > 180) ≈ 0.0475`." }
+        result: "`P(X > 180) ≈ 0.0475` (knappe 5 % er over 180 cm)."
+
       - source: "Praksis · standardnormal"
-        excerpt: "Z ~ N(0, 1). Hva er P(Z > 1.96)?"
-        solution_sketch: "P(Z > 1.96) = 1 − G(1.96) = 1 − 0.9750 = 0.0250  (klassisk tosidig 5 %-grense)"
+        question: "`Z ~ N(0, 1)`. Finn `P(Z > 1.96)` — den klassiske tosidige 5 %-grensen."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Z` er allerede standardisert (`μ = 0`, `σ = 1`), så ingen omregning trengs." }
+          - label: "Innsetting"
+            lines:
+              - { text: "`P(Z > 1.96) = 1 − G(1.96)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.96) ≈ 0.9750" } }
+              - { text: "`= 1 − 0.9750`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(Z > 1.96) ≈ 0.0250`." }
+        result: "`P(Z > 1.96) ≈ 0.0250` (2.5 % i hver hale ⇒ 5 % tosidig)."
 
   - label: "P(a < X < b)"
-    examples:
+    solutions:
       - source: "Eksamen mai25 · oppgave 4a"
-        excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
-        solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
-      - source: "Praksis · ±1σ"
-        excerpt: "X ~ N(μ, σ). Hva er P(μ − σ < X < μ + σ)?"
-        solution_sketch: "= G(1) − G(-1) = 0.8413 − 0.1587 = 0.6826  (≈ 68 %, klokkekurvens midtre del)"
+        question: "Fyllingen `X` av såpebeholdere er `N(302, 5²)` ml. Finn `P(305 < X ≤ 310)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X ~ N(302, 5)`, grenser `a = 305`, `b = 310`." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`P(305 < X ≤ 310) = G((310 − 302)/5) − G((305 − 302)/5)`" }
+              - { indent: "`= G(1.6) − G(0.6)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.6) ≈ 0.9452" } }
+              - { table_lookup: { ref: "E.3", text: "G(0.6) ≈ 0.7257" } }
+              - { text: "`= 0.9452 − 0.7257`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(305 < X ≤ 310) ≈ 0.2195`." }
+        result: "`P(305 < X ≤ 310) ≈ 0.2195` (om lag 22 % av beholderne ligger i intervallet)."
+
+      - source: "Praksis · ±1σ-regelen"
+        question: "`X ~ N(μ, σ)`. Finn `P(μ − σ < X < μ + σ)` (den midtre delen av klokkekurven)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Symmetrisk intervall rundt `μ`, bredde `2σ`." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`z_a = (μ − σ − μ)/σ = −1`, `z_b = (μ + σ − μ)/σ = 1`" }
+              - { text: "`P(μ − σ < X < μ + σ) = G(1) − G(−1)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1) ≈ 0.8413" } }
+              - { table_lookup: { ref: "E.3", text: "G(−1) ≈ 0.1587" } }
+              - { text: "`= 0.8413 − 0.1587`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(μ − σ < X < μ + σ) ≈ 0.6826`." }
+        result: "`≈ 0.6826` (den klassiske 68 %-regelen for ±1σ)."
+
       - source: "Praksis · IQ-bånd"
-        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en tilfeldig person har IQ mellom 85 og 115?"
-        solution_sketch: "= G((115-100)/15) − G((85-100)/15) = G(1) − G(-1) = 0.6826"
+        question: "IQ er `X ~ N(100, 15²)`. Finn `P(85 < X < 115)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 100`, `σ = 15`. Intervallet `(85, 115)` er nettopp `μ ± σ`." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`z_a = (85 − 100)/15 = −1`, `z_b = (115 − 100)/15 = 1`" }
+              - { text: "`P(85 < X < 115) = G(1) − G(−1)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1) ≈ 0.8413" } }
+              - { table_lookup: { ref: "E.3", text: "G(−1) ≈ 0.1587" } }
+              - { text: "`= 0.8413 − 0.1587`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`P(85 < X < 115) ≈ 0.6826`." }
+        result: "`≈ 0.6826` (omtrent to av tre har IQ i båndet 85–115)."
 
   - label: "Invers: finn x"
-    examples:
+    solutions:
       - source: "Praksis · 95-persentil"
-        excerpt: "X ~ N(60, 5²). Finn x slik at P(X ≤ x) = 0.95."
-        solution_sketch: "z₀.₉₅ = 1.645  (E.4)  →  x = 60 + 5·1.645 = 68.23"
+        question: "`X ~ N(60, 5²)`. Finn `x` slik at `P(X ≤ x) = 0.95`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 60`, `σ = 5`, mål `p = 0.95`. Vi trenger 95-kvantilet." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 (slik at G(1.645) = 0.95)" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`x = μ + σ · z = 60 + 5 · 1.645`" }
+              - { indent: "`= 60 + 8.225`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`x ≈ 68.23`." }
+        result: "`x ≈ 68.23` (95 % av X-verdiene ligger under denne grensen)."
+
       - source: "Praksis · IQ-toppen"
-        excerpt: "IQ er N(100, 15²). Hvilken IQ overgår 99 % av befolkningen?"
-        solution_sketch: "P(X ≤ x) = 0.99  →  z = 2.326  →  x = 100 + 15·2.326 ≈ 134.9"
+        question: "IQ er `X ~ N(100, 15²)`. Hvilken IQ-verdi overgår 99 % av befolkningen, dvs. `P(X ≤ x) = 0.99`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 100`, `σ = 15`, mål `p = 0.99`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.01} = 2.326 (slik at G(2.326) = 0.99)" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`x = 100 + 15 · 2.326`" }
+              - { indent: "`= 100 + 34.89`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`x ≈ 134.9`." }
+        result: "`x ≈ 134.9` (kun 1 % av befolkningen har IQ over denne verdien)."
+
       - source: "Praksis · venstre hale"
-        excerpt: "X ~ N(170, 6²). Hvilken høyde er nedre 10 %-grense ('1 av 10 er under')?"
-        solution_sketch: "P(X ≤ x) = 0.10  →  z = -1.282  →  x = 170 − 6·1.282 ≈ 162.3 cm"
+        question: "`X ~ N(170, 6²)` cm. Finn nedre 10 %-grensen, dvs. `x` slik at `P(X ≤ x) = 0.10`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`μ = 170`, `σ = 6`, mål `p = 0.10 < 0.5` ⇒ `z` blir negativ." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.10} = 1.282 ⇒ venstrekvantilet er −1.282" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`x = 170 + 6 · (−1.282)`" }
+              - { indent: "`= 170 − 7.692`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`x ≈ 162.3` cm." }
+        result: "`x ≈ 162.3` cm (én av ti er kortere enn dette)."
 
   - label: "Invers: finn μ (eller σ)"
-    examples:
+    solutions:
       - source: "Eksamen mai25 · oppgave 4d"
-        excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
-        solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090  →  μ = 300 + 15.45 = 315.45 ml"
+        question: "Standardavviket er `σ = 5` ml. Hva må forventningsverdien `μ` være for at `P(X < 300) < 0.001`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi setter likhet i grenseverdien: `P(X < 300) = 0.001`." }
+              - { text: "`G((300 − μ)/5) = 0.001`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.001} = 3.090 ⇒ venstrekvantilet er −3.090" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`(300 − μ)/5 = −3.090`" }
+              - { text: "`300 − μ = −15.45`" }
+              - { text: "`μ = 315.45`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`μ` må justeres opp til minst `315.45` ml." }
+        result: "`μ ≥ 315.45` ml (`P(X < 300) < 0.001` for alle `μ` over denne grensen)."
+
       - source: "Praksis · finn σ"
-        excerpt: "X ~ N(50, σ²) der μ er kjent. Hvor stor må σ være for at P(X < 40) = 0.05?"
-        solution_sketch: "(40 − 50)/σ = −1.645  →  σ = 10/1.645 ≈ 6.08"
+        question: "`X ~ N(50, σ²)` med kjent `μ = 50`. Hvor stor må `σ` være for at `P(X < 40) = 0.05`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Ukjent `σ`, gitt `μ = 50`, terskel `g = 40`, `p = 0.05`." }
+              - { text: "`G((40 − 50)/σ) = 0.05`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 ⇒ venstrekvantilet er −1.645" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`(40 − 50)/σ = −1.645`" }
+              - { text: "`−10/σ = −1.645`" }
+              - { text: "`σ = 10/1.645`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`σ ≈ 6.08`." }
+        result: "`σ ≈ 6.08` (større σ ⇒ mer spredning og høyere P(X < 40))."
+
       - source: "Praksis · spec-grense"
-        excerpt: "Fyllemaskin har σ = 5 ml. Hva må μ være for at minst 95 % av flaskene har ≥ 100 ml?"
-        solution_sketch: "P(X ≥ 100) ≥ 0.95  →  P(X < 100) ≤ 0.05  →  (100 − μ)/5 ≤ −1.645  →  μ ≥ 108.23 ml"
-
-detailed_solutions:
-  - source: "Eksamen jan25 · oppgave 5a"
-    question: "X er normalfordelt med μ = 25 cl og σ = 0.48 cl. Finn P(X < 24)."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "X ~ N(25, 0.48)" }
-      - label: "Standardisering"
-        lines:
-          - { text: "P(X < 24) = P(Z < (24 - 25)/0.48)" }
-          - { indent: "= P(Z < -2.0833)" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.3", text: "G(-2.08) ≈ 0.0188" } }
-    result: "P(X < 24) ≈ 0.0188"
-
-  - source: "Eksamen mai25 · oppgave 4a"
-    question: "X er normalfordelt med μ = 302 ml og σ = 5 ml. Finn P(305 < X ≤ 310)."
-    sections:
-      - label: "Standardisering"
-        lines:
-          - { text: "P(305 < X ≤ 310) = G((310-302)/5) - G((305-302)/5)" }
-          - { indent: "= G(1.6) - G(0.6)" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.3", text: "G(1.6) ≈ 0.9452" } }
-          - { table_lookup: { ref: "E.3", text: "G(0.6) ≈ 0.7257" } }
-          - { text: "= 0.9452 - 0.7257" }
-    result: "P(305 < X ≤ 310) ≈ 0.2195"
-
-  - source: "Eksamen mai25 · oppgave 4d"
-    question: "Standardavviket er σ = 5 ml. Hva må forventningsverdien μ være for at P(X < 300) < 0.001?"
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "Vi vil ha P(X < 300) = 0.001 (grenseverdien)" }
-          - { text: "G((300 - μ)/5) = 0.001" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.4", text: "z_0.001 = 3.090, så det venstresidige kvantilet er -z_0.001 = -3.090" } }
-      - label: "Innsatt"
-        lines:
-          - { text: "(300 - μ)/5 = -3.090" }
-          - { text: "300 - μ = -15.45" }
-          - { text: "μ = 315.45" }
-    result: "μ må justeres opp til minst 315.45 ml"
+        question: "Fyllemaskin har `σ = 5` ml. Hva må `μ` være for at minst 95 % av flaskene har `≥ 100` ml?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`P(X ≥ 100) ≥ 0.95` ⇔ `P(X < 100) ≤ 0.05`." }
+              - { text: "Sett likhet i grensen: `G((100 − μ)/5) = 0.05`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 ⇒ venstrekvantilet er −1.645" } }
+          - label: "Innsetting"
+            lines:
+              - { text: "`(100 − μ)/5 = −1.645`" }
+              - { text: "`100 − μ = −8.225`" }
+              - { text: "`μ = 108.225`" }
+          - label: "Resultat"
+            lines:
+              - { text: "`μ ≥ 108.23` ml." }
+        result: "`μ ≥ 108.23` ml (større `μ` gir mer slingringsmonn over speccen)."
 
 related:
   - { id: "standardnormalisering",   kind: "concept" }

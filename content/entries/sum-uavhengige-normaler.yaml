@@ -58,28 +58,176 @@ python_snippet: |
   # P(Y > 127)
   1 - norm.cdf(127, loc=mu_Y, scale=sigma_Y)     # 0.0314
 
-examples:
-  - source: "Eksamen jan25 · oppgave 5b"
-    excerpt: "X ~ N(25, 0.48). 5 trykker etter hverandre, totalt Y. Sannsynlighet for at Y > 127 cl?"
-    solution_sketch: "Y ~ N(125, √5·0.48) = N(125, 1.0733). P(Y > 127) = 1 - G((127-125)/1.0733) = 1 - G(1.86) = 0.0314"
+detailed_solution_variants:
+  - label: "Sum X+Y"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 5b"
+        question: "X (mengde kaffe ett trykk) ~ N(25, 0.48) cl. Etter 5 trykk, total Y. Sannsynlighet for Y > 127 cl?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Y = X_1 + ... + X_5, alle iid N(25, 0.48)" }
+              - { text: "Vi blander 5 uavhengige trykk fra samme normalfordeling." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "μ_Y = 5 · 25 = 125" }
+              - { text: "Var(Y) = 5 · 0.48² = 1.152" }
+              - { text: "σ_Y = 0.48 · √5 ≈ 1.0733" }
+              - { text: "Y ~ N(125, 1.0733)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(Y > 127) = 1 - G((127 - 125)/1.0733)" }
+              - { indent: "= 1 - G(1.86)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.86) ≈ 0.9686" } }
+        result: "P(Y > 127) ≈ 0.0314"
 
-detailed_solutions:
-  - source: "Eksamen jan25 · oppgave 5b"
-    question: "X (mengde kaffe ett trykk) ~ N(25, 0.48) cl. Etter 5 trykker, total Y. Sannsynlighet for Y > 127 cl?"
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "Y = X_1 + ... + X_5, alle iid N(25, 0.48)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "μ_Y = 5 · 25 = 125" }
-          - { text: "σ_Y = 0.48 · √5 = 1.0733" }
-          - { text: "P(Y > 127) = 1 - G((127-125)/1.0733)" }
-          - { indent: "= 1 - G(1.86)" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.3", text: "G(1.86) ≈ 0.9686" } }
-    result: "P(Y > 127) ≈ 0.0314"
+      - source: "Praksis · vekter"
+        question: "To pakker veies uavhengig: X ~ N(150, 4²) g og Y ~ N(180, 5²) g. Hva er fordelingen til total vekt S = X + Y, og hva er P(S > 340)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 150, σ_X = 4" }
+              - { text: "μ_Y = 180, σ_Y = 5" }
+              - { text: "X og Y uavhengige, begge normalfordelte." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "E(S) = μ_X + μ_Y = 150 + 180 = 330" }
+              - { text: "Var(S) = σ_X² + σ_Y² = 16 + 25 = 41" }
+              - { text: "σ_S = √41 ≈ 6.40" }
+              - { text: "S ~ N(330, 6.40)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(S > 340) = 1 - G((340 - 330)/6.40)" }
+              - { indent: "= 1 - G(1.5625) ≈ 1 - G(1.56)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.56) ≈ 0.9406" } }
+        result: "P(S > 340) ≈ 0.0594"
+
+      - source: "Praksis · oppgavetid"
+        question: "Tid på oppgave 1: X ~ N(20, 3²) min. Tid på oppgave 2: Y ~ N(15, 2²) min. Uavhengige. Hva er P(X + Y < 40)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 20, σ_X = 3" }
+              - { text: "μ_Y = 15, σ_Y = 2" }
+              - { text: "Total tid T = X + Y, X og Y uavhengige." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "E(T) = 20 + 15 = 35" }
+              - { text: "Var(T) = 9 + 4 = 13" }
+              - { text: "σ_T = √13 ≈ 3.606" }
+              - { text: "T ~ N(35, 3.606)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(T < 40) = G((40 - 35)/3.606)" }
+              - { indent: "= G(1.387) ≈ G(1.39)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(1.39) ≈ 0.9177" } }
+        result: "P(T < 40) ≈ 0.9177"
+
+  - label: "Differanse X−Y"
+    solutions:
+      - source: "Praksis · to målinger"
+        question: "Måling X ~ N(100, 3²) og Y ~ N(98, 4²) uavhengige. Hva er fordelingen til D = X - Y, og hva er P(X > Y)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 100, σ_X = 3" }
+              - { text: "μ_Y = 98, σ_Y = 4" }
+              - { text: "X og Y er uavhengige normalfordelte målinger." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "E(D) = μ_X - μ_Y = 100 - 98 = 2" }
+              - { text: "Var(D) = σ_X² + σ_Y² = 9 + 16 = 25" }
+              - { comment: "Merk: variansen LEGGES sammen også for differanse." }
+              - { text: "σ_D = √25 = 5" }
+              - { text: "D ~ N(2, 5)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(X > Y) = P(D > 0) = 1 - G((0 - 2)/5)" }
+              - { indent: "= 1 - G(-0.40) = G(0.40)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(0.40) ≈ 0.6554" } }
+        result: "P(X > Y) ≈ 0.6554"
+
+      - source: "Praksis · kvalitetstest"
+        question: "To målestasjoner gir uavhengige målinger X ~ N(50.2, 0.3²) og Y ~ N(50.0, 0.4²). Hva er P(X overstiger Y med mer enn 0.5)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 50.2, σ_X = 0.3" }
+              - { text: "μ_Y = 50.0, σ_Y = 0.4" }
+              - { text: "X og Y uavhengige målinger fra to stasjoner." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "D = X - Y" }
+              - { text: "E(D) = 50.2 - 50.0 = 0.2" }
+              - { text: "Var(D) = 0.09 + 0.16 = 0.25" }
+              - { text: "σ_D = √0.25 = 0.5" }
+              - { text: "D ~ N(0.2, 0.5)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(D > 0.5) = 1 - G((0.5 - 0.2)/0.5)" }
+              - { indent: "= 1 - G(0.60)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(0.60) ≈ 0.7257" } }
+        result: "P(X - Y > 0.5) ≈ 0.2743"
+
+  - label: "Lineær kombinasjon aX+bY"
+    solutions:
+      - source: "Praksis · portefølje"
+        question: "Aksje A: X ~ N(8, 2²) % avkastning. Aksje B: Y ~ N(5, 1²) %. Uavhengige. Portefølje P = 0.6X + 0.4Y. Finn fordeling og P(P > 7)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 8, σ_X = 2 (aksje A)" }
+              - { text: "μ_Y = 5, σ_Y = 1 (aksje B)" }
+              - { text: "Vekter a = 0.6, b = 0.4. X og Y uavhengige." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "E(P) = aμ_X + bμ_Y = 0.6·8 + 0.4·5 = 4.8 + 2.0 = 6.8" }
+              - { text: "Var(P) = a²σ_X² + b²σ_Y² = 0.36·4 + 0.16·1" }
+              - { indent: "= 1.44 + 0.16 = 1.60" }
+              - { text: "σ_P = √1.60 ≈ 1.265" }
+              - { text: "P ~ N(6.8, 1.265)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(P > 7) = 1 - G((7 - 6.8)/1.265)" }
+              - { indent: "= 1 - G(0.158) ≈ 1 - G(0.16)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(0.16) ≈ 0.5636" } }
+        result: "P(P > 7) ≈ 0.4364"
+
+      - source: "Praksis · blanding"
+        question: "Mengde komponent A: X ~ N(10, 1²) kg. Komponent B: Y ~ N(6, 1.5²) kg. Uavhengige. Total blanding T = 2X + 3Y. Finn fordeling og P(T < 35)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "μ_X = 10, σ_X = 1 (komponent A)" }
+              - { text: "μ_Y = 6, σ_Y = 1.5 (komponent B)" }
+              - { text: "Koeffisienter a = 2, b = 3. X og Y uavhengige." }
+          - label: "Fordeling av kombinasjon"
+            lines:
+              - { text: "E(T) = 2·10 + 3·6 = 20 + 18 = 38" }
+              - { text: "Var(T) = 2²·1² + 3²·1.5² = 4·1 + 9·2.25" }
+              - { indent: "= 4 + 20.25 = 24.25" }
+              - { text: "σ_T = √24.25 ≈ 4.924" }
+              - { text: "T ~ N(38, 4.924)" }
+          - label: "Standardisering"
+            lines:
+              - { text: "P(T < 35) = G((35 - 38)/4.924)" }
+              - { indent: "= G(-0.609) ≈ G(-0.61) = 1 - G(0.61)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "G(0.61) ≈ 0.7291" } }
+        result: "P(T < 35) ≈ 0.2709"
 
 related:
   - { id: "normalfordeling",          kind: "entry" }

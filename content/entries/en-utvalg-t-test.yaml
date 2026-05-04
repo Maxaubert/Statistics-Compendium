@@ -84,6 +84,176 @@ solution_variants:
       - { text: "Hvis du oppgir p-verdi: tosidig `p = 2·P(T > |t|, ν)`; forkast hvis `p < α`", conditional: true }
       - "Konkluder i kontekst: hvis `|T| > t_(α/2, ν)`, er det signifikant evidens for at `μ ≠ μ₀`; ellers beholdes `H₀`"
 
+detailed_solution_variants:
+  - label: "H₁: μ < μ₀ (venstre)"
+    solutions:
+      - source: "Praksis · Lyspærers levetid"
+        question: "Et utvalg av `n = 12` lyspærer har observert gjennomsnittlig levetid `x̄ = 970` timer med utvalgsstandardavvik `s = 40`. Produsenten hevder at gjennomsnittlig levetid er `μ₀ = 1000` timer. Test om `μ < 1000` på signifikansnivå `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 12`, `x̄ = 970`, `s = 40`, `μ₀ = 1000`, `α = 0.05`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 11`." }
+              - { text: "`σ` er ukjent og estimeres av `s` ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 1000`" }
+              - { text: "`H₁: μ < 1000` (venstresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (970 − 1000)/(40/√12)`." }
+              - { text: "`s/√n = 40/√12 ≈ 11.547`." }
+              - { text: "`T ≈ −30/11.547 ≈ −2.598`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 11) ≈ 1.796` ⇒ kritisk verdi `−t_(0.05, 11) ≈ −1.796`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ −2.598 < −1.796`." }
+              - { text: "Forkast `H₀`." }
+              - { text: "Det er signifikant evidens på 5 %-nivå for at gjennomsnittlig levetid er kortere enn 1000 timer." }
+        result: "`T ≈ −2.598 < −1.796` ⇒ forkast `H₀`. `μ < 1000` h."
+      - source: "Praksis · Prosessgjennomsnitt under mål"
+        question: "En produksjonsprosess skal gi et gjennomsnitt på `μ₀ = 50`. Et utvalg på `n = 8` enheter gir `x̄ = 46` og `s = 6`. Test på `α = 0.05` om prosessens gjennomsnitt er lavere enn målet."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 8`, `x̄ = 46`, `s = 6`, `μ₀ = 50`, `α = 0.05`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 7`." }
+              - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 50`" }
+              - { text: "`H₁: μ < 50` (venstresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (46 − 50)/(6/√8)`." }
+              - { text: "`s/√n = 6/√8 ≈ 2.121`." }
+              - { text: "`T ≈ −4/2.121 ≈ −1.886`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 7) ≈ 1.895` ⇒ kritisk verdi `−t_(0.05, 7) ≈ −1.895`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ −1.886` mot `−1.895`." }
+              - { text: "`T > −1.895` (så vidt), så vi beholder `H₀`." }
+              - { text: "På 5 %-nivå er det ikke tilstrekkelig evidens for at prosessgjennomsnittet er lavere enn 50; resultatet er på grensen og motiverer ev. større utvalg." }
+        result: "`T ≈ −1.886 > −1.895` ⇒ behold `H₀` (resultat på grensen)."
+  - label: "H₁: μ > μ₀ (høyre)"
+    solutions:
+      - source: "Praksis · Gjødselpåstand"
+        question: "En gjødselprodusent hevder at avlingen er minst `μ₀ = 50` kg/dekar. Et utvalg på `n = 10` jordstykker gir `x̄ = 53` og `s = 4`. Test om `μ > 50` på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 10`, `x̄ = 53`, `s = 4`, `μ₀ = 50`, `α = 0.05`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 9`." }
+              - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 50`" }
+              - { text: "`H₁: μ > 50` (høyresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (53 − 50)/(4/√10)`." }
+              - { text: "`s/√n = 4/√10 ≈ 1.265`." }
+              - { text: "`T ≈ 3/1.265 ≈ 2.372`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 9) ≈ 1.833` (høyresidig kritisk verdi)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ 2.372 > 1.833`." }
+              - { text: "Forkast `H₀`." }
+              - { text: "På 5 %-nivå er det signifikant evidens for at gjennomsnittlig avling er høyere enn 50 kg/dekar; produsentens påstand støttes." }
+        result: "`T ≈ 2.372 > 1.833` ⇒ forkast `H₀`. `μ > 50` kg/dekar."
+      - source: "Praksis · Reaksjonstidstrening"
+        question: "Etter et treningsprogram måles reaksjonstid hos `n = 15` deltakere: `x̄ = 210` ms og `s = 20`. Tidligere referanse er `μ₀ = 200` ms. Test om treningen gir høyere reaksjonstid (dårligere) på `α = 0.01`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 15`, `x̄ = 210`, `s = 20`, `μ₀ = 200`, `α = 0.01`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 14`." }
+              - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 200`" }
+              - { text: "`H₁: μ > 200` (høyresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (210 − 200)/(20/√15)`." }
+              - { text: "`s/√n = 20/√15 ≈ 5.164`." }
+              - { text: "`T ≈ 10/5.164 ≈ 1.936`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.01, 14) ≈ 2.624` (høyresidig kritisk verdi)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ 1.936 < 2.624`." }
+              - { text: "Behold `H₀`." }
+              - { text: "På 1 %-nivå er det ikke tilstrekkelig evidens for at reaksjonstiden er høyere enn 200 ms; observert økning er ikke statistisk signifikant ved dette strenge nivået." }
+        result: "`T ≈ 1.936 < 2.624` ⇒ behold `H₀`."
+  - label: "H₁: μ ≠ μ₀ (tosidig)"
+    solutions:
+      - source: "Praksis · Påfyllingsmaskin"
+        question: "En påfyllingsmaskin skal fylle flasker med `μ₀ = 500` ml. Et utvalg på `n = 15` flasker gir `x̄ = 503` og `s = 4`. Test om `μ ≠ 500` på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 15`, `x̄ = 503`, `s = 4`, `μ₀ = 500`, `α = 0.05`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 14`." }
+              - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 500`" }
+              - { text: "`H₁: μ ≠ 500` (tosidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (503 − 500)/(4/√15)`." }
+              - { text: "`s/√n = 4/√15 ≈ 1.033`." }
+              - { text: "`T ≈ 3/1.033 ≈ 2.905`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "Tosidig: `t_(α/2, ν) = t_(0.025, 14) ≈ 2.145`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `|T| ≈ 2.905 > 2.145`." }
+              - { text: "Forkast `H₀`." }
+              - { text: "På 5 %-nivå er det signifikant evidens for at maskinens gjennomsnittlige fylling avviker fra 500 ml (overfylling); maskinen bør justeres." }
+        result: "`|T| ≈ 2.905 > 2.145` ⇒ forkast `H₀`. `μ ≠ 500` ml."
+      - source: "Praksis · Kalibreringskontroll"
+        question: "Et instrument skal i kalibrering gi gjennomsnitt `μ₀ = 10`. Et utvalg på `n = 20` målinger gir `x̄ = 10.4` og `s = 0.8`. Test om `μ ≠ 10` på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 20`, `x̄ = 10.4`, `s = 0.8`, `μ₀ = 10`, `α = 0.05`." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 19`." }
+              - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ = 10`" }
+              - { text: "`H₁: μ ≠ 10` (tosidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "Innsatt: `T = (10.4 − 10)/(0.8/√20)`." }
+              - { text: "`s/√n = 0.8/√20 ≈ 0.1789`." }
+              - { text: "`T ≈ 0.4/0.1789 ≈ 2.236`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "Tosidig: `t_(α/2, ν) = t_(0.025, 19) ≈ 2.093`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `|T| ≈ 2.236 > 2.093`." }
+              - { text: "Forkast `H₀`." }
+              - { text: "På 5 %-nivå er det signifikant evidens for at instrumentet ikke er korrekt kalibrert; det avviker systematisk fra 10 og bør justeres." }
+        result: "`|T| ≈ 2.236 > 2.093` ⇒ forkast `H₀`. Kalibrering må justeres."
+
 common_traps: |
   Husk frihetsgrader: ν = n - 1 for én-utvalgs t-test (ikke n - 2 som i
   regresjon, og ikke n_X + n_Y - 2 som i to-utvalgs). Pass på fortegn:

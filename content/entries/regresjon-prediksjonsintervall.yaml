@@ -69,33 +69,114 @@ python_snippet: |
   punkt = alpha_hat + beta_hat * x       # 67.75
   margin = t_crit * SE * math.sqrt(1 + 1/n + ((x - x_bar) / (SE / SE_beta)) ** 2)
 
-examples:
-  - source: "Eksamen jan26 · oppgave 6"
-    excerpt: "ŷ = 34.6 + 6.63·x, S_E² = 6.093, SE(β̂) = 0.625, n = 10. Finn 95 % prediksjonsintervall for Y når x = 5."
-    solution_sketch: "Punkt = 67.75, margin = 2.306·2.4684·√(1 + 1/10 + ((5-6.8)/(2.4684/0.625))²) = 6.51. CI = [61.24, 74.26]"
+detailed_solution_variants:
+  - label: "Prediksjonsintervall for ny y"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 6"
+        question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(β̂) = 0.625, n = 10, x̄ = 6.8. Finn et 95 % prediksjonsintervall for Y når x₀ = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 34.6, β̂ = 6.63, S_E² = 6.093 ⇒ S_E = √6.093 ≈ 2.4684" }
+              - { text: "SE(β̂) = 0.625, n = 10, x̄ = 6.8" }
+              - { text: "Nytt x₀ = 5, konfidensnivå 1 − α = 0.95" }
+              - { comment: "S_XX = (S_E/SE(β̂))² = (2.4684/0.625)² ≈ 15.59" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = α̂ + β̂·x₀ = 34.6 + 6.63·5" }
+              - { indent: "= 34.6 + 33.15 = 67.75" }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { text: "Bruker ekvivalent form med S_E/SE(β̂):" }
+              - { indent: "= 2.4684 · √(1 + 1/10 + ((5 − 6.8)/(2.4684/0.625))²)" }
+              - { indent: "= 2.4684 · √(1 + 0.1 + (−1.8/3.949)²)" }
+              - { indent: "= 2.4684 · √(1 + 0.1 + 0.207)" }
+              - { indent: "= 2.4684 · √1.308 ≈ 2.4684 · 1.143 ≈ 2.822" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "ν = n − 2 = 8 frihetsgrader, α/2 = 0.025" }
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = t · SE_pred = 2.306 · 2.822 ≈ 6.51" }
+              - { text: "PI: ŷ₀ ± margin = 67.75 ± 6.51" }
+              - { indent: "= [61.24, 74.26]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Med 95 % sannsynlighet vil en NY student med 5 timers søvn score mellom 61.24 % og 74.26 %." }
+              - { text: "Siden 75 ligger UTENFOR intervallet, er det usannsynlig at studenten får 75 % eller bedre." }
+        result: "95 % prediksjonsintervall: [61.24, 74.26]. 75 % er usannsynlig."
 
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 6"
-    question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(β̂) = 0.625, n = 10. Finn et 95 % prediksjonsintervall for Y når x = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "α̂ = 34.6, β̂ = 6.63, S_E² = 6.093, SE(β̂) = 0.625" }
-          - { text: "n = 10, x̄ = 6.8, x = 5, α = 0.05" }
-      - label: "Frihetsgrader og kvantil"
-        lines:
-          - { text: "ν = n - 2 = 8" }
-          - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306" } }
-      - label: "Innsatt"
-        lines:
-          - { text: "S_E = √6.093 = 2.4684" }
-          - { text: "Punkt: 34.6 + 6.63·5 = 67.75" }
-          - { text: "Under rotuttrykket: 1 + 1/10 + ((5-6.8)/(2.4684/0.625))²" }
-          - { indent: "= 1 + 0.1 + (-1.8/3.949)²" }
-          - { indent: "= 1 + 0.1 + 0.207 = 1.308" }
-          - { text: "Margin: 2.306 · 2.4684 · √1.308 = 5.692 · 1.143 = 6.51" }
-          - { text: "Intervall: 67.75 ± 6.51" }
-    result: "95 % prediksjonsintervall: [61.24, 74.26]. Siden 75 ligger UTENFOR intervallet, er det usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+      - source: "Praksisoppgave · standard datasett, x₀ nær x̄"
+        question: "Et lite datasett (1,2), (2,3), (3,5), (4,6), (5,8) gir β̂ = 1.5, α̂ = 0.3, S_E = √0.1 ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5. Finn et 95 % prediksjonsintervall for en NY observasjon Y når x₀ = 4."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162" }
+              - { text: "S_XX = 10, x̄ = 3, n = 5" }
+              - { text: "Nytt x₀ = 4, konfidensnivå 1 − α = 0.95" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = α̂ + β̂·x₀ = 0.3 + 1.5·4" }
+              - { indent: "= 0.3 + 6.0 = 6.3" }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { indent: "= 0.3162 · √(1 + 1/5 + (4 − 3)²/10)" }
+              - { indent: "= 0.3162 · √(1 + 0.2 + 0.1)" }
+              - { indent: "= 0.3162 · √1.3 ≈ 0.3162 · 1.1402 ≈ 0.3604" }
+              - { comment: "1-tallet under rota fanger usikkerheten i den NYE observasjonen; uten det får man KI for E[Y|x]." }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "ν = n − 2 = 3 frihetsgrader, α/2 = 0.025" }
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 3) = 3.182" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = t · SE_pred = 3.182 · 0.3604 ≈ 1.147" }
+              - { text: "PI: ŷ₀ ± margin = 6.3 ± 1.147" }
+              - { indent: "≈ [5.15, 7.45]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Med 95 % sannsynlighet vil en ny y-observasjon ved x₀ = 4 ligge mellom ca. 5.15 og 7.45." }
+              - { text: "Bredt intervall fordi n er svært liten (kun 5 punkter) og t-kvantilen er stor." }
+        result: "95 % prediksjonsintervall ved x₀ = 4: [5.15, 7.45]."
+
+      - source: "Praksisoppgave · samme datasett, x₀ langt fra x̄"
+        question: "Med samme datasett som over (β̂ = 1.5, α̂ = 0.3, S_E ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5), finn et 95 % prediksjonsintervall for en NY Y når x₀ = 7. Sammenlign bredden med intervallet ved x₀ = 4."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162" }
+              - { text: "S_XX = 10, x̄ = 3, n = 5" }
+              - { text: "Nytt x₀ = 7 (4 enheter unna x̄), 1 − α = 0.95" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = α̂ + β̂·x₀ = 0.3 + 1.5·7" }
+              - { indent: "= 0.3 + 10.5 = 10.8" }
+              - { comment: "Merk: x₀ = 7 ligger utenfor observert x-spenn (1–5) → ekstrapolering, vær forsiktig." }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { indent: "= 0.3162 · √(1 + 1/5 + (7 − 3)²/10)" }
+              - { indent: "= 0.3162 · √(1 + 0.2 + 16/10)" }
+              - { indent: "= 0.3162 · √(1 + 0.2 + 1.6)" }
+              - { indent: "= 0.3162 · √2.8 ≈ 0.3162 · 1.6733 ≈ 0.5291" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "ν = n − 2 = 3 frihetsgrader, α/2 = 0.025" }
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 3) = 3.182" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = t · SE_pred = 3.182 · 0.5291 ≈ 1.684" }
+              - { text: "PI: ŷ₀ ± margin = 10.8 ± 1.684" }
+              - { indent: "≈ [9.12, 12.48]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "95 % PI: [9.12, 12.48], bredde ≈ 3.37." }
+              - { text: "Sammenlignet med x₀ = 4 (bredde ≈ 2.29) er intervallet ca. 47 % bredere – fordi (x₀ − x̄)²/S_XX øker raskt når x₀ fjerner seg fra x̄." }
+              - { text: "Prediksjonsintervaller er smalest ved x̄ og vokser ut til sidene." }
+        result: "95 % prediksjonsintervall ved x₀ = 7: [9.12, 12.48] – tydelig bredere pga. avstand fra x̄."
 
 related:
   - { id: "regresjon-estimat-alpha-beta",   kind: "entry" }

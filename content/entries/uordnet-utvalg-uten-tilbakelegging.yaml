@@ -52,10 +52,85 @@ common_traps: |
   C(n,k) er ikke det samme som n^k. Pass på at n og k er heltall og 0 ≤ k ≤ n.
   Symmetrien C(n,k) = C(n, n-k) er nyttig for å forenkle beregninger.
 
-examples:
-  - source: "Eksamen jan25 · oppgave 1"
-    excerpt: "Trekker 5 kort fra 52, hvorav 13 er hjerter. Antall mulige uordnete utvalg av 5 kort er C(52,5) = 2 598 960."
-    solution_sketch: "P(alle hjerter) = C(13,5)/C(52,5) = 1287/2598960 ≈ 4.95·10⁻⁴"
+detailed_solution_variants:
+  - label: "Uordnet utvalg uten tilbakelegging"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 1"
+        question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hvor mange mulige uordnete utvalg av 5 kort finnes, og hva er sannsynligheten for å få 5 hjerter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi trekker `k = 5` kort fra `n = 52` kort." }
+              - { text: "Rekkefølgen spiller ingen rolle (samme hånd uansett rekkefølge), og samme kort kan ikke trekkes to ganger." }
+              - { text: "Dette er et uordnet utvalg uten tilbakelegging, så vi bruker binomialkoeffisienten `C(n,k)`." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n, k) = n! / (k! · (n − k)!)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Antall mulige hender:" }
+              - { indent: "`C(52, 5) = 52! / (5! · 47!)`" }
+              - { indent: "`= (52 · 51 · 50 · 49 · 48) / (5 · 4 · 3 · 2 · 1)`" }
+              - { indent: "`= 311 875 200 / 120 = 2 598 960`" }
+              - { text: "Antall hender med 5 hjerter (gunstige):" }
+              - { indent: "`C(13, 5) = 13! / (5! · 8!) = 1 287`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Det finnes `2 598 960` mulige uordnete utvalg av 5 kort, og `P(5 hjerter) ≈ 0.000495`." }
+        result: "`C(52,5) = 2 598 960`, `P(5 hjerter) ≈ 4.95 · 10⁻⁴`"
+
+      - source: "Praksiseksempel · Lotto"
+        question: "I norsk Lotto velger man 7 tall fra 34 mulige. På hvor mange måter kan dette gjøres?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Populasjonen består av `n = 34` tall, og vi velger `k = 7` av disse." }
+              - { text: "Rekkefølgen er likegyldig (en lottokupong er den samme uansett hvilken rekkefølge tallene krysses av i)." }
+              - { text: "Hvert tall kan velges maksimalt én gang, altså uten tilbakelegging." }
+              - { comment: "Dette er klassisk binomialkoeffisient-anvendelse." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n, k) = n! / (k! · (n − k)!)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(34, 7) = 34! / (7! · 27!)`" }
+              - { indent: "`= (34 · 33 · 32 · 31 · 30 · 29 · 28) / (7 · 6 · 5 · 4 · 3 · 2 · 1)`" }
+              - { indent: "`= 27 113 264 640 / 5 040`" }
+              - { indent: "`= 5 379 616`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Det er `5 379 616` ulike måter å velge 7 av 34 tall på." }
+              - { text: "Sannsynligheten for å gjette riktig kombinasjon på én kupong er `1 / 5 379 616 ≈ 1.86 · 10⁻⁷`." }
+        result: "`C(34, 7) = 5 379 616` mulige kuponger"
+
+      - source: "Praksiseksempel · Poker (fire like)"
+        question: "Hvor mange mulige femkortshender finnes fra en kortstokk med 52 kort, og hva er sannsynligheten for å få nøyaktig 'fire like'?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi trekker `k = 5` kort fra `n = 52` uten tilbakelegging, og rekkefølgen i hånda spiller ingen rolle." }
+              - { text: "Antall mulige hender beregnes med `C(52, 5)`." }
+              - { text: "For 'fire like' velger vi først valør (13 valører), tar alle 4 kort av denne valøren, og legger til ett av de 48 gjenværende kortene." }
+          - label: "Formel"
+            lines:
+              - { text: "Mulige hender: `C(n, k) = n! / (k! · (n − k)!)`" }
+              - { text: "Gunstige: `gunstige = 13 · C(4,4) · 48 = 13 · 1 · 48`" }
+              - { text: "Sannsynlighet: `P = gunstige / mulige`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Mulige hender:" }
+              - { indent: "`C(52, 5) = 2 598 960`" }
+              - { text: "Gunstige hender (fire like):" }
+              - { indent: "`13 · 48 = 624`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 624 / 2 598 960 ≈ 2.40 · 10⁻⁴`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Det finnes `C(52, 5) = 2 598 960` mulige femkortshender." }
+              - { text: "Sannsynligheten for 'fire like' er omtrent `0.00024`, eller cirka `1 av 4 165`." }
+        result: "`C(52,5) = 2 598 960`, `P(fire like) ≈ 0.00024`"
 
 related:
   - { id: "hypergeometrisk-fordeling",  kind: "entry" }

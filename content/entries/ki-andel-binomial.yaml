@@ -64,32 +64,89 @@ python_snippet: |
   margin = z * math.sqrt(p_hat * (1 - p_hat) / n)
   ci = (p_hat - margin, p_hat + margin)
 
-examples:
-  - source: "Eksamen mai25 · oppgave 3b"
-    excerpt: "23 av 80 grantrær har sykdom. Finn 90 % KI for andel p."
-    solution_sketch: "p̂ = 0.2875. z_0.05 = 1.645. Margin = 1.645·√(0.2875·0.7125/80) = 0.0832. CI = [0.204, 0.371]"
+detailed_solution_variants:
+  - label: "KI for andel p"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 3b"
+        question: "Vi plukket ut 80 grantrær og 23 hadde sykdom. Finn et tilnærmet 90 % konfidensintervall for andelen p av grantrær som har sykdommen."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n = 80, X = 23, konfidensnivå 90 % → α = 0.10" }
+          - label: "Estimat"
+            lines:
+              - { text: "`p̂ = X/n = 23/80 = 0.2875`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 80·0.2875·0.7125 ≈ 16.4 ≥ 5` ✓" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.05} = 1.645" } }
+          - label: "Standardfeil og marg"
+            lines:
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.2875·0.7125/80)`" }
+              - { indent: "`= √0.002562 = 0.0506`" }
+              - { text: "`marginal = z·SE = 1.645·0.0506 = 0.0832`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`p̂ ± marginal = 0.2875 ± 0.0832`" }
+              - { indent: "`= (0.204, 0.371)`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 90 % sikre på at den sanne andelen syke grantrær ligger mellom 20.4 % og 37.1 %." }
+        result: "`p ∈ (0.204, 0.371)`"
 
-detailed_solutions:
-  - source: "Eksamen mai25 · oppgave 3b"
-    question: "Vi plukket ut 80 grantrær og 23 hadde sykdom. Finn et tilnærmet 90 % konfidensintervall for andelen p av grantrær som har sykdommen."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "X = 23, n = 80, konfidensnivå 90 % → α = 0.10" }
-      - label: "Punktestimat"
-        lines:
-          - { text: "p̂ = X/n = 23/80 = 0.2875" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.05 = 1.645" } }
-      - label: "Innsatt"
-        lines:
-          - { text: "Margin = 1.645 · √(0.2875 · (1-0.2875) / 80)" }
-          - { indent: "= 1.645 · √(0.2875 · 0.7125 / 80)" }
-          - { indent: "= 1.645 · √0.002562" }
-          - { indent: "= 1.645 · 0.0506 = 0.0832" }
-          - { text: "CI = 0.2875 ± 0.0832" }
-    result: "p ∈ [0.204, 0.371]"
+      - source: "Praksis · meningsmåling"
+        question: "I en undersøkelse svarte 200 av 500 spurte at de støtter et nytt forslag. Lag et 95 % konfidensintervall for den sanne andelen p som støtter forslaget."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n = 500, X = 200, konfidensnivå 95 % → α = 0.05" }
+          - label: "Estimat"
+            lines:
+              - { text: "`p̂ = X/n = 200/500 = 0.40`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 500·0.40·0.60 = 120 ≥ 5` ✓" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.025} = 1.96" } }
+          - label: "Standardfeil og marg"
+            lines:
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.40·0.60/500)`" }
+              - { indent: "`= √0.00048 = 0.02191`" }
+              - { text: "`marginal = z·SE = 1.96·0.02191 = 0.0429`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`p̂ ± marginal = 0.40 ± 0.043`" }
+              - { indent: "`= (0.357, 0.443)`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 95 % sikre på at den sanne andelen som støtter forslaget ligger mellom 35.7 % og 44.3 %." }
+        result: "`p ∈ (0.357, 0.443)`"
+
+      - source: "Praksis · produkttest"
+        question: "I en kvalitetstest viser det seg at 12 av 80 deler er defekte. Lag et 99 % konfidensintervall for den sanne defekt-raten p."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "n = 80, X = 12, konfidensnivå 99 % → α = 0.01" }
+          - label: "Estimat"
+            lines:
+              - { text: "`p̂ = X/n = 12/80 = 0.15`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 80·0.15·0.85 = 10.2 ≥ 5` ✓" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.005} = 2.576" } }
+          - label: "Standardfeil og marg"
+            lines:
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.15·0.85/80)`" }
+              - { indent: "`= √0.001594 = 0.0399`" }
+              - { text: "`marginal = z·SE = 2.576·0.0399 = 0.1028`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`p̂ ± marginal = 0.15 ± 0.103`" }
+              - { indent: "`= (0.047, 0.253)`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 99 % sikre på at den sanne defekt-raten ligger mellom 4.7 % og 25.3 %. Intervallet er bredt fordi konfidensnivået er høyt og n relativt lite." }
+        result: "`p ∈ (0.047, 0.253)`"
 
 related:
   - { id: "binomial-fordeling",      kind: "entry" }

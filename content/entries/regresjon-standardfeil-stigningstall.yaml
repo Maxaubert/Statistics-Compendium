@@ -50,10 +50,98 @@ python_snippet: |
   Sxx = 15.6
   SE_beta = (SE2 / Sxx) ** 0.5   # 0.625
 
-examples:
-  - source: "Eksamen mai25 · oppgave 5d / jan26 · oppgave 6"
-    excerpt: "S_E² = 6.093, S_XX = 15.6. Finn SE(β̂)."
-    solution_sketch: "SE(β̂) = √(6.093/15.6) = √0.391 = 0.625"
+detailed_solution_variants:
+  - label: "Standardfeil SE(β̂)"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d"
+        question: "Gitt `S_E² = 6.093` og `S_XX = 15.6`. Finn standardfeilen `SE(β̂)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Vi skal finne standardfeilen til stigningstallet `β̂` i en lineær regresjon."
+              - text: "Formel: `SE(β̂) = √(S_E² / S_XX)`."
+              - text: "Vi trenger:"
+              - indent: "`S_E²` (residualvariansen)"
+              - indent: "`S_XX = Σ(x_i - x̄)²`"
+          - label: "Mellom-summer"
+            lines:
+              - text: "Oppgaven oppgir:"
+              - indent: "`S_E² = 6.093`"
+              - indent: "`S_XX = 15.6`"
+          - label: "Standardfeil"
+            lines:
+              - text: "Sett inn i formelen:"
+              - indent: "`SE(β̂) = √(S_E² / S_XX)`"
+              - indent: "`= √(6.093 / 15.6)`"
+              - indent: "`= √0.3906`"
+              - indent: "`≈ 0.625`"
+          - label: "Tolkning"
+            lines:
+              - text: "`SE(β̂) ≈ 0.625` er et moderat tall sammenliknet med et typisk stigningstall."
+              - text: "Det betyr at estimatet `β̂` har en viss usikkerhet; vi vil bruke denne verdien videre i hypotesetest (`T = β̂ / SE(β̂)`) og i konfidensintervallet `β̂ ± t·SE(β̂)`."
+          - label: "Resultat"
+            lines:
+              - text: "`SE(β̂) ≈ 0.625`."
+        result: "`SE(β̂) ≈ 0.625`"
+
+      - source: "Praksiseksempel · sterk lineær sammenheng"
+        question: "Datasett: `(1,2), (2,3), (3,5), (4,6), (5,8)`. Tidligere er det funnet `S_E² = 0.1` og `S_XX = 10`. Finn `SE(β̂)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Vi har en enkel lineær regresjon `y = α + βx + ε` med 5 datapunkter."
+              - text: "Vi skal beregne standardfeilen til stigningstallet."
+              - text: "Trenger `S_E²` (allerede beregnet) og `S_XX` (allerede beregnet)."
+          - label: "Mellom-summer"
+            lines:
+              - text: "Fra tidligere utregning:"
+              - indent: "`S_E² = 0.1` (liten residualvarians – punktene ligger nær linja)"
+              - indent: "`S_XX = Σ(x_i - x̄)² = 10` (god spredning i x-verdiene)"
+          - label: "Standardfeil"
+            lines:
+              - text: "Sett inn i formelen:"
+              - indent: "`SE(β̂) = √(S_E² / S_XX)`"
+              - indent: "`= √(0.1 / 10)`"
+              - indent: "`= √0.01`"
+              - indent: "`= 0.1`"
+          - label: "Tolkning"
+            lines:
+              - text: "`SE(β̂) = 0.1` er liten. Det betyr at `β̂` er presist estimert."
+              - text: "Det skyldes både liten residualvarians (god tilpasning) og god x-spredning (`S_XX` stor)."
+              - text: "I et 95 % KI vil bredden bli `± t·0.1`, dvs. smalt – vi har høy tiltro til estimatet av `β`."
+          - label: "Resultat"
+            lines:
+              - text: "`SE(β̂) = 0.1`."
+        result: "`SE(β̂) = 0.1`"
+
+      - source: "Praksiseksempel · svak sammenheng og få datapunkter"
+        question: "Anta en regresjon basert på `n = 4` observasjoner med `S_E² = 4.0` og `S_XX = 2.5`. Finn `SE(β̂)` og kommenter usikkerheten."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Liten utvalgsstørrelse og dårlig x-spredning gir typisk stor `SE(β̂)`."
+              - text: "Vi bruker `SE(β̂) = √(S_E² / S_XX)`."
+          - label: "Mellom-summer"
+            lines:
+              - text: "Oppgitt:"
+              - indent: "`S_E² = 4.0` (stor residualvarians – punktene ligger langt fra linja)"
+              - indent: "`S_XX = 2.5` (liten spredning i x-verdiene)"
+          - label: "Standardfeil"
+            lines:
+              - text: "Sett inn i formelen:"
+              - indent: "`SE(β̂) = √(S_E² / S_XX)`"
+              - indent: "`= √(4.0 / 2.5)`"
+              - indent: "`= √1.6`"
+              - indent: "`≈ 1.265`"
+          - label: "Tolkning"
+            lines:
+              - text: "`SE(β̂) ≈ 1.265` er stor. Estimatet av `β̂` er usikkert."
+              - text: "Et 95 % KI for `β` blir bredt (`β̂ ± t·1.265`), og en hypotesetest vil sjelden forkaste `H_0: β = 0` selv om det fins en svak reell sammenheng."
+              - text: "Lærdom: For å redusere `SE(β̂)` kan man øke `n` (gir mindre `S_E²` og større `S_XX`) eller velge x-verdier med større spredning."
+          - label: "Resultat"
+            lines:
+              - text: "`SE(β̂) ≈ 1.265` – stor usikkerhet i estimatet."
+        result: "`SE(β̂) ≈ 1.265` (stor)"
 
 related:
   - { id: "regresjon-residualvarians",    kind: "entry" }

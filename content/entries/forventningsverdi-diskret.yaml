@@ -44,13 +44,87 @@ common_traps: |
   For en simultanfordeling må du først finne marginalfordelingen P(X=x)
   ved å summere over y. Ikke vekt med rad-summer i stedet for marginalsumane.
 
-examples:
-  - source: "Eksamen jan26 · oppgave 2a"
-    excerpt: "Marginalfordelingen P(X=x): {0.4, 0.3, 0.3} for x ∈ {0,1,2}. Finn E[X]."
-    solution_sketch: "E[X] = 0·0.4 + 1·0.3 + 2·0.3 = 0.9"
-  - source: "Eksamen jan25 · oppgave 2b"
-    excerpt: "Sannsynligheter {0.3, 0.2, 0.2, 0.1, 0.2} for x ∈ {-2,-1,0,1,2}."
-    solution_sketch: "E[X] = -0.6 - 0.2 + 0 + 0.1 + 0.4 = -0.3"
+detailed_solution_variants:
+  - label: "Forventningsverdi (diskret)"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 2b"
+        question: "Den diskrete stokastiske variabelen `X` tar verdier `{-2, -1, 0, 1, 2}` med sannsynligheter `{0.3, 0.2, 0.2, 0.1, 0.2}`. Finn `E[X]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` er diskret med endelig utfallsrom og kjent sannsynlighetsfordeling." }
+              - { text: "Vi skal beregne forventningsverdien `E[X]`." }
+          - label: "Formel"
+            lines:
+              - { text: "Forventningsverdi for diskret SV:" }
+              - { indent: "`E[X] = Σ x_i · P(X = x_i)`" }
+          - label: "Innsatt"
+            lines:
+              - { table_lookup: { ref: "tabell over X", text: "Les av `x_i` og `P(X = x_i)` fra fordelingstabellen." } }
+              - { text: "Multipliser hver verdi med sin sannsynlighet og summer:" }
+              - { indent: "`E[X] = (-2)·0.3 + (-1)·0.2 + 0·0.2 + 1·0.1 + 2·0.2`" }
+              - { indent: "`     = -0.6 - 0.2 + 0 + 0.1 + 0.4`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Summen av leddene gir forventningsverdien." }
+              - { comment: "Negativ forventning fordi sannsynlighetsmassen ligger litt mot venstre." }
+        result: "`E[X] = -0.3`"
+
+      - source: "Anvendelse · lineæritet av forventning"
+        question: "Gitt `E[X] = 1.7` for en diskret SV `X`. Finn `E[3X - 2]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Y = 3X - 2` er en lineær transformasjon av `X`." }
+              - { text: "Bruk lineæriteten av forventningsverdi i stedet for å regne ut leddvis." }
+          - label: "Formel"
+            lines:
+              - { text: "For konstanter `a, b`:" }
+              - { indent: "`E[aX + b] = a·E[X] + b`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Med `a = 3`, `b = -2` og `E[X] = 1.7`:" }
+              - { indent: "`E[3X - 2] = 3·E[X] - 2`" }
+              - { indent: "`         = 3·1.7 - 2`" }
+              - { indent: "`         = 5.1 - 2`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Subtraksjon gir det endelige svaret." }
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sjekk: skala 3 strekker fordelingen, `-2` flytter den ned. Forventning følger samme transformasjon." }
+              - { comment: "Definisjonen `Σ (3x-2)·P(X=x) = 3·Σ x·P(X=x) - 2·Σ P(X=x) = 3·E[X] - 2` bekrefter formelen." }
+        result: "`E[3X - 2] = 3.1`"
+
+      - source: "Anvendelse · sum av to terninger"
+        question: "Kast to rettferdige terninger. La `X` være øynene på terning 1 og `Y` øynene på terning 2. Finn `E[X + Y]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` og `Y` er diskrete SV med uniform fordeling på `{1, 2, 3, 4, 5, 6}`." }
+              - { text: "Vi skal finne forventningsverdien til summen `X + Y`." }
+              - { comment: "Lineæriteten gjelder uavhengig av om `X` og `Y` er uavhengige." }
+          - label: "Formel"
+            lines:
+              - { text: "Forventning for én terning:" }
+              - { indent: "`E[X] = Σ x · P(X = x) = (1 + 2 + 3 + 4 + 5 + 6)/6`" }
+              - { text: "Lineæritet for sum:" }
+              - { indent: "`E[X + Y] = E[X] + E[Y]`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Forventning per terning:" }
+              - { indent: "`E[X] = 21/6 = 3.5`" }
+              - { indent: "`E[Y] = 21/6 = 3.5`" }
+              - { text: "Summer ledd for ledd:" }
+              - { indent: "`E[X + Y] = 3.5 + 3.5`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Summen gir det endelige svaret." }
+          - label: "Sjekk"
+            lines:
+              - { text: "Vi unngår å regne ut leddvis fra fellestabellen `Σ (x+y)·P(X=x, Y=y)` med 36 utfall." }
+              - { comment: "Lineæriteten reduserer en 36-leddssum til to enkle 6-leddssummer." }
+        result: "`E[X + Y] = 7`"
 
 related:
   - { id: "varians-standardavvik-diskret", kind: "entry" }

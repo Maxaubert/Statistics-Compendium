@@ -65,36 +65,87 @@ python_snippet: |
   margin = z * math.sqrt(lam_hat / t)
   ci = (lam_hat - margin, lam_hat + margin)
 
-examples:
-  - source: "Eksamen jan26 · oppgave 4e"
-    excerpt: "15 klippeblåvinger fanget i 5 uker (840 timer). Finn 90 % KI for λ."
-    solution_sketch: "λ̂ = 15/840 = 0.01786. z_0.05 = 1.645. Margin = 1.645·√(0.01786/840) = 0.00758. CI = [0.0103, 0.0254]"
-  - source: "Eksamen jan25 · oppgave 4c"
-    excerpt: "37 vulkanutbrudd over 118 år (1416 mnd). Finn 90 % KI for raten pr. måned."
-    solution_sketch: "λ̂ = 37/1416 = 0.0261. Margin = 1.645·√37/1416 = 0.0071. CI = [0.0190, 0.0332]"
+detailed_solution_variants:
+  - label: "KI for poisson-rate λ"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 4e"
+        question: "Biologen lar fellen stå i fem uker og fanger 15 klippeblåvinger. Finn et tilnærmet 90 % konfidensintervall for raten λ."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Y = 15 hendelser (klippeblåvinger fanget)" }
+              - { text: "t = 5 uker = 5·168 = 840 timer" }
+              - { text: "Konfidensnivå 90 % → α = 0.10, α/2 = 0.05" }
+          - label: "Estimat"
+            lines:
+              - { text: "λ̂ = Y/t = 15/840 = 0.01786 pr. time" }
+              - { comment: "Y = 15 > 10, så normalapproksimasjon er gyldig" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.05 = 1.645" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 1.645 · √(0.01786 / 840)" }
+              - { indent: "= 1.645 · √(2.126·10⁻⁵)" }
+              - { indent: "= 1.645 · 0.00461 = 0.00758" }
+              - { text: "KI = λ̂ ± margin = 0.01786 ± 0.00758" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 90 % sikre på at raten λ ligger mellom 0.0103 og 0.0254 fangster pr. time." }
+        result: "λ ∈ [0.0103, 0.0254] pr. time"
 
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 4e"
-    question: "Biologen lar fellen stå i fem uker og fanger 15 klippeblåvinger. Finn et tilnærmet 90 % konfidensintervall for raten λ."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "Y = 15 hendelser, t = 5 uker = 5·168 = 840 timer" }
-          - { text: "Konfidensnivå 90 % → α = 0.10" }
-      - label: "Punktestimat"
-        lines:
-          - { text: "λ̂ = Y/t = 15/840 = 0.01786" }
-          - { comment: "Y > 10, så approksimasjonen er god nok" }
-      - label: "Tabelloppslag"
-        lines:
-          - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.05 = 1.645" } }
-      - label: "Innsatt"
-        lines:
-          - { text: "Margin = 1.645 · √(0.01786 / 840)" }
-          - { indent: "= 1.645 · √(2.126·10⁻⁵)" }
-          - { indent: "= 1.645 · 0.00461 = 0.00758" }
-          - { text: "CI = 0.01786 ± 0.00758" }
-    result: "λ ∈ [0.0103, 0.0254] pr. time"
+      - source: "Praksiseksempel · vulkanutbrudd"
+        question: "I løpet av 60 år er det observert 12 vulkanutbrudd i et område. Anta poissonprosess. Finn et 95 % konfidensintervall for raten λ pr. år."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Y = 12 hendelser (vulkanutbrudd)" }
+              - { text: "t = 60 år" }
+              - { text: "Konfidensnivå 95 % → α = 0.05, α/2 = 0.025" }
+          - label: "Estimat"
+            lines:
+              - { text: "λ̂ = Y/t = 12/60 = 0.20 utbrudd pr. år" }
+              - { comment: "Y = 12 > 10, normalapproksimasjon er ok" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.025 = 1.96" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 1.96 · √(0.20 / 60)" }
+              - { indent: "= 1.96 · √(0.003333)" }
+              - { indent: "= 1.96 · 0.05774 = 0.1132" }
+              - { text: "KI = λ̂ ± margin = 0.20 ± 0.113" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 95 % sikre på at den sanne raten λ ligger mellom 0.087 og 0.313 utbrudd pr. år." }
+        result: "λ ∈ [0.087, 0.313] utbrudd pr. år"
+
+      - source: "Praksiseksempel · telefonsentral"
+        question: "En telefonsentral mottar 25 anrop i løpet av 1 time. Anta poissonprosess. Finn et 99 % konfidensintervall for raten λ pr. time."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Y = 25 hendelser (anrop)" }
+              - { text: "t = 1 time" }
+              - { text: "Konfidensnivå 99 % → α = 0.01, α/2 = 0.005" }
+          - label: "Estimat"
+            lines:
+              - { text: "λ̂ = Y/t = 25/1 = 25 anrop pr. time" }
+              - { comment: "Y = 25 > 10, normalapproksimasjon er trygg" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.005 = 2.576" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 2.576 · √(25 / 1)" }
+              - { indent: "= 2.576 · √25" }
+              - { indent: "= 2.576 · 5 = 12.88" }
+              - { text: "KI = λ̂ ± margin = 25 ± 12.88" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 99 % sikre på at sentralens sanne ankomstrate λ ligger mellom 12.12 og 37.88 anrop pr. time." }
+              - { comment: "Merk: bredt intervall fordi vi kun har observert ett tidsvindu (t = 1)." }
+        result: "λ ∈ [12.12, 37.88] anrop pr. time"
 
 related:
   - { id: "poisson-fordeling",       kind: "entry" }

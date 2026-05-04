@@ -41,13 +41,101 @@ solution_template:
   - "For P(Y=y): summer langs kolonnen"
   - "Sjekk at marginalsummene tilsammen blir 1"
 
-examples:
-  - source: "Eksamen jan26 · oppgave 2"
-    excerpt: "Simultanfordeling i 3×3-tabell. Finn marginalfordelingene."
-    solution_sketch: "P(X=0) = 0.2+0.1+0.1 = 0.4, P(X=1) = 0.3, P(X=2) = 0.3 (radsummer); P(Y=0) = 0.5, P(Y=5) = 0.1, P(Y=10) = 0.4 (kolonnesummer)"
-  - source: "Eksamen mai25 · oppgave 1"
-    excerpt: "Annen simultanfordeling. Finn marginalfordelingene."
-    solution_sketch: "P(X=x): {0.6, 0.2, 0.2} (radsummer); P(Y=y): {0.5, 0.3, 0.2} (kolonnesummer)"
+detailed_solution_variants:
+  - label: "Marginalfordeling fra simultantabell"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 2"
+        question: "Gitt en simultanfordeling for `(X, Y)` i en 3×3-tabell. Finn marginalfordelingene til `X` og `Y`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har simultantabellen `P(X = x, Y = y)`:" }
+              - { text: "`         Y=0    Y=5    Y=10`" }
+              - { text: "`X=0      0.2    0.1    0.1   `" }
+              - { text: "`X=1      0.2    0.0    0.1   `" }
+              - { text: "`X=2      0.1    0.0    0.2   `" }
+              - { text: "Marginal av `X` er radsummer; marginal av `Y` er kolonnesummer." }
+          - label: "Marginal av X"
+            lines:
+              - { text: "`P(X = 0) = 0.2 + 0.1 + 0.1 = 0.4`" }
+              - { text: "`P(X = 1) = 0.2 + 0.0 + 0.1 = 0.3`" }
+              - { text: "`P(X = 2) = 0.1 + 0.0 + 0.2 = 0.3`" }
+          - label: "Marginal av Y"
+            lines:
+              - { text: "`P(Y = 0)  = 0.2 + 0.2 + 0.1 = 0.5`" }
+              - { text: "`P(Y = 5)  = 0.1 + 0.0 + 0.0 = 0.1`" }
+              - { text: "`P(Y = 10) = 0.1 + 0.1 + 0.2 = 0.4`" }
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sum av marginal for `X`: `0.4 + 0.3 + 0.3 = 1.0` ✓" }
+              - { text: "Sum av marginal for `Y`: `0.5 + 0.1 + 0.4 = 1.0` ✓" }
+          - label: "Resultat"
+            lines:
+              - { text: "Marginalfordelingen for `X`: `{0.4, 0.3, 0.3}` for `x ∈ {0, 1, 2}`." }
+              - { text: "Marginalfordelingen for `Y`: `{0.5, 0.1, 0.4}` for `y ∈ {0, 5, 10}`." }
+        result: "P(X): (0.4, 0.3, 0.3); P(Y): (0.5, 0.1, 0.4)"
+
+      - source: "Praksiseksempel · 3×2-tabell"
+        question: "Gitt simultanfordelingen `P(X = x, Y = y)` for `X ∈ {1, 2, 3}` og `Y ∈ {0, 1}`. Finn marginalfordelingene."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Simultantabellen er:" }
+              - { text: "`         Y=0    Y=1  `" }
+              - { text: "`X=1      0.10   0.20 `" }
+              - { text: "`X=2      0.15   0.25 `" }
+              - { text: "`X=3      0.05   0.25 `" }
+              - { text: "For marginal av `X` summerer vi langs hver rad; for marginal av `Y` langs hver kolonne." }
+          - label: "Marginal av X"
+            lines:
+              - { text: "`P(X = 1) = 0.10 + 0.20 = 0.30`" }
+              - { text: "`P(X = 2) = 0.15 + 0.25 = 0.40`" }
+              - { text: "`P(X = 3) = 0.05 + 0.25 = 0.30`" }
+          - label: "Marginal av Y"
+            lines:
+              - { text: "`P(Y = 0) = 0.10 + 0.15 + 0.05 = 0.30`" }
+              - { text: "`P(Y = 1) = 0.20 + 0.25 + 0.25 = 0.70`" }
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sum av marginal for `X`: `0.30 + 0.40 + 0.30 = 1.00` ✓" }
+              - { text: "Sum av marginal for `Y`: `0.30 + 0.70 = 1.00` ✓" }
+              - { text: "Total sum av celler: `0.10 + 0.20 + 0.15 + 0.25 + 0.05 + 0.25 = 1.00` ✓" }
+          - label: "Resultat"
+            lines:
+              - { text: "Marginal for `X`: `P(X = 1) = 0.30`, `P(X = 2) = 0.40`, `P(X = 3) = 0.30`." }
+              - { text: "Marginal for `Y`: `P(Y = 0) = 0.30`, `P(Y = 1) = 0.70`." }
+        result: "P(X): (0.30, 0.40, 0.30); P(Y): (0.30, 0.70)"
+
+      - source: "Praksiseksempel · forventningsverdier fra marginalene"
+        question: "Bruk marginalfordelingene fra forrige oppgave (`X ∈ {1, 2, 3}`, `Y ∈ {0, 1}`) til å regne ut `E[X]` og `E[Y]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Fra forrige eksempel har vi marginalfordelingene:" }
+              - { text: "`P(X = 1) = 0.30`, `P(X = 2) = 0.40`, `P(X = 3) = 0.30`." }
+              - { text: "`P(Y = 0) = 0.30`, `P(Y = 1) = 0.70`." }
+              - { text: "Forventningsverdi for diskret variabel: `E[X] = Σ_x x · P(X = x)`." }
+          - label: "Marginal av X"
+            lines:
+              - { text: "Innsetting i `E[X] = Σ_x x · P(X = x)`:" }
+              - { text: "`E[X] = 1 · 0.30 + 2 · 0.40 + 3 · 0.30`" }
+              - { text: "`     = 0.30 + 0.80 + 0.90`" }
+              - { text: "`     = 2.00`" }
+          - label: "Marginal av Y"
+            lines:
+              - { text: "Innsetting i `E[Y] = Σ_y y · P(Y = y)`:" }
+              - { text: "`E[Y] = 0 · 0.30 + 1 · 0.70`" }
+              - { text: "`     = 0 + 0.70`" }
+              - { text: "`     = 0.70`" }
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sjekk at marginalene fortsatt summerer til 1: `0.30 + 0.40 + 0.30 = 1.00` og `0.30 + 0.70 = 1.00` ✓." }
+              - { text: "`E[X] = 2.00` ligger i intervallet `[1, 3]` (mulige X-verdier) ✓." }
+              - { text: "`E[Y] = 0.70` ligger i `[0, 1]` ✓." }
+          - label: "Resultat"
+            lines:
+              - { text: "`E[X] = 2.00` og `E[Y] = 0.70`." }
+        result: "E[X] = 2.00, E[Y] = 0.70"
 
 related:
   - { id: "forventningsverdi-diskret",    kind: "entry" }

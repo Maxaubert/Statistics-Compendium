@@ -81,16 +81,232 @@ common_traps: |
   - **Komplement av disjunkt union**: P(A̅ ∩ B̅) = 1 − P(A ∪ B), via De Morgans lov. Brukes for "verken A eller B".
   - **Komplement i tellinger**: For "minst én suksess", komplementet er "null suksesser" (ofte enkelt å regne).
 
-examples:
-  - source: "Eksamen jan25 · oppgave 1b"
-    excerpt: "P(alle 5 trukne kort er hjerter) = 0.000495. Sannsynlighet for at IKKE alle er hjerter?"
-    solution_sketch: "P(ikke alle) = 1 − 0.000495 = 0.999505"
-  - source: "Eksamen jan26 · oppgave 1c"
-    excerpt: "P(minst én kron i n kast) > 0.99 ekvivalent med 1 − P(0 kron) > 0.99."
-    solution_sketch: "P(X ≥ 1) > 0.99 ⇔ P(X = 0) < 0.01 ⇔ 0.5^n < 0.01"
-  - source: "Eksamen jan26 · oppgave 4b"
-    excerpt: "P(minst tre klippeblåvinger). Bruk komplement."
-    solution_sketch: "P(X ≥ 3) = 1 − P(X ≤ 2)"
+detailed_solution_variants:
+  - label: "Minst k"
+    solutions:
+      - source: "Praksis · terninger"
+        question: "Du kaster fire vanlige terninger. Hva er sannsynligheten for at minst én viser sekser?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "La `X` være antall seksere blant de fire kastene. Hver terning er uavhengig, og `P(sekser) = 1/6` for hver."
+              - text: "Spørsmålet er `P(X ≥ 1)` — typisk 'minst én'-mønster som direkte ville krevd å summere over `X = 1, 2, 3, 4`."
+          - label: "Komplement"
+            lines:
+              - text: "Komplementet til 'minst én sekser' er 'ingen seksere i det hele tatt', altså `X = 0`."
+              - text: "Da har vi `P(X ≥ 1) = 1 − P(X = 0)`."
+          - label: "Beregning"
+            lines:
+              - text: "Hver terning unngår sekser med sannsynlighet `5/6`, og terningene er uavhengige:"
+              - indent: "`P(X = 0) = (5/6)⁴ = 625/1296 ≈ 0.4823`"
+              - text: "Trekker fra 1:"
+              - indent: "`P(X ≥ 1) = 1 − 0.4823 = 0.5177`"
+          - label: "Resultat"
+            lines:
+              - text: "Sannsynligheten for minst én sekser i fire kast er omtrent `0.5177`."
+        result: "`P(minst én sekser) ≈ 0.5177`"
+
+      - source: "Praksis · vulkanutbrudd (Poisson)"
+        question: "Vulkanutbrudd i et område modelleres Poisson med rate `0.03` utbrudd per år. Hva er sannsynligheten for minst to utbrudd i løpet av de neste 50 årene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Antall utbrudd `X` i 50 år er Poisson med `λt = 0.03 · 50 = 1.5`."
+              - text: "Vi vil ha `P(X ≥ 2)`. Direkte: `P(X = 2) + P(X = 3) + ...` (uendelig sum)."
+          - label: "Komplement"
+            lines:
+              - text: "Komplementet til 'minst 2' er `X ≤ 1`, altså 0 eller 1 utbrudd:"
+              - indent: "`P(X ≥ 2) = 1 − P(X = 0) − P(X = 1)`"
+              - comment: "Merk: `1 − P(X ≤ 1)`, IKKE `1 − P(X ≤ 2)` — vanlig indeks-felle."
+          - label: "Beregning"
+            lines:
+              - text: "Med `λt = 1.5`:"
+              - indent: "`P(X = 0) = e^(−1.5) ≈ 0.2231`"
+              - indent: "`P(X = 1) = 1.5 · e^(−1.5) ≈ 0.3347`"
+              - text: "Sum:"
+              - indent: "`P(X ≤ 1) ≈ 0.2231 + 0.3347 = 0.5578`"
+              - text: "Komplement:"
+              - indent: "`P(X ≥ 2) = 1 − 0.5578 = 0.4422`"
+          - label: "Resultat"
+            lines:
+              - text: "Det er omtrent `44.2 %` sannsynlighet for minst to utbrudd i 50 år."
+        result: "`P(X ≥ 2) ≈ 0.4422`"
+
+      - source: "Praksis · indeks-felle for 'minst k'"
+        question: "En binomisk variabel har `n = 10`, `p = 0.3`. Forklar hvorfor `P(X ≥ 2) = 1 − P(X ≤ 1)` og IKKE `1 − P(X ≤ 2)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Hendelsen 'minst 2' består av utfallene `X = 2, 3, 4, ..., 10`."
+              - text: "Komplementet er alle utfall som IKKE er minst 2, altså `X = 0` eller `X = 1`."
+          - label: "Komplement"
+            lines:
+              - text: "Komplementet er `X ≤ 1` (ikke `X ≤ 2`), fordi `X = 2` selv hører til hovedhendelsen 'minst 2'."
+              - indent: "`P(X ≥ 2) = 1 − P(X ≤ 1)`"
+              - comment: "Tommelfingerregel: `P(X ≥ k) = 1 − P(X ≤ k − 1)`."
+          - label: "Beregning"
+            lines:
+              - text: "Slå opp i Tabell E.1 (binomisk kumulativ) med `n = 10`, `p = 0.3`:"
+              - table_lookup: { ref: "E.1", text: "`P(X ≤ 1) ≈ 0.1493` for `n = 10`, `p = 0.3`" }
+              - text: "Komplement:"
+              - indent: "`P(X ≥ 2) = 1 − 0.1493 = 0.8507`"
+              - text: "Hadde vi feilaktig brukt `1 − P(X ≤ 2) ≈ 1 − 0.3828 = 0.6172`, ville vi mistet bidraget fra `X = 2` (som er ca. `0.2335`)."
+          - label: "Resultat"
+            lines:
+              - text: "Riktig svar er `P(X ≥ 2) ≈ 0.8507`. Indeks-fellen gir feil verdi `0.6172`."
+        result: "`P(X ≥ 2) ≈ 0.8507` (ikke `0.6172`)"
+
+  - label: "Ingen / null"
+    solutions:
+      - source: "Praksis · binomisk kvalitetskontroll"
+        question: "I en sending på `n = 10` komponenter er sannsynligheten for at en gitt komponent er defekt `p = 0.05`. Hva er sannsynligheten for at INGEN er defekte?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "La `X` være antall defekte. Da er `X ~ Bin(10, 0.05)`."
+              - text: "Spørsmålet er `P(X = 0)` — typisk 'ingen / null'-mønster."
+          - label: "Komplement"
+            lines:
+              - text: "Her bruker vi IKKE komplement direkte; men 'ingen defekte' er ofte selv komplementet til 'minst én defekt'."
+              - indent: "`P(X = 0) = 1 − P(X ≥ 1)`"
+              - text: "Det er like enkelt å regne `P(X = 0)` direkte fra binomisk pmf."
+          - label: "Beregning"
+            lines:
+              - text: "Direkte fra pmf:"
+              - indent: "`P(X = 0) = (1 − p)^n = 0.95^10`"
+              - indent: "`0.95^10 ≈ 0.5987`"
+          - label: "Resultat"
+            lines:
+              - text: "Sannsynligheten for at ingen er defekte er omtrent `0.5987`."
+              - text: "Dermed er `P(minst én defekt) = 1 − 0.5987 = 0.4013`."
+        result: "`P(X = 0) ≈ 0.5987`"
+
+      - source: "Praksis · Poisson-anrop"
+        question: "Antall anrop til en sentralbord er Poisson med rate `0.3` anrop per minutt. Hva er sannsynligheten for INGEN anrop i løpet av 10 minutter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Antall anrop `X` i 10 minutter er Poisson med `λt = 0.3 · 10 = 3`."
+              - text: "Vi spør `P(X = 0)`."
+          - label: "Komplement"
+            lines:
+              - text: "'Ingen anrop' er selv komplementet til 'minst ett anrop':"
+              - indent: "`P(X ≥ 1) = 1 − P(X = 0)`"
+              - text: "Vi regner `P(X = 0)` direkte og ser at det også gir oss `P(X ≥ 1)` gratis."
+          - label: "Beregning"
+            lines:
+              - text: "Poisson pmf ved `k = 0`:"
+              - indent: "`P(X = 0) = e^(−λt) = e^(−3)`"
+              - indent: "`e^(−3) ≈ 0.0498`"
+          - label: "Resultat"
+            lines:
+              - text: "Det er kun ca. `5 %` sjanse for ingen anrop i 10 minutter."
+              - text: "Tilsvarende er `P(minst ett anrop) ≈ 0.9502`."
+        result: "`P(X = 0) ≈ 0.0498`"
+
+  - label: "Ikke alle"
+    solutions:
+      - source: "Praksis · komponentpålitelighet"
+        question: "Et system består av 5 komponenter i serie. Hver komponent fungerer uavhengig med sannsynlighet `p = 0.95`. Hva er sannsynligheten for at minst én komponent feiler (altså at IKKE alle fungerer)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "La `A` = 'alle 5 komponenter fungerer'. Komponentene er uavhengige."
+              - text: "'Ikke alle fungerer' er det samme som 'minst én feiler' — komplementet av `A`."
+          - label: "Komplement"
+            lines:
+              - text: "Skriv om eksplisitt:"
+              - indent: "`P(ikke alle OK) = 1 − P(alle OK) = 1 − p⁵`"
+              - comment: "Pass på: 'ikke alle' er IKKE det samme som 'ingen' — sistnevnte ville vært `(1 − p)⁵ ≈ 3·10⁻⁷`."
+          - label: "Beregning"
+            lines:
+              - text: "Med `p = 0.95`:"
+              - indent: "`P(alle OK) = 0.95⁵ ≈ 0.7738`"
+              - text: "Komplement:"
+              - indent: "`P(minst én feiler) = 1 − 0.7738 = 0.2262`"
+          - label: "Resultat"
+            lines:
+              - text: "Det er ca. `22.6 %` sannsynlighet for at minst én komponent feiler."
+        result: "`P(minst én feiler) ≈ 0.2262`"
+
+      - source: "Praksis · quiz med 10 ja/nei-spørsmål"
+        question: "En student gjetter helt tilfeldig på 10 ja/nei-spørsmål. Hva er sannsynligheten for at IKKE alle blir riktige?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "La `A` = 'alle 10 svar er riktige'. Hvert svar er uavhengig med `p = 0.5`."
+              - text: "Hendelsen 'ikke alle riktige' er komplementet av `A`."
+          - label: "Komplement"
+            lines:
+              - text: "'Ikke alle riktige' = 'minst ett galt':"
+              - indent: "`P(ikke alle riktige) = 1 − P(alle riktige) = 1 − 0.5^10`"
+          - label: "Beregning"
+            lines:
+              - text: "Sett inn:"
+              - indent: "`0.5^10 = 1/1024 ≈ 0.000977`"
+              - indent: "`P(ikke alle riktige) = 1 − 0.000977 ≈ 0.9990`"
+          - label: "Resultat"
+            lines:
+              - text: "Det er praktisk talt sikkert (`> 99.9 %`) at studenten får minst ett galt svar."
+        result: "`P(ikke alle riktige) ≈ 0.999`"
+
+  - label: "Finn n for terskel"
+    solutions:
+      - source: "Praksis · sjeldne suksesser"
+        question: "Et eksperiment lykkes med sannsynlighet `p = 0.02` per forsøk. Hvor mange uavhengige forsøk trenger man for at sannsynligheten for minst én suksess skal være minst `0.95`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "La `n` være antall forsøk og `X` antall suksesser. Vi krever `P(X ≥ 1) ≥ 0.95`."
+              - text: "Direkte uttrykt blir dette en kompleks sum; komplement gir én linje."
+          - label: "Komplement"
+            lines:
+              - text: "Komplementet av 'minst én suksess' er 'null suksesser':"
+              - indent: "`P(X ≥ 1) = 1 − (1 − p)^n = 1 − 0.98^n`"
+              - text: "Kravet blir:"
+              - indent: "`1 − 0.98^n ≥ 0.95  ⇔  0.98^n ≤ 0.05`"
+          - label: "Beregning"
+            lines:
+              - text: "Ta naturlig logaritme på begge sider. Siden `ln(0.98) < 0`, snur ulikheten:"
+              - indent: "`n · ln(0.98) ≤ ln(0.05)`"
+              - indent: "`n ≥ ln(0.05) / ln(0.98)`"
+              - indent: "`n ≥ (−2.9957) / (−0.0202) ≈ 148.3`"
+              - text: "Rund OPP til nærmeste heltall:"
+              - indent: "`n = 149`"
+              - text: "Verifiser:"
+              - indent: "`1 − 0.98^149 ≈ 1 − 0.04945 ≈ 0.9506 ≥ 0.95`  ✓"
+          - label: "Resultat"
+            lines:
+              - text: "Det trengs minst `149` forsøk for at minst én suksess skal være ≥ 95 % sannsynlig."
+        result: "`n = 149`"
+
+      - source: "Praksis · myntkast"
+        question: "Hvor mange myntkast trengs for at sannsynligheten for minst én krone skal være minst `0.99`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - text: "Hvert kast gir krone med `p = 0.5`, uavhengig av andre kast."
+              - text: "Vi vil ha `P(minst én krone i n kast) ≥ 0.99`."
+          - label: "Komplement"
+            lines:
+              - text: "Komplementet er 'ingen krone i n kast', altså n mynt på rad:"
+              - indent: "`P(minst én krone) = 1 − 0.5^n`"
+              - text: "Kravet blir:"
+              - indent: "`1 − 0.5^n ≥ 0.99  ⇔  0.5^n ≤ 0.01`"
+          - label: "Beregning"
+            lines:
+              - text: "Ta logaritme (base 2 er praktisk her, men ln virker like fint):"
+              - indent: "`n · ln(0.5) ≤ ln(0.01)`"
+              - indent: "`n ≥ ln(0.01) / ln(0.5) = log₂(100) ≈ 6.6439`"
+              - text: "Rund OPP:"
+              - indent: "`n = 7`"
+              - text: "Verifiser:"
+              - indent: "`1 − 0.5^7 = 1 − 1/128 ≈ 0.9922 ≥ 0.99`  ✓"
+              - indent: "`1 − 0.5^6 = 1 − 1/64 ≈ 0.9844 < 0.99`  (så `n = 6` er for lite)"
+          - label: "Resultat"
+            lines:
+              - text: "Sju kast er nok for å være minst `99 %` sikker på minst én krone."
+        result: "`n = 7`"
 
 related:
   - { id: "unionssetningen",   kind: "entry" }

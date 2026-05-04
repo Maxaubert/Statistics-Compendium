@@ -47,20 +47,80 @@ common_traps: |
   Glem ikke å trekke fra P(A ∩ B). For tre hendelser: P(A ∪ B ∪ C) =
   P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C).
 
-examples:
-  - source: "Eksamen jan26 · oppgave 3a"
-    excerpt: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
-    solution_sketch: "P(A ∪ B) = 0.30 + 0.25 − 0.15 = 0.40"
+detailed_solution_variants:
+  - label: "Unionssetningen"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 3a"
+        question: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har to hendelser A og B med kjent overlapp." }
+              - { text: "Siden `P(A ∩ B) = 0.15 > 0` er hendelsene IKKE disjunkte." }
+              - { text: "Vi må derfor bruke den generelle unionssetningen." }
+          - label: "Formel"
+            lines:
+              - { text: "Generell unionssetning:" }
+              - { indent: "`P(A ∪ B) = P(A) + P(B) − P(A ∩ B)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Setter inn de oppgitte verdiene:" }
+              - { indent: "`P(A ∪ B) = 0.30 + 0.25 − 0.15`" }
+              - { indent: "`= 0.55 − 0.15`" }
+              - { indent: "`= 0.40`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Sannsynligheten for at minst én av A eller B inntreffer er 0.40." }
+        result: "`P(A ∪ B) = 0.40`"
 
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 3a"
-    question: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
-    sections:
-      - label: "Innsatt"
-        lines:
-          - { text: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)" }
-          - { indent: "= 0.30 + 0.25 − 0.15" }
-    result: "P(A ∪ B) = 0.40"
+      - source: "Praksis · studentkurs"
+        question: "Blant studenter har 60 % matte-kurs, 40 % fysikk-kurs, og 25 % har begge. Hva er sannsynligheten for at en tilfeldig student har minst ett av kursene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La M = «studenten har matte-kurs» og F = «studenten har fysikk-kurs»." }
+              - { text: "`P(M) = 0.60`, `P(F) = 0.40`, `P(M ∩ F) = 0.25`." }
+              - { text: "Hendelsene er IKKE disjunkte (25 % har begge), så vi bruker generell union." }
+          - label: "Formel"
+            lines:
+              - { text: "Unionssetningen for to overlappende hendelser:" }
+              - { indent: "`P(M ∪ F) = P(M) + P(F) − P(M ∩ F)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Setter inn tallene:" }
+              - { indent: "`P(M ∪ F) = 0.60 + 0.40 − 0.25`" }
+              - { indent: "`= 1.00 − 0.25`" }
+              - { indent: "`= 0.75`" }
+              - { comment: "Merk: uten å trekke fra overlappet ville vi feilaktig fått 1.00." }
+          - label: "Resultat"
+            lines:
+              - { text: "75 % av studentene har minst ett av kursene matte eller fysikk." }
+        result: "`P(M ∪ F) = 0.75`"
+
+      - source: "Praksis · kortstokk"
+        question: "Vi trekker ett kort fra en standard kortstokk (52 kort). Hva er sannsynligheten for at kortet er en rød treer eller en rød firer?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La A = «kortet er en rød treer» og B = «kortet er en rød firer»." }
+              - { text: "Et kort kan ikke samtidig være en treer OG en firer, så `A ∩ B = ∅`." }
+              - { text: "Hendelsene er DISJUNKTE, dvs. `P(A ∩ B) = 0`." }
+              - { text: "Det finnes 2 røde treere (hjerter, ruter) og 2 røde firere (hjerter, ruter)." }
+          - label: "Formel"
+            lines:
+              - { text: "For disjunkte hendelser forenkles unionssetningen:" }
+              - { indent: "`P(A ∪ B) = P(A) + P(B) − 0 = P(A) + P(B)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Beregner hver enkeltsannsynlighet:" }
+              - { indent: "`P(A) = 2/52`" }
+              - { indent: "`P(B) = 2/52`" }
+              - { text: "Summerer:" }
+              - { indent: "`P(A ∪ B) = 2/52 + 2/52 = 4/52 = 1/13 ≈ 0.0769`" }
+          - label: "Resultat"
+            lines:
+              - { text: "Sannsynligheten for å trekke en rød treer eller rød firer er `1/13 ≈ 7.69 %`." }
+        result: "`P(A ∪ B) = 4/52 = 1/13 ≈ 0.0769`"
 
 related:
   - { id: "komplementregelen",  kind: "entry" }

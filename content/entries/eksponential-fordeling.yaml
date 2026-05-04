@@ -107,35 +107,198 @@ python_snippet: |
   # P(T ≤ t) = 1 - e^(-λt)
   expon.cdf(t, scale=1/lam)       # 0.3812
 
-examples:
-  - source: "Eksamen jan26 · oppgave 4c"
-    excerpt: "La T være tiden, målt i timer, til den første klippeblåvingen blir fanget i fellen. Hvilken fordeling har T?"
-    solution_sketch: "Siden vi har en poissonprosess med rate λ = 0.01/t, vil T være eksponentialfordelt med samme λ = 0.01 pr. time."
-  - source: "Eksamen jan26 · oppgave 4d"
-    excerpt: "Hva er sannsynligheten for at ingen klippeblåvinger fanges i løpet av de første 48 timene?"
-    solution_sketch: "P(T > 48) = e^(-0.01·48) = e^(-0.48) ≈ 0.6188"
-  - source: "Eksamen jan25 · oppgave 4b (alternativ utregning)"
-    excerpt: "Sannsynlighet for minst ett vulkanutbrudd over 5 år er ekvivalent med ventetiden er kortere enn 5 år."
-    solution_sketch: "P(T < 60 mnd) = F(60) = 1 - e^(-0.0261·60) = 0.792 (samme som via P(X ≥ 1) i Poisson)"
+detailed_solution_variants:
+  - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
+    solutions:
+      - source: "Lyspære med forventet levetid"
+        question: "En lyspære har forventet levetid på 1000 timer. Hva er sannsynligheten for at den varer i mer enn 1500 timer?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = levetid (tid til pæren brenner)" }
+              - { text: "`E[T] = 1000` t  ⇒  `λ = 1/1000 = 0.001` per time" }
+              - { text: "T ~ Eksponential(`λ = 0.001`)" }
+              - { comment: "spørres om `P(T > 1500)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(T > t) = e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(T > 1500) = e^(−0.001 · 1500)`" }
+              - { indent: "`= e^(−1.5)`" }
+              - { indent: "`≈ 0.2231`" }
+        result: "`P(T > 1500) ≈ 0.2231`"
 
-detailed_solutions:
-  - source: "Eksamen jan26 · oppgave 4d"
-    question: "Hva er sannsynligheten for at ingen klippeblåvinger fanges i løpet av de første 48 timene? Bruk λ = 0.01 pr. time."
-    sections:
-      - label: "Identifisering"
-        lines:
-          - { text: "T = tid til første hendelse" }
-          - { text: "T ~ Eksponential(λ = 0.01/t)" }
-          - { comment: "spørres om P(T > 48)" }
-      - label: "Formel"
-        lines:
-          - { text: "F(t) = 1 - e^(-λt)" }
-          - { text: "P(T > t) = 1 - F(t) = e^(-λt)" }
-      - label: "Innsatt"
-        lines:
-          - { text: "P(T > 48) = e^(-0.01 · 48)" }
-          - { indent: "= e^(-0.48)" }
-    result: "P(T > 48) ≈ 0.6188"
+      - source: "Kundeankomster i butikk"
+        question: "Kunder kommer til en butikk med rate 0.1 per minutt. Hva er sannsynligheten for at det ikke kommer noen kunde i løpet av de neste 30 minuttene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til neste kundeankomst" }
+              - { text: "`λ = 0.1` per minutt" }
+              - { text: "T ~ Eksponential(`λ = 0.1`)" }
+              - { comment: "ingen kunde i 30 min  ⇔  `P(T > 30)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(T > t) = e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(T > 30) = e^(−0.1 · 30)`" }
+              - { indent: "`= e^(−3)`" }
+              - { indent: "`≈ 0.0498`" }
+        result: "`P(T > 30) ≈ 0.0498`"
+
+      - source: "Komponentens MTBF"
+        question: "En komponent har MTBF (mean time between failures) på 5 år. Hva er sannsynligheten for at den fungerer i mer enn 10 år uten feil?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til feil" }
+              - { text: "`MTBF = E[T] = 5` år  ⇒  `λ = 1/5 = 0.2` per år" }
+              - { text: "T ~ Eksponential(`λ = 0.2`)" }
+              - { comment: "spørres om `P(T > 10)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(T > t) = e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(T > 10) = e^(−0.2 · 10)`" }
+              - { indent: "`= e^(−2)`" }
+              - { indent: "`≈ 0.1353`" }
+        result: "`P(T > 10) ≈ 0.1353`"
+
+  - label: "P(T < t) — hendelse innen t"
+    solutions:
+      - source: "Anropssenter — første anrop"
+        question: "Anrop kommer til et anropssenter med rate 0.1 per minutt. Hva er sannsynligheten for at det første anropet kommer innen 5 minutter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til første anrop" }
+              - { text: "`λ = 0.1` per minutt" }
+              - { text: "T ~ Eksponential(`λ = 0.1`)" }
+              - { comment: "spørres om `P(T < 5)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`F(t) = P(T < t) = 1 − e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(T < 5) = 1 − e^(−0.1 · 5)`" }
+              - { indent: "`= 1 − e^(−0.5)`" }
+              - { indent: "`≈ 1 − 0.6065`" }
+              - { indent: "`≈ 0.3935`" }
+        result: "`P(T < 5) ≈ 0.3935`"
+
+      - source: "Vulkanutbrudd"
+        question: "Vulkanutbrudd skjer i et område med rate 0.5 per år (poissonprosess). Hva er sannsynligheten for at det kommer et utbrudd innen ett år?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til neste utbrudd" }
+              - { text: "`λ = 0.5` per år" }
+              - { text: "T ~ Eksponential(`λ = 0.5`)" }
+              - { comment: "spørres om `P(T < 1)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`F(t) = 1 − e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(T < 1) = 1 − e^(−0.5 · 1)`" }
+              - { indent: "`= 1 − e^(−0.5)`" }
+              - { indent: "`≈ 1 − 0.6065`" }
+              - { indent: "`≈ 0.3935`" }
+          - label: "Sjekk"
+            lines:
+              - { comment: "samme som via Poisson: `P(X ≥ 1) = 1 − e^(−0.5)`" }
+        result: "`P(T < 1) ≈ 0.3935`"
+
+  - label: "P(a < T < b) — intervall"
+    solutions:
+      - source: "Bussintervall"
+        question: "Busser ankommer holdeplassen som en poissonprosess med rate 6 per time. Hva er sannsynligheten for at neste buss kommer mellom 10 og 30 minutter fra nå?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til neste buss" }
+              - { text: "rate gitt per time: `6/time`  ⇒  per minutt: `λ = 6/60 = 0.1` per min" }
+              - { text: "T ~ Eksponential(`λ = 0.1` per min)" }
+              - { comment: "spørres om `P(10 < T < 30)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a < T < b) = F(b) − F(a) = e^(−λa) − e^(−λb)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(10 < T < 30) = e^(−0.1 · 10) − e^(−0.1 · 30)`" }
+              - { indent: "`= e^(−1) − e^(−3)`" }
+              - { indent: "`≈ 0.3679 − 0.0498`" }
+              - { indent: "`≈ 0.3181`" }
+        result: "`P(10 < T < 30) ≈ 0.3181`"
+
+      - source: "Anropssenter — intervall"
+        question: "Anrop kommer med rate 0.5 per minutt. Hva er sannsynligheten for at neste anrop kommer mellom 2 og 5 minutter fra nå?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til neste anrop" }
+              - { text: "`λ = 0.5` per minutt" }
+              - { text: "T ~ Eksponential(`λ = 0.5`)" }
+              - { comment: "spørres om `P(2 < T < 5)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a < T < b) = e^(−λa) − e^(−λb)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(2 < T < 5) = e^(−0.5 · 2) − e^(−0.5 · 5)`" }
+              - { indent: "`= e^(−1) − e^(−2.5)`" }
+              - { indent: "`≈ 0.3679 − 0.0821`" }
+              - { indent: "`≈ 0.2858`" }
+        result: "`P(2 < T < 5) ≈ 0.2858`"
+
+  - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
+    solutions:
+      - source: "Klassisk kundeankomster"
+        question: "Kunder kommer med rate 0.1 per minutt. Det har ikke kommet noen kunde de siste 5 minuttene. Hva er sannsynligheten for at vi må vente i mer enn 10 minutter til?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = tid til neste kunde" }
+              - { text: "`λ = 0.1` per minutt, `s = 5` (fortid), `t = 10` (ny ventetid)" }
+              - { comment: "memoryless: `P(T > s + t | T > s) = P(T > t)`" }
+              - { comment: "`s = 5` brukes ikke i utregningen" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(T > t) = e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(må vente > 10 min til) = P(T > 10) = e^(−0.1 · 10)`" }
+              - { indent: "`= e^(−1)`" }
+              - { indent: "`≈ 0.3679`" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "fordelingen 'starter på nytt' — de 5 minuttene som har gått teller ikke" }
+        result: "`P(T > 10 | T > 5) = e^(−1) ≈ 0.3679`"
+
+      - source: "Lyspære som har kjørt i 500 timer"
+        question: "En lyspære har forventet levetid 1000 timer (`λ = 0.001` per time). Den har allerede vært i drift i 500 timer uten å brenne. Hva er sannsynligheten for at den varer i minst 1500 timer til?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "T = total levetid" }
+              - { text: "`λ = 0.001` per time, `s = 500` (allerede brukt), `t = 1500` (gjenstående)" }
+              - { comment: "memoryless: `P(T > s + t | T > s) = P(T > t)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(T > t) = e^(−λt)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(varer ≥ 1500 t til) = P(T > 1500) = e^(−0.001 · 1500)`" }
+              - { indent: "`= e^(−1.5)`" }
+              - { indent: "`≈ 0.2231`" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "pæren 'husker ikke' de 500 timene den allerede har brent" }
+              - { comment: "i praksis er ikke pærer memoryless — slitasje gjør at modellen er en idealisering" }
+        result: "`P(T > 1500 | T > 500) = e^(−1.5) ≈ 0.2231`"
 
 related:
   - { id: "poisson-fordeling",  kind: "entry" }
