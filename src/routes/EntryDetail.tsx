@@ -12,9 +12,8 @@ import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
 import { StepByStep } from "@/components/detail/StepByStep";
 import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
-import { ExampleCard } from "@/components/detail/ExampleCard";
-import { ExampleVariantsTabs } from "@/components/detail/ExampleVariantsTabs";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
+import { DetailedSolutionVariantsTabs } from "@/components/detail/DetailedSolutionVariantsTabs";
 import { TrapAlert } from "@/components/detail/TrapAlert";
 import { PythonSnippet } from "@/components/detail/PythonSnippet";
 import { ToolCards } from "@/components/detail/ToolCards";
@@ -136,30 +135,19 @@ export function EntryDetail() {
           </Section>
         ) : null}
 
-        {(entry.example_variants?.length ?? 0) > 0 ? (
-          <Section title="Eksempler fra obliger og eksamener" icon={FileText}>
-            <ExampleVariantsTabs variants={entry.example_variants!} />
+        {(entry.detailed_solution_variants?.length ?? 0) > 0 ? (
+          <Section title="Detaljerte oppgaveløsninger" icon={FileText}>
+            <DetailedSolutionVariantsTabs
+              variants={entry.detailed_solution_variants!}
+            />
           </Section>
-        ) : entry.examples ? (
-          <Section title="Eksempler fra obliger og eksamener" icon={FileText}>
-            {entry.examples.map((ex, i) => (
-              <ExampleCard
-                key={i}
-                source={ex.source}
-                excerpt={ex.excerpt}
-                solutionSketch={ex.solution_sketch}
-              />
-            ))}
-          </Section>
-        ) : null}
-
-        {entry.detailed_solutions && (
+        ) : entry.detailed_solutions ? (
           <Section title="Detaljerte oppgaveløsninger" icon={FileText}>
             {entry.detailed_solutions.map((s, i) => (
               <DetailedSolution key={i} solution={s} />
             ))}
           </Section>
-        )}
+        ) : null}
 
         {entry.common_traps && (
           <Section title="Vanlige feller" icon={AlertCircle}>

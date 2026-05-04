@@ -25,7 +25,11 @@ describe("EntryDetail", () => {
     expect(screen.getByRole("heading", { name: "Symboler" })).toBeInTheDocument();
     expect(screen.getByText("Egenskaper")).toBeInTheDocument();
     expect(screen.getByText("Steg for steg")).toBeInTheDocument();
-    expect(screen.getByText("Eksempler fra obliger og eksamener")).toBeInTheDocument();
+    // The undetailed "Eksempler fra obliger og eksamener" section was removed —
+    // detailed_solutions (or detailed_solution_variants) is the only example surface now.
+    expect(
+      screen.queryByText("Eksempler fra obliger og eksamener"),
+    ).not.toBeInTheDocument();
     expect(screen.getByText("Detaljerte oppgaveløsninger")).toBeInTheDocument();
     expect(screen.getByText("Vanlige feller")).toBeInTheDocument();
     expect(screen.getByText("Python (scipy.stats)")).toBeInTheDocument();
