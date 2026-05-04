@@ -16,10 +16,10 @@ interface Props {
 }
 
 /**
- * Tabbed wrapper for detailed solutions. Mirrors `StepByStepTabs` and
- * `ExampleVariantsTabs` styling so the trio of sections (steg /
- * examples / detailed-solutions) reads as one paired widget on the
- * entry detail page. Single-variant input renders flat (no tabs).
+ * Tabbed wrapper for detailed solutions. Mirrors `StepByStepTabs`
+ * styling so the two sections (steg / detailed-solutions) read as
+ * one paired widget on the entry detail page. Single-variant input
+ * renders flat (no tabs).
  */
 export function DetailedSolutionVariantsTabs({ variants }: Props) {
   const [active, setActive] = useState(0);
