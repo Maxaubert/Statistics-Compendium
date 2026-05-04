@@ -1,35 +1,11 @@
-import { Fragment, type ReactNode } from "react";
 import { clsx } from "clsx";
+import { renderInlineCode } from "./inline-code";
 
 export type StepItem = string | { text: string; conditional?: boolean };
 
 function normalize(item: StepItem): { text: string; conditional: boolean } {
   if (typeof item === "string") return { text: item, conditional: false };
   return { text: item.text, conditional: !!item.conditional };
-}
-
-/**
- * Render a string with `backtick`-delimited spans wrapped in <code> so
- * inline math/symbols (`Z = (X − μ)/σ`, `P(X < x)`) read as code on
- * the page rather than literal backtick characters. Plain unicode is
- * preserved as-is — we don't run KaTeX here, the symbols are already
- * Unicode in the YAML.
- */
-function renderInlineCode(text: string): ReactNode {
-  const parts = text.split(/(`[^`]+`)/g);
-  return parts.map((part, i) => {
-    if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
-      return (
-        <code
-          key={i}
-          className="rounded border border-line bg-paper-2 px-1.5 py-[1px] font-mono text-[13px] text-ink"
-        >
-          {part.slice(1, -1)}
-        </code>
-      );
-    }
-    return <Fragment key={i}>{part}</Fragment>;
-  });
 }
 
 export function StepByStep({ steps }: { steps: StepItem[] }) {

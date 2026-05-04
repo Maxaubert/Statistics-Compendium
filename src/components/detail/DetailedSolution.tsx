@@ -1,5 +1,6 @@
 import { BookOpen } from "lucide-react";
 import { TableLookupCallout } from "./TableLookupCallout";
+import { renderInlineCode } from "./inline-code";
 import type { z } from "zod";
 import type { DetailedSolutionSchema } from "@/data/schema";
 
@@ -18,7 +19,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
         </p>
       </div>
       <div
-        className="relative overflow-x-auto rounded-b-lg border border-t-0 px-7 py-5 font-mono text-[14px] leading-relaxed"
+        className="relative rounded-b-lg border border-t-0 px-7 py-5 font-mono text-[14px] leading-relaxed"
         style={{
           background: "linear-gradient(180deg, var(--color-calc-bg) 0%, #1a1745 100%)",
           borderColor: "var(--color-calc-border)",
@@ -44,27 +45,27 @@ export function DetailedSolution({ solution }: { solution: DS }) {
             {sec.lines.map((line, li) => {
               if ("text" in line) {
                 return (
-                  <div key={li} className="whitespace-pre py-px">
-                    {line.text}
+                  <div key={li} className="whitespace-pre-wrap break-words py-px">
+                    {renderInlineCode(line.text)}
                   </div>
                 );
               }
               if ("comment" in line) {
                 return (
-                  <div key={li} className="whitespace-pre py-px">
+                  <div key={li} className="whitespace-pre-wrap break-words py-px">
                     <span
                       className="ml-3 italic"
                       style={{ color: "var(--color-calc-comment)" }}
                     >
-                      # {line.comment}
+                      # {renderInlineCode(line.comment)}
                     </span>
                   </div>
                 );
               }
               if ("indent" in line) {
                 return (
-                  <div key={li} className="whitespace-pre py-px pl-6">
-                    {line.indent}
+                  <div key={li} className="whitespace-pre-wrap break-words py-px pl-6">
+                    {renderInlineCode(line.indent)}
                   </div>
                 );
               }
@@ -92,10 +93,10 @@ export function DetailedSolution({ solution }: { solution: DS }) {
           Resultat
         </div>
         <span
-          className="block text-[20px] font-bold tracking-wide"
+          className="block break-words text-[20px] font-bold tracking-wide"
           style={{ color: "var(--color-calc-result)" }}
         >
-          {solution.result}
+          {renderInlineCode(solution.result)}
         </span>
       </div>
     </div>
