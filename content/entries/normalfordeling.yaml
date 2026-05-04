@@ -131,16 +131,66 @@ python_snippet: |
   # Invers: finn x slik at P(X ≤ x) = p
   norm.ppf(0.001, loc=300, scale=5)         # finne x for P(X<x)=0.001
 
-examples:
-  - source: "Eksamen jan25 · oppgave 5a"
-    excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
-    solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
-  - source: "Eksamen mai25 · oppgave 4a"
-    excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
-    solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
-  - source: "Eksamen mai25 · oppgave 4d"
-    excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
-    solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090 → μ = 300 + 15.45 = 315.45 ml"
+example_variants:
+  - label: "P(X < x)"
+    examples:
+      - source: "Eksamen jan25 · oppgave 5a"
+        excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
+        solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
+      - source: "Praksis · positiv z"
+        excerpt: "Voksenhøyde X i en populasjon: X ~ N(170, 6²) cm. Sannsynlighet for at en tilfeldig person er under 175 cm?"
+        solution_sketch: "P(X < 175) = G((175-170)/6) = G(0.83) = 0.7967"
+      - source: "Praksis · IQ"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ under 90?"
+        solution_sketch: "P(X < 90) = G((90-100)/15) = G(-0.67) = 1 − G(0.67) = 1 − 0.7486 = 0.2514"
+
+  - label: "P(X > x)"
+    examples:
+      - source: "Praksis · IQ-grense"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ over 130 ('begavet')?"
+        solution_sketch: "P(X > 130) = 1 − G((130-100)/15) = 1 − G(2.00) = 1 − 0.9772 = 0.0228"
+      - source: "Praksis · høyde"
+        excerpt: "Voksenhøyde X ~ N(170, 6²). Sannsynlighet for at en tilfeldig person er over 180 cm?"
+        solution_sketch: "P(X > 180) = 1 − G((180-170)/6) = 1 − G(1.67) = 1 − 0.9525 = 0.0475"
+      - source: "Praksis · standardnormal"
+        excerpt: "Z ~ N(0, 1). Hva er P(Z > 1.96)?"
+        solution_sketch: "P(Z > 1.96) = 1 − G(1.96) = 1 − 0.9750 = 0.0250  (klassisk tosidig 5 %-grense)"
+
+  - label: "P(a < X < b)"
+    examples:
+      - source: "Eksamen mai25 · oppgave 4a"
+        excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
+        solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
+      - source: "Praksis · ±1σ"
+        excerpt: "X ~ N(μ, σ). Hva er P(μ − σ < X < μ + σ)?"
+        solution_sketch: "= G(1) − G(-1) = 0.8413 − 0.1587 = 0.6826  (≈ 68 %, klokkekurvens midtre del)"
+      - source: "Praksis · IQ-bånd"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en tilfeldig person har IQ mellom 85 og 115?"
+        solution_sketch: "= G((115-100)/15) − G((85-100)/15) = G(1) − G(-1) = 0.6826"
+
+  - label: "Invers: finn x"
+    examples:
+      - source: "Praksis · 95-persentil"
+        excerpt: "X ~ N(60, 5²). Finn x slik at P(X ≤ x) = 0.95."
+        solution_sketch: "z₀.₉₅ = 1.645  (E.4)  →  x = 60 + 5·1.645 = 68.23"
+      - source: "Praksis · IQ-toppen"
+        excerpt: "IQ er N(100, 15²). Hvilken IQ overgår 99 % av befolkningen?"
+        solution_sketch: "P(X ≤ x) = 0.99  →  z = 2.326  →  x = 100 + 15·2.326 ≈ 134.9"
+      - source: "Praksis · venstre hale"
+        excerpt: "X ~ N(170, 6²). Hvilken høyde er nedre 10 %-grense ('1 av 10 er under')?"
+        solution_sketch: "P(X ≤ x) = 0.10  →  z = -1.282  →  x = 170 − 6·1.282 ≈ 162.3 cm"
+
+  - label: "Invers: finn μ (eller σ)"
+    examples:
+      - source: "Eksamen mai25 · oppgave 4d"
+        excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
+        solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090  →  μ = 300 + 15.45 = 315.45 ml"
+      - source: "Praksis · finn σ"
+        excerpt: "X ~ N(50, σ²) der μ er kjent. Hvor stor må σ være for at P(X < 40) = 0.05?"
+        solution_sketch: "(40 − 50)/σ = −1.645  →  σ = 10/1.645 ≈ 6.08"
+      - source: "Praksis · spec-grense"
+        excerpt: "Fyllemaskin har σ = 5 ml. Hva må μ være for at minst 95 % av flaskene har ≥ 100 ml?"
+        solution_sketch: "P(X ≥ 100) ≥ 0.95  →  P(X < 100) ≤ 0.05  →  (100 − μ)/5 ≤ −1.645  →  μ ≥ 108.23 ml"
 
 detailed_solutions:
   - source: "Eksamen jan25 · oppgave 5a"

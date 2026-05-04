@@ -10,11 +10,15 @@ export function useFilteredContent(allEntries: Entry[]) {
   const fuse = useMemo(() => buildSearchIndex(allEntries), [allEntries]);
 
   const filtered = useMemo(() => {
-    let pool = allEntries;
-    if (query.trim().length > 0) {
-      const ids = new Set(fuse.search(query.trim()).map((h) => h.item.id));
-      pool = pool.filter((e) => ids.has(e.id));
-    }
+    // When there's a search query, take entries in Fuse's score order
+    // (best match first) and apply filters on top, since `applyFilters`
+    // uses `.filter()` which preserves input order. The previous code
+    // converted hits to a Set and lost the ranking — that's why
+    // "normalfordeling" didn't surface first when typed verbatim.
+    const pool =
+      query.trim().length > 0
+        ? fuse.search(query.trim()).map((h) => h.item)
+        : allEntries;
     return applyFilters(pool, selection);
   }, [allEntries, query, fuse, selection]);
 

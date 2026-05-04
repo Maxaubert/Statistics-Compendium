@@ -13,6 +13,7 @@ import { PropertyCards } from "@/components/detail/PropertyCards";
 import { StepByStep } from "@/components/detail/StepByStep";
 import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
 import { ExampleCard } from "@/components/detail/ExampleCard";
+import { ExampleVariantsTabs } from "@/components/detail/ExampleVariantsTabs";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
 import { TrapAlert } from "@/components/detail/TrapAlert";
 import { PythonSnippet } from "@/components/detail/PythonSnippet";
@@ -135,7 +136,11 @@ export function EntryDetail() {
           </Section>
         ) : null}
 
-        {entry.examples && (
+        {(entry.example_variants?.length ?? 0) > 0 ? (
+          <Section title="Eksempler fra obliger og eksamener" icon={FileText}>
+            <ExampleVariantsTabs variants={entry.example_variants!} />
+          </Section>
+        ) : entry.examples ? (
           <Section title="Eksempler fra obliger og eksamener" icon={FileText}>
             {entry.examples.map((ex, i) => (
               <ExampleCard
@@ -146,7 +151,7 @@ export function EntryDetail() {
               />
             ))}
           </Section>
-        )}
+        ) : null}
 
         {entry.detailed_solutions && (
           <Section title="Detaljerte oppgaveløsninger" icon={FileText}>

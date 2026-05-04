@@ -107,6 +107,21 @@ export const EntrySchema = z.object({
   common_traps: z.string().optional(),
   python_snippet: z.string().optional(),
   examples: z.array(ExampleSchema).optional(),
+  /**
+   * Optional grouping of examples by problem-type, mirroring the tabs
+   * used in `solution_variants`. When set, the entry detail renders
+   * one tab per group so each variant has its own set of practice
+   * examples. Use the same labels as `solution_variants` for the UI
+   * to feel coherent. If unset, falls back to the flat `examples`.
+   */
+  example_variants: z
+    .array(
+      z.object({
+        label: z.string(),
+        examples: z.array(ExampleSchema),
+      }),
+    )
+    .optional(),
   detailed_solutions: z.array(DetailedSolutionSchema).optional(),
   related: z.array(RelatedRefSchema).optional(),
   tools: z.array(z.string()).optional(),
