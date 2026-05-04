@@ -46,14 +46,43 @@ filters:
   distribution_assumption: [t_distribution]
   tooling: [t_quantile_table_E5]
 
-solution_template:
-  - "Formuler hypotesene H₀ og H₁ (én- eller tosidig)"
-  - "Begrunn t-test (σ ukjent og normalfordelt eller stort n)"
-  - "Beregn x̄ og s² fra dataene (s² = (1/(n-1))·Σ(xi - x̄)²)"
-  - "Beregn testobservatoren t = (x̄ - μ₀)/(s/√n)"
-  - "Finn kvantil i tabell E.5: t_(α,ν) for ensidig eller t_(α/2,ν) for tosidig"
-  - "Sammenlign t med kvantilet og bruk forkastingsregelen"
-  - "Konkluder"
+solution_variants:
+  - label: "H₁: μ < μ₀ (venstre)"
+    description: "Ensidig venstresidig test. Forkast H₀ hvis `T < −t_(α, ν)`."
+    steps:
+      - "Formuler hypotesene: `H₀: μ = μ₀` mot `H₁: μ < μ₀` (venstresidig)"
+      - "Begrunn t-test: `σ` er ukjent, og enten er observasjonene normalfordelte eller `n` er stor nok"
+      - "Beregn `x̄` og `s` fra dataene (`s² = (1/(n−1))·Σ(xᵢ − x̄)²`)"
+      - "Beregn testobservatoren `T = (x̄ − μ₀)/(s/√n)` (f.eks. `n = 12`, `ν = 11`, `x̄ = 4.6`, `s = 0.8`, `μ₀ = 5.0` → `T = (4.6−5.0)/(0.8/√12) ≈ −1.732`)"
+      - { text: "Hvis `σ` er kjent, bruk z-test i stedet (mer presist for kjent `σ`)", conditional: true }
+      - "Slå opp `t_(α, ν)` i tabell E.5 med `ν = n − 1` frihetsgrader (f.eks. `α = 0.05`, `ν = 11` → `t_(0.05, 11) ≈ 1.796`)"
+      - "Forkastingsregel: forkast `H₀` hvis `T < −t_(α, ν)` (kritisk verdi er negativ for venstresidig)"
+      - { text: "Hvis du oppgir p-verdi: ensidig `p = P(T < t, ν)` (venstresidig); forkast hvis `p < α`", conditional: true }
+      - "Konkluder i kontekst: hvis `T < −t_(α, ν)`, er det signifikant evidens for at `μ < μ₀`"
+  - label: "H₁: μ > μ₀ (høyre)"
+    description: "Ensidig høyresidig test. Forkast H₀ hvis `T > +t_(α, ν)`."
+    steps:
+      - "Formuler hypotesene: `H₀: μ = μ₀` mot `H₁: μ > μ₀` (høyresidig)"
+      - "Begrunn t-test: `σ` er ukjent, og enten er observasjonene normalfordelte eller `n` er stor nok"
+      - "Beregn `x̄` og `s` fra dataene (`s² = (1/(n−1))·Σ(xᵢ − x̄)²`)"
+      - "Beregn testobservatoren `T = (x̄ − μ₀)/(s/√n)` (f.eks. `n = 12`, `ν = 11`, `x̄ = 5.4`, `s = 0.8`, `μ₀ = 5.0` → `T = (5.4−5.0)/(0.8/√12) ≈ 1.732`)"
+      - { text: "Hvis `n` er stor (`≥ 30`), gir t- og z-test nær identiske svar", conditional: true }
+      - "Slå opp `t_(α, ν)` i tabell E.5 med `ν = n − 1` frihetsgrader (f.eks. `α = 0.05`, `ν = 11` → `t_(0.05, 11) ≈ 1.796`)"
+      - "Forkastingsregel: forkast `H₀` hvis `T > +t_(α, ν)` (kritisk verdi er positiv for høyresidig)"
+      - { text: "Hvis du oppgir p-verdi: ensidig `p = P(T > t, ν)` (høyresidig); forkast hvis `p < α`", conditional: true }
+      - "Konkluder i kontekst: hvis `T > +t_(α, ν)`, er det signifikant evidens for at `μ > μ₀`"
+  - label: "H₁: μ ≠ μ₀ (tosidig)"
+    description: "Tosidig test. Forkast H₀ hvis `|T| > t_(α/2, ν)`."
+    steps:
+      - "Formuler hypotesene: `H₀: μ = μ₀` mot `H₁: μ ≠ μ₀` (tosidig)"
+      - "Begrunn t-test: `σ` er ukjent, og enten er observasjonene normalfordelte eller `n` er stor nok"
+      - "Beregn `x̄` og `s` fra dataene (`s² = (1/(n−1))·Σ(xᵢ − x̄)²`)"
+      - "Beregn testobservatoren `T = (x̄ − μ₀)/(s/√n)` (f.eks. `n = 10`, `ν = 9`, `x̄ = 71.30`, `s = 14.33`, `μ₀ = 70` → `T = (71.30−70)/(14.33/√10) ≈ 0.287`)"
+      - { text: "Hvis `σ` er kjent, bruk z-test i stedet (mer presist for kjent `σ`)", conditional: true }
+      - "Slå opp `t_(α/2, ν)` i tabell E.5 med `ν = n − 1` frihetsgrader (merk: `α/2`, ikke `α`; f.eks. `α = 0.05`, `ν = 9` → `t_(0.025, 9) ≈ 2.262`)"
+      - "Forkastingsregel: forkast `H₀` hvis `|T| > t_(α/2, ν)` (kritisk verdi gjelder begge haler)"
+      - { text: "Hvis du oppgir p-verdi: tosidig `p = 2·P(T > |t|, ν)`; forkast hvis `p < α`", conditional: true }
+      - "Konkluder i kontekst: hvis `|T| > t_(α/2, ν)`, er det signifikant evidens for at `μ ≠ μ₀`; ellers beholdes `H₀`"
 
 common_traps: |
   Husk frihetsgrader: ν = n - 1 for én-utvalgs t-test (ikke n - 2 som i

@@ -39,12 +39,41 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
-solution_template:
-  - "Identifiser hendelsen A som du vil ha sannsynligheten for"
-  - "Beskriv A̅ – det motsatte av A. Tenk: 'hva er det A IKKE er?'"
-  - "Beregn P(A̅) – sjekk om dette er enklere enn å regne ut P(A) direkte"
-  - "Bruk regelen: P(A) = 1 − P(A̅)"
-  - "For 'minst k' i en kumulativ tabell: P(X ≥ k) = 1 − P(X ≤ k - 1). Husk å trekke fra 1, ikke k!"
+solution_variants:
+  - label: "Minst k"
+    steps:
+      - "Identifiser hendelsen: 'minst k hendelser inntreffer', altså `P(X ≥ k)`"
+      - "Skriv om via komplement: `P(X ≥ k) = 1 − P(X ≤ k − 1)` (NB: `k − 1`, ikke `k`)"
+      - "Slå opp `P(X ≤ k − 1)` i kumulativ tabell (E.1 binomial, E.2 poisson) eller regn ut direkte"
+      - "Trekk fra 1 og les av svaret. Eksempel: `P(X ≥ 3) = 1 − P(X ≤ 2)`"
+      - { text: "Hvis indeksen i 'minst k' tolkes feil, du ender med `P(X ≤ k)` — ikke `P(X ≤ k−1)` — så svaret er for stort", conditional: true }
+      - { text: "Hvis 'minst en' er spørsmålet, det er bare `1 − P(ingen)` — ingen tabelloppslag nødvendig (f.eks. binomial: `1 − (1 − p)^n`)", conditional: true }
+
+  - label: "Ingen / null"
+    steps:
+      - "Identifiser hendelsen som `P(X = 0)` — sannsynligheten for null forekomster"
+      - "Velg riktig pmf-uttrykk basert på fordeling: Poisson `P(X = 0) = e^(−λt)`; binomial `P(X = 0) = (1 − p)^n`; geometrisk `P(X = 0)` (avh. av definisjon)"
+      - "Sett inn parametrene direkte. Eksempel: Poisson med `λ = 2`, `t = 1.5` gir `P(X = 0) = e^(−3) ≈ 0.0498`"
+      - "Hvis spørsmålet egentlig er om 'minst én', bruk komplementet: `P(X ≥ 1) = 1 − P(X = 0)`"
+      - { text: "Hvis hendelsene IKKE er uavhengige, `(1 − p)^n` gjelder ikke — bruk hypergeometrisk eller direkte telling i stedet", conditional: true }
+
+  - label: "Ikke alle"
+    steps:
+      - "Identifiser 'alle'-hendelsen først: f.eks. 'alle n forsøk er suksess' har sannsynlighet `p^n` (uavhengige)"
+      - "Komplementet til 'alle' er 'minst én er IKKE': `P(ikke alle) = 1 − P(alle) = 1 − p^n`"
+      - "Pass på: 'ikke alle' ≠ 'ingen'. 'Ingen' er `(1 − p)^n`, 'ikke alle' er `1 − p^n`"
+      - "Beregn og les av. Eksempel: `P(alle 5 hjerter) = 0.000495` → `P(ikke alle hjerter) = 1 − 0.000495 = 0.999505`"
+      - { text: "Hvis hendelsene IKKE er uavhengige (f.eks. trekk uten tilbakelegging), bruk hypergeometrisk for `P(alle)` før du tar komplementet", conditional: true }
+
+  - label: "Finn n for terskel"
+    steps:
+      - "Skriv kravet som ulikhet: 'minst én hendelse skjer med sannsynlighet ≥ T' blir `1 − (1 − p)^n ≥ T`"
+      - "Isoler `(1 − p)^n`: `(1 − p)^n ≤ 1 − T`"
+      - "Ta logaritme på begge sider — husk at `ln(1 − p) < 0`, så ulikheten snur: `n ≥ ln(1 − T) / ln(1 − p)`"
+      - "Rund OPP til nærmeste heltall (f.eks. `p = 0.05`, `T = 0.99` → `n ≥ ln(0.01)/ln(0.95) ≈ 89.78` → `n = 90`)"
+      - "Verifiser ved innsetting: `1 − 0.95^90 ≈ 0.9906 ≥ 0.99` (OK)"
+      - { text: "Hvis du glemmer å snu ulikheten ved logaritme av tall < 1, du får feil retning og dermed feil n", conditional: true }
+      - { text: "Hvis hendelsene IKKE er uavhengige, bruk addisjon med betinget-sannsynlighet i stedet for `(1 − p)^n`", conditional: true }
 
 common_traps: |
   - **"Minst k" indeks-feil**: P(X ≥ k) = 1 − P(X ≤ k − 1), IKKE 1 − P(X ≤ k). For k = 3: P(X ≥ 3) = 1 − P(X ≤ 2).

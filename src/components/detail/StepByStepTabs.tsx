@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { clsx } from "clsx";
-import { StepByStep } from "./StepByStep";
+import { StepByStep, type StepItem } from "./StepByStep";
 
 export interface StepVariant {
   /** Label shown on the tab — short, scannable. */
   label: string;
-  steps: string[];
+  steps: StepItem[];
 }
 
 interface StepByStepTabsProps {
