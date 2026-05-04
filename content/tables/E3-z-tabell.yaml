@@ -7,6 +7,14 @@ inputs:
   - { name: "z", type: number, min: -3.09, max: 3.09, step: any }
 output: "G(z) = P(Z ≤ z)"
 distribution: normal_cumulative
+toggle_label: "z → p"
+input_hint: "Sett inn standardisert verdi z. Får arealet til VENSTRE for z."
+inverse:
+  inputs:
+    - { name: "p", type: number, min: 0.0001, max: 0.9999, step: any }
+  output: "z slik at G(z) = p"
+  toggle_label: "p → z"
+  input_hint: "Sett inn kumulativ sannsynlighet p (venstre hale). Får z slik at P(Z ≤ z) = p."
 related_entries:
   - normalfordeling
   - en-utvalg-z-test

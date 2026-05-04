@@ -7,6 +7,14 @@ inputs:
   - { name: "α", type: number, min: 0.001, max: 0.5, step: any }
 output: "z_α"
 distribution: normal_quantile
+toggle_label: "α (høyre hale)"
+input_hint: "α er sannsynligheten i HØYRE hale: P(Z > z_α) = α. F.eks. α = 0.05 gir z_α ≈ 1.645."
+inverse:
+  inputs:
+    - { name: "p", type: number, min: 0.0001, max: 0.9999, step: any }
+  output: "z slik at G(z) = p"
+  toggle_label: "p (kumulativ)"
+  input_hint: "p er kumulativ VENSTRE-hale-sannsynlighet: P(Z ≤ z) = p. F.eks. p = 0.9 gir z ≈ 1.2816."
 related_entries:
   - normalfordeling
   - ki-mu-kjent-sigma

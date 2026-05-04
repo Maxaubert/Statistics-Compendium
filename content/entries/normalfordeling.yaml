@@ -60,14 +60,54 @@ filters:
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
+solution_variants:
+  - label: "P(X < x)"
+    steps:
+      - "Skriv ned μ, σ og x fra oppgaveteksten."
+      - "Bekreft at X ~ N(μ, σ) er antatt — direkte oppgitt eller via sentralgrenseteoremet (n ≥ 30)."
+      - "Standardiser: z = (x − μ)/σ. Rund til 2 desimaler så det passer E.3."
+      - "Slå opp G(z) i E.3. Tabellen gir P(Z ≤ z) — arealet til VENSTRE."
+      - "Svaret er P(X < x) = G(z). Hvis z er negativ, bruk symmetri: G(−z) = 1 − G(z) (kun nødvendig hvis tabellen er ensidig)."
+
+  - label: "P(X > x)"
+    steps:
+      - "Skriv ned μ, σ og x."
+      - "Standardiser: z = (x − μ)/σ."
+      - "Slå opp G(z) i E.3."
+      - "Bruk komplementet: P(X > x) = 1 − G(z)."
+      - "Sjekk fortegn på z: hvis x > μ blir z > 0; hvis x < μ blir z < 0."
+
+  - label: "P(a < X < b)"
+    steps:
+      - "Skriv ned μ, σ, a og b (a < b)."
+      - "Standardiser begge: z_a = (a − μ)/σ, z_b = (b − μ)/σ."
+      - "Slå opp G(z_a) og G(z_b) i E.3."
+      - "Trekk fra: P(a < X < b) = G(z_b) − G(z_a)."
+      - "Resultatet skal være positivt og ≤ 1 — sjekk for fortegnsfeil hvis det ikke er det."
+
+  - label: "Invers: finn x"
+    steps:
+      - "Identifiser hva som er gitt: en sannsynlighet p og enten 'P(X < x) = p' eller 'P(X > x) = α'."
+      - "Konverter til standardform: hvis 'P(X > x) = α', bruk p = 1 − α."
+      - "Slå opp z slik at G(z) = p i E.4 (Z-kvantiltabell)."
+      - "Sjekk fortegn: hvis p < 0.5 blir z negativ (refleksjon: −z_{1−p})."
+      - "Regn ut x: x = μ + σ · z."
+      - "Sanity-sjekk: hvis p < 0.5, skal x < μ; hvis p > 0.5, skal x > μ."
+
+  - label: "Invers: finn μ (eller σ)"
+    steps:
+      - "Identifiser hva som er ukjent (μ eller σ) og hva som er gitt (typisk en grense og en sannsynlighet)."
+      - "Sett opp ligningen: G((grense − μ)/σ) = p."
+      - "Slå opp z = G⁻¹(p) i E.4. Husk fortegn."
+      - "Løs for det ukjente: hvis μ er ukjent, μ = grense − σ · z. Hvis σ er ukjent, σ = (grense − μ)/z."
+      - "Sjekk retningen i oppgaven: 'P(X < grense) < p' krever at μ flyttes oppover, 'P(X > grense) < p' krever at μ flyttes nedover."
+
+# Fallback for konsumenter som forventer flat liste — gjenkjenningssteg som er felles for alle variantene.
 solution_template:
-  - "Skriv ned hva X representerer og hvilke verdier μ og σ har (les nøye gjennom oppgaven)"
-  - "Bekreft at X ~ N(μ, σ) er antatt – enten direkte oppgitt, eller via sentralgrenseteoremet for store n"
-  - "Identifiser hva spørsmålet etterspør: P(X < x), P(X > x), P(a < X < b), eller en x-verdi som oppfyller en betingelse"
-  - "Standardiser: erstatt X med Z og verdiene med (verdi − μ)/σ. F.eks. P(X < 24) = P(Z < (24 − 25)/0.48) = P(Z < -2.08)"
-  - "Slå opp G(z) i tabell E.3 (Z-tabell). Tabellen gir P(Z ≤ z), arealet til VENSTRE for z"
-  - "For 'høyre hale' P(Z > z), bruk 1 − G(z). For tosidig 'mellom a og b': G(b-standardisert) − G(a-standardisert)"
-  - "For invers (finn x når P(X < x) = p er gitt): finn z_p i E.4 og regn x = μ + σ · z (eller −z hvis venstre hale)"
+  - "Skriv ned hva X representerer og hvilke verdier μ og σ har."
+  - "Bekreft normalfordelings-antakelsen (direkte eller via sentralgrenseteoremet)."
+  - "Identifiser oppgavetypen — se faner over: P(X<x), P(X>x), P(a<X<b), eller invers."
+  - "Standardiser med Z = (X − μ)/σ og slå opp i E.3 (kumulativ) eller E.4 (kvantil)."
 
 common_traps: |
   - **Forveksle ikke σ (standardavvik) med σ² (varians).** Hvis oppgaven sier "varians 25", er σ = 5, ikke 25.

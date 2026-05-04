@@ -73,6 +73,21 @@ export const EntrySchema = z.object({
   properties: PropertiesSchema.optional(),
   filters: FilterSelectionSchema,
   solution_template: z.array(z.string()).optional(),
+  /**
+   * Multiple step-by-step procedures, rendered as tabs in the detail
+   * page. Use this when one entry covers several distinct problem
+   * shapes (e.g. for Normalfordeling: P(X<x), P(a<X<b), invers).
+   * If both `solution_template` and `solution_variants` are set,
+   * `solution_variants` wins.
+   */
+  solution_variants: z
+    .array(
+      z.object({
+        label: z.string(),
+        steps: z.array(z.string()),
+      }),
+    )
+    .optional(),
   common_traps: z.string().optional(),
   python_snippet: z.string().optional(),
   examples: z.array(ExampleSchema).optional(),
@@ -124,6 +139,26 @@ export const TableSchema = z.object({
     "chi_squared_quantile",
   ]),
   related_entries: z.array(z.string()).optional(),
+  /** Optional caption rendered under the active mode's inputs — used to head off
+   *  parameterization misunderstandings (e.g. "α er HØYRE-hale-sannsynligheten"). */
+  input_hint: z.string().optional(),
+  /** Optional override for the mode-toggle button label for the forward direction.
+   *  Defaults to a generic "z → p" arrow style if not provided. */
+  toggle_label: z.string().optional(),
+  /**
+   * Optional alternate input mode. When set, the widget shows a toggle so the
+   * user can switch how they parameterize the lookup (e.g. for E.3: forward
+   * `z → p` vs inverse `p → z`; for E.4: `α → z_α` vs `p → z`). Both modes
+   * use the same `distribution` key — only the input shape changes.
+   */
+  inverse: z
+    .object({
+      inputs: z.array(TableInputSchema),
+      output: z.string(),
+      input_hint: z.string().optional(),
+      toggle_label: z.string().optional(),
+    })
+    .optional(),
 });
 export type Table = z.infer<typeof TableSchema>;
 

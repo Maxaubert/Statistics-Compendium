@@ -11,6 +11,7 @@ import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
 import { StepByStep } from "@/components/detail/StepByStep";
+import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
 import { ExampleCard } from "@/components/detail/ExampleCard";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
 import { TrapAlert } from "@/components/detail/TrapAlert";
@@ -124,11 +125,15 @@ export function EntryDetail() {
           </Section>
         )}
 
-        {entry.solution_template && (
+        {(entry.solution_variants?.length ?? 0) > 0 ? (
+          <Section title="Steg for steg" icon={ClipboardList}>
+            <StepByStepTabs variants={entry.solution_variants!} />
+          </Section>
+        ) : entry.solution_template ? (
           <Section title="Steg for steg" icon={ClipboardList}>
             <StepByStep steps={entry.solution_template} />
           </Section>
-        )}
+        ) : null}
 
         {entry.examples && (
           <Section title="Eksempler fra obliger og eksamener" icon={FileText}>
