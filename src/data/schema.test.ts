@@ -28,6 +28,37 @@ describe("EntrySchema", () => {
     expect(() => EntrySchema.parse({ name_no: "X" })).toThrow();
   });
 
+  it("accepts detailed_solution_variants on Entry", () => {
+    const data = {
+      id: "test-entry",
+      name_no: "Test",
+      type: "distribution" as const,
+      tagline: "x",
+      formula_main: "f",
+      formula_latex: "f",
+      what_it_does: "x",
+      recognition_cues: ["a"],
+      filters: {},
+      detailed_solution_variants: [
+        {
+          label: "Variant A",
+          solutions: [
+            {
+              source: "Praksis · A1",
+              question: "Q?",
+              sections: [{ label: "Step", lines: [{ text: "x" }] }],
+              result: "r",
+            },
+          ],
+        },
+      ],
+    };
+    expect(() => EntrySchema.parse(data)).not.toThrow();
+    const parsed = EntrySchema.parse(data);
+    expect(parsed.detailed_solution_variants?.[0].label).toBe("Variant A");
+    expect(parsed.detailed_solution_variants?.[0].solutions).toHaveLength(1);
+  });
+
   it("accepts a full entry with all optional fields", () => {
     const full = {
       id: "poisson-fordeling",

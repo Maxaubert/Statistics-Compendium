@@ -123,6 +123,20 @@ export const EntrySchema = z.object({
     )
     .optional(),
   detailed_solutions: z.array(DetailedSolutionSchema).optional(),
+  /**
+   * Tabbed detailed solutions, mirroring `solution_variants` labels.
+   * When set, the entry-detail page renders one tab per group with
+   * 2–3 fully-worked solutions inside. Replaces the older `examples`
+   * and `example_variants` UI surfaces.
+   */
+  detailed_solution_variants: z
+    .array(
+      z.object({
+        label: z.string(),
+        solutions: z.array(DetailedSolutionSchema),
+      }),
+    )
+    .optional(),
   related: z.array(RelatedRefSchema).optional(),
   tools: z.array(z.string()).optional(),
 });
