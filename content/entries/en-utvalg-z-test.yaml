@@ -50,15 +50,42 @@ filters:
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4]
 
-solution_template:
-  - "Formuler hypotesene. H₀ er 'status quo' (typisk μ ≥ μ₀, μ ≤ μ₀, eller μ = μ₀). H₁ er det du vil bevise (μ < μ₀, μ > μ₀, eller μ ≠ μ₀)"
-  - "Bestem retning: en-sidig hvis H₁ er 'mindre enn' eller 'større enn'; tosidig hvis 'forskjellig fra'"
-  - "Begrunn z-testen: σ er kjent (oppgitt) og enten observasjonene er normalfordelte eller n ≥ 30"
-  - "Beregn z = (x̄ − μ₀) / (σ/√n). Pass på fortegnet: hvis x̄ < μ₀ blir z negativ"
-  - "Slå opp kritisk verdi i tabell E.4 (Z-kvantiltabell). Ensidig: z_α; tosidig: z_(α/2)"
-  - "Forkastingsregel: Venstresidig (μ < μ₀) → forkast hvis z < −z_α. Høyresidig (μ > μ₀) → forkast hvis z > z_α. Tosidig (μ ≠ μ₀) → forkast hvis |z| > z_(α/2)"
-  - "Konkluder med en setning: 'Vi forkaster H₀ på α = ... ' eller 'Vi kan ikke forkaste H₀ på α = ...', og hva det betyr i sammenheng med oppgavens kontekst"
-  - "Hvis p-verdi etterspørres: For venstresidig p = G(z); for høyresidig p = 1 − G(z); for tosidig p = 2·(1 − G(|z|))"
+solution_variants:
+  - label: "H₁: μ < μ₀ (venstre)"
+    description: "Ensidig venstresidig test. Forkast hvis Z < −z_α."
+    steps:
+      - "Sett opp hypotesene: H₀: μ ≥ μ₀ mot H₁: μ < μ₀ (du mistenker at sann μ ligger UNDER påstandsverdien, f.eks. ny julelys bruker mindre enn 50 W)"
+      - "Sjekk forutsetninger: σ er kjent (oppgitt), og enten X normalfordelt eller n ≥ 30"
+      - { text: "Hvis σ er ukjent (kun s estimert fra utvalget), bruk t-test i stedet — z-test krever kjent populasjonsvarians", conditional: true }
+      - { text: "Hvis n < 30 og populasjonen ikke er normal, er z-test ikke gyldig — vurder ikke-parametrisk test", conditional: true }
+      - "Beregn testobservatoren: `Z = (X̄ − μ₀) / (σ/√n)` (f.eks. `n = 36, σ = 5, X̄ = 98, μ₀ = 100 → Z = (98−100)/(5/6) = −2.40`). For venstresidig test forventes Z å bli negativ"
+      - "Slå opp kritisk verdi `z_α` i tabell E.4 (f.eks. `α = 0.05 → z_0.05 = 1.645`). Forkastningsregel: `Z < −z_α` (merk minustegnet — sjekkverdien er negativ for venstresidig)"
+      - "Sammenlign og konkluder: Hvis `Z < −z_α` → forkast H₀ (f.eks. `−2.40 < −1.645` ✓ → forkast). Hvis ikke → behold H₀. Skriv konklusjonen i kontekst: 'Tallene tyder på at μ er lavere enn μ₀.'"
+      - { text: "Hvis du beregner p-verdi i stedet for kritisk verdi, formelen er `p = P(Z < z) = G(z)` for venstresidig (f.eks. `Z = −2.40 → p = G(−2.40) ≈ 0.0082`). Forkast hvis `p < α`", conditional: true }
+
+  - label: "H₁: μ > μ₀ (høyre)"
+    description: "Ensidig høyresidig test. Forkast hvis Z > +z_α."
+    steps:
+      - "Sett opp hypotesene: H₀: μ ≤ μ₀ mot H₁: μ > μ₀ (du mistenker at sann μ ligger OVER påstandsverdien, f.eks. ny prosess gir høyere utbytte enn 100 enheter)"
+      - "Sjekk forutsetninger: σ er kjent (oppgitt), og enten X normalfordelt eller n ≥ 30"
+      - { text: "Hvis σ er ukjent (kun s estimert fra utvalget), bruk t-test i stedet — z-test krever kjent populasjonsvarians", conditional: true }
+      - { text: "Hvis n < 30 og populasjonen ikke er normal, er z-test ikke gyldig — vurder ikke-parametrisk test", conditional: true }
+      - "Beregn testobservatoren: `Z = (X̄ − μ₀) / (σ/√n)` (f.eks. `n = 36, σ = 5, X̄ = 102, μ₀ = 100 → Z = (102−100)/(5/6) = 2.40`). For høyresidig test forventes Z å bli positiv"
+      - "Slå opp kritisk verdi `z_α` i tabell E.4 (f.eks. `α = 0.05 → z_0.05 = 1.645`). Forkastningsregel: `Z > +z_α` (positiv sjekkverdi — kun høyre hale i fokus)"
+      - "Sammenlign og konkluder: Hvis `Z > +z_α` → forkast H₀ (f.eks. `2.40 > 1.645` ✓ → forkast). Hvis ikke → behold H₀. Skriv konklusjonen i kontekst: 'Tallene tyder på at μ er høyere enn μ₀.'"
+      - { text: "Hvis du beregner p-verdi i stedet for kritisk verdi, formelen er `p = P(Z > z) = 1 − G(z)` for høyresidig (f.eks. `Z = 2.40 → p = 1 − G(2.40) ≈ 0.0082`). Forkast hvis `p < α`", conditional: true }
+
+  - label: "H₁: μ ≠ μ₀ (tosidig)"
+    description: "Tosidig test. Forkast hvis |Z| > z_(α/2)."
+    steps:
+      - "Sett opp hypotesene: H₀: μ = μ₀ mot H₁: μ ≠ μ₀ (du mistenker at sann μ er FORSKJELLIG fra påstandsverdien, men har ingen retningshypotese — f.eks. avviker maskinen fra mål 100 mm)"
+      - "Sjekk forutsetninger: σ er kjent (oppgitt), og enten X normalfordelt eller n ≥ 30"
+      - { text: "Hvis σ er ukjent (kun s estimert fra utvalget), bruk t-test i stedet — z-test krever kjent populasjonsvarians", conditional: true }
+      - { text: "Hvis n < 30 og populasjonen ikke er normal, er z-test ikke gyldig — vurder ikke-parametrisk test", conditional: true }
+      - "Beregn testobservatoren: `Z = (X̄ − μ₀) / (σ/√n)` (f.eks. `n = 36, σ = 5, X̄ = 102, μ₀ = 100 → Z = (102−100)/(5/6) = 2.40`). Fortegnet på Z spiller ingen rolle her — vi bruker `|Z|`"
+      - "Slå opp kritisk verdi `z_(α/2)` i tabell E.4 — del α på TO siden α fordeles på to haler (f.eks. `α = 0.05 → z_0.025 = 1.96`, IKKE `z_0.05 = 1.645`). Forkastningsregel: `|Z| > z_(α/2)`"
+      - "Sammenlign og konkluder: Hvis `|Z| > z_(α/2)` → forkast H₀ (f.eks. `|2.40| = 2.40 > 1.96` ✓ → forkast). Hvis ikke → behold H₀. Skriv konklusjonen i kontekst: 'Tallene tyder på at μ avviker fra μ₀.'"
+      - { text: "Hvis du beregner p-verdi i stedet for kritisk verdi, formelen er `p = 2·P(Z > |z|) = 2·(1 − G(|z|))` for tosidig (f.eks. `Z = 2.40 → p = 2·(1 − G(2.40)) ≈ 0.0164`). Forkast hvis `p < α`", conditional: true }
 
 common_traps: |
   - **Ensidig vs. tosidig**: Hvis H₁ er "mindre enn" eller "større enn", er testen ensidig (bruk z_α). Hvis H₁ er "forskjellig fra", er den tosidig (bruk z_(α/2)).

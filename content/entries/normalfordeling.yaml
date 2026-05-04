@@ -63,51 +63,51 @@ filters:
 solution_variants:
   - label: "P(X < x)"
     steps:
-      - "Skriv ned μ, σ og x fra oppgaveteksten."
-      - "Bekreft at X ~ N(μ, σ) er antatt — direkte oppgitt eller via sentralgrenseteoremet (n ≥ 30)."
-      - "Standardiser: z = (x − μ)/σ. Rund til 2 desimaler så det passer E.3."
-      - "Slå opp G(z) i E.3. Tabellen gir P(Z ≤ z) — arealet til VENSTRE."
-      - "Svaret er P(X < x) = G(z). Hvis z er negativ, bruk symmetri: G(−z) = 1 − G(z) (kun nødvendig hvis tabellen er ensidig)."
+      - "Noter `μ`, `σ` og terskelen `x` fra oppgaven (f.eks. `μ = 25`, `σ = 0.48`, `x = 24`)."
+      - "Bekreft at `X ~ N(μ, σ)` — enten direkte oppgitt, eller via sentralgrenseteoremet når `n ≥ 30`."
+      - "Standardiser med `z = (x − μ)/σ` og rund til 2 desimaler (f.eks. `(24 − 25)/0.48 = −2.0833 ≈ −2.08`)."
+      - "Slå opp `G(z)` i tabell E.3 — arealet til VENSTRE for `z` (f.eks. `G(−2.08) ≈ 0.0188`)."
+      - "Svaret er `P(X < x) = G(z)`."
+      - { text: "Hvis tabellen din kun viser positive `z`, bruk symmetri: `G(−z) = 1 − G(z)`. (Vår E.3 dekker både fortegn, så dette er sjelden nødvendig.)", conditional: true }
 
   - label: "P(X > x)"
     steps:
-      - "Skriv ned μ, σ og x."
-      - "Standardiser: z = (x − μ)/σ."
-      - "Slå opp G(z) i E.3."
-      - "Bruk komplementet: P(X > x) = 1 − G(z)."
-      - "Sjekk fortegn på z: hvis x > μ blir z > 0; hvis x < μ blir z < 0."
+      - "Noter `μ`, `σ` og terskelen `x` (f.eks. `μ = 302`, `σ = 5`, `x = 310`)."
+      - "Standardiser: `z = (x − μ)/σ` (f.eks. `(310 − 302)/5 = 1.6`)."
+      - "Slå opp `G(z)` i E.3 (f.eks. `G(1.6) ≈ 0.9452`)."
+      - "Bruk komplementet siden E.3 gir venstrearealet: `P(X > x) = 1 − G(z)` (f.eks. `1 − 0.9452 = 0.0548`)."
+      - "Fortegnssjekk: `x > μ ⇒ z > 0` (svar `< 0.5`); `x < μ ⇒ z < 0` (svar `> 0.5`)."
 
   - label: "P(a < X < b)"
     steps:
-      - "Skriv ned μ, σ, a og b (a < b)."
-      - "Standardiser begge: z_a = (a − μ)/σ, z_b = (b − μ)/σ."
-      - "Slå opp G(z_a) og G(z_b) i E.3."
-      - "Trekk fra: P(a < X < b) = G(z_b) − G(z_a)."
-      - "Resultatet skal være positivt og ≤ 1 — sjekk for fortegnsfeil hvis det ikke er det."
+      - "Noter `μ`, `σ` og grensene `a < b` (f.eks. `μ = 302`, `σ = 5`, `a = 305`, `b = 310`)."
+      - "Standardiser begge: `z_a = (a − μ)/σ`, `z_b = (b − μ)/σ` (f.eks. `z_a = 0.6`, `z_b = 1.6`)."
+      - "Slå opp `G(z_a)` og `G(z_b)` i E.3 (f.eks. `G(0.6) ≈ 0.7257`, `G(1.6) ≈ 0.9452`)."
+      - "Trekk fra: `P(a < X < b) = G(z_b) − G(z_a)` (f.eks. `0.9452 − 0.7257 = 0.2195`)."
+      - "Sanity-sjekk: svaret skal ligge i `[0, 1]`. Negativt resultat betyr at du har byttet om `z_a` og `z_b`."
 
   - label: "Invers: finn x"
     steps:
-      - "Identifiser hva som er gitt: en sannsynlighet p og enten 'P(X < x) = p' eller 'P(X > x) = α'."
-      - "Konverter til standardform: hvis 'P(X > x) = α', bruk p = 1 − α."
-      - "Slå opp z slik at G(z) = p i E.4 (Z-kvantiltabell)."
-      - "Sjekk fortegn: hvis p < 0.5 blir z negativ (refleksjon: −z_{1−p})."
-      - "Regn ut x: x = μ + σ · z."
-      - "Sanity-sjekk: hvis p < 0.5, skal x < μ; hvis p > 0.5, skal x > μ."
+      - "Les hva som er gitt: en sannsynlighet og hvilken side. Enten `P(X < x) = p`, eller `P(X > x) = α` (da er `p = 1 − α`)."
+      - "Slå opp `z` slik at `G(z) = p` i tabell E.4 (Z-kvantil). Eksempel: `p = 0.975 ⇒ z = 1.96`."
+      - { text: "Hvis `p < 0.5`: `z` er negativ. Bruk refleksjon `z = −z_{1−p}` (f.eks. `p = 0.001 ⇒ z = −z_{0.999} = −3.090`).", conditional: true }
+      - "Sett inn i `x = μ + σ · z` (f.eks. `μ = 300`, `σ = 5`, `z = −3.090 ⇒ x = 300 − 15.45 = 284.55`)."
+      - "Sanity-sjekk: `p < 0.5 ⇒ x < μ`; `p > 0.5 ⇒ x > μ`. Stemmer det ikke, har du glemt fortegnet på `z`."
 
   - label: "Invers: finn μ (eller σ)"
     steps:
-      - "Identifiser hva som er ukjent (μ eller σ) og hva som er gitt (typisk en grense og en sannsynlighet)."
-      - "Sett opp ligningen: G((grense − μ)/σ) = p."
-      - "Slå opp z = G⁻¹(p) i E.4. Husk fortegn."
-      - "Løs for det ukjente: hvis μ er ukjent, μ = grense − σ · z. Hvis σ er ukjent, σ = (grense − μ)/z."
-      - "Sjekk retningen i oppgaven: 'P(X < grense) < p' krever at μ flyttes oppover, 'P(X > grense) < p' krever at μ flyttes nedover."
+      - "Identifiser det ukjente (`μ` eller `σ`) og hva som er gitt: typisk en grense `g` og en målsannsynlighet `p` (f.eks. `P(X < 300) = 0.001`, `σ = 5`)."
+      - "Sett opp likningen `G((g − μ)/σ) = p`."
+      - "Slå opp `z = G⁻¹(p)` i tabell E.4. Husk at `p < 0.5` gir negativ `z` (f.eks. `p = 0.001 ⇒ z = −3.090`)."
+      - "Løs for det ukjente: `μ = g − σ · z`, eller `σ = (g − μ)/z` hvis `σ` er ukjent (f.eks. `μ = 300 − 5·(−3.090) = 315.45`)."
+      - { text: "Retningssjekk for `μ`: hvis du vil at `P(X < g)` skal bli MINDRE, må `μ` flyttes OPP (lenger fra `g` på høyre side).", conditional: true }
+      - { text: "Motsatt retning: hvis du vil at `P(X > g)` skal bli mindre, må `μ` flyttes NED (lenger fra `g` på venstre side).", conditional: true }
 
-# Fallback for konsumenter som forventer flat liste — gjenkjenningssteg som er felles for alle variantene.
+# Fallback for konsumenter som forventer flat liste — peker videre til faner over.
 solution_template:
-  - "Skriv ned hva X representerer og hvilke verdier μ og σ har."
-  - "Bekreft normalfordelings-antakelsen (direkte eller via sentralgrenseteoremet)."
-  - "Identifiser oppgavetypen — se faner over: P(X<x), P(X>x), P(a<X<b), eller invers."
-  - "Standardiser med Z = (X − μ)/σ og slå opp i E.3 (kumulativ) eller E.4 (kvantil)."
+  - "Noter `μ`, `σ` og hva oppgaven spør om."
+  - "Identifiser variant — se faner over: `P(X < x)`, `P(X > x)`, `P(a < X < b)`, eller invers."
+  - "Standardiser med `Z = (X − μ)/σ`, slå opp i E.3 (kumulativ) eller E.4 (kvantil)."
 
 common_traps: |
   - **Forveksle ikke σ (standardavvik) med σ² (varians).** Hvis oppgaven sier "varians 25", er σ = 5, ikke 25.
@@ -131,16 +131,66 @@ python_snippet: |
   # Invers: finn x slik at P(X ≤ x) = p
   norm.ppf(0.001, loc=300, scale=5)         # finne x for P(X<x)=0.001
 
-examples:
-  - source: "Eksamen jan25 · oppgave 5a"
-    excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
-    solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
-  - source: "Eksamen mai25 · oppgave 4a"
-    excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
-    solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
-  - source: "Eksamen mai25 · oppgave 4d"
-    excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
-    solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090 → μ = 300 + 15.45 = 315.45 ml"
+example_variants:
+  - label: "P(X < x)"
+    examples:
+      - source: "Eksamen jan25 · oppgave 5a"
+        excerpt: "Mengden kaffe er normalfordelt med μ = 25 cl, σ = 0.48 cl. Sannsynlighet for at en kopp har mindre enn 24 cl?"
+        solution_sketch: "P(X < 24) = G((24-25)/0.48) = G(-2.08) = 0.0188"
+      - source: "Praksis · positiv z"
+        excerpt: "Voksenhøyde X i en populasjon: X ~ N(170, 6²) cm. Sannsynlighet for at en tilfeldig person er under 175 cm?"
+        solution_sketch: "P(X < 175) = G((175-170)/6) = G(0.83) = 0.7967"
+      - source: "Praksis · IQ"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ under 90?"
+        solution_sketch: "P(X < 90) = G((90-100)/15) = G(-0.67) = 1 − G(0.67) = 1 − 0.7486 = 0.2514"
+
+  - label: "P(X > x)"
+    examples:
+      - source: "Praksis · IQ-grense"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en person har IQ over 130 ('begavet')?"
+        solution_sketch: "P(X > 130) = 1 − G((130-100)/15) = 1 − G(2.00) = 1 − 0.9772 = 0.0228"
+      - source: "Praksis · høyde"
+        excerpt: "Voksenhøyde X ~ N(170, 6²). Sannsynlighet for at en tilfeldig person er over 180 cm?"
+        solution_sketch: "P(X > 180) = 1 − G((180-170)/6) = 1 − G(1.67) = 1 − 0.9525 = 0.0475"
+      - source: "Praksis · standardnormal"
+        excerpt: "Z ~ N(0, 1). Hva er P(Z > 1.96)?"
+        solution_sketch: "P(Z > 1.96) = 1 − G(1.96) = 1 − 0.9750 = 0.0250  (klassisk tosidig 5 %-grense)"
+
+  - label: "P(a < X < b)"
+    examples:
+      - source: "Eksamen mai25 · oppgave 4a"
+        excerpt: "Fyllingen av såpebeholdere er N(302, 5). Sannsynlighet for innhold mellom 305 og 310 ml?"
+        solution_sketch: "P(305 < X ≤ 310) = G(1.6) − G(0.6) = 0.9452 − 0.7257 = 0.2195"
+      - source: "Praksis · ±1σ"
+        excerpt: "X ~ N(μ, σ). Hva er P(μ − σ < X < μ + σ)?"
+        solution_sketch: "= G(1) − G(-1) = 0.8413 − 0.1587 = 0.6826  (≈ 68 %, klokkekurvens midtre del)"
+      - source: "Praksis · IQ-bånd"
+        excerpt: "IQ er N(100, 15²). Sannsynlighet for at en tilfeldig person har IQ mellom 85 og 115?"
+        solution_sketch: "= G((115-100)/15) − G((85-100)/15) = G(1) − G(-1) = 0.6826"
+
+  - label: "Invers: finn x"
+    examples:
+      - source: "Praksis · 95-persentil"
+        excerpt: "X ~ N(60, 5²). Finn x slik at P(X ≤ x) = 0.95."
+        solution_sketch: "z₀.₉₅ = 1.645  (E.4)  →  x = 60 + 5·1.645 = 68.23"
+      - source: "Praksis · IQ-toppen"
+        excerpt: "IQ er N(100, 15²). Hvilken IQ overgår 99 % av befolkningen?"
+        solution_sketch: "P(X ≤ x) = 0.99  →  z = 2.326  →  x = 100 + 15·2.326 ≈ 134.9"
+      - source: "Praksis · venstre hale"
+        excerpt: "X ~ N(170, 6²). Hvilken høyde er nedre 10 %-grense ('1 av 10 er under')?"
+        solution_sketch: "P(X ≤ x) = 0.10  →  z = -1.282  →  x = 170 − 6·1.282 ≈ 162.3 cm"
+
+  - label: "Invers: finn μ (eller σ)"
+    examples:
+      - source: "Eksamen mai25 · oppgave 4d"
+        excerpt: "Hva må μ justeres til for at P(X < 300) < 0.001 når σ = 5?"
+        solution_sketch: "(300 − μ)/5 = −z_0.001 = −3.090  →  μ = 300 + 15.45 = 315.45 ml"
+      - source: "Praksis · finn σ"
+        excerpt: "X ~ N(50, σ²) der μ er kjent. Hvor stor må σ være for at P(X < 40) = 0.05?"
+        solution_sketch: "(40 − 50)/σ = −1.645  →  σ = 10/1.645 ≈ 6.08"
+      - source: "Praksis · spec-grense"
+        excerpt: "Fyllemaskin har σ = 5 ml. Hva må μ være for at minst 95 % av flaskene har ≥ 100 ml?"
+        solution_sketch: "P(X ≥ 100) ≥ 0.95  →  P(X < 100) ≤ 0.05  →  (100 − μ)/5 ≤ −1.645  →  μ ≥ 108.23 ml"
 
 detailed_solutions:
   - source: "Eksamen jan25 · oppgave 5a"

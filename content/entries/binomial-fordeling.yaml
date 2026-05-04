@@ -52,13 +52,42 @@ filters:
   distribution_assumption: [binomial]
   tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
 
-solution_template:
-  - "Identifiser antall forsøk n og suksessannsynligheten p i hvert forsøk"
-  - "Skriv X ~ Bin(n, p)"
-  - "Bestem hva spørsmålet ber om: P(X = k), P(X ≤ k), P(X ≥ k), eller 'finn n'"
-  - "For 'minst k': bruk komplementregelen P(X ≥ k) = 1 - P(X ≤ k-1)"
-  - "Slå opp P(X ≤ k) i tabell E.1 (Binomialtabell) eller regn direkte med formelen"
-  - "Hvis 'finn minste n' for et terskelkrav: løs ulikhet med tabell eller logaritmer"
+solution_variants:
+  - label: "P(X = k)"
+    steps:
+      - "Identifiser `n` (antall forsøk) og `p` (suksessannsynlighet) fra oppgaveteksten"
+      - "Skriv `X ~ Bin(n, p)` og noter ønsket verdi `k` (heltall, `0 ≤ k ≤ n`)"
+      - "Sett inn i formelen `P(X = k) = C(n,k)·p^k·(1−p)^(n−k)`"
+      - "Beregn binomialkoeffisienten `C(n,k) = n! / (k!·(n−k)!)` (f.eks. `C(10,4) = 210`)"
+      - "Multiplisér leddene sammen (f.eks. `n = 10, p = 0.30, k = 4 → 210·0.3⁴·0.7⁶ ≈ 0.200`)"
+      - { text: "Hvis `k = 0`, formelen forenkles til `(1−p)^n`", conditional: true }
+      - { text: "Hvis `k = n`, formelen forenkles til `p^n`", conditional: true }
+  - label: "P(X ≤ k)"
+    steps:
+      - "Identifiser `n`, `p` og terskelen `k` fra oppgaven"
+      - "Skriv `X ~ Bin(n, p)` og bekreft at vi ønsker den kumulative `P(X ≤ k)`"
+      - "Slå opp verdien direkte i tabell E.1 (Binomialtabell) for gitte `n`, `p`, `k` (f.eks. `n = 10, p = 0.20, k = 1 → 0.376`)"
+      - "Les av sannsynligheten og rund av til 3–4 desimaler"
+      - { text: "Hvis `k` eller `p` er utenfor tabell E.1 sitt område, summér pmf for hånd: `P(X ≤ k) = Σ_{i=0}^{k} C(n,i)·p^i·(1−p)^(n−i)`", conditional: true }
+      - { text: "Hvis `p > 0.5` og tabellen kun dekker `p ≤ 0.5`, snu spørsmålet: la `Y = n − X ~ Bin(n, 1−p)`, og bruk `P(X ≤ k) = P(Y ≥ n−k) = 1 − P(Y ≤ n−k−1)`", conditional: true }
+  - label: "P(X ≥ k)"
+    steps:
+      - "Identifiser `n`, `p` og nedre grense `k` (oppgaven sier 'minst k')"
+      - "Skriv `X ~ Bin(n, p)` og noter at vi vil ha `P(X ≥ k)`"
+      - "Bruk komplementregelen: `P(X ≥ k) = 1 − P(X ≤ k−1)`"
+      - "Slå opp `P(X ≤ k−1)` i tabell E.1 (f.eks. `n = 10, p = 0.20, k = 2 → P(X ≤ 1) = 0.376`)"
+      - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
+      - { text: "Hvis `k = 1`, forenkles uttrykket til `P(X ≥ 1) = 1 − (1−p)^n` (ingen tabell nødvendig)", conditional: true }
+      - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
+  - label: "Finn n for terskel"
+    steps:
+      - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`)"
+      - "Sett opp ulikheten i `n`, typisk via komplement: `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 0.01`"
+      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
+      - "Løs for `n`: `n ≥ ln(0.01) / ln(1−p)` (f.eks. `p = 0.5 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
+      - "Rund opp til neste heltall siden `n` må være heltall (f.eks. `6.64 → n = 7`)"
+      - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
+      - { text: "Hvis terskelen gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), bruk tabell E.1 og prøv økende `n` til kravet er oppfylt", conditional: true }
 
 common_traps: |
   Vær sikker på at p er konstant fra forsøk til forsøk. Hvis du trekker

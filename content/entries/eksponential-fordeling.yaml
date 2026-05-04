@@ -50,12 +50,44 @@ filters:
   distribution_assumption: [exponential]
   tooling: [calculator_exp]
 
-solution_template:
-  - "Bekreft at problemet handler om tid TIL første hendelse i en poissonprosess"
-  - "Identifiser raten λ med riktig enhet"
-  - "Bestem hvilken sannsynlighet som etterspørres: P(T > t), P(T < t), eller P(a < T < b)"
-  - "Bruk F(t) = 1 - e^(-λt) for kumulativ; P(T > t) = e^(-λt)"
-  - "Sjekk enheten på t (samme som rate)"
+solution_variants:
+  - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
+    steps:
+      - "Bekreft at problemet handler om tid TIL første hendelse i en poissonprosess, og at spørsmålet er på formen 'ingen hendelse innen t' eller 'T større enn t'"
+      - "Identifiser raten `λ` og noter enheten (per minutt, per time, per år, ...)"
+      - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først slik at `λ` og `t` har samme tidsenhet", conditional: true }
+      - "Bruk overlevelsesformelen direkte: `P(T > t) = e^(−λt)`"
+      - "Sett inn tall og regn ut (f.eks. `λ = 1/15` per min, `t = 30` → `P(T > 30) = e^(−2) ≈ 0.135`)"
+      - "Sjekk at svaret er mellom 0 og 1, og at det går mot 0 når `t` blir stort"
+
+  - label: "P(T < t) — hendelse innen t"
+    steps:
+      - "Bekreft at spørsmålet er 'minst én hendelse innen t', 'hendelsen skjer før t', eller 'ventetiden er kortere enn t'"
+      - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet"
+      - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først", conditional: true }
+      - "Bruk kumulativ fordelingsfunksjon: `F(t) = P(T < t) = 1 − e^(−λt)`"
+      - "Sett inn tall og regn ut (f.eks. `λ = 0.01` per time, `t = 48` → `P(T < 48) = 1 − e^(−0.48) ≈ 0.381`)"
+      - { text: "Alternativt: regn først `P(T > t) = e^(−λt)` og bruk komplementregelen `P(T < t) = 1 − P(T > t)`. Nyttig hvis du allerede har overlevelsen", conditional: true }
+      - "Sjekk at svaret er mellom 0 og 1, og at det går mot 1 når `t` blir stort"
+
+  - label: "P(a < T < b) — intervall"
+    steps:
+      - "Bekreft at spørsmålet ber om sannsynligheten for at ventetiden faller i et intervall `(a, b)`"
+      - "Identifiser `λ`, `a` og `b`, alle med samme tidsenhet"
+      - { text: "Hvis intervallets endepunkter er i en annen enhet enn raten, konvertér først", conditional: true }
+      - "Bruk differansen av to kumulative: `P(a < T < b) = F(b) − F(a) = e^(−λa) − e^(−λb)`"
+      - "Sett inn og regn ut (f.eks. `λ = 1/10` per min, `a = 5`, `b = 15` → `e^(−0.5) − e^(−1.5) ≈ 0.607 − 0.223 = 0.384`)"
+      - "Sjekk at `b > a` og at svaret er positivt og mindre enn både `P(T > a)` og `P(T < b)`"
+
+  - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
+    steps:
+      - { text: "Hvis spørsmålet sier 'gitt at det ikke har skjedd noe i de siste s minutter, hva er sannsynligheten for å vente t til', bruk memoryless-egenskapen i stedet for å betinget regne på vanlig måte", conditional: true }
+      - "Memoryless-egenskapen: `P(T > s + t | T > s) = P(T > t)` — fortiden 'glemmes', bare den nye ventetiden `t` betyr noe"
+      - "Identifiser `λ` og den nye ventetiden `t` (ikke `s + t`); `s` brukes ikke i utregningen"
+      - { text: "Hvis raten og `t` er i ulike enheter, konvertér først", conditional: true }
+      - "Bruk overlevelsesformelen på `t` alene: `P(T > t) = e^(−λt)`"
+      - "Sett inn tall (f.eks. `λ = 1/15` per min, har ventet `s = 20` min uten hendelse, vil vente `t = 10` min til → `P = e^(−10/15) ≈ 0.513`)"
+      - "Tolk: ventetidsfordelingen 'starter på nytt' hvert øyeblikk uten hendelse — typisk for poissonprosesser"
 
 common_traps: |
   Eksponentialfordeling og Poissonfordeling deler samme λ men måler ulike

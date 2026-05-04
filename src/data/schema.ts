@@ -46,6 +46,22 @@ export const DetailedSolutionSchema = z.object({
   result: z.string(),
 });
 
+/**
+ * A single step in a step-by-step guide. Either:
+ *  - a plain string (default — renders as a normal numbered step), or
+ *  - an object `{ text, conditional }` where `conditional: true` marks the
+ *    step as only applying in a specific sub-case (negative z, threshold
+ *    failed, etc.). The renderer surfaces these with a distinct accent
+ *    border so the eye picks them out.
+ */
+export const StepItemSchema = z.union([
+  z.string(),
+  z.object({
+    text: z.string(),
+    conditional: z.boolean().optional(),
+  }),
+]);
+
 // ============ Entry (formler) ============
 
 export const EntryTypeSchema = z.enum([
@@ -72,7 +88,7 @@ export const EntrySchema = z.object({
   symbols: z.array(SymbolSchema).optional(),
   properties: PropertiesSchema.optional(),
   filters: FilterSelectionSchema,
-  solution_template: z.array(z.string()).optional(),
+  solution_template: z.array(StepItemSchema).optional(),
   /**
    * Multiple step-by-step procedures, rendered as tabs in the detail
    * page. Use this when one entry covers several distinct problem
@@ -84,13 +100,28 @@ export const EntrySchema = z.object({
     .array(
       z.object({
         label: z.string(),
-        steps: z.array(z.string()),
+        steps: z.array(StepItemSchema),
       }),
     )
     .optional(),
   common_traps: z.string().optional(),
   python_snippet: z.string().optional(),
   examples: z.array(ExampleSchema).optional(),
+  /**
+   * Optional grouping of examples by problem-type, mirroring the tabs
+   * used in `solution_variants`. When set, the entry detail renders
+   * one tab per group so each variant has its own set of practice
+   * examples. Use the same labels as `solution_variants` for the UI
+   * to feel coherent. If unset, falls back to the flat `examples`.
+   */
+  example_variants: z
+    .array(
+      z.object({
+        label: z.string(),
+        examples: z.array(ExampleSchema),
+      }),
+    )
+    .optional(),
   detailed_solutions: z.array(DetailedSolutionSchema).optional(),
   related: z.array(RelatedRefSchema).optional(),
   tools: z.array(z.string()).optional(),
