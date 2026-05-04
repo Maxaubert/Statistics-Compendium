@@ -46,7 +46,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
               if ("text" in line) {
                 return (
                   <div key={li} className="whitespace-pre-wrap break-words py-px">
-                    {renderInlineCode(line.text)}
+                    {renderInlineCode(line.text, "dark")}
                   </div>
                 );
               }
@@ -57,7 +57,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
                       className="ml-3 italic"
                       style={{ color: "var(--color-calc-comment)" }}
                     >
-                      # {renderInlineCode(line.comment)}
+                      # {renderInlineCode(line.comment, "dark")}
                     </span>
                   </div>
                 );
@@ -65,7 +65,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
               if ("indent" in line) {
                 return (
                   <div key={li} className="whitespace-pre-wrap break-words py-px pl-6">
-                    {renderInlineCode(line.indent)}
+                    {renderInlineCode(line.indent, "dark")}
                   </div>
                 );
               }
@@ -96,7 +96,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
           className="block break-words text-[20px] font-bold tracking-wide"
           style={{ color: "var(--color-calc-result)" }}
         >
-          {renderInlineCode(solution.result)}
+          {renderInlineCode(solution.result, "dark")}
         </span>
       </div>
     </div>
