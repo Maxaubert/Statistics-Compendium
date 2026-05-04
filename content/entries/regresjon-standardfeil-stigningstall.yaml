@@ -79,9 +79,6 @@ detailed_solution_variants:
             lines:
               - text: "`SE(β̂) ≈ 0.625` er et moderat tall sammenliknet med et typisk stigningstall."
               - text: "Det betyr at estimatet `β̂` har en viss usikkerhet; vi vil bruke denne verdien videre i hypotesetest (`T = β̂ / SE(β̂)`) og i konfidensintervallet `β̂ ± t·SE(β̂)`."
-          - label: "Resultat"
-            lines:
-              - text: "`SE(β̂) ≈ 0.625`."
         result: "`SE(β̂) ≈ 0.625`"
 
       - source: "Praksiseksempel · sterk lineær sammenheng"
@@ -109,9 +106,6 @@ detailed_solution_variants:
               - text: "`SE(β̂) = 0.1` er liten. Det betyr at `β̂` er presist estimert."
               - text: "Det skyldes både liten residualvarians (god tilpasning) og god x-spredning (`S_XX` stor)."
               - text: "I et 95 % KI vil bredden bli `± t·0.1`, dvs. smalt – vi har høy tiltro til estimatet av `β`."
-          - label: "Resultat"
-            lines:
-              - text: "`SE(β̂) = 0.1`."
         result: "`SE(β̂) = 0.1`"
 
       - source: "Praksiseksempel · svak sammenheng og få datapunkter"
@@ -138,9 +132,6 @@ detailed_solution_variants:
               - text: "`SE(β̂) ≈ 1.265` er stor. Estimatet av `β̂` er usikkert."
               - text: "Et 95 % KI for `β` blir bredt (`β̂ ± t·1.265`), og en hypotesetest vil sjelden forkaste `H_0: β = 0` selv om det fins en svak reell sammenheng."
               - text: "Lærdom: For å redusere `SE(β̂)` kan man øke `n` (gir mindre `S_E²` og større `S_XX`) eller velge x-verdier med større spredning."
-          - label: "Resultat"
-            lines:
-              - text: "`SE(β̂) ≈ 1.265` – stor usikkerhet i estimatet."
         result: "`SE(β̂) ≈ 1.265` (stor)"
 
 related:

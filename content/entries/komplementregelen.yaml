@@ -101,9 +101,6 @@ detailed_solution_variants:
               - indent: "`P(X = 0) = (5/6)⁴ = 625/1296 ≈ 0.4823`"
               - text: "Trekker fra 1:"
               - indent: "`P(X ≥ 1) = 1 − 0.4823 = 0.5177`"
-          - label: "Resultat"
-            lines:
-              - text: "Sannsynligheten for minst én sekser i fire kast er omtrent `0.5177`."
         result: "`P(minst én sekser) ≈ 0.5177`"
 
       - source: "Praksis · vulkanutbrudd (Poisson)"
@@ -127,9 +124,6 @@ detailed_solution_variants:
               - indent: "`P(X ≤ 1) ≈ 0.2231 + 0.3347 = 0.5578`"
               - text: "Komplement:"
               - indent: "`P(X ≥ 2) = 1 − 0.5578 = 0.4422`"
-          - label: "Resultat"
-            lines:
-              - text: "Det er omtrent `44.2 %` sannsynlighet for minst to utbrudd i 50 år."
         result: "`P(X ≥ 2) ≈ 0.4422`"
 
       - source: "Praksis · indeks-felle for 'minst k'"
@@ -151,9 +145,6 @@ detailed_solution_variants:
               - text: "Komplement:"
               - indent: "`P(X ≥ 2) = 1 − 0.1493 = 0.8507`"
               - text: "Hadde vi feilaktig brukt `1 − P(X ≤ 2) ≈ 1 − 0.3828 = 0.6172`, ville vi mistet bidraget fra `X = 2` (som er ca. `0.2335`)."
-          - label: "Resultat"
-            lines:
-              - text: "Riktig svar er `P(X ≥ 2) ≈ 0.8507`. Indeks-fellen gir feil verdi `0.6172`."
         result: "`P(X ≥ 2) ≈ 0.8507` (ikke `0.6172`)"
 
   - label: "Ingen / null"
@@ -175,10 +166,6 @@ detailed_solution_variants:
               - text: "Direkte fra pmf:"
               - indent: "`P(X = 0) = (1 − p)^n = 0.95^10`"
               - indent: "`0.95^10 ≈ 0.5987`"
-          - label: "Resultat"
-            lines:
-              - text: "Sannsynligheten for at ingen er defekte er omtrent `0.5987`."
-              - text: "Dermed er `P(minst én defekt) = 1 − 0.5987 = 0.4013`."
         result: "`P(X = 0) ≈ 0.5987`"
 
       - source: "Praksis · Poisson-anrop"
@@ -198,10 +185,6 @@ detailed_solution_variants:
               - text: "Poisson pmf ved `k = 0`:"
               - indent: "`P(X = 0) = e^(−λt) = e^(−3)`"
               - indent: "`e^(−3) ≈ 0.0498`"
-          - label: "Resultat"
-            lines:
-              - text: "Det er kun ca. `5 %` sjanse for ingen anrop i 10 minutter."
-              - text: "Tilsvarende er `P(minst ett anrop) ≈ 0.9502`."
         result: "`P(X = 0) ≈ 0.0498`"
 
   - label: "Ikke alle"
@@ -224,9 +207,6 @@ detailed_solution_variants:
               - indent: "`P(alle OK) = 0.95⁵ ≈ 0.7738`"
               - text: "Komplement:"
               - indent: "`P(minst én feiler) = 1 − 0.7738 = 0.2262`"
-          - label: "Resultat"
-            lines:
-              - text: "Det er ca. `22.6 %` sannsynlighet for at minst én komponent feiler."
         result: "`P(minst én feiler) ≈ 0.2262`"
 
       - source: "Praksis · quiz med 10 ja/nei-spørsmål"
@@ -245,9 +225,6 @@ detailed_solution_variants:
               - text: "Sett inn:"
               - indent: "`0.5^10 = 1/1024 ≈ 0.000977`"
               - indent: "`P(ikke alle riktige) = 1 − 0.000977 ≈ 0.9990`"
-          - label: "Resultat"
-            lines:
-              - text: "Det er praktisk talt sikkert (`> 99.9 %`) at studenten får minst ett galt svar."
         result: "`P(ikke alle riktige) ≈ 0.999`"
 
   - label: "Finn n for terskel"
@@ -275,9 +252,6 @@ detailed_solution_variants:
               - indent: "`n = 149`"
               - text: "Verifiser:"
               - indent: "`1 − 0.98^149 ≈ 1 − 0.04945 ≈ 0.9506 ≥ 0.95`  ✓"
-          - label: "Resultat"
-            lines:
-              - text: "Det trengs minst `149` forsøk for at minst én suksess skal være ≥ 95 % sannsynlig."
         result: "`n = 149`"
 
       - source: "Praksis · myntkast"
@@ -303,9 +277,6 @@ detailed_solution_variants:
               - text: "Verifiser:"
               - indent: "`1 − 0.5^7 = 1 − 1/128 ≈ 0.9922 ≥ 0.99`  ✓"
               - indent: "`1 − 0.5^6 = 1 − 1/64 ≈ 0.9844 < 0.99`  (så `n = 6` er for lite)"
-          - label: "Resultat"
-            lines:
-              - text: "Sju kast er nok for å være minst `99 %` sikker på minst én krone."
         result: "`n = 7`"
 
 related:

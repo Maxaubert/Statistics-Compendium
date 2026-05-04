@@ -76,9 +76,6 @@ detailed_solution_variants:
               - { indent: "`= 20/56`" }
               - { indent: "`= 5/14`" }
               - { comment: "Forkort brøken med felles faktor 4." }
-          - label: "Resultat"
-            lines:
-              - { text: "Sannsynligheten for to røde kuler er `5/14 ≈ 0.357`." }
         result: "`P(begge røde) = 5/14 ≈ 0.357`"
 
       - source: "Praksis · kortstokk uten tilbakelegging"
@@ -103,9 +100,6 @@ detailed_solution_variants:
               - { indent: "`= 12/2652`" }
               - { indent: "`= 1/221`" }
               - { indent: "`≈ 0.00452`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Sannsynligheten for to ess på rad er omtrent `0.45 %`." }
         result: "`P(to ess) = 1/221 ≈ 0.0045`"
 
       - source: "Praksis · uavhengige hendelser"
@@ -129,9 +123,6 @@ detailed_solution_variants:
               - { indent: "`P(A ∩ B) = (1/2) · (1/6)`" }
               - { indent: "`= 1/12`" }
               - { indent: "`≈ 0.0833`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Sannsynligheten for krone og sekser er `1/12 ≈ 8.3 %`." }
         result: "`P(krone ∩ sekser) = 1/12 ≈ 0.083`"
 
 related:

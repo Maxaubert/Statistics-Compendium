@@ -64,10 +64,6 @@ detailed_solution_variants:
               - { text: "Multipliser hver verdi med sin sannsynlighet og summer:" }
               - { indent: "`E[X] = (-2)·0.3 + (-1)·0.2 + 0·0.2 + 1·0.1 + 2·0.2`" }
               - { indent: "`     = -0.6 - 0.2 + 0 + 0.1 + 0.4`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Summen av leddene gir forventningsverdien." }
-              - { comment: "Negativ forventning fordi sannsynlighetsmassen ligger litt mot venstre." }
         result: "`E[X] = -0.3`"
 
       - source: "Anvendelse · lineæritet av forventning"
@@ -87,9 +83,6 @@ detailed_solution_variants:
               - { indent: "`E[3X - 2] = 3·E[X] - 2`" }
               - { indent: "`         = 3·1.7 - 2`" }
               - { indent: "`         = 5.1 - 2`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Subtraksjon gir det endelige svaret." }
           - label: "Verifikasjon"
             lines:
               - { text: "Sjekk: skala 3 strekker fordelingen, `-2` flytter den ned. Forventning følger samme transformasjon." }
@@ -117,9 +110,6 @@ detailed_solution_variants:
               - { indent: "`E[Y] = 21/6 = 3.5`" }
               - { text: "Summer ledd for ledd:" }
               - { indent: "`E[X + Y] = 3.5 + 3.5`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Summen gir det endelige svaret." }
           - label: "Sjekk"
             lines:
               - { text: "Vi unngår å regne ut leddvis fra fellestabellen `Σ (x+y)·P(X=x, Y=y)` med 36 utfall." }

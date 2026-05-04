@@ -89,9 +89,6 @@ detailed_solution_variants:
           - label: "S_E (standardavvik)"
             lines:
               - text: "`S_E = √S_E² = √6.093 ≈ 2.4684`."
-          - label: "Resultat"
-            lines:
-              - text: "`S_E² ≈ 6.093` og `S_E ≈ 2.468`."
         result: "`S_E² ≈ 6.093`, `S_E ≈ 2.468`"
 
       - source: "Praksis · lite datasett"
@@ -124,10 +121,6 @@ detailed_solution_variants:
           - label: "S_E (standardavvik)"
             lines:
               - text: "`S_E = √0.1 ≈ 0.3162`."
-          - label: "Resultat"
-            lines:
-              - text: "`S_E² = 0.1`, `S_E ≈ 0.316`."
-              - text: "Liten residualvarians indikerer at punktene ligger nær regresjonslinjen."
         result: "`S_E² = 0.1`, `S_E ≈ 0.316`"
 
       - source: "Praksis · datasett med større spredning"
@@ -158,10 +151,6 @@ detailed_solution_variants:
           - label: "S_E (standardavvik)"
             lines:
               - text: "`S_E = √4.726 ≈ 2.174`."
-          - label: "Resultat"
-            lines:
-              - text: "`β̂ ≈ 1.286`, `S_E² ≈ 4.726`, `S_E ≈ 2.174`."
-              - text: "Større `S_E` enn forrige eksempel reflekterer mer spredning rundt linjen."
         result: "`S_E² ≈ 4.726`, `S_E ≈ 2.174`"
 
 related:

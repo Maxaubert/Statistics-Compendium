@@ -95,9 +95,6 @@ detailed_solution_variants:
             lines:
               - { text: "Setter inn estimatene i `ŷ = α̂ + β̂·x`:" }
               - { indent: "`ŷ = 34.62 + 6.63·x`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Stigningstallet er positivt, så `y` øker med x." }
         result: "`ŷ = 34.62 + 6.63·x`"
 
       - source: "Praksis · 5 datapunkter"
@@ -127,9 +124,6 @@ detailed_solution_variants:
             lines:
               - { text: "Setter inn i `ŷ = α̂ + β̂·x`:" }
               - { indent: "`ŷ = 0.3 + 1.5·x`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Sjekk: ved `x = 3` gir linjen `ŷ = 0.3 + 4.5 = 4.8 = ȳ` (linjen går gjennom `(x̄, ȳ)`)." }
         result: "`α̂ = 0.3`, `β̂ = 1.5`, `ŷ = 0.3 + 1.5·x`"
 
       - source: "Praksis · lab-data (strekk vs. last)"
@@ -160,9 +154,6 @@ detailed_solution_variants:
             lines:
               - { text: "Setter inn estimatene:" }
               - { indent: "`ŷ = 0.15 + 1.97·x`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Skjæringspunktet `α̂ = 0.15` er nær 0 (i tråd med Hooke's lov), og fjærkonstanten estimeres til `β̂ ≈ 1.97 mm/N`." }
         result: "`α̂ ≈ 0.15`, `β̂ ≈ 1.97`, `ŷ = 0.15 + 1.97·x`"
 
 related:

@@ -66,9 +66,6 @@ detailed_solution_variants:
               - { text: "Innsetting av tallene:" }
               - { indent: "`= 0.52·0.23 + 0.48·0.34`" }
               - { indent: "`= 0.1196 + 0.1632`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Den totale sannsynligheten for at et tilfeldig valgt barn drikker tran daglig:" }
         result: "`P(T) = 0.2828` (28.28 %)"
       - source: "Praksis · produksjonslinje"
         question: "Tre maskiner produserer komponenter. Maskin A lager 50 % med defektrate 1 %, maskin B lager 30 % med defektrate 2 %, og maskin C lager 20 % med defektrate 5 %. Hva er den totale sannsynligheten for at en tilfeldig valgt komponent er defekt?"
@@ -87,9 +84,6 @@ detailed_solution_variants:
               - { indent: "`= 0.50·0.01 + 0.30·0.02 + 0.20·0.05`" }
               - { indent: "`= 0.005 + 0.006 + 0.010`" }
               - { comment: "Sjekk: `P(A) + P(B) + P(C) = 1` – partisjonen er gyldig." }
-          - label: "Resultat"
-            lines:
-              - { text: "Total sannsynlighet for at en tilfeldig valgt komponent er defekt:" }
         result: "`P(D) = 0.021` (2.1 %)"
       - source: "Praksis · medisinsk test"
         question: "I en befolkning er 1 % syke og 99 % friske. Testen er 99 % nøyaktig på syke (sensitivitet) og 95 % nøyaktig på friske (spesifisitet, dvs. 5 % falsk positiv). Hva er den totale sannsynligheten for at en tilfeldig testet person får positivt testresultat?"
@@ -110,9 +104,6 @@ detailed_solution_variants:
               - { indent: "`= 0.01·0.99 + 0.99·0.05`" }
               - { indent: "`= 0.0099 + 0.0495`" }
               - { comment: "Falsk-positiv-bidraget dominerer fordi friske er en mye større gruppe." }
-          - label: "Resultat"
-            lines:
-              - { text: "Total sannsynlighet for positivt testresultat:" }
         result: "`P(+) = 0.0594` (5.94 %)"
 
 related:

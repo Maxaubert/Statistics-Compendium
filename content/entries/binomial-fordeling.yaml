@@ -128,9 +128,6 @@ detailed_solution_variants:
               - { text: "`P(X = 4) = C(10,4)·0.30^4·0.70^6`" }
               - { indent: "= 210 · 0.0081 · 0.117649" }
               - { indent: "≈ 210 · 0.000953" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X = 4) ≈ 0.2001`" }
         result: "`P(X = 4) ≈ 0.2001`"
       - source: "Praksis · 2 seksere på 6 kast"
         question: "En vanlig terning kastes `n = 6` ganger. Hva er sannsynligheten for å få nøyaktig 2 seksere?"
@@ -148,9 +145,6 @@ detailed_solution_variants:
               - { text: "`P(X = 2) = C(6,2)·(1/6)²·(5/6)^4`" }
               - { indent: "= 15 · (1/36) · (625/1296)" }
               - { indent: "= 15 · 0.02778 · 0.48225" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X = 2) ≈ 0.2009`" }
         result: "`P(X = 2) ≈ 0.2009`"
       - source: "Eksamen mai25 · 3a (variant `P(X = k)`)"
         question: "En andel `p = 0.2` av grantrær har en sykdom. Vi sjekker tilfeldig 10 grantrær. Hva er sannsynligheten for at nøyaktig 2 av disse har sykdommen?"
@@ -167,9 +161,6 @@ detailed_solution_variants:
               - { text: "`P(X = 2) = C(10,2)·0.2^2·0.8^8`" }
               - { indent: "= 45 · 0.04 · 0.16777" }
               - { indent: "≈ 45 · 0.006711" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X = 2) ≈ 0.3020`" }
         result: "`P(X = 2) ≈ 0.3020`"
 
   - label: "P(X ≤ k)"
@@ -185,10 +176,6 @@ detailed_solution_variants:
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.1", text: "Slå opp `P(X ≤ 2)` for `n = 20`, `p = 0.05` → 0.9245" } }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≤ 2) ≈ 0.9245`" }
-              - { comment: "altså meget sannsynlig at høyst 2 er defekte" }
         result: "`P(X ≤ 2) ≈ 0.9245`"
       - source: "Praksis · quiz med gjetting"
         question: "En quiz har 10 ja/nei-spørsmål. En kandidat gjetter tilfeldig (`p = 0.5`). Hva er sannsynligheten for å få høyst 4 riktige?"
@@ -205,9 +192,6 @@ detailed_solution_variants:
             lines:
               - { text: "Ved symmetri: `P(X ≤ 4) = P(X ≥ 6) = (1 − P(X = 5))/2`" }
               - { indent: "= (1 − 0.2461)/2 ≈ 0.3770" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≤ 4) ≈ 0.3770`" }
         result: "`P(X ≤ 4) ≈ 0.3770`"
       - source: "Praksis · vaksinerte i utvalg"
         question: "I en kommune er 90 % vaksinert (`p = 0.90`). Vi tar et tilfeldig utvalg på `n = 8` personer. Hva er sannsynligheten for at høyst 6 er vaksinert?"
@@ -226,9 +210,6 @@ detailed_solution_variants:
           - label: "Innsatt"
             lines:
               - { text: "`P(X ≤ 6) = 1 − 0.8131`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≤ 6) ≈ 0.1869`" }
         result: "`P(X ≤ 6) ≈ 0.1869`"
 
   - label: "P(X ≥ k)"
@@ -249,9 +230,6 @@ detailed_solution_variants:
           - label: "Innsatt"
             lines:
               - { text: "`P(X ≥ 2) = 1 − 0.376`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≥ 2) ≈ 0.624`" }
         result: "`P(X ≥ 2) ≈ 0.624`"
       - source: "Praksis · lottokuponger"
         question: "Et lodd har vinnersannsynlighet `p = 0.05`. Vi kjøper `n = 20` lodd. Hva er sannsynligheten for å vinne minst én gang?"
@@ -269,9 +247,6 @@ detailed_solution_variants:
             lines:
               - { text: "`P(X ≥ 1) = 1 − 0.95^20`" }
               - { indent: "= 1 − 0.3585" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≥ 1) ≈ 0.6415`" }
         result: "`P(X ≥ 1) ≈ 0.6415`"
       - source: "Praksis · kvalitetskontroll"
         question: "I en batch på `n = 50` deler er hver del OK med sannsynlighet `p = 0.99`. Hva er sannsynligheten for at minst 49 deler er OK?"
@@ -289,9 +264,6 @@ detailed_solution_variants:
               - { text: "`P(X = 49) = C(50,49)·0.99^49·0.01^1`" }
               - { indent: "= 50 · 0.6111 · 0.01 ≈ 0.3056" }
               - { text: "`P(X = 50) = 0.99^50 ≈ 0.6050`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X ≥ 49) ≈ 0.3056 + 0.6050 = 0.9106`" }
         result: "`P(X ≥ 49) ≈ 0.9106`"
 
   - label: "Finn n for terskel"
@@ -315,10 +287,6 @@ detailed_solution_variants:
               - { text: "`n ≥ ln(0.01) / ln(0.95)`" }
               - { indent: "= −4.6052 / −0.05129" }
               - { indent: "≈ 89.78" }
-          - label: "Resultat"
-            lines:
-              - { text: "Rund opp: `n = 90`" }
-              - { comment: "verifisér: `0.95^90 ≈ 0.0099 < 0.01` ✓" }
         result: "`n = 90` lodd"
       - source: "Praksis · ingen defekter"
         question: "Hver del produseres med en defektrate på 1 % (`p = 0.01`). Hvor stor batch `n` kan vi produsere og fortsatt ha minst 95 % sannsynlighet for at ingen del er defekt?"
@@ -339,10 +307,6 @@ detailed_solution_variants:
               - { text: "`n ≤ ln(0.95) / ln(0.99)`" }
               - { indent: "= −0.05129 / −0.01005" }
               - { indent: "≈ 5.10" }
-          - label: "Resultat"
-            lines:
-              - { text: "Rund ned: `n = 5`" }
-              - { comment: "verifisér: `0.99^5 ≈ 0.9510 ≥ 0.95` ✓; `0.99^6 ≈ 0.9415 < 0.95`" }
         result: "`n = 5` deler"
 
 related:

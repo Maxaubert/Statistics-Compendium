@@ -82,9 +82,6 @@ detailed_solution_variants:
             lines:
               - { text: "`r ≈ 0.966` ligger svært nær 1 — sterk positiv lineær sammenheng mellom `x` og `y`." }
               - { text: "Forklart variasjon: `r² ≈ 0.933` — ca. 93 % av variasjonen i `y` forklares av lineær regresjon på `x`." }
-          - label: "Resultat"
-            lines:
-              - { text: "`r ≈ 0.966`, sterk positiv lineær sammenheng." }
         result: "`r ≈ 0.966` (sterk positiv lineær sammenheng, `r² ≈ 0.933`)"
 
       - source: "Praksisoppgave (samme data som regresjon-estimat #2)"
@@ -116,9 +113,6 @@ detailed_solution_variants:
               - { text: "`r ≈ 0.987` — meget sterk positiv lineær sammenheng." }
               - { text: "`r² ≈ 0.975` — ca. 97.5 % av variasjonen i `y` forklares av regresjonen på `x`." }
               - { text: "Punktene ligger nesten på en rett linje (jf. spredningsplott)." }
-          - label: "Resultat"
-            lines:
-              - { text: "`r ≈ 0.987`, meget sterk positiv lineær sammenheng (`r² ≈ 0.975`)." }
         result: "`r ≈ 0.987` (`r² ≈ 0.975`)"
 
       - source: "Praksisoppgave (svak/negativ korrelasjon for kontrast)"
@@ -149,9 +143,6 @@ detailed_solution_variants:
               - { text: "`r ≈ -0.791` — moderat til sterk NEGATIV lineær sammenheng: når `x` øker, har `y` en tendens til å avta." }
               - { text: "`r² ≈ 0.625` — ca. 62.5 % av variasjonen i `y` forklares av lineær regresjon på `x`. Resten (≈37.5 %) er uforklart støy." }
               - { text: "MERK: `r` måler bare lineær sammenheng. Ved et ikke-lineært mønster kan `r` være liten selv om punktene følger en tydelig kurve." }
-          - label: "Resultat"
-            lines:
-              - { text: "`r ≈ -0.791`, moderat sterk negativ lineær sammenheng (`r² ≈ 0.625`)." }
         result: "`r ≈ -0.791` (`r² ≈ 0.625`, negativ retning)"
 
 related:

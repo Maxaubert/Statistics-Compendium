@@ -68,9 +68,6 @@ detailed_solution_variants:
               - { indent: "`P(A ∪ B) = 0.30 + 0.25 − 0.15`" }
               - { indent: "`= 0.55 − 0.15`" }
               - { indent: "`= 0.40`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Sannsynligheten for at minst én av A eller B inntreffer er 0.40." }
         result: "`P(A ∪ B) = 0.40`"
 
       - source: "Praksis · studentkurs"
@@ -92,9 +89,6 @@ detailed_solution_variants:
               - { indent: "`= 1.00 − 0.25`" }
               - { indent: "`= 0.75`" }
               - { comment: "Merk: uten å trekke fra overlappet ville vi feilaktig fått 1.00." }
-          - label: "Resultat"
-            lines:
-              - { text: "75 % av studentene har minst ett av kursene matte eller fysikk." }
         result: "`P(M ∪ F) = 0.75`"
 
       - source: "Praksis · kortstokk"
@@ -117,9 +111,6 @@ detailed_solution_variants:
               - { indent: "`P(B) = 2/52`" }
               - { text: "Summerer:" }
               - { indent: "`P(A ∪ B) = 2/52 + 2/52 = 4/52 = 1/13 ≈ 0.0769`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Sannsynligheten for å trekke en rød treer eller rød firer er `1/13 ≈ 7.69 %`." }
         result: "`P(A ∪ B) = 4/52 = 1/13 ≈ 0.0769`"
 
 related:

@@ -147,9 +147,6 @@ detailed_solution_variants:
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.3", text: "G(−2.08) ≈ 0.0188" } }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X < 24) ≈ 0.0188`." }
         result: "`P(X < 24) ≈ 0.0188` (om lag 1.9 % av koppene har mindre enn 24 cl)."
 
       - source: "Praksis · høyde, positiv z"
@@ -165,9 +162,6 @@ detailed_solution_variants:
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.3", text: "G(0.83) ≈ 0.7967" } }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X < 175) ≈ 0.7967`." }
         result: "`P(X < 175) ≈ 0.7967` (om lag 80 % er under 175 cm)."
 
       - source: "Praksis · IQ, negativ z"
@@ -183,9 +177,6 @@ detailed_solution_variants:
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.3", text: "G(−0.67) ≈ 0.2514 (alternativt 1 − G(0.67) = 1 − 0.7486)" } }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X < 90) ≈ 0.2514`." }
         result: "`P(X < 90) ≈ 0.2514` (rundt 25 % har IQ under 90)."
 
   - label: "P(X > x)"
@@ -204,9 +195,6 @@ detailed_solution_variants:
             lines:
               - { table_lookup: { ref: "E.3", text: "G(2.00) ≈ 0.9772" } }
               - { text: "`= 1 − 0.9772`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X > 130) ≈ 0.0228`." }
         result: "`P(X > 130) ≈ 0.0228` (vel 2 % har IQ over 130)."
 
       - source: "Praksis · høyde"
@@ -223,9 +211,6 @@ detailed_solution_variants:
             lines:
               - { table_lookup: { ref: "E.3", text: "G(1.67) ≈ 0.9525" } }
               - { text: "`= 1 − 0.9525`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(X > 180) ≈ 0.0475`." }
         result: "`P(X > 180) ≈ 0.0475` (knappe 5 % er over 180 cm)."
 
       - source: "Praksis · standardnormal"
@@ -241,9 +226,6 @@ detailed_solution_variants:
             lines:
               - { table_lookup: { ref: "E.3", text: "G(1.96) ≈ 0.9750" } }
               - { text: "`= 1 − 0.9750`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(Z > 1.96) ≈ 0.0250`." }
         result: "`P(Z > 1.96) ≈ 0.0250` (2.5 % i hver hale ⇒ 5 % tosidig)."
 
   - label: "P(a < X < b)"
@@ -263,9 +245,6 @@ detailed_solution_variants:
               - { table_lookup: { ref: "E.3", text: "G(1.6) ≈ 0.9452" } }
               - { table_lookup: { ref: "E.3", text: "G(0.6) ≈ 0.7257" } }
               - { text: "`= 0.9452 − 0.7257`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(305 < X ≤ 310) ≈ 0.2195`." }
         result: "`P(305 < X ≤ 310) ≈ 0.2195` (om lag 22 % av beholderne ligger i intervallet)."
 
       - source: "Praksis · ±1σ-regelen"
@@ -283,9 +262,6 @@ detailed_solution_variants:
               - { table_lookup: { ref: "E.3", text: "G(1) ≈ 0.8413" } }
               - { table_lookup: { ref: "E.3", text: "G(−1) ≈ 0.1587" } }
               - { text: "`= 0.8413 − 0.1587`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(μ − σ < X < μ + σ) ≈ 0.6826`." }
         result: "`≈ 0.6826` (den klassiske 68 %-regelen for ±1σ)."
 
       - source: "Praksis · IQ-bånd"
@@ -303,9 +279,6 @@ detailed_solution_variants:
               - { table_lookup: { ref: "E.3", text: "G(1) ≈ 0.8413" } }
               - { table_lookup: { ref: "E.3", text: "G(−1) ≈ 0.1587" } }
               - { text: "`= 0.8413 − 0.1587`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`P(85 < X < 115) ≈ 0.6826`." }
         result: "`≈ 0.6826` (omtrent to av tre har IQ i båndet 85–115)."
 
   - label: "Invers: finn x"
@@ -323,9 +296,6 @@ detailed_solution_variants:
             lines:
               - { text: "`x = μ + σ · z = 60 + 5 · 1.645`" }
               - { indent: "`= 60 + 8.225`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`x ≈ 68.23`." }
         result: "`x ≈ 68.23` (95 % av X-verdiene ligger under denne grensen)."
 
       - source: "Praksis · IQ-toppen"
@@ -341,9 +311,6 @@ detailed_solution_variants:
             lines:
               - { text: "`x = 100 + 15 · 2.326`" }
               - { indent: "`= 100 + 34.89`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`x ≈ 134.9`." }
         result: "`x ≈ 134.9` (kun 1 % av befolkningen har IQ over denne verdien)."
 
       - source: "Praksis · venstre hale"
@@ -359,9 +326,6 @@ detailed_solution_variants:
             lines:
               - { text: "`x = 170 + 6 · (−1.282)`" }
               - { indent: "`= 170 − 7.692`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`x ≈ 162.3` cm." }
         result: "`x ≈ 162.3` cm (én av ti er kortere enn dette)."
 
   - label: "Invers: finn μ (eller σ)"
@@ -381,9 +345,6 @@ detailed_solution_variants:
               - { text: "`(300 − μ)/5 = −3.090`" }
               - { text: "`300 − μ = −15.45`" }
               - { text: "`μ = 315.45`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`μ` må justeres opp til minst `315.45` ml." }
         result: "`μ ≥ 315.45` ml (`P(X < 300) < 0.001` for alle `μ` over denne grensen)."
 
       - source: "Praksis · finn σ"
@@ -401,9 +362,6 @@ detailed_solution_variants:
               - { text: "`(40 − 50)/σ = −1.645`" }
               - { text: "`−10/σ = −1.645`" }
               - { text: "`σ = 10/1.645`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`σ ≈ 6.08`." }
         result: "`σ ≈ 6.08` (større σ ⇒ mer spredning og høyere P(X < 40))."
 
       - source: "Praksis · spec-grense"
@@ -421,9 +379,6 @@ detailed_solution_variants:
               - { text: "`(100 − μ)/5 = −1.645`" }
               - { text: "`100 − μ = −8.225`" }
               - { text: "`μ = 108.225`" }
-          - label: "Resultat"
-            lines:
-              - { text: "`μ ≥ 108.23` ml." }
         result: "`μ ≥ 108.23` ml (større `μ` gir mer slingringsmonn over speccen)."
 
 related:

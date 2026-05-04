@@ -76,9 +76,6 @@ detailed_solution_variants:
             lines:
               - { text: "`σ² = E[X²] - μ² = 2.3 - (-0.3)² = 2.3 - 0.09 = 2.21`" }
               - { text: "`σ = √2.21 ≈ 1.487`" }
-          - label: "Resultat"
-            lines:
-              - { text: "Variansen er `Var(X) = 2.21`, og standardavviket er `σ ≈ 1.487`." }
         result: "Var(X) = 2.21,  σ ≈ 1.487"
 
       - source: "Praksis · diskret SV med fire verdier"
@@ -109,9 +106,6 @@ detailed_solution_variants:
               - { text: "`σ² = E[X²] - μ² = 3.7 - 1.7² = 3.7 - 2.89 = 0.81`" }
               - { text: "`σ = √0.81 = 0.9`" }
               - { text: "Pent tall siden `0.81 = 0.9²`." }
-          - label: "Resultat"
-            lines:
-              - { text: "Variansen er `Var(X) = 0.81`, og standardavviket er `σ = 0.9`." }
         result: "Var(X) = 0.81,  σ = 0.9"
 
       - source: "Praksis · lineær transformasjon `Var(aX+b) = a²·Var(X)`"
@@ -142,10 +136,6 @@ detailed_solution_variants:
               - { text: "Sjekk regelen: `a²·Var(X) = 2²·0.81 = 4·0.81 = 3.24` ✓" }
               - { text: "`σ_Y = √3.24 = 1.8 = 2·0.9 = a·σ_X`, som forventet." }
               - { comment: "Konstantleddet b = 5 forskyver fordelingen, men endrer ikke spredningen." }
-          - label: "Resultat"
-            lines:
-              - { text: "`Var(Y) = 3.24 = 4·Var(X)`, og `σ_Y = 1.8 = 2·σ_X`." }
-              - { text: "Bekrefter regelen `Var(aX + b) = a²·Var(X)`." }
         result: "Var(Y) = 3.24,  σ_Y = 1.8"
 
 related:
