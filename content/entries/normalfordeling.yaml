@@ -339,12 +339,11 @@ detailed_solution_variants:
               - { text: "`G((300 − μ)/5) = 0.001`" }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.001`: `z = −3.090` (siden `p < 0.5` er `z` negativ)." } }
+              - { table_lookup: { ref: "E.4", text: "`G⁻¹(0.001) = −3.090` (siden `p < 0.5` er `z` negativ)." } }
           - label: "Innsetting"
             lines:
-              - { text: "`(300 − μ)/5 = −3.090`" }
-              - { text: "`300 − μ = −15.45`" }
-              - { text: "`μ = 315.45`" }
+              - { text: "`300 = μ + 5·(−3.090) = μ − 15.45`" }
+              - { text: "`μ = 300 + 15.45 = 315.45`" }
         result: "`μ ≥ 315.45` ml (`P(X < 300) < 0.001` for alle `μ` over denne grensen)."
 
       - source: "Praksis · finn σ"
@@ -356,12 +355,12 @@ detailed_solution_variants:
               - { text: "`G((40 − 50)/σ) = 0.05`" }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.05`: `z = −1.645`." } }
+              - { table_lookup: { ref: "E.4", text: "`G⁻¹(0.05) = −1.645`." } }
           - label: "Innsetting"
             lines:
-              - { text: "`(40 − 50)/σ = −1.645`" }
-              - { text: "`−10/σ = −1.645`" }
-              - { text: "`σ = 10/1.645`" }
+              - { text: "`40 = 50 + σ·(−1.645) = 50 − 1.645·σ`" }
+              - { text: "`1.645·σ = 50 − 40 = 10`" }
+              - { text: "`σ = 10 / 1.645`" }
         result: "`σ ≈ 6.08` (større σ ⇒ mer spredning og høyere P(X < 40))."
 
       - source: "Praksis · spec-grense"
@@ -373,12 +372,11 @@ detailed_solution_variants:
               - { text: "Sett likhet i grensen: `G((100 − μ)/5) = 0.05`." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.05`: `z = −1.645`." } }
+              - { table_lookup: { ref: "E.4", text: "`G⁻¹(0.05) = −1.645`." } }
           - label: "Innsetting"
             lines:
-              - { text: "`(100 − μ)/5 = −1.645`" }
-              - { text: "`100 − μ = −8.225`" }
-              - { text: "`μ = 108.225`" }
+              - { text: "`100 = μ + 5·(−1.645) = μ − 8.225`" }
+              - { text: "`μ = 100 + 8.225 = 108.225`" }
         result: "`μ ≥ 108.23` ml (større `μ` gir mer slingringsmonn over speccen)."
 
 related:
