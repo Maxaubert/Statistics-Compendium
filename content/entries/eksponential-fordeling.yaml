@@ -110,7 +110,7 @@ python_snippet: |
 detailed_solution_variants:
   - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
     solutions:
-      - source: "Lyspære med forventet levetid"
+      - source: "Praksis · Lyspære med forventet levetid"
         question: "En lyspære har forventet levetid på 1000 timer. Hva er sannsynligheten for at den varer i mer enn 1500 timer?"
         sections:
           - label: "Identifisering"
@@ -129,7 +129,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.2231`" }
         result: "`P(T > 1500) ≈ 0.2231`"
 
-      - source: "Kundeankomster i butikk"
+      - source: "Praksis · Kundeankomster i butikk"
         question: "Kunder kommer til en butikk med rate 0.1 per minutt. Hva er sannsynligheten for at det ikke kommer noen kunde i løpet av de neste 30 minuttene?"
         sections:
           - label: "Identifisering"
@@ -148,7 +148,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.0498`" }
         result: "`P(T > 30) ≈ 0.0498`"
 
-      - source: "Komponentens MTBF"
+      - source: "Praksis · Komponentens MTBF"
         question: "En komponent har MTBF (mean time between failures) på 5 år. Hva er sannsynligheten for at den fungerer i mer enn 10 år uten feil?"
         sections:
           - label: "Identifisering"
@@ -169,7 +169,7 @@ detailed_solution_variants:
 
   - label: "P(T < t) — hendelse innen t"
     solutions:
-      - source: "Anropssenter — første anrop"
+      - source: "Praksis · Anropssenter — første anrop"
         question: "Anrop kommer til et anropssenter med rate 0.1 per minutt. Hva er sannsynligheten for at det første anropet kommer innen 5 minutter?"
         sections:
           - label: "Identifisering"
@@ -189,7 +189,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.3935`" }
         result: "`P(T < 5) ≈ 0.3935`"
 
-      - source: "Vulkanutbrudd"
+      - source: "Praksis · Vulkanutbrudd"
         question: "Vulkanutbrudd skjer i et område med rate 0.5 per år (poissonprosess). Hva er sannsynligheten for at det kommer et utbrudd innen ett år?"
         sections:
           - label: "Identifisering"
@@ -214,7 +214,7 @@ detailed_solution_variants:
 
   - label: "P(a < T < b) — intervall"
     solutions:
-      - source: "Bussintervall"
+      - source: "Praksis · Bussintervall"
         question: "Busser ankommer holdeplassen som en poissonprosess med rate 6 per time. Hva er sannsynligheten for at neste buss kommer mellom 10 og 30 minutter fra nå?"
         sections:
           - label: "Identifisering"
@@ -234,7 +234,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.3181`" }
         result: "`P(10 < T < 30) ≈ 0.3181`"
 
-      - source: "Anropssenter — intervall"
+      - source: "Praksis · Anropssenter — intervall"
         question: "Anrop kommer med rate 0.5 per minutt. Hva er sannsynligheten for at neste anrop kommer mellom 2 og 5 minutter fra nå?"
         sections:
           - label: "Identifisering"
@@ -256,7 +256,7 @@ detailed_solution_variants:
 
   - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
     solutions:
-      - source: "Klassisk kundeankomster"
+      - source: "Praksis · Klassisk kundeankomster"
         question: "Kunder kommer med rate 0.1 per minutt. Det har ikke kommet noen kunde de siste 5 minuttene. Hva er sannsynligheten for at vi må vente i mer enn 10 minutter til?"
         sections:
           - label: "Identifisering"
@@ -278,7 +278,7 @@ detailed_solution_variants:
               - { comment: "fordelingen 'starter på nytt' — de 5 minuttene som har gått teller ikke" }
         result: "`P(T > 10 | T > 5) = e^(−1) ≈ 0.3679`"
 
-      - source: "Lyspære som har kjørt i 500 timer"
+      - source: "Praksis · Lyspære som har kjørt i 500 timer"
         question: "En lyspære har forventet levetid 1000 timer (`λ = 0.001` per time). Den har allerede vært i drift i 500 timer uten å brenne. Hva er sannsynligheten for at den varer i minst 1500 timer til?"
         sections:
           - label: "Identifisering"
