@@ -1,3 +1,5 @@
+import { renderInlineCode } from "./inline-code";
+
 interface Props {
   reference: string;
   text: string;
@@ -20,7 +22,7 @@ export function TableLookupCallout({ reference, text }: Props) {
         <span>Tabell </span>
         <span>{reference}</span>
       </div>
-      {text}
+      {renderInlineCode(text, "dark")}
     </div>
   );
 }
