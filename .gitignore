@@ -43,3 +43,6 @@ coverage/
 
 # TypeScript build info
 *.tsbuildinfo
+
+# Local exam-prep notes pulled in from Downloads — not part of the compendium
+statistikk-eksamen/
