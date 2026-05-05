@@ -168,7 +168,7 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
               step={inp.type === "integer" ? 1 : "any"}
               onChange={(e) => handleChange(inp.name, e.target.value)}
               onFocus={(e) => e.target.select()}
-              className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5"
+              className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           </label>
         ))}
