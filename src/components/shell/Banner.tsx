@@ -1,16 +1,42 @@
-import { Moon, Sun, Compass, BookA, Sigma } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Moon, Sun, Compass, BookA, Sigma, Lightbulb, Table2 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
-const NAV_LINKS = [
+interface NavLink {
+  to: string;
+  label: string;
+  Icon: typeof Compass;
+  /** When set, this link is "current" only if /?tab=<value> matches. */
+  tabParam?: string;
+}
+
+const CATEGORY_LINKS: NavLink[] = [
+  { to: "/", label: "Formler", Icon: Sigma, tabParam: "formler" },
+  { to: "/?tab=konsepter", label: "Konsepter", Icon: Lightbulb, tabParam: "konsepter" },
+  { to: "/?tab=tabeller", label: "Tabeller", Icon: Table2, tabParam: "tabeller" },
+];
+
+const HELPER_LINKS: NavLink[] = [
   { to: "/veiviser", label: "Veiviser", Icon: Compass },
   { to: "/ordliste", label: "Ordliste", Icon: BookA },
   { to: "/symboler", label: "Symboler", Icon: Sigma },
 ];
 
+function isActive(loc: ReturnType<typeof useLocation>, link: NavLink): boolean {
+  if (link.tabParam !== undefined) {
+    if (loc.pathname !== "/") return false;
+    const params = new URLSearchParams(loc.search);
+    const tab = params.get("tab") ?? "formler";
+    return tab === link.tabParam;
+  }
+  return loc.pathname === link.to;
+}
+
 export function Banner() {
   const { theme, toggle } = useTheme();
+  const location = useLocation();
   const Icon = theme === "light" ? Moon : Sun;
+  const allLinks = [...CATEGORY_LINKS, ...HELPER_LINKS];
   return (
     <header
       className="relative overflow-hidden text-white"
@@ -58,16 +84,24 @@ export function Banner() {
         </button>
       </div>
       <nav className="relative z-10 flex flex-wrap gap-1 border-t border-white/10 px-7 py-2 text-[12.5px]">
-        {NAV_LINKS.map(({ to, label, Icon: NavIcon }) => (
-          <Link
-            key={to}
-            to={to}
-            className="flex items-center gap-1.5 rounded-md px-2.5 py-1 text-white/85 no-underline hover:bg-white/10 hover:text-white"
-          >
-            <NavIcon size={13} />
-            {label}
-          </Link>
-        ))}
+        {allLinks.map((link) => {
+          const active = isActive(location, link);
+          return (
+            <Link
+              key={link.to + link.label}
+              to={link.to}
+              aria-current={active ? "page" : undefined}
+              className={
+                active
+                  ? "flex items-center gap-1.5 rounded-md bg-white/15 px-2.5 py-1 font-semibold text-white no-underline"
+                  : "flex items-center gap-1.5 rounded-md px-2.5 py-1 text-white/85 no-underline hover:bg-white/10 hover:text-white"
+              }
+            >
+              <link.Icon size={13} />
+              {link.label}
+            </Link>
+          );
+        })}
       </nav>
     </header>
   );
