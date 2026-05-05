@@ -5,7 +5,6 @@ aliases:
   - z-score
   - z-verdi
   - z-skår
-  - standardnormal
 long_def: |
   Z-score standardiserer en observasjon til standardnormalfordeling
   (`μ = 0`, `σ = 1`). Brukes både til å sammenligne verdier på ulike

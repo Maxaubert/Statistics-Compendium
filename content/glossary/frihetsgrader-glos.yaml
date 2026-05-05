@@ -7,6 +7,9 @@ aliases:
   - df
   - ν
 long_def: |
+  Forkortelsen `df` står for engelsk *degrees of freedom*; `ν` er det
+  greske bokstavsymbolet. Begge betyr det samme.
+
   Frihetsgrader velger riktig rad i t-tabellen og χ²-tabellen.
   Tommelfingerregler:
 
@@ -14,6 +17,8 @@ long_def: |
   - **To-utvalg t-test (pooled):** `ν = n_X + n_Y − 2`
   - **Lineær regresjon:** `ν = n − 2`
   - **Kjikvadrat:** `ν = (rader − 1)·(kolonner − 1)`
+
+  Større `ν` → t-fordelingen ligner mer på standardnormal.
 see_also:
   - { id: frihetsgrader, kind: concept }
   - { id: en-utvalg-t-test, kind: entry }
