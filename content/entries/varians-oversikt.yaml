@@ -86,14 +86,6 @@ what_it_means: |
 
   Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
 
-  ## [Normalvarians](glossary:normalvarians)
-
-      Var(X) = σ²
-
-  Trivielt — `σ²` er parameteren selv.
-
-  Entry: [Normalfordeling](/entry/normalfordeling).
-
   ## [Variansen til utvalgsgjennomsnittet](glossary:variansen-til-utvalgsgjennomsnittet)
 
       Var(X̄) = σ²/n          SE(X̄) = σ/√n

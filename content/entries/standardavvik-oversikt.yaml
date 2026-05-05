@@ -36,12 +36,6 @@ what_it_means: |
 
   Entry: [Residualenes varians](/entry/regresjon-residualvarians).
 
-  ## [Standardavvik for normalfordeling](glossary:normalvarians)
-
-      σ = σ   (parameteren selv)
-
-  Entry: [Normalfordeling](/entry/normalfordeling).
-
   ## [Standardavvik for binomial](glossary:binomialvarians)
 
       σ = √(np(1 − p))
