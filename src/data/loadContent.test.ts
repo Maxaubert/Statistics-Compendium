@@ -33,10 +33,9 @@ describe("loadAllContent", () => {
     expect(data.glossary.find((g) => g.id === rel!.id)).toBeDefined();
   });
 
-  it("loads glossary, symbols, and wizard", () => {
+  it("loads glossary and wizard", () => {
     const bundle = loadAllContent();
     expect(bundle.glossary).toBeInstanceOf(Array);
-    expect(bundle.symbols).toBeInstanceOf(Array);
     expect(bundle.wizard).not.toBeNull();
   });
 });

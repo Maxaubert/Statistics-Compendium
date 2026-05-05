@@ -1,6 +1,0 @@
-id: stub
-sym: "?"
-short_def: "Placeholder. Filtered out at load."
-contexts:
-  - usage: "Stub"
-    detail: "This stub keeps the glob pattern working when no curated symbols exist."

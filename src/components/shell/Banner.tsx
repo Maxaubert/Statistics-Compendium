@@ -18,7 +18,6 @@ const CATEGORY_LINKS: NavLink[] = [
 
 const HELPER_LINKS: NavLink[] = [
   { to: "/veiviser", label: "Veiviser", Icon: Compass },
-  { to: "/symboler", label: "Symboler", Icon: Sigma },
 ];
 
 function isActive(loc: ReturnType<typeof useLocation>, link: NavLink): boolean {

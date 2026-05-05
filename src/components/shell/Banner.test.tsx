@@ -41,7 +41,6 @@ describe("Banner", () => {
     renderBanner();
     expect(screen.getByRole("link", { name: /Veiviser/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Ordliste/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Symboler/i })).toBeInTheDocument();
   });
 });
 

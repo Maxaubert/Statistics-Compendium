@@ -3,7 +3,6 @@ import { ListView } from "./routes/ListView";
 import { EntryDetail } from "./routes/EntryDetail";
 import { ConceptRedirect } from "./routes/ConceptRedirect";
 import { TableDetail } from "./routes/TableDetail";
-import { SymbolTable } from "./routes/SymbolTable";
 import { Glossary } from "./routes/Glossary";
 import { Wizard } from "./routes/Wizard";
 import { MockupTabs } from "./routes/MockupTabs";
@@ -23,7 +22,6 @@ export function App() {
         <Route path="/entry/:id" element={<EntryDetail />} />
         <Route path="/concept/:id" element={<ConceptRedirect />} />
         <Route path="/table/:id" element={<TableDetail />} />
-        <Route path="/symboler" element={<SymbolTable />} />
         <Route path="/ordliste" element={<Glossary />} />
         <Route path="/veiviser" element={<Wizard />} />
         <Route path="/mockups/tabs" element={<MockupTabs />} />
