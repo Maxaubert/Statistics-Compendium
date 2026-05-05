@@ -6,6 +6,11 @@ import { TableDetail } from "./routes/TableDetail";
 import { SymbolTable } from "./routes/SymbolTable";
 import { Glossary } from "./routes/Glossary";
 import { Wizard } from "./routes/Wizard";
+import { MockupTabs } from "./routes/MockupTabs";
+import { MockupSteps } from "./routes/MockupSteps";
+import { MockupStepsC } from "./routes/MockupStepsC";
+import { MockupTabsSeparated } from "./routes/MockupTabsSeparated";
+import { MockupProperty } from "./routes/MockupProperty";
 import { NotFound } from "./routes/NotFound";
 
 export function App() {
@@ -19,6 +24,11 @@ export function App() {
         <Route path="/symboler" element={<SymbolTable />} />
         <Route path="/ordliste" element={<Glossary />} />
         <Route path="/veiviser" element={<Wizard />} />
+        <Route path="/mockups/tabs" element={<MockupTabs />} />
+        <Route path="/mockups/steps" element={<MockupSteps />} />
+        <Route path="/mockups/steps/c" element={<MockupStepsC />} />
+        <Route path="/mockups/tabs/separated" element={<MockupTabsSeparated />} />
+        <Route path="/mockups/property" element={<MockupProperty />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
