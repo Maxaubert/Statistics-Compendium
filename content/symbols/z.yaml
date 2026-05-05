@@ -40,5 +40,5 @@ contexts:
     entry_refs:
       - normalfordeling
 see_also:
-  - { id: standardnormalisering, kind: concept }
+  - { id: normalisering, kind: glossary }
   - { id: kritisk-verdi, kind: glossary }

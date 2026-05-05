@@ -101,11 +101,11 @@ nodes:
       - label: "Sannsynlighet for et område P(X<a), P(a<X<b), P(X>a)"
         leads_to:
           - { id: normalfordeling, kind: entry }
-          - { id: standardnormalisering, kind: concept }
+          - { id: normalisering, kind: glossary }
       - label: "Finn μ slik at en gitt sannsynlighet oppfylles (invers)"
         leads_to:
           - { id: normalfordeling, kind: entry }
-          - { id: standardnormalisering, kind: concept }
+          - { id: normalisering, kind: glossary }
       - label: "Konfidensintervall for μ – σ kjent"
         leads_to:
           - { id: ki-mu-kjent-sigma, kind: entry }

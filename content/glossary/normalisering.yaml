@@ -7,7 +7,8 @@ aliases:
   - standardnormalfordeling
   - standardnormalfordelingen
 long_def: |
-  Trikset for å bruke z-tabellen E.3: hvis `X ~ N(μ, σ)`, så er
+  Også kalt **standardnormalisering**. Trikset for å bruke z-tabellen E.3:
+  hvis `X ~ N(μ, σ)`, så er
 
       Z = (X − μ) / σ ~ N(0, 1)
 
@@ -16,7 +17,12 @@ long_def: |
       P(X ≤ x) = G( (x − μ) / σ )
 
   Samme idé brukes i nesten alle z-tester: **standardiser → slå opp → sammenlign**.
+
+  **Brukes for:**
+
+  - Sannsynlighetsberegning fra vilkårlig `N(μ, σ)` via tabellen.
+  - Z-test (testobservatoren er standardnormalisert).
+  - KI for `μ` med kjent `σ` (`z_(α/2)` er kvantil i standardnormal).
 see_also:
-  - { id: standardnormalisering, kind: concept }
   - { id: normalfordeling, kind: entry }
   - { id: E3-z-tabell, kind: table }
