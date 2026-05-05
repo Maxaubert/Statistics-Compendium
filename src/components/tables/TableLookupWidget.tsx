@@ -186,8 +186,8 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
         Resultat
       </div>
       <div
-        className="text-[26px] font-bold tracking-wide"
-        style={{ color: "var(--color-calc-result)" }}
+        className="break-words font-mono text-[15px] font-semibold"
+        style={{ color: "var(--color-calc-text)" }}
       >
         {MODE_RESULT_PREFIX[mode](table)} ≈{" "}
         {Number.isFinite(result) ? result.toFixed(4) : "—"}
