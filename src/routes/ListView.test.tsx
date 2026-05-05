@@ -30,13 +30,36 @@ describe("ListView", () => {
     expect(screen.getByText("Binomialfordeling")).toBeInTheDocument();
   });
 
-  it("shows the Tabeller tab content when selected", () => {
+  it("shows the Tabeller tab content when ?tab=tabeller is in the URL", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={["/?tab=tabeller"]}>
         <ListView />
       </MemoryRouter>
     );
-    fireEvent.click(screen.getByRole("tab", { name: /Tabeller/i }));
     expect(screen.getByText("Poissontabell")).toBeInTheDocument();
+  });
+
+  it("opens the konsepter tab when ?tab=konsepter is in the URL", async () => {
+    render(
+      <MemoryRouter initialEntries={["/?tab=konsepter"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    // The konsepter search placeholder identifies which tab is active.
+    expect(
+      await screen.findByPlaceholderText(/Søk i konsepter/i),
+    ).toBeInTheDocument();
+  });
+
+  it("opens the tabeller tab when ?tab=tabeller is in the URL", async () => {
+    render(
+      <MemoryRouter initialEntries={["/?tab=tabeller"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    // Tabeller tab shows a banner-style hint instead of a search input.
+    expect(
+      await screen.findByText(/Tabellene er interaktive/i),
+    ).toBeInTheDocument();
   });
 });

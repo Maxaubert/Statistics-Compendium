@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { Banner } from "@/components/shell/Banner";
 import { TabBar } from "@/components/shell/TabBar";
@@ -15,11 +15,22 @@ import {
 import { useFilteredContent } from "@/hooks/useFilteredContent";
 
 const CROSS_HIT_CAP = 8;
+const VALID_TABS = new Set(["formler", "konsepter", "tabeller"]);
 
 export function ListView() {
   const data = loadAllContent();
   const navigate = useNavigate();
-  const [tab, setTab] = useState("formler");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const rawTab = searchParams.get("tab") ?? "formler";
+  const tab = VALID_TABS.has(rawTab) ? rawTab : "formler";
+
+  const setTab = (key: string) => {
+    setSearchParams(
+      key === "formler" ? {} : { tab: key },
+      { replace: true },
+    );
+  };
+
   const [conceptQuery, setConceptQuery] = useState("");
 
   const {
