@@ -1,6 +1,6 @@
 id: lambda
 term_no: Lambda (λ)
-short_def: "Rate – antall hendelser per tids- eller romenhet i poisson- og eksponentialfordelingen."
+short_def: "Rate — antall hendelser per tids- eller romenhet i poisson- og eksponentialfordelingen."
 aliases:
   - λ
   - lambda

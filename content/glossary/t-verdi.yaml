@@ -1,6 +1,6 @@
 id: t-verdi
 term_no: T-verdi (t-observator)
-short_def: "Standardisert utvalgsgjennomsnitt når σ er ukjent: t = (X̄ − μ₀)/(s/√n)."
+short_def: "Standardisert utvalgsgjennomsnitt når `σ` er ukjent: `t = (X̄ − μ₀)/(s/√n)`."
 aliases:
   - t-verdi
   - t-observator

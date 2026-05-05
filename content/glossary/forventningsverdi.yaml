@@ -1,6 +1,6 @@
 id: forventningsverdi
 term_no: Forventningsverdi (E[X], μ)
-short_def: "Gjennomsnittet på lang sikt av en stokastisk variabel – det 'sentrale tyngdepunktet' i fordelingen."
+short_def: "Gjennomsnittet på lang sikt av en stokastisk variabel — det «sentrale tyngdepunktet» i fordelingen."
 long_def: |
   Forventningsverdien er det «vektede gjennomsnittet» av en variabels
   mulige verdier — det langsiktige snittet hvis du gjentok eksperimentet

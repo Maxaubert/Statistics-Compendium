@@ -1,6 +1,6 @@
 id: z-score
 term_no: Z-score (z-verdi)
-short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: Z = (X − μ)/σ."
+short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: `Z = (X − μ)/σ`."
 aliases:
   - z-score
   - z-verdi

@@ -1,6 +1,6 @@
 id: r-kvadrat
 term_no: R² (forklaringsgrad, determinasjonskoeffisient)
-short_def: "Andelen av variasjonen i Y som forklares av X i regresjonsmodellen – mellom 0 og 1."
+short_def: "Andelen av variasjonen i `Y` som forklares av `X` i regresjonsmodellen — mellom `0` og `1`."
 aliases:
   - R²
   - r²

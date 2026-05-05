@@ -1,6 +1,6 @@
 id: konfidensintervall
 term_no: Konfidensintervall (KI)
-short_def: "Intervall som med (1 − α)·100 % sikkerhet inneholder den ukjente parameteren."
+short_def: "Intervall som med `(1 − α)·100 %` sikkerhet inneholder den ukjente parameteren."
 aliases:
   - konfidensintervall
   - konfidensintervallet

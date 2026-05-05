@@ -1,6 +1,6 @@
 id: standardavvik
 term_no: Standardavvik (σ, s)
-short_def: "Kvadratroten av variansen – spredning i samme enhet som dataene."
+short_def: "Kvadratroten av variansen — spredning i samme enhet som dataene."
 long_def: |
   `σ = √Var(X)`. For et utvalg: `s = √S²`.
 

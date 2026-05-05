@@ -1,6 +1,6 @@
 id: forkastningsomrade
 term_no: Forkastningsområde
-short_def: "Settet av testobservator-verdier som fører til at H₀ forkastes."
+short_def: "Settet av testobservator-verdier som fører til at `H₀` forkastes."
 long_def: |
   Forkastningsområdet ligger i halene av fordelingen til testobservatoren
   under H₀:

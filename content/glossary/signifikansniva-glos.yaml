@@ -1,6 +1,6 @@
 id: signifikansniva-glos
 term_no: Signifikansnivå (α)
-short_def: "Risikoen du godtar for å forkaste H₀ når H₀ egentlig er sann."
+short_def: "Risikoen du godtar for å forkaste `H₀` når `H₀` egentlig er sann."
 long_def: |
   Signifikansnivået `α` bestemmer hvor sterke beviser du krever før du
   forkaster `H₀`. Vanlige verdier: `0.10`, `0.05`, `0.01`.

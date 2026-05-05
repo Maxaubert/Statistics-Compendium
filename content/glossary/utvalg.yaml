@@ -1,6 +1,6 @@
 id: utvalg
 term_no: Utvalg (stikkprøve, sample)
-short_def: "De n observasjonene du faktisk har målt – en delmengde av populasjonen."
+short_def: "De `n` observasjonene du faktisk har målt — en delmengde av populasjonen."
 long_def: |
   Utvalget er `n` konkrete målinger trukket fra populasjonen. Synonymer:
   stikkprøve, sample. Utvalgsstørrelsen er `n`.

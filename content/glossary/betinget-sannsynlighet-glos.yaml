@@ -1,6 +1,6 @@
 id: betinget-sannsynlighet-glos
 term_no: Betinget sannsynlighet
-short_def: "P(A|B) = sannsynligheten for A når vi vet at B har inntruffet."
+short_def: "`P(A|B)` = sannsynligheten for `A` når vi vet at `B` har inntruffet."
 long_def: |
   Formel: `P(A|B) = P(A ∩ B) / P(B)`, forutsatt `P(B) > 0`.
 

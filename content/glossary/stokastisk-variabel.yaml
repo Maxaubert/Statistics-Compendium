@@ -1,6 +1,6 @@
 id: stokastisk-variabel
 term_no: Stokastisk variabel (X, tilfeldig variabel)
-short_def: "En variabel hvis verdi er bestemt av et tilfeldig forsøk – kan være diskret eller kontinuerlig."
+short_def: "En variabel hvis verdi er bestemt av et tilfeldig forsøk — kan være diskret eller kontinuerlig."
 long_def: |
   En stokastisk variabel `X` tilordner et tall til hvert utfall av et tilfeldig forsøk.
 

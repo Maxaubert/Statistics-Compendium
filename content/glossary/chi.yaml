@@ -1,6 +1,6 @@
 id: chi
 term_no: Chi / kji (χ)
-short_def: "Gresk bokstav brukt i kjikvadrat-fordelingen χ² for variansestimat og goodness-of-fit-tester."
+short_def: "Gresk bokstav brukt i kjikvadrat-fordelingen `χ²` for variansestimat og goodness-of-fit-tester."
 aliases:
   - chi
   - kji

@@ -1,6 +1,6 @@
 id: residual
 term_no: Residual
-short_def: "Forskjellen mellom observert y og predikert ŷ i en regresjonsmodell."
+short_def: "Forskjellen mellom observert `y` og predikert `ŷ` i en regresjonsmodell."
 long_def: |
   Formel: `e_i = y_i − ŷ_i`, der `ŷ_i = α̂ + β̂·x_i`.
 

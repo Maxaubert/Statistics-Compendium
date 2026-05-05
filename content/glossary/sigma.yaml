@@ -1,6 +1,6 @@
 id: sigma
 term_no: Sigma (σ)
-short_def: "Populasjonens standardavvik – spredningen rundt μ, samme enhet som dataene."
+short_def: "Populasjonens standardavvik — spredningen rundt `μ`, samme enhet som dataene."
 aliases:
   - σ
   - sigma

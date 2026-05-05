@@ -1,6 +1,6 @@
 id: bernoulli-forsoek
 term_no: Bernoulli-forsøk
-short_def: "Et enkelt forsøk med to mulige utfall (suksess / fiasko) og fast suksessannsynlighet p."
+short_def: "Et enkelt forsøk med to mulige utfall (suksess / fiasko) og fast suksessannsynlighet `p`."
 long_def: |
   Et Bernoulli-forsøk er ett enkelt eksperiment med eksakt to utfall:
   "suksess" (sannsynlighet `p`) eller "fiasko" (sannsynlighet `1 − p`).

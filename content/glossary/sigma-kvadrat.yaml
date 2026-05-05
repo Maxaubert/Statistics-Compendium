@@ -1,6 +1,6 @@
 id: sigma-kvadrat
 term_no: Sigma-kvadrat (σ²)
-short_def: "Populasjonsvariansen – forventet kvadrert avvik fra μ."
+short_def: "Populasjonsvariansen — forventet kvadrert avvik fra `μ`."
 aliases:
   - σ²
   - sigma-kvadrat

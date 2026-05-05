@@ -1,6 +1,6 @@
 id: kumulativ
 term_no: Kumulativ fordeling
-short_def: "F(x) = P(X ≤ x) – sannsynligheten for at X er mindre enn eller lik x."
+short_def: "`F(x) = P(X ≤ x)` — sannsynligheten for at `X` er mindre enn eller lik `x`."
 long_def: |
   Standardnormaltabellen E.3 gir `G(z) = P(Z ≤ z)`.
 

@@ -43,13 +43,15 @@ export function GlossaryPopup({ term, onClose }: PopupProps) {
         </h2>
       </header>
 
-      <section className="px-7 pt-5">
-        <p
-          className="m-0 text-[15px] leading-relaxed"
-          style={{ color: "var(--color-calc-text)" }}
-        >
-          {term.short_def}
-        </p>
+      <section
+        className="px-7 pt-5"
+        style={{ color: "var(--color-calc-text)" }}
+      >
+        <Prose
+          body={term.short_def}
+          theme="dark"
+          paragraphClass="m-0 text-[15px] leading-relaxed"
+        />
       </section>
 
       {term.long_def && (

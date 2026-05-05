@@ -1,6 +1,6 @@
 id: partisjon
 term_no: Partisjon av utfallsrommet
-short_def: "En oppdeling av utfallsrommet i disjunkte hendelser som til sammen dekker alt – f.eks. {A, A̅} eller {A₁, A₂, …, A_k}."
+short_def: "En oppdeling av utfallsrommet i disjunkte hendelser som til sammen dekker alt — f.eks. `{A, A̅}` eller `{A₁, A₂, …, A_k}`."
 long_def: |
   Hendelsene `A₁, …, A_k` danner en partisjon hvis to krav er oppfylt:
 

@@ -1,6 +1,6 @@
 id: disjunkte-hendelser-glos
 term_no: Disjunkte hendelser (gjensidig utelukkende)
-short_def: "To hendelser kan ikke inntreffe samtidig: P(A ∩ B) = 0."
+short_def: "To hendelser kan ikke inntreffe samtidig: `P(A ∩ B) = 0`."
 long_def: |
   Når `A` og `B` er disjunkte, forenkles unionssetningen til
   `P(A ∪ B) = P(A) + P(B)`.

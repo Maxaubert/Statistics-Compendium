@@ -1,6 +1,6 @@
 id: paret-test
 term_no: Paret test (parvis)
-short_def: "Hver observasjon i utvalg 1 hører til en bestemt observasjon i utvalg 2 – test differansen Dᵢ = Xᵢ − Yᵢ."
+short_def: "Hver observasjon i utvalg 1 hører til en bestemt observasjon i utvalg 2 — test differansen `Dᵢ = Xᵢ − Yᵢ`."
 long_def: |
   Paret design: samme person måles før og etter, eller to målinger gjøres
   på samme enhet. Du regner ikke to-utvalgs-test, men én-utvalgs-test på

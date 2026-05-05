@@ -1,6 +1,6 @@
 id: alpha
 term_no: Alfa (α)
-short_def: "Signifikansnivå i hypotesetesting – også konstantleddet i regresjonslinja Y = α + β·X."
+short_def: "Signifikansnivå i hypotesetesting — også konstantleddet i regresjonslinja `Y = α + β·X`."
 aliases:
   - alfa
   - α

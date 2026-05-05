@@ -1,6 +1,6 @@
 id: korrelasjon-glos
 term_no: Korrelasjon (ρ, r)
-short_def: "Tall mellom −1 og 1 som måler styrken på den lineære sammenhengen mellom to variabler."
+short_def: "Tall mellom `−1` og `1` som måler styrken på den lineære sammenhengen mellom to variabler."
 long_def: |
   Formel: `ρ(X,Y) = Cov(X,Y) / (σ_X · σ_Y)`.
 

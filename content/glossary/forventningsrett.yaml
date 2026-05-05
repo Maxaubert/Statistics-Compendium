@@ -1,6 +1,6 @@
 id: forventningsrett
 term_no: Forventningsrett (unbiased)
-short_def: "En estimator θ̂ er forventningsrett hvis E[θ̂] = θ – den treffer riktig i snitt."
+short_def: "En estimator `θ̂` er forventningsrett hvis `E[θ̂] = θ` — den treffer riktig i snitt."
 long_def: |
   Forventningsrett betyr at estimatoren ikke systematisk over- eller
   underestimerer parameteren.
