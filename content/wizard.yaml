@@ -43,7 +43,7 @@ nodes:
           - { id: uavhengighet-glos, kind: glossary }
       - label: "De Morgan – komplement av union eller snitt"
         leads_to:
-          - { id: de-morgans-lov, kind: concept }
+          - { id: de-morgans-lov, kind: glossary }
       - label: "Sjekk om hendelser er disjunkte (gjensidig utelukkende)"
         leads_to:
           - { id: disjunkte-hendelser-glos, kind: glossary }

@@ -1,0 +1,30 @@
+id: poisson-prosess
+term_no: Poissonprosess
+short_def: "Tellestrøm der hendelser inntreffer uavhengig med konstant rate `λ` over tid eller område."
+aliases:
+  - poissonprosess
+  - poisson-prosess
+  - poisson prosess
+  - poisson prosessen
+  - poissonprosessen
+long_def: |
+  En stokastisk prosess der hendelser inntreffer uavhengig med konstant
+  rate `λ`. Tre konsekvenser:
+
+  - **Telleantall** i et vindu av lengde `t` er Poissonfordelt:
+
+        X ~ Poisson(λt)
+
+  - **Ventetid** mellom påfølgende hendelser er eksponentialfordelt:
+
+        T ~ Eksponential(λ)
+
+  - **Disjunkte vinduer** gir uavhengige antall hendelser.
+
+  Typiske eksempler: vulkanutbrudd, sommerfugler i felle, kunder til en
+  kasse, radioaktiv nedbrytning.
+see_also:
+  - { id: poisson-fordeling, kind: entry }
+  - { id: eksponential-fordeling, kind: entry }
+  - { id: ki-poissonrate, kind: entry }
+  - { id: lambda, kind: glossary }

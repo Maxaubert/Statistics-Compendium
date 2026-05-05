@@ -1,0 +1,24 @@
+id: de-morgans-lov
+term_no: De Morgans lov
+short_def: "Komplementet av en union er snittet av komplementene — og omvendt."
+aliases:
+  - de morgans lov
+  - de morgans lover
+  - de-morgans-lover
+long_def: |
+  De Morgans to lover gir deg en måte å flytte et komplement inn eller
+  ut av et union/snitt-uttrykk:
+
+      A̅ ∩ B̅ = A ∪ B̅
+
+      A̅ ∪ B̅ = A ∩ B̅
+
+  Brukes ofte for å forenkle uttrykk som "verken `A` eller `B`" eller
+  "ikke begge". Sammen med komplementregelen gir det en kraftig måte å
+  regne ut sammensatte sannsynligheter.
+
+  **Eksempel:** `P(M̅ ∩ F̅) = P(M ∪ F̅) = 1 − P(M ∪ F)`.
+see_also:
+  - { id: unionssetningen, kind: entry }
+  - { id: komplementregelen, kind: entry }
+  - { id: hendelse, kind: glossary }

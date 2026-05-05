@@ -1,6 +1,11 @@
 id: simultanfordeling
 term_no: Simultanfordeling
 short_def: "Tabell eller funksjon som gir P(X=x, Y=y) for alle kombinasjoner av to variabler."
+aliases:
+  - simultanfordeling
+  - simultanfordelingen
+  - fellesfordeling
+  - fellesfordelingen
 long_def: |
   Også kalt fellesfordeling. Summerer til `1` over alle `(x, y)`.
 
@@ -8,8 +13,8 @@ long_def: |
 
   - Marginalfordelinger (rad-/kolonnesummer)
   - Betingede fordelinger
-  - Kovarians og korrelasjon
+  - `E[X]`, `E[Y]`, `E[XY]`
+  - `Var(X)`, `Var(Y)`, kovarians og korrelasjon
 see_also:
-  - { id: fellesfordeling, kind: concept }
   - { id: marginalfordeling, kind: entry }
   - { id: kovarians, kind: entry }
