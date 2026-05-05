@@ -98,17 +98,6 @@ what_it_means: |
 
   Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
 
-  ## Sammenheng
-
-  Alle disse er forskjellige måter å regne det samme grunnbegrepet —
-  en gjennomsnittlig kvadrert avvik. Vekten og delingsleddet endrer seg
-  etter hva du har og hva du estimerer.
-
-  Hvis du forstår hvorfor `s² = Σ(xᵢ − x̄)² / (n − 1)` er riktig form for
-  rådata, har du forstått rytmen i alle de andre.
-
-  Se også [Standardavvik (oversikt)](/entry/standardavvik-oversikt) for parallellen til σ.
-
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"
   - "Du må velge mellom flere variansformer (rådata vs. fordeling vs. residual)"

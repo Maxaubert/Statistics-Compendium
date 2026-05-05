@@ -128,9 +128,11 @@ export function EntryDetail() {
           </>
         )}
 
-        <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
-          <RecognitionCues cues={entry.recognition_cues} />
-        </Section>
+        {!isProseEntry && entry.recognition_cues && entry.recognition_cues.length > 0 && (
+          <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
+            <RecognitionCues cues={entry.recognition_cues} />
+          </Section>
+        )}
 
         {entry.when_NOT_to_use && entry.when_NOT_to_use.length > 0 && (
           <Section title="IKKE bruk når" icon={AlertTriangle}>
