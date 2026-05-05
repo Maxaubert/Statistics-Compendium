@@ -12,13 +12,10 @@ what_it_means: |
 
       varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»
 
-  Men formelen tar litt forskjellig form etter hva du har: rådata,
-  en kjent fordelingsfamilie, eller et estimat hvis spredning du vil måle.
+  Vekten og delingsleddet endrer seg etter hva du har og hva du estimerer.
   Sidene under dekker hver av de viktige variansformene én gang hver.
 
-  ## Utregnet fra dine data
-
-  ### Diskret SV med PMF
+  ## Diskret SV med PMF
 
       Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)
 
@@ -28,7 +25,7 @@ what_it_means: |
 
   Entry: [Varians og standardavvik (diskret SV)](/entry/varians-standardavvik-diskret).
 
-  ### Utvalgsvarians (s²)
+  ## Utvalgsvarians (s²)
 
       s² = Σ (xᵢ − x̄)² / (n − 1)
 
@@ -41,7 +38,7 @@ what_it_means: |
   [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma),
   [KI for σ²](/entry/ki-varians).
 
-  ### Pooled (interpolert) varians (S_P²)
+  ## Pooled (interpolert) varians (S_P²)
 
       S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
 
@@ -51,7 +48,7 @@ what_it_means: |
   Konsept: [Interpolert (pooled) varians](/concept/interpolert-varians).
   Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
 
-  ### Residualvarians (S_E²)
+  ## Residualvarians (S_E²)
 
       S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)
 
@@ -63,33 +60,28 @@ what_it_means: |
   [Hypotesetest for β](/entry/regresjon-test-stigningstall),
   [Prediksjonsintervall](/entry/regresjon-prediksjonsintervall).
 
-  ## Avlest fra en kjent fordeling
-
-  Når du har en navngitt fordeling, slipper du å regne — variansen er en
-  egenskap ved fordelingen og står på «Egenskaper»-kortet til hver fordelings-side.
-
-  ### Binomialvarians
+  ## Binomialvarians
 
       Var(X) = np(1 − p)
 
-  For `B(n, p)`. Størst når `p = 0.5`. Detaljer: binomialvarians (klikk for popup).
+  For `B(n, p)`. Størst når `p = 0.5`. Detaljer: binomialvarians.
   Entry: [Binomialfordeling](/entry/binomial-fordeling).
 
-  ### Poissonvarians
+  ## Poissonvarians
 
       Var(X) = λ   (eller λt for et vindu)
 
   Spesielt for Poisson: `E[X] = Var(X) = λ`. Detaljer: poissonvarians.
   Entry: [Poissonfordeling](/entry/poisson-fordeling).
 
-  ### Eksponentialvarians
+  ## Eksponentialvarians
 
       Var(T) = 1/λ²
 
   For ventetid med rate `λ`. Detaljer: eksponentialvarians.
   Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
 
-  ### Hypergeometrisk varians
+  ## Hypergeometrisk varians
 
       Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))
 
@@ -97,32 +89,27 @@ what_it_means: |
   `(N−n)/(N−1)`. Detaljer: hypergeometrisk varians.
   Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
 
-  ### Normalvarians
+  ## Normalvarians
 
       Var(X) = σ²
 
   Trivielt — `σ²` er parameteren selv.
   Entry: [Normalfordeling](/entry/normalfordeling).
 
-  ## Spredning til et estimat
+  ## Variansen til utvalgsgjennomsnittet
 
-  Disse er IKKE «varians til en variabel» i vanlig forstand, men spredningen
-  i et tall vi har regnet ut fra et utvalg. Fundamentet for KI-er og
-  standardfeilene som står i nevneren av nesten alle testobservatorer.
+      Var(X̄) = σ²/n          SE(X̄) = σ/√n
 
-  ### Variansen til utvalgsgjennomsnittet
-
-      Var(X̄) = σ²/n        SE(X̄) = σ/√n
-
-  Bruker `s/√n` hvis `σ` er ukjent. Stort `n` → liten `Var(X̄)` → smalt KI,
-  presis test. Detaljer: variansen til utvalgsgjennomsnittet.
+  Spredningen i selve estimatet `X̄`, ikke i dataene. Bruker `s/√n` hvis
+  `σ` er ukjent. Stort `n` → liten `Var(X̄)` → smalt KI, presis test.
+  Detaljer: variansen til utvalgsgjennomsnittet.
 
   Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
   [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
 
-  ### Variansen til stigningstallet
+  ## Variansen til stigningstallet
 
-      Var(β̂) = S_E² / S_XX        SE(β̂) = √(Var(β̂))
+      Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))
 
   Stor `S_XX` (mye spredning i `x`) → liten `SE(β̂)` → presis estimering.
 
@@ -131,9 +118,11 @@ what_it_means: |
   ## Sammenheng
 
   Alle disse er forskjellige måter å regne det samme grunnbegrepet —
-  en gjennomsnittlig kvadrert avvik. Vekten og delingsleddet endrer seg etter
-  hva du har og hva du estimerer. Hvis du forstår hvorfor `s² = Σ(xᵢ − x̄)² / (n − 1)`
-  er riktig form for rådata, har du forstått rytmen i alle de andre.
+  en gjennomsnittlig kvadrert avvik. Vekten og delingsleddet endrer seg
+  etter hva du har og hva du estimerer.
+
+  Hvis du forstår hvorfor `s² = Σ(xᵢ − x̄)² / (n − 1)` er riktig form for
+  rådata, har du forstått rytmen i alle de andre.
 
   Se også [Standardavvik (oversikt)](/concept/standardavvik) for parallellen til σ.
 
