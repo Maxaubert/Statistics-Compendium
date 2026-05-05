@@ -96,7 +96,21 @@ export function Banner() {
               }
             >
               <link.Icon size={13} />
-              {link.label}
+              {/*
+                Render the label twice: visible text is regular weight when
+                inactive and bold when active; the hidden ::before sibling
+                always reserves the bold width so the nav doesn't shift
+                when an item becomes active.
+              */}
+              <span className="grid">
+                <span
+                  aria-hidden
+                  className="invisible col-start-1 row-start-1 font-semibold"
+                >
+                  {link.label}
+                </span>
+                <span className="col-start-1 row-start-1">{link.label}</span>
+              </span>
             </Link>
           );
         })}
