@@ -1,6 +1,6 @@
 id: bootstrapping
 name_no: "Bootstrapping"
-type: concept
+type: method
 tagline: "Metode for å estimere usikkerhet uten å anta normalfordeling – gjenta utvalg med tilbakelegging fra dataene."
 
 what_it_means: |
@@ -31,6 +31,6 @@ recognition_cues:
 filters: {}
 
 related:
-  - { id: "prosentilintervall",     kind: "concept" }
+  - { id: "prosentilintervall",         kind: "entry" }
   - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
-  - { id: "ki-mu-kjent-sigma",      kind: "entry" }
+  - { id: "ki-mu-kjent-sigma",          kind: "entry" }
