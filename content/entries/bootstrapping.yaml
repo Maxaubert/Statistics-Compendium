@@ -38,6 +38,6 @@ filters:
   tooling: [calculator_only]
 
 related:
-  - { id: "prosentilintervall",         kind: "entry" }
+  - { id: "prosentilintervall",         kind: "glossary" }
   - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",          kind: "entry" }
