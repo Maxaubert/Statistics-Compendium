@@ -9,4 +9,4 @@ long_def: |
   - Beslutningsregel: forkast `H₀` hvis `p < α`.
 see_also:
   - { id: signifikansnivaa, kind: concept }
-  - { id: p-verdi, kind: concept }
+  - { id: p-verdi-glos, kind: glossary }

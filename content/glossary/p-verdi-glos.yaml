@@ -7,7 +7,18 @@ long_def: |
 
   **Beslutningsregel:** forkast `H₀` hvis `p < α`.
 
+  **Venstresidig z-test:**
+
+      p = P(Z ≤ z_obs | H₀) = G(z_obs)
+
+  **Høyresidig z-test:**
+
+      p = 1 − G(z_obs)
+
+  **Tosidig z-test:**
+
+      p = 2·(1 − G(|z_obs|))
+
   P-verdien er **IKKE** sannsynligheten for at `H₀` er sann.
 see_also:
-  - { id: p-verdi, kind: concept }
-  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }

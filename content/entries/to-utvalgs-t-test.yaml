@@ -316,7 +316,7 @@ related:
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "pooled-varians",          kind: "glossary" }
   - { id: "frihetsgrader-glos",      kind: "glossary" }
-  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "E5-t-tabell",             kind: "table" }
 
 tools:

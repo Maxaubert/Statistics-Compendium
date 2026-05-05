@@ -43,5 +43,4 @@ contexts:
       - kjikvadrat-goodness-of-fit
       - kjikvadrat-uavhengighet
 see_also:
-  - { id: p-verdi, kind: concept }
   - { id: p-verdi-glos, kind: glossary }

@@ -290,7 +290,7 @@ detailed_solution_variants:
 related:
   - { id: "normalfordeling",         kind: "entry" }
   - { id: "en-utvalg-t-test",        kind: "entry" }
-  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "signifikansnivaa",        kind: "concept" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }

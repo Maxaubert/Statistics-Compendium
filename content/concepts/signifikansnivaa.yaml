@@ -23,6 +23,6 @@ filters:
   computes: [hypothesis_test, confidence_interval]
 
 related:
-  - { id: "p-verdi",            kind: "concept" }
+  - { id: "p-verdi-glos",       kind: "glossary" }
   - { id: "en-utvalg-z-test",   kind: "entry" }
   - { id: "ki-mu-kjent-sigma",  kind: "entry" }
