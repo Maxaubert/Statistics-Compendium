@@ -112,6 +112,12 @@ export function ListView() {
         <main className="bg-card px-7 py-5">
           {tab === "formler" && (
             <>
+              <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
+                Formler og konsepter
+              </h1>
+              <p className="mb-5 font-serif italic text-ink-3">
+                Søk etter en formel eller bla med filtrene. Klikk en oppføring for å se detaljene.
+              </p>
               <SearchBox
                 value={query}
                 onChange={setQuery}
@@ -148,6 +154,12 @@ export function ListView() {
 
           {tab === "tabeller" && (
             <div className="mx-auto max-w-[1200px]">
+              <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
+                Tabeller
+              </h1>
+              <p className="mb-6 font-serif italic text-ink-3">
+                Statistiske oppslagstabeller. Klikk en tabell for interaktivt oppslag og full visning.
+              </p>
               <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
                 {data.tables.map((t) => (
                   <TableCard key={t.id} table={t} onClick={() => navigate(`/table/${t.id}`)} />
