@@ -31,14 +31,13 @@ symbols:
   - { sym: "E[X], μ",   means: "forventningsverdien" }
 
 filters:
-  computes: [expected_value]
+  computes: [expected_value, marginal_probability]
   random_variable: [discrete_count]
   setup: [single_population, joint_table_given]
   structural_cues: [joint_table_present, summary_stats_given, data_as_list]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 solution_template:
   - "List opp alle verdier x_i og P(X = x_i)"
   - "Multipliser hver x_i med P(X = x_i)"

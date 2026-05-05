@@ -34,14 +34,13 @@ symbols:
   - { sym: "z_(α/2)",  means: "kvantil i standardnormal slik at P(Z > z_(α/2)) = α/2" }
 
 filters:
-  computes: [confidence_interval, parameter_estimate]
+  computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, data_as_list, total_observations_n]
-  parameters_known: [population_variance_known, sample_size_large, confidence_level]
+  parameters_known: [population_variance_known, sample_size_large, confidence_level, sample_size_small_lt30]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
-
 solution_template:
   - "Identifiser konfidensnivå (1-α) og finn α (f.eks. 90 % gir α = 0.10)"
   - "Slå opp z_(α/2) i tabell E.4 (f.eks. α/2 = 0.05 gir 1.645)"

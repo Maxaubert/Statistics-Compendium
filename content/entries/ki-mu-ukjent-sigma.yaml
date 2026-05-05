@@ -40,8 +40,7 @@ filters:
   structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
   parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, confidence_level]
   distribution_assumption: [t_distribution, normal]
-  tooling: [t_quantile_table_E5, calculator_sqrt]
-
+  tooling: [t_quantile_table_E5, calculator_sqrt, normal_quantile_table_E4, standard_normal_table_E3]
 solution_template:
   - "Identifiser konfidensnivå (1-α) og α"
   - "Beregn s² = (1/(n-1)) · Σ(xi - x̄)² (eller bruk gitt s)"

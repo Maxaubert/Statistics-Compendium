@@ -46,10 +46,9 @@ filters:
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool, fixed_n_trials]
   structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events]
-  parameters_known: []
+  parameters_known: [success_p]
   distribution_assumption: [hypergeometric]
   tooling: [calculator_binomial_coef]
-
 solution_template:
   - "Identifiser N (totalt), K (vellykkede), n (trekninger), k (spørsmål)"
   - "Skriv X ~ Hyp(N, K, n)"

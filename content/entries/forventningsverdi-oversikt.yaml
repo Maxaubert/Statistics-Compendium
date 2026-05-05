@@ -106,10 +106,9 @@ filters:
   random_variable: [discrete_count, continuous]
   setup: [single_population, joint_table_given]
   structural_cues: [data_as_list, joint_table_present, summary_stats_given]
-  parameters_known: []
+  parameters_known: [mean_known, rate_lambda]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 related:
   - { id: "forventningsverdi-diskret",  kind: "entry" }
   - { id: "marginalfordeling",          kind: "entry" }
