@@ -172,6 +172,48 @@ describe("TableLookupWidget — renders without crashing for every fixture", () 
 
 // ===================== Empty input → reset to default =====================
 
+describe("TableLookupWidget — input fields start empty", () => {
+  // Across all six tables and both forward/inverse modes, the input
+  // fields should be empty on initial mount even though `liveVals`
+  // holds default numbers (so the printed table still renders).
+  it.each([
+    ["poisson", poissonTable, { μ: 5, k: 2 }],
+    ["z-cumulative", zTable, { z: 0 }],
+    ["t-quantile", tTable, { df: 5, α: 0.05 }],
+  ] as const)("starts with empty input fields (%s, forward)", (_label, table, vals) => {
+    render(<TableLookupWidget table={table} vals={vals} setVals={() => {}} />);
+    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
+      expect(input.value).toBe("");
+    }
+  });
+
+  it("inverse mode also starts with empty input fields (z-tabell)", () => {
+    render(<TableLookupWidget table={zTable} vals={{ z: 0 }} setVals={() => {}} />);
+    // Toggle to inverse mode.
+    fireEvent.click(screen.getByRole("tab", { name: /p → z/i }));
+    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
+      expect(input.value).toBe("");
+    }
+  });
+
+  it("toggling between modes resets the new mode's text inputs to empty", () => {
+    render(<TableLookupWidget table={zTable} vals={{ z: 0 }} setVals={() => {}} />);
+    const zInput = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
+    fireEvent.change(zInput, { target: { value: "1.96" } });
+    expect(zInput.value).toBe("1.96");
+    // Switch to inverse — its inputs should be empty
+    fireEvent.click(screen.getByRole("tab", { name: /p → z/i }));
+    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
+      expect(input.value).toBe("");
+    }
+    // Switch back to forward — should also be empty (fresh start each toggle)
+    fireEvent.click(screen.getByRole("tab", { name: /z → p/i }));
+    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
+      expect(input.value).toBe("");
+    }
+  });
+});
+
 describe("TableLookupWidget — handleChange empty-input fix", () => {
   it("calls setVals with the input's default when the field is cleared (poisson μ)", () => {
     const setVals = vi.fn();
@@ -184,6 +226,9 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
     );
 
     const μInput = screen.getAllByRole("spinbutton")[0];
+    // Field starts empty, so type a value first, then clear it.
+    fireEvent.change(μInput, { target: { value: "3" } });
+    setVals.mockClear();
     fireEvent.change(μInput, { target: { value: "" } });
 
     expect(setVals).toHaveBeenCalled();
@@ -201,8 +246,10 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
         setVals={setVals}
       />,
     );
-    // df is the first input (index 0).
+    // df is the first input (index 0). Field starts empty; type, then clear.
     const dfInput = screen.getAllByRole("spinbutton")[0];
+    fireEvent.change(dfInput, { target: { value: "999" } });
+    setVals.mockClear();
     fireEvent.change(dfInput, { target: { value: "" } });
 
     expect(setVals).toHaveBeenCalled();
