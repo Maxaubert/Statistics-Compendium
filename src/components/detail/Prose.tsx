@@ -231,12 +231,15 @@ function parseBlocks(body: string): Block[] {
 type Token =
   | { kind: "code"; value: string }
   | { kind: "bold"; value: string }
+  | { kind: "italic"; value: string }
   | { kind: "text"; value: string };
 
 /**
- * Tokenize an inline string into code spans, bold spans, and plain text.
- * Backticks have priority — content inside backticks is never further
- * processed (so `**inside code**` stays literal in code).
+ * Tokenize an inline string into code spans, bold spans, italic spans,
+ * and plain text. Backticks have priority — content inside backticks is
+ * never further processed (so `**inside code**` stays literal in code).
+ * Bold (`**...**`) is matched before italic (`*...*`) so the asterisks
+ * don't fight.
  */
 function tokenizeInline(text: string): Token[] {
   const out: Token[] = [];
@@ -252,9 +255,19 @@ function tokenizeInline(text: string): Token[] {
     for (const bp of boldParts) {
       if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
         out.push({ kind: "bold", value: bp.slice(2, -2) });
-      } else if (bp.length > 0) {
-        out.push({ kind: "text", value: bp });
+        continue;
       }
+      if (bp.length === 0) continue;
+      // Finally split on *italic* (single asterisk delimited).
+      const italicParts = bp.split(/(\*[^*]+\*)/g);
+      for (const ip of italicParts) {
+        if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
+          out.push({ kind: "italic", value: ip.slice(1, -1) });
+        } else if (ip.length > 0) {
+          out.push({ kind: "text", value: ip });
+        }
+      }
+      continue;
     }
   }
   return out;
@@ -282,6 +295,13 @@ function renderInline(
         </strong>
       );
     }
+    if (tok.kind === "italic") {
+      return (
+        <em key={i} className="italic">
+          {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
+        </em>
+      );
+    }
     return (
       <Fragment key={i}>
         {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
@@ -301,10 +321,12 @@ const BOLD_CLASS: Record<ProseTheme, string> = {
   dark: "font-semibold text-white",
 };
 const LINK_CLASS: Record<ProseTheme, string> = {
+  // Text stays the surrounding ink color; only the dotted underline marks
+  // it as a clickable link. Hover surfaces the primary accent for feedback.
   light:
-    "cursor-pointer text-primary-2 underline decoration-primary-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+    "cursor-pointer bg-transparent text-inherit underline decoration-ink-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
   dark:
-    "cursor-pointer text-[#a8b1ff] underline decoration-dotted decoration-[#a8b1ff]/60 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
+    "cursor-pointer bg-transparent text-inherit underline decoration-dotted decoration-white/40 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
 
 /**

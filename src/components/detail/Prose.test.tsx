@@ -93,6 +93,15 @@ describe("Prose", () => {
     expect(container.querySelectorAll("p")).toHaveLength(2);
   });
 
+  it("renders *italic* spans without breaking **bold** or `code`", () => {
+    const { container } = render(
+      <Prose body="engelsk *degrees of freedom* og **bold** og `code`" />,
+    );
+    expect(container.querySelector("em")?.textContent).toBe("degrees of freedom");
+    expect(container.querySelector("strong")?.textContent).toBe("bold");
+    expect(container.querySelector("code")?.textContent).toBe("code");
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,
