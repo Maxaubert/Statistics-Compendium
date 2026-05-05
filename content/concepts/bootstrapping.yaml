@@ -32,5 +32,5 @@ filters: {}
 
 related:
   - { id: "prosentilintervall",     kind: "concept" }
-  - { id: "sentralgrenseteoremet",  kind: "concept" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",      kind: "entry" }

@@ -14,6 +14,9 @@ long_def: |
   **Tommelfingerregel:** `n ≥ 30` holder ofte.
 
   Forklarer hvorfor z- og t-tester fungerer for ikke-normale data.
+
+  Hvis `n` er for liten og fordelingen ikke kan antas normal: bruk
+  bootstrapping i stedet.
 see_also:
-  - { id: sentralgrenseteoremet, kind: concept }
   - { id: en-utvalg-z-test, kind: entry }
+  - { id: bootstrapping, kind: concept }

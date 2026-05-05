@@ -381,7 +381,7 @@ detailed_solution_variants:
 
 related:
   - { id: "standardnormalisering",   kind: "concept" }
-  - { id: "sentralgrenseteoremet",   kind: "concept" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "sum-uavhengige-normaler", kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }

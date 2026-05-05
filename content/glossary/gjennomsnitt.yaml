@@ -15,4 +15,4 @@ long_def: |
   derfor `σ/√n` — se variansen til utvalgsgjennomsnittet.
 see_also:
   - { id: forventningsverdi-diskret, kind: entry }
-  - { id: sentralgrenseteoremet, kind: concept }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }

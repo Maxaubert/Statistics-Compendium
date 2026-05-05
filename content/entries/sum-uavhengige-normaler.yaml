@@ -237,7 +237,7 @@ detailed_solution_variants:
 
 related:
   - { id: "normalfordeling",          kind: "entry" }
-  - { id: "sentralgrenseteoremet",    kind: "concept" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "standardnormalisering",    kind: "concept" }
 
 tools:

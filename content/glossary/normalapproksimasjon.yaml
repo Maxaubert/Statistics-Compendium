@@ -24,4 +24,4 @@ see_also:
   - { id: en-utvalg-z-test-andel, kind: entry }
   - { id: ki-andel-binomial, kind: entry }
   - { id: ki-poissonrate, kind: entry }
-  - { id: sentralgrenseteoremet, kind: concept }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }

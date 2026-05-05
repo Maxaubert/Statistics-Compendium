@@ -31,5 +31,5 @@ filters: {}
 related:
   - { id: "normalfordeling",       kind: "entry" }
   - { id: "bootstrapping",         kind: "concept" }
-  - { id: "sentralgrenseteoremet", kind: "concept" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "spredningsplott",       kind: "concept" }

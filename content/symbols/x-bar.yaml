@@ -32,5 +32,5 @@ contexts:
       - sum-uavhengige-normaler
 see_also:
   - { id: gjennomsnitt, kind: glossary }
-  - { id: sentralgrenseteoremet, kind: concept }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }
   - { id: punktestimat, kind: glossary }
