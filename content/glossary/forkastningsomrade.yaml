@@ -3,11 +3,19 @@ term_no: Forkastningsområde
 short_def: "Settet av testobservator-verdier som fører til at `H₀` forkastes."
 long_def: |
   Forkastningsområdet ligger i halene av fordelingen til testobservatoren
-  under H₀:
+  under `H₀`:
 
-  - **Høyresidig:** `T > kritisk verdi`
-  - **Venstresidig:** `T < −kritisk verdi`
-  - **Tosidig:** `|T| > kritisk verdi` (bruk α/2 i hver hale)
+  **Høyresidig:**
+
+      T > kritisk verdi
+
+  **Venstresidig:**
+
+      T < −kritisk verdi
+
+  **Tosidig** (bruk `α/2` i hver hale):
+
+      |T| > kritisk verdi
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
   - { id: signifikansnivaa, kind: concept }

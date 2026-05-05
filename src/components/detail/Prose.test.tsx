@@ -102,6 +102,35 @@ describe("Prose", () => {
     expect(container.querySelector("code")?.textContent).toBe("code");
   });
 
+  it("renders ## headers as <h2> and ### as <h3>", () => {
+    const body = "## Stor seksjon\n\nNoe tekst.\n\n### Mindre seksjon\n\nMer.";
+    const { container } = render(<Prose body={body} />);
+    expect(container.querySelector("h2")?.textContent).toBe("Stor seksjon");
+    expect(container.querySelector("h3")?.textContent).toBe("Mindre seksjon");
+    expect(container.querySelectorAll("p")).toHaveLength(2);
+  });
+
+  it("renders [label](href) markdown links as router links", () => {
+    render(
+      <MemoryRouter>
+        <Prose body="se [Poissonfordeling](/entry/poisson-fordeling) for detaljer" />
+      </MemoryRouter>,
+    );
+    const link = screen.getByRole("link", { name: /Poissonfordeling/ });
+    expect(link).toHaveAttribute("href", "/entry/poisson-fordeling");
+  });
+
+  it("renders [label](glossary:id) as popup-opening buttons", () => {
+    renderInProvider(
+      <Prose body="[Varians](glossary:varians)" />,
+    );
+    // It is a button (not a router link).
+    const btn = screen.getByRole("button", { name: "Varians" });
+    expect(btn.tagName).toBe("BUTTON");
+    // Sanity: not also rendered as a router link.
+    expect(screen.queryByRole("link", { name: "Varians" })).toBeNull();
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,

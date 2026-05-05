@@ -4,10 +4,19 @@ short_def: "En oppdeling av utfallsrommet i disjunkte hendelser som til sammen d
 long_def: |
   Hendelsene `A₁, …, A_k` danner en partisjon hvis to krav er oppfylt:
 
-  - Parvis disjunkte: `Aᵢ ∩ Aⱼ = ∅` for `i ≠ j`
-  - Dekker hele utfallsrommet: `A₁ ∪ … ∪ A_k = Ω`
+  **Parvis disjunkte** (snittet er tomt):
 
-  Brukes i setningen om total sannsynlighet (`P(B) = Σ P(Aᵢ)·P(B|Aᵢ)`) og videre i Bayes' setning.
+      Aᵢ ∩ Aⱼ = ∅        for i ≠ j
+
+  **Dekker hele utfallsrommet:**
+
+      A₁ ∪ A₂ ∪ … ∪ A_k = Ω
+
+  Brukes i setningen om total sannsynlighet:
+
+      P(B) = Σ P(Aᵢ) · P(B|Aᵢ)
+
+  og videre i Bayes' setning.
 aliases:
   - partisjon
   - partisjonen

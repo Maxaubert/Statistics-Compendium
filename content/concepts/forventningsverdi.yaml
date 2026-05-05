@@ -12,12 +12,12 @@ what_it_means: |
 
       forventningsverdi = «sum av verdi · vekt»
 
-  Vekten er sannsynligheten (for SV) eller `1/n` (for et utvalg). Under er
+  Vekten er sannsynligheten (for en stokastisk variabel) eller `1/n` (for et utvalg). Under er
   formene du møter i pensum og når hver passer.
 
   ---
 
-  **1. Diskret SV med sannsynlighetsfordeling**
+  **1. Diskret stokastisk variabel med sannsynlighetsfordeling**
 
       E[X] = Σ x_i · P(X = x_i)
 
@@ -28,7 +28,7 @@ what_it_means: |
 
   ---
 
-  **2. Kontinuerlig SV (integral-form)**
+  **2. Kontinuerlig stokastisk variabel (integral-form)**
 
       E[X] = ∫ x · f(x) dx
 
@@ -89,11 +89,11 @@ what_it_means: |
 
   ---
 
-  Sammenhengen mellom formene: form 1 og 2 er for SV med kjent fordeling.
-  Form 3 er for rådata. Form 4–6 er regneregler som lar deg unngå å regne
-  ut nye forventninger fra grunn av — du bygger dem fra det du allerede har.
-  Mange eksamensoppgaver løses raskere ved å bruke lineæritet i stedet for
-  å regne ut en transformert SV direkte.
+  Sammenhengen mellom formene: form 1 og 2 er for stokastiske variabler
+  med kjent fordeling. Form 3 er for rådata. Form 4–6 er regneregler som
+  lar deg unngå å regne ut nye forventninger fra grunn av — du bygger dem
+  fra det du allerede har. Mange eksamensoppgaver løses raskere ved å
+  bruke lineæritet i stedet for å regne ut en transformert variabel direkte.
 
 recognition_cues:
   - "Oppgaven ber om E[X], μ, eller forventningsverdien"

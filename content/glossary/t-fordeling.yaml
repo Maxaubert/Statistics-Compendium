@@ -4,12 +4,16 @@ short_def: "Klokkeformet, men bredere enn standardnormal — formen styres av fr
 long_def: |
   T-fordelingen brukes når vi standardiserer et utvalgsgjennomsnitt med
   utvalgsstandardavviket `s` i stedet for det kjente `σ`. Da følger
-  testobservatoren `T = (X̄ − μ₀)/(s/√n)` en t-fordeling med `ν` frihetsgrader.
+  testobservatoren
 
-  - **Form:** symmetrisk om `0`, klokkeformet — men har tyngre haler enn standardnormal
-  - **Eneste parameter:** frihetsgrader `ν`. Lite `ν` → bredere haler; stort `ν` → likner standardnormal
-  - **Tilnærming:** for `n ≥ 30` kan z-fordeling brukes i stedet
-  - **Tabell:** kvantilene står i tabell E.5
+      T = (X̄ − μ₀) / (s/√n)
+
+  en t-fordeling med `ν` frihetsgrader.
+
+  - **Form:** symmetrisk om `0`, klokkeformet — men har tyngre haler enn standardnormal.
+  - **Eneste parameter:** frihetsgrader `ν`. Lite `ν` → bredere haler; stort `ν` → likner standardnormal.
+  - **Tilnærming:** for `n ≥ 30` kan z-fordeling brukes i stedet.
+  - **Tabell:** kvantilene står i tabell E.5.
 
   Ikke forveksle med `t`-verdien selv: t-fordelingen er fordelingen,
   `t`-verdien er den observerte testobservatoren.

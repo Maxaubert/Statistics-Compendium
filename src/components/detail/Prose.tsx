@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   buildAliasIndex,
   findGlossaryLinks,
@@ -86,6 +87,14 @@ export function Prose({
         if (block.kind === "rule") {
           return <hr key={i} className={ruleClass} />;
         }
+        if (block.kind === "heading") {
+          const Tag = block.level === 2 ? "h2" : "h3";
+          return (
+            <Tag key={i} className={HEADING_CLASS[theme][block.level]}>
+              {renderInline(block.text, aliases, popup?.openTerm, theme)}
+            </Tag>
+          );
+        }
         if (block.kind === "code_block") {
           return (
             <pre key={i} className={CODE_BLOCK_CLASS[theme]}>
@@ -121,6 +130,16 @@ const CODE_BLOCK_CLASS: Record<ProseTheme, string> = {
   dark:
     "m-0 overflow-x-auto rounded-md bg-white/[0.05] px-4 py-3 font-mono text-[13.5px] leading-relaxed text-[inherit]",
 };
+const HEADING_CLASS: Record<ProseTheme, Record<2 | 3, string>> = {
+  light: {
+    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-ink",
+    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-ink",
+  },
+  dark: {
+    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-white",
+    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-white",
+  },
+};
 
 // ---- Block parser -----------------------------------------------------
 
@@ -129,12 +148,20 @@ interface ListBlock { kind: "list"; items: string[] }
 interface OrderedListBlock { kind: "ordered"; items: string[] }
 interface RuleBlock { kind: "rule" }
 interface CodeBlock { kind: "code_block"; lines: string[] }
-type Block = ParagraphBlock | ListBlock | OrderedListBlock | RuleBlock | CodeBlock;
+interface HeadingBlock { kind: "heading"; level: 2 | 3; text: string }
+type Block =
+  | ParagraphBlock
+  | ListBlock
+  | OrderedListBlock
+  | RuleBlock
+  | CodeBlock
+  | HeadingBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
 const NUMBERED_RE = /^\s*\d+\.\s+/;
 const RULE_RE = /^\s*-{3,}\s*$/;
 const INDENTED_CODE_RE = /^(?: {4}|\t)(.*)$/;
+const HEADING_RE = /^(##|###)\s+(.+)$/;
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -148,6 +175,16 @@ function parseBlocks(body: string): Block[] {
     }
     if (RULE_RE.test(lines[i])) {
       blocks.push({ kind: "rule" });
+      i++;
+      continue;
+    }
+    const headingMatch = lines[i].match(HEADING_RE);
+    if (headingMatch) {
+      blocks.push({
+        kind: "heading",
+        level: headingMatch[1].length === 2 ? 2 : 3,
+        text: headingMatch[2].trim(),
+      });
       i++;
       continue;
     }
@@ -181,7 +218,7 @@ function parseBlocks(body: string): Block[] {
     }
     if (BULLET_RE.test(lines[i])) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i]) && !HEADING_RE.test(lines[i])) {
         if (BULLET_RE.test(lines[i])) {
           items.push(lines[i].replace(BULLET_RE, "").trim());
         } else if (NUMBERED_RE.test(lines[i])) {
@@ -197,7 +234,7 @@ function parseBlocks(body: string): Block[] {
     }
     if (NUMBERED_RE.test(lines[i])) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i]) && !HEADING_RE.test(lines[i])) {
         if (NUMBERED_RE.test(lines[i])) {
           items.push(lines[i].replace(NUMBERED_RE, "").trim());
         } else if (BULLET_RE.test(lines[i])) {
@@ -216,7 +253,8 @@ function parseBlocks(body: string): Block[] {
       lines[i].trim() !== "" &&
       !BULLET_RE.test(lines[i]) &&
       !NUMBERED_RE.test(lines[i]) &&
-      !RULE_RE.test(lines[i])
+      !RULE_RE.test(lines[i]) &&
+      !HEADING_RE.test(lines[i])
     ) {
       paraLines.push(lines[i].trim());
       i++;
@@ -232,45 +270,68 @@ type Token =
   | { kind: "code"; value: string }
   | { kind: "bold"; value: string }
   | { kind: "italic"; value: string }
+  | { kind: "link"; label: string; href: string }
   | { kind: "text"; value: string };
+
+const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 /**
  * Tokenize an inline string into code spans, bold spans, italic spans,
- * and plain text. Backticks have priority — content inside backticks is
- * never further processed (so `**inside code**` stays literal in code).
- * Bold (`**...**`) is matched before italic (`*...*`) so the asterisks
- * don't fight.
+ * markdown links, and plain text. Backticks have priority — content
+ * inside backticks is never further processed (so `**inside code**`
+ * stays literal in code). Then `[label](href)` markdown links are split
+ * out before bold/italic so link targets don't get parsed as emphasis.
  */
 function tokenizeInline(text: string): Token[] {
   const out: Token[] = [];
-  // First split on backticks to lock in code spans.
   const codeParts = text.split(/(`[^`]+`)/g);
   for (const part of codeParts) {
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
       out.push({ kind: "code", value: part.slice(1, -1) });
       continue;
     }
-    // Then split each non-code chunk on **bold**.
-    const boldParts = part.split(/(\*\*[^*]+\*\*)/g);
-    for (const bp of boldParts) {
-      if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
-        out.push({ kind: "bold", value: bp.slice(2, -2) });
-        continue;
+    if (part.length === 0) continue;
+    // Pull out [label](href) link tokens before bold/italic so the link
+    // target's parens etc. don't fight with emphasis parsing.
+    let cursor = 0;
+    LINK_RE.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = LINK_RE.exec(part)) !== null) {
+      if (match.index > cursor) {
+        emitNonLink(part.slice(cursor, match.index), out);
       }
-      if (bp.length === 0) continue;
-      // Finally split on *italic* (single asterisk delimited).
-      const italicParts = bp.split(/(\*[^*]+\*)/g);
-      for (const ip of italicParts) {
-        if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
-          out.push({ kind: "italic", value: ip.slice(1, -1) });
-        } else if (ip.length > 0) {
-          out.push({ kind: "text", value: ip });
-        }
-      }
-      continue;
+      out.push({ kind: "link", label: match[1], href: match[2] });
+      cursor = match.index + match[0].length;
+    }
+    if (cursor < part.length) {
+      emitNonLink(part.slice(cursor), out);
     }
   }
   return out;
+}
+
+/**
+ * Tokenize a chunk that has already been peeled of backticks and links.
+ * Splits on bold, then italic.
+ */
+function emitNonLink(chunk: string, out: Token[]) {
+  if (chunk.length === 0) return;
+  const boldParts = chunk.split(/(\*\*[^*]+\*\*)/g);
+  for (const bp of boldParts) {
+    if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
+      out.push({ kind: "bold", value: bp.slice(2, -2) });
+      continue;
+    }
+    if (bp.length === 0) continue;
+    const italicParts = bp.split(/(\*[^*]+\*)/g);
+    for (const ip of italicParts) {
+      if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
+        out.push({ kind: "italic", value: ip.slice(1, -1) });
+      } else if (ip.length > 0) {
+        out.push({ kind: "text", value: ip });
+      }
+    }
+  }
 }
 
 function renderInline(
@@ -302,6 +363,30 @@ function renderInline(
         </em>
       );
     }
+    if (tok.kind === "link") {
+      // Special protocol: [label](glossary:term-id) opens the popup for
+      // that glossary id instead of routing. Useful in headings where
+      // we want a click to surface the term definition without leaving
+      // the page.
+      if (tok.href.startsWith("glossary:")) {
+        const termId = tok.href.slice("glossary:".length);
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => openTerm?.(termId)}
+            className={MD_LINK_CLASS[theme]}
+          >
+            {tok.label}
+          </button>
+        );
+      }
+      return (
+        <RouterLink key={i} to={tok.href} className={MD_LINK_CLASS[theme]}>
+          {tok.label}
+        </RouterLink>
+      );
+    }
     return (
       <Fragment key={i}>
         {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
@@ -327,6 +412,15 @@ const LINK_CLASS: Record<ProseTheme, string> = {
     "cursor-pointer bg-transparent text-inherit underline decoration-ink-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
   dark:
     "cursor-pointer bg-transparent text-inherit underline decoration-dotted decoration-white/40 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
+};
+// Markdown links — same hover-driven affordance, but a SOLID underline so
+// they read as "navigates to a page" rather than "opens a popup" (which is
+// what the dotted glossary links do).
+const MD_LINK_CLASS: Record<ProseTheme, string> = {
+  light:
+    "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+  dark:
+    "text-inherit underline decoration-white/50 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
 
 /**

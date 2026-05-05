@@ -8,7 +8,12 @@ aliases:
   - standardnormalfordelingen
 long_def: |
   Trikset for å bruke z-tabellen E.3: hvis `X ~ N(μ, σ)`, så er
-  `Z = (X − μ)/σ ~ N(0, 1)` og `P(X ≤ x) = G((x − μ)/σ)`.
+
+      Z = (X − μ) / σ ~ N(0, 1)
+
+  og dermed:
+
+      P(X ≤ x) = G( (x − μ) / σ )
 
   Samme idé brukes i nesten alle z-tester: **standardiser → slå opp → sammenlign**.
 see_also:

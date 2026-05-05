@@ -6,10 +6,15 @@ long_def: |
   én hale. Hele `α` legges i den ene halen — halverer ikke `α` slik
   tosidig gjør.
 
-  - **Høyresidig:** `p = P(observator ≥ observert | H₀)`
-  - **Venstresidig:** `p = P(observator ≤ observert | H₀)`
+  **Høyresidig:**
 
-  Bruk når oppgaven sier "større enn", "mindre enn", "minst", eller "høyst".
+      p = P(observator ≥ observert | H₀)
+
+  **Venstresidig:**
+
+      p = P(observator ≤ observert | H₀)
+
+  Bruk når oppgaven sier «større enn», «mindre enn», «minst», eller «høyst».
 see_also:
   - { id: tosidig-test, kind: glossary }
   - { id: alternativhypotese, kind: glossary }

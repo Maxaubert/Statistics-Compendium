@@ -39,6 +39,7 @@ symbols:
 properties:
   expected_value: "E[X] = n · K/N"
   variance: "Var[X] = n · K/N · (N-K)/N · (N-n)/(N-1)"
+  std_dev: "σ = √(Var[X])"
 
 filters:
   computes: [exact_probability, at_least_k, combinatorial_count]

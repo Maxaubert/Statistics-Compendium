@@ -10,8 +10,13 @@ long_def: |
   observerte `yᵢ` og predikerte `ŷᵢ` blir minst mulig. Kvadratet straffer
   store avvik mer enn små og gjør matematikken pen (lukket løsning).
 
-  - **Stigningstall:** `β̂ = S_xy / S_xx`
-  - **Konstantledd:** `α̂ = ȳ − β̂·x̄`
+  **Stigningstall:**
+
+      β̂ = S_xy / S_xx
+
+  **Konstantledd:**
+
+      α̂ = ȳ − β̂·x̄
 
   Sårbar for uteliggere fordi store avvik veier ekstra tungt.
 see_also:

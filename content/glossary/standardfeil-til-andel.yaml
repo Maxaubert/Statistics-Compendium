@@ -1,0 +1,32 @@
+id: standardfeil-til-andel
+term_no: Standardfeil til utvalgsandelen (SE(p̂))
+short_def: "`SE(p̂) = √(p̂(1 − p̂)/n)` — spredningen i estimert andel `p̂ = X/n`."
+long_def: |
+  Standardfeilen til andelen brukes i z-test og KI for andel. To
+  varianter er vanlige:
+
+  **For KI** (bruker estimat):
+
+      SE(p̂) = √( p̂(1 − p̂) / n )
+
+  **For testobservator** (bruker `p₀` fra `H₀`):
+
+      SE(p̂) = √( p₀(1 − p₀) / n )
+
+  Forutsetter normalapproksimasjon:
+
+      n · p̂ · (1 − p̂) ≥ 5
+
+  **Trenger rådata?** Nei — bare `n` og `p̂` (eller `p₀`).
+
+  Standardfeilen er størst når `p̂ = 0.5` og minst når `p̂` er nær `0` eller `1`.
+aliases:
+  - standardfeil til andel
+  - standardfeil til andelen
+  - se(p̂)
+  - se(p)
+see_also:
+  - { id: andel, kind: glossary }
+  - { id: en-utvalg-z-test-andel, kind: entry }
+  - { id: ki-andel-binomial, kind: entry }
+  - { id: normalapproksimasjon, kind: glossary }

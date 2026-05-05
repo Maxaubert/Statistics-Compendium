@@ -5,11 +5,15 @@ aliases:
   - t-verdi
   - t-observator
 long_def: |
+  Formel:
+
+      t = (X̄ − μ₀) / (s/√n)
+
   T-verdien er som `z`, men med utvalgets `s` i stedet for kjent `σ`.
   Følger t-fordeling med `n − 1` frihetsgrader.
 
-  - T-fordelingen er bredere i halene enn standardnormal — kritisk verdi blir litt større for små `n`
-  - Når `n` vokser, nærmer t-fordelingen seg z-fordelingen
+  - T-fordelingen er bredere i halene enn standardnormal — kritisk verdi blir litt større for små `n`.
+  - Når `n` vokser, nærmer t-fordelingen seg z-fordelingen.
 
   Slå opp i E.5-tabellen.
 see_also:

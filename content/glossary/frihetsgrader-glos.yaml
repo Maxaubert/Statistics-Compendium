@@ -13,10 +13,21 @@ long_def: |
   Frihetsgrader velger riktig rad i t-tabellen og χ²-tabellen.
   Tommelfingerregler:
 
-  - **Én-utvalg t-test og KI for μ:** `ν = n − 1`
-  - **To-utvalg t-test (pooled):** `ν = n_X + n_Y − 2`
-  - **Lineær regresjon:** `ν = n − 2`
-  - **Kjikvadrat:** `ν = (rader − 1)·(kolonner − 1)`
+  **Én-utvalg t-test og KI for μ:**
+
+      ν = n − 1
+
+  **To-utvalg t-test (pooled):**
+
+      ν = n_X + n_Y − 2
+
+  **Lineær regresjon:**
+
+      ν = n − 2
+
+  **Kjikvadrat:**
+
+      ν = (rader − 1) · (kolonner − 1)
 
   Større `ν` → t-fordelingen ligner mer på standardnormal.
 see_also:

@@ -6,10 +6,22 @@ long_def: |
   mulige verdier — det langsiktige snittet hvis du gjentok eksperimentet
   uendelig mange ganger.
 
-  - **Diskret SV:** `E[X] = Σ x · P(X = x)`
-  - **Kontinuerlig SV:** `E[X] = ∫ x · f(x) dx`
-  - **Utvalg:** estimeres med `X̄ = (1/n)·Σ Xᵢ`
-  - **Lineæritet:** `E[aX + b] = a·E[X] + b` og `E[X + Y] = E[X] + E[Y]` (uten antakelse om uavhengighet)
+  **Diskret stokastisk variabel:**
+
+      E[X] = Σ x · P(X = x)
+
+  **Kontinuerlig stokastisk variabel:**
+
+      E[X] = ∫ x · f(x) dx
+
+  **Utvalg** (estimat for `μ`):
+
+      X̄ = (1/n) · Σ Xᵢ
+
+  **Lineæritet:**
+
+      E[aX + b] = a · E[X] + b
+      E[X + Y]  = E[X] + E[Y]        (uten antakelse om uavhengighet)
 aliases:
   - forventningsverdi
   - forventningsverdien

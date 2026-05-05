@@ -2,10 +2,13 @@ id: kvantil
 term_no: Kvantil
 short_def: "Verdien som har en gitt sannsynlighet til venstre for seg i en fordeling."
 long_def: |
-  `z_α` er den verdien der `P(Z > z_α) = α` — altså `α`-kvantilen i den
-  øvre halen.
+  `α`-kvantilen i øvre hale er definert ved:
 
-  **Eksempel:** `z_(0.025) = 1.96` fordi `P(Z > 1.96) = 0.025`.
+      P(Z > z_α) = α
+
+  **Eksempel:**
+
+      z_(0.025) = 1.96        fordi    P(Z > 1.96) = 0.025
 
   Kvantiler brukes til å sette grenser for KI og kritiske verdier.
 see_also:

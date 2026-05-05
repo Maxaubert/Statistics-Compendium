@@ -1,0 +1,32 @@
+id: residualstandardavvik
+term_no: Residualstandardavvik (S_E)
+short_def: "Kvadratroten av residualvariansen: `S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )`. Typisk avvik fra regresjonslinjen."
+long_def: |
+  Formel:
+
+      S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )
+
+  Gjennomsnittlig størrelse på residualene — hvor langt observasjonene
+  typisk ligger unna regresjonslinjen, målt i samme enhet som `y`.
+
+  **Trenger rådata?** Indirekte: trenger `(xᵢ, yᵢ)`-parene for å regne
+  residualene. Hvis `S_E²` (eller `S_E`) er oppgitt, trenger du ikke
+  rådataene.
+
+  **`n − 2` i nevneren:** to frihetsgrader er brukt opp på å estimere
+  `α̂` og `β̂`.
+
+  Inngår i:
+
+      SE(β̂) = √(S_E² / S_XX)
+
+  og i prediksjonsintervaller.
+aliases:
+  - residualstandardavvik
+  - residualstandardavviket
+  - s_e
+see_also:
+  - { id: residualvarians, kind: glossary }
+  - { id: regresjon-residualvarians, kind: entry }
+  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: standardavvik, kind: concept }

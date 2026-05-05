@@ -9,7 +9,9 @@ aliases:
   - korrelasjonskoeffisient
   - korrelasjonskoeffisienten
 long_def: |
-  Formel: `r = Cov(X, Y) / (σ_X · σ_Y)`.
+  Formel:
+
+      r = Cov(X, Y) / (σ_X · σ_Y)
 
   - `r = 1`: perfekt positiv lineær sammenheng
   - `r = −1`: perfekt negativ

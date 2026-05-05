@@ -1,0 +1,33 @@
+id: variansen-til-utvalgsgjennomsnittet
+term_no: Variansen til utvalgsgjennomsnittet (Var(X̄))
+short_def: "`Var(X̄) = σ²/n` — spredningen i selve gjennomsnittet, ikke i dataene. Standardfeilen er `SE(X̄) = σ/√n`."
+long_def: |
+  Når du regner ut `X̄` fra `n` uavhengige observasjoner med samme
+  varians `σ²`, er variansen til selve gjennomsnittet:
+
+      Var(X̄) = σ²/n
+
+  Standardfeilen blir kvadratroten:
+
+      SE(X̄) = σ/√n   (eller `s/√n` hvis σ er ukjent)
+
+  - **Stort `n` → liten `Var(X̄)`** → smalt KI, presis test.
+  - **Ikke det samme som `Var(X)`:** den variansen er spredningen i en
+    enkelt observasjon. `Var(X̄)` er spredningen i estimatet `X̄`.
+  - **Trenger IKKE rådata** når `σ` (eller et estimat for σ) allerede
+    er gitt — formelen sier hva spredningen i `X̄` blir uten å se på selve dataene.
+
+  Bygd inn i: én-utvalg z-test, én-utvalg t-test, og KI for μ — der står
+  `σ/√n` eller `s/√n` i nevneren.
+aliases:
+  - variansen til utvalgsgjennomsnittet
+  - varians til utvalgsgjennomsnittet
+  - varians til x̄
+  - var(x̄)
+  - var(xbar)
+see_also:
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: standardfeil, kind: glossary }
+  - { id: varians, kind: concept }
+  - { id: en-utvalg-z-test, kind: entry }
+  - { id: ki-mu-kjent-sigma, kind: entry }
