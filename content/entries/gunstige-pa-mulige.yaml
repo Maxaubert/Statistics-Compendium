@@ -47,3 +47,8 @@ related:
   - { id: "multiplikasjonsprinsippet",           kind: "glossary" }
   - { id: "ordnet-utvalg",                       kind: "glossary" }
   - { id: "uordnet-utvalg",                      kind: "glossary" }
+
+tags:
+  - "kombinatorikk"
+  - "telling"
+  - "sannsynlighet"

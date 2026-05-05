@@ -46,6 +46,7 @@ export function buildSearchIndex(entries: Entry[]) {
     getFn: makeGetFn<Entry>(),
     keys: [
       { name: "name_no", weight: 1.0 },
+      { name: "tags", weight: 0.9 },
       { name: "tagline", weight: 0.7 },
       { name: "recognition_cues", weight: 0.6 },
       { name: "symbols.sym", weight: 0.5 },

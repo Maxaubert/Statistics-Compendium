@@ -162,6 +162,12 @@ export const EntrySchema = z.object({
   tools: z.array(z.string()).optional(),
   /** Card-grid sections for type: overview entries (see OversiktFormSchema). */
   forms: z.array(OversiktFormSchema).optional(),
+  /**
+   * Free-form Norwegian search tags (e.g. "kombinatorikk", "regresjon").
+   * Indexed by the search engine so users can find related entries by topic
+   * even when the topic word doesn't appear in name_no/tagline/cues.
+   */
+  tags: z.array(z.string()).optional(),
 });
 export type Entry = z.infer<typeof EntrySchema>;
 

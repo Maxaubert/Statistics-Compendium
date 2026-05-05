@@ -6,6 +6,7 @@ aliases:
   - "multiplikasjonsprinsipp"
   - "telleregelen"
   - "produktregelen for telling"
+  - "kombinatorikk"
 filters:
   computes: [combinatorial_count]
 long_def: |

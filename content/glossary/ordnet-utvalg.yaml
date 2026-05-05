@@ -6,6 +6,7 @@ aliases:
   - "ordnede utvalg"
   - "permutasjon"
   - "permutasjoner"
+  - "kombinatorikk"
 filters:
   computes: [combinatorial_count]
   random_variable: [discrete_count]
