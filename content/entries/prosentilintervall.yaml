@@ -23,13 +23,12 @@ recognition_cues:
 
 filters:
   computes: [confidence_interval, parameter_estimate]
-  random_variable: [continuous, mean_of_samples]
+  random_variable: [continuous, mean_of_samples, proportion]
   setup: [single_population]
   structural_cues: [data_as_list, summary_stats_given]
-  parameters_known: [confidence_level, population_variance_unknown]
+  parameters_known: [confidence_level, population_variance_unknown, sample_size_small_lt30]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 related:
   - { id: "bootstrapping",     kind: "entry" }
   - { id: "ki-mu-kjent-sigma", kind: "entry" }

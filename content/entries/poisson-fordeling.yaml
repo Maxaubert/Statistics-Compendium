@@ -44,14 +44,13 @@ properties:
   std_dev: "σ = √(λt)"
 
 filters:
-  computes: [exact_probability, at_least_k, range_probability, expected_value]
+  computes: [exact_probability, at_least_k, range_probability, expected_value, find_n_for_threshold]
   random_variable: [discrete_count]
   setup: [single_population, events_in_window]
   structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, counting_events, complement_pattern]
   parameters_known: [rate_lambda]
   distribution_assumption: [poisson]
   tooling: [cumulative_poisson_table_E2, calculator_exp, calculator_factorial]
-
 solution_variants:
   - label: "P(X = k)"
     steps:

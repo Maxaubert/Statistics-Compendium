@@ -32,11 +32,10 @@ filters:
   computes: [exact_probability, union_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [disjoint_events, independent_events]
+  structural_cues: [disjoint_events, independent_events, complement_pattern]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 solution_template:
   - "Identifiser hendelsene A og B"
   - "Finn P(A), P(B), P(A ∩ B)"

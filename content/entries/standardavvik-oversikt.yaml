@@ -91,13 +91,12 @@ recognition_cues:
 
 filters:
   computes: [std_dev]
-  random_variable: [discrete_count, continuous, mean_of_samples]
+  random_variable: [discrete_count, continuous, mean_of_samples, sum_of_samples, proportion]
   setup: [single_population]
   structural_cues: [data_as_list, summary_stats_given, mean_and_sd_given]
-  parameters_known: [population_variance_known, population_variance_unknown]
+  parameters_known: [population_variance_known, population_variance_unknown, success_p]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
-
 related:
   - { id: "varians-oversikt",                     kind: "entry" }
   - { id: "standardavvik",                        kind: "glossary" }
