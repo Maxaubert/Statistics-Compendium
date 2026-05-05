@@ -533,9 +533,7 @@
         <div class="head"><h3>Z-tabell</h3><span class="code">E.3</span></div>
         <div class="formal">Kumulativ standardnormalfordeling</div>
         <div class="sparkline">
-          <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-            <path d="M 0 60 Q 60 60 90 12 Q 110 -8 110 12 Q 140 60 200 60 Z" fill="#6366f1" opacity="0.85"/>
-          </svg>
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none" data-curve="normal" data-fill="#6366f1"></svg>
         </div>
         <div class="body">
           <p class="desc">Slår opp G(z) = P(Z ≤ z). Brukes til å konvertere standardiserte verdier til sannsynligheter.</p>
@@ -551,10 +549,8 @@
         <div class="head"><h3>Z-kvantiltabell</h3><span class="code">E.4</span></div>
         <div class="formal">Standardnormalfordelingens kvantiltabell</div>
         <div class="sparkline">
-          <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-            <path d="M 0 60 Q 60 60 90 12 Q 110 -8 110 12 Q 140 60 200 60 Z" fill="#a8a29e" opacity="0.4"/>
-            <path d="M 150 60 Q 162 60 165 30 Q 168 18 175 30 Q 188 60 200 60 Z" fill="#22d3ee" opacity="0.85"/>
-          </svg>
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none"
+               data-curve="normal-with-tail" data-fill="#6366f1"></svg>
         </div>
         <div class="body">
           <p class="desc">Invers av Z-tabellen — slår opp z_α der P(Z &gt; z_α) = α.</p>
@@ -570,10 +566,7 @@
         <div class="head"><h3>t-tabell</h3><span class="code">E.5</span></div>
         <div class="formal">t-fordelingens kvantiltabell</div>
         <div class="sparkline">
-          <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-            <path d="M 0 56 Q 60 56 92 14 Q 110 0 108 14 Q 140 56 200 56 Z" fill="#6366f1" opacity="0.85"/>
-            <path d="M 0 58 Q 60 58 95 30 Q 110 22 105 30 Q 140 58 200 58 Z" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
-          </svg>
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none" data-curve="t" data-fill="#6366f1"></svg>
         </div>
         <div class="body">
           <p class="desc">Kritiske t-verdier t_α for ulike frihetsgrader. Brukes når populasjonens varians er ukjent.</p>
@@ -589,9 +582,7 @@
         <div class="head"><h3>Kjikvadrattabell</h3><span class="code">E.6</span></div>
         <div class="formal">Kjikvadratfordelingens kvantiltabell</div>
         <div class="sparkline">
-          <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-            <path d="M 0 60 L 30 22 Q 60 4 90 18 Q 130 36 170 56 L 200 60 Z" fill="#6366f1" opacity="0.85"/>
-          </svg>
+          <svg viewBox="0 0 200 60" preserveAspectRatio="none" data-curve="chi2" data-fill="#6366f1"></svg>
         </div>
         <div class="body">
           <p class="desc">Kritiske χ²-verdier. Brukes til kjikvadrattester (uavhengighet, goodness of fit) og KI for varians.</p>
@@ -604,6 +595,110 @@
       </article>
     </div>
   </section>
+
+  <script>
+    // ===== Generate accurate sparkline curves from PDFs =====
+    // SVG viewBox is 0 0 200 60 with y inverted (60 = baseline).
+    // Curves are drawn as filled polylines with peak at y=10.
+
+    function densityNormal(x) {
+      return Math.exp(-(x * x) / 2);
+    }
+    // Student-t with df=3 (visibly fatter tails than normal)
+    function densityT(x, df) {
+      df = df || 3;
+      var c = 1.0; // we'll normalize by peak below, so constant cancels
+      return Math.pow(1 + (x * x) / df, -(df + 1) / 2);
+    }
+    // Chi-squared with df=4: f(x) ∝ x · e^(-x/2)
+    function densityChi2(x, df) {
+      df = df || 4;
+      if (x <= 0) return 0;
+      return Math.pow(x, df / 2 - 1) * Math.exp(-x / 2);
+    }
+
+    function buildPath(samples) {
+      // samples = [[svgX, density]], normalize density so peak = 50px height
+      var peak = samples.reduce(function (m, s) { return Math.max(m, s[1]); }, 0);
+      if (peak === 0) return "";
+      var pts = samples.map(function (s) {
+        var y = 60 - (s[1] / peak) * 50;
+        return s[0].toFixed(1) + "," + y.toFixed(1);
+      });
+      return "M " + samples[0][0].toFixed(1) + ",60 L " + pts.join(" L ") + " L " + samples[samples.length - 1][0].toFixed(1) + ",60 Z";
+    }
+
+    function sampleNormal() {
+      // x in [-3.5, 3.5] mapped to [0, 200]
+      var samples = [];
+      for (var i = 0; i <= 60; i++) {
+        var x = -3.5 + (i / 60) * 7;
+        var svgX = (i / 60) * 200;
+        samples.push([svgX, densityNormal(x)]);
+      }
+      return samples;
+    }
+    function sampleT() {
+      var samples = [];
+      for (var i = 0; i <= 60; i++) {
+        var x = -3.5 + (i / 60) * 7;
+        var svgX = (i / 60) * 200;
+        samples.push([svgX, densityT(x, 3)]);
+      }
+      return samples;
+    }
+    function sampleChi2() {
+      var samples = [];
+      var X_MAX = 16;
+      for (var i = 0; i <= 80; i++) {
+        var x = (i / 80) * X_MAX;
+        var svgX = (i / 80) * 200;
+        samples.push([svgX, densityChi2(x, 4)]);
+      }
+      return samples;
+    }
+
+    function tailPath(samples, fromIndex) {
+      // For Z-quantile: highlight the right tail starting at index `fromIndex`
+      var slice = samples.slice(fromIndex);
+      if (slice.length === 0) return "";
+      var peak = samples.reduce(function (m, s) { return Math.max(m, s[1]); }, 0);
+      var pts = slice.map(function (s) {
+        var y = 60 - (s[1] / peak) * 50;
+        return s[0].toFixed(1) + "," + y.toFixed(1);
+      });
+      return "M " + slice[0][0].toFixed(1) + ",60 L " + pts.join(" L ") + " L " + slice[slice.length - 1][0].toFixed(1) + ",60 Z";
+    }
+
+    document.querySelectorAll("svg[data-curve]").forEach(function (svg) {
+      var kind = svg.dataset.curve;
+      var fill = svg.dataset.fill || "#6366f1";
+      svg.innerHTML = "";
+
+      if (kind === "normal") {
+        var s = sampleNormal();
+        svg.innerHTML = '<path d="' + buildPath(s) + '" fill="' + fill + '" opacity="0.85"/>';
+      } else if (kind === "normal-with-tail") {
+        var s = sampleNormal();
+        // Tail beyond z = 1.645 (alpha = 0.05): index where x ≈ 1.645
+        // x at index i: x = -3.5 + (i/60)*7, solving for x=1.645 → i ≈ 44
+        var tailFrom = 44;
+        var bg =
+          '<path d="' + buildPath(s) + '" fill="#a8a29e" opacity="0.35"/>';
+        var tail = '<path d="' + tailPath(s, tailFrom) + '" fill="#22d3ee" opacity="0.9"/>';
+        svg.innerHTML = bg + tail;
+      } else if (kind === "t") {
+        // Show t-distribution (heavier tails) as primary, normal as faint outline
+        var sT = sampleT();
+        var sN = sampleNormal();
+        var nOutline = '<path d="' + buildPath(sN) + '" fill="none" stroke="#a8a29e" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>';
+        svg.innerHTML = '<path d="' + buildPath(sT) + '" fill="' + fill + '" opacity="0.85"/>' + nOutline;
+      } else if (kind === "chi2") {
+        var s = sampleChi2();
+        svg.innerHTML = '<path d="' + buildPath(s) + '" fill="' + fill + '" opacity="0.85"/>';
+      }
+    });
+  </script>
 
   <!-- ============================================ -->
   <!-- VARIANT 2: HERO QUICK-LOOKUP                  -->
