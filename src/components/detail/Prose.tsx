@@ -7,6 +7,8 @@ import {
 import type { GlossaryTerm } from "@/data/schema";
 import { useGlossaryPopup } from "./GlossaryPopup";
 
+export type ProseTheme = "light" | "dark";
+
 export interface ProseProps {
   body: string;
   /**
@@ -19,6 +21,12 @@ export interface ProseProps {
   paragraphClass?: string;
   /** Tailwind classes applied to bullet list items. */
   listItemClass?: string;
+  /**
+   * Visual theme for inline elements (code pills, bold, links). Default
+   * "light" matches the paper-themed entry detail page; "dark" matches
+   * the indigo calc-card popup background.
+   */
+  theme?: ProseTheme;
 }
 
 /**
@@ -34,14 +42,19 @@ export interface ProseProps {
 export function Prose({
   body,
   glossary,
-  paragraphClass = "m-0 font-serif text-base leading-relaxed text-ink",
-  listItemClass = "font-serif text-base leading-relaxed text-ink",
+  paragraphClass,
+  listItemClass,
+  theme = "light",
 }: ProseProps) {
   const popup = useGlossaryPopup();
   const aliases =
     glossary && popup ? buildAliasIndexCached(glossary) : undefined;
 
   const blocks = parseBlocks(body);
+
+  const pClass = paragraphClass ?? DEFAULT_PARAGRAPH_CLASS[theme];
+  const liClass = listItemClass ?? DEFAULT_LIST_ITEM_CLASS[theme];
+  const ruleClass = RULE_CLASS[theme];
 
   return (
     <div className="space-y-3">
@@ -50,8 +63,8 @@ export function Prose({
           return (
             <ul key={i} className="m-0 list-disc space-y-1.5 pl-6">
               {block.items.map((item, j) => (
-                <li key={j} className={listItemClass}>
-                  {renderInline(item, aliases, popup?.openTerm)}
+                <li key={j} className={liClass}>
+                  {renderInline(item, aliases, popup?.openTerm, theme)}
                 </li>
               ))}
             </ul>
@@ -61,25 +74,38 @@ export function Prose({
           return (
             <ol key={i} className="m-0 list-decimal space-y-1.5 pl-6">
               {block.items.map((item, j) => (
-                <li key={j} className={listItemClass}>
-                  {renderInline(item, aliases, popup?.openTerm)}
+                <li key={j} className={liClass}>
+                  {renderInline(item, aliases, popup?.openTerm, theme)}
                 </li>
               ))}
             </ol>
           );
         }
         if (block.kind === "rule") {
-          return <hr key={i} className="my-2 border-t border-line" />;
+          return <hr key={i} className={ruleClass} />;
         }
         return (
-          <p key={i} className={paragraphClass}>
-            {renderInline(block.text, aliases, popup?.openTerm)}
+          <p key={i} className={pClass}>
+            {renderInline(block.text, aliases, popup?.openTerm, theme)}
           </p>
         );
       })}
     </div>
   );
 }
+
+const DEFAULT_PARAGRAPH_CLASS: Record<ProseTheme, string> = {
+  light: "m-0 font-serif text-base leading-relaxed text-ink",
+  dark: "m-0 text-[14px] leading-relaxed",
+};
+const DEFAULT_LIST_ITEM_CLASS: Record<ProseTheme, string> = {
+  light: "font-serif text-base leading-relaxed text-ink",
+  dark: "text-[14px] leading-relaxed",
+};
+const RULE_CLASS: Record<ProseTheme, string> = {
+  light: "my-2 border-t border-line",
+  dark: "my-2 border-t border-white/10",
+};
 
 // ---- Block parser -----------------------------------------------------
 
@@ -193,38 +219,54 @@ function renderInline(
   text: string,
   aliases: GlossaryAlias[] | undefined,
   openTerm: ((id: string) => void) | undefined,
+  theme: ProseTheme,
 ): ReactNode {
   const tokens = tokenizeInline(text);
   return tokens.map((tok, i) => {
     if (tok.kind === "code") {
       return (
-        <code
-          key={i}
-          className="rounded border border-line bg-paper-2 px-1.5 py-[1px] font-mono text-[13px] text-ink"
-        >
+        <code key={i} className={CODE_CLASS[theme]}>
           {tok.value}
         </code>
       );
     }
     if (tok.kind === "bold") {
       return (
-        <strong key={i} className="font-semibold text-ink">
-          {renderTextWithLinks(tok.value, aliases, openTerm)}
+        <strong key={i} className={BOLD_CLASS[theme]}>
+          {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
         </strong>
       );
     }
     return (
       <Fragment key={i}>
-        {renderTextWithLinks(tok.value, aliases, openTerm)}
+        {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
       </Fragment>
     );
   });
 }
 
+const CODE_CLASS: Record<ProseTheme, string> = {
+  light:
+    "rounded border border-line bg-paper-2 px-1.5 py-[1px] font-mono text-[13px] text-ink",
+  dark:
+    "rounded bg-white/[0.08] px-1.5 py-[1px] font-mono text-[12.5px] text-[inherit]",
+};
+const BOLD_CLASS: Record<ProseTheme, string> = {
+  light: "font-semibold text-ink",
+  dark: "font-semibold text-white",
+};
+const LINK_CLASS: Record<ProseTheme, string> = {
+  light:
+    "cursor-pointer text-primary-2 underline decoration-primary-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+  dark:
+    "cursor-pointer text-[#a8b1ff] underline decoration-dotted decoration-[#a8b1ff]/60 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
+};
+
 function renderTextWithLinks(
   text: string,
   aliases: GlossaryAlias[] | undefined,
   openTerm: ((id: string) => void) | undefined,
+  theme: ProseTheme,
 ): ReactNode {
   if (!aliases || !openTerm) return text;
   const segs = findGlossaryLinks(text, aliases);
@@ -235,7 +277,7 @@ function renderTextWithLinks(
         key={i}
         type="button"
         onClick={() => openTerm(s.termId)}
-        className="cursor-pointer text-primary-2 underline decoration-primary-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary"
+        className={LINK_CLASS[theme]}
       >
         {s.value}
       </button>

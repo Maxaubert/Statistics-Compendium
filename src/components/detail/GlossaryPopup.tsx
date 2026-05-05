@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "@/components/shell/Modal";
+import { Prose } from "./Prose";
 import type { GlossaryTerm } from "@/data/schema";
 
 function relatedRefPath(kind: string, id: string): string {
@@ -52,13 +53,11 @@ export function GlossaryPopup({ term, onClose }: PopupProps) {
       </section>
 
       {term.long_def && (
-        <section className="px-7 pt-4">
-          <p
-            className="m-0 whitespace-pre-line text-[14px] leading-relaxed"
-            style={{ color: "var(--color-calc-text)", opacity: 0.85 }}
-          >
-            {term.long_def}
-          </p>
+        <section
+          className="px-7 pt-4"
+          style={{ color: "var(--color-calc-text)", opacity: 0.85 }}
+        >
+          <Prose body={term.long_def} theme="dark" />
         </section>
       )}
 
