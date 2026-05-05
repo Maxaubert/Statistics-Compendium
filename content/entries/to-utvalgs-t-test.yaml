@@ -317,6 +317,8 @@ related:
   - { id: "pooled-varians",          kind: "glossary" }
   - { id: "frihetsgrader-glos",      kind: "glossary" }
   - { id: "p-verdi-glos",            kind: "glossary" }
+  - { id: "ensidig-test",            kind: "glossary" }
+  - { id: "tosidig-test",            kind: "glossary" }
   - { id: "E5-t-tabell",             kind: "table" }
 
 tools:
