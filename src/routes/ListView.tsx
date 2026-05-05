@@ -9,8 +9,13 @@ import { TableCard } from "@/components/tables/TableCard";
 import { loadAllContent } from "@/data/loadContent";
 import {
   buildConceptSearchIndex,
+  buildGlossarySearchIndex,
   buildSearchIndex,
+  searchConcepts,
+  searchEntries,
+  searchGlossary,
 } from "@/data/search";
+import { GlossaryPopupProvider, useGlossaryPopup } from "@/components/detail/GlossaryPopup";
 import { useFilteredContent } from "@/hooks/useFilteredContent";
 
 const CROSS_HIT_CAP = 8;
@@ -49,11 +54,15 @@ export function ListView() {
     () => buildSearchIndex(data.entries),
     [data.entries],
   );
+  const glossaryFuse = useMemo(
+    () => buildGlossarySearchIndex(data.glossary),
+    [data.glossary],
+  );
 
   const filteredConcepts = useMemo(() => {
     const q = conceptQuery.trim();
     if (!q) return data.concepts;
-    return conceptFuse.search(q).map((h) => h.item);
+    return searchConcepts(conceptFuse, q).map((h) => h.item);
   }, [conceptQuery, conceptFuse, data.concepts]);
 
   // Cross-tab hits: when searching one tab, show top hits from the other.
@@ -62,13 +71,25 @@ export function ListView() {
   const crossConceptHits = useMemo(() => {
     const q = query.trim();
     if (!q) return [];
-    return conceptFuse.search(q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
+    return searchConcepts(conceptFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
   }, [query, conceptFuse]);
   const crossEntryHits = useMemo(() => {
     const q = conceptQuery.trim();
     if (!q) return [];
-    return entryFuse.search(q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
+    return searchEntries(entryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
   }, [conceptQuery, entryFuse]);
+
+  const crossGlossaryHitsForFormler = useMemo(() => {
+    const q = query.trim();
+    if (!q) return [];
+    return searchGlossary(glossaryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
+  }, [query, glossaryFuse]);
+
+  const crossGlossaryHitsForKonsepter = useMemo(() => {
+    const q = conceptQuery.trim();
+    if (!q) return [];
+    return searchGlossary(glossaryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
+  }, [conceptQuery, glossaryFuse]);
 
   const activePills = Object.entries(selection).flatMap(([dim, vals]) =>
     (vals ?? []).map((optionKey) => {
@@ -81,6 +102,7 @@ export function ListView() {
   const showSidebar = tab === "formler";
 
   return (
+    <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="list-view" className="min-h-screen bg-paper">
       <Banner />
       <div className="grid grid-cols-1 md:grid-cols-[280px_1fr]">
@@ -126,6 +148,16 @@ export function ListView() {
                     href: `/concept/${c.id}`,
                   }))}
                   onSelect={(href) => navigate(href)}
+                />
+              )}
+
+              {query.trim().length > 0 && crossGlossaryHitsForFormler.length > 0 && (
+                <GlossaryCrossSection
+                  items={crossGlossaryHitsForFormler.map((g) => ({
+                    id: g.id,
+                    term_no: g.term_no,
+                    short_def: g.short_def,
+                  }))}
                 />
               )}
             </>
@@ -179,6 +211,16 @@ export function ListView() {
                   onSelect={(href) => navigate(href)}
                 />
               )}
+
+              {conceptQuery.trim().length > 0 && crossGlossaryHitsForKonsepter.length > 0 && (
+                <GlossaryCrossSection
+                  items={crossGlossaryHitsForKonsepter.map((g) => ({
+                    id: g.id,
+                    term_no: g.term_no,
+                    short_def: g.short_def,
+                  }))}
+                />
+              )}
             </>
           )}
 
@@ -197,6 +239,7 @@ export function ListView() {
         </main>
       </div>
     </div>
+    </GlossaryPopupProvider>
   );
 }
 
@@ -243,6 +286,44 @@ function CrossSearchSection({
               </div>
               <div className="flex-1 truncate text-[12.5px] italic text-ink-3">
                 {it.tagline}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+interface GlossaryCrossItem {
+  id: string;
+  term_no: string;
+  short_def: string;
+}
+
+function GlossaryCrossSection({ items }: { items: GlossaryCrossItem[] }) {
+  const popup = useGlossaryPopup();
+  return (
+    <section className="mt-8 rounded-xl border border-dashed border-line bg-paper-2/50 px-4 py-4">
+      <h3 className="mb-3 flex items-baseline gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-3">
+        <span>Termer som også matcher</span>
+        <span className="rounded-full bg-primary-2/15 px-1.5 py-px text-[10px] tracking-normal text-primary-2">
+          {items.length}
+        </span>
+      </h3>
+      <ul className="m-0 grid list-none gap-1.5 p-0">
+        {items.map((it) => (
+          <li
+            key={it.id}
+            onClick={() => popup?.openTerm(it.id)}
+            className="group cursor-pointer rounded-md border border-line bg-card px-3.5 py-2 hover:border-primary-2"
+          >
+            <div className="flex items-baseline gap-3">
+              <div className="font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
+                {it.term_no}
+              </div>
+              <div className="flex-1 truncate text-[12.5px] italic text-ink-3">
+                {it.short_def}
               </div>
             </div>
           </li>

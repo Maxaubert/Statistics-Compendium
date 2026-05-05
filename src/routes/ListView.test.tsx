@@ -62,4 +62,15 @@ describe("ListView", () => {
       await screen.findByText(/Tabellene er interaktive/i),
     ).toBeInTheDocument();
   });
+
+  it("shows a glossary cross-search section when typing in formler", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    const input = screen.getByPlaceholderText(/Søk i navn, symboler/i);
+    fireEvent.change(input, { target: { value: "frihetsgrader" } });
+    expect(screen.getByText(/Termer som også matcher/i)).toBeInTheDocument();
+  });
 });
