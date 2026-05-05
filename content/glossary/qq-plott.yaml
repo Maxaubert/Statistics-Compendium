@@ -23,6 +23,6 @@ long_def: |
   typisk bruke bootstrapping eller ikke-parametriske metoder.
 see_also:
   - { id: normalfordeling, kind: entry }
-  - { id: bootstrapping, kind: concept }
+  - { id: bootstrapping, kind: entry }
   - { id: sentralgrenseteoremet-glos, kind: glossary }
   - { id: spredningsplott, kind: glossary }

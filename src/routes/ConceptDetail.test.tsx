@@ -4,7 +4,10 @@ import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { ConceptDetail } from "./ConceptDetail";
 
 describe("ConceptDetail", () => {
-  it("renders the Bootstrapping fixture", () => {
+  // Phase 3b moved all concepts to entries; the route still exists but no
+  // longer has matching content. Phase 3d will install a redirect. Until
+  // then, ConceptDetail just renders the not-found fallback for any id.
+  it("renders the not-found fallback when no concept matches the id", () => {
     render(
       <MemoryRouter initialEntries={["/concept/bootstrapping"]}>
         <Routes>
@@ -13,9 +16,7 @@ describe("ConceptDetail", () => {
       </MemoryRouter>
     );
     expect(
-      screen.getByRole("heading", { name: "Bootstrapping" })
+      screen.getByText(/Fant ingen konsept med id/)
     ).toBeInTheDocument();
-    expect(screen.getByText("Hva det betyr")).toBeInTheDocument();
-    expect(screen.getByText("Slik gjenkjenner du det")).toBeInTheDocument();
   });
 });

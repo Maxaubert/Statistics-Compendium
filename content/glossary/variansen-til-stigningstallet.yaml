@@ -29,4 +29,4 @@ see_also:
   - { id: regresjon-standardfeil-stigningstall, kind: entry }
   - { id: residualvarians, kind: glossary }
   - { id: beta-koeffisient, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

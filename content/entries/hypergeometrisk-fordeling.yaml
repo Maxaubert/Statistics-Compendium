@@ -140,9 +140,9 @@ detailed_solution_variants:
 
 related:
   - { id: "binomial-fordeling",   kind: "entry" }
-  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "concept" }
-  - { id: "gunstige-pa-mulige",   kind: "concept" }
-  - { id: "uten-tilbakelegging",  kind: "concept" }
+  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "gunstige-pa-mulige",     kind: "entry" }
+  - { id: "uten-tilbakelegging-glos", kind: "glossary" }
 
 tools:
   - "Kalkulator: binomialkoeffisient C(n,k) (også skrevet som nCk eller komb.)"

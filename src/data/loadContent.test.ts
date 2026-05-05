@@ -5,7 +5,7 @@ describe("loadAllContent", () => {
   it("loads all entries, concepts, and tables from content/", () => {
     const data = loadAllContent();
     expect(data.entries.length).toBeGreaterThanOrEqual(2);
-    expect(data.concepts.length).toBeGreaterThanOrEqual(1);
+    expect(data.concepts.length).toBeGreaterThanOrEqual(0);
     expect(data.tables.length).toBeGreaterThanOrEqual(1);
     expect(data.filters.dimensions.length).toBeGreaterThan(0);
   });

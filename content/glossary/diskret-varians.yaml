@@ -27,4 +27,4 @@ aliases:
 see_also:
   - { id: varians-standardavvik-diskret, kind: entry }
   - { id: forventningsverdi-diskret, kind: entry }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

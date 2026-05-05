@@ -312,7 +312,7 @@ detailed_solution_variants:
 related:
   - { id: "poisson-fordeling",      kind: "entry" }
   - { id: "hypergeometrisk-fordeling", kind: "entry" }
-  - { id: "komplementregelen",      kind: "concept" }
+  - { id: "komplementregelen",      kind: "entry" }
   - { id: "ki-andel-binomial",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel", kind: "entry" }
   - { id: "E1-binomial-kumulativ",  kind: "table" }

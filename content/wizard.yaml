@@ -151,7 +151,7 @@ nodes:
           - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
       - label: "Beregne P som gunstige/mulige (uniform sannsynlighet)"
         leads_to:
-          - { id: gunstige-pa-mulige, kind: concept }
+          - { id: gunstige-pa-mulige, kind: entry }
 
   - id: n_regresjon
     question: "Hva er du på jakt etter?"

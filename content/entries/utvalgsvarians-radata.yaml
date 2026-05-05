@@ -137,7 +137,7 @@ related:
   - { id: "ki-mu-ukjent-sigma",            kind: "entry" }
   - { id: "en-utvalg-t-test",              kind: "entry" }
   - { id: "to-utvalgs-t-test",             kind: "entry" }
-  - { id: "varians",                       kind: "concept" }
+  - { id: "varians-oversikt",              kind: "entry" }
   - { id: "frihetsgrader-glos",            kind: "glossary" }
 
 tools:

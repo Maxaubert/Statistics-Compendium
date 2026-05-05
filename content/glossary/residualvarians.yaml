@@ -27,4 +27,4 @@ see_also:
   - { id: regresjon-residualvarians, kind: entry }
   - { id: residualstandardavvik, kind: glossary }
   - { id: residual, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

@@ -151,7 +151,7 @@ detailed_solution_variants:
 related:
   - { id: "hypergeometrisk-fordeling",  kind: "entry" }
   - { id: "binomial-fordeling",         kind: "entry" }
-  - { id: "gunstige-pa-mulige",         kind: "concept" }
+  - { id: "gunstige-pa-mulige",         kind: "entry" }
 
 tools:
   - "Kalkulator: nCr / COMB / binomialkoeffisient-funksjon"

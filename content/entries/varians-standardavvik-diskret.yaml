@@ -133,7 +133,7 @@ related:
   - { id: "utvalgsvarians-radata",     kind: "entry" }
   - { id: "kovarians",                 kind: "entry" }
   - { id: "korrelasjon-joint",         kind: "entry" }
-  - { id: "varians",                   kind: "concept" }
+  - { id: "varians-oversikt",          kind: "entry" }
 
 tools:
   - "Kalkulator: kvadrering, kvadratrot, summer"
