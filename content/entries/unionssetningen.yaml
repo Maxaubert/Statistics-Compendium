@@ -116,7 +116,7 @@ detailed_solution_variants:
 related:
   - { id: "komplementregelen",  kind: "entry" }
   - { id: "produktregel",       kind: "entry" }
-  - { id: "disjunkte-hendelser", kind: "concept" }
+  - { id: "disjunkte-hendelser-glos", kind: "glossary" }
   - { id: "de-morgans-lov",     kind: "concept" }
 
 tools:

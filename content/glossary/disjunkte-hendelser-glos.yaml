@@ -11,8 +11,11 @@ long_def: |
   `A` skjedde, vet du sikkert `B` ikke skjedde).
 
   Klassisk eksempel: «får krone» og «får mynt» i ett myntkast.
+
+  **Konsekvens:** disjunkthet gir `A ⊆ B̄`, slik at
+
+      P(A | B̄) = P(A) / (1 − P(B))
 see_also:
-  - { id: disjunkte-hendelser, kind: concept }
   - { id: hendelse, kind: glossary }
   - { id: unionssetningen, kind: entry }
-  - { id: uavhengighet-hendelser, kind: concept }
+  - { id: uavhengighet-glos, kind: glossary }

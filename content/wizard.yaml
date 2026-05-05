@@ -46,7 +46,7 @@ nodes:
           - { id: de-morgans-lov, kind: concept }
       - label: "Sjekk om hendelser er disjunkte (gjensidig utelukkende)"
         leads_to:
-          - { id: disjunkte-hendelser, kind: concept }
+          - { id: disjunkte-hendelser-glos, kind: glossary }
 
   - id: n_fordeling
     question: "Diskret eller kontinuerlig?"
