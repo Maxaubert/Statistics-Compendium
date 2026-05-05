@@ -145,21 +145,6 @@ export const EntrySchema = z.object({
 });
 export type Entry = z.infer<typeof EntrySchema>;
 
-// ============ Concept (konsepter) ============
-
-export const ConceptSchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/),
-  name_no: z.string(),
-  type: z.literal("concept"),
-  tagline: z.string(),
-  what_it_means: z.string(),
-  recognition_cues: z.array(z.string()),
-  examples: z.array(ExampleSchema).optional(),
-  related: z.array(RelatedRefSchema).optional(),
-  filters: FilterSelectionSchema,
-});
-export type Concept = z.infer<typeof ConceptSchema>;
-
 // ============ Table (vedlegg E.1–E.6) ============
 
 export const TableInputSchema = z.object({

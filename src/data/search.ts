@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import type { FuseGetFunction } from "fuse.js";
-import type { Concept, Entry, GlossaryTerm } from "./schema";
+import type { Entry, GlossaryTerm } from "./schema";
 
 /**
  * Treat hyphens like spaces so users can search for "p verdi" and find
@@ -35,9 +35,6 @@ export function searchWith<T>(idx: Fuse<T>, query: string) {
 export function searchEntries(idx: Fuse<Entry>, query: string) {
   return searchWith(idx, query);
 }
-export function searchConcepts(idx: Fuse<Concept>, query: string) {
-  return searchWith(idx, query);
-}
 export function searchGlossary(idx: Fuse<GlossaryTerm>, query: string) {
   return searchWith(idx, query);
 }
@@ -56,22 +53,6 @@ export function buildSearchIndex(entries: Entry[]) {
       { name: "examples.excerpt", weight: 0.4 },
       { name: "examples.source", weight: 0.3 },
       { name: "what_it_does", weight: 0.3 },
-    ],
-  });
-}
-
-export function buildConceptSearchIndex(concepts: Concept[]) {
-  return new Fuse(concepts, {
-    includeScore: true,
-    threshold: 0.4,
-    getFn: makeGetFn<Concept>(),
-    keys: [
-      { name: "name_no", weight: 1.0 },
-      { name: "tagline", weight: 0.7 },
-      { name: "recognition_cues", weight: 0.6 },
-      { name: "what_it_means", weight: 0.4 },
-      { name: "examples.excerpt", weight: 0.4 },
-      { name: "examples.source", weight: 0.3 },
     ],
   });
 }

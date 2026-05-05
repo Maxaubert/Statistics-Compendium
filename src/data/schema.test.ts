@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   EntrySchema,
-  ConceptSchema,
   TableSchema,
   FiltersSchema,
   GlossaryTermSchema,
@@ -173,21 +172,6 @@ describe("FiltersSchema", () => {
       ],
     };
     expect(FiltersSchema.parse(filters)).toEqual(filters);
-  });
-});
-
-describe("ConceptSchema", () => {
-  it("accepts a minimal concept", () => {
-    const c = {
-      id: "poisson-prosess",
-      name_no: "Poissonprosess",
-      type: "concept" as const,
-      tagline: "...",
-      what_it_means: "...",
-      recognition_cues: ["cue"],
-      filters: {},
-    };
-    expect(ConceptSchema.parse(c).id).toBe("poisson-prosess");
   });
 });
 

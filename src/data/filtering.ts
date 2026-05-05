@@ -1,7 +1,7 @@
-import type { Entry, Concept } from "./schema";
+import type { Entry } from "./schema";
 
 export type FilterSelection = Record<string, string[]>;
-type Filterable = Pick<Entry | Concept, "filters">;
+type Filterable = Pick<Entry, "filters">;
 
 export function applyFilters<T extends Filterable>(
   items: T[],
