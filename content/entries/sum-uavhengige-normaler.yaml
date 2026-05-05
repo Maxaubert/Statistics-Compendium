@@ -35,13 +35,13 @@ properties:
   std_dev: "σ_Y = σ·√n"
 
 filters:
-  computes: [exact_probability, range_probability]
-  random_variable: [sum_of_samples, continuous]
+  computes: [exact_probability, range_probability, expected_value, std_dev, find_x_for_threshold]
+  random_variable: [sum_of_samples, mean_of_samples, continuous]
   setup: [single_population, fixed_n_trials]
-  structural_cues: [normal_assumed, independent_events, mean_and_sd_given]
-  parameters_known: [mean_known, population_variance_known]
+  structural_cues: [normal_assumed, independent_events, mean_and_sd_given, total_observations_n]
+  parameters_known: [mean_known, population_variance_known, sample_size_large]
   distribution_assumption: [normal]
-  tooling: [standard_normal_table_E3, calculator_sqrt]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
 solution_template:
   - "Bekreft at `X_i` er uavhengige og normalfordelte `N(μ, σ)`"
