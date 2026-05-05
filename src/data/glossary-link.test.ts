@@ -159,4 +159,17 @@ describe("buildAliasIndex case sensitivity", () => {
     expect(h0).toBeDefined();
     expect(h0!.caseSensitive).toBe(true);
   });
+
+  it("treats single-character aliases as case-sensitive (Σ must not match σ)", () => {
+    const idx = buildAliasIndex([
+      term("sigma", "Sigma (σ)", ["σ", "sigma"]),
+    ]);
+    const sigma = idx.find((a) => a.alias === "σ");
+    expect(sigma).toBeDefined();
+    expect(sigma!.caseSensitive).toBe(true);
+    // Verify end-to-end: uppercase Σ (sumtegn) must NOT link to the σ entry.
+    const segs = findGlossaryLinks("Σ x_i og σ", idx);
+    const links = segs.filter((s) => s.kind === "link");
+    expect(links.map((l) => l.value)).toEqual(["σ"]);
+  });
 });
