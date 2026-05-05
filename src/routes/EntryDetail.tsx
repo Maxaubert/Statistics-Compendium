@@ -21,6 +21,7 @@ import { ToolCards } from "@/components/detail/ToolCards";
 import { RelatedPills } from "@/components/detail/RelatedPills";
 import { Pager } from "@/components/detail/Pager";
 import { Prose } from "@/components/detail/Prose";
+import { OversiktCardGrid } from "@/components/detail/OversiktCardGrid";
 import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
 
@@ -109,11 +110,18 @@ export function EntryDetail() {
         </header>
 
         {isProseEntry ? (
-          entry.what_it_means && (
-            <Section title="Hva det betyr" icon={Info}>
-              <Prose body={entry.what_it_means} glossary={data.glossary} />
-            </Section>
-          )
+          <>
+            {entry.what_it_means && (
+              <Section title="Hva det betyr" icon={Info}>
+                <Prose body={entry.what_it_means} glossary={data.glossary} />
+              </Section>
+            )}
+            {entry.forms && entry.forms.length > 0 && (
+              <Section title="Former" icon={BarChart3}>
+                <OversiktCardGrid forms={entry.forms} />
+              </Section>
+            )}
+          </>
         ) : (
           <>
             <DistributionThumbnail entry={entry} />

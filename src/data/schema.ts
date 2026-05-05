@@ -75,6 +75,24 @@ export const EntryTypeSchema = z.enum([
   "method",
 ]);
 
+/**
+ * One row in the card-grid layout used by `type: overview` entries
+ * (varians-oversikt, standardavvik-oversikt, forventningsverdi-oversikt).
+ * Each form is rendered as a clickable card that opens the glossary
+ * popup for `glossary_id` (when present).
+ */
+export const OversiktFormSchema = z.object({
+  title: z.string(),
+  symbol: z.string().optional(),
+  glossary_id: z.string().optional(),
+  formula: z.string(),
+  description: z.string().optional(),
+  entry_links: z
+    .array(z.object({ id: z.string(), label: z.string() }))
+    .optional(),
+});
+export type OversiktForm = z.infer<typeof OversiktFormSchema>;
+
 export const EntrySchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/, "id must be kebab-case"),
   name_no: z.string(),
@@ -142,6 +160,8 @@ export const EntrySchema = z.object({
     .optional(),
   related: z.array(RelatedRefSchema).optional(),
   tools: z.array(z.string()).optional(),
+  /** Card-grid sections for type: overview entries (see OversiktFormSchema). */
+  forms: z.array(OversiktFormSchema).optional(),
 });
 export type Entry = z.infer<typeof EntrySchema>;
 
