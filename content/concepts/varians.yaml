@@ -4,118 +4,112 @@ type: concept
 tagline: "Mål for spredning. Samme idé i alle former, men formelen ser ulik ut etter hva slags data du har."
 
 what_it_means: |
-  Varians måler hvor mye en variabel typisk avviker kvadratisk fra gjennomsnittet.
-  Standardavviket er kvadratroten av variansen og har samme enhet som dataene.
+  Varians måler hvor mye en variabel typisk avviker kvadratisk fra
+  gjennomsnittet. Standardavviket er kvadratroten av variansen og har
+  samme enhet som dataene.
 
   Den grunnleggende ideen er alltid den samme:
 
       varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»
 
-  Men formelen tar litt forskjellig form alt etter hva slags «vekter» du har —
-  en sannsynlighetsfordeling, et utvalg av observasjoner, en regresjon-rest, osv.
-  Under ser du de seks formene du møter i pensum, hva slags input de tar, og
-  når hver form passer.
+  Vekten og delingsleddet endrer seg etter hva du har og hva du estimerer:
+  en sannsynlighetsfordeling, et utvalg, et residual, en kjent fordelingsfamilie.
+  Under er de tre store gruppene: utregning fra data, lesing fra en kjent fordeling,
+  og spredning til et estimat.
 
   ---
 
-  **1. Diskret SV med sannsynlighetsfordeling (PMF)**
+  ## A. Utregning fra dine data
 
-      Var(X) = Σ (x_i − μ)² · P(X = x_i)
+  **A1. Diskret SV med PMF — `Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)`**
 
-  Bruk når: Du har en tabell med verdier `x_i` og sannsynligheter `P(X = x_i)`.
-  Samme stil som rådata-utvalgsvariansen — bare med `P(X = x)` som vekt
-  i stedet for `1/(n − 1)`.
+  Bruk når du har en tabell med verdier `xᵢ` og sannsynligheter `P(X = xᵢ)`.
+  Multiplisér hvert kvadrert avvik med sin sannsynlighet og summér.
+  Snarvei for uniform fordeling: `Var(X) = E[X²] − μ²`.
 
-  Snarvei for uniform fordeling: `Var(X) = E[X²] − μ²`. Når alle
-  sannsynligheter er like, er det ofte raskere å regne `Σ x_i²·P` og
-  trekke fra `μ²` enn å regne hver `(x − μ)²` for seg.
+  Entry: [Varians og standardavvik (diskret SV)](/entry/varians-standardavvik-diskret).
+  Brukes i: [Forventningsverdi for diskret SV](/entry/forventningsverdi-diskret),
+  [Kovarians](/entry/kovarians), [Korrelasjon](/entry/korrelasjon-joint).
 
-  Entry: `Varians og standardavvik (diskret stokastisk variabel)`.
+  **A2. Utvalgsvarians fra rådata — `s² = Σ (xᵢ − x̄)² / (n − 1)`**
 
-  ---
+  Bruk når du har en liste med `n` observasjoner og ingen kjent fordeling —
+  den vanligste formen i praksis. `n − 1` (Bessels korreksjon) gjør `s²`
+  forventningsrett for `σ²`. Standardavviket er `s = √s²`.
 
-  **2. Utvalgsvarians fra rådata (n − 1-formen)**
+  Entry: [Utvalgsvarians fra rådata](/entry/utvalgsvarians-radata).
+  Brukes i: [Én-utvalg t-test](/entry/en-utvalg-t-test),
+  [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma),
+  [KI for σ²](/entry/ki-varians).
 
-      s² = Σ (x_i − x̄)² / (n − 1)
+  **A3. Pooled (interpolert) varians — `S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X+n_Y−2)`**
 
-  Bruk når: Du har en liste med `n` observasjoner og ingen kjent fordeling.
-  Dette er DEN vanligste formen i hypotesetester og KI når σ er ukjent.
+  Bruk når du sammenligner to grupper med antatt felles `σ²` i to-utvalgs t-test.
+  Vektet snitt der vekten er antall frihetsgrader.
 
-  Hvorfor `n − 1` og ikke `n`? Bessels korreksjon — `x̄` er regnet ut fra de
-  samme dataene, så vi har «brukt opp» én frihetsgrad. Ved å dele på `n − 1`
-  blir `s²` en forventningsrett (unbiased) estimator for den ukjente
-  populasjonsvariansen `σ²`.
+  Konsept: [Interpolert (pooled) varians](/concept/interpolert-varians).
+  Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
 
-  Entry: `Utvalgsvarians fra rådata`.
+  **A4. Residualvarians i regresjon — `S_E² = Σ(yᵢ − ŷᵢ)² / (n − 2)`**
 
-  ---
+  Måler hvor langt observasjonene ligger unna regresjonslinjen i snitt.
+  `n − 2` fordi vi har estimert både `α̂` og `β̂` fra samme data.
 
-  **3. Variansen til utvalgsgjennomsnittet (σ²/n-formen)**
-
-      Var(X̄) = σ²/n   (standardavvik: SE(X̄) = σ/√n)
-
-  Bruk når: Du har et utvalg av størrelse `n` fra en populasjon med varians `σ²`,
-  og spør hvor mye `X̄` typisk avviker fra `μ`. Brukes som standardfeil i z-test
-  og KI for `μ`. Hvis `σ` er ukjent, erstattes med `s` så `SE(X̄) = s/√n`.
-
-  Intuisjon: Et gjennomsnitt av flere observasjoner svinger MINDRE enn én
-  enkelt observasjon. Stort `n` → liten `Var(X̄)` → smalt KI, presis test.
-
-  Innebygget i formlene for: `Én-utvalg z-test`, `Én-utvalg t-test`, `KI for μ`.
+  Entry: [Residualenes varians S_E²](/entry/regresjon-residualvarians).
+  Brukes i: [SE(β̂)](/entry/regresjon-standardfeil-stigningstall),
+  [Hypotesetest for β](/entry/regresjon-test-stigningstall),
+  [Prediksjonsintervall](/entry/regresjon-prediksjonsintervall).
 
   ---
 
-  **4. Pooled (interpolert) varians**
+  ## B. Avlest fra en kjent fordeling
 
-      S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
+  Når du har en navngitt fordeling, slipper du å regne — variansen er en
+  egenskap ved fordelingen. Sjekk «Egenskaper»-kortene på hver fordelings-side.
 
-  Bruk når: Du sammenligner gjennomsnittet i to grupper med to-utvalgs t-test
-  og antar at de har samme underliggende `σ²`. Pooled varians er et veid
-  gjennomsnitt av de to utvalgsvarianse — vekten er antall frihetsgrader.
+  - **Binomial:** `Var(X) = np(1 − p)` — se [Binomialfordeling](/entry/binomial-fordeling); detalj-popup: binomialvarians.
+  - **Poisson:** `Var(X) = λ` (eller `λt` for et vindu) — se [Poissonfordeling](/entry/poisson-fordeling); detalj-popup: poissonvarians.
+  - **Eksponential:** `Var(T) = 1/λ²` — se [Eksponentialfordeling](/entry/eksponential-fordeling); detalj-popup: eksponentialvarians.
+  - **Hypergeometrisk:** `Var(X) = n·(K/N)·((N−K)/N)·((N−n)/(N−1))` — se [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
+  - **Normal:** `Var(X) = σ²` — se [Normalfordeling](/entry/normalfordeling).
 
-  Husk antakelsen: BEGGE gruppene må ha tilnærmet lik spredning. Hvis ikke,
-  bruk Welch t-test (egen formel).
-
-  Embedded i entry: `To-utvalgs t-test (uparet, pooled)`. Konsept: `Interpolert (pooled) varians S_P²`.
-
-  ---
-
-  **5. Residualvarians i regresjon**
-
-      S_E² = SS_E / (n − 2)   der SS_E = Σ (y_i − ŷ_i)²
-
-  Bruk når: Du har gjort lineær regresjon og vil måle hvor langt observasjonene
-  ligger unna regresjonslinjen i snitt. `S_E²` er gjennomsnittlig kvadrert
-  residual.
-
-  Hvorfor `n − 2`? To frihetsgrader er «brukt opp» — vi har estimert både
-  `α̂` og `β̂` fra samme data.
-
-  Inngår videre i: standardfeil til `β̂`, hypotesetest for stigningstall,
-  prediksjonsintervall.
-
-  Entry: `Residualenes varians S_E²`.
+  Spesielt for Poisson: forventningsverdien er lik variansen (`E[X] = Var(X) = λ`).
+  Det gjør den kjennelig — hvis empirisk gjennomsnitt og varians er nær like,
+  passer Poisson godt.
 
   ---
 
-  **6. Standardfeil til stigningstallet**
+  ## C. Spredning til et estimat
 
-      SE(β̂) = √(S_E² / S_XX)   der S_XX = Σ (x_i − x̄)²
+  Disse er IKKE «varians til en variabel» i vanlig forstand, men spredningen
+  i et tall vi har regnet ut fra et utvalg. De er fundamentet for KI-er
+  og standardfeilene som står i nevneren av nesten alle testobservatorer.
 
-  Bruk når: Du tester om `β̂` er signifikant forskjellig fra 0, eller bygger
-  KI rundt `β̂`. Hvor presist kjenner vi stigningstallet?
+  **C1. Variansen til utvalgsgjennomsnittet — `Var(X̄) = σ²/n`**
 
-  Stor `S_XX` (data spredt langs x-aksen) → liten `SE(β̂)` → presis estimering.
-  Liten `S_XX` (data klumpet på en x-verdi) → høy usikkerhet.
+  Standardfeilen er `SE(X̄) = σ/√n` (eller `s/√n` hvis `σ` er ukjent).
+  Stort `n` → liten `Var(X̄)` → smalt KI, presis test.
 
-  Entry: `Standardfeil til stigningstallet, SE(β̂)`.
+  Detalj-popup: variansen til utvalgsgjennomsnittet.
+  Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
+  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
+
+  **C2. Variansen til stigningstallet — `Var(β̂) = S_E² / S_XX`**
+
+  Standardfeilen er `SE(β̂) = √(Var(β̂))`. Stor `S_XX` (mye spredning i x)
+  → liten `SE(β̂)` → presis estimering. Liten `S_XX` → høy usikkerhet.
+
+  Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
 
   ---
 
-  Sammenheng: alle disse er forskjellige måter å regne det samme grunnbegrepet —
-  en gjennomsnittlig kvadrert avvik. Vekten og delingsleddet endrer seg etter
-  hva du har og hva du estimerer. Hvis du forstår hvorfor `s² = Σ(x − x̄)²/(n − 1)`
-  er riktig form for rådata, har du forstått rytmen i alle de andre.
+  ## Sammenheng
+
+  Alle disse er forskjellige måter å regne det samme grunnbegrepet —
+  en gjennomsnittlig kvadrert avvik. Hvis du forstår hvorfor `s² =
+  Σ(xᵢ − x̄)² / (n − 1)` er riktig form for rådata, har du forstått
+  rytmen i alle de andre. Sjekk også [Standardavvik (oversikt)](/concept/standardavvik)
+  for parallellen til σ.
 
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"
@@ -125,10 +119,11 @@ recognition_cues:
 filters: {}
 
 related:
-  - { id: "varians-standardavvik-diskret",    kind: "entry" }
-  - { id: "utvalgsvarians-radata",            kind: "entry" }
-  - { id: "to-utvalgs-t-test",                kind: "entry" }
-  - { id: "regresjon-residualvarians",        kind: "entry" }
-  - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
-  - { id: "interpolert-varians",              kind: "concept" }
-  - { id: "frihetsgrader",                    kind: "concept" }
+  - { id: "varians-standardavvik-diskret",         kind: "entry" }
+  - { id: "utvalgsvarians-radata",                 kind: "entry" }
+  - { id: "to-utvalgs-t-test",                     kind: "entry" }
+  - { id: "regresjon-residualvarians",             kind: "entry" }
+  - { id: "regresjon-standardfeil-stigningstall",  kind: "entry" }
+  - { id: "interpolert-varians",                   kind: "concept" }
+  - { id: "standardavvik",                         kind: "concept" }
+  - { id: "frihetsgrader",                         kind: "concept" }

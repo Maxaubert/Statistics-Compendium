@@ -1,0 +1,28 @@
+id: binomialvarians
+term_no: Binomialvarians (Var(X) = np(1−p))
+short_def: "Spesielt for `Binomial(n, p)`: `E[X] = np`, `Var(X) = np(1 − p)`, `σ = √(np(1 − p))`."
+long_def: |
+  For en `Binomial(n, p)`-fordelt variabel `X` (antall suksesser i `n`
+  uavhengige Bernoulli-forsøk med suksessannsynlighet `p`):
+
+  - `E[X] = np`
+  - `Var(X) = np(1 − p)`
+  - `σ = √(np(1 − p))`
+
+  Variansen er størst når `p = 0.5` (`Var = n/4`) og går mot `0` når `p`
+  nærmer seg `0` eller `1`. For andelen `p̂ = X/n` blir
+  `Var(p̂) = p(1 − p)/n`.
+
+  Brukes som **kjennelig egenskap** for binomial og som grunnlag for
+  normalapproksimasjon når `np(1 − p) ≥ 5`.
+aliases:
+  - binomialvarians
+  - binomialvariansen
+  - binomial varians
+see_also:
+  - { id: binomial-fordeling, kind: entry }
+  - { id: bernoulli-forsoek, kind: glossary }
+  - { id: andel, kind: glossary }
+  - { id: normalapproksimasjon, kind: glossary }
+  - { id: varians, kind: glossary }
+  - { id: varians, kind: concept }

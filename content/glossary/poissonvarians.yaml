@@ -1,0 +1,27 @@
+id: poissonvarians
+term_no: Poissonvarians (Var(X) = λ)
+short_def: "Spesielt for Poisson: variansen er **lik** forventningsverdien — `E[X] = Var(X) = λ`."
+long_def: |
+  For en `Poisson(λ)`-fordelt variabel `X`:
+
+  - `E[X] = λ`
+  - `Var(X) = λ`
+  - `σ = √λ`
+
+  For et tidsvindu av lengde `t` med rate `λ` blir antall hendelser
+  `Poisson(λt)`-fordelt, og da gjelder `E[X] = Var(X) = λt` med
+  `σ = √(λt)`.
+
+  At forventning og varians er **like** er kjennelig — hvis empirisk
+  gjennomsnitt og varians ligger nær hverandre, passer Poisson godt.
+  Hvis variansen er klart større enn snittet (overdispersjon), passer
+  Poisson dårlig og du må kanskje bytte fordeling (negativ binomial,
+  bootstrap, osv.).
+aliases:
+  - poissonvarians
+  - poissonvariansen
+see_also:
+  - { id: poisson-fordeling, kind: entry }
+  - { id: lambda, kind: glossary }
+  - { id: varians, kind: glossary }
+  - { id: varians, kind: concept }

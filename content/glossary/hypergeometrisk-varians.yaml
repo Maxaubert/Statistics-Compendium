@@ -1,0 +1,26 @@
+id: hypergeometrisk-varians
+term_no: Hypergeometrisk varians
+short_def: "For trekning UTEN tilbakelegging: `Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))`."
+long_def: |
+  For en `Hypergeometrisk(N, K, n)`-fordelt variabel `X` (antall
+  «vellykkede» i `n` trekninger uten tilbakelegging fra en pott på
+  `N` elementer hvorav `K` er «vellykkede»):
+
+  - `E[X] = n · K/N`
+  - `Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))`
+
+  Sammenligning med binomial:
+
+  - Binomial-forventningen er den samme hvis du setter `p = K/N`: `n·p`.
+  - Binomialvariansen er `n·p·(1−p)`. Den hypergeometriske variansen er
+    den binomiale **multiplisert med endelig-populasjon-korreksjonen**
+    `(N−n)/(N−1)` — som er `< 1` når `n > 1`.
+  - Når `n` er liten i forhold til `N`, er korreksjonen ≈ 1 og hypergeometrisk
+    ≈ binomial.
+aliases:
+  - hypergeometrisk varians
+  - hypergeometrisk variansen
+see_also:
+  - { id: hypergeometrisk-fordeling, kind: entry }
+  - { id: binomialvarians, kind: glossary }
+  - { id: uten-tilbakelegging-glos, kind: glossary }

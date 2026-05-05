@@ -102,6 +102,16 @@ describe("Prose", () => {
     expect(container.querySelector("code")?.textContent).toBe("code");
   });
 
+  it("renders [label](href) markdown links as router links", () => {
+    render(
+      <MemoryRouter>
+        <Prose body="se [Poissonfordeling](/entry/poisson-fordeling) for detaljer" />
+      </MemoryRouter>,
+    );
+    const link = screen.getByRole("link", { name: /Poissonfordeling/ });
+    expect(link).toHaveAttribute("href", "/entry/poisson-fordeling");
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,

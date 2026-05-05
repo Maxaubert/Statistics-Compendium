@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   buildAliasIndex,
   findGlossaryLinks,
@@ -232,45 +233,68 @@ type Token =
   | { kind: "code"; value: string }
   | { kind: "bold"; value: string }
   | { kind: "italic"; value: string }
+  | { kind: "link"; label: string; href: string }
   | { kind: "text"; value: string };
+
+const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 /**
  * Tokenize an inline string into code spans, bold spans, italic spans,
- * and plain text. Backticks have priority — content inside backticks is
- * never further processed (so `**inside code**` stays literal in code).
- * Bold (`**...**`) is matched before italic (`*...*`) so the asterisks
- * don't fight.
+ * markdown links, and plain text. Backticks have priority — content
+ * inside backticks is never further processed (so `**inside code**`
+ * stays literal in code). Then `[label](href)` markdown links are split
+ * out before bold/italic so link targets don't get parsed as emphasis.
  */
 function tokenizeInline(text: string): Token[] {
   const out: Token[] = [];
-  // First split on backticks to lock in code spans.
   const codeParts = text.split(/(`[^`]+`)/g);
   for (const part of codeParts) {
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
       out.push({ kind: "code", value: part.slice(1, -1) });
       continue;
     }
-    // Then split each non-code chunk on **bold**.
-    const boldParts = part.split(/(\*\*[^*]+\*\*)/g);
-    for (const bp of boldParts) {
-      if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
-        out.push({ kind: "bold", value: bp.slice(2, -2) });
-        continue;
+    if (part.length === 0) continue;
+    // Pull out [label](href) link tokens before bold/italic so the link
+    // target's parens etc. don't fight with emphasis parsing.
+    let cursor = 0;
+    LINK_RE.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = LINK_RE.exec(part)) !== null) {
+      if (match.index > cursor) {
+        emitNonLink(part.slice(cursor, match.index), out);
       }
-      if (bp.length === 0) continue;
-      // Finally split on *italic* (single asterisk delimited).
-      const italicParts = bp.split(/(\*[^*]+\*)/g);
-      for (const ip of italicParts) {
-        if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
-          out.push({ kind: "italic", value: ip.slice(1, -1) });
-        } else if (ip.length > 0) {
-          out.push({ kind: "text", value: ip });
-        }
-      }
-      continue;
+      out.push({ kind: "link", label: match[1], href: match[2] });
+      cursor = match.index + match[0].length;
+    }
+    if (cursor < part.length) {
+      emitNonLink(part.slice(cursor), out);
     }
   }
   return out;
+}
+
+/**
+ * Tokenize a chunk that has already been peeled of backticks and links.
+ * Splits on bold, then italic.
+ */
+function emitNonLink(chunk: string, out: Token[]) {
+  if (chunk.length === 0) return;
+  const boldParts = chunk.split(/(\*\*[^*]+\*\*)/g);
+  for (const bp of boldParts) {
+    if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
+      out.push({ kind: "bold", value: bp.slice(2, -2) });
+      continue;
+    }
+    if (bp.length === 0) continue;
+    const italicParts = bp.split(/(\*[^*]+\*)/g);
+    for (const ip of italicParts) {
+      if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
+        out.push({ kind: "italic", value: ip.slice(1, -1) });
+      } else if (ip.length > 0) {
+        out.push({ kind: "text", value: ip });
+      }
+    }
+  }
 }
 
 function renderInline(
@@ -302,6 +326,13 @@ function renderInline(
         </em>
       );
     }
+    if (tok.kind === "link") {
+      return (
+        <RouterLink key={i} to={tok.href} className={MD_LINK_CLASS[theme]}>
+          {tok.label}
+        </RouterLink>
+      );
+    }
     return (
       <Fragment key={i}>
         {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
@@ -327,6 +358,15 @@ const LINK_CLASS: Record<ProseTheme, string> = {
     "cursor-pointer bg-transparent text-inherit underline decoration-ink-3/60 decoration-dotted underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
   dark:
     "cursor-pointer bg-transparent text-inherit underline decoration-dotted decoration-white/40 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
+};
+// Markdown links — same hover-driven affordance, but a SOLID underline so
+// they read as "navigates to a page" rather than "opens a popup" (which is
+// what the dotted glossary links do).
+const MD_LINK_CLASS: Record<ProseTheme, string> = {
+  light:
+    "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+  dark:
+    "text-inherit underline decoration-white/50 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
 
 /**

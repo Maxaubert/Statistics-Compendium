@@ -29,6 +29,11 @@ symbols:
   - { sym: "X_i",      means: "iid normalfordelte (μ, σ)" }
   - { sym: "Y = ΣX_i", means: "summen, normalfordelt N(nμ, σ√n)" }
 
+properties:
+  expected_value: "E[Y] = n·μ"
+  variance: "Var[Y] = n·σ²"
+  std_dev: "σ_Y = σ·√n"
+
 filters:
   computes: [exact_probability, range_probability]
   random_variable: [sum_of_samples, continuous]
