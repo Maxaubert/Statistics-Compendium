@@ -4,8 +4,8 @@ short_def: "En variabel hvis verdi er bestemt av et tilfeldig forsøk — kan v�
 long_def: |
   En stokastisk variabel `X` tilordner et tall til hvert utfall av et tilfeldig forsøk.
 
-  - **Diskret SV:** tar tellbare verdier (antall, telling) og har en sannsynlighetsfordeling `P(X = x)`.
-  - **Kontinuerlig SV:** tar verdier i et intervall (vekt, høyde, tid) og har en tetthetsfunksjon `f(x)`.
+  - **Diskret stokastisk variabel:** tar tellbare verdier (antall, telling) og har en sannsynlighetsfordeling `P(X = x)`.
+  - **Kontinuerlig stokastisk variabel:** tar verdier i et intervall (vekt, høyde, tid) og har en tetthetsfunksjon `f(x)`.
 
   Skrives vanligvis med stor bokstav (`X`, `Y`) for selve variabelen og liten (`x`, `y`) for en konkret verdi.
 aliases:
@@ -13,8 +13,6 @@ aliases:
   - stokastiske variabler
   - tilfeldig variabel
   - tilfeldige variabler
-  - stokastisk
-  - stokastiske
 see_also:
   - { id: forventningsverdi, kind: glossary }
   - { id: varians, kind: glossary }

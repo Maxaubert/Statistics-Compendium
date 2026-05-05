@@ -30,7 +30,7 @@ recognition_cues:
   - "Ingen sannsynlighetsfordeling er gitt — bare rådata"
 
 when_NOT_to_use:
-  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk varians for diskret SV i stedet"
+  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk varians for diskret stokastisk variabel i stedet"
   - "Oppgaven oppgir s² eller σ² direkte → ingen utregning nødvendig"
   - "Du har hele populasjonen (svært sjelden i pensum) → del på `n` i stedet for `n − 1`"
 

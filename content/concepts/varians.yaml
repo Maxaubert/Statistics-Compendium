@@ -16,13 +16,13 @@ what_it_means: |
   overskriften** for å åpne ordliste-popupen med detaljert forklaring,
   inkludert om du trenger rådata eller ikke.
 
-  ## [Variansen til diskret SV](glossary:diskret-varians)
+  ## [Variansen til diskret stokastisk variabel](glossary:diskret-varians)
 
       Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)
 
   Når du har en PMF-tabell. Vekt = sannsynligheten.
 
-  Entry: [Varians og standardavvik (diskret SV)](/entry/varians-standardavvik-diskret).
+  Entry: [Varians og standardavvik (diskret stokastisk variabel)](/entry/varians-standardavvik-diskret).
 
   ## [Utvalgsvarians (s²)](glossary:utvalgsvarians)
 
