@@ -1,6 +1,11 @@
 id: beta-koeffisient
 term_no: Beta-koeffisient (β, stigningstall)
 short_def: "Stigningstallet i regresjonslinja: hvor mye `Y` endrer seg når `X` øker med én enhet."
+filters:
+  random_variable: [slope_estimate]
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
+  computes: [parameter_estimate, confidence_interval, hypothesis_test]
 aliases:
   - beta-koeffisient
   - stigningstall

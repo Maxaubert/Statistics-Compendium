@@ -1,6 +1,8 @@
 id: boksplott
 term_no: Boksplott (box plot)
 short_def: "Visualisering av median, kvartiler og uteliggere — boksen dekker midtre 50 % av dataene."
+filters:
+  structural_cues: [data_as_list]
 long_def: |
   - **Boksen:** går fra `Q1` til `Q3` (interkvartilbredden, `IQR`), med strek for medianen
   - **Værhårene:** strekker seg vanligvis til siste observasjon innen `1.5·IQR`

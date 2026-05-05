@@ -1,6 +1,9 @@
 id: betinget-sannsynlighet-glos
 term_no: Betinget sannsynlighet
 short_def: "`P(A|B)` = sannsynligheten for `A` når vi vet at `B` har inntruffet."
+filters:
+  computes: [conditional_probability]
+  structural_cues: [conditional_given]
 aliases:
   - betinget sannsynlighet
   - betinget sannsynligheten
