@@ -6,9 +6,13 @@ aliases:
   - standardfeilen
   - SE
 long_def: |
-  SE(X̄) = σ/√n (eller s/√n hvis σ er ukjent). SE er IKKE spredningen i
-  dataene, men spredningen i estimatet. Står i nevneren i nesten alle
-  testobservatorer og KI-er: estimat / SE eller estimat ± kvantil · SE.
+  Formel: `SE(X̄) = σ/√n` (eller `s/√n` hvis `σ` er ukjent).
+
+  `SE` er **IKKE** spredningen i dataene, men spredningen i estimatet.
+  Står i nevneren i nesten alle testobservatorer og KI-er:
+
+  - **Testobservator:** `estimat / SE`
+  - **KI:** `estimat ± kvantil · SE`
 see_also:
   - { id: ki-mu-kjent-sigma, kind: entry }
   - { id: regresjon-standardfeil-stigningstall, kind: entry }

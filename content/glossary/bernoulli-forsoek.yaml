@@ -3,10 +3,11 @@ term_no: Bernoulli-forsøk
 short_def: "Et enkelt forsøk med to mulige utfall (suksess / fiasko) og fast suksessannsynlighet p."
 long_def: |
   Et Bernoulli-forsøk er ett enkelt eksperiment med eksakt to utfall:
-  "suksess" (med sannsynlighet p) eller "fiasko" (med sannsynlighet 1 − p).
-  Eksempler: ett myntkast, én observasjon av et defekt produkt, én pasient
-  som tester positivt. Antall suksesser i n uavhengige Bernoulli-forsøk er
-  binomialfordelt B(n, p).
+  "suksess" (sannsynlighet `p`) eller "fiasko" (sannsynlighet `1 − p`).
+
+  Eksempler: ett myntkast, én observasjon av et defekt produkt, én
+  pasient som tester positivt. Antall suksesser i `n` uavhengige
+  Bernoulli-forsøk er binomialfordelt `B(n, p)`.
 aliases:
   - bernoulli-forsøk
   - bernoulli-forsøkene

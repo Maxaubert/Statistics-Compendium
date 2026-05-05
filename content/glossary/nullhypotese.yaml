@@ -7,9 +7,11 @@ aliases:
   - H₀
   - H_0
 long_def: |
-  H₀ er status quo som dataene må motbevise. Du forkaster aldri H₀ med
-  mindre testobservatoren er ekstrem nok. "Ikke forkaste" betyr ikke at
-  H₀ er sann – bare at vi ikke har bevis nok mot den.
+  `H₀` er status quo som dataene må motbevise. Du forkaster aldri `H₀`
+  med mindre testobservatoren er ekstrem nok.
+
+  **"Ikke forkaste" betyr ikke at `H₀` er sann** — bare at vi ikke har
+  bevis nok mot den.
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
   - { id: signifikansnivaa, kind: concept }

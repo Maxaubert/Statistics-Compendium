@@ -2,10 +2,15 @@ id: hendelse
 term_no: Hendelse (event)
 short_def: "En delmengde av utfallsrommet – noe som enten inntreffer eller ikke."
 long_def: |
-  En hendelse A er et utvalg av mulige utfall, og P(A) er sannsynligheten
-  for at minst ett av dem inntreffer. Hendelser kan kombineres med
-  union (∪, 'eller'), snitt (∩, 'og') og komplement (Ā, 'ikke A').
-  Eksempel: kast to terninger; A = 'sum er 7' er en hendelse som
+  En hendelse `A` er et utvalg av mulige utfall, og `P(A)` er
+  sannsynligheten for at minst ett av dem inntreffer. Hendelser kan
+  kombineres med:
+
+  - **Union** (`∪`, "eller")
+  - **Snitt** (`∩`, "og")
+  - **Komplement** (`Ā`, "ikke A")
+
+  Eksempel: kast to terninger; `A = "sum er 7"` er en hendelse som
   inneholder 6 av de 36 utfallene.
 see_also:
   - { id: komplement, kind: glossary }

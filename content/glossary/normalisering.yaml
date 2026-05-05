@@ -2,9 +2,10 @@ id: normalisering
 term_no: Standardnormalisering
 short_def: "Z = (X − μ)/σ – gjør om en normalfordelt X til standardnormal Z ~ N(0, 1)."
 long_def: |
-  Trikset for å bruke z-tabellen E.3: hvis X ~ N(μ, σ), så er
-  Z = (X − μ)/σ ~ N(0, 1) og P(X ≤ x) = G((x − μ)/σ). Samme idé brukes
-  i nesten alle z-tester: standardiser, slå opp, sammenlign.
+  Trikset for å bruke z-tabellen E.3: hvis `X ~ N(μ, σ)`, så er
+  `Z = (X − μ)/σ ~ N(0, 1)` og `P(X ≤ x) = G((x − μ)/σ)`.
+
+  Samme idé brukes i nesten alle z-tester: **standardiser → slå opp → sammenlign**.
 see_also:
   - { id: standardnormalisering, kind: concept }
   - { id: normalfordeling, kind: entry }

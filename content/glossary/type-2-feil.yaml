@@ -2,8 +2,10 @@ id: type-2-feil
 term_no: Type-II-feil
 short_def: "Å beholde H₀ når H₁ faktisk er sann – du oppdaget ikke effekten."
 long_def: |
-  Sannsynligheten for type-II-feil kalles β. Teststyrke = 1 − β er sjansen
-  for å oppdage en effekt som finnes. Større utvalg, større effekt eller
-  høyere α gir lavere β (men høyere α øker type-I-risikoen).
+  Sannsynligheten for type-II-feil kalles `β`. **Teststyrke** = `1 − β`
+  er sjansen for å oppdage en effekt som finnes.
+
+  Større `n`, større effekt eller høyere `α` gir lavere `β`
+  (men høyere `α` øker type-I-risikoen).
 see_also:
   - { id: signifikansnivaa, kind: concept }

@@ -2,9 +2,13 @@ id: marginalfordeling-term
 term_no: Marginalfordeling
 short_def: "Fordelingen til én variabel alene, regnet ut fra simultanfordelingen ved å summere ut den andre."
 long_def: |
-  Fra en tabell med P(X=x, Y=y): rad-summen gir P(X=x), kolonnesummen gir
-  P(Y=y). Marginalfordelingen er fordelingen du sitter igjen med når du
-  ignorerer den andre variabelen.
+  Fra en tabell med `P(X=x, Y=y)`:
+
+  - **Rad-summen:** gir `P(X=x)`
+  - **Kolonnesummen:** gir `P(Y=y)`
+
+  Marginalfordelingen er fordelingen du sitter igjen med når du ignorerer
+  den andre variabelen.
 see_also:
   - { id: marginalfordeling, kind: entry }
   - { id: fellesfordeling, kind: concept }

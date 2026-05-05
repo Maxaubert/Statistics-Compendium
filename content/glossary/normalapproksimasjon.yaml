@@ -2,10 +2,10 @@ id: normalapproksimasjon
 term_no: Normalapproksimasjon
 short_def: "Tilnærming der en diskret fordeling (binomial, poisson) byttes ut med en normalfordeling."
 long_def: |
-  For binomial: hvis n·p·(1−p) ≥ 5 er X ≈ N(np, √(np(1−p))). For poisson:
-  hvis λ er stor (typisk λ ≥ 10) er Y ≈ N(λ, √λ). Normalapproksimasjon er
-  drivkraften bak z-test og KI for andel og for poissonrate. Tommelfingerregel
-  for andel-KI: bruk p̂ i stedet for p i sjekken: n·p̂·(1−p̂) ≥ 5.
+  - **Binomial:** hvis `n·p·(1−p) ≥ 5`, så `X ≈ N(np, √(np(1−p)))`.
+  - **Poisson:** hvis `λ` er stor (typisk `λ ≥ 10`), så `Y ≈ N(λ, √λ)`.
+
+  Normalapproksimasjon er drivkraften bak z-test og KI for andel og for poissonrate. Tommelfingerregel for andel-KI: bruk `p̂` i stedet for `p` i sjekken: `n·p̂·(1−p̂) ≥ 5`.
 aliases:
   - normalapproksimasjon
   - normalapproksimasjonen

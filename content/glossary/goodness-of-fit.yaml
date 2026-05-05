@@ -2,11 +2,14 @@ id: goodness-of-fit
 term_no: Goodness-of-fit (tilpasningstest)
 short_def: "Test som sjekker om observerte antall i kategorier samsvarer med en forventet fordeling."
 long_def: |
-  Sammenligner observerte antall O_i med forventede antall E_i under en
-  gitt hypotese (likedeling, bestemt teoretisk fordeling, etc.) ved
-  testobservatoren χ² = Σ (O_i − E_i)² / E_i. Stor χ²-verdi → dataene
-  passer dårlig med hypotesen. Frihetsgrader er typisk k − 1, men
-  reduseres ytterligere hvis parametere ble estimert fra dataene.
+  Sammenligner observerte antall `O_i` med forventede antall `E_i` under
+  en gitt hypotese (likedeling, bestemt teoretisk fordeling, etc.).
+
+  **Testobservator:** `χ² = Σ (O_i − E_i)² / E_i`
+
+  Stor `χ²`-verdi → dataene passer dårlig med hypotesen. Frihetsgrader
+  er typisk `k − 1`, men reduseres ytterligere hvis parametere ble
+  estimert fra dataene.
 aliases:
   - goodness-of-fit
   - goodness of fit

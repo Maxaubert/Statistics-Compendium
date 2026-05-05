@@ -7,9 +7,11 @@ aliases:
   - stigningstallet
   - β̂
 long_def: |
-  I modellen Y = α + β·X + ε er β stigningstallet. β̂ estimeres fra data
-  ved minste kvadraters metode. Tester β = 0 sjekker om X har lineær
-  effekt på Y. KI for β: β̂ ± t_(α/2, n−2) · SE(β̂).
+  I modellen `Y = α + β·X + ε` er `β` stigningstallet. `β̂` estimeres fra
+  data ved minste kvadraters metode. Tester `β = 0` sjekker om `X` har
+  lineær effekt på `Y`.
+
+  **KI for β:** `β̂ ± t_(α/2, n−2) · SE(β̂)`
 see_also:
   - { id: regresjon-estimat-alpha-beta, kind: entry }
   - { id: regresjon-test-stigningstall, kind: entry }

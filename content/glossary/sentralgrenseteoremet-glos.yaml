@@ -6,10 +6,12 @@ aliases:
   - sentralgrenseteorem
   - CLT
 long_def: |
-  Hvis X_1, ..., X_n er uavhengige og identisk fordelte med forventning μ
-  og standardavvik σ, så er X̄ ≈ N(μ, σ/√n) for stor n. Tommelfingerregel:
-  n ≥ 30 holder ofte. Forklarer hvorfor z- og t-tester fungerer for ikke-
-  normale data.
+  Hvis `X_1, …, X_n` er uavhengige og identisk fordelte med forventning
+  `μ` og standardavvik `σ`, så er `X̄ ≈ N(μ, σ/√n)` for stor `n`.
+
+  **Tommelfingerregel:** `n ≥ 30` holder ofte.
+
+  Forklarer hvorfor z- og t-tester fungerer for ikke-normale data.
 see_also:
   - { id: sentralgrenseteoremet, kind: concept }
   - { id: en-utvalg-z-test, kind: entry }

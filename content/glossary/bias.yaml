@@ -2,11 +2,13 @@ id: bias
 term_no: Bias (forventningsskjevhet)
 short_def: "Differansen E[θ̂] − θ – hvor mye estimatoren systematisk bommer i snitt."
 long_def: |
-  En forventningsrett (unbiased) estimator har bias = 0. Bias kan oppstå
-  fra metoden (eks. å dele på n i stedet for n − 1 i variansestimatet)
-  eller fra utvalget (skjevt utvalg, frafall, måleinstrument). Lav bias
-  er ikke alt – du vil også ha lav varians. Total feil måles ofte med
-  MSE = bias² + varians.
+  En forventningsrett (unbiased) estimator har `bias = 0`. Bias kan oppstå:
+
+  - **Fra metoden:** f.eks. å dele på `n` i stedet for `n − 1` i variansestimatet
+  - **Fra utvalget:** skjevt utvalg, frafall, måleinstrument
+
+  Lav bias er ikke alt — du vil også ha lav varians. Total feil måles
+  ofte med `MSE = bias² + varians`.
 see_also:
   - { id: forventningsrett, kind: glossary }
   - { id: estimator, kind: glossary }

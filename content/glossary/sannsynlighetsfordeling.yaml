@@ -2,11 +2,10 @@ id: sannsynlighetsfordeling
 term_no: Sannsynlighetsfordeling (PMF, PDF)
 short_def: "Funksjon som tilordner sannsynlighet til hver mulig verdi (diskret, PMF) eller tetthet i hvert intervall (kontinuerlig, PDF) av en stokastisk variabel."
 long_def: |
-  Diskret SV: P(X = x_i) for hver mulig x_i, med Σ P(X = x_i) = 1.
-  Kalles PMF (probability mass function). Kontinuerlig SV: tetthet
-  f(x) ≥ 0 med ∫ f(x) dx = 1. Sannsynlighet for et intervall regnes
-  som integral: P(a ≤ X ≤ b) = ∫_a^b f(x) dx. PMF/PDF er fundamentet
-  for E[X], Var(X), KI og hypotesetester.
+  - **Diskret SV (PMF):** `P(X = x_i)` for hver mulig `x_i`, med `Σ P(X = x_i) = 1`.
+  - **Kontinuerlig SV (PDF):** tetthet `f(x) ≥ 0` med `∫ f(x) dx = 1`. Sannsynlighet for et intervall: `P(a ≤ X ≤ b) = ∫_a^b f(x) dx`.
+
+  PMF/PDF er fundamentet for `E[X]`, `Var(X)`, KI og hypotesetester.
 aliases:
   - sannsynlighetsfordeling
   - sannsynlighetsfordelingen

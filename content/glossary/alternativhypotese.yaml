@@ -7,9 +7,13 @@ aliases:
   - H₁
   - H_1
 long_def: |
-  H₁ kan være ensidig (μ > μ₀ eller μ < μ₀) eller tosidig (μ ≠ μ₀).
-  Form på H₁ bestemmer hvor du ser etter ekstreme verdier: høyre hale,
-  venstre hale, eller begge. Tosidig test halverer α i hver hale.
+  `H₁` kan være ensidig eller tosidig:
+
+  - **Høyresidig:** `H₁: μ > μ₀` (kritikk i øvre hale)
+  - **Venstresidig:** `H₁: μ < μ₀` (kritikk i nedre hale)
+  - **Tosidig:** `H₁: μ ≠ μ₀` (kritikk i begge haler, `α/2` i hver)
+
+  Form på `H₁` bestemmer hvor du ser etter ekstreme verdier.
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
   - { id: en-utvalg-t-test, kind: entry }

@@ -2,9 +2,11 @@ id: signifikansniva-glos
 term_no: Signifikansnivå (α)
 short_def: "Risikoen du godtar for å forkaste H₀ når H₀ egentlig er sann."
 long_def: |
-  Signifikansnivået α bestemmer hvor sterke beviser du krever før du
-  forkaster H₀. Vanlige verdier: 0.10, 0.05, 0.01. Konfidensnivå er
-  1 − α, så et 95 % KI svarer til α = 0.05. Forkast H₀ hvis p < α.
+  Signifikansnivået `α` bestemmer hvor sterke beviser du krever før du
+  forkaster `H₀`. Vanlige verdier: `0.10`, `0.05`, `0.01`.
+
+  - Konfidensnivå er `1 − α`, så et 95 % KI svarer til `α = 0.05`.
+  - Beslutningsregel: forkast `H₀` hvis `p < α`.
 see_also:
   - { id: signifikansnivaa, kind: concept }
   - { id: p-verdi, kind: concept }

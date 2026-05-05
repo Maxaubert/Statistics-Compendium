@@ -7,10 +7,13 @@ aliases:
   - forklaringsgrad
   - determinasjonskoeffisient
 long_def: |
-  R² = 1 − SSE/SST, der SST er total variasjon i Y og SSE er residualenes
-  variasjon. R² = 0.80 betyr at modellen forklarer 80 % av variasjonen.
-  For enkel lineær regresjon: R² = r² (kvadratet av Pearson-korrelasjonen).
-  Høy R² gir ikke automatisk en god modell – sjekk også residualplott.
+  Formel: `R² = 1 − SSE/SST`, der `SST` er total variasjon i `Y` og
+  `SSE` er residualenes variasjon.
+
+  `R² = 0.80` betyr at modellen forklarer 80 % av variasjonen. For enkel
+  lineær regresjon: `R² = r²` (kvadratet av Pearson-korrelasjonen).
+
+  Høy `R²` gir ikke automatisk en god modell — sjekk også residualplott.
 see_also:
   - { id: korrelasjon-glos, kind: glossary }
   - { id: pearson-korrelasjon, kind: glossary }

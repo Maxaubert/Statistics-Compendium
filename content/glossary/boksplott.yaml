@@ -2,11 +2,12 @@ id: boksplott
 term_no: Boksplott (box plot)
 short_def: "Visualisering av median, kvartiler og uteliggere – boksen dekker midtre 50 % av dataene."
 long_def: |
-  Boksen går fra Q1 til Q3 (interkvartilbredden, IQR), med strek for
-  medianen. Værhårene strekker seg vanligvis til siste observasjon innen
-  1.5·IQR; punkter utenfor markeres som uteliggere. Bra for å sammenligne
-  flere grupper side om side og oppdage skjevhet. Viser ikke fordelingens
-  detaljerte form – bruk histogram eller QQ-plott til det.
+  - **Boksen:** går fra `Q1` til `Q3` (interkvartilbredden, `IQR`), med strek for medianen
+  - **Værhårene:** strekker seg vanligvis til siste observasjon innen `1.5·IQR`
+  - **Uteliggere:** punkter utenfor markeres som egne prikker
+
+  Bra for å sammenligne flere grupper side om side og oppdage skjevhet.
+  Viser ikke fordelingens detaljerte form — bruk histogram eller QQ-plott til det.
 see_also:
   - { id: histogram-glos, kind: glossary }
   - { id: qq-plott, kind: concept }

@@ -2,9 +2,9 @@ id: kritisk-verdi
 term_no: Kritisk verdi
 short_def: "Tabellverdien testobservatoren må passere for at H₀ skal forkastes."
 long_def: |
-  Slå opp i z-, t-, eller χ²-tabellen med α (og df hvis nødvendig). Hvis
-  testobservatoren er mer ekstrem enn den kritiske verdien, ligger den i
-  forkastningsområdet og du forkaster H₀. Tosidig test: bruk α/2.
+  Slå opp i z-, t-, eller χ²-tabellen med `α` (og `df` hvis nødvendig).
+  Hvis testobservatoren er mer ekstrem enn den kritiske verdien, ligger
+  den i forkastningsområdet og du forkaster `H₀`. Tosidig test: bruk `α/2`.
 see_also:
   - { id: E4-z-kvantiltabell, kind: table }
   - { id: E5-t-tabell, kind: table }

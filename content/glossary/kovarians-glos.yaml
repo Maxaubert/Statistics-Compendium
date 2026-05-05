@@ -2,9 +2,11 @@ id: kovarians-glos
 term_no: Kovarians (Cov)
 short_def: "Mål på hvor mye to variabler beveger seg sammen – positiv = samme retning, negativ = motsatt."
 long_def: |
-  Cov(X,Y) = E[XY] − μ_X·μ_Y. Null kovarians betyr ingen lineær
-  sammenheng (men kan ha annen sammenheng). Skalaavhengig: bytter du
-  enhet, endres tallet. Korrelasjon er kovarians normalisert til [−1, 1].
+  Formel: `Cov(X,Y) = E[XY] − μ_X·μ_Y`.
+
+  Null kovarians betyr ingen lineær sammenheng (men kan ha annen
+  sammenheng). Skalaavhengig: bytter du enhet, endres tallet.
+  Korrelasjon er kovarians normalisert til `[−1, 1]`.
 see_also:
   - { id: kovarians, kind: entry }
   - { id: korrelasjon-joint, kind: entry }

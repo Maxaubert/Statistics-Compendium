@@ -2,11 +2,14 @@ id: utvalg
 term_no: Utvalg (stikkprøve, sample)
 short_def: "De n observasjonene du faktisk har målt – en delmengde av populasjonen."
 long_def: |
-  Utvalget er n konkrete målinger trukket fra populasjonen. Synonymer:
-  stikkprøve, sample. Utvalgsstørrelsen er n. Statistikker (X̄, s², p̂)
-  beregnes fra utvalget og brukes som estimat for populasjonsparameterne
-  (μ, σ², p). For at konklusjonen skal gjelde populasjonen, må utvalget
-  være tilfeldig og representativt.
+  Utvalget er `n` konkrete målinger trukket fra populasjonen. Synonymer:
+  stikkprøve, sample. Utvalgsstørrelsen er `n`.
+
+  Statistikker (`X̄`, `s²`, `p̂`) beregnes fra utvalget og brukes som
+  estimat for populasjonsparameterne (`μ`, `σ²`, `p`).
+
+  For at konklusjonen skal gjelde populasjonen, må utvalget være
+  **tilfeldig og representativt**.
 see_also:
   - { id: populasjon, kind: glossary }
   - { id: n, kind: glossary }

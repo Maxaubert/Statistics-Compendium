@@ -8,8 +8,12 @@ aliases:
   - kjikvadratfordeling
   - kjikvadrat-fordeling
 long_def: |
-  Du møter χ nesten alltid i kvadrert form: χ² (kjikvadrat). Brukes til
-  KI for varians, goodness-of-fit-test, og uavhengighetstest i krysstabell.
+  Du møter `χ` nesten alltid i kvadrert form: `χ²` (kjikvadrat). Brukes til:
+
+  - KI for varians
+  - Goodness-of-fit-test
+  - Uavhengighetstest i krysstabell
+
   Fordelingen har frihetsgrader som eneste parameter og er ikke-symmetrisk
   (skjev mot høyre). Slå opp kvantiler i E.6-tabellen.
 see_also:

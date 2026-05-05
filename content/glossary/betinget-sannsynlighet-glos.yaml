@@ -2,9 +2,10 @@ id: betinget-sannsynlighet-glos
 term_no: Betinget sannsynlighet
 short_def: "P(A|B) = sannsynligheten for A når vi vet at B har inntruffet."
 long_def: |
-  Formel: P(A|B) = P(A ∩ B) / P(B), forutsatt P(B) > 0. Hvis A og B er
-  uavhengige, er P(A|B) = P(A). Brukes i Bayes' setning og total
-  sannsynlighet.
+  Formel: `P(A|B) = P(A ∩ B) / P(B)`, forutsatt `P(B) > 0`.
+
+  Hvis `A` og `B` er uavhengige, er `P(A|B) = P(A)`. Brukes i Bayes'
+  setning og total sannsynlighet.
 see_also:
   - { id: betinget-sannsynlighet, kind: concept }
   - { id: bayes-setning, kind: entry }

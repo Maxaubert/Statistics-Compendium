@@ -6,9 +6,11 @@ aliases:
   - joint distribution
   - joint probability
 long_def: |
-  Lærebøker veksler mellom 'joint', 'simultan' og 'felles'. Alle betyr det
-  samme: fordelingen til to (eller flere) variabler sammen, P(X=x, Y=y).
-  Joint probability = P(X=x ∩ Y=y).
+  Lærebøker veksler mellom "joint", "simultan" og "felles". Alle betyr
+  det samme: fordelingen til to (eller flere) variabler sammen,
+  `P(X=x, Y=y)`.
+
+  Joint probability: `P(X=x ∩ Y=y)`.
 see_also:
   - { id: fellesfordeling, kind: concept }
   - { id: korrelasjon-joint, kind: entry }
