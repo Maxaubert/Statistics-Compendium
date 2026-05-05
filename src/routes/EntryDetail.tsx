@@ -77,7 +77,7 @@ export function EntryDetail() {
     <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="entry-detail" className="min-h-screen bg-paper">
       <Banner />
-      <article className="mx-auto max-w-[920px] bg-card px-14 py-8 pb-12">
+      <article className={`mx-auto bg-card px-14 py-8 pb-12 ${isProseEntry ? "max-w-[1200px]" : "max-w-[920px]"}`}>
         <div className="mb-6 flex items-center justify-between">
           <button
             type="button"
