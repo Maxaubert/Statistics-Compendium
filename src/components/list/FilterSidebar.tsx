@@ -20,7 +20,7 @@ export function FilterSidebar({
 }: Props) {
   const hasAny = Object.values(selection).some((arr) => arr && arr.length > 0);
   return (
-    <aside className="border-r border-line bg-paper-2 p-3.5 text-sm">
+    <aside className="border-r border-line bg-paper-2 px-3.5 pb-3.5 pt-10 text-sm">
       <div className="mb-3 border-b border-line pb-2 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-3">
         Filter
       </div>
