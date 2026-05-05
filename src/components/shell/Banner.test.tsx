@@ -67,7 +67,10 @@ describe("Banner — category tabs", () => {
     expect(
       labels.indexOf("Formler og konsepter"),
     ).toBeLessThan(labels.indexOf("Veiviser"));
-    expect(labels.indexOf("Tabeller")).toBeLessThan(labels.indexOf("Ordliste"));
+    // Ordliste sits between Formler-og-konsepter and Tabeller in the
+    // category group; Veiviser is after all category tabs.
+    expect(labels.indexOf("Ordliste")).toBeLessThan(labels.indexOf("Veiviser"));
+    expect(labels.indexOf("Tabeller")).toBeLessThan(labels.indexOf("Veiviser"));
   });
 
   it("marks Formler-og-konsepter as current on the bare home path", () => {
