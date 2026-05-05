@@ -9,6 +9,8 @@ const TYPE_LABEL: Record<Entry["type"], string> = {
   identity: "identitet",
   rule: "regel",
   combinatorics: "kombinatorikk",
+  overview: "oversikt",
+  method: "metode",
 };
 
 const TYPE_BADGE_CLASS: Record<Entry["type"], string> = {
@@ -18,6 +20,8 @@ const TYPE_BADGE_CLASS: Record<Entry["type"], string> = {
   identity: "bg-stone-100 text-stone-700",
   rule: "bg-stone-100 text-stone-700",
   combinatorics: "bg-violet-100 text-violet-800",
+  overview: "bg-amber-100 text-amber-800",
+  method: "bg-sky-100 text-sky-800",
 };
 
 interface Props {
