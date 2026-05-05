@@ -216,20 +216,15 @@ function GlossaryCrossSection({ items }: { items: GlossaryCrossItem[] }) {
           {items.length}
         </span>
       </h3>
-      <ul className="m-0 grid list-none gap-1.5 p-0">
+      <ul className="m-0 grid list-none grid-cols-1 gap-1.5 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((it) => (
           <li
             key={it.id}
             onClick={() => popup?.openTerm(it.id)}
             className="group cursor-pointer rounded-md border border-line bg-card px-3.5 py-2 hover:border-primary-2"
           >
-            <div className="flex items-baseline gap-3">
-              <div className="font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
-                {it.term_no}
-              </div>
-              <div className="flex-1 truncate text-[12.5px] italic text-ink-3">
-                {it.short_def}
-              </div>
+            <div className="truncate font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
+              {it.term_no}
             </div>
           </li>
         ))}
