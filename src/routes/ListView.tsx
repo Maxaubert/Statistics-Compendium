@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Banner } from "@/components/shell/Banner";
 import { SearchBox } from "@/components/list/SearchBox";
 import { FilterSidebar } from "@/components/list/FilterSidebar";
@@ -48,10 +48,6 @@ export function ListView() {
     remove,
     clear,
   } = useFilteredContent(data.entries);
-
-  useEffect(() => {
-    setQuery("");
-  }, [tab, setQuery]);
 
   const glossaryFuse = useMemo(
     () => buildGlossarySearchIndex(data.glossary),

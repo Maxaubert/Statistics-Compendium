@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Banner } from "@/components/shell/Banner";
 import {
   GlossaryPopupProvider,
@@ -22,7 +22,22 @@ export function Glossary() {
 function GlossaryInner() {
   const data = loadAllContent();
   const popup = useGlossaryPopup();
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("q") ?? "";
+  const setQuery = useCallback(
+    (q: string) => {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          if (q) next.set("q", q);
+          else next.delete("q");
+          return next;
+        },
+        { replace: true },
+      );
+    },
+    [setSearchParams],
+  );
 
   const filtered = useMemo(
     () =>
