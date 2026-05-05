@@ -28,7 +28,14 @@ recognition_cues:
   - "Spørsmål om bootstrap-konfidensintervall"
   - "Python-bruk av numpy.random.choice(replace=True)"
 
-filters: {}
+filters:
+  computes: [confidence_interval, parameter_estimate, std_dev]
+  random_variable: [continuous, mean_of_samples]
+  setup: [single_population, with_replacement]
+  structural_cues: [data_as_list, summary_stats_given]
+  parameters_known: [population_variance_unknown, confidence_level, sample_size_small_lt30]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only]
 
 related:
   - { id: "prosentilintervall",         kind: "entry" }

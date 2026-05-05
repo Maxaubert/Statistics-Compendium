@@ -44,9 +44,9 @@ symbols:
 
 filters:
   computes: [std_dev, parameter_estimate]
-  random_variable: [discrete_count, continuous]
+  random_variable: [discrete_count, continuous, mean_of_samples]
   setup: [single_population]
-  structural_cues: [data_as_list]
+  structural_cues: [data_as_list, summary_stats_given, total_observations_n]
   parameters_known: [population_variance_unknown]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]

@@ -101,7 +101,14 @@ recognition_cues:
   - "Oppgaven gir simultanfordeling og spør om E[X · Y] eller E[X + Y]"
   - "Du har rådata og trenger gjennomsnittet x̄"
 
-filters: {}
+filters:
+  computes: [expected_value]
+  random_variable: [discrete_count, continuous]
+  setup: [single_population, joint_table_given]
+  structural_cues: [data_as_list, joint_table_present, summary_stats_given]
+  parameters_known: []
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only]
 
 related:
   - { id: "forventningsverdi-diskret",  kind: "entry" }

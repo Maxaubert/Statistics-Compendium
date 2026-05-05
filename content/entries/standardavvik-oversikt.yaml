@@ -89,7 +89,14 @@ recognition_cues:
   - "Du må velge mellom σ (kjent), s (estimat fra rådata), og σ/√n (spredning til X̄)"
   - "Du har et estimat og skal kvantifisere usikkerheten i det"
 
-filters: {}
+filters:
+  computes: [std_dev]
+  random_variable: [discrete_count, continuous, mean_of_samples]
+  setup: [single_population]
+  structural_cues: [data_as_list, summary_stats_given, mean_and_sd_given]
+  parameters_known: [population_variance_known, population_variance_unknown]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_sqrt]
 
 related:
   - { id: "varians-oversikt",                     kind: "entry" }
