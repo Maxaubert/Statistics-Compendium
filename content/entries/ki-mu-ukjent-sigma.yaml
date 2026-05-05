@@ -118,7 +118,7 @@ related:
   - { id: "normalfordeling",       kind: "entry" }
   - { id: "ki-mu-kjent-sigma",     kind: "entry" }
   - { id: "en-utvalg-t-test",      kind: "entry" }
-  - { id: "frihetsgrader",         kind: "concept" }
+  - { id: "frihetsgrader-glos",    kind: "glossary" }
   - { id: "E5-t-tabell",           kind: "table" }
 
 tools:

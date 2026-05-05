@@ -138,4 +138,4 @@ related:
   - { id: "regresjon-standardfeil-stigningstall",  kind: "entry" }
   - { id: "interpolert-varians",                   kind: "concept" }
   - { id: "standardavvik",                         kind: "concept" }
-  - { id: "frihetsgrader",                         kind: "concept" }
+  - { id: "frihetsgrader-glos",                    kind: "glossary" }

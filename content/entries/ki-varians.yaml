@@ -90,7 +90,7 @@ detailed_solution_variants:
         result: "`95 % KI for σ²: [2.41, 11.19]`; for `σ: [1.55, 3.34]`"
 
 related:
-  - { id: frihetsgrader, kind: concept }
+  - { id: frihetsgrader-glos, kind: glossary }
   - { id: ki-mu-ukjent-sigma, kind: entry }
   - { id: E6-kjikvadrattabell, kind: table }
 

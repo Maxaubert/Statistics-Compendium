@@ -99,7 +99,7 @@ detailed_solution_variants:
         result: "Behold `H₀`: ingen statistisk grunnlag for å hevde at kjønn og trandrikking er avhengige."
 
 related:
-  - { id: frihetsgrader, kind: concept }
+  - { id: frihetsgrader-glos, kind: glossary }
   - { id: marginalfordeling, kind: entry }
   - { id: E6-kjikvadrattabell, kind: table }
 

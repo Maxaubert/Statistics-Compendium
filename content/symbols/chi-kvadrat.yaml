@@ -36,4 +36,4 @@ contexts:
       - ki-varians
 see_also:
   - { id: kritisk-verdi, kind: glossary }
-  - { id: frihetsgrader, kind: concept }
+  - { id: frihetsgrader-glos, kind: glossary }

@@ -305,7 +305,7 @@ related:
   - { id: "normalfordeling",       kind: "entry" }
   - { id: "en-utvalg-z-test",      kind: "entry" }
   - { id: "to-utvalgs-t-test",     kind: "entry" }
-  - { id: "frihetsgrader",         kind: "concept" }
+  - { id: "frihetsgrader-glos",    kind: "glossary" }
   - { id: "p-verdi",               kind: "concept" }
   - { id: "ki-mu-ukjent-sigma",    kind: "entry" }
   - { id: "E5-t-tabell",           kind: "table" }
