@@ -1,6 +1,10 @@
 id: residualvarians
 term_no: Residualvarians (S_E²)
 short_def: "Variansen til residualene i regresjon: `S_E² = Σ(yᵢ − ŷᵢ)² / (n − 2)`."
+filters:
+  setup: [linear_relationship]
+  parameters_known: [residual_variance]
+  computes: [std_dev]
 long_def: |
   Formel:
 

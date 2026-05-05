@@ -1,6 +1,9 @@
 id: spredningsplott
 term_no: Spredningsplott (scatter plot)
 short_def: "Punkter `(x_i, y_i)` i et koordinatsystem — viser sammenheng, retning og uteliggere."
+filters:
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected, data_as_list]
 aliases:
   - spredningsplott
   - scatter plot

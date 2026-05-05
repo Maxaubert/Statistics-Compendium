@@ -1,6 +1,8 @@
 id: punktestimat
 term_no: Punktestimat
 short_def: "Ett tall som er beste gjet av en parameter, regnet ut fra dataene."
+filters:
+  computes: [parameter_estimate]
 long_def: |
   Når du har data fra et utvalg, regner du ut et "best guess" for en
   ukjent parameter (`μ`, `p`, `σ`, `β`…). Dette ene tallet kalles et

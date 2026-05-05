@@ -1,6 +1,9 @@
 id: qq-plott
 term_no: QQ-plott (normaltestplott)
 short_def: "Plotter empiriske kvantiler mot teoretiske kvantiler — punkter på rett linje betyr normalfordeling."
+filters:
+  distribution_assumption: [normal]
+  structural_cues: [data_as_list, normal_assumed]
 aliases:
   - qq-plott
   - qq plott
