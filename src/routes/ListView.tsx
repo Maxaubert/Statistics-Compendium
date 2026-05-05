@@ -99,8 +99,8 @@ export function ListView() {
     <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="list-view" className="min-h-screen bg-paper">
       <Banner />
-      <div className="grid grid-cols-1 md:grid-cols-[280px_1fr]">
-        {showSidebar ? (
+      <div className={showSidebar ? "grid grid-cols-1 md:grid-cols-[280px_1fr]" : ""}>
+        {showSidebar && (
           <FilterSidebar
             filters={data.filters}
             selection={selection}
@@ -108,8 +108,6 @@ export function ListView() {
             onToggle={toggle}
             onClear={clear}
           />
-        ) : (
-          <div aria-hidden className="hidden md:block bg-paper border-r border-line" />
         )}
         <main className="bg-card px-7 py-5">
           {tab === "formler" && (
@@ -149,10 +147,12 @@ export function ListView() {
           )}
 
           {tab === "tabeller" && (
-            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-              {data.tables.map((t) => (
-                <TableCard key={t.id} table={t} onClick={() => navigate(`/table/${t.id}`)} />
-              ))}
+            <div className="mx-auto max-w-[1200px]">
+              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+                {data.tables.map((t) => (
+                  <TableCard key={t.id} table={t} onClick={() => navigate(`/table/${t.id}`)} />
+                ))}
+              </div>
             </div>
           )}
         </main>

@@ -158,21 +158,27 @@ interface BarData {
   bars: number[]; // height in 0..1, normalized by peak
 }
 
-// Binomial(n=8, p=0.5): symmetric, peak at k=4
+// Binomial(n=14, p=0.5): symmetric, peak at k=7. 15 bars.
 function barsBinomial(): BarData {
-  // P(X=k) for n=8 p=0.5
-  const probs = [
-    0.00390625, 0.03125, 0.109375, 0.21875, 0.2734375, 0.21875, 0.109375,
-    0.03125, 0.00390625,
-  ];
+  const n = 14;
+  const p = 0.5;
+  const ks = Array.from({ length: n + 1 }, (_, i) => i);
+  // C(n,k) via accumulation
+  const C: number[] = [1];
+  for (let i = 1; i <= n; i++) {
+    C.push((C[i - 1] * (n - i + 1)) / i);
+  }
+  const probs = ks.map(
+    (k) => C[k] * Math.pow(p, k) * Math.pow(1 - p, n - k),
+  );
   const peak = Math.max(...probs);
   return { bars: probs.map((p) => p / peak) };
 }
 
-// Poisson(λ=2): right-skewed, peak at k=1 or 2
+// Poisson(λ=3): right-skewed, peak at k=2 or 3. 13 bars.
 function barsPoisson(): BarData {
-  const λ = 2;
-  const ks = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const λ = 3;
+  const ks = Array.from({ length: 13 }, (_, i) => i);
   function poissonPmf(k: number) {
     let f = 1;
     for (let i = 1; i <= k; i++) f *= i;
@@ -186,7 +192,7 @@ function barsPoisson(): BarData {
 function renderBars(data: BarData): React.ReactNode {
   const n = data.bars.length;
   const totalWidth = 200;
-  const gap = 4;
+  const gap = n > 10 ? 2 : 4;
   const barWidth = (totalWidth - gap * (n - 1)) / n;
   return (
     <g>
