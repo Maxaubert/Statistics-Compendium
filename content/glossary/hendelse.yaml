@@ -16,4 +16,4 @@ see_also:
   - { id: komplement, kind: glossary }
   - { id: disjunkte-hendelser-glos, kind: glossary }
   - { id: unionssetningen, kind: entry }
-  - { id: uavhengighet-hendelser, kind: concept }
+  - { id: uavhengighet-glos, kind: glossary }

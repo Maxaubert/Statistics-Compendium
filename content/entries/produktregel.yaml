@@ -152,7 +152,7 @@ detailed_solution_variants:
 
 related:
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
-  - { id: "uavhengighet-hendelser", kind: "concept" }
+  - { id: "uavhengighet-glos", kind: "glossary" }
   - { id: "bayes-setning",          kind: "entry" }
   - { id: "total-sannsynlighet",    kind: "entry" }
 

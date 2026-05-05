@@ -40,7 +40,7 @@ nodes:
           - { id: bayes-setning, kind: entry }
       - label: "Sjekk om hendelser er uavhengige"
         leads_to:
-          - { id: uavhengighet-hendelser, kind: concept }
+          - { id: uavhengighet-glos, kind: glossary }
       - label: "De Morgan – komplement av union eller snitt"
         leads_to:
           - { id: de-morgans-lov, kind: concept }
@@ -141,7 +141,7 @@ nodes:
       - label: "Er X og Y uavhengige?"
         leads_to:
           - { id: kjikvadrat-uavhengighet, kind: entry }
-          - { id: uavhengighet-hendelser, kind: concept }
+          - { id: uavhengighet-glos, kind: glossary }
 
   - id: n_telling
     question: "Hva slags telleproblem?"
