@@ -12,5 +12,5 @@ long_def: |
 
   Joint probability: `P(X=x ∩ Y=y)`.
 see_also:
-  - { id: fellesfordeling, kind: concept }
+  - { id: simultanfordeling, kind: glossary }
   - { id: korrelasjon-joint, kind: entry }

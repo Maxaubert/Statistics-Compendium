@@ -93,8 +93,8 @@ detailed_solution_variants:
         result: "Behold `H₀`: ingen grunnlag for å hevde at terningen er urettferdig."
 
 related:
-  - { id: frihetsgrader, kind: concept }
-  - { id: signifikansnivaa, kind: concept }
+  - { id: frihetsgrader-glos, kind: glossary }
+  - { id: signifikansniva-glos, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:

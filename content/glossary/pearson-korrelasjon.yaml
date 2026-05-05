@@ -25,4 +25,4 @@ see_also:
   - { id: kovarians-glos, kind: glossary }
   - { id: r-kvadrat, kind: glossary }
   - { id: regresjon-korrelasjonskoeffisient, kind: entry }
-  - { id: spredningsplott, kind: concept }
+  - { id: spredningsplott, kind: glossary }

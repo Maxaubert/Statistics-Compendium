@@ -28,4 +28,4 @@ see_also:
   - { id: andel, kind: glossary }
   - { id: normalapproksimasjon, kind: glossary }
   - { id: varians, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

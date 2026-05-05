@@ -29,5 +29,4 @@ contexts:
       - kjikvadrat-uavhengighet
       - regresjon-test-stigningstall
 see_also:
-  - { id: frihetsgrader, kind: concept }
   - { id: frihetsgrader-glos, kind: glossary }

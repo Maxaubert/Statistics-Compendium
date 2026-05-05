@@ -116,7 +116,7 @@ related:
   - { id: "binomial-fordeling",      kind: "entry" }
   - { id: "ki-andel-binomial",       kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
-  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

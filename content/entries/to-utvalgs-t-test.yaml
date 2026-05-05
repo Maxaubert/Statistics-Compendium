@@ -314,9 +314,9 @@ detailed_solution_variants:
 related:
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
-  - { id: "interpolert-varians",     kind: "concept" }
-  - { id: "frihetsgrader",           kind: "concept" }
-  - { id: "p-verdi",                 kind: "concept" }
+  - { id: "pooled-varians",          kind: "glossary" }
+  - { id: "frihetsgrader-glos",      kind: "glossary" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "E5-t-tabell",             kind: "table" }
 
 tools:

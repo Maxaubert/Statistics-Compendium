@@ -137,7 +137,7 @@ related:
   - { id: "forventningsverdi-diskret",   kind: "entry" }
   - { id: "korrelasjon-joint",           kind: "entry" }
   - { id: "marginalfordeling",           kind: "entry" }
-  - { id: "fellesfordeling",             kind: "concept" }
+  - { id: "simultanfordeling",           kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon"

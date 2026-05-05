@@ -162,7 +162,7 @@ related:
   - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
   - { id: "regresjon-test-stigningstall",      kind: "entry" }
   - { id: "regresjon-prediksjonsintervall",    kind: "entry" }
-  - { id: "spredningsplott",                   kind: "concept" }
+  - { id: "spredningsplott",                   kind: "glossary" }
 
 tools:
   - "Kalkulator: summer, gjennomsnitt"

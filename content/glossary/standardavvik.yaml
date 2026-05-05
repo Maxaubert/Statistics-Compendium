@@ -17,4 +17,4 @@ long_def: |
       Z = (X − μ) / σ
 see_also:
   - { id: varians-standardavvik-diskret, kind: entry }
-  - { id: standardnormalisering, kind: concept }
+  - { id: normalisering, kind: glossary }

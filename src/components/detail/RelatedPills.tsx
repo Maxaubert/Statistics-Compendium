@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 
-type Kind = "entry" | "concept" | "table" | "glossary" | "pattern";
+type Kind = "entry" | "table" | "glossary" | "pattern";
 
 const KIND_LABEL: Record<Kind, string> = {
   entry: "distr.",
-  concept: "konsept",
   table: "verktøy",
   glossary: "ordliste",
   pattern: "mønster",
@@ -14,8 +13,6 @@ function pathFor(kind: Kind, id: string): string {
   switch (kind) {
     case "entry":
       return `/entry/${id}`;
-    case "concept":
-      return `/concept/${id}`;
     case "table":
       return `/table/${id}`;
     case "glossary":

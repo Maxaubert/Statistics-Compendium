@@ -30,7 +30,7 @@ aliases:
   - forventningen
   - E[X]
 see_also:
-  - { id: forventningsverdi, kind: concept }
+  - { id: forventningsverdi-oversikt, kind: entry }
   - { id: mu, kind: glossary }
   - { id: gjennomsnitt, kind: glossary }
   - { id: forventningsverdi-diskret, kind: entry }

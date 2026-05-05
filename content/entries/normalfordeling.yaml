@@ -380,8 +380,8 @@ detailed_solution_variants:
         result: "`μ ≥ 108.23` ml (større `μ` gir mer slingringsmonn over speccen)."
 
 related:
-  - { id: "standardnormalisering",   kind: "concept" }
-  - { id: "sentralgrenseteoremet",   kind: "concept" }
+  - { id: "normalisering",           kind: "glossary" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "sum-uavhengige-normaler", kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }

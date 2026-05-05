@@ -18,4 +18,4 @@ long_def: |
       |T| > kritisk verdi
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
-  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }

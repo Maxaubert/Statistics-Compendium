@@ -11,4 +11,4 @@ long_def: |
   den andre variabelen.
 see_also:
   - { id: marginalfordeling, kind: entry }
-  - { id: fellesfordeling, kind: concept }
+  - { id: simultanfordeling, kind: glossary }

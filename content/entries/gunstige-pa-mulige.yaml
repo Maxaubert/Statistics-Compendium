@@ -1,6 +1,6 @@
 id: gunstige-pa-mulige
 name_no: "Gunstige på mulige (uniform sannsynlighetsfordeling)"
-type: concept
+type: method
 tagline: "Når alle utfall er like sannsynlige: P(A) = antall gunstige / antall mulige."
 
 what_it_means: |

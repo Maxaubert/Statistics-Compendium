@@ -28,6 +28,6 @@ aliases:
 see_also:
   - { id: eksponential-fordeling, kind: entry }
   - { id: lambda, kind: glossary }
-  - { id: poisson-prosess, kind: concept }
+  - { id: poisson-prosess, kind: glossary }
   - { id: varians, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

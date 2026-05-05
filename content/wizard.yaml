@@ -27,7 +27,7 @@ nodes:
           - { id: produktregel, kind: entry }
       - label: "P(A | B) – betinget sannsynlighet"
         leads_to:
-          - { id: betinget-sannsynlighet, kind: concept }
+          - { id: betinget-sannsynlighet-glos, kind: glossary }
           - { id: produktregel, kind: entry }
       - label: "P(Ā) – komplement, 'ikke A', eller 'minst én' via 1 − P(ingen)"
         leads_to:
@@ -40,13 +40,13 @@ nodes:
           - { id: bayes-setning, kind: entry }
       - label: "Sjekk om hendelser er uavhengige"
         leads_to:
-          - { id: uavhengighet-hendelser, kind: concept }
+          - { id: uavhengighet-glos, kind: glossary }
       - label: "De Morgan – komplement av union eller snitt"
         leads_to:
-          - { id: de-morgans-lov, kind: concept }
+          - { id: de-morgans-lov, kind: glossary }
       - label: "Sjekk om hendelser er disjunkte (gjensidig utelukkende)"
         leads_to:
-          - { id: disjunkte-hendelser, kind: concept }
+          - { id: disjunkte-hendelser-glos, kind: glossary }
 
   - id: n_fordeling
     question: "Diskret eller kontinuerlig?"
@@ -64,7 +64,7 @@ nodes:
       - label: "Hendelser kommer som de kommer, rate λ gitt (poissonprosess)"
         leads_to:
           - { id: poisson-fordeling, kind: entry }
-          - { id: poisson-prosess, kind: concept }
+          - { id: poisson-prosess, kind: glossary }
       - label: "Trekker uten tilbakelegging fra endelig pott"
         leads_to:
           - { id: hypergeometrisk-fordeling, kind: entry }
@@ -101,11 +101,11 @@ nodes:
       - label: "Sannsynlighet for et område P(X<a), P(a<X<b), P(X>a)"
         leads_to:
           - { id: normalfordeling, kind: entry }
-          - { id: standardnormalisering, kind: concept }
+          - { id: normalisering, kind: glossary }
       - label: "Finn μ slik at en gitt sannsynlighet oppfylles (invers)"
         leads_to:
           - { id: normalfordeling, kind: entry }
-          - { id: standardnormalisering, kind: concept }
+          - { id: normalisering, kind: glossary }
       - label: "Konfidensintervall for μ – σ kjent"
         leads_to:
           - { id: ki-mu-kjent-sigma, kind: entry }
@@ -125,7 +125,7 @@ nodes:
       - label: "Marginalfordeling P(X=x) eller P(Y=y) – rad/kolonne-summer"
         leads_to:
           - { id: marginalfordeling, kind: entry }
-          - { id: fellesfordeling, kind: concept }
+          - { id: simultanfordeling, kind: glossary }
       - label: "Forventningsverdi E(X), E(Y), eller E(XY)"
         leads_to:
           - { id: forventningsverdi-diskret, kind: entry }
@@ -141,7 +141,7 @@ nodes:
       - label: "Er X og Y uavhengige?"
         leads_to:
           - { id: kjikvadrat-uavhengighet, kind: entry }
-          - { id: uavhengighet-hendelser, kind: concept }
+          - { id: uavhengighet-glos, kind: glossary }
 
   - id: n_telling
     question: "Hva slags telleproblem?"
@@ -151,7 +151,7 @@ nodes:
           - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
       - label: "Beregne P som gunstige/mulige (uniform sannsynlighet)"
         leads_to:
-          - { id: gunstige-pa-mulige, kind: concept }
+          - { id: gunstige-pa-mulige, kind: entry }
 
   - id: n_regresjon
     question: "Hva er du på jakt etter?"
@@ -176,7 +176,7 @@ nodes:
           - { id: regresjon-residualvarians, kind: entry }
       - label: "Spredningsplott / visualisere data"
         leads_to:
-          - { id: spredningsplott, kind: concept }
+          - { id: spredningsplott, kind: glossary }
 
   - id: n_inferens
     question: "Hva slags inferens?"

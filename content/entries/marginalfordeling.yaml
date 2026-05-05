@@ -140,7 +140,7 @@ related:
   - { id: "forventningsverdi-diskret",    kind: "entry" }
   - { id: "varians-standardavvik-diskret", kind: "entry" }
   - { id: "kovarians",                    kind: "entry" }
-  - { id: "fellesfordeling",              kind: "concept" }
+  - { id: "simultanfordeling",            kind: "glossary" }
 
 tools:
   - "Kalkulator: addisjon"

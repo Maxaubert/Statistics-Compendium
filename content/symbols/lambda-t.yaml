@@ -22,4 +22,4 @@ contexts:
       - eksponential-fordeling
       - ki-poissonrate
 see_also:
-  - { id: poisson-prosess, kind: concept }
+  - { id: poisson-prosess, kind: glossary }

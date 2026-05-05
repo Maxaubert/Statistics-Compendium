@@ -31,5 +31,4 @@ long_def: |
 
   Større `ν` → t-fordelingen ligner mer på standardnormal.
 see_also:
-  - { id: frihetsgrader, kind: concept }
   - { id: en-utvalg-t-test, kind: entry }

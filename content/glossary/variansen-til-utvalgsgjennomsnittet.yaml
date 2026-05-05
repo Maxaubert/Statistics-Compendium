@@ -28,6 +28,6 @@ aliases:
 see_also:
   - { id: gjennomsnitt, kind: glossary }
   - { id: standardfeil, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }
   - { id: en-utvalg-z-test, kind: entry }
   - { id: ki-mu-kjent-sigma, kind: entry }

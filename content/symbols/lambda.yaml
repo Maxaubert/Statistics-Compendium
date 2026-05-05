@@ -33,5 +33,5 @@ contexts:
     entry_refs:
       - eksponential-fordeling
 see_also:
-  - { id: poisson-prosess, kind: concept }
+  - { id: poisson-prosess, kind: glossary }
   - { id: lambda, kind: glossary }

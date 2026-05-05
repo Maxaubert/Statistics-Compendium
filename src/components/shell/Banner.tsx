@@ -1,4 +1,4 @@
-import { Moon, Sun, Compass, BookA, Sigma, Lightbulb, Table2 } from "lucide-react";
+import { Moon, Sun, Compass, BookA, Sigma, Table2 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -11,8 +11,7 @@ interface NavLink {
 }
 
 const CATEGORY_LINKS: NavLink[] = [
-  { to: "/", label: "Formler", Icon: Sigma, tabParam: "formler" },
-  { to: "/?tab=konsepter", label: "Konsepter", Icon: Lightbulb, tabParam: "konsepter" },
+  { to: "/", label: "Formler og konsepter", Icon: Sigma, tabParam: "formler" },
   { to: "/?tab=tabeller", label: "Tabeller", Icon: Table2, tabParam: "tabeller" },
 ];
 

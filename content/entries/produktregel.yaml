@@ -151,8 +151,8 @@ detailed_solution_variants:
         result: "`P(krone ∩ sekser) = 1/12 ≈ 0.083`"
 
 related:
-  - { id: "betinget-sannsynlighet", kind: "concept" }
-  - { id: "uavhengighet-hendelser", kind: "concept" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "uavhengighet-glos", kind: "glossary" }
   - { id: "bayes-setning",          kind: "entry" }
   - { id: "total-sannsynlighet",    kind: "entry" }
 

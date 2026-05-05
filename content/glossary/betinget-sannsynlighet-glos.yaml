@@ -13,7 +13,14 @@ long_def: |
 
   Hvis `A` og `B` er uavhengige, er `P(A|B) = P(A)`. Brukes i Bayes'
   setning og total sannsynlighet.
+
+  **Sammenhenger:**
+
+      Produktregel:        P(A ∩ B) = P(B) · P(A|B)
+
+      Bayes' setning:      P(A|B) = P(A) · P(B|A) / P(B)
+
+      Total sannsynlighet: bryter P(B) over en partisjon.
 see_also:
-  - { id: betinget-sannsynlighet, kind: concept }
   - { id: bayes-setning, kind: entry }
   - { id: total-sannsynlighet, kind: entry }

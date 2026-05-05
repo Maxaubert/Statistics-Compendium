@@ -302,9 +302,9 @@ detailed_solution_variants:
 
 related:
   - { id: "poisson-fordeling",  kind: "entry" }
-  - { id: "poisson-prosess",    kind: "concept" }
+  - { id: "poisson-prosess",    kind: "glossary" }
   - { id: "normalfordeling",    kind: "entry" }
-  - { id: "komplementregelen",  kind: "concept" }
+  - { id: "komplementregelen",  kind: "entry" }
 
 tools:
   - "Kalkulator: e^x"

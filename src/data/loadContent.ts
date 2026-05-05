@@ -1,12 +1,11 @@
 import {
-  EntrySchema, ConceptSchema, TableSchema, FiltersSchema,
+  EntrySchema, TableSchema, FiltersSchema,
   GlossaryTermSchema, SymbolEntrySchema, WizardSchema,
-  type Entry, type Concept, type Table, type Filters,
+  type Entry, type Table, type Filters,
   type GlossaryTerm, type SymbolEntry, type Wizard,
 } from "./schema";
 
 const entryModules    = import.meta.glob("/content/entries/*.yaml",   { eager: true, import: "default" });
-const conceptModules  = import.meta.glob("/content/concepts/*.yaml",  { eager: true, import: "default" });
 const tableModules    = import.meta.glob("/content/tables/*.yaml",    { eager: true, import: "default" });
 const glossaryModules = import.meta.glob("/content/glossary/*.yaml",  { eager: true, import: "default" });
 const symbolModules   = import.meta.glob("/content/symbols/*.yaml",   { eager: true, import: "default" });
@@ -15,7 +14,6 @@ const wizardModule    = import.meta.glob("/content/wizard.yaml",      { eager: t
 
 export interface ContentBundle {
   entries: Entry[];
-  concepts: Concept[];
   tables: Table[];
   glossary: GlossaryTerm[];
   symbols: SymbolEntry[];
@@ -45,7 +43,6 @@ export function loadAllContent(): ContentBundle {
   if (cached) return cached;
 
   const entries = parseAll(entryModules, EntrySchema, "entry");
-  const concepts = parseAll(conceptModules, ConceptSchema, "concept");
   const tables = parseAll(tableModules, TableSchema, "table");
   const glossary = parseAll(glossaryModules, GlossaryTermSchema, "glossary")
     .filter((g) => g.id !== "stub");
@@ -62,7 +59,6 @@ export function loadAllContent(): ContentBundle {
   // Uniqueness check
   const allIds = [
     ...entries.map((e) => `entry:${e.id}`),
-    ...concepts.map((c) => `concept:${c.id}`),
     ...tables.map((t) => `table:${t.id}`),
     ...glossary.map((g) => `glossary:${g.id}`),
     ...symbols.map((s) => `symbol:${s.id}`),
@@ -70,6 +66,6 @@ export function loadAllContent(): ContentBundle {
   const dupes = allIds.filter((id, i) => allIds.indexOf(id) !== i);
   if (dupes.length > 0) throw new Error(`Duplicate ids found: ${dupes.join(", ")}`);
 
-  cached = { entries, concepts, tables, glossary, symbols, wizard, filters };
+  cached = { entries, tables, glossary, symbols, wizard, filters };
   return cached;
 }

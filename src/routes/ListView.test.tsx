@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { ListView } from "./ListView";
@@ -12,7 +12,7 @@ describe("ListView", () => {
       </MemoryRouter>
     );
     expect(screen.getByText("Statistikk-kompendium")).toBeInTheDocument();
-    expect(screen.getByText("Formler")).toBeInTheDocument();
+    expect(screen.getByText(/Formler og konsepter/i)).toBeInTheDocument();
     expect(screen.getByText("Poissonfordeling")).toBeInTheDocument();
   });
 
@@ -39,18 +39,6 @@ describe("ListView", () => {
     expect(screen.getByText("Poissontabell")).toBeInTheDocument();
   });
 
-  it("opens the konsepter tab when ?tab=konsepter is in the URL", async () => {
-    render(
-      <MemoryRouter initialEntries={["/?tab=konsepter"]}>
-        <ListView />
-      </MemoryRouter>,
-    );
-    // The konsepter search placeholder identifies which tab is active.
-    expect(
-      await screen.findByPlaceholderText(/Søk i konsepter/i),
-    ).toBeInTheDocument();
-  });
-
   it("opens the tabeller tab when ?tab=tabeller is in the URL", async () => {
     render(
       <MemoryRouter initialEntries={["/?tab=tabeller"]}>
@@ -63,6 +51,18 @@ describe("ListView", () => {
     ).toBeInTheDocument();
   });
 
+  it("falls back to formler when ?tab=konsepter is in the URL", () => {
+    render(
+      <MemoryRouter initialEntries={["/?tab=konsepter"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    // konsepter is gone — the URL is harmless and we render the formler view.
+    expect(
+      screen.getByPlaceholderText(/Søk i navn, symboler/i),
+    ).toBeInTheDocument();
+  });
+
   it("shows a glossary cross-search section when typing in formler", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -72,5 +72,36 @@ describe("ListView", () => {
     const input = screen.getByPlaceholderText(/Søk i navn, symboler/i);
     fireEvent.change(input, { target: { value: "frihetsgrader" } });
     expect(screen.getByText(/Termer som også matcher/i)).toBeInTheDocument();
+  });
+
+  it("renders the Oversikter featured section above the table when no query is active", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    const section = screen.getByTestId("oversikter-section");
+    expect(section).toBeInTheDocument();
+    const links = within(section).getAllByRole("link");
+    const hrefs = links.map((a) => a.getAttribute("href"));
+    expect(hrefs).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("/entry/varians-oversikt"),
+        expect.stringContaining("/entry/standardavvik-oversikt"),
+        expect.stringContaining("/entry/forventningsverdi-oversikt"),
+      ]),
+    );
+  });
+
+  it("hides the Oversikter section once a search query is active", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <ListView />
+      </MemoryRouter>,
+    );
+    expect(screen.getByTestId("oversikter-section")).toBeInTheDocument();
+    const input = screen.getByPlaceholderText(/Søk i navn, symboler/i);
+    fireEvent.change(input, { target: { value: "poisson" } });
+    expect(screen.queryByTestId("oversikter-section")).not.toBeInTheDocument();
   });
 });

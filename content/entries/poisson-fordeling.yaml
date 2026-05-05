@@ -338,10 +338,10 @@ detailed_solution_variants:
         result: "`k = 12` med `P(X > 12) ≈ 0.064`"
 
 related:
-  - { id: "poisson-prosess",      kind: "concept" }
+  - { id: "poisson-prosess",      kind: "glossary" }
   - { id: "eksponential-fordeling", kind: "entry" }
   - { id: "binomial-fordeling",   kind: "entry" }
-  - { id: "komplementregelen",    kind: "concept" }
+  - { id: "komplementregelen",    kind: "entry" }
   - { id: "ki-poissonrate",       kind: "entry" }
   - { id: "E2-poisson-kumulativ", kind: "table" }
 

@@ -138,7 +138,7 @@ related:
   - { id: "regresjon-residualvarians",    kind: "entry" }
   - { id: "regresjon-test-stigningstall", kind: "entry" }
   - { id: "regresjon-prediksjonsintervall", kind: "entry" }
-  - { id: "frihetsgrader",                kind: "concept" }
+  - { id: "frihetsgrader-glos",           kind: "glossary" }
 
 tools:
   - "Kalkulator: kvadratrot"

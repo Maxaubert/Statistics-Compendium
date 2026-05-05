@@ -1,0 +1,23 @@
+id: spredningsplott
+term_no: Spredningsplott (scatter plot)
+short_def: "Punkter `(x_i, y_i)` i et koordinatsystem — viser sammenheng, retning og uteliggere."
+aliases:
+  - spredningsplott
+  - scatter plot
+  - spredningsdiagram
+long_def: |
+  Et spredningsplott viser parene av observasjoner `(x_i, y_i)` som
+  punkter i et 2D-koordinatsystem.
+
+  **Brukes til:**
+
+  - Å vurdere om sammenhengen mellom `x` og `y` er lineær.
+  - Å identifisere uteliggere som kan påvirke regresjonen.
+  - Å se styrken og retningen (positiv, negativ, ingen).
+
+  Typisk steg før du kjører regresjon: hvis spredningsplottet ikke ser
+  ut som en "rett sky", er en lineær modell ikke nødvendigvis god.
+see_also:
+  - { id: regresjon-estimat-alpha-beta, kind: entry }
+  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: qq-plott, kind: glossary }

@@ -120,7 +120,7 @@ detailed_solution_variants:
 
 related:
   - { id: "produktregel",          kind: "entry" }
-  - { id: "betinget-sannsynlighet", kind: "concept" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
   - { id: "bayes-setning",         kind: "entry" }
 
 tools:

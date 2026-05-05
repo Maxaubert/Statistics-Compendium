@@ -2,10 +2,9 @@ import { describe, it, expect } from "vitest";
 import { loadAllContent } from "./loadContent";
 
 describe("loadAllContent", () => {
-  it("loads all entries, concepts, and tables from content/", () => {
+  it("loads all entries and tables from content/", () => {
     const data = loadAllContent();
     expect(data.entries.length).toBeGreaterThanOrEqual(2);
-    expect(data.concepts.length).toBeGreaterThanOrEqual(1);
     expect(data.tables.length).toBeGreaterThanOrEqual(1);
     expect(data.filters.dimensions.length).toBeGreaterThan(0);
   });
@@ -27,9 +26,11 @@ describe("loadAllContent", () => {
   it("resolves a related ref by kind", () => {
     const data = loadAllContent();
     const poisson = data.entries.find((e) => e.id === "poisson-fordeling")!;
-    const rel = poisson.related?.find((r) => r.kind === "concept");
+    const rel = poisson.related?.find(
+      (r) => r.kind === "glossary" && r.id === "poisson-prosess"
+    );
     expect(rel?.id).toBe("poisson-prosess");
-    expect(data.concepts.find((c) => c.id === rel!.id)).toBeDefined();
+    expect(data.glossary.find((g) => g.id === rel!.id)).toBeDefined();
   });
 
   it("loads glossary, symbols, and wizard", () => {

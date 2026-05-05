@@ -19,4 +19,4 @@ see_also:
   - { id: tosidig-test, kind: glossary }
   - { id: alternativhypotese, kind: glossary }
   - { id: kritisk-verdi, kind: glossary }
-  - { id: p-verdi, kind: concept }
+  - { id: p-verdi-glos, kind: glossary }

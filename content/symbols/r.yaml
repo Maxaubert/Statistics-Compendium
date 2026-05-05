@@ -27,4 +27,4 @@ contexts:
       - korrelasjon-joint
 see_also:
   - { id: korrelasjon-glos, kind: glossary }
-  - { id: spredningsplott, kind: concept }
+  - { id: spredningsplott, kind: glossary }

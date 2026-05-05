@@ -21,6 +21,5 @@ long_def: |
   Slå opp sannsynligheter eller kvantiler i E.3- / E.4-tabellene.
 see_also:
   - { id: normalisering, kind: glossary }
-  - { id: standardnormalisering, kind: concept }
   - { id: en-utvalg-z-test, kind: entry }
   - { id: E3-z-tabell, kind: table }

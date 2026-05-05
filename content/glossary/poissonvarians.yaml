@@ -26,4 +26,4 @@ see_also:
   - { id: poisson-fordeling, kind: entry }
   - { id: lambda, kind: glossary }
   - { id: varians, kind: glossary }
-  - { id: varians, kind: concept }
+  - { id: varians-oversikt, kind: entry }

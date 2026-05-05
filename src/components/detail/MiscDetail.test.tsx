@@ -61,14 +61,14 @@ describe("RelatedPills", () => {
       <MemoryRouter>
         <RelatedPills
           related={[
-            { id: "poisson-prosess", kind: "concept", name: "Poissonprosess" },
+            { id: "poisson-prosess", kind: "glossary", name: "Poissonprosess" },
             { id: "binomial-fordeling", kind: "entry", name: "Binomialfordeling" },
           ]}
         />
       </MemoryRouter>
     );
     expect(screen.getByText("Poissonprosess")).toBeInTheDocument();
-    expect(screen.getByText("(konsept)")).toBeInTheDocument();
+    expect(screen.getByText("(ordliste)")).toBeInTheDocument();
     expect(screen.getByText("Binomialfordeling")).toBeInTheDocument();
   });
 });

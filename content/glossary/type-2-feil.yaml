@@ -8,4 +8,4 @@ long_def: |
   Større `n`, større effekt eller høyere `α` gir lavere `β`
   (men høyere `α` øker type-I-risikoen).
 see_also:
-  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }

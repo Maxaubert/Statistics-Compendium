@@ -22,4 +22,4 @@ long_def: |
 see_also:
   - { id: poisson-fordeling, kind: entry }
   - { id: eksponential-fordeling, kind: entry }
-  - { id: poisson-prosess, kind: concept }
+  - { id: poisson-prosess, kind: glossary }

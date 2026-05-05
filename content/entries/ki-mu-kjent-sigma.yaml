@@ -109,7 +109,7 @@ related:
   - { id: "normalfordeling",         kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "ki-mu-ukjent-sigma",      kind: "entry" }
-  - { id: "signifikansnivaa",        kind: "concept" }
+  - { id: "signifikansniva-glos",    kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

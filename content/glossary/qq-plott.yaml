@@ -1,0 +1,28 @@
+id: qq-plott
+term_no: QQ-plott (normaltestplott)
+short_def: "Plotter empiriske kvantiler mot teoretiske kvantiler — punkter på rett linje betyr normalfordeling."
+aliases:
+  - qq-plott
+  - qq plott
+  - normaltestplott
+  - kvantil-kvantil-plott
+long_def: |
+  Et QQ-plott (kvantil-kvantil-plott) plotter observasjonenes empiriske
+  kvantiler mot teoretiske kvantiler fra standardnormalfordelingen.
+  Hvis dataene er normalfordelte, ligger punktene tilnærmet på den
+  inntegnede referanselinjen.
+
+  **Slik leser du avvik:**
+
+  - **S-kurve** → tunge eller lette haler
+  - **Krumning** → skjevhet (positiv eller negativ)
+
+  Brukes som rask visuell sjekk før metoder som forutsetter
+  normalfordeling (z-test, t-test, KI for `μ`). Hvis QQ-plottet viser
+  klart avvik og utvalget er for lite til sentralgrenseteoremet, må du
+  typisk bruke bootstrapping eller ikke-parametriske metoder.
+see_also:
+  - { id: normalfordeling, kind: entry }
+  - { id: bootstrapping, kind: entry }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }
+  - { id: spredningsplott, kind: glossary }

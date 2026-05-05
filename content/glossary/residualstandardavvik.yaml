@@ -29,4 +29,4 @@ see_also:
   - { id: residualvarians, kind: glossary }
   - { id: regresjon-residualvarians, kind: entry }
   - { id: regresjon-standardfeil-stigningstall, kind: entry }
-  - { id: standardavvik, kind: concept }
+  - { id: standardavvik-oversikt, kind: entry }

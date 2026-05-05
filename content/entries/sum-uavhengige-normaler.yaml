@@ -237,8 +237,8 @@ detailed_solution_variants:
 
 related:
   - { id: "normalfordeling",          kind: "entry" }
-  - { id: "sentralgrenseteoremet",    kind: "concept" }
-  - { id: "standardnormalisering",    kind: "concept" }
+  - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
+  - { id: "normalisering",            kind: "glossary" }
 
 tools:
   - "Tabell E.3 – Z-tabell"

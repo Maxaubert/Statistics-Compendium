@@ -10,5 +10,5 @@ long_def: |
   Viser ikke fordelingens detaljerte form — bruk histogram eller QQ-plott til det.
 see_also:
   - { id: histogram-glos, kind: glossary }
-  - { id: qq-plott, kind: concept }
+  - { id: qq-plott, kind: glossary }
   - { id: kvantil, kind: glossary }

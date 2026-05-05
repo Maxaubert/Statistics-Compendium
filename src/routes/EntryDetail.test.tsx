@@ -41,4 +41,42 @@ describe("EntryDetail", () => {
     renderAt("/entry/does-not-exist");
     expect(screen.getByText(/Fant ingen oppføring/)).toBeInTheDocument();
   });
+
+  it("renders an overview entry (varians-oversikt) using the prose layout", () => {
+    renderAt("/entry/varians-oversikt");
+    // Page header still renders
+    expect(
+      screen.getByRole("heading", { name: "Varians (oversikt)" }),
+    ).toBeInTheDocument();
+    // what_it_means prose body content shows up — look for a distinctive
+    // chunk from the YAML so we know the markdown renderer ran.
+    expect(
+      screen.getByText(/vektet sum av kvadrerte avvik/),
+    ).toBeInTheDocument();
+    // Recognition cues section is preserved
+    expect(
+      screen.getByText("Slik gjenkjenner du den i en oppgave"),
+    ).toBeInTheDocument();
+    // Formula-shaped sections that don't apply to overviews must NOT render
+    expect(screen.queryByText("Hva den gjør")).not.toBeInTheDocument();
+    expect(screen.queryByText("Hovedformel")).not.toBeInTheDocument();
+    // Related-pills section still renders
+    expect(screen.getByText("Relaterte oppføringer")).toBeInTheDocument();
+  });
+
+  it("renders a method entry (bootstrapping) using the prose layout", () => {
+    renderAt("/entry/bootstrapping");
+    expect(
+      screen.getByRole("heading", { name: "Bootstrapping" }),
+    ).toBeInTheDocument();
+    // A distinctive sentence from the bootstrapping what_it_means
+    expect(
+      screen.getByText(/Behandle de N observasjonene/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Slik gjenkjenner du den i en oppgave"),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Hva den gjør")).not.toBeInTheDocument();
+    expect(screen.queryByText("Hovedformel")).not.toBeInTheDocument();
+  });
 });

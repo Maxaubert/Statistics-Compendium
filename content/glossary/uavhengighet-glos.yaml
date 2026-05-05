@@ -11,6 +11,10 @@ long_def: |
   Uavhengighet er **IKKE** det samme som disjunkthet — disjunkte hendelser
   med positiv sannsynlighet er sterkt avhengige.
 
+  **TESTE uavhengighet:** regn ut `P(A) · P(B)` og sammenlign med oppgitt
+  eller observert `P(A ∩ B)`. Hvis de er like, er hendelsene uavhengige.
+  Alternativt: sjekk om `P(B|A) = P(B)`.
+
   For utvalg: observasjoner kalles uavhengige hvis verdien til den ene
   ikke påvirker den andre (typisk antatt for utvalg fra populasjon).
 aliases:
@@ -19,6 +23,5 @@ aliases:
   - uavhengighet
   - uavhengigheten
 see_also:
-  - { id: uavhengighet-hendelser, kind: concept }
   - { id: disjunkte-hendelser-glos, kind: glossary }
   - { id: produktregel, kind: entry }

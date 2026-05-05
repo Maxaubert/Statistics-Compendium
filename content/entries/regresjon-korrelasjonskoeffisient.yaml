@@ -148,7 +148,7 @@ detailed_solution_variants:
 related:
   - { id: "regresjon-estimat-alpha-beta",  kind: "entry" }
   - { id: "korrelasjon-joint",             kind: "entry" }
-  - { id: "spredningsplott",               kind: "concept" }
+  - { id: "spredningsplott",               kind: "glossary" }
   - { id: "regresjon-test-stigningstall",  kind: "entry" }
 
 tools:

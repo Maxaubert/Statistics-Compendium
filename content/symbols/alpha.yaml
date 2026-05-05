@@ -36,6 +36,5 @@ contexts:
       - regresjon-estimat-alpha-beta
       - regresjon-prediksjonsintervall
 see_also:
-  - { id: signifikansnivaa, kind: concept }
   - { id: signifikansniva-glos, kind: glossary }
   - { id: intercept, kind: glossary }

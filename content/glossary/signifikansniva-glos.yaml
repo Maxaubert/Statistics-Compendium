@@ -7,6 +7,11 @@ long_def: |
 
   - Konfidensnivå er `1 − α`, så et 95 % KI svarer til `α = 0.05`.
   - Beslutningsregel: forkast `H₀` hvis `p < α`.
+
+  **Tre måter å bruke `α`:**
+
+  1. Sammenligne testobservator med kvantil `z_α` (eller `t_α`): forkast hvis testobs > kvantil.
+  2. Sammenligne p-verdi med `α`: forkast hvis `p < α`.
+  3. Bygge konfidensintervall: med `(1 − α)·100 %` konfidensnivå.
 see_also:
-  - { id: signifikansnivaa, kind: concept }
-  - { id: p-verdi, kind: concept }
+  - { id: p-verdi-glos, kind: glossary }

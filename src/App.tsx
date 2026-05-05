@@ -1,7 +1,7 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { ListView } from "./routes/ListView";
 import { EntryDetail } from "./routes/EntryDetail";
-import { ConceptDetail } from "./routes/ConceptDetail";
+import { ConceptRedirect } from "./routes/ConceptRedirect";
 import { TableDetail } from "./routes/TableDetail";
 import { SymbolTable } from "./routes/SymbolTable";
 import { Glossary } from "./routes/Glossary";
@@ -21,7 +21,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<ListView />} />
         <Route path="/entry/:id" element={<EntryDetail />} />
-        <Route path="/concept/:id" element={<ConceptDetail />} />
+        <Route path="/concept/:id" element={<ConceptRedirect />} />
         <Route path="/table/:id" element={<TableDetail />} />
         <Route path="/symboler" element={<SymbolTable />} />
         <Route path="/ordliste" element={<Glossary />} />

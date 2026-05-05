@@ -7,7 +7,6 @@ import type { GlossaryTerm } from "@/data/schema";
 function relatedRefPath(kind: string, id: string): string {
   switch (kind) {
     case "entry":     return `/entry/${id}`;
-    case "concept":   return `/concept/${id}`;
     case "table":     return `/table/${id}`;
     case "pattern":   return `/monstre/${id}`;
     case "glossary":  return `/ordliste#${id}`;
