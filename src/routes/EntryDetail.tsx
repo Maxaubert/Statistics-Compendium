@@ -46,16 +46,20 @@ export function EntryDetail() {
     );
   }
 
-  const related = (entry.related ?? []).map((r) => {
-    let name = r.id;
-    if (r.kind === "entry")
-      name = data.entries.find((x) => x.id === r.id)?.name_no ?? r.id;
-    if (r.kind === "concept")
-      name = data.concepts.find((x) => x.id === r.id)?.name_no ?? r.id;
-    if (r.kind === "table")
-      name = data.tables.find((x) => x.id === r.id)?.name_no ?? r.id;
-    return { ...r, name };
-  });
+  // Filter out any stale `kind: concept` refs — the concept content type
+  // has been retired (concepts are now glossary terms or `type: overview`
+  // entries). Surviving content shouldn't reference them, but we drop any
+  // leftovers defensively rather than crash the page.
+  const related = (entry.related ?? [])
+    .filter((r) => r.kind !== "concept")
+    .map((r) => {
+      let name = r.id;
+      if (r.kind === "entry")
+        name = data.entries.find((x) => x.id === r.id)?.name_no ?? r.id;
+      if (r.kind === "table")
+        name = data.tables.find((x) => x.id === r.id)?.name_no ?? r.id;
+      return { ...r, kind: r.kind as "entry" | "table" | "glossary" | "pattern", name };
+    });
 
   const sameType = data.entries.filter((e) => e.type === entry.type);
   const idx = sameType.findIndex((e) => e.id === entry.id);

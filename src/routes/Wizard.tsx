@@ -85,15 +85,11 @@ export function Wizard() {
                 const name =
                   r.kind === "entry"
                     ? data.entries.find((e) => e.id === r.id)?.name_no
-                    : r.kind === "concept"
-                      ? data.concepts.find((c) => c.id === r.id)?.name_no
-                      : r.id;
+                    : r.id;
                 const to =
                   r.kind === "entry"
                     ? `/entry/${r.id}`
-                    : r.kind === "concept"
-                      ? `/concept/${r.id}`
-                      : `/table/${r.id}`;
+                    : `/table/${r.id}`;
                 return (
                   <li key={r.id}>
                     <Link
