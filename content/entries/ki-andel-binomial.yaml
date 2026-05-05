@@ -43,11 +43,13 @@ filters:
   tooling: [normal_quantile_table_E4]
 
 solution_template:
-  - "Beregn p̂ = X/n"
-  - "Sjekk at n·p̂·(1-p̂) ≥ 5"
-  - "Slå opp z_(α/2) i E.4"
-  - "Beregn margin: z_(α/2) · √(p̂(1-p̂)/n)"
-  - "KI: p̂ ± margin"
+  - "Identifiser antall suksesser `X` og utvalgsstørrelsen `n`"
+  - "Beregn punktestimat `p̂ = X/n`"
+  - "Sjekk at `n·p̂·(1−p̂) ≥ 5` (normalapproksimasjon gyldig)"
+  - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
+  - "Slå opp `z_(α/2)` i tabell E.4 (f.eks. `z_(0.05) = 1.645`)"
+  - "Beregn margin: `z_(α/2) · √(p̂(1−p̂)/n)`"
+  - "KI: `p̂ ± margin`"
 
 common_traps: |
   Standard error i KI bruker p̂ (estimert), MEN i hypotesetest for andel

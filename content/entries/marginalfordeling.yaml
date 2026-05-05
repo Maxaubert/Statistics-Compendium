@@ -22,6 +22,16 @@ recognition_cues:
   - "Spørsmålet ber om P(X = x) eller P(Y = y) for individuelle verdier"
   - "Du trenger marginalsannsynligheter som mellomberegning til E, σ, Cov"
 
+when_NOT_to_use:
+  - "(X, Y) er kontinuerlige → marginal `f_X(x) = ∫ f(x, y) dy` (integrér ut den andre)"
+  - "Du har bare delsummer, ikke hele simultantabellen → ikke nok informasjon til å regne ut marginalene"
+
+common_traps: |
+  Marginalsummene MÅ summere til 1. Hvis ikke, har du sannsynligvis
+  oversett en celle eller summert feil rad/kolonne. Marginalen for X
+  fås ved å summere LANGS RADEN (ut over alle Y-verdiene), marginalen
+  for Y ved å summere LANGS KOLONNEN. Pass på at du ikke bytter retning.
+
 symbols:
   - { sym: "P(X = x, Y = y)", means: "simultansannsynlighet i en celle" }
   - { sym: "P(X = x)",        means: "marginalsannsynlighet for X (radsum)" }

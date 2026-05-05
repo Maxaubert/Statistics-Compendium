@@ -43,11 +43,14 @@ filters:
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
-  - "Identifiser α̂, β̂, S_E (eller S_E²), SE(β̂), x̄, n, x-verdien som det skal predikeres for"
-  - "Slå opp t_(α/2, n-2) i tabell E.5"
-  - "Beregn punkt: α̂ + β̂·x"
-  - "Beregn margin: t · S_E · √(1 + 1/n + ((x-x̄) / (S_E/SE(β̂)))²)"
-  - "Intervall: punkt ± margin"
+  - "Identifiser oppgitt: `α̂`, `β̂`, `S_E` (eller `S_E²`), `SE(β̂)`, antall observasjoner `n`, og `x`-verdien det skal predikeres for"
+  - "Hvis `x̄` ikke er gitt, regn det ut fra rådata: `x̄ = (Σx_i) / n`"
+  - "Finn `α` fra konfidensnivået (f.eks. 95 % gir `α = 0.05`, så `α/2 = 0.025`)"
+  - "Slå opp `t_(α/2, n−2)` i tabell E.5 (n−2 frihetsgrader)"
+  - "Beregn punktestimatet: `ŷ = α̂ + β̂·x`"
+  - "Beregn margin: `t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(β̂) / S_E)²)`"
+  - "Prediksjonsintervall: `ŷ ± margin`"
+  - "Sjekk svaret ved å sammenligne mot oppgavens spørsmål (f.eks. ligger en gitt verdi innenfor intervallet?)"
 
 common_traps: |
   Frihetsgrader er n - 2 (lineær regresjon). Tall under kvadratroten

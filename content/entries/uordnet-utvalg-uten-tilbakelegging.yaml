@@ -43,10 +43,36 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_binomial_coef, calculator_factorial]
 
-solution_template:
-  - "Identifiser n (totalt) og k (det som skal velges)"
-  - "Beregn C(n,k) – på kalkulator typisk 'nCr' eller 'COMB'"
-  - "Hvis sannsynlighetsoppgave: kombiner med antall mulige utvalg, P = gunstige/mulige"
+solution_variants:
+  - label: "Antall mulige utvalg"
+    steps:
+      - "Identifiser `N` (totalt antall elementer) og `k` (antall som skal velges)"
+      - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
+      - "Beregn `C(N, k) = N! / (k! · (N − k)!)` på kalkulator (typisk `nCr` eller `COMB`)"
+      - "Eksempel: 5 kort fra 52 → `C(52, 5) = 2 598 960` mulige hender"
+      - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(N, k) = C(N, N − k)` for å redusere arbeidet"
+        conditional: true
+  - label: "Sannsynlighet: alle k er av en kategori"
+    steps:
+      - "Bruk når oppgaven spør 'alle k uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter')"
+      - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
+      - "Antall mulige utvalg: `C(N, k)`"
+      - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
+      - "Sannsynligheten: `P(alle k er A) = C(K, k) / C(N, k)`"
+      - "Eksempel: 5 hjerter blant 13 hjerter i 52-korts stokk → `C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴`"
+      - text: "Alternativt, hvis sekvensiell beregning er enklere: bruk produktregelen `(K/N)·((K−1)/(N−1))·…·((K−k+1)/(N−k+1))`. Begge metodene gir samme svar."
+        conditional: true
+  - label: "Sannsynlighet: ingen av k er av en kategori"
+    steps:
+      - "Bruk når oppgaven spør 'ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter')"
+      - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
+      - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
+      - "Antall mulige utvalg: `C(N, k)`"
+      - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
+      - "Sannsynligheten: `P(ingen av k er A) = C(N − K, k) / C(N, k)`"
+      - "Eksempel: ingen hjerter blant 5 trukne kort → `C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.2215`"
+      - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
+        conditional: true
 
 common_traps: |
   C(n,k) er ikke det samme som n^k. Pass på at n og k er heltall og 0 ≤ k ≤ n.

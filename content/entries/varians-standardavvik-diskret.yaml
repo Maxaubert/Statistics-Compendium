@@ -20,6 +20,10 @@ recognition_cues:
   - "Diskret stokastisk variabel med kjent sannsynlighetsfordeling"
   - "Spørsmålet ber om Var(X), σ², σ, eller standardavviket"
 
+when_NOT_to_use:
+  - "X er kontinuerlig → bruk integralet `Var(X) = ∫ (x − μ)² · f(x) dx`"
+  - "Du har kun rådata uten fordeling → bruk utvalgsvariansen `s² = Σ(x_i − x̄)² / (n − 1)`"
+
 symbols:
   - { sym: "Var(X), σ²", means: "variansen" }
   - { sym: "σ",          means: "standardavviket, σ = √Var(X)" }

@@ -61,6 +61,50 @@ python_snippet: |
   margin = z * sigma / math.sqrt(n)
   ci = (x_bar - margin, x_bar + margin)
 
+detailed_solution_variants:
+  - label: "KI for μ (kjent σ)"
+    solutions:
+      - source: "Praksis · julelys-måling"
+        question: "Et utvalg på `n = 40` julelys ga gjennomsnittlig effekt `x̄ = 48` watt. Populasjonens standardavvik er `σ = 5` watt (kjent). Finn et 95 % konfidensintervall for `μ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 40`, `x̄ = 48`, `σ = 5` (kjent), konfidensnivå `(1 − α) = 0.95`." }
+              - { text: "Siden `σ` er kjent og `n ≥ 30`, kan vi bruke `z`-basert KI." }
+          - label: "Kvantil"
+            lines:
+              - { text: "`α = 1 − 0.95 = 0.05`, så `α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.4", text: "`z_(0.025) = 1.960`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = z_(α/2) · σ/√n`" }
+              - { indent: "`= 1.960 · 5/√40`" }
+              - { indent: "`= 1.960 · 0.7906`" }
+              - { indent: "`≈ 1.55`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = x̄ ± margin = 48 ± 1.55`" }
+              - { indent: "`= [46.45, 49.55]`" }
+        result: "`95 % KI for μ: [46.45, 49.55] watt`"
+
+      - source: "Praksis · kaffemengde"
+        question: "Kaffeautomaten gir mengder med kjent `σ = 0.48` cl. Et utvalg av `n = 100` trykk ga `x̄ = 25.05` cl. Finn et 90 % KI for `μ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 100`, `x̄ = 25.05`, `σ = 0.48`, konfidensnivå 90 %." }
+          - label: "Kvantil"
+            lines:
+              - { text: "`α = 0.10`, så `α/2 = 0.05`." }
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = 1.645 · 0.48/√100 = 1.645 · 0.048 = 0.0790`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = 25.05 ± 0.0790 = [24.97, 25.13]`" }
+        result: "`90 % KI for μ: [24.97, 25.13] cl`"
+
 related:
   - { id: "normalfordeling",         kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }

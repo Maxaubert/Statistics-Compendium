@@ -20,6 +20,10 @@ recognition_cues:
   - "Du har en simultanfordeling og spørsmålet ber om korrelasjon"
   - "Du har allerede beregnet Cov(X,Y), σ_X, σ_Y"
 
+when_NOT_to_use:
+  - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk Pearsons korrelasjon `r` fra utvalget i stedet"
+  - "Sammenhengen er åpenbart ikke-lineær (f.eks. kvadratisk eller eksponentiell) → korrelasjon kan være lav selv om det finnes en sterk sammenheng — vurder å plotte først"
+
 symbols:
   - { sym: "ρ(X,Y)",   means: "korrelasjonskoeffisient (mellom -1 og 1)" }
   - { sym: "Cov(X,Y)", means: "kovariansen mellom X og Y" }

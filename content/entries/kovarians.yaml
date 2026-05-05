@@ -20,6 +20,11 @@ recognition_cues:
   - "Du har en simultanfordeling for X og Y"
   - "Spørsmålet ber om Cov(X,Y) eller du trenger den til ρ"
 
+when_NOT_to_use:
+  - "(X, Y) er kontinuerlige → bruk dobbeltintegralet `E[XY] = ∫∫ x·y · f(x, y) dx dy`"
+  - "Du har bare rådata-par `(x_i, y_i)` → bruk utvalgskovariansen `s_XY = Σ(x_i − x̄)(y_i − ȳ) / (n − 1)`"
+  - "Du vil måle styrken av sammenhengen — bruk korrelasjon `ρ` (skalainvariant), ikke Cov direkte"
+
 symbols:
   - { sym: "Cov(X,Y)", means: "kovariansen" }
   - { sym: "E[XY]",     means: "Σ x_i·y_j·P(X=x_i, Y=y_j) over hele simultantabellen" }

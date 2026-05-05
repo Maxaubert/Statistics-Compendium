@@ -65,6 +65,33 @@ python_snippet: |
 
   chisq, p = chisquare(observed, f_exp=expected)
 
+detailed_solution_variants:
+  - label: "Test mot uniform fordeling"
+    solutions:
+      - source: "Praksis · rettferdig terning"
+        question: "En terning kastes 60 ganger. Antall observasjoner per side er: `1: 8, 2: 9, 3: 11, 4: 13, 5: 10, 6: 9`. Test om terningen er rettferdig på 5 %-nivå."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p_i = 1/6` for alle sider (rettferdig)" }
+              - { text: "`H₁: minst én p_i ≠ 1/6`" }
+          - label: "Forventede antall"
+            lines:
+              - { text: "Under `H₀`: `E_i = n·p_i = 60·(1/6) = 10` for alle 6 sider." }
+              - { text: "Sjekk at alle `E_i ≥ 5` ✓ (alle = 10)." }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = Σ (O_i − E_i)² / E_i`" }
+              - { indent: "`= (8−10)²/10 + (9−10)²/10 + (11−10)²/10`" }
+              - { indent: "`+ (13−10)²/10 + (10−10)²/10 + (9−10)²/10`" }
+              - { indent: "`= 0.4 + 0.1 + 0.1 + 0.9 + 0 + 0.1 = 1.6`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Frihetsgrader: `ν = k − 1 = 6 − 1 = 5`. (Ingen parametre estimert fra data.)" }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 5) = 11.07`." } }
+              - { text: "`χ² = 1.6 < 11.07` → behold `H₀`." }
+        result: "Behold `H₀`: ingen grunnlag for å hevde at terningen er urettferdig."
+
 related:
   - { id: frihetsgrader, kind: concept }
   - { id: signifikansnivaa, kind: concept }

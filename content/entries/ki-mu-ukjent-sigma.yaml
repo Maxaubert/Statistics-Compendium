@@ -63,6 +63,51 @@ python_snippet: |
   margin = t_crit * s / math.sqrt(n)
   ci = (x_bar - margin, x_bar + margin)
 
+detailed_solution_variants:
+  - label: "KI for μ (ukjent σ)"
+    solutions:
+      - source: "Praksis · klassetest, gammel metode"
+        question: "Et utvalg av `n = 10` testresultater har `x̄ = 71.30` og utvalgsstandardavvik `s² = 205.34`. Finn et 95 % konfidensintervall for `μ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 10`, `x̄ = 71.30`, `s² = 205.34` ⇒ `s = √205.34 ≈ 14.33`." }
+              - { text: "`σ` er ikke kjent (kun estimert som `s` fra utvalget) → bruk t-basert KI." }
+          - label: "Kvantil"
+            lines:
+              - { text: "Frihetsgrader: `ν = n − 1 = 9`. Konfidensnivå 95 % ⇒ `α = 0.05`, `α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.5", text: "Slå opp `t_(0.025, 9) = 2.262`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = t_(α/2, n−1) · s/√n`" }
+              - { indent: "`= 2.262 · 14.33/√10`" }
+              - { indent: "`= 2.262 · 4.531`" }
+              - { indent: "`≈ 10.25`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = 71.30 ± 10.25 = [61.05, 81.55]`" }
+        result: "`95 % KI for μ: [61.05, 81.55]`"
+
+      - source: "Praksis · liten produktprøve"
+        question: "Innholdet av 6 såpebeholdere ble målt: 297, 300, 293, 296, 304, 302 ml. Finn et 95 % KI for forventet fyllingsmengde, uten å forutsette kjent `σ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 6`. Først regn `x̄` og `s` fra dataene." }
+              - { text: "`x̄ = (297+300+293+296+304+302)/6 = 1792/6 ≈ 298.67`" }
+              - { text: "`s² = Σ(x_i − x̄)²/(n−1) = (1.78 + 1.78 + 32.11 + 7.11 + 28.44 + 11.11)/5 ≈ 16.47`, så `s ≈ 4.06`." }
+          - label: "Kvantil"
+            lines:
+              - { text: "`ν = 5`, `α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 5) = 2.571`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = 2.571 · 4.06/√6 ≈ 4.27`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = 298.67 ± 4.27 ≈ [294.40, 302.94]`" }
+        result: "`95 % KI for μ: [294.40, 302.94] ml`"
+
 related:
   - { id: "normalfordeling",       kind: "entry" }
   - { id: "ki-mu-kjent-sigma",     kind: "entry" }

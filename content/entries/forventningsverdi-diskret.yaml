@@ -21,6 +21,10 @@ recognition_cues:
   - "Spørsmålet ber om E[X], μ, eller forventningsverdien"
   - "Du har en tabell med x-verdier og P(X=x)-verdier"
 
+when_NOT_to_use:
+  - "X er kontinuerlig (måling, tid, mengde) → bruk integralet `E[X] = ∫ x · f(x) dx`"
+  - "Du har ikke en sannsynlighetsfordeling, kun rådata → bruk utvalgsgjennomsnittet `x̄ = (Σx_i)/n` i stedet"
+
 symbols:
   - { sym: "x_i",      means: "verdiene X kan ta" }
   - { sym: "P(X=x_i)", means: "sannsynlighet for hver verdi" }

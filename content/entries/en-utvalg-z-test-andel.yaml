@@ -65,6 +65,53 @@ python_snippet: |
   z = (x - n*p0) / math.sqrt(n * p0 * (1 - p0))
   z_crit = norm.ppf(1 - alpha/2)             # tosidig 1.96
 
+detailed_solution_variants:
+  - label: "Z-test for andel p"
+    solutions:
+      - source: "Praksis · myntfairness (tosidig)"
+        question: "En mynt er kastet `n = 100` ganger og gitt `60` kron. Test om mynten er rettferdig (`p = 0.5`) på signifikansnivå 5 %."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p = 0.5`  (mynten er rettferdig)" }
+              - { text: "`H₁: p ≠ 0.5`  (tosidig — vi har ingen retningshypotese)" }
+          - label: "Forutsetninger"
+            lines:
+              - { text: "Sjekk normalapproksimasjon: `n·p₀·(1−p₀) = 100·0.5·0.5 = 25 ≥ 5` ✓" }
+              - { text: "`p̂ = 60/100 = 0.60`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { indent: "`= (0.60 − 0.50) / √(0.5·0.5/100)`" }
+              - { indent: "`= 0.10 / 0.05 = 2.00`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(α/2) = z_(0.025) = 1.960` (tosidig kritisk verdi)." } }
+              - { text: "`|Z| = 2.00 > 1.96` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: tallene tyder på at mynten ikke er rettferdig."
+
+      - source: "Praksis · andel grantrær med sykdom (ensidig)"
+        question: "En produsent påstår at høyst 20 % av grantrær har sykdom. Et utvalg på `n = 80` ga `23` syke. Test om andelen er HØYERE enn 20 % på 5 %-nivå."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p ≤ 0.20`  (produsentens påstand)" }
+              - { text: "`H₁: p > 0.20`  (høyresidig)" }
+          - label: "Forutsetninger"
+            lines:
+              - { text: "Normalapproksimasjon: `n·p₀·(1−p₀) = 80·0.20·0.80 = 12.8 ≥ 5` ✓" }
+              - { text: "`p̂ = 23/80 = 0.2875`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { indent: "`= (0.2875 − 0.20) / √(0.20·0.80/80)`" }
+              - { indent: "`= 0.0875 / 0.04472 ≈ 1.957`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_α = z_(0.05) = 1.645` (ensidig kritisk verdi)." } }
+              - { text: "`Z = 1.957 > 1.645` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: utvalget tyder på at andelen syke trær er høyere enn 20 %."
+
 related:
   - { id: "binomial-fordeling",      kind: "entry" }
   - { id: "ki-andel-binomial",       kind: "entry" }
