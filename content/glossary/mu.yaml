@@ -5,8 +5,11 @@ aliases:
   - μ
   - my
 long_def: |
-  `μ = E(X)` er forventningsverdien (populasjonsgjennomsnittet) til en
-  variabel. Estimeres med utvalgsgjennomsnittet `X̄`.
+  `μ` er forventningsverdien (populasjonsgjennomsnittet) til en variabel:
+
+      μ = E(X)
+
+  Estimeres med utvalgsgjennomsnittet `X̄`.
 
   Mange tester og KI handler om `μ`: t-test for `μ`, KI for `μ`,
   sammenligning av to `μ`.
