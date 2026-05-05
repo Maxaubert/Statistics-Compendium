@@ -1,6 +1,9 @@
 id: type-2-feil
 term_no: Type-II-feil
 short_def: "Å beholde `H₀` når `H₁` faktisk er sann — du oppdaget ikke effekten."
+filters:
+  computes: [hypothesis_test]
+  parameters_known: [alpha_significance]
 long_def: |
   Sannsynligheten for type-II-feil kalles `β`. **Teststyrke** = `1 − β`
   er sjansen for å oppdage en effekt som finnes.

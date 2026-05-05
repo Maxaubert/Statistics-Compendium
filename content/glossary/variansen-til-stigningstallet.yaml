@@ -1,6 +1,11 @@
 id: variansen-til-stigningstallet
 term_no: Variansen til stigningstallet (Var(β̂))
 short_def: "Spredningen i regresjonsstigningen: `Var(β̂) = S_E² / S_XX`, der `S_XX = Σ(xᵢ − x̄)²`."
+filters:
+  random_variable: [slope_estimate]
+  setup: [linear_relationship]
+  parameters_known: [slope_se, residual_variance, sum_xx_sxy]
+  computes: [std_dev]
 long_def: |
   Formel:
 

@@ -1,6 +1,9 @@
 id: varians
 term_no: Varians (Var, σ²)
 short_def: "Mål på spredning: forventet kvadrert avvik fra gjennomsnittet."
+filters:
+  computes: [std_dev]
+  parameters_known: [population_variance_known, population_variance_unknown]
 long_def: |
   **Definisjon:**
 

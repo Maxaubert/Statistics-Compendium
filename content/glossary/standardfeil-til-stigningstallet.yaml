@@ -1,6 +1,11 @@
 id: standardfeil-til-stigningstallet
 term_no: Standardfeil til stigningstallet (SE(β̂))
 short_def: "`SE(β̂) = √(S_E² / S_XX)` — kvadratroten av Var(β̂). Hvor presist vi kjenner regresjonsstigningen."
+filters:
+  random_variable: [slope_estimate]
+  setup: [linear_relationship]
+  parameters_known: [slope_se, residual_variance, sum_xx_sxy]
+  computes: [std_dev, hypothesis_test, confidence_interval]
 long_def: |
   Formel:
 
