@@ -1,6 +1,6 @@
-id: varians
-name_no: "Varians (oversikt over de ulike formene)"
-type: concept
+id: varians-oversikt
+name_no: "Varians (oversikt)"
+type: overview
 tagline: "Mål for spredning. Samme idé i alle former, men formelen ser ulik ut etter hva slags data du har."
 
 what_it_means: |
@@ -120,7 +120,7 @@ what_it_means: |
   Hvis du forstår hvorfor `s² = Σ(xᵢ − x̄)² / (n − 1)` er riktig form for
   rådata, har du forstått rytmen i alle de andre.
 
-  Se også [Standardavvik (oversikt)](/concept/standardavvik) for parallellen til σ.
+  Se også [Standardavvik (oversikt)](/entry/standardavvik-oversikt) for parallellen til σ.
 
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"
@@ -136,5 +136,5 @@ related:
   - { id: "regresjon-residualvarians",             kind: "entry" }
   - { id: "regresjon-standardfeil-stigningstall",  kind: "entry" }
   - { id: "pooled-varians",                        kind: "glossary" }
-  - { id: "standardavvik",                         kind: "concept" }
+  - { id: "standardavvik-oversikt",                kind: "entry" }
   - { id: "frihetsgrader-glos",                    kind: "glossary" }

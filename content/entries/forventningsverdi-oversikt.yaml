@@ -1,6 +1,6 @@
-id: forventningsverdi
-name_no: "Forventningsverdi (oversikt over de ulike formene)"
-type: concept
+id: forventningsverdi-oversikt
+name_no: "Forventningsverdi (oversikt)"
+type: overview
 tagline: "E[X] = vektet gjennomsnitt. Alle formene er samme idé med forskjellige vekter eller datakilder."
 
 what_it_means: |
@@ -107,5 +107,5 @@ related:
   - { id: "forventningsverdi-diskret",  kind: "entry" }
   - { id: "marginalfordeling",          kind: "entry" }
   - { id: "kovarians",                  kind: "entry" }
-  - { id: "varians",                    kind: "concept" }
-  - { id: "fellesfordeling",            kind: "concept" }
+  - { id: "varians-oversikt",           kind: "entry" }
+  - { id: "simultanfordeling",          kind: "glossary" }
