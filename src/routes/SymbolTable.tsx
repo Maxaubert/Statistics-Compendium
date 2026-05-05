@@ -78,6 +78,19 @@ function lookupEntryName(id: string): string | null {
   return data.entries.find((e) => e.id === id)?.name_no ?? null;
 }
 
+/**
+ * Pick a font size for the symbol cell based on glyph length so long
+ * expressions like `P(X = x, Y = y)` or `S_X², S_Y²` don't overflow
+ * the grid cell while short ones (`μ`, `n`, `S`) still feel large.
+ */
+function symbolSizeClass(sym: string): string {
+  const len = sym.length;
+  if (len > 12) return "text-[18px]";
+  if (len > 8) return "text-[24px]";
+  if (len > 5) return "text-[30px]";
+  return "text-[40px]";
+}
+
 function relatedRefPath(kind: string, id: string): string {
   switch (kind) {
     case "entry":
@@ -225,9 +238,11 @@ export function SymbolTable() {
               type="button"
               onClick={() => setOpenId(s.id)}
               aria-label={`Vis detaljer for ${s.sym}`}
-              className="group flex min-h-[120px] items-center justify-center rounded-xl border border-line bg-paper-2 p-4 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
+              className="group flex min-h-[120px] items-center justify-center overflow-hidden rounded-xl border border-line bg-paper-2 p-3 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
             >
-              <span className="font-math whitespace-nowrap text-[40px] font-medium leading-none text-primary group-hover:text-primary-2">
+              <span
+                className={`font-math max-w-full break-words font-medium leading-tight text-primary group-hover:text-primary-2 ${symbolSizeClass(s.sym)}`}
+              >
                 {s.sym}
               </span>
             </button>

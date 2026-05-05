@@ -10,6 +10,7 @@ import { DistributionThumbnail } from "@/components/detail/DistributionThumbnail
 import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
+import { PROPERTY_EXPLANATIONS } from "@/components/detail/property-explanations";
 import { StepByStep } from "@/components/detail/StepByStep";
 import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
@@ -121,7 +122,10 @@ export function EntryDetail() {
 
         {entry.properties && (
           <Section title="Egenskaper" icon={BarChart3}>
-            <PropertyCards properties={entry.properties} />
+            <PropertyCards
+              properties={entry.properties}
+              explanations={PROPERTY_EXPLANATIONS[entry.id]}
+            />
           </Section>
         )}
 

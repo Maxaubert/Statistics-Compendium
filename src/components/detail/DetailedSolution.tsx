@@ -93,8 +93,8 @@ export function DetailedSolution({ solution }: { solution: DS }) {
           Resultat
         </div>
         <span
-          className="block break-words text-[20px] font-bold tracking-wide"
-          style={{ color: "var(--color-calc-result)" }}
+          className="block break-words text-[15px] font-semibold"
+          style={{ color: "var(--color-calc-text)" }}
         >
           {renderInlineCode(solution.result, "dark")}
         </span>

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { X } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
+import { Modal } from "@/components/shell/Modal";
 import { loadAllContent } from "@/data/loadContent";
 import type { GlossaryTerm } from "@/data/schema";
 
@@ -28,56 +28,65 @@ interface ModalProps {
 }
 
 function GlossaryModal({ term, onClose }: ModalProps) {
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8"
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Detaljer for termen ${term.term_no}`}
-    >
-      <button
-        type="button"
-        aria-label="Lukk"
-        onClick={onClose}
-        className="absolute inset-0 cursor-default bg-black/50"
-      />
-      <div className="relative max-h-full w-full max-w-[640px] overflow-y-auto rounded-xl border border-line bg-card p-7 shadow-2xl">
-        <button
-          type="button"
-          aria-label="Lukk"
-          onClick={onClose}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-md text-ink-3 hover:bg-paper-2 hover:text-ink"
+    <Modal ariaLabel={`Detaljer for termen ${term.term_no}`} onClose={onClose}>
+      <header
+        className="border-b px-7 py-5"
+        style={{ borderColor: "var(--color-calc-border)" }}
+      >
+        <div
+          className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.2em]"
+          style={{ color: "var(--color-calc-label)" }}
         >
-          <X size={18} />
-        </button>
-        <h2 className="m-0 border-b border-line pb-3 font-serif text-[28px] font-semibold text-ink">
+          Term
+        </div>
+        <h2 className="m-0 mt-0.5 font-serif text-[28px] font-semibold text-white">
           {term.term_no}
         </h2>
-        <p className="mt-4 text-[15px] leading-relaxed text-ink">
+      </header>
+
+      <section className="px-7 pt-5">
+        <p
+          className="m-0 text-[15px] leading-relaxed"
+          style={{ color: "var(--color-calc-text)" }}
+        >
           {term.short_def}
         </p>
-        {term.long_def && (
-          <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink-2">
+      </section>
+
+      {term.long_def && (
+        <section className="px-7 pt-4">
+          <p
+            className="m-0 whitespace-pre-line text-[14px] leading-relaxed"
+            style={{ color: "var(--color-calc-text)", opacity: 0.85 }}
+          >
             {term.long_def}
           </p>
-        )}
+        </section>
+      )}
+
+      <div className="px-7 pb-7 pt-5">
         {term.see_also && term.see_also.length > 0 && (
-          <div className="mt-5 border-t border-line pt-3 text-[13px] text-ink-3">
-            Se også:{" "}
+          <div
+            className="border-t pt-4 text-[13px]"
+            style={{
+              borderColor: "var(--color-calc-divider)",
+              color: "var(--color-calc-text)",
+            }}
+          >
+            <span
+              className="mr-2 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em]"
+              style={{ color: "var(--color-calc-label)" }}
+            >
+              Se også
+            </span>
             {term.see_also.map((r, i) => (
               <span key={`${r.kind}-${r.id}`}>
                 {i > 0 && ", "}
                 <Link
                   to={relatedRefPath(r.kind, r.id)}
-                  className="text-primary-2 underline"
+                  className="underline hover:no-underline"
+                  style={{ color: "var(--color-calc-lookup-border)" }}
                   onClick={onClose}
                 >
                   {r.id}
@@ -87,7 +96,7 @@ function GlossaryModal({ term, onClose }: ModalProps) {
           </div>
         )}
       </div>
-    </div>
+    </Modal>
   );
 }
 
