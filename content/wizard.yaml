@@ -125,7 +125,7 @@ nodes:
       - label: "Marginalfordeling P(X=x) eller P(Y=y) – rad/kolonne-summer"
         leads_to:
           - { id: marginalfordeling, kind: entry }
-          - { id: fellesfordeling, kind: concept }
+          - { id: simultanfordeling, kind: glossary }
       - label: "Forventningsverdi E(X), E(Y), eller E(XY)"
         leads_to:
           - { id: forventningsverdi-diskret, kind: entry }

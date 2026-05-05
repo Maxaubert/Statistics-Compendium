@@ -164,7 +164,7 @@ related:
   - { id: "kovarians",                       kind: "entry" }
   - { id: "varians-standardavvik-diskret",   kind: "entry" }
   - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }
-  - { id: "fellesfordeling",                 kind: "concept" }
+  - { id: "simultanfordeling",               kind: "glossary" }
 
 tools:
   - "Kalkulator: divisjon"
