@@ -142,6 +142,7 @@ related:
   - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
   - { id: "gunstige-pa-mulige",     kind: "entry" }
   - { id: "uten-tilbakelegging-glos", kind: "glossary" }
+  - { id: "hypergeometrisk-varians", kind: "glossary" }
 
 tools:
   - "Kalkulator: binomialkoeffisient C(n,k) (også skrevet som nCk eller komb.)"
