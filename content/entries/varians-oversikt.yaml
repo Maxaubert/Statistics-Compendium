@@ -112,3 +112,4 @@ related:
   - { id: "pooled-varians",                        kind: "glossary" }
   - { id: "standardavvik-oversikt",                kind: "entry" }
   - { id: "frihetsgrader-glos",                    kind: "glossary" }
+  - { id: "stokastisk-variabel",                   kind: "glossary" }
