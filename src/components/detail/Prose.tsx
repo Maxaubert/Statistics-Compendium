@@ -371,20 +371,25 @@ function renderInline(
       if (tok.href.startsWith("glossary:")) {
         const termId = tok.href.slice("glossary:".length);
         return (
-          <button
-            key={i}
-            type="button"
-            onClick={() => openTerm?.(termId)}
-            className={MD_LINK_CLASS[theme]}
-          >
-            {tok.label}
-          </button>
+          <Fragment key={i}>
+            <button
+              type="button"
+              onClick={() => openTerm?.(termId)}
+              className={MD_LINK_CLASS[theme]}
+            >
+              {tok.label}
+            </button>
+            <LinkTypeBadge kind="ordliste" theme={theme} />
+          </Fragment>
         );
       }
       return (
-        <RouterLink key={i} to={tok.href} className={MD_LINK_CLASS[theme]}>
-          {tok.label}
-        </RouterLink>
+        <Fragment key={i}>
+          <RouterLink to={tok.href} className={MD_LINK_CLASS[theme]}>
+            {tok.label}
+          </RouterLink>
+          <LinkTypeBadge kind={typeBadgeForHref(tok.href)} theme={theme} />
+        </Fragment>
       );
     }
     return (
@@ -422,6 +427,39 @@ const MD_LINK_CLASS: Record<ProseTheme, string> = {
   dark:
     "text-inherit underline decoration-white/50 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
+
+// Small badge shown after explicit markdown links so the user can tell
+// at a glance whether the link goes to a full entry, a popup term, etc.
+type LinkKind = "formel" | "ordliste" | "tabell" | "mønster" | null;
+
+function typeBadgeForHref(href: string): LinkKind {
+  if (href.startsWith("/entry/")) return "formel";
+  if (href.startsWith("/table/")) return "tabell";
+  if (href.startsWith("/monstre/")) return "mønster";
+  return null;
+}
+
+function LinkTypeBadge({
+  kind,
+  theme,
+}: {
+  kind: LinkKind;
+  theme: ProseTheme;
+}) {
+  if (!kind) return null;
+  return (
+    <span
+      aria-hidden
+      className={
+        theme === "dark"
+          ? "ml-1 inline-block whitespace-nowrap rounded bg-white/10 px-1 py-px font-mono text-[10px] font-medium leading-tight text-white/60"
+          : "ml-1 inline-block whitespace-nowrap rounded bg-paper-2 px-1 py-px font-mono text-[10px] font-medium leading-tight text-ink-3"
+      }
+    >
+      ({kind})
+    </span>
+  );
+}
 
 /**
  * When the same term gets matched twice in one chunk (e.g. `ν` and
