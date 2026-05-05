@@ -11,4 +11,4 @@ long_def: |
   slik at det kan sammenlignes med en teoretisk tetthetsfunksjon `f(x)`.
 see_also:
   - { id: boksplott, kind: glossary }
-  - { id: spredningsplott, kind: concept }
+  - { id: spredningsplott, kind: glossary }

@@ -176,7 +176,7 @@ nodes:
           - { id: regresjon-residualvarians, kind: entry }
       - label: "Spredningsplott / visualisere data"
         leads_to:
-          - { id: spredningsplott, kind: concept }
+          - { id: spredningsplott, kind: glossary }
 
   - id: n_inferens
     question: "Hva slags inferens?"
