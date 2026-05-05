@@ -4,6 +4,10 @@ short_def: "Tallet du regner ut fra dataene og sammenligner mot tabell — typis
 filters:
   computes: [hypothesis_test]
   distribution_assumption: [normal, t_distribution, chi_squared]
+  random_variable: [mean_of_samples]
+  setup: [single_population]
+  structural_cues: [more_than_two_categories]
+  parameters_known: [sample_size_small_lt30, population_variance_unknown, population_variance_known]
 long_def: |
   Testobservatoren standardiserer dataene under `H₀` slik at du kan slå opp
   i en tabell. Sammenlign `|observator|` mot kritisk verdi.

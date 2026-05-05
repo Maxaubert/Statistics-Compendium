@@ -4,6 +4,7 @@ short_def: "Hele gruppen du vil si noe om – alle individer/objekter av interes
 filters:
   setup: [single_population]
   computes: [parameter_estimate]
+  random_variable: [mean_of_samples, proportion]
 long_def: |
   Populasjonen er det fulle universet (alle nordmenn, alle produserte
   enheter, alle mulige målinger). Populasjonens egenskaper (`μ`, `σ²`,

@@ -2,9 +2,10 @@ id: sigma-kvadrat
 term_no: Sigma-kvadrat (σ²)
 short_def: "Populasjonsvariansen — forventet kvadrert avvik fra `μ`."
 filters:
-  parameters_known: [population_variance_known, population_variance_unknown]
+  parameters_known: [population_variance_known, population_variance_unknown, confidence_level]
   computes: [std_dev, confidence_interval]
   distribution_assumption: [chi_squared]
+  tooling: [chi_square_quantile_table_E6]
 aliases:
   - σ²
   - sigma-kvadrat

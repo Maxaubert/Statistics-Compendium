@@ -4,6 +4,7 @@ short_def: "Risikoen du godtar for å forkaste `H₀` når `H₀` egentlig er sa
 filters:
   parameters_known: [alpha_significance, confidence_level]
   computes: [hypothesis_test, confidence_interval]
+  tooling: [normal_quantile_table_E4, t_quantile_table_E5]
 long_def: |
   Signifikansnivået `α` bestemmer hvor sterke beviser du krever før du
   forkaster `H₀`. Vanlige verdier: `0.10`, `0.05`, `0.01`.

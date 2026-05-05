@@ -2,8 +2,10 @@ id: standardavvik
 term_no: Standardavvik (σ, s)
 short_def: "Kvadratroten av variansen — spredning i samme enhet som dataene."
 filters:
-  computes: [std_dev]
+  computes: [std_dev, range_probability, parameter_estimate]
   parameters_known: [population_variance_known, population_variance_unknown]
+  structural_cues: [normal_assumed, data_as_list, mean_and_sd_given]
+  distribution_assumption: [normal]
 long_def: |
   Definisjon:
 

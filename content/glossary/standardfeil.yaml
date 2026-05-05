@@ -3,7 +3,10 @@ term_no: Standardfeil (SE)
 short_def: "Standardavviket til et estimat — hvor mye estimatet typisk varierer fra utvalg til utvalg."
 filters:
   computes: [std_dev, confidence_interval, hypothesis_test]
-  random_variable: [mean_of_samples]
+  random_variable: [mean_of_samples, slope_estimate, proportion]
+  setup: [linear_relationship]
+  parameters_known: [success_p, slope_se, confidence_level, population_variance_known]
+  distribution_assumption: [binomial, normal]
 aliases:
   - standardfeil
   - standardfeilen

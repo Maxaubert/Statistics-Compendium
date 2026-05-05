@@ -3,7 +3,9 @@ term_no: Sannsynlighetsfordeling (PMF, PDF)
 short_def: "Funksjon som tilordner sannsynlighet til hver mulig verdi (diskret, PMF) eller tetthet i hvert intervall (kontinuerlig, PDF) av en stokastisk variabel."
 filters:
   random_variable: [discrete_count, continuous]
-  computes: [exact_probability, expected_value, std_dev]
+  computes: [exact_probability, expected_value, std_dev, range_probability]
+  structural_cues: [data_as_list]
+  distribution_assumption: [poisson, binomial, normal]
 long_def: |
   Forkortelsene står for engelsk:
 

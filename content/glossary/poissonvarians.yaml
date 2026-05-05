@@ -7,6 +7,7 @@ filters:
   parameters_known: [rate_lambda]
   setup: [events_in_window]
   computes: [std_dev, expected_value]
+  structural_cues: [data_as_list, rate_given]
 long_def: |
   For en `Poisson(λ)`-fordelt variabel `X`:
 

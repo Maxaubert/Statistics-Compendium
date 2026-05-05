@@ -4,7 +4,8 @@ short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom `
 filters:
   computes: [correlation, covariance]
   setup: [linear_relationship]
-  structural_cues: [linear_relationship_suspected]
+  structural_cues: [linear_relationship_suspected, summary_stats_given, data_as_list]
+  parameters_known: [sum_xx_sxy]
 aliases:
   - pearson-korrelasjon
   - pearson-korrelasjonen

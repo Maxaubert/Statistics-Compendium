@@ -4,7 +4,8 @@ short_def: "Gjennomsnittet av mange uavhengige variabler er tilnærmet normalfor
 filters:
   distribution_assumption: [normal]
   random_variable: [mean_of_samples, sum_of_samples]
-  parameters_known: [sample_size_large]
+  parameters_known: [sample_size_large, sample_size_small_lt30]
+  setup: [single_population]
 aliases:
   - sentralgrenseteoremet
   - sentralgrenseteorem

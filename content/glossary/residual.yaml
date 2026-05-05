@@ -4,7 +4,8 @@ short_def: "Forskjellen mellom observert `y` og predikert `ŷ` i en regresjonsmo
 filters:
   setup: [linear_relationship]
   parameters_known: [residual_variance]
-  structural_cues: [linear_relationship_suspected]
+  structural_cues: [linear_relationship_suspected, data_as_list]
+  computes: [parameter_estimate, std_dev]
 long_def: |
   Formel:
 

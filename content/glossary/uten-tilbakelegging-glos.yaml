@@ -3,7 +3,9 @@ term_no: Uten tilbakelegging
 short_def: "Du legger ikke trekningen tilbake — sannsynlighetene endres for hver trekning."
 filters:
   setup: [without_replacement, finite_pool]
-  distribution_assumption: [hypergeometric]
+  distribution_assumption: [hypergeometric, binomial]
+  computes: [at_least_k, exact_probability]
+  random_variable: [discrete_count]
 long_def: |
   Hver trekning reduserer populasjonen, så `p` endrer seg underveis.
   Trekningene er **IKKE uavhengige**.
