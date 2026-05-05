@@ -6,6 +6,7 @@ filters:
   computes: [hypothesis_test]
   structural_cues: [more_than_two_categories]
   tooling: [chi_square_quantile_table_E6]
+  parameters_known: [alpha_significance]
 long_def: |
   Sammenligner observerte antall `Oᵢ` med forventede antall `Eᵢ` under
   en gitt hypotese (likedeling, bestemt teoretisk fordeling, etc.).

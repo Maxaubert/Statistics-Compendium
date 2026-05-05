@@ -4,7 +4,9 @@ short_def: "Stigningstall i regresjon — også sannsynligheten for type-II-feil
 filters:
   random_variable: [slope_estimate]
   setup: [linear_relationship]
-  computes: [hypothesis_test, parameter_estimate]
+  computes: [hypothesis_test, parameter_estimate, confidence_interval]
+  structural_cues: [linear_relationship_suspected]
+  parameters_known: [alpha_significance, slope_se]
 aliases:
   - beta
   - β

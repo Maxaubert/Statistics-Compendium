@@ -2,8 +2,10 @@ id: forventningsverdi
 term_no: Forventningsverdi (E[X], μ)
 short_def: "Gjennomsnittet på lang sikt av en stokastisk variabel — det «sentrale tyngdepunktet» i fordelingen."
 filters:
-  computes: [expected_value]
+  computes: [expected_value, parameter_estimate]
   parameters_known: [mean_known]
+  random_variable: [mean_of_samples, continuous, discrete_count]
+  setup: [single_population]
 long_def: |
   Forventningsverdien er det «vektede gjennomsnittet» av en variabels
   mulige verdier — det langsiktige snittet hvis du gjentok eksperimentet

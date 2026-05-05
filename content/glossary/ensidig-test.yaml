@@ -3,7 +3,10 @@ term_no: Ensidig test (én-sidig)
 short_def: "Hypotesen ser bare i én retning — `H₁: μ > μ₀` eller `H₁: μ < μ₀`."
 filters:
   computes: [hypothesis_test]
-  parameters_known: [alpha_significance]
+  parameters_known: [alpha_significance, population_variance_unknown]
+  random_variable: [proportion]
+  distribution_assumption: [normal, t_distribution]
+  tooling: [t_quantile_table_E5, normal_quantile_table_E4]
 long_def: |
   En ensidig test forkaster bare hvis observatoren ligger langt nok ut i
   én hale. Hele `α` legges i den ene halen — halverer ikke `α` slik

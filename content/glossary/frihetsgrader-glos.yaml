@@ -5,6 +5,10 @@ filters:
   distribution_assumption: [t_distribution, chi_squared]
   tooling: [t_quantile_table_E5, chi_square_quantile_table_E6]
   parameters_known: [population_variance_unknown]
+  computes: [test_independence, hypothesis_test]
+  random_variable: [slope_estimate]
+  setup: [linear_relationship, joint_table_given, single_population, two_independent_samples]
+  structural_cues: [joint_table_present]
 aliases:
   - frihetsgrader
   - frihetsgrad
