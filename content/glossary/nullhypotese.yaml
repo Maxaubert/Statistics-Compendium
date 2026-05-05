@@ -1,6 +1,11 @@
 id: nullhypotese
 term_no: Nullhypotese (H₀)
 short_def: "Påstanden vi tester mot – typisk 'ingen effekt' eller 'ingen forskjell'."
+aliases:
+  - nullhypotese
+  - nullhypotesen
+  - H₀
+  - H_0
 long_def: |
   H₀ er status quo som dataene må motbevise. Du forkaster aldri H₀ med
   mindre testobservatoren er ekstrem nok. "Ikke forkaste" betyr ikke at

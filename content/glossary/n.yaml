@@ -1,6 +1,8 @@
 id: n
 term_no: n (utvalgsstørrelse)
 short_def: "Antall observasjoner i utvalget."
+aliases:
+  - utvalgsstørrelse
 long_def: |
   n er hvor mange datapunkter du har. Stor n gir mindre standardfeil
   (SE = σ/√n) og smalere konfidensintervall. Mange formler bruker n − 1

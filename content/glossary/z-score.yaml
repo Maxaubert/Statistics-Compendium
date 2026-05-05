@@ -1,6 +1,11 @@
 id: z-score
 term_no: Z-score (z-verdi)
 short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: Z = (X − μ)/σ."
+aliases:
+  - z-score
+  - z-verdi
+  - z-skår
+  - standardnormal
 long_def: |
   Z-score standardiserer en observasjon til standardnormalfordeling
   (μ = 0, σ = 1). Brukes både til å sammenligne verdier på ulike skalaer

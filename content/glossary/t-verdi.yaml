@@ -1,6 +1,12 @@
 id: t-verdi
 term_no: T-verdi (t-observator)
 short_def: "Standardisert utvalgsgjennomsnitt når σ er ukjent: t = (X̄ − μ₀)/(s/√n)."
+aliases:
+  - t-verdi
+  - t-observator
+  - t-fordeling
+  - t-fordelingen
+  - t-fordelt
 long_def: |
   T-verdien er som z, men med utvalgets s i stedet for kjent σ. Følger
   t-fordeling med n − 1 frihetsgrader. T-fordelingen er bredere i halene

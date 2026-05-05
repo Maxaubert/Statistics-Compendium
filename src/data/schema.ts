@@ -228,6 +228,13 @@ export const GlossaryTermSchema = z.object({
   short_def: z.string(),
   long_def: z.string().optional(),
   see_also: z.array(RelatedRefSchema).optional(),
+  /**
+   * Surface forms used by the auto-linker to find this term inside prose
+   * (e.g. inflected forms like "stokastisk", "stokastiske", "stokastisk variabel").
+   * Case-insensitive, whole-word match. If omitted, the linker falls back to
+   * `term_no` with parenthetical decoration stripped.
+   */
+  aliases: z.array(z.string()).optional(),
 });
 export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
 

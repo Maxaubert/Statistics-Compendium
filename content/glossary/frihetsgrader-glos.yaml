@@ -1,6 +1,11 @@
 id: frihetsgrader-glos
 term_no: Frihetsgrader (df, ν)
 short_def: "Hvor mange uavhengige biter informasjon som er igjen etter at noe er estimert fra dataene."
+aliases:
+  - frihetsgrader
+  - frihetsgrad
+  - df
+  - ν
 long_def: |
   Frihetsgrader velger riktig rad i t-tabellen og χ²-tabellen.
   Tommelfingerregler: t-test for ett utvalg → ν = n − 1.

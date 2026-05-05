@@ -1,6 +1,9 @@
 id: mu
 term_no: My (μ)
 short_def: "Populasjonens forventningsverdi – det 'sanne' gjennomsnittet du prøver å estimere."
+aliases:
+  - μ
+  - my
 long_def: |
   μ = E(X) er forventningsverdien (populasjonsgjennomsnittet) til en
   variabel. Estimeres med utvalgsgjennomsnittet X̄. Mange tester og

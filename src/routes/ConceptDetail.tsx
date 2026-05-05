@@ -5,6 +5,8 @@ import { Section } from "@/components/detail/Section";
 import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { ExampleCard } from "@/components/detail/ExampleCard";
 import { RelatedPills } from "@/components/detail/RelatedPills";
+import { Prose } from "@/components/detail/Prose";
+import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
 
 export function ConceptDetail() {
@@ -41,6 +43,7 @@ export function ConceptDetail() {
   });
 
   return (
+    <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="concept-detail" className="min-h-screen bg-paper">
       <Banner />
       <article className="mx-auto max-w-[920px] bg-card px-14 py-8 pb-12">
@@ -67,9 +70,7 @@ export function ConceptDetail() {
         </header>
 
         <Section title="Hva det betyr" icon={Info}>
-          <p className="m-0 whitespace-pre-line font-serif text-base leading-relaxed text-ink">
-            {concept.what_it_means}
-          </p>
+          <Prose body={concept.what_it_means} glossary={data.glossary} />
         </Section>
 
         <Section title="Slik gjenkjenner du det" icon={Search}>
@@ -96,5 +97,6 @@ export function ConceptDetail() {
         )}
       </article>
     </div>
+    </GlossaryPopupProvider>
   );
 }

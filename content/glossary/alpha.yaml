@@ -1,6 +1,9 @@
 id: alpha
 term_no: Alfa (α)
 short_def: "Signifikansnivå i hypotesetesting – også konstantleddet i regresjonslinja Y = α + β·X."
+aliases:
+  - alfa
+  - α
 long_def: |
   α har to vanlige betydninger på dette kurset. (1) Signifikansnivå:
   sannsynligheten du godtar for å forkaste H₀ når H₀ er sann (type-1-feil).

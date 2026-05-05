@@ -1,6 +1,11 @@
 id: alternativhypotese
 term_no: Alternativhypotese (H₁)
 short_def: "Påstanden du vil bevise – det H₀ må vike for hvis dataene er ekstreme nok."
+aliases:
+  - alternativhypotese
+  - alternativhypotesen
+  - H₁
+  - H_1
 long_def: |
   H₁ kan være ensidig (μ > μ₀ eller μ < μ₀) eller tosidig (μ ≠ μ₀).
   Form på H₁ bestemmer hvor du ser etter ekstreme verdier: høyre hale,

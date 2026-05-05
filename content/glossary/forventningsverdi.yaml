@@ -1,0 +1,20 @@
+id: forventningsverdi
+term_no: Forventningsverdi (E[X], μ)
+short_def: "Gjennomsnittet på lang sikt av en stokastisk variabel – det 'sentrale tyngdepunktet' i fordelingen."
+long_def: |
+  Diskret SV: E[X] = Σ x · P(X = x). Kontinuerlig SV: E[X] = ∫ x · f(x) dx.
+  For utvalg estimeres forventningsverdien med utvalgsgjennomsnittet
+  X̄ = (1/n)·Σ Xᵢ. Lineæritet: E[aX + b] = a·E[X] + b og
+  E[X + Y] = E[X] + E[Y] uten antakelser om uavhengighet.
+aliases:
+  - forventningsverdi
+  - forventningsverdien
+  - forventningsverdier
+  - forventning
+  - forventningen
+  - E[X]
+see_also:
+  - { id: forventningsverdi, kind: concept }
+  - { id: mu, kind: glossary }
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: forventningsverdi-diskret, kind: entry }
