@@ -4,16 +4,12 @@ type: overview
 tagline: "E[X] = vektet gjennomsnitt. Alle formene er samme idé med forskjellige vekter eller datakilder."
 
 what_it_means: |
-  Forventningsverdien er det «vektede gjennomsnittet» av en variabels mulige
-  verdier. Tenk på den som det langsiktige snittet hvis du gjentok eksperimentet
-  uendelig mange ganger.
-
-  Den grunnleggende ideen er alltid den samme:
+  Forventningsverdien er det langsiktige snittet av en variabel — det
+  vektede gjennomsnittet av mulige verdier.
 
       forventningsverdi = «sum av verdi · vekt»
 
-  Vekten er sannsynligheten (for en stokastisk variabel) eller `1/n` (for et utvalg). Under er
-  formene du møter i pensum og når hver passer.
+  Vekten er sannsynligheten (stokastisk variabel) eller `1/n` (utvalg).
 
   ---
 
