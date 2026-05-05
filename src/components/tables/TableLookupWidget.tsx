@@ -28,10 +28,6 @@ function toggleLabelFor(table: Table, mode: Mode): string {
   return table.inverse?.toggle_label ?? "p → z";
 }
 
-function hintFor(table: Table, mode: Mode): string | undefined {
-  return mode === "forward" ? table.input_hint : table.inverse?.input_hint;
-}
-
 export function TableLookupWidget({ table, vals, setVals }: Props) {
   const supportsInverse = !!table.inverse;
   const [mode, setMode] = useState<Mode>("forward");
@@ -177,20 +173,6 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
           </label>
         ))}
       </div>
-
-      {hintFor(table, mode) && (
-        <div
-          className="-mt-3 mb-4 rounded-md border-l-2 px-3 py-2 text-[12px] leading-relaxed"
-          style={{
-            borderColor: "#818cf8",
-            background: "rgba(129, 140, 248, 0.06)",
-            color: "var(--color-calc-text)",
-          }}
-        >
-          <span className="opacity-70">↳ </span>
-          {hintFor(table, mode)}
-        </div>
-      )}
 
       <hr
         className="my-4 border-0"
