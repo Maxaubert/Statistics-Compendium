@@ -46,30 +46,40 @@ describe("Banner", () => {
 });
 
 describe("Banner — category tabs", () => {
-  it("renders Formler, Konsepter and Tabeller links in the nav", () => {
+  it("renders the merged Formler-og-konsepter and Tabeller links", () => {
     renderAt("/");
-    expect(screen.getByRole("link", { name: /Formler/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Konsepter/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Formler og konsepter/i }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Tabeller/i })).toBeInTheDocument();
+  });
+
+  it("does not render a separate Konsepter link", () => {
+    renderAt("/");
+    expect(
+      screen.queryByRole("link", { name: /^Konsepter$/i }),
+    ).not.toBeInTheDocument();
   });
 
   it("category tabs come before helper pages in the DOM", () => {
     renderAt("/");
     const labels = Array.from(document.querySelectorAll("nav a"))
       .map((a) => (a.textContent ?? "").replace(/\s+/g, " ").trim());
-    expect(labels.indexOf("Formler")).toBeLessThan(labels.indexOf("Veiviser"));
-    expect(labels.indexOf("Konsepter")).toBeLessThan(labels.indexOf("Ordliste"));
+    expect(
+      labels.indexOf("Formler og konsepter"),
+    ).toBeLessThan(labels.indexOf("Veiviser"));
+    expect(labels.indexOf("Tabeller")).toBeLessThan(labels.indexOf("Ordliste"));
   });
 
-  it("marks the konsepter link as current when ?tab=konsepter", () => {
-    renderAt("/?tab=konsepter");
-    const link = screen.getByRole("link", { name: /Konsepter/i });
+  it("marks Formler-og-konsepter as current on the bare home path", () => {
+    renderAt("/");
+    const link = screen.getByRole("link", { name: /Formler og konsepter/i });
     expect(link).toHaveAttribute("aria-current", "page");
   });
 
-  it("marks Formler as current on the bare home path", () => {
-    renderAt("/");
-    const link = screen.getByRole("link", { name: /Formler/i });
+  it("marks Tabeller as current when ?tab=tabeller", () => {
+    renderAt("/?tab=tabeller");
+    const link = screen.getByRole("link", { name: /Tabeller/i });
     expect(link).toHaveAttribute("aria-current", "page");
   });
 });
