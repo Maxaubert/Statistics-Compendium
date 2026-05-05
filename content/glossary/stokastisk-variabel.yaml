@@ -13,8 +13,6 @@ aliases:
   - stokastiske variabler
   - tilfeldig variabel
   - tilfeldige variabler
-  - stokastisk
-  - stokastiske
 see_also:
   - { id: forventningsverdi, kind: glossary }
   - { id: varians, kind: glossary }

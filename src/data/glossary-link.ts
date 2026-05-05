@@ -87,15 +87,28 @@ interface AliasEntry {
 }
 
 /**
+ * Decide whether the surface form should be matched case-sensitively in
+ * prose. True for:
+ *   - ALL-CAPS Latin abbreviations (`SE`, `KI`, `OLS`, `H₀`, …).
+ *   - Single characters (`σ`, `μ`, `β`, …) — JS lowercases `Σ` to `σ`,
+ *     so without case-sensitivity the sumtegn `Σ` would match the σ
+ *     glossary entry. Single-char Latin aliases would also match every
+ *     occurrence of that letter, which we do not want.
+ */
+function isCaseSensitiveAlias(s: string): boolean {
+  if (s.length === 1) return true;
+  return isAbbreviationLike(s);
+}
+
+/**
  * For one user-provided surface form, produce the alias entries to add
- * to the index. ALL-CAPS abbreviations stay cased and case-sensitive
- * (no inflection). Everything else gets lowercased + Norwegian-suffix
- * inflection.
+ * to the index. Case-sensitive aliases stay verbatim (no inflection).
+ * Everything else gets lowercased + Norwegian-suffix inflection.
  */
 function aliasEntriesFor(surface: string): AliasEntry[] {
   const trimmed = surface.trim();
   if (!trimmed) return [];
-  if (isAbbreviationLike(trimmed)) {
+  if (isCaseSensitiveAlias(trimmed)) {
     return [{ surface: trimmed, caseSensitive: true }];
   }
   return expandInflections(trimmed).map((s) => ({ surface: s, caseSensitive: false }));

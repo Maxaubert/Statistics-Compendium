@@ -1,6 +1,13 @@
 id: pearson-korrelasjon
 term_no: "Pearson-korrelasjon (r)"
 short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom `−1` og `1`."
+aliases:
+  - pearson-korrelasjon
+  - pearson-korrelasjonen
+  - pearson-korrelasjonskoeffisient
+  - pearson-korrelasjonskoeffisienten
+  - korrelasjonskoeffisient
+  - korrelasjonskoeffisienten
 long_def: |
   Formel: `r = Cov(X, Y) / (σ_X · σ_Y)`.
 

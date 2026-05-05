@@ -8,9 +8,10 @@ formula_main: "C(n, k) = n! / (k! · (n - k)!)"
 formula_latex: "\\binom{n}{k} = \\frac{n!}{k! (n-k)!}"
 
 what_it_does: |
-  Beregner antall mulige utvalg av k elementer fra en mengde av n
-  forskjellige elementer, når rekkefølgen ikke spiller noen rolle og
-  ingen elementer kan trekkes flere ganger.
+  Beregner antall mulige måter å plukke ut `k` elementer fra en mengde
+  av `n` forskjellige elementer, når rekkefølgen ikke spiller noen rolle
+  og ingen elementer kan trekkes flere ganger. Tallet skrives også som
+  binomialkoeffisienten `C(n, k)` eller "n velg k".
 
 why_use: |
   Brukes for å telle antall gunstige eller mulige utvalg i sannsynlighetsberegninger
