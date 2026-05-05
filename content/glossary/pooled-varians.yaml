@@ -1,6 +1,12 @@
 id: pooled-varians
 term_no: Pooled (interpolert) varians (S_P²)
 short_def: "Felles variansestimat for to grupper: `S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X + n_Y − 2)`."
+filters:
+  setup: [two_independent_samples]
+  random_variable: [difference_of_means]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+  computes: [hypothesis_test, std_dev]
 long_def: |
   Formel:
 

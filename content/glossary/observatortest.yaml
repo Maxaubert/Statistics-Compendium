@@ -1,6 +1,9 @@
 id: observatortest
 term_no: Testobservator
 short_def: "Tallet du regner ut fra dataene og sammenligner mot tabell — typisk `Z`, `T` eller `χ²`."
+filters:
+  computes: [hypothesis_test]
+  distribution_assumption: [normal, t_distribution, chi_squared]
 long_def: |
   Testobservatoren standardiserer dataene under `H₀` slik at du kan slå opp
   i en tabell. Sammenlign `|observator|` mot kritisk verdi.

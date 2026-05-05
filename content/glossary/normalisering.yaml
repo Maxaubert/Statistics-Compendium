@@ -1,6 +1,11 @@
 id: normalisering
 term_no: Standardnormalisering
 short_def: "`Z = (X − μ)/σ` — gjør om en normalfordelt `X` til standardnormal `Z ~ N(0, 1)`."
+filters:
+  distribution_assumption: [normal]
+  tooling: [standard_normal_table_E3]
+  computes: [exact_probability, range_probability]
+  structural_cues: [normal_assumed, mean_and_sd_given]
 aliases:
   - standardnormalisering
   - standardnormal
