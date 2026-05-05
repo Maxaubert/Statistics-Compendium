@@ -57,6 +57,20 @@ export function Prose({
             </ul>
           );
         }
+        if (block.kind === "ordered") {
+          return (
+            <ol key={i} className="m-0 list-decimal space-y-1.5 pl-6">
+              {block.items.map((item, j) => (
+                <li key={j} className={listItemClass}>
+                  {renderInline(item, aliases, popup?.openTerm)}
+                </li>
+              ))}
+            </ol>
+          );
+        }
+        if (block.kind === "rule") {
+          return <hr key={i} className="my-2 border-t border-line" />;
+        }
         return (
           <p key={i} className={paragraphClass}>
             {renderInline(block.text, aliases, popup?.openTerm)}
@@ -71,9 +85,13 @@ export function Prose({
 
 interface ParagraphBlock { kind: "paragraph"; text: string }
 interface ListBlock { kind: "list"; items: string[] }
-type Block = ParagraphBlock | ListBlock;
+interface OrderedListBlock { kind: "ordered"; items: string[] }
+interface RuleBlock { kind: "rule" }
+type Block = ParagraphBlock | ListBlock | OrderedListBlock | RuleBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
+const NUMBERED_RE = /^\s*\d+\.\s+/;
+const RULE_RE = /^\s*-{3,}\s*$/;
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -85,11 +103,18 @@ function parseBlocks(body: string): Block[] {
       i++;
       continue;
     }
+    if (RULE_RE.test(lines[i])) {
+      blocks.push({ kind: "rule" });
+      i++;
+      continue;
+    }
     if (BULLET_RE.test(lines[i])) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "") {
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
         if (BULLET_RE.test(lines[i])) {
           items.push(lines[i].replace(BULLET_RE, "").trim());
+        } else if (NUMBERED_RE.test(lines[i])) {
+          break; // switch from bullet to numbered list
         } else {
           // Continuation line for the previous bullet.
           if (items.length > 0) items[items.length - 1] += " " + lines[i].trim();
@@ -97,14 +122,35 @@ function parseBlocks(body: string): Block[] {
         i++;
       }
       blocks.push({ kind: "list", items });
-    } else {
-      const paraLines: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !BULLET_RE.test(lines[i])) {
-        paraLines.push(lines[i].trim());
+      continue;
+    }
+    if (NUMBERED_RE.test(lines[i])) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
+        if (NUMBERED_RE.test(lines[i])) {
+          items.push(lines[i].replace(NUMBERED_RE, "").trim());
+        } else if (BULLET_RE.test(lines[i])) {
+          break; // switch from numbered to bullet list
+        } else {
+          if (items.length > 0) items[items.length - 1] += " " + lines[i].trim();
+        }
         i++;
       }
-      blocks.push({ kind: "paragraph", text: paraLines.join(" ") });
+      blocks.push({ kind: "ordered", items });
+      continue;
     }
+    const paraLines: string[] = [];
+    while (
+      i < lines.length &&
+      lines[i].trim() !== "" &&
+      !BULLET_RE.test(lines[i]) &&
+      !NUMBERED_RE.test(lines[i]) &&
+      !RULE_RE.test(lines[i])
+    ) {
+      paraLines.push(lines[i].trim());
+      i++;
+    }
+    blocks.push({ kind: "paragraph", text: paraLines.join(" ") });
   }
   return blocks;
 }

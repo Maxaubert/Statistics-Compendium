@@ -54,6 +54,36 @@ describe("Prose", () => {
     expect(lis[0].textContent).toBe("Første");
   });
 
+  it("renders numbered lists", () => {
+    const { container } = render(
+      <Prose body={"Prosedyre:\n\n1. Første steg\n2. Andre steg\n3. Tredje steg"} />,
+    );
+    const ol = container.querySelector("ol");
+    expect(ol).not.toBeNull();
+    const lis = ol!.querySelectorAll("li");
+    expect(lis).toHaveLength(3);
+    expect(lis[0].textContent).toBe("Første steg");
+    expect(lis[2].textContent).toBe("Tredje steg");
+    // Heading paragraph still rendered
+    expect(container.querySelector("p")?.textContent).toBe("Prosedyre:");
+  });
+
+  it("breaks paragraph when a numbered list begins on the next line", () => {
+    const { container } = render(
+      <Prose body={"Prosedyre:\n1. Første\n2. Andre"} />,
+    );
+    expect(container.querySelector("p")?.textContent).toBe("Prosedyre:");
+    expect(container.querySelectorAll("ol li")).toHaveLength(2);
+  });
+
+  it("renders horizontal rule for ---", () => {
+    const { container } = render(
+      <Prose body={"En linje\n\n---\n\nNeste avsnitt"} />,
+    );
+    expect(container.querySelector("hr")).not.toBeNull();
+    expect(container.querySelectorAll("p")).toHaveLength(2);
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,

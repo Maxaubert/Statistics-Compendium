@@ -136,6 +136,25 @@ async function captureTraps(slug, name) {
   console.log(`no traps section for ${slug}`);
 }
 
+async function captureConcept(slug, name) {
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 1600 });
+  await page.goto(`http://localhost:${PORT}/#/concept/${slug}`, {
+    waitUntil: "networkidle0",
+  });
+  await page.waitForFunction(
+    () => document.querySelector('[data-testid="concept-detail"]') !== null,
+    { timeout: 15000 },
+  );
+  await new Promise((r) => setTimeout(r, 600));
+  await page.screenshot({
+    path: path.join(OUT, `prose-concept-${name}.png`),
+    fullPage: true,
+  });
+  await page.close();
+  console.log(`captured concept-${name}`);
+}
+
 async function captureSection(slug, name) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 1200 });
@@ -182,6 +201,10 @@ try {
   await captureTraps("varians-standardavvik-diskret", "varians");
   await captureTraps("normalfordeling", "normalfordeling");
   await captureSection("bayes-setning", "bayes");
+  await captureConcept("bootstrapping", "bootstrap");
+  await captureConcept("varians", "varians-konsept");
+  await captureSection("kjikvadrat-uavhengighet", "kji");
+  await captureSection("en-utvalg-z-test-andel", "ztest-andel");
 } finally {
   await browser.close();
 }

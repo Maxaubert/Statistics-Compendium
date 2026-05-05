@@ -1,0 +1,20 @@
+id: kontingenstabell
+term_no: Kontingenstabell (krysstabell, r×c-tabell)
+short_def: "Tabell over antall observasjoner i hver kombinasjon av to kategoriske variabler."
+long_def: |
+  Hver rad svarer til en verdi av variabel X, hver kolonne til en verdi
+  av variabel Y. Cellen O_ij teller hvor mange observasjoner som har
+  X = i og Y = j. Brukes som input til kjikvadrat-test for uavhengighet:
+  forventede antall E_ij regnes som rad-sum × kol-sum / totalsum, og
+  testobservatoren er Σ (O − E)² / E.
+aliases:
+  - kontingenstabell
+  - kontingenstabellen
+  - kontingenstabeller
+  - krysstabell
+  - krysstabellen
+  - r×c-tabell
+  - r x c-tabell
+see_also:
+  - { id: kjikvadrat-uavhengighet, kind: entry }
+  - { id: kjikvadrat-goodness-of-fit, kind: entry }
