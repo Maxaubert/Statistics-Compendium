@@ -21,6 +21,7 @@ import { ToolCards } from "@/components/detail/ToolCards";
 import { RelatedPills } from "@/components/detail/RelatedPills";
 import { Pager } from "@/components/detail/Pager";
 import { Prose } from "@/components/detail/Prose";
+import { OversiktCardGrid } from "@/components/detail/OversiktCardGrid";
 import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
 
@@ -76,7 +77,7 @@ export function EntryDetail() {
     <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="entry-detail" className="min-h-screen bg-paper">
       <Banner />
-      <article className="mx-auto max-w-[920px] bg-card px-14 py-8 pb-12">
+      <article className={`mx-auto bg-card px-14 py-8 pb-12 ${isProseEntry ? "max-w-[1200px]" : "max-w-[920px]"}`}>
         <div className="mb-6 flex items-center justify-between">
           <button
             type="button"
@@ -109,11 +110,18 @@ export function EntryDetail() {
         </header>
 
         {isProseEntry ? (
-          entry.what_it_means && (
-            <Section title="Hva det betyr" icon={Info}>
-              <Prose body={entry.what_it_means} glossary={data.glossary} />
-            </Section>
-          )
+          <>
+            {entry.what_it_means && (
+              <Section title="Hva det betyr" icon={Info}>
+                <Prose body={entry.what_it_means} glossary={data.glossary} />
+              </Section>
+            )}
+            {entry.forms && entry.forms.length > 0 && (
+              <Section title="Former" icon={BarChart3}>
+                <OversiktCardGrid forms={entry.forms} />
+              </Section>
+            )}
+          </>
         ) : (
           <>
             <DistributionThumbnail entry={entry} />
@@ -128,9 +136,11 @@ export function EntryDetail() {
           </>
         )}
 
-        <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
-          <RecognitionCues cues={entry.recognition_cues} />
-        </Section>
+        {!isProseEntry && entry.recognition_cues && entry.recognition_cues.length > 0 && (
+          <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
+            <RecognitionCues cues={entry.recognition_cues} />
+          </Section>
+        )}
 
         {entry.when_NOT_to_use && entry.when_NOT_to_use.length > 0 && (
           <Section title="IKKE bruk når" icon={AlertTriangle}>

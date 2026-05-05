@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8" />
+<title>Oversikt-side mockups · Statistikk-kompendium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --ink-4: #a8a29e;
+    --paper: #fafaf7;
+    --paper-2: #f5f5f0;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --line-2: #d6d3d1;
+
+    --primary: #312e81;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+
+    --cyan: #22d3ee;
+    --cyan-2: #06b6d4;
+    --cyan-soft: #cffafe;
+    --cyan-deep: #0e7490;
+
+    --calc-bg: #1e1b4b;
+    --calc-border: #3730a3;
+    --calc-divider: rgba(165, 180, 252, 0.18);
+    --calc-text: #e0e7ff;
+    --calc-result: #22d3ee;
+
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-serif: "Source Serif 4", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Page wrapper */
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .page-header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .page-header h1 {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .page-header p {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink-3);
+    max-width: 56ch;
+    margin: 0;
+  }
+  .page-header .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .page-header .nav a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--primary-2);
+    text-decoration: none;
+  }
+  .page-header .nav a:hover { text-decoration: underline; }
+
+  /* Variant header */
+  .variant {
+    margin: 96px 0 0;
+    padding-top: 48px;
+    border-top: 1px dashed var(--line-2);
+  }
+  .variant:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+  .variant-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+  .variant-tag::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--ink-3);
+  }
+  .variant h2 {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .variant-blurb {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-3);
+    max-width: 64ch;
+    margin: 0 0 40px;
+  }
+
+  /* Tagline (intro to the actual content) */
+  .intro {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+  .intro .core {
+    background: var(--primary-soft);
+    border-left: 3px solid var(--primary-2);
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--primary);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ============================================================
+     VARIANT 1: CARD GRID
+     2-col cards. Each form is a self-contained card with a
+     strongly-styled formula block at the top. Clean, scannable.
+     ============================================================ */
+  .v1-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .v1-grid { grid-template-columns: 1fr; } }
+  .v1-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .v1-card:hover {
+    border-color: var(--primary-3);
+    box-shadow: 0 4px 12px rgba(67, 56, 202, .08);
+  }
+  .v1-card .label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .v1-card h3 {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+  .v1-card .symbol {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--primary-2);
+    background: var(--primary-soft);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .v1-card .formula {
+    font-family: var(--font-mono);
+    font-size: 14.5px;
+    line-height: 1.4;
+    background: var(--calc-bg);
+    color: var(--calc-text);
+    padding: 16px 18px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .v1-card .desc {
+    font-family: var(--font-serif);
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0 0 12px;
+  }
+  .v1-card .links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .v1-card .links a {
+    color: var(--primary-2);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-3);
+  }
+  .v1-card .links a:hover { color: var(--primary); }
+
+  /* ============================================================
+     VARIANT 2: EDITORIAL / MAGAZINE
+     Single column, generous whitespace, large serif headings.
+     Formula is the focal point in a dark-indigo callout. Side
+     notes flow next to the prose for context.
+     ============================================================ */
+  .v2-section {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 48px;
+    margin: 56px 0;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .v2-section:last-child { border-bottom: none; }
+  @media (max-width: 800px) {
+    .v2-section { grid-template-columns: 1fr; gap: 16px; }
+  }
+  .v2-section h3 {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .v2-section .h3-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ink-3);
+    font-size: 14.5px;
+    margin: 0 0 24px;
+  }
+  .v2-section .formula {
+    background: var(--calc-bg);
+    color: var(--calc-text);
+    font-family: var(--font-mono);
+    font-size: 17px;
+    text-align: center;
+    padding: 28px 24px;
+    border-radius: 4px;
+    border-left: 4px solid var(--cyan);
+    margin: 0 0 20px;
+  }
+  .v2-section .body {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+  .v2-section aside {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-3);
+    border-left: 2px solid var(--ink-4);
+    padding: 4px 0 4px 16px;
+    line-height: 1.55;
+  }
+  .v2-section aside .label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 10.5px;
+    color: var(--ink-2);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .v2-section aside a {
+    color: var(--primary-2);
+    text-decoration: none;
+  }
+  .v2-section aside a:hover { text-decoration: underline; }
+
+  /* ============================================================
+     VARIANT 3: CHEAT SHEET / REFERENCE TABLE
+     Dense, tightly-packed reference card. Each form on one row.
+     Like a textbook appendix. Mono-driven, minimal chrome.
+     ============================================================ */
+  .v3-table {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .v3-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 280px;
+    align-items: baseline;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+    gap: 24px;
+  }
+  .v3-row:last-child { border-bottom: none; }
+  .v3-row:nth-child(even) { background: var(--paper-2); }
+  @media (max-width: 800px) {
+    .v3-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+  .v3-row .label {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 15.5px;
+    color: var(--ink);
+  }
+  .v3-row .label .sub {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .v3-row .formula {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--primary);
+    padding: 6px 12px;
+    background: var(--primary-soft);
+    border-radius: 4px;
+    align-self: center;
+  }
+  .v3-row .desc {
+    font-family: var(--font-serif);
+    font-size: 13.5px;
+    color: var(--ink-3);
+    line-height: 1.45;
+  }
+  .v3-row .desc a {
+    color: var(--primary-2);
+    text-decoration: none;
+  }
+  .v3-row .desc a:hover { text-decoration: underline; }
+
+  /* ============================================================
+     VARIANT 4: TEXTBOOK / MATH-FIRST
+     Each form gets generous space. Formula HUGE and centered.
+     Title below in serif. Brief italic note. Like a math text.
+     ============================================================ */
+  .v4-block {
+    margin: 64px 0;
+    text-align: center;
+  }
+  .v4-block .formula {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    color: var(--ink);
+    padding: 24px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .v4-block h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink-2);
+    margin: 24px 0 8px;
+  }
+  .v4-block .tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .v4-block .desc {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--ink-3);
+    max-width: 56ch;
+    margin: 12px auto 0;
+    line-height: 1.65;
+  }
+  .v4-block .links {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .v4-block .links a {
+    color: var(--primary-2);
+    text-decoration: none;
+    margin: 0 8px;
+  }
+  .v4-block .links a:hover { text-decoration: underline; }
+
+  /* TOC for jumping between variants */
+  .toc {
+    position: sticky;
+    top: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    z-index: 10;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .toc strong {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .toc a {
+    color: var(--primary-2);
+    text-decoration: none;
+  }
+  .toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-header">
+    <div>
+      <h1>Oversikt-side: mockup-varianter</h1>
+      <p>Fire designretninger for varians/standardavvik/forventningsverdi-oversiktene. Samme innhold, ulik visuell behandling.</p>
+    </div>
+    <div class="nav">
+      <a href="/">← Tilbake til appen</a>
+      <a href="/#/entry/varians-oversikt">Sammenlign med live varians-oversikt</a>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <strong>Hopp til:</strong>
+    <a href="#v1">1. Card Grid</a>
+    <a href="#v2">2. Editorial</a>
+    <a href="#v3">3. Cheat Sheet</a>
+    <a href="#v4">4. Textbook</a>
+  </nav>
+
+  <!-- ====================================================== -->
+  <!-- VARIANT 1: CARD GRID                                    -->
+  <!-- ====================================================== -->
+  <section class="variant" id="v1">
+    <div class="variant-tag">Variant 1</div>
+    <h2>Card Grid</h2>
+    <p class="variant-blurb">Tett oversikt i 2 kolonner. Hver variansform i sitt eget kort. Formler i mørk callout-blokk for sterk visuell vekt. Bra for skanning og «pek og klikk».</p>
+
+    <div class="intro">
+      <p>Varians måler hvor mye en variabel typisk avviker kvadratisk fra gjennomsnittet.</p>
+      <div class="core">varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»</div>
+    </div>
+
+    <div class="v1-grid">
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Diskret stokastisk variabel</h3>
+          <span class="symbol">Var(X)</span>
+        </div>
+        <div class="formula">Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)</div>
+        <p class="desc">Når du har en PMF-tabell. Vekten er sannsynligheten.</p>
+        <div class="links"><a href="#">Entry: diskret SV</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Utvalgsvarians</h3>
+          <span class="symbol">s²</span>
+        </div>
+        <div class="formula">s² = Σ (xᵢ − x̄)² / (n − 1)</div>
+        <p class="desc">Den vanligste i praksis — fra rådata når fordelingen er ukjent. Bessels korreksjon (n−1) gjør estimatet forventningsrett.</p>
+        <div class="links"><a href="#">Entry: rådata</a><a href="#">t-test</a><a href="#">KI for μ</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Pooled (interpolert)</h3>
+          <span class="symbol">S_P²</span>
+        </div>
+        <div class="formula">S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X+n_Y−2)</div>
+        <p class="desc">Felles variansestimat for to grupper med antatt lik σ².</p>
+        <div class="links"><a href="#">To-utvalgs t-test</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Residualvarians</h3>
+          <span class="symbol">S_E²</span>
+        </div>
+        <div class="formula">S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)</div>
+        <p class="desc">Spredningen i avvikene fra regresjonslinjen.</p>
+        <div class="links"><a href="#">SE(β̂)</a><a href="#">Hypotesetest β</a><a href="#">Prediksjonsintervall</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Binomialvarians</h3>
+          <span class="symbol">B(n, p)</span>
+        </div>
+        <div class="formula">Var(X) = np(1 − p)</div>
+        <p class="desc">For binomial. Størst når p = 0.5.</p>
+        <div class="links"><a href="#">Binomialfordeling</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Poissonvarians</h3>
+          <span class="symbol">Pois(λ)</span>
+        </div>
+        <div class="formula">Var(X) = λ        (eller λt for et vindu)</div>
+        <p class="desc">Spesielt: E[X] = Var(X) = λ for Poisson.</p>
+        <div class="links"><a href="#">Poissonfordeling</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Eksponentialvarians</h3>
+          <span class="symbol">Eksp(λ)</span>
+        </div>
+        <div class="formula">Var(T) = 1/λ²</div>
+        <p class="desc">Ventetid med rate λ.</p>
+        <div class="links"><a href="#">Eksponentialfordeling</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Hypergeometrisk varians</h3>
+          <span class="symbol">Hg(N, K, n)</span>
+        </div>
+        <div class="formula">Var(X) = n·(K/N)·((N−K)/N)·((N−n)/(N−1))</div>
+        <p class="desc">Som binomial, men med endelig-populasjon-korreksjon.</p>
+        <div class="links"><a href="#">Hypergeometrisk</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Variansen til X̄</h3>
+          <span class="symbol">Var(X̄)</span>
+        </div>
+        <div class="formula">Var(X̄) = σ²/n         SE(X̄) = σ/√n</div>
+        <p class="desc">Spredningen i selve estimatet X̄, ikke i dataene. Innebygget i z-test og KI.</p>
+        <div class="links"><a href="#">Én-utvalg z-test</a><a href="#">KI for μ</a></div>
+      </article>
+
+      <article class="v1-card">
+        <div class="label-row">
+          <h3>Variansen til β̂</h3>
+          <span class="symbol">Var(β̂)</span>
+        </div>
+        <div class="formula">Var(β̂) = S_E² / S_XX        SE(β̂) = √Var(β̂)</div>
+        <p class="desc">Hvor presist vi kjenner regresjonsstigningen.</p>
+        <div class="links"><a href="#">Standardfeil til β̂</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- VARIANT 2: EDITORIAL / MAGAZINE                         -->
+  <!-- ====================================================== -->
+  <section class="variant" id="v2">
+    <div class="variant-tag">Variant 2</div>
+    <h2>Editorial / Magazine</h2>
+    <p class="variant-blurb">Lange, luftige oppslag. Hver form får sin egen seksjon med stor serif-overskrift, formelen som visuelt hovedpunkt, og en stille sidekolonne for kontekst og lenker. Bra for fordypning og lesbarhet.</p>
+
+    <div class="intro">
+      <p>Varians måler hvor mye en variabel typisk avviker kvadratisk fra gjennomsnittet.</p>
+      <div class="core">varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»</div>
+    </div>
+
+    <article class="v2-section">
+      <div>
+        <h3>Diskret stokastisk variabel</h3>
+        <p class="h3-sub">Når du har sannsynlighetsfordelingen.</p>
+        <div class="formula">Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)</div>
+        <p class="body">Multipliser hvert kvadrert avvik med sin sannsynlighet, og summer. Vekten er PMF-en. Brukes på alle diskrete fordelinger der du har tabell over (xᵢ, P(X=xᵢ)).</p>
+      </div>
+      <aside>
+        <span class="label">Se også</span>
+        Entry: <a href="#">Varians og standardavvik (diskret SV)</a><br/>
+        Glossary: <a href="#">diskret-varians</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Utvalgsvarians</h3>
+        <p class="h3-sub">s² fra rådata.</p>
+        <div class="formula">s² = Σ (xᵢ − x̄)² / (n − 1)</div>
+        <p class="body">Den vanligste varianten i praksis — når fordelingen er ukjent og du har målte verdier. <em>n − 1</em> i nevneren er Bessels korreksjon, og gjør estimatet forventningsrett for σ².</p>
+      </div>
+      <aside>
+        <span class="label">Brukes i</span>
+        <a href="#">Én-utvalg t-test</a><br/>
+        <a href="#">KI for μ (ukjent σ)</a><br/>
+        <a href="#">KI for σ²</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Pooled (interpolert) varians</h3>
+        <p class="h3-sub">Felles variansestimat S_P² for to grupper.</p>
+        <div class="formula">S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X + n_Y − 2)</div>
+        <p class="body">Når to-utvalgs t-testen antar at de to gruppene har samme σ², kombinerer vi informasjonen ved å vekte hver utvalgsvarians med sine frihetsgrader.</p>
+      </div>
+      <aside>
+        <span class="label">Brukes i</span>
+        <a href="#">To-utvalgs t-test</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Residualvarians</h3>
+        <p class="h3-sub">S_E² — spredningen rundt regresjonslinjen.</p>
+        <div class="formula">S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)</div>
+        <p class="body">Hvor langt observasjonene typisk ligger fra den tilpassede linjen. <em>n − 2</em> fordi to parametre er estimert (α̂, β̂).</p>
+      </div>
+      <aside>
+        <span class="label">Bygges inn i</span>
+        <a href="#">SE(β̂)</a><br/>
+        <a href="#">Hypotesetest β</a><br/>
+        <a href="#">Prediksjonsintervall</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Binomialvarians</h3>
+        <p class="h3-sub">For B(n, p).</p>
+        <div class="formula">Var(X) = np(1 − p)</div>
+        <p class="body">Variansen i antall suksesser blant <em>n</em> uavhengige forsøk. Maksimum ved p = 0.5.</p>
+      </div>
+      <aside>
+        <span class="label">Entry</span>
+        <a href="#">Binomialfordeling</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Poissonvarians</h3>
+        <p class="h3-sub">Var(X) = λ.</p>
+        <div class="formula">Var(X) = λ        (eller λt for et vindu av lengde t)</div>
+        <p class="body">Det spesielle med Poisson: forventning og varians er like. E[X] = Var(X) = λ.</p>
+      </div>
+      <aside>
+        <span class="label">Entry</span>
+        <a href="#">Poissonfordeling</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Eksponentialvarians</h3>
+        <p class="h3-sub">Ventetid med rate λ.</p>
+        <div class="formula">Var(T) = 1/λ²</div>
+        <p class="body">Symmetrisk med forventningen E[T] = 1/λ. Standardavvik = forventning, så variasjonskoeffisienten er 1.</p>
+      </div>
+      <aside>
+        <span class="label">Entry</span>
+        <a href="#">Eksponentialfordeling</a>
+      </aside>
+    </article>
+
+    <article class="v2-section">
+      <div>
+        <h3>Variansen til utvalgsgjennomsnittet</h3>
+        <p class="h3-sub">Var(X̄) — spredningen i estimatet, ikke i dataene.</p>
+        <div class="formula">Var(X̄) = σ²/n         SE(X̄) = σ/√n</div>
+        <p class="body">Selv om enkeltobservasjoner spriker mye, blir gjennomsnittet stabilt jo flere observasjoner du har. Dette er fundamentet for KI og z/t-tester for μ.</p>
+      </div>
+      <aside>
+        <span class="label">Innebygget i</span>
+        <a href="#">Én-utvalg z-test</a><br/>
+        <a href="#">KI for μ (kjent σ)</a>
+      </aside>
+    </article>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- VARIANT 3: CHEAT SHEET / REFERENCE TABLE                -->
+  <!-- ====================================================== -->
+  <section class="variant" id="v3">
+    <div class="variant-tag">Variant 3</div>
+    <h2>Cheat Sheet</h2>
+    <p class="variant-blurb">Referanse-kort i tabellform. Hver form på én rad: navn, formel, kort bruk. Tett, raskt å skanne — som et appendiks bakerst i en lærebok.</p>
+
+    <div class="intro">
+      <p>Varians måler hvor mye en variabel typisk avviker kvadratisk fra gjennomsnittet.</p>
+    </div>
+
+    <div class="v3-table">
+      <div class="v3-row">
+        <div class="label">Diskret SV<span class="sub">PMF gitt</span></div>
+        <div class="formula">Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)</div>
+        <div class="desc">Vekt = sannsynligheten. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Utvalgsvarians<span class="sub">s²</span></div>
+        <div class="formula">Σ (xᵢ − x̄)² / (n − 1)</div>
+        <div class="desc">Rådata. Bessels korreksjon. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Pooled<span class="sub">S_P²</span></div>
+        <div class="formula">((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X+n_Y−2)</div>
+        <div class="desc">To-utvalgs t-test, antatt lik σ². <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Residual<span class="sub">S_E²</span></div>
+        <div class="formula">Σ (yᵢ − ŷᵢ)² / (n − 2)</div>
+        <div class="desc">Avvik fra regresjonslinjen. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Binomial<span class="sub">B(n, p)</span></div>
+        <div class="formula">np(1 − p)</div>
+        <div class="desc">Maks ved p = 0.5. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Poisson<span class="sub">Pois(λ)</span></div>
+        <div class="formula">λ           (λt for vindu)</div>
+        <div class="desc">E = Var = λ. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Eksponential<span class="sub">Eksp(λ)</span></div>
+        <div class="formula">1/λ²</div>
+        <div class="desc">σ = 1/λ = forventning. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Hypergeometrisk<span class="sub">Hg(N, K, n)</span></div>
+        <div class="formula">n·(K/N)·((N−K)/N)·((N−n)/(N−1))</div>
+        <div class="desc">Endelig-populasjon-korreksjon. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Var(X̄)<span class="sub">utvalgsgjennomsnitt</span></div>
+        <div class="formula">σ²/n           SE(X̄) = σ/√n</div>
+        <div class="desc">Spredningen i estimatet. <a href="#">Entry</a></div>
+      </div>
+      <div class="v3-row">
+        <div class="label">Var(β̂)<span class="sub">stigningstall</span></div>
+        <div class="formula">S_E² / S_XX           SE(β̂) = √Var(β̂)</div>
+        <div class="desc">Presisjon i regresjonen. <a href="#">Entry</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- VARIANT 4: TEXTBOOK / MATH-FIRST                        -->
+  <!-- ====================================================== -->
+  <section class="variant" id="v4">
+    <div class="variant-tag">Variant 4</div>
+    <h2>Textbook</h2>
+    <p class="variant-blurb">Matematikken først. Hver form får generøs plass — formelen er stor, sentrert, satt mellom tynne streker. Tittelen kommer etterpå, i italic-serif, som i en lærebok. Rolig og fokusert.</p>
+
+    <div class="intro">
+      <p>Varians måler hvor mye en variabel typisk avviker kvadratisk fra gjennomsnittet.</p>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Diskret SV</div>
+      <div class="formula">Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)</div>
+      <h3>Variansen til diskret stokastisk variabel</h3>
+      <p class="desc">Når du har en PMF-tabell. Vekten er sannsynligheten.</p>
+      <div class="links"><a href="#">→ Entry</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Utvalg</div>
+      <div class="formula">s² = Σ (xᵢ − x̄)² / (n − 1)</div>
+      <h3>Utvalgsvarians</h3>
+      <p class="desc">Den vanligste i praksis — fra rådata når fordelingen er ukjent. Bessels korreksjon.</p>
+      <div class="links">
+        <a href="#">→ Entry</a>
+        <a href="#">→ t-test</a>
+        <a href="#">→ KI for μ</a>
+      </div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">To utvalg</div>
+      <div class="formula">S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X + n_Y − 2)</div>
+      <h3>Pooled (interpolert) varians</h3>
+      <p class="desc">Felles variansestimat for to grupper med antatt lik σ².</p>
+      <div class="links"><a href="#">→ To-utvalgs t-test</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Regresjon</div>
+      <div class="formula">S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)</div>
+      <h3>Residualvarians</h3>
+      <p class="desc">Spredningen i avvikene fra regresjonslinjen.</p>
+      <div class="links"><a href="#">→ Entry</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Binomial</div>
+      <div class="formula">Var(X) = np(1 − p)</div>
+      <h3>Binomialvarians</h3>
+      <p class="desc">For B(n, p). Størst når p = 0.5.</p>
+      <div class="links"><a href="#">→ Binomialfordeling</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Poisson</div>
+      <div class="formula">Var(X) = λ</div>
+      <h3>Poissonvarians</h3>
+      <p class="desc">Spesielt: E[X] = Var(X) = λ. For et vindu av lengde t: λt.</p>
+      <div class="links"><a href="#">→ Poissonfordeling</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Eksponential</div>
+      <div class="formula">Var(T) = 1/λ²</div>
+      <h3>Eksponentialvarians</h3>
+      <p class="desc">Ventetid med rate λ. Standardavvik = forventning.</p>
+      <div class="links"><a href="#">→ Eksponentialfordeling</a></div>
+    </div>
+
+    <div class="v4-block">
+      <div class="tag">Estimator</div>
+      <div class="formula">Var(X̄) = σ²/n          SE(X̄) = σ/√n</div>
+      <h3>Variansen til utvalgsgjennomsnittet</h3>
+      <p class="desc">Spredningen i selve estimatet X̄, ikke i rådataene.</p>
+      <div class="links">
+        <a href="#">→ z-test</a>
+        <a href="#">→ KI for μ</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

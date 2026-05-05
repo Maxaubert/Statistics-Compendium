@@ -1,14 +1,13 @@
 import {
   EntrySchema, TableSchema, FiltersSchema,
-  GlossaryTermSchema, SymbolEntrySchema, WizardSchema,
+  GlossaryTermSchema, WizardSchema,
   type Entry, type Table, type Filters,
-  type GlossaryTerm, type SymbolEntry, type Wizard,
+  type GlossaryTerm, type Wizard,
 } from "./schema";
 
 const entryModules    = import.meta.glob("/content/entries/*.yaml",   { eager: true, import: "default" });
 const tableModules    = import.meta.glob("/content/tables/*.yaml",    { eager: true, import: "default" });
 const glossaryModules = import.meta.glob("/content/glossary/*.yaml",  { eager: true, import: "default" });
-const symbolModules   = import.meta.glob("/content/symbols/*.yaml",   { eager: true, import: "default" });
 const filtersModule   = import.meta.glob("/content/filters.yaml",     { eager: true, import: "default" });
 const wizardModule    = import.meta.glob("/content/wizard.yaml",      { eager: true, import: "default" });
 
@@ -16,7 +15,6 @@ export interface ContentBundle {
   entries: Entry[];
   tables: Table[];
   glossary: GlossaryTerm[];
-  symbols: SymbolEntry[];
   wizard: Wizard | null;
   filters: Filters;
 }
@@ -46,8 +44,6 @@ export function loadAllContent(): ContentBundle {
   const tables = parseAll(tableModules, TableSchema, "table");
   const glossary = parseAll(glossaryModules, GlossaryTermSchema, "glossary")
     .filter((g) => g.id !== "stub");
-  const symbols = parseAll(symbolModules, SymbolEntrySchema, "symbol")
-    .filter((s) => s.id !== "stub");
 
   const filtersFiles = Object.values(filtersModule);
   if (filtersFiles.length === 0) throw new Error("content/filters.yaml is missing");
@@ -61,11 +57,10 @@ export function loadAllContent(): ContentBundle {
     ...entries.map((e) => `entry:${e.id}`),
     ...tables.map((t) => `table:${t.id}`),
     ...glossary.map((g) => `glossary:${g.id}`),
-    ...symbols.map((s) => `symbol:${s.id}`),
   ];
   const dupes = allIds.filter((id, i) => allIds.indexOf(id) !== i);
   if (dupes.length > 0) throw new Error(`Duplicate ids found: ${dupes.join(", ")}`);
 
-  cached = { entries, tables, glossary, symbols, wizard, filters };
+  cached = { entries, tables, glossary, wizard, filters };
   return cached;
 }

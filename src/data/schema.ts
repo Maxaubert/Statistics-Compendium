@@ -75,6 +75,24 @@ export const EntryTypeSchema = z.enum([
   "method",
 ]);
 
+/**
+ * One row in the card-grid layout used by `type: overview` entries
+ * (varians-oversikt, standardavvik-oversikt, forventningsverdi-oversikt).
+ * Each form is rendered as a clickable card that opens the glossary
+ * popup for `glossary_id` (when present).
+ */
+export const OversiktFormSchema = z.object({
+  title: z.string(),
+  symbol: z.string().optional(),
+  glossary_id: z.string().optional(),
+  formula: z.string(),
+  description: z.string().optional(),
+  entry_links: z
+    .array(z.object({ id: z.string(), label: z.string() }))
+    .optional(),
+});
+export type OversiktForm = z.infer<typeof OversiktFormSchema>;
+
 export const EntrySchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/, "id must be kebab-case"),
   name_no: z.string(),
@@ -142,6 +160,8 @@ export const EntrySchema = z.object({
     .optional(),
   related: z.array(RelatedRefSchema).optional(),
   tools: z.array(z.string()).optional(),
+  /** Card-grid sections for type: overview entries (see OversiktFormSchema). */
+  forms: z.array(OversiktFormSchema).optional(),
 });
 export type Entry = z.infer<typeof EntrySchema>;
 
@@ -233,24 +253,6 @@ export const GlossaryTermSchema = z.object({
   filters: FilterSelectionSchema,
 });
 export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
-
-// ============ Symbol Entry ============
-
-export const SymbolEntryContextSchema = z.object({
-  usage: z.string(),       // e.g. "Signifikansnivå (hypotesetest)"
-  detail: z.string(),       // 2-3 sentence explanation
-  entry_refs: z.array(z.string()).optional(), // entry ids that use this meaning
-});
-
-export const SymbolEntrySchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/),  // e.g. "alpha"
-  sym: z.string(),                         // the actual symbol: "α"
-  short_def: z.string(),                    // one-line summary
-  contexts: z.array(SymbolEntryContextSchema).min(1), // ≥1
-  see_also: z.array(RelatedRefSchema).optional(),
-});
-export type SymbolEntryContext = z.infer<typeof SymbolEntryContextSchema>;
-export type SymbolEntry = z.infer<typeof SymbolEntrySchema>;
 
 // ============ Wizard ============
 

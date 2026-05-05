@@ -12,13 +12,12 @@ interface NavLink {
 
 const CATEGORY_LINKS: NavLink[] = [
   { to: "/", label: "Formler og konsepter", Icon: Sigma, tabParam: "formler" },
+  { to: "/ordliste", label: "Ordliste", Icon: BookA },
   { to: "/?tab=tabeller", label: "Tabeller", Icon: Table2, tabParam: "tabeller" },
 ];
 
 const HELPER_LINKS: NavLink[] = [
   { to: "/veiviser", label: "Veiviser", Icon: Compass },
-  { to: "/ordliste", label: "Ordliste", Icon: BookA },
-  { to: "/symboler", label: "Symboler", Icon: Sigma },
 ];
 
 function isActive(loc: ReturnType<typeof useLocation>, link: NavLink): boolean {

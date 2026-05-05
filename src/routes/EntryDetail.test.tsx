@@ -53,10 +53,12 @@ describe("EntryDetail", () => {
     expect(
       screen.getByText(/vektet sum av kvadrerte avvik/),
     ).toBeInTheDocument();
-    // Recognition cues section is preserved
+    // Card-grid "Former" section renders for overview entries with forms[]
+    expect(screen.getByText("Former")).toBeInTheDocument();
+    // Recognition cues section is HIDDEN for overview/method entries
     expect(
-      screen.getByText("Slik gjenkjenner du den i en oppgave"),
-    ).toBeInTheDocument();
+      screen.queryByText("Slik gjenkjenner du den i en oppgave"),
+    ).not.toBeInTheDocument();
     // Formula-shaped sections that don't apply to overviews must NOT render
     expect(screen.queryByText("Hva den gjør")).not.toBeInTheDocument();
     expect(screen.queryByText("Hovedformel")).not.toBeInTheDocument();
@@ -73,9 +75,10 @@ describe("EntryDetail", () => {
     expect(
       screen.getByText(/Behandle de N observasjonene/),
     ).toBeInTheDocument();
+    // Recognition cues hidden for method entries
     expect(
-      screen.getByText("Slik gjenkjenner du den i en oppgave"),
-    ).toBeInTheDocument();
+      screen.queryByText("Slik gjenkjenner du den i en oppgave"),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("Hva den gjør")).not.toBeInTheDocument();
     expect(screen.queryByText("Hovedformel")).not.toBeInTheDocument();
   });
