@@ -59,6 +59,38 @@ describe("EntrySchema", () => {
     expect(parsed.detailed_solution_variants?.[0].solutions).toHaveLength(1);
   });
 
+  it("accepts overview entry without formula_main", () => {
+    const e = EntrySchema.parse({
+      id: "varians-oversikt",
+      name_no: "Varians (oversikt)",
+      type: "overview",
+      tagline: "Oversikt over alle variansformer",
+      what_it_means: "Varians måler spredning...",
+      recognition_cues: ["Spørsmål om varians"],
+      filters: {},
+    });
+    expect(e.type).toBe("overview");
+    expect(e.formula_main).toBeUndefined();
+    expect(e.what_it_means).toBe("Varians måler spredning...");
+  });
+
+  it("accepts method entry without formula_main", () => {
+    const e = EntrySchema.parse({
+      id: "bootstrapping",
+      name_no: "Bootstrapping",
+      type: "method",
+      tagline: "Resampling-basert estimering",
+      what_it_means: "Bootstrapping er en resampling-metode...",
+      recognition_cues: ["Spørsmål om resampling"],
+      filters: {},
+    });
+    expect(e.type).toBe("method");
+    expect(e.formula_main).toBeUndefined();
+    expect(e.formula_latex).toBeUndefined();
+    expect(e.what_it_does).toBeUndefined();
+    expect(e.what_it_means).toBe("Bootstrapping er en resampling-metode...");
+  });
+
   it("accepts a full entry with all optional fields", () => {
     const full = {
       id: "poisson-fordeling",

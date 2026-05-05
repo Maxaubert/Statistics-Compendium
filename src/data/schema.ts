@@ -71,6 +71,8 @@ export const EntryTypeSchema = z.enum([
   "identity",
   "rule",
   "combinatorics",
+  "overview",
+  "method",
 ]);
 
 export const EntrySchema = z.object({
@@ -79,9 +81,10 @@ export const EntrySchema = z.object({
   type: EntryTypeSchema,
   category: z.string().optional(),
   tagline: z.string(),
-  formula_main: z.string(),
-  formula_latex: z.string(),
-  what_it_does: z.string(),
+  formula_main: z.string().optional(),
+  formula_latex: z.string().optional(),
+  what_it_does: z.string().optional(),
+  what_it_means: z.string().optional(),
   why_use: z.string().optional(),
   recognition_cues: z.array(z.string()),
   when_NOT_to_use: z.array(z.string()).optional(),
