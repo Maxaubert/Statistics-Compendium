@@ -42,21 +42,28 @@ export function Glossary() {
           onChange={(e) => setQuery(e.target.value)}
           className="mb-6 w-full rounded-md border border-line bg-paper-2 px-4 py-2 text-[14px] text-ink"
         />
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        <ul className="m-0 grid list-none grid-cols-1 gap-1.5 p-0 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((t) => (
-            <button
+            <li
               key={t.id}
-              type="button"
               onClick={() => setOpenId(t.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpenId(t.id);
+                }
+              }}
               aria-label={`Vis definisjon av ${t.term_no}`}
-              className="group flex min-h-[110px] items-center justify-center rounded-xl border border-line bg-paper-2 px-4 py-5 text-center transition hover:-translate-y-0.5 hover:border-primary-3 hover:bg-card hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-3"
+              className="group cursor-pointer rounded-md border border-line bg-card px-3.5 py-2 hover:border-primary-2"
             >
-              <span className="font-serif text-[18px] font-semibold leading-tight text-ink group-hover:text-primary">
+              <div className="truncate font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
                 {t.term_no}
-              </span>
-            </button>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
         {filtered.length === 0 && (
           <p className="mt-8 text-center text-ink-3">Ingen treff for "{query}".</p>
         )}
