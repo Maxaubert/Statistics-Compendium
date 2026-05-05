@@ -5,10 +5,15 @@ long_def: |
   En tosidig test forkaster hvis observatoren er langt unna i begge
   retninger. `α` deles likt i to haler (`α/2` i hver).
 
-  - **Kritisk verdi:** `z_(α/2)` eller `t_(α/2, df)`
-  - **p-verdi (symmetrisk fordeling):** `2·P(|Z| ≥ |observert|)`
+  **Kritisk verdi:**
 
-  Standard når oppgaven bare spør om det er "forskjell" eller "endring"
+      z_(α/2)        eller    t_(α/2, df)
+
+  **p-verdi** (symmetrisk fordeling):
+
+      p = 2 · P(|Z| ≥ |observert|)
+
+  Standard når oppgaven bare spør om det er «forskjell» eller «endring»
   uten å spesifisere retning.
 see_also:
   - { id: ensidig-test, kind: glossary }
