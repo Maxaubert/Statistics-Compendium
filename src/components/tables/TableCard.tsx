@@ -31,7 +31,7 @@ export function TableCard({ table, onClick }: Props) {
       <div className="px-5 pb-3 pt-0.5 font-mono text-[11.5px] tracking-wider text-ink-3">
         {table.formal_name_no}
       </div>
-      <div className="flex h-[76px] items-end justify-center border-y border-line bg-gradient-to-b from-paper-2 to-card px-4 pb-2 pt-2">
+      <div className="flex h-[120px] items-end justify-center border-y border-line bg-gradient-to-b from-paper-2 to-card px-4 pb-3 pt-3">
         <DistributionSparkline distribution={table.distribution} />
       </div>
       <div className="flex flex-1 flex-col gap-3 px-5 py-4">
