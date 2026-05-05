@@ -1,9 +1,11 @@
 id: prediksjonsintervall-glos
 term_no: Prediksjonsintervall
-short_def: "Intervall for hvor en NY enkeltobservasjon vil ligge – bredere enn et KI."
+short_def: "Intervall for hvor en NY enkeltobservasjon vil ligge — bredere enn et KI."
 long_def: |
-  Mens et konfidensintervall er for en parameter (f.eks. μ), gjelder et
-  prediksjonsintervall en framtidig enkelt-Y. Det er bredere fordi det
-  må fange både usikkerheten i estimatet OG den naturlige spredningen i Y.
+  - **Konfidensintervall:** for en parameter (f.eks. `μ`)
+  - **Prediksjonsintervall:** for en framtidig enkelt-`Y`
+
+  Prediksjonsintervallet er bredere fordi det må fange både usikkerheten
+  i estimatet **og** den naturlige spredningen i `Y`.
 see_also:
   - { id: regresjon-prediksjonsintervall, kind: entry }

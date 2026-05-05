@@ -1,12 +1,19 @@
 id: t-verdi
 term_no: T-verdi (t-observator)
-short_def: "Standardisert utvalgsgjennomsnitt når σ er ukjent: t = (X̄ − μ₀)/(s/√n)."
+short_def: "Standardisert utvalgsgjennomsnitt når `σ` er ukjent: `t = (X̄ − μ₀)/(s/√n)`."
+aliases:
+  - t-verdi
+  - t-observator
 long_def: |
-  T-verdien er som z, men med utvalgets s i stedet for kjent σ. Følger
-  t-fordeling med n − 1 frihetsgrader. T-fordelingen er bredere i halene
-  enn standardnormal – så kritisk verdi blir litt større for små n. Når
-  n vokser nærmer t-fordelingen seg z-fordelingen. Slå opp i E.5-tabellen.
+  T-verdien er som `z`, men med utvalgets `s` i stedet for kjent `σ`.
+  Følger t-fordeling med `n − 1` frihetsgrader.
+
+  - T-fordelingen er bredere i halene enn standardnormal — kritisk verdi blir litt større for små `n`
+  - Når `n` vokser, nærmer t-fordelingen seg z-fordelingen
+
+  Slå opp i E.5-tabellen.
 see_also:
+  - { id: t-fordeling, kind: glossary }
   - { id: z-score, kind: glossary }
   - { id: en-utvalg-t-test, kind: entry }
   - { id: frihetsgrader-glos, kind: glossary }

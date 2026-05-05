@@ -1,11 +1,19 @@
 id: z-score
 term_no: Z-score (z-verdi)
-short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: Z = (X − μ)/σ."
+short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: `Z = (X − μ)/σ`."
+aliases:
+  - z-score
+  - z-verdi
+  - z-skår
 long_def: |
   Z-score standardiserer en observasjon til standardnormalfordeling
-  (μ = 0, σ = 1). Brukes både til å sammenligne verdier på ulike skalaer
-  og som testobservator i z-test. For utvalgsgjennomsnitt: Z = (X̄ − μ₀)
-  / (σ/√n). Slå opp sannsynligheter eller kvantiler i E.3 / E.4-tabellene.
+  (`μ = 0`, `σ = 1`). Brukes både til å sammenligne verdier på ulike
+  skalaer og som testobservator i z-test.
+
+  - **Enkel observasjon:** `Z = (X − μ)/σ`
+  - **Utvalgsgjennomsnitt:** `Z = (X̄ − μ₀)/(σ/√n)`
+
+  Slå opp sannsynligheter eller kvantiler i E.3- / E.4-tabellene.
 see_also:
   - { id: normalisering, kind: glossary }
   - { id: standardnormalisering, kind: concept }

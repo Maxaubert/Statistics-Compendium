@@ -1,0 +1,22 @@
+id: andel
+term_no: Andel (p, p̂)
+short_def: "Brøkdelen av en populasjon (`p`) eller et utvalg (`p̂ = X/n`) som har en bestemt egenskap."
+long_def: |
+  `p` er populasjonsandelen — det vi prøver å estimere. `p̂ = X/n` er
+  utvalgsandelen — antall "suksesser" delt på antall observasjoner.
+
+  - **KI for andel:** `p̂ ± z_(α/2)·√(p̂(1−p̂)/n)` (krever `n·p̂·(1−p̂) ≥ 5`)
+  - **Testobservator:** `Z = (p̂ − p₀)/√(p₀(1−p₀)/n)`
+aliases:
+  - andel
+  - andelen
+  - andeler
+  - andelene
+  - utvalgsandel
+  - utvalgsandelen
+  - populasjonsandel
+  - populasjonsandelen
+see_also:
+  - { id: en-utvalg-z-test-andel, kind: entry }
+  - { id: ki-andel-binomial, kind: entry }
+  - { id: bernoulli-forsoek, kind: glossary }

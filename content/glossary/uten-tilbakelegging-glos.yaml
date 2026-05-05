@@ -1,12 +1,12 @@
 id: uten-tilbakelegging-glos
 term_no: Uten tilbakelegging
-short_def: "Du legger ikke trekningen tilbake – sannsynlighetene endres for hver trekning."
+short_def: "Du legger ikke trekningen tilbake — sannsynlighetene endres for hver trekning."
 long_def: |
-  Hver trekning reduserer populasjonen, så p endrer seg underveis.
-  Trekningene er IKKE uavhengige. Antall suksesser i n trekninger uten
-  tilbakelegging fra en endelig populasjon følger hypergeometrisk
-  fordeling. Når n er liten i forhold til populasjonen, kan binomial
-  brukes som tilnærming.
+  Hver trekning reduserer populasjonen, så `p` endrer seg underveis.
+  Trekningene er **IKKE uavhengige**.
+
+  - **Eksakt:** antall suksesser i `n` trekninger uten tilbakelegging fra en endelig populasjon følger hypergeometrisk fordeling
+  - **Tilnærming:** når `n` er liten i forhold til populasjonen, kan binomial brukes
 see_also:
   - { id: hypergeometrisk-fordeling, kind: entry }
   - { id: med-tilbakelegging, kind: glossary }

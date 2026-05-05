@@ -1,11 +1,17 @@
 id: mu
 term_no: My (μ)
-short_def: "Populasjonens forventningsverdi – det 'sanne' gjennomsnittet du prøver å estimere."
+short_def: "Populasjonens forventningsverdi — det «sanne» gjennomsnittet du prøver å estimere."
+aliases:
+  - μ
+  - my
 long_def: |
-  μ = E(X) er forventningsverdien (populasjonsgjennomsnittet) til en
-  variabel. Estimeres med utvalgsgjennomsnittet X̄. Mange tester og
-  konfidensintervall handler om μ: t-test for μ, KI for μ, sammenligning
-  av to μ. Ikke forveksle μ (populasjon, ukjent konstant) med X̄ (utvalg,
+  `μ = E(X)` er forventningsverdien (populasjonsgjennomsnittet) til en
+  variabel. Estimeres med utvalgsgjennomsnittet `X̄`.
+
+  Mange tester og KI handler om `μ`: t-test for `μ`, KI for `μ`,
+  sammenligning av to `μ`.
+
+  Ikke forveksle `μ` (populasjon, ukjent konstant) med `X̄` (utvalg,
   tilfeldig variabel).
 see_also:
   - { id: gjennomsnitt, kind: glossary }

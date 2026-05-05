@@ -14,7 +14,7 @@ what_it_does: |
 
   Mer generelt: gitt P(B|A), P(A), og P(B), finner du P(A|B). Hvis P(B)
   ikke er oppgitt direkte, må du først regne det ut via setningen om
-  total sannsynlighet (se related).
+  total sannsynlighet.
 
 why_use: |
   Standard verktøy når oppgaven "snur" retningen: fra "av alle som har

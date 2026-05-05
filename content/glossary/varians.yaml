@@ -2,9 +2,12 @@ id: varians
 term_no: Varians (Var, σ²)
 short_def: "Mål på spredning: forventet kvadrert avvik fra gjennomsnittet."
 long_def: |
-  Var(X) = E[(X − μ)²] = E[X²] − μ². For et utvalg: S² = Σ(x_i − x̄)²/(n − 1).
-  Var(aX + b) = a²·Var(X). Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X,Y).
-  Hvis X og Y er uavhengige: Cov = 0, så variansene legges sammen.
+  - **Definisjon:** `Var(X) = E[(X − μ)²] = E[X²] − μ²`
+  - **Utvalg:** `S² = Σ(x_i − x̄)²/(n − 1)`
+  - **Lineær transformasjon:** `Var(aX + b) = a²·Var(X)`
+  - **Sum:** `Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X,Y)`
+
+  Hvis `X` og `Y` er uavhengige er `Cov = 0`, så variansene legges sammen.
 see_also:
   - { id: varians-standardavvik-diskret, kind: entry }
   - { id: kovarians, kind: entry }

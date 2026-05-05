@@ -20,6 +20,8 @@ import { PythonSnippet } from "@/components/detail/PythonSnippet";
 import { ToolCards } from "@/components/detail/ToolCards";
 import { RelatedPills } from "@/components/detail/RelatedPills";
 import { Pager } from "@/components/detail/Pager";
+import { Prose } from "@/components/detail/Prose";
+import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
 
 export function EntryDetail() {
@@ -61,6 +63,7 @@ export function EntryDetail() {
   const next = idx >= 0 && idx < sameType.length - 1 ? sameType[idx + 1] : undefined;
 
   return (
+    <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="entry-detail" className="min-h-screen bg-paper">
       <Banner />
       <article className="mx-auto max-w-[920px] bg-card px-14 py-8 pb-12">
@@ -99,9 +102,7 @@ export function EntryDetail() {
         <HeroFormula latex={entry.formula_latex} />
 
         <Section title="Hva den gjør" icon={Info}>
-          <p className="m-0 font-serif text-base leading-relaxed text-ink">
-            {entry.what_it_does}
-          </p>
+          <Prose body={entry.what_it_does} glossary={data.glossary} />
         </Section>
 
         <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
@@ -155,7 +156,7 @@ export function EntryDetail() {
 
         {entry.common_traps && (
           <Section title="Vanlige feller" icon={AlertCircle}>
-            <TrapAlert body={entry.common_traps} />
+            <TrapAlert body={entry.common_traps} glossary={data.glossary} />
           </Section>
         )}
 
@@ -183,5 +184,6 @@ export function EntryDetail() {
         />
       </article>
     </div>
+    </GlossaryPopupProvider>
   );
 }

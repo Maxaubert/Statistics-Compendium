@@ -1,12 +1,15 @@
 id: n
 term_no: n (utvalgsstørrelse)
 short_def: "Antall observasjoner i utvalget."
+aliases:
+  - utvalgsstørrelse
 long_def: |
-  n er hvor mange datapunkter du har. Stor n gir mindre standardfeil
-  (SE = σ/√n) og smalere konfidensintervall. Mange formler bruker n − 1
-  i stedet for n (som ved utvalgsvarians og frihetsgrader for t-test) –
-  det er ikke en feil, det er Bessels korreksjon for å gjøre estimatet
-  forventningsrett.
+  `n` er hvor mange datapunkter du har. Stor `n` gir mindre standardfeil
+  (`SE = σ/√n`) og smalere konfidensintervall.
+
+  Mange formler bruker `n − 1` i stedet for `n` (som ved utvalgsvarians
+  og frihetsgrader for t-test) — det er ikke en feil, det er **Bessels
+  korreksjon** for å gjøre estimatet forventningsrett.
 see_also:
   - { id: utvalg, kind: glossary }
   - { id: standardfeil, kind: glossary }

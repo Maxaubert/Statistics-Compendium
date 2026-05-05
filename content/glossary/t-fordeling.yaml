@@ -1,0 +1,27 @@
+id: t-fordeling
+term_no: T-fordeling (Student's t)
+short_def: "Klokkeformet, men bredere enn standardnormal — formen styres av frihetsgrader `ν`."
+long_def: |
+  T-fordelingen brukes når vi standardiserer et utvalgsgjennomsnitt med
+  utvalgsstandardavviket `s` i stedet for det kjente `σ`. Da følger
+  testobservatoren `T = (X̄ − μ₀)/(s/√n)` en t-fordeling med `ν` frihetsgrader.
+
+  - **Form:** symmetrisk om `0`, klokkeformet — men har tyngre haler enn standardnormal
+  - **Eneste parameter:** frihetsgrader `ν`. Lite `ν` → bredere haler; stort `ν` → likner standardnormal
+  - **Tilnærming:** for `n ≥ 30` kan z-fordeling brukes i stedet
+  - **Tabell:** kvantilene står i tabell E.5
+
+  Ikke forveksle med `t`-verdien selv: t-fordelingen er fordelingen,
+  `t`-verdien er den observerte testobservatoren.
+aliases:
+  - t-fordeling
+  - t-fordelingen
+  - t-fordelt
+  - student-t
+  - students t
+see_also:
+  - { id: t-verdi, kind: glossary }
+  - { id: frihetsgrader-glos, kind: glossary }
+  - { id: en-utvalg-t-test, kind: entry }
+  - { id: ki-mu-ukjent-sigma, kind: entry }
+  - { id: E5-t-tabell, kind: table }

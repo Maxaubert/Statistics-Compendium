@@ -1,0 +1,24 @@
+id: uavhengighet-glos
+term_no: Uavhengighet (uavhengige hendelser)
+short_def: "A og B er uavhengige hvis P(A ∩ B) = P(A)·P(B), dvs. at A ikke endrer sannsynligheten for B."
+long_def: |
+  Tre ekvivalente definisjoner:
+
+  - `P(A ∩ B) = P(A)·P(B)`
+  - `P(B|A) = P(B)`
+  - `P(A|B) = P(A)`
+
+  Uavhengighet er **IKKE** det samme som disjunkthet — disjunkte hendelser
+  med positiv sannsynlighet er sterkt avhengige.
+
+  For utvalg: observasjoner kalles uavhengige hvis verdien til den ene
+  ikke påvirker den andre (typisk antatt for utvalg fra populasjon).
+aliases:
+  - uavhengig
+  - uavhengige
+  - uavhengighet
+  - uavhengigheten
+see_also:
+  - { id: uavhengighet-hendelser, kind: concept }
+  - { id: disjunkte-hendelser-glos, kind: glossary }
+  - { id: produktregel, kind: entry }

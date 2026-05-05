@@ -1,9 +1,12 @@
 id: korrelasjon-glos
 term_no: Korrelasjon (ρ, r)
-short_def: "Tall mellom −1 og 1 som måler styrken på den lineære sammenhengen mellom to variabler."
+short_def: "Tall mellom `−1` og `1` som måler styrken på den lineære sammenhengen mellom to variabler."
 long_def: |
-  ρ(X,Y) = Cov(X,Y) / (σ_X · σ_Y). r = ±1: perfekt lineær sammenheng.
-  r = 0: ingen lineær sammenheng (kan likevel ha annen sammenheng).
+  Formel: `ρ(X,Y) = Cov(X,Y) / (σ_X · σ_Y)`.
+
+  - `r = ±1`: perfekt lineær sammenheng
+  - `r = 0`: ingen lineær sammenheng (kan likevel ha annen sammenheng)
+
   Korrelasjon er ikke det samme som årsak.
 see_also:
   - { id: korrelasjon-joint, kind: entry }

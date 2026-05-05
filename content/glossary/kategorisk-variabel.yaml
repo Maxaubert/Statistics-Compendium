@@ -1,0 +1,18 @@
+id: kategorisk-variabel
+term_no: Kategorisk variabel
+short_def: "Variabel som tar verdier i et begrenset sett av kategorier (kjønn, blodtype, røyker/ikke), ikke tall man regner med."
+long_def: |
+  Kategoriske variabler grupperer observasjoner i klasser. Sannsynlighet
+  for hver kategori, andeler, og uavhengighet mellom kategoriske variabler
+  testes med kjikvadrat-tester. Skiller seg fra numeriske variabler
+  (vekt, høyde) der man bruker gjennomsnitt, varians, t- og z-tester.
+aliases:
+  - kategorisk variabel
+  - kategoriske variable
+  - kategoriske variabler
+  - kategoriske
+  - kategorisk
+see_also:
+  - { id: kjikvadrat-uavhengighet, kind: entry }
+  - { id: kjikvadrat-goodness-of-fit, kind: entry }
+  - { id: kontingenstabell, kind: glossary }

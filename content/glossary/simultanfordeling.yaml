@@ -2,9 +2,13 @@ id: simultanfordeling
 term_no: Simultanfordeling
 short_def: "Tabell eller funksjon som gir P(X=x, Y=y) for alle kombinasjoner av to variabler."
 long_def: |
-  Også kalt fellesfordeling. Summerer til 1 over alle (x, y). Fra
-  simultanfordelingen får du marginalfordelinger (rad/kolonne-summer),
-  betingede fordelinger og kovarians/korrelasjon.
+  Også kalt fellesfordeling. Summerer til `1` over alle `(x, y)`.
+
+  Fra simultanfordelingen får du:
+
+  - Marginalfordelinger (rad-/kolonnesummer)
+  - Betingede fordelinger
+  - Kovarians og korrelasjon
 see_also:
   - { id: fellesfordeling, kind: concept }
   - { id: marginalfordeling, kind: entry }

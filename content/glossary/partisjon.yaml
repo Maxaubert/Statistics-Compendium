@@ -1,0 +1,18 @@
+id: partisjon
+term_no: Partisjon av utfallsrommet
+short_def: "En oppdeling av utfallsrommet i disjunkte hendelser som til sammen dekker alt — f.eks. `{A, A̅}` eller `{A₁, A₂, …, A_k}`."
+long_def: |
+  Hendelsene `A₁, …, A_k` danner en partisjon hvis to krav er oppfylt:
+
+  - Parvis disjunkte: `Aᵢ ∩ Aⱼ = ∅` for `i ≠ j`
+  - Dekker hele utfallsrommet: `A₁ ∪ … ∪ A_k = Ω`
+
+  Brukes i setningen om total sannsynlighet (`P(B) = Σ P(Aᵢ)·P(B|Aᵢ)`) og videre i Bayes' setning.
+aliases:
+  - partisjon
+  - partisjonen
+  - partisjon av utfallsrommet
+see_also:
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: disjunkte-hendelser, kind: concept }

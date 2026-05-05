@@ -1,10 +1,12 @@
 id: residual
 term_no: Residual
-short_def: "Forskjellen mellom observert y og predikert ŷ i en regresjonsmodell."
+short_def: "Forskjellen mellom observert `y` og predikert `ŷ` i en regresjonsmodell."
 long_def: |
-  e_i = y_i − ŷ_i, hvor ŷ_i = α̂ + β̂·x_i. Summen av residualene er 0
-  ved minste kvadraters tilpasning. Variansen til residualene (S_E²)
-  brukes til å lage KI og prediksjonsintervaller i regresjon.
+  Formel: `e_i = y_i − ŷ_i`, der `ŷ_i = α̂ + β̂·x_i`.
+
+  Summen av residualene er `0` ved minste kvadraters tilpasning.
+  Variansen til residualene (`S_E²`) brukes til å lage KI og
+  prediksjonsintervaller i regresjon.
 see_also:
   - { id: regresjon-estimat-alpha-beta, kind: entry }
   - { id: regresjon-residualvarians, kind: entry }

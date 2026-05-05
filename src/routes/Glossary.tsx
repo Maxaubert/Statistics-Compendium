@@ -1,104 +1,7 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { Banner } from "@/components/shell/Banner";
-import { Modal } from "@/components/shell/Modal";
+import { GlossaryPopup } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
-import type { GlossaryTerm } from "@/data/schema";
-
-function relatedRefPath(kind: string, id: string): string {
-  switch (kind) {
-    case "entry":
-      return `/entry/${id}`;
-    case "concept":
-      return `/concept/${id}`;
-    case "table":
-      return `/table/${id}`;
-    case "pattern":
-      return `/monstre/${id}`;
-    case "glossary":
-      return `/ordliste#${id}`;
-    default:
-      return "/";
-  }
-}
-
-interface ModalProps {
-  term: GlossaryTerm;
-  onClose: () => void;
-}
-
-function GlossaryModal({ term, onClose }: ModalProps) {
-  return (
-    <Modal ariaLabel={`Detaljer for termen ${term.term_no}`} onClose={onClose}>
-      <header
-        className="border-b px-7 py-5"
-        style={{ borderColor: "var(--color-calc-border)" }}
-      >
-        <div
-          className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.2em]"
-          style={{ color: "var(--color-calc-label)" }}
-        >
-          Term
-        </div>
-        <h2 className="m-0 mt-0.5 font-serif text-[28px] font-semibold text-white">
-          {term.term_no}
-        </h2>
-      </header>
-
-      <section className="px-7 pt-5">
-        <p
-          className="m-0 text-[15px] leading-relaxed"
-          style={{ color: "var(--color-calc-text)" }}
-        >
-          {term.short_def}
-        </p>
-      </section>
-
-      {term.long_def && (
-        <section className="px-7 pt-4">
-          <p
-            className="m-0 whitespace-pre-line text-[14px] leading-relaxed"
-            style={{ color: "var(--color-calc-text)", opacity: 0.85 }}
-          >
-            {term.long_def}
-          </p>
-        </section>
-      )}
-
-      <div className="px-7 pb-7 pt-5">
-        {term.see_also && term.see_also.length > 0 && (
-          <div
-            className="border-t pt-4 text-[13px]"
-            style={{
-              borderColor: "var(--color-calc-divider)",
-              color: "var(--color-calc-text)",
-            }}
-          >
-            <span
-              className="mr-2 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em]"
-              style={{ color: "var(--color-calc-label)" }}
-            >
-              Se også
-            </span>
-            {term.see_also.map((r, i) => (
-              <span key={`${r.kind}-${r.id}`}>
-                {i > 0 && ", "}
-                <Link
-                  to={relatedRefPath(r.kind, r.id)}
-                  className="underline hover:no-underline"
-                  style={{ color: "var(--color-calc-lookup-border)" }}
-                  onClick={onClose}
-                >
-                  {r.id}
-                </Link>
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </Modal>
-  );
-}
 
 export function Glossary() {
   const data = loadAllContent();
@@ -158,7 +61,7 @@ export function Glossary() {
           <p className="mt-8 text-center text-ink-3">Ingen treff for "{query}".</p>
         )}
       </main>
-      {open && <GlossaryModal term={open} onClose={() => setOpenId(null)} />}
+      {open && <GlossaryPopup term={open} onClose={() => setOpenId(null)} />}
     </div>
   );
 }

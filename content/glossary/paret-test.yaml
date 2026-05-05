@@ -1,12 +1,23 @@
 id: paret-test
 term_no: Paret test (parvis)
-short_def: "Hver observasjon i utvalg 1 hører til en bestemt observasjon i utvalg 2 – test differansen Dᵢ = Xᵢ − Yᵢ."
+short_def: "Hver observasjon i utvalg 1 hører til en bestemt observasjon i utvalg 2 — test differansen `Dᵢ = Xᵢ − Yᵢ`."
+aliases:
+  - paret test
+  - parede tester
+  - parvis test
+  - parvis t-test
+  - paret t-test
+  - parvis
 long_def: |
   Paret design: samme person måles før og etter, eller to målinger gjøres
   på samme enhet. Du regner ikke to-utvalgs-test, men én-utvalgs-test på
-  differansene Dᵢ. H₀: μ_D = 0. Bruker n − 1 frihetsgrader. Fordelen er
-  at variasjon mellom personer fjernes – testen blir kraftigere.
-  Kjennetegn: 'før/etter', 'parvis', 'samme person'.
+  differansene `Dᵢ = Xᵢ − Yᵢ`.
+
+  - **Hypotese:** `H₀: μ_D = 0`
+  - **Frihetsgrader:** `ν = n − 1`
+
+  Fordelen er at variasjon mellom personer fjernes — testen blir kraftigere.
+  Kjennetegn: "før/etter", "parvis", "samme person".
 see_also:
   - { id: en-utvalg-t-test, kind: entry }
   - { id: to-utvalgs-t-test, kind: entry }
