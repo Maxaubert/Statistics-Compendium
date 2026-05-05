@@ -37,12 +37,12 @@ symbols:
 
 filters:
   computes: [hypothesis_test]
-  random_variable: [proportion]
-  setup: [single_population, fixed_n_trials]
-  structural_cues: [success_probability_given, total_observations_n]
+  random_variable: [proportion, discrete_count]
+  setup: [single_population, fixed_n_trials, with_replacement]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
   parameters_known: [success_p, sample_size_large, alpha_significance]
   distribution_assumption: [binomial, normal]
-  tooling: [normal_quantile_table_E4]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
 solution_template:
   - "Formuler hypotesene H₀: p = p₀ vs H₁ (én- eller tosidig)"

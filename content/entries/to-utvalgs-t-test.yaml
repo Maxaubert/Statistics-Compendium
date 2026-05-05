@@ -42,12 +42,12 @@ symbols:
 
 filters:
   computes: [hypothesis_test]
-  random_variable: [difference_of_means]
+  random_variable: [difference_of_means, mean_of_samples, continuous]
   setup: [two_independent_samples]
-  structural_cues: [normal_assumed, data_as_list, summary_stats_given]
-  parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
-  distribution_assumption: [t_distribution]
-  tooling: [t_quantile_table_E5]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, alpha_significance]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
   - "Formuler hypotesene: `H₀: μ_X = μ_Y` vs `H₁` (ensidig eller tosidig)"

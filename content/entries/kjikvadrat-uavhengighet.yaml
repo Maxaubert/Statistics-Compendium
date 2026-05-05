@@ -35,9 +35,9 @@ symbols:
 filters:
   computes: [hypothesis_test, test_independence]
   random_variable: [discrete_count]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, more_than_two_categories]
-  parameters_known: [alpha_significance]
+  setup: [joint_table_given, single_population]
+  structural_cues: [joint_table_present, more_than_two_categories, summary_stats_given, total_observations_n, independent_events]
+  parameters_known: [alpha_significance, sample_size_large]
   distribution_assumption: [chi_squared]
   tooling: [chi_square_quantile_table_E6]
 
