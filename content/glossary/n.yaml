@@ -1,6 +1,9 @@
 id: n
 term_no: n (utvalgsstørrelse)
 short_def: "Antall observasjoner i utvalget."
+filters:
+  structural_cues: [total_observations_n]
+  parameters_known: [sample_size_small_lt30, sample_size_large]
 aliases:
   - utvalgsstørrelse
 long_def: |

@@ -1,6 +1,8 @@
 id: kovarians-glos
 term_no: Kovarians (Cov)
 short_def: "Mål på hvor mye to variabler beveger seg sammen — positiv = samme retning, negativ = motsatt."
+filters:
+  computes: [covariance, correlation]
 long_def: |
   Formel:
 

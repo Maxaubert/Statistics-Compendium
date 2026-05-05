@@ -1,6 +1,9 @@
 id: kumulativ
 term_no: Kumulativ fordeling
 short_def: "`F(x) = P(X ≤ x)` — sannsynligheten for at `X` er mindre enn eller lik `x`."
+filters:
+  computes: [exact_probability, at_least_k, range_probability]
+  tooling: [cumulative_binomial_table_E1, cumulative_poisson_table_E2, standard_normal_table_E3]
 long_def: |
   Standardnormaltabellen E.3 gir:
 

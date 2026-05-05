@@ -1,6 +1,11 @@
 id: kontingenstabell
 term_no: Kontingenstabell (krysstabell, r×c-tabell)
 short_def: "Tabell over antall observasjoner i hver kombinasjon av to kategoriske variabler."
+filters:
+  setup: [joint_table_given]
+  structural_cues: [joint_table_present, more_than_two_categories]
+  distribution_assumption: [chi_squared]
+  computes: [test_independence, hypothesis_test]
 long_def: |
   Hver rad svarer til en verdi av variabel `X`, hver kolonne til en
   verdi av variabel `Y`. Cellen `O_ij` teller hvor mange observasjoner
