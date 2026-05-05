@@ -10,6 +10,8 @@ import { MockupTabs } from "./routes/MockupTabs";
 import { MockupSteps } from "./routes/MockupSteps";
 import { MockupStepsC } from "./routes/MockupStepsC";
 import { MockupTabsSeparated } from "./routes/MockupTabsSeparated";
+import { MockupTabsV2 } from "./routes/MockupTabsV2";
+import { MockupTabsV3 } from "./routes/MockupTabsV3";
 import { MockupProperty } from "./routes/MockupProperty";
 import { NotFound } from "./routes/NotFound";
 
@@ -28,6 +30,8 @@ export function App() {
         <Route path="/mockups/steps" element={<MockupSteps />} />
         <Route path="/mockups/steps/c" element={<MockupStepsC />} />
         <Route path="/mockups/tabs/separated" element={<MockupTabsSeparated />} />
+        <Route path="/mockups/tabs/v2" element={<MockupTabsV2 />} />
+        <Route path="/mockups/tabs/v3" element={<MockupTabsV3 />} />
         <Route path="/mockups/property" element={<MockupProperty />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
