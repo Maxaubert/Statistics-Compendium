@@ -158,9 +158,9 @@ interface BarData {
   bars: number[]; // height in 0..1, normalized by peak
 }
 
-// Binomial(n=10, p=0.5): symmetric, peak at k=5. 11 bars.
+// Binomial(n=8, p=0.5): symmetric, peak at k=4. 9 bars.
 function barsBinomial(): BarData {
-  const n = 10;
+  const n = 8;
   const p = 0.5;
   const ks = Array.from({ length: n + 1 }, (_, i) => i);
   const C: number[] = [1];
@@ -174,10 +174,10 @@ function barsBinomial(): BarData {
   return { bars: probs.map((p) => p / peak) };
 }
 
-// Poisson(λ=2.5): right-skewed. 10 bars (k=0..9).
+// Poisson(λ=2): right-skewed. 8 bars (k=0..7).
 function barsPoisson(): BarData {
-  const λ = 2.5;
-  const ks = Array.from({ length: 10 }, (_, i) => i);
+  const λ = 2;
+  const ks = Array.from({ length: 8 }, (_, i) => i);
   function poissonPmf(k: number) {
     let f = 1;
     for (let i = 1; i <= k; i++) f *= i;
