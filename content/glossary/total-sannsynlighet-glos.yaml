@@ -1,0 +1,17 @@
+id: total-sannsynlighet-glos
+term_no: Setningen om total sannsynlighet
+short_def: "P(B) = Σ P(Aᵢ)·P(B|Aᵢ) over en partisjon {Aᵢ} – bryter P(B) opp i bidrag fra hvert tilfelle."
+long_def: |
+  Når B kan inntreffe på flere disjunkte måter (gjennom A eller A̅, eller en
+  partisjon A₁, A₂, …, A_k), summeres de betingede sannsynlighetene veid
+  med marginalsannsynlighetene: P(B) = Σ P(Aᵢ)·P(B|Aᵢ). Brukes typisk
+  som mellomsteg i Bayes' setning når P(B) ikke er gitt direkte.
+aliases:
+  - total sannsynlighet
+  - totale sannsynlighet
+  - setningen om total sannsynlighet
+  - lov om total sannsynlighet
+see_also:
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }

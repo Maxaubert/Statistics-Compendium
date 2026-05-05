@@ -181,6 +181,7 @@ try {
   await captureSection("varians-standardavvik-diskret", "varians");
   await captureTraps("varians-standardavvik-diskret", "varians");
   await captureTraps("normalfordeling", "normalfordeling");
+  await captureSection("bayes-setning", "bayes");
 } finally {
   await browser.close();
 }

@@ -1,8 +1,44 @@
 import type { GlossaryTerm } from "./schema";
 
 export interface GlossaryAlias {
-  alias: string;        // surface form, lowercased, NFC normalized
+  alias: string;        // surface form (lowercased if caseSensitive=false, original if true)
   termId: string;       // glossary term id
+  /**
+   * When true, prose must match the alias exactly (case-sensitive). Used
+   * for short ALL-CAPS abbreviations like "SE", "KI", "OLS", "CLT" so
+   * lowercase Norwegian words ("se", "ki") don't false-positive into them.
+   */
+  caseSensitive: boolean;
+}
+
+/**
+ * Detect ALL-CAPS abbreviation-like surface forms (SE, KI, OLS, CLT, df-not,
+ * H₀, H₁, R²). These get matched case-sensitively to avoid linking common
+ * Norwegian words like "se" or "ki" to the glossary entry for "SE".
+ *
+ * Heuristic: 1–5 chars, contains at least one A-Z letter, no lowercase
+ * letters. Subscripts/superscripts/digits are allowed.
+ */
+function isAbbreviationLike(s: string): boolean {
+  if (s.length === 0 || s.length > 5) return false;
+  let hasUpper = false;
+  for (const ch of s) {
+    if (ch >= "A" && ch <= "Z") {
+      hasUpper = true;
+      continue;
+    }
+    if (ch >= "a" && ch <= "z") return false;
+    // Allow digits, subscripts, superscripts.
+    const code = ch.charCodeAt(0);
+    if ((code >= 0x30 && code <= 0x39) ||         // 0-9
+        (code >= 0x2080 && code <= 0x2089) ||      // ₀-₉
+        (code >= 0x2070 && code <= 0x2079) ||      // ⁰-⁹
+        ch === "²" || ch === "³" || ch === "¹") {  // common superscripts
+      continue;
+    }
+    return false;
+  }
+  return hasUpper;
 }
 
 /**
@@ -45,6 +81,26 @@ function expandInflections(alias: string): string[] {
   ];
 }
 
+interface AliasEntry {
+  surface: string;        // alias as stored in lookup (lowercased OR cased)
+  caseSensitive: boolean;
+}
+
+/**
+ * For one user-provided surface form, produce the alias entries to add
+ * to the index. ALL-CAPS abbreviations stay cased and case-sensitive
+ * (no inflection). Everything else gets lowercased + Norwegian-suffix
+ * inflection.
+ */
+function aliasEntriesFor(surface: string): AliasEntry[] {
+  const trimmed = surface.trim();
+  if (!trimmed) return [];
+  if (isAbbreviationLike(trimmed)) {
+    return [{ surface: trimmed, caseSensitive: true }];
+  }
+  return expandInflections(trimmed).map((s) => ({ surface: s, caseSensitive: false }));
+}
+
 /**
  * Build the master alias list. For each term we use:
  *   - explicit aliases from YAML, if present, otherwise
@@ -61,11 +117,15 @@ export function buildAliasIndex(glossary: GlossaryTerm[]): GlossaryAlias[] {
     const explicit = term.aliases ?? [];
     const surfaces = explicit.length > 0 ? explicit : [cleanTermNo(term.term_no)];
     for (const s of surfaces) {
-      for (const inflected of expandInflections(s)) {
-        const key = `${inflected}::${term.id}`;
+      for (const entry of aliasEntriesFor(s)) {
+        const key = `${entry.caseSensitive ? "S" : "I"}|${entry.surface}::${term.id}`;
         if (seen.has(key)) continue;
         seen.add(key);
-        out.push({ alias: inflected, termId: term.id });
+        out.push({
+          alias: entry.surface,
+          termId: term.id,
+          caseSensitive: entry.caseSensitive,
+        });
       }
     }
   }
@@ -117,7 +177,8 @@ export function findGlossaryLinks(
     for (const a of aliases) {
       if (a.alias.length === 0) continue;
       if (cursor + a.alias.length > text.length) continue;
-      if (lower.substr(cursor, a.alias.length) !== a.alias) continue;
+      const haystack = a.caseSensitive ? text : lower;
+      if (haystack.substr(cursor, a.alias.length) !== a.alias) continue;
       const before = cursor === 0 ? "" : text[cursor - 1];
       const after = text[cursor + a.alias.length] ?? "";
       if (before && isWordChar(before)) continue;

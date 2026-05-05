@@ -59,10 +59,10 @@ describe("buildAliasIndex", () => {
 
 describe("findGlossaryLinks", () => {
   const aliases: GlossaryAlias[] = [
-    { alias: "stokastisk variabel", termId: "sv" },
-    { alias: "stokastiske", termId: "sv" },
-    { alias: "stokastisk", termId: "sv" },
-    { alias: "varians", termId: "var" },
+    { alias: "stokastisk variabel", termId: "sv", caseSensitive: false },
+    { alias: "stokastiske", termId: "sv", caseSensitive: false },
+    { alias: "stokastisk", termId: "sv", caseSensitive: false },
+    { alias: "varians", termId: "var", caseSensitive: false },
   ];
 
   it("returns single text segment when no aliases match", () => {
@@ -115,5 +115,48 @@ describe("findGlossaryLinks", () => {
 
   it("handles empty input safely", () => {
     expect(findGlossaryLinks("", aliases)).toEqual([{ kind: "text", value: "" }]);
+  });
+
+  it("matches ALL-CAPS abbreviation aliases case-sensitively", () => {
+    const ab: GlossaryAlias[] = [
+      { alias: "SE", termId: "standardfeil", caseSensitive: true },
+      { alias: "varians", termId: "var", caseSensitive: false },
+    ];
+    // Lowercase "se" must NOT match the case-sensitive "SE" alias
+    expect(findGlossaryLinks("regn ut se related", ab)).toEqual([
+      { kind: "text", value: "regn ut se related" },
+    ]);
+    // Uppercase "SE" matches
+    expect(findGlossaryLinks("SE er stor", ab)).toEqual([
+      { kind: "link", value: "SE", termId: "standardfeil" },
+      { kind: "text", value: " er stor" },
+    ]);
+  });
+});
+
+describe("buildAliasIndex case sensitivity", () => {
+  it("marks ALL-CAPS short aliases as case-sensitive and skips inflection", () => {
+    const idx = buildAliasIndex([
+      term("standardfeil", "Standardfeil (SE)", ["standardfeil", "SE"]),
+    ]);
+    const se = idx.find((a) => a.alias === "SE");
+    expect(se).toBeDefined();
+    expect(se!.caseSensitive).toBe(true);
+    // No inflected "se", "seen", etc. that would clash with Norwegian "se".
+    expect(idx.some((a) => a.alias === "se")).toBe(false);
+    expect(idx.some((a) => a.alias === "seen")).toBe(false);
+
+    const sf = idx.find((a) => a.alias === "standardfeil");
+    expect(sf).toBeDefined();
+    expect(sf!.caseSensitive).toBe(false);
+  });
+
+  it("treats subscripted abbreviations like H₀ as case-sensitive", () => {
+    const idx = buildAliasIndex([
+      term("h0", "Nullhypotese (H₀)", ["nullhypotese", "H₀"]),
+    ]);
+    const h0 = idx.find((a) => a.alias === "H₀");
+    expect(h0).toBeDefined();
+    expect(h0!.caseSensitive).toBe(true);
   });
 });
