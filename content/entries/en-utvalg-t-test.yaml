@@ -143,6 +143,36 @@ detailed_solution_variants:
         result: "`T ≈ −1.886 > −1.895` ⇒ behold `H₀` (resultat på grensen)."
   - label: "H₁: μ > μ₀ (høyre)"
     solutions:
+      - source: "Øving 5 · oppgave 2 (rådata, beregn s² først)"
+        question: "Test om gjennomsnittet er over `μ₀ = 14` på signifikansnivå `α = 0.01`. Målinger: 15, 17, 18, 14, 19, 16, 17, 15, 19, 13."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ ≤ 14`" }
+              - { text: "`H₁: μ > 14` (høyresidig)" }
+          - label: "Gjennomsnittet"
+            lines:
+              - { text: "`x̄ = (15 + 17 + 18 + 14 + 19 + 16 + 17 + 15 + 19 + 13)/10 = 163/10 = 16.3`" }
+          - label: "Utvalgsvarians og s"
+            lines:
+              - { text: "`var = ((15−16.3)² + (17−16.3)² + (18−16.3)² + (14−16.3)² + (19−16.3)² + (16−16.3)² + (17−16.3)² + (15−16.3)² + (19−16.3)² + (13−16.3)²)/(10−1)`" }
+              - { indent: "`= (1.69 + 0.49 + 2.89 + 5.29 + 7.29 + 0.09 + 0.49 + 1.69 + 7.29 + 10.89)/9`" }
+              - { indent: "`= 38.10/9 ≈ 4.23`" }
+              - { text: "`s = √4.23 ≈ 2.06`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = (x̄ − μ₀)/(s/√n) = (16.3 − 14)/(2.06/√10)`" }
+              - { indent: "`= 2.3/0.6515 ≈ 3.53`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.01, 9) ≈ 2.821` (høyresidig kritisk verdi)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ 3.53 > 2.821` ✓" }
+              - { text: "Forkast `H₀`." }
+              - { text: "På 1 %-nivå er det signifikant evidens for at `μ > 14`." }
+        result: "`T ≈ 3.53 > 2.821` ⇒ forkast `H₀`. `μ > 14`."
+
       - source: "Praksis · Gjødselpåstand"
         question: "En gjødselprodusent hevder at avlingen er minst `μ₀ = 50` kg/dekar. Et utvalg på `n = 10` jordstykker gir `x̄ = 53` og `s = 4`. Test om `μ > 50` på `α = 0.05`."
         sections:

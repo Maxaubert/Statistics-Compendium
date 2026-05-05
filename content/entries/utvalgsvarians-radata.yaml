@@ -1,0 +1,144 @@
+id: utvalgsvarians-radata
+name_no: "Utvalgsvarians fra rådata"
+type: identity
+category: descriptive_statistics
+tagline: "s² = Σ(x_i − x̄)²/(n − 1) — variansen til en datamengde, beregnet direkte fra observasjonene."
+
+formula_main: "s² = Σ(x_i − x̄)² / (n − 1);  s = √s²"
+formula_latex: "s^2 = \\frac{\\sum_{i=1}^{n} (x_i - \\bar{x})^2}{n - 1}, \\quad s = \\sqrt{s^2}"
+
+what_it_does: |
+  Estimerer variansen til populasjonen X kommer fra, basert på et utvalg
+  av observasjoner `x_1, x_2, …, x_n`. Brukes når du har rådata, men IKKE
+  en kjent sannsynlighetsfordeling — typisk når oppgaven gir deg en liste
+  med målinger.
+
+  Hovedforskjell fra varians-for-diskret-SV: der har du en PMF og veier
+  hvert avvik med `P(X = x)`. Her har du n observasjoner og bruker bare
+  delingen på `n − 1`.
+
+why_use: |
+  Inngangsdata til stort sett alle inferens-prosedyrer der σ er ukjent:
+  én-utvalg t-test, to-utvalgs t-test, KI for μ (ukjent σ), regresjons-
+  residualer. Når oppgaven gir deg en liste med observasjoner og ber om
+  «standardavvik» eller «s», er det denne formelen du vil bruke.
+
+recognition_cues:
+  - "Oppgaven gir en liste med observasjoner (f.eks. «målingene var 297, 300, 293, 296, 304, 302»)"
+  - "Spørsmålet ber om utvalgsstandardavvik s, eller varians s² fra dataene"
+  - "Du trenger s² som inngang til t-test eller KI"
+  - "Ingen sannsynlighetsfordeling er gitt — bare rådata"
+
+when_NOT_to_use:
+  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk varians for diskret SV i stedet"
+  - "Oppgaven oppgir s² eller σ² direkte → ingen utregning nødvendig"
+  - "Du har hele populasjonen (svært sjelden i pensum) → del på `n` i stedet for `n − 1`"
+
+symbols:
+  - { sym: "x_i",   means: "den i-te observasjonen i datamengden" }
+  - { sym: "x̄",     means: "utvalgsgjennomsnittet, x̄ = Σ x_i / n" }
+  - { sym: "n",     means: "antall observasjoner" }
+  - { sym: "n − 1", means: "frihetsgrader (Bessels korreksjon — gir forventningsrett estimator for σ²)" }
+  - { sym: "s²",    means: "utvalgsvariansen — estimat for populasjonsvariansen σ²" }
+  - { sym: "s",     means: "utvalgsstandardavviket, s = √s²" }
+
+filters:
+  computes: [std_dev, parameter_estimate]
+  random_variable: [discrete_count, continuous]
+  setup: [single_population]
+  structural_cues: [data_as_list]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_sqrt]
+
+solution_template:
+  - "Regn ut utvalgsgjennomsnittet: `x̄ = (Σ x_i) / n`"
+  - "For hver observasjon: regn ut avviket `(x_i − x̄)`"
+  - "Kvadrér hvert avvik: `(x_i − x̄)²`"
+  - "Summér alle kvadratavvikene: `Σ (x_i − x̄)²`"
+  - "Del på `n − 1` (IKKE `n`): `s² = Σ (x_i − x̄)² / (n − 1)`"
+  - "Standardavvik: `s = √s²`"
+
+common_traps: |
+  - **Del på `n − 1`, ikke `n`.** Dette er Bessels korreksjon: `n` ville gitt et estimat
+    som systematisk er for lite (skjevt). `n − 1` korrigerer for det faktum at vi har
+    «brukt opp» én frihetsgrad ved å estimere `x̄` fra dataene.
+  - **Avvikene `(x_i − x̄)` summerer alltid til 0** — det er definisjonen av gjennomsnittet.
+    Hvis summen ikke blir 0, har du regnet feil et sted.
+  - **Kvadrér FØR du summerer.** Du kan ikke dele kvadratet av summen på `n − 1`.
+  - **`s` har samme enhet som dataene** (f.eks. cm, watt, kr), mens `s²` har enheten
+    kvadrert. Hvis oppgaven ber om standardavvik, oppgi `s`, ikke `s²`.
+
+python_snippet: |
+  import statistics
+
+  data = [297, 300, 293, 296, 304, 302]
+  s2 = statistics.variance(data)            # bruker n - 1 (Bessels korreksjon)
+  s  = statistics.stdev(data)               # = √s²
+
+  # Eller manuelt:
+  n = len(data)
+  x_bar = sum(data) / n
+  s2_manual = sum((x - x_bar)**2 for x in data) / (n - 1)
+
+detailed_solution_variants:
+  - label: "s² fra rådata"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 4b (såpebeholdere)"
+        question: "6 såpebeholdere ble målt: 297, 300, 293, 296, 304, 302 ml. Finn utvalgsstandardavviket s."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har `n = 6` observasjoner som rådata, ingen kjent fordeling." }
+              - { text: "Bruker formel for utvalgsvarians med `n − 1 = 5` frihetsgrader." }
+          - label: "Gjennomsnittet"
+            lines:
+              - { text: "`x̄ = (297 + 300 + 293 + 296 + 304 + 302) / 6`" }
+              - { indent: "`= 1792 / 6 ≈ 298.67`" }
+          - label: "Avvik og kvadrér"
+            lines:
+              - { text: "`(x_i − x̄)²` for hver observasjon:" }
+              - { indent: "`(297 − 298.67)² = (−1.67)² ≈ 2.79`" }
+              - { indent: "`(300 − 298.67)² = (1.33)² ≈ 1.77`" }
+              - { indent: "`(293 − 298.67)² = (−5.67)² ≈ 32.15`" }
+              - { indent: "`(296 − 298.67)² = (−2.67)² ≈ 7.13`" }
+              - { indent: "`(304 − 298.67)² = (5.33)² ≈ 28.41`" }
+              - { indent: "`(302 − 298.67)² = (3.33)² ≈ 11.09`" }
+          - label: "Summer og del"
+            lines:
+              - { text: "Sum: `2.79 + 1.77 + 32.15 + 7.13 + 28.41 + 11.09 ≈ 83.34`" }
+              - { text: "`s² = 83.34 / (6 − 1) = 83.34 / 5 ≈ 16.67`" }
+              - { text: "`s = √16.67 ≈ 4.08` ml" }
+        result: "s² ≈ 16.67 ml², s ≈ 4.08 ml"
+
+      - source: "Eksamen jan26 · oppgave 5b (klassetest, ny metode)"
+        question: "Resultater fra ny metode (n = 9): 82, 62, 77, 94, 32, 62, 91, 89, 81. Finn `s_Y²`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 9` observasjoner. Trenger `s_Y²` som inngang til pooled t-test." }
+          - label: "Gjennomsnittet"
+            lines:
+              - { text: "`ȳ = (82 + 62 + 77 + 94 + 32 + 62 + 91 + 89 + 81) / 9`" }
+              - { indent: "`= 670 / 9 ≈ 74.44`" }
+          - label: "Sum av kvadratavvik"
+            lines:
+              - { text: "Avviket fra hver observasjon kvadrert og summert:" }
+              - { indent: "`Σ (y_i − ȳ)² ≈ 3086.22`" }
+              - { comment: "Praktisk tips: Σ y_i² − n·ȳ² = 52964 − 9·74.44² ≈ 3086.22 (samme svar, færre kvadreringer)." }
+          - label: "Del på n − 1"
+            lines:
+              - { text: "`s_Y² = 3086.22 / (9 − 1) = 3086.22 / 8 ≈ 385.78`" }
+              - { text: "`s_Y = √385.78 ≈ 19.64`" }
+        result: "s_Y² ≈ 385.78, s_Y ≈ 19.64"
+
+related:
+  - { id: "varians-standardavvik-diskret", kind: "entry" }
+  - { id: "ki-mu-ukjent-sigma",            kind: "entry" }
+  - { id: "en-utvalg-t-test",              kind: "entry" }
+  - { id: "to-utvalgs-t-test",             kind: "entry" }
+  - { id: "varians",                       kind: "concept" }
+  - { id: "frihetsgrader",                 kind: "concept" }
+
+tools:
+  - "Kalkulator: kvadrering, sum, kvadratrot"

@@ -124,6 +124,7 @@ related:
   - { id: "varians-standardavvik-diskret", kind: "entry" }
   - { id: "marginalfordeling",             kind: "entry" }
   - { id: "kovarians",                     kind: "entry" }
+  - { id: "forventningsverdi",             kind: "concept" }
 
 tools:
   - "Kalkulator: multiplikasjon, addisjon"

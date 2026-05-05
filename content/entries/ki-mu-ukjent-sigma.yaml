@@ -88,25 +88,31 @@ detailed_solution_variants:
               - { text: "`KI = 71.30 ± 10.25 = [61.05, 81.55]`" }
         result: "`95 % KI for μ: [61.05, 81.55]`"
 
-      - source: "Praksis · liten produktprøve"
+      - source: "Praksis · liten produktprøve (rådata)"
         question: "Innholdet av 6 såpebeholdere ble målt: 297, 300, 293, 296, 304, 302 ml. Finn et 95 % KI for forventet fyllingsmengde, uten å forutsette kjent `σ`."
         sections:
-          - label: "Identifisering"
+          - label: "Gjennomsnittet"
             lines:
-              - { text: "`n = 6`. Først regn `x̄` og `s` fra dataene." }
-              - { text: "`x̄ = (297+300+293+296+304+302)/6 = 1792/6 ≈ 298.67`" }
-              - { text: "`s² = Σ(x_i − x̄)²/(n−1) = (1.78 + 1.78 + 32.11 + 7.11 + 28.44 + 11.11)/5 ≈ 16.47`, så `s ≈ 4.06`." }
+              - { text: "`n = 6`. Først regn `x̄` fra rådataene:" }
+              - { text: "`x̄ = (297 + 300 + 293 + 296 + 304 + 302)/6 = 1792/6 ≈ 298.67`" }
+          - label: "Utvalgsvarians og s"
+            lines:
+              - { text: "`var = ((297−298.67)² + (300−298.67)² + (293−298.67)² + (296−298.67)² + (304−298.67)² + (302−298.67)²)/(6−1)`" }
+              - { indent: "`= ((−1.67)² + (1.33)² + (−5.67)² + (−2.67)² + (5.33)² + (3.33)²)/5`" }
+              - { indent: "`= (2.79 + 1.77 + 32.15 + 7.13 + 28.41 + 11.09)/5`" }
+              - { indent: "`= 83.34/5 ≈ 16.67`" }
+              - { text: "`s = √16.67 ≈ 4.08`" }
           - label: "Kvantil"
             lines:
-              - { text: "`ν = 5`, `α/2 = 0.025`." }
+              - { text: "`ν = n − 1 = 5`, `α/2 = 0.025`." }
               - { table_lookup: { ref: "E.5", text: "`t_(0.025, 5) = 2.571`." } }
-          - label: "Margin"
-            lines:
-              - { text: "`margin = 2.571 · 4.06/√6 ≈ 4.27`" }
           - label: "Intervall"
             lines:
-              - { text: "`KI = 298.67 ± 4.27 ≈ [294.40, 302.94]`" }
-        result: "`95 % KI for μ: [294.40, 302.94] ml`"
+              - { text: "`KI = x̄ ± t_(α/2, ν) · s/√n`" }
+              - { indent: "`= 298.67 ± 2.571 · 4.08/√6`" }
+              - { indent: "`= 298.67 ± 4.28`" }
+              - { indent: "`= [294.39, 302.95]`" }
+        result: "`95 % KI for μ: [294.39, 302.95] ml`"
 
 related:
   - { id: "normalfordeling",       kind: "entry" }

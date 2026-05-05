@@ -1,0 +1,111 @@
+id: forventningsverdi
+name_no: "Forventningsverdi (oversikt over de ulike formene)"
+type: concept
+tagline: "E[X] = vektet gjennomsnitt. Alle formene er samme idé med forskjellige vekter eller datakilder."
+
+what_it_means: |
+  Forventningsverdien er det «vektede gjennomsnittet» av en variabels mulige
+  verdier. Tenk på den som det langsiktige snittet hvis du gjentok eksperimentet
+  uendelig mange ganger.
+
+  Den grunnleggende ideen er alltid den samme:
+
+      forventningsverdi = «sum av verdi · vekt»
+
+  Vekten er sannsynligheten (for SV) eller `1/n` (for et utvalg). Under er
+  formene du møter i pensum og når hver passer.
+
+  ---
+
+  **1. Diskret SV med sannsynlighetsfordeling**
+
+      E[X] = Σ x_i · P(X = x_i)
+
+  Bruk når: Du har en PMF-tabell — verdier `x_i` og tilhørende sannsynligheter.
+  Multiplisér hver verdi med sin sannsynlighet, summér.
+
+  Entry: `Forventningsverdi for diskret stokastisk variabel`.
+
+  ---
+
+  **2. Kontinuerlig SV (integral-form)**
+
+      E[X] = ∫ x · f(x) dx
+
+  Bruk når: X er kontinuerlig (vekt, tid, lengde) med tetthet `f(x)`. I praksis
+  bruker du ferdige formler — for normalfordelingen er `E[X] = μ`, for
+  eksponentialen er `E[T] = 1/λ`. Du regner sjelden integralet selv.
+
+  Sjekk de aktuelle fordelings-entries for konkrete verdier.
+
+  ---
+
+  **3. Utvalgsgjennomsnitt fra rådata**
+
+      x̄ = Σ x_i / n
+
+  Bruk når: Du har en liste med `n` observasjoner. Bare summér og del på `n`.
+  Dette er IKKE en forventningsverdi i streng forstand — det er et estimat
+  for forventningsverdien, basert på dataene dine.
+
+  Sammenheng: Hvis observasjonene er uavhengige fra samme fordeling med
+  forventning `μ`, så er `E[X̄] = μ`. Det vil si at utvalgsgjennomsnittet
+  er en forventningsrett (unbiased) estimator.
+
+  ---
+
+  **4. Lineæritet — `E[aX + b] = a·E[X] + b`**
+
+  Skalering og forskyvning kommer rett ut av forventningen.
+
+  Eksempel: `Y = 2X + 5` med `E[X] = 3` gir `E[Y] = 2·3 + 5 = 11`.
+
+  Brukes ofte som snarvei for å unngå å regne ut hele PMF-en på nytt.
+
+  ---
+
+  **5. Sum av variabler — `E[X + Y] = E[X] + E[Y]`**
+
+  Forventningen til en sum er summen av forventningene. **Krever IKKE uavhengighet.**
+  Dette er en av de mest brukte og mest robuste reglene i sannsynlighetsregning.
+
+  Eksempel: `E[X_1 + X_2 + … + X_n] = n · μ` for `n` iid kopier.
+
+  Konsekvens: For utvalgsgjennomsnittet `X̄ = (X_1 + … + X_n)/n`, blir
+  `E[X̄] = μ`.
+
+  ---
+
+  **6. Produkt under uavhengighet — `E[X · Y] = E[X] · E[Y]`**
+
+  Forventningen til et produkt er produktet av forventningene HVIS X og Y er
+  uavhengige. Hvis ikke, må du regne `E[X·Y]` direkte fra simultanfordelingen
+  (`E[X·Y] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)`).
+
+  Sammenheng: `Cov(X, Y) = E[X·Y] − E[X]·E[Y]`. Hvis X og Y er uavhengige er
+  kovariansen 0.
+
+  Brukes i: `Kovarians`-entry, ved utregning av varianser av summer.
+
+  ---
+
+  Sammenhengen mellom formene: form 1 og 2 er for SV med kjent fordeling.
+  Form 3 er for rådata. Form 4–6 er regneregler som lar deg unngå å regne
+  ut nye forventninger fra grunn av — du bygger dem fra det du allerede har.
+  Mange eksamensoppgaver løses raskere ved å bruke lineæritet i stedet for
+  å regne ut en transformert SV direkte.
+
+recognition_cues:
+  - "Oppgaven ber om E[X], μ, eller forventningsverdien"
+  - "Oppgaven gir en transformert variabel (Y = aX + b) og spør om E[Y]"
+  - "Oppgaven gir simultanfordeling og spør om E[X · Y] eller E[X + Y]"
+  - "Du har rådata og trenger gjennomsnittet x̄"
+
+filters: {}
+
+related:
+  - { id: "forventningsverdi-diskret",  kind: "entry" }
+  - { id: "marginalfordeling",          kind: "entry" }
+  - { id: "kovarians",                  kind: "entry" }
+  - { id: "varians",                    kind: "concept" }
+  - { id: "fellesfordeling",            kind: "concept" }

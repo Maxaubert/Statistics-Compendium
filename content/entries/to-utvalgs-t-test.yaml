@@ -50,13 +50,15 @@ filters:
   tooling: [t_quantile_table_E5]
 
 solution_template:
-  - "Formuler hypotesene: H₀: μ_X = μ_Y vs H₁ (ensidig eller tosidig)"
-  - "Begrunn uparet t-test (to grupper, ukjent σ, normalfordelte)"
-  - "Beregn x̄, ȳ, s_X², s_Y² fra dataene"
-  - "Beregn pooled varians: s_P² = ((n_X-1)s_X² + (n_Y-1)s_Y²) / (n_X + n_Y - 2)"
-  - "Beregn testobservatoren t = (x̄ - ȳ) / (s_P · √(1/n_X + 1/n_Y))"
-  - "Finn kvantil t_(α,ν) eller t_(α/2,ν) i tabell E.5 med ν = n_X + n_Y - 2"
+  - "Formuler hypotesene: `H₀: μ_X = μ_Y` vs `H₁` (ensidig eller tosidig)"
+  - "Begrunn uparet t-test (to uavhengige grupper, ukjent σ, normalfordelte)"
+  - "Beregn `x̄`, `ȳ`, `s_X²`, `s_Y²` fra dataene"
+  - "Beregn pooled varians: `s_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)`"
+  - "Beregn testobservatoren: `T = (x̄ − ȳ) / (s_P · √(1/n_X + 1/n_Y))`"
+  - "Finn kvantil `t_(α, ν)` (ensidig) eller `t_(α/2, ν)` (tosidig) i tabell E.5 med `ν = n_X + n_Y − 2` frihetsgrader"
   - "Sammenlign og konkluder"
+  - text: "Alternativ: Welch t-test bruker `T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)` og krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
+    conditional: true
 
 common_traps: |
   Tegnet på testobservatoren avhenger av rekkefølgen X − Y vs Y − X. Hvis
