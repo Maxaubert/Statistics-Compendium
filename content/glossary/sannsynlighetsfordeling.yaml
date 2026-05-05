@@ -7,10 +7,17 @@ long_def: |
   - **PMF** = *probability mass function* (sannsynlighetsmassefunksjon) — for diskrete variabler.
   - **PDF** = *probability density function* (tetthetsfunksjon) — for kontinuerlige variabler.
 
-  Konkret:
+  **Diskret stokastisk variabel (PMF):** sannsynlighet for hver verdi `xᵢ`:
 
-  - **Diskret stokastisk variabel (PMF):** `P(X = xᵢ)` for hver mulig `xᵢ`, med `Σ P(X = xᵢ) = 1`.
-  - **Kontinuerlig stokastisk variabel (PDF):** tetthet `f(x) ≥ 0` med `∫ f(x) dx = 1`. Sannsynlighet for et intervall: `P(a ≤ X ≤ b) = ∫_a^b f(x) dx`.
+      P(X = xᵢ)        med    Σ P(X = xᵢ) = 1
+
+  **Kontinuerlig stokastisk variabel (PDF):** tetthet `f(x) ≥ 0` med:
+
+      ∫ f(x) dx = 1
+
+  Sannsynlighet for et intervall regnes som integral:
+
+      P(a ≤ X ≤ b) = ∫_a^b f(x) dx
 
   PMF/PDF er fundamentet for `E[X]`, `Var(X)`, KI og hypotesetester.
 aliases:

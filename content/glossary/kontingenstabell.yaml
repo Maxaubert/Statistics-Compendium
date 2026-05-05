@@ -6,10 +6,15 @@ long_def: |
   verdi av variabel `Y`. Cellen `O_ij` teller hvor mange observasjoner
   som har `X = i` og `Y = j`.
 
-  Brukes som input til kjikvadrat-test for uavhengighet:
+  Brukes som input til kjikvadrat-test for uavhengighet.
 
-  - **Forventet antall:** `E_ij = (rad-sum × kol-sum) / totalsum`
-  - **Testobservator:** `χ² = Σ (O − E)² / E`
+  **Forventet antall under H₀:**
+
+      E_ij = (rad-sum × kol-sum) / totalsum
+
+  **Testobservator:**
+
+      χ² = Σ (O − E)² / E
 aliases:
   - kontingenstabell
   - kontingenstabellen

@@ -7,9 +7,15 @@ aliases:
   - konstantleddet
   - skjæringspunkt
 long_def: |
-  I `Y = α + β·X + ε` er `α` intercept. Estimatet er `α̂ = ȳ − β̂·x̄`.
+  I modellen
 
-  Tolkning som "verdien når `X = 0`" gir mening bare hvis `X = 0`
+      Y = α + β·X + ε
+
+  er `α` intercept. Estimatet:
+
+      α̂ = ȳ − β̂·x̄
+
+  Tolkning som «verdien når `X = 0`» gir mening bare hvis `X = 0`
   ligger innenfor observerte data; ellers er det en matematisk konstant.
 see_also:
   - { id: regresjon-estimat-alpha-beta, kind: entry }

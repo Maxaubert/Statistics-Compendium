@@ -10,8 +10,13 @@ long_def: |
   (`μ = 0`, `σ = 1`). Brukes både til å sammenligne verdier på ulike
   skalaer og som testobservator i z-test.
 
-  - **Enkel observasjon:** `Z = (X − μ)/σ`
-  - **Utvalgsgjennomsnitt:** `Z = (X̄ − μ₀)/(σ/√n)`
+  **Enkel observasjon:**
+
+      Z = (X − μ) / σ
+
+  **Utvalgsgjennomsnitt:**
+
+      Z = (X̄ − μ₀) / (σ/√n)
 
   Slå opp sannsynligheter eller kvantiler i E.3- / E.4-tabellene.
 see_also:

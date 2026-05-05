@@ -2,13 +2,17 @@ id: komplement
 term_no: Komplement (Ā, A^c)
 short_def: "Hendelsen «ikke A» — alle utfall som ikke ligger i `A`. `P(Ā) = 1 − P(A)`."
 long_def: |
-  Komplementet skrives `Ā`, `A^c` eller `A'`. Komplementregelen
-  `P(Ā) = 1 − P(A)` er en av de enkleste, men mest nyttige reglene.
+  Komplementet skrives `Ā`, `A^c` eller `A'`. Komplementregelen er en
+  av de enkleste, men mest nyttige reglene:
 
-  Brukes når det er lettere å regne "minst én" som "1 − ingen", eller
-  "ikke alle" som "1 − alle".
+      P(Ā) = 1 − P(A)
 
-  **Eksempel:** `P("minst én treff i n forsøk") = 1 − P("null treff") = 1 − (1 − p)^n`
+  Brukes når det er lettere å regne «minst én» som «1 − ingen», eller
+  «ikke alle» som «1 − alle».
+
+  **Eksempel** — minst én treff i `n` forsøk:
+
+      P(minst én treff) = 1 − P(null treff) = 1 − (1 − p)^n
 see_also:
   - { id: komplementregelen, kind: entry }
   - { id: hendelse, kind: glossary }

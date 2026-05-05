@@ -2,11 +2,16 @@ id: gjennomsnitt
 term_no: Gjennomsnitt (X̄, μ)
 short_def: "Summen av observasjoner delt på antallet — det aritmetiske midlet."
 long_def: |
-  - **Utvalgsgjennomsnitt:** `X̄ = (1/n) · Σ xᵢ` — trenger rådata.
-  - **Forventningsverdi (populasjon):** `μ = E[X]` — en parameter, ikke regnet fra data.
+  **Utvalgsgjennomsnitt** (trenger rådata):
+
+      X̄ = (1/n) · Σ xᵢ
+
+  **Forventningsverdi** (populasjon, en parameter):
+
+      μ = E[X]
 
   Sentralgrenseteoremet: `X̄` er tilnærmet `N(μ, σ/√n)` for store `n`,
-  uansett hvilken fordeling `X_i` har. Spredningen i selve `X̄` er
+  uansett hvilken fordeling `Xᵢ` har. Spredningen i selve `X̄` er
   derfor `σ/√n` — se variansen til utvalgsgjennomsnittet.
 see_also:
   - { id: forventningsverdi-diskret, kind: entry }

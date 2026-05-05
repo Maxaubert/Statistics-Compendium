@@ -2,12 +2,20 @@ id: observatortest
 term_no: Testobservator
 short_def: "Tallet du regner ut fra dataene og sammenligner mot tabell — typisk `Z`, `T` eller `χ²`."
 long_def: |
-  Testobservatoren standardiserer dataene under H₀ slik at du kan slå opp
-  i en tabell. Sammenlign |observator| mot kritisk verdi.
+  Testobservatoren standardiserer dataene under `H₀` slik at du kan slå opp
+  i en tabell. Sammenlign `|observator|` mot kritisk verdi.
 
-  - **Z-test:** `Z = (X̄ − μ₀)/(σ/√n)`
-  - **T-test:** `T = (X̄ − μ₀)/(s/√n)` (bytt σ med s)
-  - **Kjikvadrat:** `χ² = Σ (O − E)²/E`
+  **Z-test:**
+
+      Z = (X̄ − μ₀) / (σ/√n)
+
+  **T-test** (bytt σ med s):
+
+      T = (X̄ − μ₀) / (s/√n)
+
+  **Kjikvadrat:**
+
+      χ² = Σ (O − E)² / E
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
   - { id: en-utvalg-t-test, kind: entry }
