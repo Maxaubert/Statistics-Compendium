@@ -2,9 +2,11 @@ id: mu
 term_no: My (μ)
 short_def: "Populasjonens forventningsverdi — det «sanne» gjennomsnittet du prøver å estimere."
 filters:
-  parameters_known: [mean_known]
-  random_variable: [mean_of_samples]
-  computes: [expected_value, parameter_estimate, confidence_interval]
+  parameters_known: [mean_known, population_variance_unknown, population_variance_known]
+  random_variable: [mean_of_samples, difference_of_means]
+  computes: [expected_value, parameter_estimate, confidence_interval, find_mu_for_threshold, hypothesis_test]
+  setup: [two_independent_samples]
+  distribution_assumption: [normal, t_distribution]
 aliases:
   - μ
   - my

@@ -5,6 +5,8 @@ filters:
   computes: [correlation, covariance]
   setup: [linear_relationship]
   structural_cues: [linear_relationship_suspected]
+  random_variable: [slope_estimate]
+  parameters_known: [sum_xx_sxy]
 long_def: |
   Formel:
 

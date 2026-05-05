@@ -4,7 +4,10 @@ short_def: "Tilnærming der en diskret fordeling (binomial, poisson) byttes ut m
 filters:
   distribution_assumption: [normal, binomial, poisson]
   tooling: [standard_normal_table_E3]
-  parameters_known: [sample_size_large]
+  parameters_known: [sample_size_large, rate_lambda, success_p]
+  computes: [confidence_interval]
+  random_variable: [proportion, mean_of_samples]
+  structural_cues: [two_outcomes_per_trial]
 long_def: |
   **Binomial:** hvis `n·p·(1−p) ≥ 5`, så
 

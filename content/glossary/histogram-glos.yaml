@@ -3,6 +3,7 @@ term_no: Histogram
 short_def: "Stolpediagram der hver stolpe viser frekvensen (eller tettheten) i et tallintervall."
 filters:
   structural_cues: [data_as_list]
+  distribution_assumption: [normal, none_assumed]
 long_def: |
   Histogrammet deler dataene i kasser (bins) og tegner en stolpe med
   høyde lik antall observasjoner i hver kasse.

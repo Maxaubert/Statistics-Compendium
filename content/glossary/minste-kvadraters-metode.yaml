@@ -6,6 +6,7 @@ filters:
   random_variable: [slope_estimate]
   structural_cues: [linear_relationship_suspected]
   computes: [parameter_estimate]
+  parameters_known: [sum_xx_sxy]
 aliases:
   - minste kvadraters metode
   - minste kvadraters

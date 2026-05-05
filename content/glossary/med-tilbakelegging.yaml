@@ -4,7 +4,9 @@ short_def: "Du putter trekningen tilbake før neste — hver trekning er uavheng
 filters:
   setup: [with_replacement, fixed_n_trials]
   distribution_assumption: [binomial]
-  structural_cues: [independent_events]
+  structural_cues: [independent_events, two_outcomes_per_trial, success_probability_given]
+  computes: [exact_probability]
+  parameters_known: [success_p]
 long_def: |
   Klassisk eksempel: trekke kuler fra en urne og legge dem tilbake mellom
   hver trekning. Hver trekning er uavhengig, og `p` forblir konstant.

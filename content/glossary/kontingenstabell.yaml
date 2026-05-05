@@ -5,7 +5,8 @@ filters:
   setup: [joint_table_given]
   structural_cues: [joint_table_present, more_than_two_categories]
   distribution_assumption: [chi_squared]
-  computes: [test_independence, hypothesis_test]
+  computes: [test_independence, hypothesis_test, joint_probability, marginal_probability]
+  tooling: [chi_square_quantile_table_E6]
 long_def: |
   Hver rad svarer til en verdi av variabel `X`, hver kolonne til en
   verdi av variabel `Y`. Cellen `O_ij` teller hvor mange observasjoner

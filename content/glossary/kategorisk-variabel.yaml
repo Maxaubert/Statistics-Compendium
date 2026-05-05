@@ -2,9 +2,11 @@ id: kategorisk-variabel
 term_no: Kategorisk variabel
 short_def: "Variabel som tar verdier i et begrenset sett av kategorier (kjønn, blodtype, røyker/ikke), ikke tall man regner med."
 filters:
-  structural_cues: [more_than_two_categories]
+  structural_cues: [more_than_two_categories, joint_table_present, two_outcomes_per_trial]
   distribution_assumption: [chi_squared]
   computes: [test_independence, hypothesis_test]
+  random_variable: [proportion]
+  tooling: [chi_square_quantile_table_E6]
 long_def: |
   Kategoriske variabler grupperer observasjoner i klasser. Sannsynlighet
   for hver kategori, andeler, og uavhengighet mellom kategoriske variabler
