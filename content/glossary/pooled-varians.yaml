@@ -4,9 +4,11 @@ short_def: "Felles variansestimat for to grupper: `S_P² = ((n_X−1)·s_X² + (
 filters:
   setup: [two_independent_samples]
   random_variable: [difference_of_means]
-  parameters_known: [population_variance_unknown]
+  parameters_known: [population_variance_unknown, confidence_level]
   distribution_assumption: [t_distribution]
-  computes: [hypothesis_test, std_dev]
+  computes: [hypothesis_test, std_dev, confidence_interval]
+  structural_cues: [summary_stats_given]
+  tooling: [t_quantile_table_E5]
 long_def: |
   Formel:
 

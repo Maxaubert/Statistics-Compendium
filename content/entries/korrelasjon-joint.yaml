@@ -30,14 +30,13 @@ symbols:
   - { sym: "σ_X, σ_Y", means: "standardavvikene til X og Y" }
 
 filters:
-  computes: [correlation, covariance]
+  computes: [correlation, covariance, std_dev]
   random_variable: [discrete_count]
   setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given]
+  structural_cues: [joint_table_present, summary_stats_given, linear_relationship_suspected]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
-
 solution_template:
   - "Beregn først μ_X, μ_Y, σ_X, σ_Y"
   - "Beregn Cov(X,Y)"

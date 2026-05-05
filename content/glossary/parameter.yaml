@@ -3,6 +3,10 @@ term_no: Parameter
 short_def: "En ukjent populasjonsstørrelse (μ, σ², p, λ) som du vil estimere fra data."
 filters:
   computes: [parameter_estimate]
+  random_variable: [proportion]
+  setup: [events_in_window, single_population]
+  parameters_known: [success_p, rate_lambda]
+  distribution_assumption: [poisson, binomial]
 long_def: |
   Parametere beskriver populasjonen og er konstante (ikke tilfeldige).
   Vanlige parametere:

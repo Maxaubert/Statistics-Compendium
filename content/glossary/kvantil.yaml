@@ -4,6 +4,8 @@ short_def: "Verdien som har en gitt sannsynlighet til venstre for seg i en forde
 filters:
   tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6, standard_normal_table_E3]
   computes: [confidence_interval, hypothesis_test, find_x_for_threshold]
+  parameters_known: [alpha_significance, confidence_level, population_variance_unknown]
+  distribution_assumption: [normal, t_distribution]
 long_def: |
   `α`-kvantilen i øvre hale er definert ved:
 

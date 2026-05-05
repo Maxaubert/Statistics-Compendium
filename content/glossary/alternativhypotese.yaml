@@ -3,6 +3,9 @@ term_no: Alternativhypotese (H₁)
 short_def: "Påstanden du vil bevise — det `H₀` må vike for hvis dataene er ekstreme nok."
 filters:
   computes: [hypothesis_test]
+  random_variable: [proportion, slope_estimate]
+  setup: [linear_relationship]
+  parameters_known: [alpha_significance, success_p]
 aliases:
   - alternativhypotese
   - alternativhypotesen

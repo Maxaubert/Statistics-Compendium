@@ -5,6 +5,8 @@ filters:
   setup: [linear_relationship]
   structural_cues: [linear_relationship_suspected]
   computes: [parameter_estimate]
+  random_variable: [slope_estimate]
+  parameters_known: [sum_xx_sxy]
 aliases:
   - intercept
   - konstantledd

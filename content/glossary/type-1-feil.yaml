@@ -4,6 +4,7 @@ short_def: "Å forkaste `H₀` når `H₀` faktisk er sann — falsk alarm."
 filters:
   computes: [hypothesis_test]
   parameters_known: [alpha_significance]
+  distribution_assumption: [normal]
 long_def: |
   Sannsynligheten for type-I-feil er lik signifikansnivået `α`. Hvis du
   setter `α = 0.05`, godtar du 5 % sjanse for falsk alarm.

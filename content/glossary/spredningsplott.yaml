@@ -4,6 +4,7 @@ short_def: "Punkter `(x_i, y_i)` i et koordinatsystem — viser sammenheng, retn
 filters:
   setup: [linear_relationship]
   structural_cues: [linear_relationship_suspected, data_as_list]
+  computes: [correlation]
 aliases:
   - spredningsplott
   - scatter plot

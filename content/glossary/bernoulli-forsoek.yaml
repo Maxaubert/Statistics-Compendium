@@ -6,6 +6,8 @@ filters:
   setup: [fixed_n_trials]
   structural_cues: [two_outcomes_per_trial, success_probability_given]
   parameters_known: [success_p]
+  computes: [parameter_estimate, exact_probability]
+  random_variable: [proportion, discrete_count]
 long_def: |
   Et Bernoulli-forsøk er ett enkelt eksperiment med eksakt to utfall:
   "suksess" (sannsynlighet `p`) eller "fiasko" (sannsynlighet `1 − p`).

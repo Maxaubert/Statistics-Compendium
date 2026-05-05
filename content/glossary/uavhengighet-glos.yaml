@@ -2,8 +2,9 @@ id: uavhengighet-glos
 term_no: Uavhengighet (uavhengige hendelser)
 short_def: "`A` og `B` er uavhengige hvis `P(A ∩ B) = P(A)·P(B)` — `A` endrer ikke sannsynligheten for `B`."
 filters:
-  structural_cues: [independent_events]
+  structural_cues: [independent_events, joint_table_present]
   computes: [test_independence, joint_probability]
+  setup: [joint_table_given]
 long_def: |
   Tre ekvivalente definisjoner:
 

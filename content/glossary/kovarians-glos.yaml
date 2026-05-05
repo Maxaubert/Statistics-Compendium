@@ -3,6 +3,8 @@ term_no: Kovarians (Cov)
 short_def: "Mål på hvor mye to variabler beveger seg sammen — positiv = samme retning, negativ = motsatt."
 filters:
   computes: [covariance, correlation]
+  setup: [linear_relationship, joint_table_given]
+  structural_cues: [linear_relationship_suspected, joint_table_present, data_as_list]
 long_def: |
   Formel:
 

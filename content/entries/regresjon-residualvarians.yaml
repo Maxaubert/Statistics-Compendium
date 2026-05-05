@@ -34,11 +34,10 @@ filters:
   computes: [parameter_estimate, std_dev]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, total_observations_n]
   parameters_known: [residual_variance, population_variance_unknown]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
-
 solution_template:
   - "Beregn SSE = Σ(y_i - α̂ - β̂·x_i)² (eller hent fra tabell)"
   - "S_E² = SSE / (n - 2)"

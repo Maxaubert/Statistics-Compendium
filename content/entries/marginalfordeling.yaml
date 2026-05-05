@@ -38,14 +38,13 @@ symbols:
   - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
 
 filters:
-  computes: [marginal_probability, exact_probability]
+  computes: [marginal_probability, exact_probability, test_independence]
   random_variable: [discrete_count]
   setup: [joint_table_given]
   structural_cues: [joint_table_present, summary_stats_given]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 solution_template:
   - "For P(X=x): summer langs raden i simultantabellen"
   - "For P(Y=y): summer langs kolonnen"

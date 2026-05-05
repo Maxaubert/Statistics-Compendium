@@ -4,6 +4,9 @@ short_def: "Plotter empiriske kvantiler mot teoretiske kvantiler — punkter på
 filters:
   distribution_assumption: [normal]
   structural_cues: [data_as_list, normal_assumed]
+  computes: [confidence_interval]
+  setup: [single_population]
+  parameters_known: [sample_size_small_lt30]
 aliases:
   - qq-plott
   - qq plott

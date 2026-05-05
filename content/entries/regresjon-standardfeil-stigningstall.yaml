@@ -27,14 +27,13 @@ symbols:
   - { sym: "S_XX",    means: "Σ(x_i - x̄)² (sum av kvadrerte avvik for x)" }
 
 filters:
-  computes: [parameter_estimate, std_dev]
+  computes: [parameter_estimate, std_dev, confidence_interval]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
   structural_cues: [linear_relationship_suspected, summary_stats_given]
   parameters_known: [residual_variance, sum_xx_sxy, slope_se]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
-
 solution_template:
   - "Beregn S_E² først (residualvariansen)"
   - "Beregn S_XX = Σ(x_i - x̄)²"

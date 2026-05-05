@@ -1,0 +1,863 @@
+chunk: glossary-h-n
+items:
+  - id: hendelse
+    type: glossary
+    current_filters:
+      computes: [exact_probability]
+    contexts:
+      - scenario: "Studenten skal regne P(A) eller P(A ∪ B) i kombinatorisk oppgave (terningkast)"
+        student_filters:
+          computes: [exact_probability, union_probability]
+        currently_surfaces: false
+        missing_tags:
+          computes: [union_probability]
+      - scenario: "Studenten ser oppgave med 'minst én' som krever komplementhendelse"
+        student_filters:
+          computes: [exact_probability]
+          structural_cues: [complement_pattern]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [complement_pattern]
+      - scenario: "Studenten har to disjunkte/uavhengige hendelser og spør hva en hendelse er"
+        student_filters:
+          structural_cues: [independent_events, disjoint_events]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [independent_events, disjoint_events]
+      - scenario: "Studenten skal teste om to hendelser er uavhengige"
+        student_filters:
+          computes: [test_independence]
+        currently_surfaces: false
+        missing_tags:
+          computes: [test_independence]
+
+  - id: histogram-glos
+    type: glossary
+    current_filters:
+      structural_cues: [data_as_list]
+    contexts:
+      - scenario: "Studenten har rådata som liste og skal lage histogram"
+        student_filters:
+          structural_cues: [data_as_list]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal vurdere om data er normalfordelt ut fra et histogram"
+        student_filters:
+          structural_cues: [data_as_list, normal_assumed]
+          distribution_assumption: [normal]
+        currently_surfaces: false
+        missing_tags:
+          distribution_assumption: [normal]
+      - scenario: "Studenten har observasjoner og spør hvordan tegne fordelingen"
+        student_filters:
+          structural_cues: [data_as_list]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          distribution_assumption: [none_assumed]
+
+  - id: hypergeometrisk-varians
+    type: glossary
+    current_filters:
+      distribution_assumption: [hypergeometric]
+      random_variable: [discrete_count]
+      setup: [without_replacement, finite_pool]
+      computes: [std_dev, expected_value]
+    contexts:
+      - scenario: "Studenten trekker uten tilbakelegging fra en endelig pott og skal finne Var(X)"
+        student_filters:
+          distribution_assumption: [hypergeometric]
+          setup: [without_replacement, finite_pool]
+          computes: [std_dev]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal finne forventningsverdi i hypergeometrisk oppgave"
+        student_filters:
+          distribution_assumption: [hypergeometric]
+          computes: [expected_value]
+          random_variable: [discrete_count]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har en kvalitetskontroll-oppgave: trekker n av N enheter, K defekte"
+        student_filters:
+          setup: [without_replacement, finite_pool, fixed_n_trials]
+          random_variable: [discrete_count]
+          computes: [std_dev]
+        currently_surfaces: false
+        missing_tags:
+          setup: [fixed_n_trials]
+
+  - id: intercept
+    type: glossary
+    current_filters:
+      setup: [linear_relationship]
+      structural_cues: [linear_relationship_suspected]
+      computes: [parameter_estimate]
+    contexts:
+      - scenario: "Studenten skal estimere α i en regresjonsmodell Y = α + βX + ε"
+        student_filters:
+          setup: [linear_relationship]
+          computes: [parameter_estimate]
+          random_variable: [slope_estimate]
+        currently_surfaces: false
+        missing_tags:
+          random_variable: [slope_estimate]
+      - scenario: "Studenten har par av (x, y)-data og skal finne konstantleddet"
+        student_filters:
+          setup: [linear_relationship]
+          structural_cues: [linear_relationship_suspected, data_as_list]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har Σ(x-x̄)², Σ(x-x̄)(y-ȳ) gitt og skal finne α̂"
+        student_filters:
+          setup: [linear_relationship]
+          parameters_known: [sum_xx_sxy]
+          computes: [parameter_estimate]
+        currently_surfaces: false
+        missing_tags:
+          parameters_known: [sum_xx_sxy]
+
+  - id: joint
+    type: glossary
+    current_filters:
+      computes: [joint_probability, marginal_probability]
+      setup: [joint_table_given]
+      structural_cues: [joint_table_present]
+    contexts:
+      - scenario: "Studenten har en simultantabell og skal finne P(X=x, Y=y)"
+        student_filters:
+          computes: [joint_probability]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal finne marginalfordelingen P(X=x) ut fra simultantabell"
+        student_filters:
+          computes: [marginal_probability]
+          setup: [joint_table_given]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har joint distribution og skal regne betinget sannsynlighet"
+        student_filters:
+          computes: [conditional_probability]
+          setup: [joint_table_given]
+          structural_cues: [conditional_given]
+        currently_surfaces: false
+        missing_tags:
+          computes: [conditional_probability]
+          structural_cues: [conditional_given]
+      - scenario: "Studenten skal teste om to variabler er uavhengige fra simultantabell"
+        student_filters:
+          computes: [test_independence]
+          setup: [joint_table_given]
+        currently_surfaces: false
+        missing_tags:
+          computes: [test_independence]
+
+  - id: kategorisk-variabel
+    type: glossary
+    current_filters:
+      structural_cues: [more_than_two_categories]
+      distribution_assumption: [chi_squared]
+      computes: [test_independence, hypothesis_test]
+    contexts:
+      - scenario: "Studenten har en r×c-tabell med flere kategorier og skal kjøre kjikvadrat-test"
+        student_filters:
+          structural_cues: [more_than_two_categories, joint_table_present]
+          distribution_assumption: [chi_squared]
+          computes: [test_independence]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [joint_table_present]
+      - scenario: "Studenten skal teste 'goodness-of-fit' av kategoriske data"
+        student_filters:
+          distribution_assumption: [chi_squared]
+          computes: [hypothesis_test]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: false
+        missing_tags:
+          tooling: [chi_square_quantile_table_E6]
+      - scenario: "Studenten ser kategorisk variabel med to kategorier (røyker/ikke) og bruker andel"
+        student_filters:
+          structural_cues: [two_outcomes_per_trial]
+          random_variable: [proportion]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [two_outcomes_per_trial]
+          random_variable: [proportion]
+
+  - id: komplement
+    type: glossary
+    current_filters:
+      computes: [exact_probability]
+      structural_cues: [complement_pattern]
+    contexts:
+      - scenario: "Studenten har en 'minst én' oppgave og bruker P(Ā) = 1 − P(A)"
+        student_filters:
+          computes: [exact_probability, at_least_k]
+          structural_cues: [complement_pattern]
+        currently_surfaces: false
+        missing_tags:
+          computes: [at_least_k]
+      - scenario: "Studenten har en binomialoppgave med 'ingen treff' og bruker komplement"
+        student_filters:
+          distribution_assumption: [binomial]
+          structural_cues: [complement_pattern, two_outcomes_per_trial]
+          computes: [at_least_k]
+        currently_surfaces: false
+        missing_tags:
+          distribution_assumption: [binomial]
+          computes: [at_least_k]
+      - scenario: "Studenten skal regne P(A ∪ B) og bruker komplement-trikset"
+        student_filters:
+          computes: [union_probability, exact_probability]
+        currently_surfaces: false
+        missing_tags:
+          computes: [union_probability]
+      - scenario: "Studenten har poissonoppgave med 'minst én hendelse i intervallet'"
+        student_filters:
+          distribution_assumption: [poisson]
+          structural_cues: [complement_pattern, counting_events]
+          computes: [at_least_k]
+        currently_surfaces: false
+        missing_tags:
+          distribution_assumption: [poisson]
+          computes: [at_least_k]
+
+  - id: konfidensintervall
+    type: glossary
+    current_filters:
+      computes: [confidence_interval, parameter_estimate]
+      parameters_known: [confidence_level, alpha_significance]
+    contexts:
+      - scenario: "Studenten skal lage 95% KI for μ med kjent σ"
+        student_filters:
+          computes: [confidence_interval]
+          parameters_known: [population_variance_known, confidence_level]
+          tooling: [normal_quantile_table_E4]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [population_variance_known]
+          tooling: [normal_quantile_table_E4]
+          distribution_assumption: [normal]
+      - scenario: "Studenten skal lage KI for μ med ukjent σ (t-fordeling)"
+        student_filters:
+          computes: [confidence_interval]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [population_variance_unknown]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+      - scenario: "Studenten skal lage KI for andel p"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [proportion]
+          distribution_assumption: [binomial, normal]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [proportion]
+          distribution_assumption: [binomial, normal]
+      - scenario: "Studenten skal finne nødvendig n for ønsket bredde på KI"
+        student_filters:
+          computes: [confidence_interval, find_n_for_threshold]
+          parameters_known: [confidence_level]
+        currently_surfaces: true
+        missing_tags:
+          computes: [find_n_for_threshold]
+
+  - id: kontingenstabell
+    type: glossary
+    current_filters:
+      setup: [joint_table_given]
+      structural_cues: [joint_table_present, more_than_two_categories]
+      distribution_assumption: [chi_squared]
+      computes: [test_independence, hypothesis_test]
+    contexts:
+      - scenario: "Studenten har 2×2 kontingenstabell og skal teste uavhengighet"
+        student_filters:
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+          distribution_assumption: [chi_squared]
+          computes: [test_independence]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal regne ut forventet antall E_ij i kontingenstabell"
+        student_filters:
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+          computes: [hypothesis_test]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags:
+          tooling: [chi_square_quantile_table_E6]
+      - scenario: "Studenten skal finne marginalsannsynlighet ut fra rad/kol-summer"
+        student_filters:
+          setup: [joint_table_given]
+          computes: [marginal_probability, joint_probability]
+        currently_surfaces: true
+        missing_tags:
+          computes: [marginal_probability, joint_probability]
+
+  - id: korrelasjon-glos
+    type: glossary
+    current_filters:
+      computes: [correlation, covariance]
+      setup: [linear_relationship]
+      structural_cues: [linear_relationship_suspected]
+    contexts:
+      - scenario: "Studenten har par av (x, y)-data og skal beregne korrelasjon r"
+        student_filters:
+          computes: [correlation]
+          setup: [linear_relationship]
+          structural_cues: [linear_relationship_suspected, data_as_list]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har Σ(x-x̄)², Σ(x-x̄)(y-ȳ) gitt og skal finne r"
+        student_filters:
+          computes: [correlation]
+          parameters_known: [sum_xx_sxy]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [sum_xx_sxy]
+      - scenario: "Studenten skal vurdere om en regresjonsmodell egner seg via r²"
+        student_filters:
+          computes: [correlation, parameter_estimate]
+          setup: [linear_relationship]
+          random_variable: [slope_estimate]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [slope_estimate]
+
+  - id: kovarians-glos
+    type: glossary
+    current_filters:
+      computes: [covariance, correlation]
+    contexts:
+      - scenario: "Studenten har par av (x, y) og skal regne ut Cov(X, Y)"
+        student_filters:
+          computes: [covariance]
+          setup: [linear_relationship]
+          structural_cues: [linear_relationship_suspected, data_as_list]
+        currently_surfaces: true
+        missing_tags:
+          setup: [linear_relationship]
+          structural_cues: [linear_relationship_suspected, data_as_list]
+      - scenario: "Studenten har joint distribution-tabell og skal finne Cov(X, Y)"
+        student_filters:
+          computes: [covariance]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+        currently_surfaces: true
+        missing_tags:
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+      - scenario: "Studenten lurer på sammenhengen mellom kovarians og korrelasjon"
+        student_filters:
+          computes: [covariance, correlation]
+        currently_surfaces: true
+        missing_tags: []
+
+  - id: kritisk-verdi
+    type: glossary
+    current_filters:
+      computes: [hypothesis_test]
+      parameters_known: [alpha_significance]
+      tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6]
+    contexts:
+      - scenario: "Studenten skal finne kritisk z-verdi for α = 0.05 (tosidig)"
+        student_filters:
+          computes: [hypothesis_test]
+          parameters_known: [alpha_significance]
+          tooling: [normal_quantile_table_E4]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [normal]
+      - scenario: "Studenten skal finne kritisk t-verdi i en t-test med liten n"
+        student_filters:
+          computes: [hypothesis_test]
+          parameters_known: [alpha_significance, sample_size_small_lt30]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [t_distribution]
+      - scenario: "Studenten skal finne kritisk χ² for kjikvadrat-test for uavhengighet"
+        student_filters:
+          computes: [hypothesis_test, test_independence]
+          parameters_known: [alpha_significance]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags:
+          computes: [test_independence]
+          distribution_assumption: [chi_squared]
+
+  - id: kumulativ
+    type: glossary
+    current_filters:
+      computes: [exact_probability, at_least_k, range_probability]
+      tooling: [cumulative_binomial_table_E1, cumulative_poisson_table_E2, standard_normal_table_E3]
+    contexts:
+      - scenario: "Studenten har binomialoppgave og slår opp P(X ≤ k) i tabell E.1"
+        student_filters:
+          distribution_assumption: [binomial]
+          computes: [at_least_k]
+          tooling: [cumulative_binomial_table_E1]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [binomial]
+      - scenario: "Studenten har Poisson-oppgave og finner P(X ≤ k) i tabell E.2"
+        student_filters:
+          distribution_assumption: [poisson]
+          computes: [at_least_k, range_probability]
+          tooling: [cumulative_poisson_table_E2]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [poisson]
+      - scenario: "Studenten skal regne P(a < X ≤ b) for normalfordelt X"
+        student_filters:
+          distribution_assumption: [normal]
+          computes: [range_probability]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [normal]
+
+  - id: kvantil
+    type: glossary
+    current_filters:
+      tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6, standard_normal_table_E3]
+      computes: [confidence_interval, hypothesis_test, find_x_for_threshold]
+    contexts:
+      - scenario: "Studenten skal finne z_(α/2) for KI"
+        student_filters:
+          computes: [confidence_interval]
+          tooling: [normal_quantile_table_E4]
+          parameters_known: [confidence_level, alpha_significance]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [confidence_level, alpha_significance]
+          distribution_assumption: [normal]
+      - scenario: "Studenten skal finne x slik at P(X ≤ x) = 0.95 (invers normal)"
+        student_filters:
+          computes: [find_x_for_threshold]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [normal]
+      - scenario: "Studenten skal finne t-kvantil for KI med n−1 frihetsgrader"
+        student_filters:
+          computes: [confidence_interval]
+          tooling: [t_quantile_table_E5]
+          distribution_assumption: [t_distribution]
+          parameters_known: [population_variance_unknown]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [t_distribution]
+          parameters_known: [population_variance_unknown]
+
+  - id: lambda
+    type: glossary
+    current_filters:
+      parameters_known: [rate_lambda]
+      setup: [events_in_window]
+      structural_cues: [rate_given, process_over_time, counting_events]
+      distribution_assumption: [poisson, exponential]
+    contexts:
+      - scenario: "Studenten har Poisson-oppgave med rate 3 per minutt"
+        student_filters:
+          distribution_assumption: [poisson]
+          parameters_known: [rate_lambda]
+          setup: [events_in_window]
+          structural_cues: [rate_given]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har eksponentialfordeling for ventetid med rate λ"
+        student_filters:
+          distribution_assumption: [exponential]
+          random_variable: [time_until_event]
+          parameters_known: [rate_lambda]
+          structural_cues: [rate_given, time_until_first]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [time_until_event]
+          structural_cues: [time_until_first]
+      - scenario: "Studenten har Poisson-prosess med rate λ og skal finne fordeling for tid til første hendelse"
+        student_filters:
+          distribution_assumption: [exponential, poisson]
+          structural_cues: [poisson_process_mentioned, time_until_first]
+          parameters_known: [rate_lambda]
+        currently_surfaces: true
+        missing_tags:
+          structural_cues: [poisson_process_mentioned, time_until_first]
+
+  - id: marginalfordeling-term
+    type: glossary
+    current_filters:
+      computes: [marginal_probability]
+      setup: [joint_table_given]
+      structural_cues: [joint_table_present]
+    contexts:
+      - scenario: "Studenten har simultantabell og finner P(X=x) ved rad-sum"
+        student_filters:
+          computes: [marginal_probability]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal finne marginal forventningsverdi E(X) fra joint"
+        student_filters:
+          computes: [marginal_probability, expected_value]
+          setup: [joint_table_given]
+        currently_surfaces: true
+        missing_tags:
+          computes: [expected_value]
+      - scenario: "Studenten har kontingenstabell og finner marginal andel"
+        student_filters:
+          computes: [marginal_probability]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, more_than_two_categories]
+        currently_surfaces: true
+        missing_tags:
+          structural_cues: [more_than_two_categories]
+
+  - id: med-tilbakelegging
+    type: glossary
+    current_filters:
+      setup: [with_replacement, fixed_n_trials]
+      distribution_assumption: [binomial]
+      structural_cues: [independent_events]
+    contexts:
+      - scenario: "Studenten skal trekke n kuler fra urne med tilbakelegging"
+        student_filters:
+          setup: [with_replacement, fixed_n_trials]
+          distribution_assumption: [binomial]
+          structural_cues: [two_outcomes_per_trial, independent_events]
+        currently_surfaces: true
+        missing_tags:
+          structural_cues: [two_outcomes_per_trial]
+      - scenario: "Studenten lurer på når man bruker binomial vs. hypergeometrisk"
+        student_filters:
+          setup: [with_replacement, without_replacement]
+          distribution_assumption: [binomial, hypergeometric]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har 'med tilbakelegging' og skal finne P(suksess i alle n)"
+        student_filters:
+          setup: [with_replacement, fixed_n_trials]
+          structural_cues: [success_probability_given]
+          parameters_known: [success_p]
+          computes: [exact_probability]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [success_probability_given]
+          parameters_known: [success_p]
+          computes: [exact_probability]
+
+  - id: minste-kvadraters-metode
+    type: glossary
+    current_filters:
+      setup: [linear_relationship]
+      random_variable: [slope_estimate]
+      structural_cues: [linear_relationship_suspected]
+      computes: [parameter_estimate]
+    contexts:
+      - scenario: "Studenten har par av (x, y)-data og skal finne β̂ med OLS"
+        student_filters:
+          setup: [linear_relationship]
+          random_variable: [slope_estimate]
+          computes: [parameter_estimate]
+          structural_cues: [linear_relationship_suspected, data_as_list]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten har Σ(x-x̄)², Σ(x-x̄)(y-ȳ) og skal regne β̂ = S_xy/S_xx"
+        student_filters:
+          setup: [linear_relationship]
+          parameters_known: [sum_xx_sxy]
+          computes: [parameter_estimate]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [sum_xx_sxy]
+      - scenario: "Studenten skal finne både α̂ og β̂ i regresjon"
+        student_filters:
+          setup: [linear_relationship]
+          random_variable: [slope_estimate]
+          computes: [parameter_estimate]
+        currently_surfaces: true
+        missing_tags: []
+
+  - id: mu
+    type: glossary
+    current_filters:
+      parameters_known: [mean_known]
+      random_variable: [mean_of_samples]
+      computes: [expected_value, parameter_estimate, confidence_interval]
+    contexts:
+      - scenario: "Studenten har t-test for μ med ukjent σ"
+        student_filters:
+          computes: [hypothesis_test]
+          parameters_known: [population_variance_unknown, mean_known]
+          random_variable: [mean_of_samples]
+          distribution_assumption: [t_distribution]
+        currently_surfaces: true
+        missing_tags:
+          computes: [hypothesis_test]
+          parameters_known: [population_variance_unknown]
+          distribution_assumption: [t_distribution]
+      - scenario: "Studenten skal lage KI for μ med kjent σ"
+        student_filters:
+          computes: [confidence_interval]
+          parameters_known: [population_variance_known, mean_known]
+          random_variable: [mean_of_samples]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [population_variance_known]
+          distribution_assumption: [normal]
+      - scenario: "Studenten skal sammenligne to populasjonsmidler μ₁ og μ₂"
+        student_filters:
+          setup: [two_independent_samples]
+          random_variable: [difference_of_means]
+          computes: [hypothesis_test, confidence_interval]
+        currently_surfaces: true
+        missing_tags:
+          setup: [two_independent_samples]
+          random_variable: [difference_of_means]
+          computes: [hypothesis_test]
+      - scenario: "Studenten skal finne nødvendig μ som oppfyller en terskel"
+        student_filters:
+          computes: [find_mu_for_threshold]
+          parameters_known: [mean_known]
+        currently_surfaces: true
+        missing_tags:
+          computes: [find_mu_for_threshold]
+
+  - id: n
+    type: glossary
+    current_filters:
+      structural_cues: [total_observations_n]
+      parameters_known: [sample_size_small_lt30, sample_size_large]
+    contexts:
+      - scenario: "Studenten skal finne nødvendig n for ønsket bredde på KI"
+        student_filters:
+          computes: [find_n_for_threshold, confidence_interval]
+          parameters_known: [sample_size_large]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_n_for_threshold, confidence_interval]
+      - scenario: "Studenten har lite utvalg n < 30 og skal velge t- eller z-test"
+        student_filters:
+          parameters_known: [sample_size_small_lt30]
+          distribution_assumption: [t_distribution]
+          setup: [single_population]
+        currently_surfaces: true
+        missing_tags:
+          setup: [single_population]
+      - scenario: "Studenten ser data oppgitt som liste med n observasjoner og skal beregne X̄"
+        student_filters:
+          structural_cues: [total_observations_n, data_as_list]
+          random_variable: [mean_of_samples]
+          computes: [expected_value]
+        currently_surfaces: true
+        missing_tags:
+          structural_cues: [data_as_list]
+          random_variable: [mean_of_samples]
+          computes: [expected_value]
+      - scenario: "Studenten lurer på Bessels korreksjon (n − 1) i utvalgsvarians"
+        student_filters:
+          parameters_known: [sample_size_small_lt30, population_variance_unknown]
+          computes: [std_dev]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [population_variance_unknown]
+          computes: [std_dev]
+
+  - id: normalapproksimasjon
+    type: glossary
+    current_filters:
+      distribution_assumption: [normal, binomial, poisson]
+      tooling: [standard_normal_table_E3]
+      parameters_known: [sample_size_large]
+    contexts:
+      - scenario: "Studenten har binomialoppgave med stor n og skal bruke normalapproksimasjon"
+        student_filters:
+          distribution_assumption: [binomial, normal]
+          parameters_known: [sample_size_large, success_p]
+          structural_cues: [two_outcomes_per_trial]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [success_p]
+          structural_cues: [two_outcomes_per_trial]
+      - scenario: "Studenten skal lage KI for andel p (binomial) via normaltilnærming"
+        student_filters:
+          distribution_assumption: [binomial, normal]
+          random_variable: [proportion]
+          computes: [confidence_interval]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [proportion]
+          computes: [confidence_interval]
+      - scenario: "Studenten har Poisson med λ stor og bruker normalapproksimasjon"
+        student_filters:
+          distribution_assumption: [poisson, normal]
+          parameters_known: [rate_lambda]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [rate_lambda]
+      - scenario: "Studenten har stort utvalg og bruker CLT for X̄"
+        student_filters:
+          distribution_assumption: [normal]
+          parameters_known: [sample_size_large]
+          random_variable: [mean_of_samples]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [mean_of_samples]
+
+  - id: normalisering
+    type: glossary
+    current_filters:
+      distribution_assumption: [normal]
+      tooling: [standard_normal_table_E3]
+      computes: [exact_probability, range_probability]
+      structural_cues: [normal_assumed, mean_and_sd_given]
+    contexts:
+      - scenario: "Studenten har X ~ N(μ, σ) og skal regne P(X ≤ x) ved Z-transformasjon"
+        student_filters:
+          distribution_assumption: [normal]
+          structural_cues: [normal_assumed, mean_and_sd_given]
+          computes: [exact_probability]
+          tooling: [standard_normal_table_E3]
+          parameters_known: [population_variance_known, mean_known]
+        currently_surfaces: true
+        missing_tags:
+          parameters_known: [population_variance_known, mean_known]
+      - scenario: "Studenten skal regne P(a < X ≤ b) for normalfordelt variabel"
+        student_filters:
+          distribution_assumption: [normal]
+          computes: [range_probability]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal lage z-test for μ med kjent σ"
+        student_filters:
+          distribution_assumption: [normal]
+          computes: [hypothesis_test]
+          parameters_known: [population_variance_known]
+        currently_surfaces: false
+        missing_tags:
+          computes: [hypothesis_test]
+          parameters_known: [population_variance_known]
+      - scenario: "Studenten skal finne x slik at P(X ≤ x) = 0.95 (invers)"
+        student_filters:
+          distribution_assumption: [normal]
+          computes: [find_x_for_threshold]
+          tooling: [normal_quantile_table_E4]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_x_for_threshold]
+          tooling: [normal_quantile_table_E4]
+
+  - id: normalvarians
+    type: glossary
+    current_filters:
+      distribution_assumption: [normal]
+      random_variable: [continuous]
+      parameters_known: [population_variance_known]
+      computes: [std_dev]
+    contexts:
+      - scenario: "Studenten har X ~ N(μ, σ) og skal lese av Var(X) direkte"
+        student_filters:
+          distribution_assumption: [normal]
+          random_variable: [continuous]
+          parameters_known: [population_variance_known]
+          computes: [std_dev]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Studenten skal finne Var(X̄) = σ²/n for utvalgsgjennomsnitt"
+        student_filters:
+          distribution_assumption: [normal]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known]
+          computes: [std_dev]
+        currently_surfaces: false
+        missing_tags:
+          random_variable: [mean_of_samples]
+      - scenario: "Studenten har μ og σ gitt eksplisitt i normalfordelt oppgave"
+        student_filters:
+          distribution_assumption: [normal]
+          structural_cues: [mean_and_sd_given, normal_assumed]
+          parameters_known: [population_variance_known, mean_known]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [mean_and_sd_given, normal_assumed]
+          parameters_known: [mean_known]
+
+  - id: nullhypotese
+    type: glossary
+    current_filters:
+      computes: [hypothesis_test]
+    contexts:
+      - scenario: "Studenten skal sette opp H₀ og H₁ for t-test for μ"
+        student_filters:
+          computes: [hypothesis_test]
+          distribution_assumption: [t_distribution]
+          parameters_known: [alpha_significance]
+        currently_surfaces: true
+        missing_tags:
+          distribution_assumption: [t_distribution]
+          parameters_known: [alpha_significance]
+      - scenario: "Studenten skal sette opp H₀ for kjikvadrat-test for uavhengighet"
+        student_filters:
+          computes: [hypothesis_test, test_independence]
+          distribution_assumption: [chi_squared]
+          setup: [joint_table_given]
+        currently_surfaces: true
+        missing_tags:
+          computes: [test_independence]
+          distribution_assumption: [chi_squared]
+          setup: [joint_table_given]
+      - scenario: "Studenten har z-test for andel p og skriver H₀: p = p₀"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [proportion]
+          distribution_assumption: [binomial, normal]
+          parameters_known: [success_p, alpha_significance]
+        currently_surfaces: true
+        missing_tags:
+          random_variable: [proportion]
+          distribution_assumption: [binomial, normal]
+          parameters_known: [success_p, alpha_significance]
+      - scenario: "Studenten skal sammenligne to gjennomsnitt μ₁ = μ₂"
+        student_filters:
+          computes: [hypothesis_test]
+          setup: [two_independent_samples]
+          random_variable: [difference_of_means]
+        currently_surfaces: true
+        missing_tags:
+          setup: [two_independent_samples]
+          random_variable: [difference_of_means]
+
+proposed_new_filters_yaml_additions: []
+
+summary:
+  entries_audited: 24
+  contexts_generated: 79
+  entries_with_missing_tags: 23
+  entries_fully_covered: 1
+  notes: |
+    The most under-tagged entries are general/foundational glossary terms (hendelse,
+    nullhypotese, mu, n, konfidensintervall) — they appear in many distinct exam
+    contexts but currently carry only one or two filter dimensions. Surfacing them
+    requires adding distribution_assumption, parameters_known, setup, and
+    random_variable cross-tags so they appear when students filter by concrete
+    distributional or sample setups. No new filter values are required — the
+    existing filters.yaml dimensions cover all observed gaps.

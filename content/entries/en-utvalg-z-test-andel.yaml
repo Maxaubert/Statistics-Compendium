@@ -36,14 +36,13 @@ symbols:
   - { sym: "Z",   means: "testobservator, standardnormalfordelt under H₀" }
 
 filters:
-  computes: [hypothesis_test]
+  computes: [hypothesis_test, find_n_for_threshold]
   random_variable: [proportion, discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
   structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
   parameters_known: [success_p, sample_size_large, alpha_significance]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
-
 solution_template:
   - "Formuler hypotesene H₀: p = p₀ vs H₁ (én- eller tosidig)"
   - "Bekreft normalapproksimasjon: n·p̂·(1-p̂) ≥ 5"

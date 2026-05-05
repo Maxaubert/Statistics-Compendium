@@ -6,6 +6,9 @@ filters:
   setup: [linear_relationship]
   structural_cues: [linear_relationship_suspected]
   computes: [parameter_estimate, confidence_interval, hypothesis_test]
+  parameters_known: [slope_se, sum_xx_sxy]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
 aliases:
   - beta-koeffisient
   - stigningstall

@@ -2,9 +2,12 @@ id: gjennomsnitt
 term_no: Gjennomsnitt (X̄, μ)
 short_def: "Summen av observasjoner delt på antallet — det aritmetiske midlet."
 filters:
-  random_variable: [mean_of_samples]
-  computes: [expected_value, parameter_estimate]
-  setup: [single_population]
+  random_variable: [mean_of_samples, difference_of_means]
+  computes: [expected_value, parameter_estimate, confidence_interval, hypothesis_test]
+  setup: [single_population, two_independent_samples]
+  structural_cues: [data_as_list]
+  parameters_known: [sample_size_large]
+  distribution_assumption: [normal]
 long_def: |
   **Utvalgsgjennomsnitt** (trenger rådata):
 

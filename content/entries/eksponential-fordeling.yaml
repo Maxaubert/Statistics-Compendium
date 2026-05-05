@@ -42,14 +42,13 @@ properties:
   std_dev: "σ = 1/λ"
 
 filters:
-  computes: [exact_probability, range_probability, expected_value, find_x_for_threshold]
+  computes: [exact_probability, range_probability, expected_value, find_x_for_threshold, conditional_probability]
   random_variable: [continuous, time_until_event]
   setup: [single_population, events_in_window]
   structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, time_until_first, complement_pattern]
   parameters_known: [rate_lambda]
   distribution_assumption: [exponential]
   tooling: [calculator_exp]
-
 solution_variants:
   - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
     steps:

@@ -3,8 +3,10 @@ term_no: Residualstandardavvik (S_E)
 short_def: "Kvadratroten av residualvariansen: `S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )`. Typisk avvik fra regresjonslinjen."
 filters:
   setup: [linear_relationship]
-  parameters_known: [residual_variance]
-  computes: [std_dev]
+  parameters_known: [residual_variance, sum_xx_sxy, slope_se]
+  computes: [std_dev, prediction_interval, hypothesis_test]
+  random_variable: [slope_estimate]
+  structural_cues: [linear_relationship_suspected, data_as_list]
 long_def: |
   Formel:
 

@@ -3,10 +3,12 @@ term_no: Z-score (z-verdi)
 short_def: "Hvor mange standardavvik en observasjon ligger fra forventningen: `Z = (X − μ)/σ`."
 filters:
   distribution_assumption: [normal]
-  parameters_known: [population_variance_known]
-  tooling: [standard_normal_table_E3]
+  parameters_known: [population_variance_known, alpha_significance]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4]
   computes: [hypothesis_test, exact_probability, range_probability]
   structural_cues: [normal_assumed, mean_and_sd_given]
+  random_variable: [mean_of_samples]
+  setup: [single_population]
 aliases:
   - z-score
   - z-verdi

@@ -2,8 +2,11 @@ id: konfidensintervall
 term_no: Konfidensintervall (KI)
 short_def: "Intervall som med `(1 − α)·100 %` sikkerhet inneholder den ukjente parameteren."
 filters:
-  computes: [confidence_interval, parameter_estimate]
-  parameters_known: [confidence_level, alpha_significance]
+  computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
+  parameters_known: [confidence_level, alpha_significance, population_variance_unknown, population_variance_known]
+  random_variable: [proportion]
+  distribution_assumption: [binomial, normal, t_distribution]
+  tooling: [normal_quantile_table_E4, t_quantile_table_E5]
 aliases:
   - konfidensintervall
   - konfidensintervallet

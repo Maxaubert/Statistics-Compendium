@@ -2,11 +2,12 @@ id: binomialvarians
 term_no: Binomialvarians (Var(X) = np(1−p))
 short_def: "Spesielt for `Binomial(n, p)`: `E[X] = np`, `Var(X) = np(1 − p)`, `σ = √(np(1 − p))`."
 filters:
-  distribution_assumption: [binomial]
-  random_variable: [discrete_count]
+  distribution_assumption: [binomial, normal]
+  random_variable: [discrete_count, proportion]
   computes: [std_dev, expected_value]
   parameters_known: [success_p]
   setup: [fixed_n_trials]
+  structural_cues: [success_probability_given]
 long_def: |
   For en `Binomial(n, p)`-fordelt variabel `X` (antall suksesser i `n`
   uavhengige Bernoulli-forsøk med suksessannsynlighet `p`):

@@ -4,7 +4,9 @@ short_def: "Andelen av variasjonen i `Y` som forklares av `X` i regresjonsmodell
 filters:
   setup: [linear_relationship]
   computes: [correlation]
-  structural_cues: [linear_relationship_suspected]
+  structural_cues: [linear_relationship_suspected, summary_stats_given]
+  random_variable: [slope_estimate]
+  parameters_known: [residual_variance]
 aliases:
   - R²
   - r²

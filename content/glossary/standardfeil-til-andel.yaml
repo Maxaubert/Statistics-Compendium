@@ -3,9 +3,12 @@ term_no: Standardfeil til utvalgsandelen (SE(p̂))
 short_def: "`SE(p̂) = √(p̂(1 − p̂)/n)` — spredningen i estimert andel `p̂ = X/n`."
 filters:
   random_variable: [proportion]
-  parameters_known: [success_p]
+  parameters_known: [success_p, confidence_level]
   computes: [std_dev, confidence_interval, hypothesis_test]
   distribution_assumption: [normal, binomial]
+  setup: [single_population]
+  structural_cues: [success_probability_given]
+  tooling: [standard_normal_table_E3]
 long_def: |
   Standardfeilen til andelen brukes i z-test og KI for andel. To
   varianter er vanlige:

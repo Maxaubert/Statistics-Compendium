@@ -2,7 +2,8 @@ id: theta
 term_no: Theta (θ)
 short_def: "Generelt symbol for en ukjent parameter du vil estimere."
 filters:
-  computes: [parameter_estimate]
+  computes: [parameter_estimate, confidence_interval]
+  parameters_known: [confidence_level]
 aliases:
   - θ
   - theta

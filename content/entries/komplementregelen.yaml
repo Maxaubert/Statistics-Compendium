@@ -32,13 +32,12 @@ symbols:
 
 filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
-  random_variable: [discrete_count, continuous]
+  random_variable: [discrete_count, continuous, time_until_event]
   setup: [single_population]
-  structural_cues: [complement_pattern, independent_events]
+  structural_cues: [complement_pattern, independent_events, time_until_first]
   parameters_known: []
-  distribution_assumption: [none_assumed, binomial, poisson, normal]
+  distribution_assumption: [none_assumed, binomial, poisson, normal, exponential]
   tooling: [calculator_only]
-
 solution_variants:
   - label: "Minst k"
     steps:

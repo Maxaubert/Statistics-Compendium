@@ -3,8 +3,9 @@ term_no: Simultanfordeling
 short_def: "Tabell eller funksjon som gir P(X=x, Y=y) for alle kombinasjoner av to variabler."
 filters:
   setup: [joint_table_given]
-  structural_cues: [joint_table_present]
-  computes: [joint_probability, marginal_probability, conditional_probability]
+  structural_cues: [joint_table_present, independent_events]
+  computes: [joint_probability, marginal_probability, conditional_probability, covariance, test_independence, correlation]
+  random_variable: [discrete_count]
 aliases:
   - simultanfordeling
   - simultanfordelingen

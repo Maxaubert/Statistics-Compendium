@@ -42,14 +42,13 @@ symbols:
   - { sym: "Z",  means: "testobservatoren, standardnormalfordelt under H₀" }
 
 filters:
-  computes: [hypothesis_test]
+  computes: [hypothesis_test, find_x_for_threshold, find_n_for_threshold]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, total_observations_n]
   parameters_known: [population_variance_known, sample_size_large, mean_known, alpha_significance]
   distribution_assumption: [normal]
-  tooling: [standard_normal_table_E3, normal_quantile_table_E4]
-
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_variants:
   - label: "H₁: μ < μ₀ (venstre)"
     description: "Ensidig venstresidig test. Forkast hvis Z < −z_α."

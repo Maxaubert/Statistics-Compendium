@@ -4,8 +4,9 @@ short_def: "Rate — antall hendelser per tids- eller romenhet i poisson- og eks
 filters:
   parameters_known: [rate_lambda]
   setup: [events_in_window]
-  structural_cues: [rate_given, process_over_time, counting_events]
+  structural_cues: [rate_given, process_over_time, counting_events, poisson_process_mentioned, time_until_first]
   distribution_assumption: [poisson, exponential]
+  random_variable: [time_until_event]
 aliases:
   - λ
   - lambda

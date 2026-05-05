@@ -4,8 +4,10 @@ short_def: "`SE(β̂) = √(S_E² / S_XX)` — kvadratroten av Var(β̂). Hvor p
 filters:
   random_variable: [slope_estimate]
   setup: [linear_relationship]
-  parameters_known: [slope_se, residual_variance, sum_xx_sxy]
+  parameters_known: [slope_se, residual_variance, sum_xx_sxy, confidence_level]
   computes: [std_dev, hypothesis_test, confidence_interval]
+  distribution_assumption: [t_distribution]
+  tooling: [t_quantile_table_E5]
 long_def: |
   Formel:
 

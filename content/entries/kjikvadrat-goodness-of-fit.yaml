@@ -38,10 +38,9 @@ filters:
   random_variable: [discrete_count]
   setup: [single_population]
   structural_cues: [more_than_two_categories, summary_stats_given, total_observations_n, counting_events]
-  parameters_known: [alpha_significance, sample_size_large]
-  distribution_assumption: [chi_squared]
+  parameters_known: [alpha_significance, sample_size_large, rate_lambda]
+  distribution_assumption: [chi_squared, poisson]
   tooling: [chi_square_quantile_table_E6]
-
 solution_template:
   - "Skriv ned H0 (forventet fordeling) og H1 (avvik)"
   - "Regn forventede antall E_i under H0"

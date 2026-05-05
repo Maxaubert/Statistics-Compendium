@@ -3,9 +3,10 @@ term_no: Normalvarians (Var(X) = σ²)
 short_def: "Trivielt for `N(μ, σ)`: variansen ER parameteren `σ²` selv. Standardavvik = `σ`."
 filters:
   distribution_assumption: [normal]
-  random_variable: [continuous]
-  parameters_known: [population_variance_known]
+  random_variable: [continuous, mean_of_samples]
+  parameters_known: [population_variance_known, mean_known]
   computes: [std_dev]
+  structural_cues: [mean_and_sd_given, normal_assumed]
 long_def: |
   For en `N(μ, σ)`-fordelt variabel:
 

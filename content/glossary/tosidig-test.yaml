@@ -3,7 +3,10 @@ term_no: Tosidig test (to-sidig)
 short_def: "Hypotesen ser begge retninger — `H₁: μ ≠ μ₀`."
 filters:
   computes: [hypothesis_test]
-  parameters_known: [alpha_significance]
+  parameters_known: [alpha_significance, population_variance_unknown, population_variance_known]
+  random_variable: [mean_of_samples]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [normal_quantile_table_E4, t_quantile_table_E5, standard_normal_table_E3]
 long_def: |
   En tosidig test forkaster hvis observatoren er langt unna i begge
   retninger. `α` deles likt i to haler (`α/2` i hver).

@@ -31,14 +31,13 @@ symbols:
   - { sym: "μ_X, μ_Y",  means: "forventningsverdiene" }
 
 filters:
-  computes: [covariance, expected_value]
+  computes: [covariance, expected_value, std_dev, test_independence]
   random_variable: [discrete_count]
   setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given]
+  structural_cues: [joint_table_present, summary_stats_given, independent_events]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-
 solution_template:
   - "Beregn μ_X og μ_Y fra marginalfordelingene"
   - "Beregn E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j) – kun celler med positiv sannsynlighet bidrar"
