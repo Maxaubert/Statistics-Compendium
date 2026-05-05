@@ -151,7 +151,7 @@ detailed_solution_variants:
 
 related:
   - { id: "poisson-fordeling",       kind: "entry" }
-  - { id: "poisson-prosess",         kind: "concept" }
+  - { id: "poisson-prosess",         kind: "glossary" }
   - { id: "ki-andel-binomial",       kind: "entry" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 

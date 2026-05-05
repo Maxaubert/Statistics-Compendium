@@ -40,4 +40,4 @@ contexts:
       - ki-poissonrate
 see_also:
   - { id: gjennomsnitt, kind: glossary }
-  - { id: poisson-prosess, kind: concept }
+  - { id: poisson-prosess, kind: glossary }

@@ -64,7 +64,7 @@ nodes:
       - label: "Hendelser kommer som de kommer, rate λ gitt (poissonprosess)"
         leads_to:
           - { id: poisson-fordeling, kind: entry }
-          - { id: poisson-prosess, kind: concept }
+          - { id: poisson-prosess, kind: glossary }
       - label: "Trekker uten tilbakelegging fra endelig pott"
         leads_to:
           - { id: hypergeometrisk-fordeling, kind: entry }
