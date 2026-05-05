@@ -13,6 +13,7 @@ import {
 } from "@/data/search";
 import { GlossaryPopupProvider, useGlossaryPopup } from "@/components/detail/GlossaryPopup";
 import { useFilteredContent } from "@/hooks/useFilteredContent";
+import { applyFilters } from "@/data/filtering";
 
 const CROSS_HIT_CAP = 8;
 const VALID_TABS = new Set(["formler", "tabeller"]);
@@ -57,14 +58,29 @@ export function ListView() {
     [data.glossary],
   );
 
+  const hasActiveFilters = useMemo(
+    () =>
+      Object.values(selection).some(
+        (vals) => Array.isArray(vals) && vals.length > 0,
+      ),
+    [selection],
+  );
+
   // Cross-search: when the user types in the formler tab, surface
   // glossary terms that also match. Capped so the cross-section
-  // never dominates.
+  // never dominates. When the query is empty but filters are
+  // active, filter the glossary by the same selection so terms
+  // surface alongside formler results.
   const crossGlossaryHitsForFormler = useMemo(() => {
     const q = query.trim();
-    if (!q) return [];
-    return searchGlossary(glossaryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
-  }, [query, glossaryFuse]);
+    if (q) {
+      return searchGlossary(glossaryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
+    }
+    if (hasActiveFilters) {
+      return applyFilters(data.glossary, selection).slice(0, CROSS_HIT_CAP);
+    }
+    return [];
+  }, [query, glossaryFuse, hasActiveFilters, data.glossary, selection]);
 
   const overviewEntries = useMemo(() => {
     return OVERVIEW_ENTRY_IDS
@@ -123,15 +139,16 @@ export function ListView() {
               </div>
               <EntryTable entries={filtered} onRowClick={(id) => navigate(`/entry/${id}`)} />
 
-              {query.trim().length > 0 && crossGlossaryHitsForFormler.length > 0 && (
-                <GlossaryCrossSection
-                  items={crossGlossaryHitsForFormler.map((g) => ({
-                    id: g.id,
-                    term_no: g.term_no,
-                    short_def: g.short_def,
-                  }))}
-                />
-              )}
+              {(query.trim().length > 0 || hasActiveFilters) &&
+                crossGlossaryHitsForFormler.length > 0 && (
+                  <GlossaryCrossSection
+                    items={crossGlossaryHitsForFormler.map((g) => ({
+                      id: g.id,
+                      term_no: g.term_no,
+                      short_def: g.short_def,
+                    }))}
+                  />
+                )}
             </>
           )}
 
