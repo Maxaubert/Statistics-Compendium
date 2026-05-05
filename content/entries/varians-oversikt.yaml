@@ -5,16 +5,11 @@ tagline: "Mål for spredning. Samme idé i alle former, men formelen ser ulik ut
 
 what_it_means: |
   Varians måler hvor mye en variabel typisk avviker kvadratisk fra
-  gjennomsnittet. Standardavviket er kvadratroten av variansen og har
-  samme enhet som dataene.
+  gjennomsnittet.
 
   Den grunnleggende ideen er alltid den samme:
 
       varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»
-
-  Sidene under er en kjapp oversikt over hver variansform. **Klikk på
-  overskriften** for å åpne ordliste-popupen med detaljert forklaring,
-  inkludert om du trenger rådata eller ikke.
 
   ## [Variansen til diskret stokastisk variabel](glossary:diskret-varians)
 
