@@ -34,13 +34,13 @@ symbols:
   - { sym: "t_(α/2, n-1)", means: "kvantil i t-fordelingen" }
 
 filters:
-  computes: [confidence_interval]
-  random_variable: [mean_of_samples]
+  computes: [confidence_interval, parameter_estimate]
+  random_variable: [mean_of_samples, continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
-  parameters_known: [population_variance_unknown, sample_size_small_lt30, confidence_level]
-  distribution_assumption: [t_distribution]
-  tooling: [t_quantile_table_E5]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, confidence_level]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
   - "Identifiser konfidensnivå (1-α) og α"
