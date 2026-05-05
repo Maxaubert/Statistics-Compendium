@@ -81,7 +81,15 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 
   const handleChange = (name: string, raw: string) => {
     setText((prev) => ({ ...prev, [name]: raw }));
-    if (raw === "" || raw === "-" || raw === "." || raw === "-.") return;
+    // Empty field → reset to the input's default so the printed table
+    // and result widget stop showing the previous value.
+    if (raw === "") {
+      writeVals({ ...liveVals, [name]: defaultValueFor(name) });
+      return;
+    }
+    // Mid-typing intermediate states: don't push a number yet, but
+    // also don't clobber liveVals.
+    if (raw === "-" || raw === "." || raw === "-.") return;
     const num = Number(raw);
     if (!Number.isNaN(num)) {
       writeVals({ ...liveVals, [name]: num });
@@ -237,6 +245,14 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 }
 
 function defaultValueFor(name: string): number {
-  if (name === "p") return 0.95;
-  return 0;
+  switch (name) {
+    case "p":  return 0.95;
+    case "α":  return 0.05;
+    case "df": return 5;
+    case "z":  return 0;
+    case "μ":  return 1;
+    case "k":  return 0;
+    case "n":  return 10;
+    default:   return 0;
+  }
 }
