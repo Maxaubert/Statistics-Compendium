@@ -172,45 +172,29 @@ describe("TableLookupWidget — renders without crashing for every fixture", () 
 
 // ===================== Empty input → reset to default =====================
 
-describe("TableLookupWidget — input fields start empty", () => {
-  // Across all six tables and both forward/inverse modes, the input
-  // fields should be empty on initial mount even though `liveVals`
-  // holds default numbers (so the printed table still renders).
-  it.each([
-    ["poisson", poissonTable, { μ: 5, k: 2 }],
-    ["z-cumulative", zTable, { z: 0 }],
-    ["t-quantile", tTable, { df: 5, α: 0.05 }],
-  ] as const)("starts with empty input fields (%s, forward)", (_label, table, vals) => {
-    render(<TableLookupWidget table={table} vals={vals} setVals={() => {}} />);
-    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
-      expect(input.value).toBe("");
-    }
+describe("TableLookupWidget — input fields show liveVals on mount", () => {
+  // Fields mirror liveVals so users see the current default (e.g. "0")
+  // rather than an empty box on first paint.
+  it("shows '0' for z on mount (z-table forward)", () => {
+    render(<TableLookupWidget table={zTable} vals={{ z: 0 }} setVals={() => {}} />);
+    const input = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
+    expect(input.value).toBe("0");
   });
 
-  it("inverse mode also starts with empty input fields (z-tabell)", () => {
-    render(<TableLookupWidget table={zTable} vals={{ z: 0 }} setVals={() => {}} />);
-    // Toggle to inverse mode.
-    fireEvent.click(screen.getByRole("tab", { name: /p → z/i }));
-    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
-      expect(input.value).toBe("");
-    }
+  it("shows the seeded vals for poisson (μ, k)", () => {
+    render(
+      <TableLookupWidget table={poissonTable} vals={{ μ: 5, k: 2 }} setVals={() => {}} />,
+    );
+    const inputs = screen.getAllByRole("spinbutton") as HTMLInputElement[];
+    expect(inputs.map((i) => i.value)).toEqual(["5", "2"]);
   });
 
-  it("toggling between modes resets the new mode's text inputs to empty", () => {
+  it("inverse mode also shows the inverse defaults (z-table p)", () => {
     render(<TableLookupWidget table={zTable} vals={{ z: 0 }} setVals={() => {}} />);
-    const zInput = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
-    fireEvent.change(zInput, { target: { value: "1.96" } });
-    expect(zInput.value).toBe("1.96");
-    // Switch to inverse — its inputs should be empty
     fireEvent.click(screen.getByRole("tab", { name: /p → z/i }));
-    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
-      expect(input.value).toBe("");
-    }
-    // Switch back to forward — should also be empty (fresh start each toggle)
-    fireEvent.click(screen.getByRole("tab", { name: /z → p/i }));
-    for (const input of screen.getAllByRole("spinbutton") as HTMLInputElement[]) {
-      expect(input.value).toBe("");
-    }
+    const input = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
+    // defaultValueFor('p') = 0.95
+    expect(input.value).toBe("0.95");
   });
 });
 

@@ -55,15 +55,26 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
   const liveVals = mode === "inverse" ? inverseVals : vals;
   const writeVals = mode === "inverse" ? setInverseVals : setVals;
 
-  // Local string state per input. Starts empty so the user sees a clean
-  // canvas on mount — `liveVals` still holds defaults so the printed
-  // table and result widget render meaningful values until the user
-  // types. Mode toggle and table-id changes also clear text so the new
-  // mode's inputs start empty.
-  const [text, setText] = useState<Record<string, string>>({});
+  // Local string state per input. Mirrors liveVals so users see the
+  // current default number (e.g. "0" for z) on mount — both forward
+  // and inverse modes. handleChange controls text after that.
+  const [text, setText] = useState<Record<string, string>>(() =>
+    Object.fromEntries(Object.entries(liveVals).map(([k, v]) => [k, String(v)])),
+  );
+  // Re-sync when liveVals reference changes (mode toggle, table swap).
   useEffect(() => {
-    setText({});
-  }, [mode, table.id]);
+    setText((prev) => {
+      const next = { ...prev };
+      for (const [k, v] of Object.entries(liveVals)) {
+        if (Number(prev[k]) !== v) next[k] = String(v);
+      }
+      // Drop keys that don't belong to the active mode's inputs.
+      for (const k of Object.keys(prev)) {
+        if (!(k in liveVals)) delete next[k];
+      }
+      return next;
+    });
+  }, [liveVals]);
 
   const handleChange = (name: string, raw: string) => {
     setText((prev) => ({ ...prev, [name]: raw }));
