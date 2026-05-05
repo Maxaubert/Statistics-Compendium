@@ -1,6 +1,10 @@
 id: intercept
 term_no: Intercept (α, konstantledd)
 short_def: "Skjæringspunktet med y-aksen i en regresjonslinje — `Y` når `X = 0`."
+filters:
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
+  computes: [parameter_estimate]
 aliases:
   - intercept
   - konstantledd

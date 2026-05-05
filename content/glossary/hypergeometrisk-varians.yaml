@@ -1,6 +1,11 @@
 id: hypergeometrisk-varians
 term_no: Hypergeometrisk varians
 short_def: "For trekning UTEN tilbakelegging: `Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))`."
+filters:
+  distribution_assumption: [hypergeometric]
+  random_variable: [discrete_count]
+  setup: [without_replacement, finite_pool]
+  computes: [std_dev, expected_value]
 long_def: |
   For en `Hypergeometrisk(N, K, n)`-fordelt variabel `X` (antall
   «vellykkede» i `n` trekninger uten tilbakelegging fra en pott på

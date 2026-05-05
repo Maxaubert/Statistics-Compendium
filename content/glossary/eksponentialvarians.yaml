@@ -1,6 +1,11 @@
 id: eksponentialvarians
 term_no: Eksponentialvarians (Var(T) = 1/λ²)
 short_def: "Spesielt for `Eksp(λ)`: `E[T] = 1/λ`, `Var(T) = 1/λ²`, `σ = 1/λ`."
+filters:
+  distribution_assumption: [exponential]
+  random_variable: [time_until_event, continuous]
+  parameters_known: [rate_lambda]
+  computes: [std_dev, expected_value]
 long_def: |
   For en `Eksponential(λ)`-fordelt ventetid `T`:
 
