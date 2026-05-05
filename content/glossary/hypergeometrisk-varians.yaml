@@ -6,17 +6,18 @@ long_def: |
   «vellykkede» i `n` trekninger uten tilbakelegging fra en pott på
   `N` elementer hvorav `K` er «vellykkede»):
 
-  - `E[X] = n · K/N`
-  - `Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))`
+      E[X]   = n · K/N
+      Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))
 
-  Sammenligning med binomial:
+  **Sammenligning med binomial:** sett `p = K/N`. Da blir
+  binomial-forventningen den samme (`n·p`) og binomialvariansen er
+  `n·p·(1−p)`. Den hypergeometriske variansen er den binomiale
+  multiplisert med **endelig-populasjon-korreksjonen**:
 
-  - Binomial-forventningen er den samme hvis du setter `p = K/N`: `n·p`.
-  - Binomialvariansen er `n·p·(1−p)`. Den hypergeometriske variansen er
-    den binomiale **multiplisert med endelig-populasjon-korreksjonen**
-    `(N−n)/(N−1)` — som er `< 1` når `n > 1`.
-  - Når `n` er liten i forhold til `N`, er korreksjonen ≈ 1 og hypergeometrisk
-    ≈ binomial.
+      (N − n) / (N − 1)
+
+  Faktoren er `< 1` når `n > 1`. Når `n` er liten i forhold til `N`,
+  går korreksjonen mot `1` og hypergeometrisk ≈ binomial.
 aliases:
   - hypergeometrisk varians
   - hypergeometrisk variansen

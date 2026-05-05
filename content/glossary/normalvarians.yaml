@@ -2,13 +2,23 @@ id: normalvarians
 term_no: Normalvarians (Var(X) = σ²)
 short_def: "Trivielt for `N(μ, σ)`: variansen ER parameteren `σ²` selv. Standardavvik = `σ`."
 long_def: |
-  Normalfordelingen er parameterisert direkte med standardavviket `σ` (eller
-  variansen `σ²`), så det er ingen utregning å gjøre — du leser parameteren
-  rett av oppgaven.
+  For en `N(μ, σ)`-fordelt variabel:
 
-  - **Trenger rådata?** Nei — bare oppgitt `σ` (eller `σ²`).
-  - For utvalgsgjennomsnittet `X̄` av `n` iid `N(μ, σ)`-observasjoner blir
-    spredningen mindre: `Var(X̄) = σ²/n`. Se «variansen til utvalgsgjennomsnittet».
+      Var(X) = σ²
+      σ      = σ        (parameteren selv)
+
+  Normalfordelingen er parameterisert direkte med standardavviket `σ`
+  (eller variansen `σ²`), så det er ingen utregning å gjøre — du leser
+  parameteren rett av oppgaven.
+
+  **Trenger rådata?** Nei — bare oppgitt `σ` (eller `σ²`).
+
+  For utvalgsgjennomsnittet `X̄` av `n` iid `N(μ, σ)`-observasjoner blir
+  spredningen mindre:
+
+      Var(X̄) = σ² / n
+
+  Se «variansen til utvalgsgjennomsnittet».
 aliases:
   - normalvarians
   - normalvariansen

@@ -5,13 +5,21 @@ long_def: |
   Standardfeilen til andelen brukes i z-test og KI for andel. To
   varianter er vanlige:
 
-  - **For KI:** `SE(p̂) = √( p̂(1 − p̂)/n )` (bruker estimat).
-  - **For testobservator:** `SE(p̂) = √( p₀(1 − p₀)/n )` (bruker `p₀` fra `H₀`).
+  **For KI** (bruker estimat):
 
-  Forutsetter normalapproksimasjon: `n·p̂·(1 − p̂) ≥ 5`.
+      SE(p̂) = √( p̂(1 − p̂) / n )
 
-  - **Trenger rådata?** Nei — bare `n` og `p̂` (eller `p₀`).
-  - Standardfeilen er størst når `p̂ = 0.5` og minst når `p̂` er nær `0` eller `1`.
+  **For testobservator** (bruker `p₀` fra `H₀`):
+
+      SE(p̂) = √( p₀(1 − p₀) / n )
+
+  Forutsetter normalapproksimasjon:
+
+      n · p̂ · (1 − p̂) ≥ 5
+
+  **Trenger rådata?** Nei — bare `n` og `p̂` (eller `p₀`).
+
+  Standardfeilen er størst når `p̂ = 0.5` og minst når `p̂` er nær `0` eller `1`.
 aliases:
   - standardfeil til andel
   - standardfeil til andelen

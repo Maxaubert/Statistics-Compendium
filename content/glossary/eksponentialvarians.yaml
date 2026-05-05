@@ -4,16 +4,20 @@ short_def: "Spesielt for `Eksp(λ)`: `E[T] = 1/λ`, `Var(T) = 1/λ²`, `σ = 1/�
 long_def: |
   For en `Eksponential(λ)`-fordelt ventetid `T`:
 
-  - `E[T] = 1/λ`
-  - `Var(T) = 1/λ²`
-  - `σ = 1/λ`
+      E[T]   = 1/λ
+      Var(T) = 1/λ²
+      σ      = 1/λ
 
-  Forventning og standardavvik er like (`1/λ`), så variasjonskoeffisienten
-  `σ/μ = 1` — fordelingen er sterkt høyre-skjev og har samme spredning som
+  Forventning og standardavvik er like (`1/λ`), så variasjonskoeffisienten:
+
+      σ / μ = 1
+
+  Fordelingen er sterkt høyre-skjev og har samme spredning som
   forventning.
 
-  Lambda `λ` er rateparameteren: hvis hendelser kommer med rate `2 per minutt`,
-  er forventet ventetid `1/2 = 0.5 min` og standardavviket også `0.5 min`.
+  Lambda `λ` er rateparameteren: hvis hendelser kommer med rate
+  `2` per minutt, er forventet ventetid `1/2 = 0.5` min og
+  standardavviket også `0.5` min.
 
   Pass på enhetene: hvis `λ` er per minutt, er `T` i minutter.
 aliases:

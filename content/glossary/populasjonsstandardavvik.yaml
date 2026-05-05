@@ -2,12 +2,16 @@ id: populasjonsstandardavvik
 term_no: Populasjonsstandardavvik (σ)
 short_def: "Den «sanne» spredningen i hele populasjonen — `σ = √Var(X)`, antatt kjent eller estimert."
 long_def: |
-  `σ` er populasjonens standardavvik — den faste, ukjente spredningen
-  rundt forventningsverdien `μ`.
+  Definisjon:
 
-  - **Når `σ` er kjent:** bruk z-test og z-baserte KI for `μ`
+      σ = √Var(X)
+
+  Den faste, ukjente spredningen rundt forventningsverdien `μ` i hele
+  populasjonen.
+
+  - **Når `σ` er kjent:** bruk z-test og z-baserte KI for `μ`.
   - **Når `σ` er ukjent (det vanlige):** estimer den med
-    utvalgsstandardavviket `s` og bruk t-fordelt inferens
+    utvalgsstandardavviket `s` og bruk t-fordelt inferens.
 
   Skiller seg fra utvalgsstandardavviket `s`, som regnes ut fra dataene
   og varierer fra utvalg til utvalg.

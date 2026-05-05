@@ -2,15 +2,21 @@ id: pooled-varians
 term_no: Pooled (interpolert) varians (S_P²)
 short_def: "Felles variansestimat for to grupper: `S_P² = ((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X + n_Y − 2)`."
 long_def: |
-  Brukes i to-utvalgs t-test der vi antar at begge gruppene har samme
-  underliggende `σ²`. Formelen er et vektet snitt av de to
-  utvalgsvariansene — vekten er antall frihetsgrader i hver gruppe.
+  Formel:
 
-  - **Trenger rådata?** Indirekte: trenger `s_X²` og `s_Y²`, som regnes
-    fra rådata. Hvis utvalgsvariansene allerede er gitt i oppgaven,
-    trenger du ikke selve observasjonene.
-  - **Antakelse:** lik `σ²` i begge grupper. Hvis ikke, bruk Welch t-test.
-  - Standardavviket `S_P = √S_P²`.
+      S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
+
+  Brukes i to-utvalgs t-test der vi antar at begge gruppene har samme
+  underliggende `σ²`. Et vektet snitt av de to utvalgsvariansene — vekten
+  er antall frihetsgrader i hver gruppe.
+
+  **Trenger rådata?** Indirekte: trenger `s_X²` og `s_Y²`, som regnes
+  fra rådata. Hvis utvalgsvariansene allerede er gitt i oppgaven,
+  trenger du ikke selve observasjonene.
+
+  **Antakelse:** lik `σ²` i begge grupper. Hvis ikke, bruk Welch t-test.
+
+  Standardavviket er `S_P = √S_P²`.
 aliases:
   - pooled varians
   - pooled-varians

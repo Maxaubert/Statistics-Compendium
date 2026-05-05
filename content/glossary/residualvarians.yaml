@@ -2,16 +2,22 @@ id: residualvarians
 term_no: Residualvarians (S_E²)
 short_def: "Variansen til residualene i regresjon: `S_E² = Σ(yᵢ − ŷᵢ)² / (n − 2)`."
 long_def: |
+  Formel:
+
+      S_E² = Σ(yᵢ − ŷᵢ)² / (n − 2)
+
   Måler hvor langt observasjonene ligger unna regresjonslinjen i snitt.
   Brukes som mellomsteg i nesten alt videre i lineær regresjon.
 
-  - **Trenger rådata?** Indirekte: trenger `Σ(yᵢ − ŷᵢ)²` (som regnes
-    fra `(xᵢ, yᵢ)`-parene). Hvis `S_E²` er oppgitt direkte, trenger du
-    ikke rådataene.
-  - **Hvorfor `n − 2`?** To frihetsgrader er «brukt opp» til å estimere
-    `α̂` og `β̂` fra de samme dataene.
-  - Inngår i: standardfeil til `β̂`, hypotesetest for stigningstall,
-    prediksjonsintervall.
+  **Trenger rådata?** Indirekte: trenger `Σ(yᵢ − ŷᵢ)²` (som regnes fra
+  `(xᵢ, yᵢ)`-parene). Hvis `S_E²` er oppgitt direkte, trenger du ikke
+  rådataene.
+
+  **Hvorfor `n − 2`?** To frihetsgrader er «brukt opp» til å estimere
+  `α̂` og `β̂` fra de samme dataene.
+
+  Inngår i: standardfeil til `β̂`, hypotesetest for stigningstall,
+  prediksjonsintervall.
 aliases:
   - residualvarians
   - residualvariansen

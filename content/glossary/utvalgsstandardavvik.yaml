@@ -2,17 +2,27 @@ id: utvalgsstandardavvik
 term_no: Utvalgsstandardavvik (s, S)
 short_def: "Estimat for `σ` regnet ut fra utvalget: `s = √S²`, der `S² = Σ(xᵢ − x̄)²/(n − 1)`."
 long_def: |
-  `s` (av og til skrevet `S`) er kvadratroten av utvalgsvariansen `S²`,
-  som bruker `n − 1` i nevneren (Bessels korreksjon) for å være
-  forventningsrett for `σ²`.
+  `s` (av og til skrevet `S`) er kvadratroten av utvalgsvariansen:
 
-  - **Trenger rådata?** Ja — du må ha observasjonene `x_1, …, x_n` for
-    å regne `Σ(xᵢ − x̄)²`. Hvis bare `s` (eller `s²`) er oppgitt, kan du
-    selvsagt bruke det videre uten å ha selve dataene.
-  - Brukes i stedet for det ukjente `σ` i alle t-baserte inferenser:
-    - **Testobservator (t-test):** `T = (X̄ − μ₀)/(s/√n)`
-    - **KI for μ:** `X̄ ± t_(α/2, n−1) · s/√n`
-    - **Frihetsgrader:** `ν = n − 1`
+      s = √S²        der    S² = Σ(xᵢ − x̄)² / (n − 1)
+
+  `n − 1` (Bessels korreksjon) gjør `s²` forventningsrett for `σ²`.
+
+  **Trenger rådata?** Ja — du må ha observasjonene `x_1, …, x_n` for å
+  regne `Σ(xᵢ − x̄)²`. Hvis bare `s` (eller `s²`) er oppgitt, kan du
+  selvsagt bruke det videre uten å ha selve dataene.
+
+  Brukes i stedet for det ukjente `σ` i alle t-baserte inferenser:
+
+  **Testobservator (t-test):**
+
+      T = (X̄ − μ₀) / (s/√n)
+
+  **KI for μ:**
+
+      X̄ ± t_(α/2, n−1) · s/√n
+
+  Frihetsgrader er `ν = n − 1`.
 
   Skiller seg fra populasjonsstandardavviket `σ`, som er en konstant —
   `s` er en stokastisk variabel som varierer fra utvalg til utvalg.

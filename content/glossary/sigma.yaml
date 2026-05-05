@@ -5,12 +5,17 @@ aliases:
   - σ
   - sigma
 long_def: |
-  `σ = √Var(X)` er standardavviket til populasjonen.
+  Definisjon:
 
-  - **Når `σ` er kjent:** z-test og z-baserte KI
-  - **Når `σ` er ukjent (det vanlige):** bruk `s` (utvalgets standardavvik) og t-fordeling
+      σ = √Var(X)
 
-  Pass på: stor `Σ` er sumtegn, liten `σ` er standardavvik — to helt forskjellige ting.
+  Standardavviket til populasjonen.
+
+  - **Når `σ` er kjent:** z-test og z-baserte KI.
+  - **Når `σ` er ukjent (det vanlige):** bruk `s` (utvalgets standardavvik) og t-fordeling.
+
+  Pass på: stor `Σ` er sumtegn, liten `σ` er standardavvik — to helt
+  forskjellige ting.
 see_also:
   - { id: standardavvik, kind: glossary }
   - { id: sigma-kvadrat, kind: glossary }
