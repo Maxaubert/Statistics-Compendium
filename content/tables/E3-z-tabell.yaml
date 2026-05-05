@@ -4,7 +4,7 @@ formal_name_no: "Kumulativ standardnormalfordeling"
 code: "E.3"
 description: "Slår opp G(z) = P(Z ≤ z) for en gitt z-verdi. Brukes for å konvertere standardiserte normalverdier til sannsynligheter."
 inputs:
-  - { name: "z", type: number, min: -3.09, max: 3.09, step: any }
+  - { name: "z", type: number, min: -3.99, max: 3.99, step: any }
 output: "G(z) = P(Z ≤ z)"
 distribution: normal_cumulative
 toggle_label: "z → p"

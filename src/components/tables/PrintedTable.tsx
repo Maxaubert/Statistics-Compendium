@@ -123,15 +123,16 @@ function ZPrintedTable({ inputs }: { inputs: Record<string, number> }) {
   const zRow = +(sign * absRow).toFixed(1);
   const zCol = +(absZ - absRow).toFixed(2);
 
-  // Show 7 rows centered on the user's z (one decimal). Clamp the
-  // window center to ±2.7 so all 7 offsets stay inside the [-3, 3]
-  // table range — otherwise typing z >= 3.4 would yield an empty
-  // window and crash on `reduce` below.
+  // Show 7 rows centered on the user's z (one decimal). Table extends
+  // to ±3.9. Clamp the window center to ±3.6 so all 7 offsets (±0.3)
+  // stay inside the table range — otherwise very large |z| would yield
+  // an empty window and crash on `reduce` below.
+  const Z_MAX = 3.9;
   const rowOffsets = [-3, -2, -1, 0, 1, 2, 3];
-  const clampedRow = Math.max(-2.7, Math.min(2.7, zRow));
+  const clampedRow = Math.max(-(Z_MAX - 0.3), Math.min(Z_MAX - 0.3, zRow));
   const zRows = rowOffsets
     .map((d) => +(clampedRow + d * 0.1).toFixed(1))
-    .filter((v) => v >= -3.0 && v <= 3.0);
+    .filter((v) => v >= -Z_MAX && v <= Z_MAX);
   const zCols = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09].map((v) => +v.toFixed(2));
 
   // Find the closest second-decimal column
