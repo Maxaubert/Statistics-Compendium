@@ -58,7 +58,7 @@ export function Glossary() {
               aria-label={`Vis definisjon av ${t.term_no}`}
               className="group cursor-pointer rounded-md border border-line bg-card px-3.5 py-2 hover:border-primary-2"
             >
-              <div className="truncate font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
+              <div className="truncate text-center font-serif text-[14px] font-medium text-ink group-hover:text-primary-2">
                 {t.term_no}
               </div>
             </li>
