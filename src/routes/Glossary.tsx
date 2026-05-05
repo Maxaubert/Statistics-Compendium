@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Banner } from "@/components/shell/Banner";
-import { GlossaryPopup } from "@/components/detail/GlossaryPopup";
+import {
+  GlossaryPopupProvider,
+  useGlossaryPopup,
+} from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
 import { buildSearchIndex, searchEntries } from "@/data/search";
 
@@ -9,8 +12,17 @@ const CROSS_HIT_CAP = 16;
 
 export function Glossary() {
   const data = loadAllContent();
+  return (
+    <GlossaryPopupProvider glossary={data.glossary}>
+      <GlossaryInner />
+    </GlossaryPopupProvider>
+  );
+}
+
+function GlossaryInner() {
+  const data = loadAllContent();
+  const popup = useGlossaryPopup();
   const [query, setQuery] = useState("");
-  const [openId, setOpenId] = useState<string | null>(null);
 
   const filtered = useMemo(
     () =>
@@ -37,8 +49,6 @@ export function Glossary() {
     return searchEntries(entryFuse, q).slice(0, CROSS_HIT_CAP).map((h) => h.item);
   }, [query, entryFuse]);
 
-  const open = openId ? data.glossary.find((t) => t.id === openId) ?? null : null;
-
   return (
     <div className="min-h-screen bg-paper">
       <Banner />
@@ -60,13 +70,13 @@ export function Glossary() {
           {filtered.map((t) => (
             <li
               key={t.id}
-              onClick={() => setOpenId(t.id)}
+              onClick={() => popup?.openTerm(t.id)}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  setOpenId(t.id);
+                  popup?.openTerm(t.id);
                 }
               }}
               aria-label={`Vis definisjon av ${t.term_no}`}
@@ -107,7 +117,6 @@ export function Glossary() {
           </section>
         )}
       </main>
-      {open && <GlossaryPopup term={open} onClose={() => setOpenId(null)} />}
     </div>
   );
 }
