@@ -223,6 +223,14 @@ export const GlossaryTermSchema = z.object({
    * `term_no` with parenthetical decoration stripped.
    */
   aliases: z.array(z.string()).optional(),
+  /**
+   * Filter tags using the same dimensions as entries (computes,
+   * random_variable, setup, structural_cues, parameters_known,
+   * distribution_assumption, tooling). Lets glossary terms surface
+   * in the cross-search section when a filter is active. Defaults
+   * to {} so legacy yaml without filters still parses.
+   */
+  filters: FilterSelectionSchema,
 });
 export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
 
