@@ -87,6 +87,14 @@ export function Prose({
         if (block.kind === "rule") {
           return <hr key={i} className={ruleClass} />;
         }
+        if (block.kind === "heading") {
+          const Tag = block.level === 2 ? "h2" : "h3";
+          return (
+            <Tag key={i} className={HEADING_CLASS[theme][block.level]}>
+              {renderInline(block.text, aliases, popup?.openTerm, theme)}
+            </Tag>
+          );
+        }
         if (block.kind === "code_block") {
           return (
             <pre key={i} className={CODE_BLOCK_CLASS[theme]}>
@@ -122,6 +130,16 @@ const CODE_BLOCK_CLASS: Record<ProseTheme, string> = {
   dark:
     "m-0 overflow-x-auto rounded-md bg-white/[0.05] px-4 py-3 font-mono text-[13.5px] leading-relaxed text-[inherit]",
 };
+const HEADING_CLASS: Record<ProseTheme, Record<2 | 3, string>> = {
+  light: {
+    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-ink",
+    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-ink",
+  },
+  dark: {
+    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-white",
+    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-white",
+  },
+};
 
 // ---- Block parser -----------------------------------------------------
 
@@ -130,12 +148,20 @@ interface ListBlock { kind: "list"; items: string[] }
 interface OrderedListBlock { kind: "ordered"; items: string[] }
 interface RuleBlock { kind: "rule" }
 interface CodeBlock { kind: "code_block"; lines: string[] }
-type Block = ParagraphBlock | ListBlock | OrderedListBlock | RuleBlock | CodeBlock;
+interface HeadingBlock { kind: "heading"; level: 2 | 3; text: string }
+type Block =
+  | ParagraphBlock
+  | ListBlock
+  | OrderedListBlock
+  | RuleBlock
+  | CodeBlock
+  | HeadingBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
 const NUMBERED_RE = /^\s*\d+\.\s+/;
 const RULE_RE = /^\s*-{3,}\s*$/;
 const INDENTED_CODE_RE = /^(?: {4}|\t)(.*)$/;
+const HEADING_RE = /^(##|###)\s+(.+)$/;
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -149,6 +175,16 @@ function parseBlocks(body: string): Block[] {
     }
     if (RULE_RE.test(lines[i])) {
       blocks.push({ kind: "rule" });
+      i++;
+      continue;
+    }
+    const headingMatch = lines[i].match(HEADING_RE);
+    if (headingMatch) {
+      blocks.push({
+        kind: "heading",
+        level: headingMatch[1].length === 2 ? 2 : 3,
+        text: headingMatch[2].trim(),
+      });
       i++;
       continue;
     }
@@ -182,7 +218,7 @@ function parseBlocks(body: string): Block[] {
     }
     if (BULLET_RE.test(lines[i])) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i]) && !HEADING_RE.test(lines[i])) {
         if (BULLET_RE.test(lines[i])) {
           items.push(lines[i].replace(BULLET_RE, "").trim());
         } else if (NUMBERED_RE.test(lines[i])) {
@@ -198,7 +234,7 @@ function parseBlocks(body: string): Block[] {
     }
     if (NUMBERED_RE.test(lines[i])) {
       const items: string[] = [];
-      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i])) {
+      while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i]) && !HEADING_RE.test(lines[i])) {
         if (NUMBERED_RE.test(lines[i])) {
           items.push(lines[i].replace(NUMBERED_RE, "").trim());
         } else if (BULLET_RE.test(lines[i])) {
@@ -217,7 +253,8 @@ function parseBlocks(body: string): Block[] {
       lines[i].trim() !== "" &&
       !BULLET_RE.test(lines[i]) &&
       !NUMBERED_RE.test(lines[i]) &&
-      !RULE_RE.test(lines[i])
+      !RULE_RE.test(lines[i]) &&
+      !HEADING_RE.test(lines[i])
     ) {
       paraLines.push(lines[i].trim());
       i++;

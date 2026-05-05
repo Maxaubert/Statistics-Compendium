@@ -102,6 +102,14 @@ describe("Prose", () => {
     expect(container.querySelector("code")?.textContent).toBe("code");
   });
 
+  it("renders ## headers as <h2> and ### as <h3>", () => {
+    const body = "## Stor seksjon\n\nNoe tekst.\n\n### Mindre seksjon\n\nMer.";
+    const { container } = render(<Prose body={body} />);
+    expect(container.querySelector("h2")?.textContent).toBe("Stor seksjon");
+    expect(container.querySelector("h3")?.textContent).toBe("Mindre seksjon");
+    expect(container.querySelectorAll("p")).toHaveLength(2);
+  });
+
   it("renders [label](href) markdown links as router links", () => {
     render(
       <MemoryRouter>
