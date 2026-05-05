@@ -3,6 +3,8 @@ import {
   buildAliasIndex,
   findGlossaryLinks,
   type GlossaryAlias,
+  type LinkedSegment,
+  type LinkSegment,
 } from "@/data/glossary-link";
 import type { GlossaryTerm } from "@/data/schema";
 import { useGlossaryPopup } from "./GlossaryPopup";
@@ -305,6 +307,42 @@ const LINK_CLASS: Record<ProseTheme, string> = {
     "cursor-pointer text-[#a8b1ff] underline decoration-dotted decoration-[#a8b1ff]/60 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
 
+/**
+ * When the same term gets matched twice in one chunk (e.g. `ν` and
+ * `frihetsgrader` both pointing at frihetsgrader-glos in "ν = n - 1
+ * frihetsgrader"), demote the shorter occurrences to plain text. The
+ * longest surface form wins because it's the most readable link target.
+ */
+function preferLongest(segments: LinkedSegment[]): LinkedSegment[] {
+  const byTerm = new Map<string, LinkSegment[]>();
+  for (const s of segments) {
+    if (s.kind === "link") {
+      const arr = byTerm.get(s.termId);
+      if (arr) arr.push(s);
+      else byTerm.set(s.termId, [s]);
+    }
+  }
+  const demote = new Set<LinkSegment>();
+  for (const arr of byTerm.values()) {
+    if (arr.length <= 1) continue;
+    const maxLen = Math.max(...arr.map((s) => s.value.length));
+    for (const s of arr) if (s.value.length < maxLen) demote.add(s);
+  }
+  if (demote.size === 0) return segments;
+  const out: LinkedSegment[] = [];
+  for (const s of segments) {
+    const piece: LinkedSegment =
+      s.kind === "link" && demote.has(s) ? { kind: "text", value: s.value } : s;
+    const last = out[out.length - 1];
+    if (last && last.kind === "text" && piece.kind === "text") {
+      last.value += piece.value;
+    } else {
+      out.push(piece);
+    }
+  }
+  return out;
+}
+
 function renderTextWithLinks(
   text: string,
   aliases: GlossaryAlias[] | undefined,
@@ -312,7 +350,7 @@ function renderTextWithLinks(
   theme: ProseTheme,
 ): ReactNode {
   if (!aliases || !openTerm) return text;
-  const segs = findGlossaryLinks(text, aliases);
+  const segs = preferLongest(findGlossaryLinks(text, aliases));
   return segs.map((s, i) => {
     if (s.kind === "text") return <Fragment key={i}>{s.value}</Fragment>;
     return (

@@ -127,4 +127,22 @@ describe("Prose", () => {
     // Without provider, no button is rendered.
     expect(screen.queryAllByRole("button")).toHaveLength(0);
   });
+
+  it("dedupes same-term links in one paragraph and keeps the longest form", () => {
+    const dfGlossary = [
+      {
+        id: "frihetsgrader-glos",
+        term_no: "Frihetsgrader (df, ν)",
+        short_def: "x",
+        aliases: ["frihetsgrader", "ν"],
+      },
+    ];
+    renderInProvider(
+      <Prose body="t-fordelt med ν = n − 1 frihetsgrader" glossary={dfGlossary} />,
+    );
+    const buttons = screen.queryAllByRole("button");
+    // Only the longer form ("frihetsgrader") should remain a link.
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].textContent).toBe("frihetsgrader");
+  });
 });
