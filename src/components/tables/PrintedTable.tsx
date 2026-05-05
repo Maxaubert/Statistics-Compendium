@@ -34,8 +34,10 @@ export function PrintedTable({ distribution, inputs }: Props) {
 
 // ===================== Poisson =====================
 function PoissonPrintedTable({ inputs }: { inputs: Record<string, number> }) {
-  const μ = inputs.μ ?? 0;
-  const k = Math.max(0, Math.round(inputs.k ?? 0));
+  const rawMu = inputs.μ;
+  const μ = Number.isFinite(rawMu) ? rawMu : 0;
+  const rawK = inputs.k;
+  const k = Math.max(0, Math.round(Number.isFinite(rawK) ? rawK : 0));
   const μValues = Array.from(new Set(
     [-3, -2, -1, 0, 1, 2, 3]
       .map((d) => +(Math.max(0.1, μ + d * 0.1)).toFixed(2))
@@ -114,7 +116,8 @@ function PoissonPrintedTable({ inputs }: { inputs: Record<string, number> }) {
 
 // ===================== Z-tabell (kumulativ standardnormal) =====================
 function ZPrintedTable({ inputs }: { inputs: Record<string, number> }) {
-  const z = inputs.z ?? 0;
+  const rawZ = inputs.z ?? 0;
+  const z = Number.isFinite(rawZ) ? rawZ : 0;
   // Standard textbook convention: rows are z to one decimal of |z|, with sign;
   // columns are the second decimal of |z| (0.00..0.09).
   const sign = z >= 0 ? 1 : -1;
@@ -246,8 +249,10 @@ function ZQuantilePrintedTable() {
 
 // ===================== t-fordelingens kvantiltabell =====================
 function TPrintedTable({ inputs }: { inputs: Record<string, number> }) {
-  const df = Math.max(1, Math.round(inputs.df ?? 1));
-  const α = inputs.α ?? 0.05;
+  const rawDf = inputs.df;
+  const df = Math.max(1, Math.round(Number.isFinite(rawDf) ? rawDf : 1));
+  const rawα = inputs.α;
+  const α = Number.isFinite(rawα) ? rawα : 0.05;
   const αs = [0.25, 0.1, 0.05, 0.025, 0.01, 0.005];
 
   // Show df ± 3 rows around input
@@ -325,8 +330,10 @@ function TPrintedTable({ inputs }: { inputs: Record<string, number> }) {
 
 // ===================== Kjikvadratfordelingens kvantiltabell =====================
 function ChiSquaredPrintedTable({ inputs }: { inputs: Record<string, number> }) {
-  const df = Math.max(1, Math.round(inputs.df ?? 1));
-  const α = inputs.α ?? 0.05;
+  const rawDf = inputs.df;
+  const df = Math.max(1, Math.round(Number.isFinite(rawDf) ? rawDf : 1));
+  const rawα = inputs.α;
+  const α = Number.isFinite(rawα) ? rawα : 0.05;
   const αs = [0.995, 0.975, 0.950, 0.100, 0.050, 0.025, 0.010, 0.005];
 
   const dfRows = [-3, -2, -1, 0, 1, 2, 3]
@@ -405,9 +412,12 @@ function ChiSquaredPrintedTable({ inputs }: { inputs: Record<string, number> }) 
 
 // ===================== Binomialtabell =====================
 function BinomialPrintedTable({ inputs }: { inputs: Record<string, number> }) {
-  const n = Math.max(2, Math.round(inputs.n ?? 10));
-  const p = inputs.p ?? 0.5;
-  const k = Math.max(0, Math.round(inputs.k ?? 0));
+  const rawN = inputs.n;
+  const n = Math.max(2, Math.round(Number.isFinite(rawN) ? rawN : 10));
+  const rawP = inputs.p;
+  const p = Number.isFinite(rawP) ? rawP : 0.5;
+  const rawK = inputs.k;
+  const k = Math.max(0, Math.round(Number.isFinite(rawK) ? rawK : 0));
   const ps = [0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95];
   const ks = Array.from({ length: Math.min(n + 1, 11) }, (_, i) => i);
 

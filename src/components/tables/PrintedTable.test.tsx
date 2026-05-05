@@ -44,12 +44,7 @@ describe("PrintedTable — Z (normal cumulative)", () => {
     ).not.toThrow();
   });
 
-  // BUG (uncovered by tests): NaN z crashes ZPrintedTable because the
-  // 7-row window filter ends up empty and `reduce` has no initial value.
-  // The widget's `handleChange` filters NaN out before reaching here, so
-  // it doesn't manifest in the live UI — but the component is not robust
-  // on its own. Documented here; not fixing per scope of test-only PR.
-  it.skip("BUG: crashes for NaN z (component not robust to NaN, widget filters it out)", () => {
+  it("renders without crashing when z is NaN (defaults to 0)", () => {
     expect(() =>
       render(<PrintedTable distribution="normal_cumulative" inputs={{ z: NaN }} />),
     ).not.toThrow();
@@ -320,12 +315,13 @@ describe("PrintedTable — Z-quantile", () => {
 
 // ===================== Cross-distribution smoke test =====================
 describe("PrintedTable — all distributions render with garbage / NaN inputs", () => {
-  // Note: normal_cumulative is excluded from this NaN sweep because of
-  // the documented NaN-z bug above. The widget never feeds NaN to the
+  // Note: normal_cumulative is included now that NaN-z is hardened. Widget
+  // never feeds NaN to the
   // PrintedTable in practice (handleChange filters it).
   it.each([
     ["binomial", { n: NaN, p: NaN, k: NaN }],
     ["poisson", { μ: NaN, k: NaN }],
+    ["normal_cumulative", { z: NaN }],
     ["normal_quantile", { α: NaN }],
     ["t_quantile", { df: NaN, α: NaN }],
     ["chi_squared_quantile", { df: NaN, α: NaN }],
