@@ -45,9 +45,9 @@ describe("ListView", () => {
         <ListView />
       </MemoryRouter>,
     );
-    // Tabeller tab shows a banner-style hint instead of a search input.
+    // Tabeller tab renders the table cards. Look for one of the table names.
     expect(
-      await screen.findByText(/Tabellene er interaktive/i),
+      await screen.findByText(/Z-tabell/i),
     ).toBeInTheDocument();
   });
 

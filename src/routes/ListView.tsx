@@ -149,16 +149,11 @@ export function ListView() {
           )}
 
           {tab === "tabeller" && (
-            <>
-              <div className="mb-4 rounded-r-md border-l-[3px] border-primary-2 bg-primary-soft px-3.5 py-2.5 font-serif text-[13px] text-primary">
-                Tabellene er interaktive. Klikk for å slå opp en verdi direkte.
-              </div>
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-                {data.tables.map((t) => (
-                  <TableCard key={t.id} table={t} onClick={() => navigate(`/table/${t.id}`)} />
-                ))}
-              </div>
-            </>
+            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              {data.tables.map((t) => (
+                <TableCard key={t.id} table={t} onClick={() => navigate(`/table/${t.id}`)} />
+              ))}
+            </div>
           )}
         </main>
       </div>
