@@ -1,0 +1,967 @@
+chunk: entries-part-1
+description: |
+  Context-based filter audit for 21 entries (formler/konsepter).
+  For each entry, 2-4 realistic exam-question contexts are imagined.
+  For each context, the filters a student would naturally click are listed,
+  and compared to the entry's current filter tags. Mismatches flagged.
+
+items:
+  # ============================================================
+  - id: bayes-setning
+    type: entry
+    current_filters:
+      computes: [conditional_probability, exact_probability, marginal_probability]
+      random_variable: [discrete_count]
+      setup: [single_population]
+      structural_cues: [conditional_given, more_than_two_categories]
+      parameters_known: []
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "Klassisk diagnose: prevalens 1 %, sensitivitet 99 %, spesifisitet 95 %, finn P(syk | positiv test)"
+        student_filters:
+          computes: [conditional_probability]
+          structural_cues: [conditional_given]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Tre maskiner (50/30/20 %) med ulike defektrater; en defekt del — fra hvilken maskin?"
+        student_filters:
+          computes: [conditional_probability]
+          structural_cues: [conditional_given, more_than_two_categories]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Spam-filter: 30 % spam, ord 'free' i 80 % av spam og 5 % av ham; gitt 'free', P(spam)?"
+        student_filters:
+          computes: [conditional_probability]
+          structural_cues: [conditional_given, independent_events]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [independent_events]
+        notes: "Bayes-oppgaver bruker ofte uavhengighet mellom betinging-paths; mange studenter klikker independent_events."
+      - scenario: "Sekvensiell testing: to uavhengige tester (screening + bekreftende), begge positive — P(syk | begge pos)"
+        student_filters:
+          computes: [conditional_probability, joint_probability]
+          structural_cues: [conditional_given, independent_events]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: false
+        missing_tags:
+          computes: [joint_probability]
+          structural_cues: [independent_events]
+        notes: "Joint P(D ∩ T1 ∩ T2) er sentralt; en student med joint_probability-filter ville forvente Bayes."
+
+  # ============================================================
+  - id: binomial-fordeling
+    type: entry
+    current_filters:
+      computes: [exact_probability, at_least_k, range_probability, find_n_for_threshold, expected_value]
+      random_variable: [discrete_count]
+      setup: [single_population, fixed_n_trials, with_replacement]
+      structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n, counting_events]
+      parameters_known: [success_p]
+      distribution_assumption: [binomial]
+      tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
+    contexts:
+      - scenario: "Skytter med p=0.30, n=10 skudd; P(X=4 treff)"
+        student_filters:
+          computes: [exact_probability]
+          random_variable: [discrete_count]
+          setup: [fixed_n_trials]
+          structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events]
+          parameters_known: [success_p]
+          distribution_assumption: [binomial]
+          tooling: [calculator_binomial_coef]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Lottokuponger: p=0.05 hver, n=20; P(minst 1 vinst)"
+        student_filters:
+          computes: [at_least_k]
+          structural_cues: [complement_pattern, success_probability_given]
+          distribution_assumption: [binomial]
+          tooling: [cumulative_binomial_table_E1]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Hvor mange lodd må kjøpes for P(minst 1 vinst) ≥ 0.99?"
+        student_filters:
+          computes: [find_n_for_threshold]
+          structural_cues: [complement_pattern]
+          parameters_known: [success_p]
+          distribution_assumption: [binomial]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Forventet antall defekter når n=100 og p=0.02"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [discrete_count]
+          parameters_known: [success_p]
+          distribution_assumption: [binomial]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: bootstrapping
+    type: entry
+    current_filters:
+      computes: [confidence_interval, parameter_estimate, std_dev]
+      random_variable: [continuous, mean_of_samples]
+      setup: [single_population, with_replacement]
+      structural_cues: [data_as_list, summary_stats_given]
+      parameters_known: [population_variance_unknown, confidence_level, sample_size_small_lt30]
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "Lite skjevtfordelt utvalg (n=15), QQ-plot ser ikke normalt ut, vil ha 95 % KI for μ uten å anta normalitet"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [mean_of_samples]
+          setup: [single_population]
+          structural_cues: [data_as_list]
+          parameters_known: [confidence_level, sample_size_small_lt30, population_variance_unknown]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Ønsker å estimere usikkerhet i medianen fra 25 målinger via resampling"
+        student_filters:
+          computes: [parameter_estimate, std_dev]
+          random_variable: [continuous]
+          setup: [single_population, with_replacement]
+          structural_cues: [data_as_list]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Python-oppgave med numpy.random.choice(replace=True) for å lage 1000 resamples og bruke prosentilintervall"
+        student_filters:
+          computes: [confidence_interval]
+          setup: [with_replacement]
+          parameters_known: [confidence_level]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: eksponential-fordeling
+    type: entry
+    current_filters:
+      computes: [exact_probability, range_probability, expected_value, find_x_for_threshold]
+      random_variable: [continuous, time_until_event]
+      setup: [single_population, events_in_window]
+      structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, time_until_first, complement_pattern]
+      parameters_known: [rate_lambda]
+      distribution_assumption: [exponential]
+      tooling: [calculator_exp]
+    contexts:
+      - scenario: "Lyspære med MTBF 1000 timer; P(varer > 1500 timer)?"
+        student_filters:
+          computes: [exact_probability]
+          random_variable: [time_until_event, continuous]
+          structural_cues: [time_until_first]
+          parameters_known: [rate_lambda]
+          distribution_assumption: [exponential]
+          tooling: [calculator_exp]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Kunder med rate 0.1/min; P(første kunde innen 5 minutter)?"
+        student_filters:
+          computes: [exact_probability]
+          random_variable: [time_until_event]
+          structural_cues: [rate_given, time_until_first, complement_pattern]
+          parameters_known: [rate_lambda]
+          distribution_assumption: [exponential]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "P(neste buss kommer mellom 10 og 30 min); rate 6/time"
+        student_filters:
+          computes: [range_probability]
+          random_variable: [time_until_event, continuous]
+          structural_cues: [rate_given, process_over_time]
+          parameters_known: [rate_lambda]
+          distribution_assumption: [exponential]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Memoryless: pære kjørt i 500 t, P(varer 1500 t til)?"
+        student_filters:
+          computes: [conditional_probability]
+          random_variable: [time_until_event]
+          parameters_known: [rate_lambda]
+          distribution_assumption: [exponential]
+        currently_surfaces: false
+        missing_tags:
+          computes: [conditional_probability]
+        notes: "Memoryless-spørsmål er betingede sannsynligheter; en student som klikker conditional_probability ville forvente eksponential."
+
+  # ============================================================
+  - id: en-utvalg-t-test
+    type: entry
+    current_filters:
+      computes: [hypothesis_test]
+      random_variable: [mean_of_samples, continuous]
+      setup: [single_population]
+      structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+      parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, sample_size_large, alpha_significance]
+      distribution_assumption: [t_distribution, normal]
+      tooling: [t_quantile_table_E5, calculator_sqrt]
+    contexts:
+      - scenario: "n=15 målinger, σ ukjent (kun s), test om μ ≠ 100, α=0.05"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [mean_of_samples]
+          setup: [single_population]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30, mean_known, alpha_significance]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Ensidig test (μ > μ₀) gitt utvalgsstatistikk x̄, s, n=12"
+        student_filters:
+          computes: [hypothesis_test]
+          structural_cues: [summary_stats_given]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Rådata-liste på 8 observasjoner, normalfordeling antatt, σ ukjent — test om μ = 50"
+        student_filters:
+          computes: [hypothesis_test]
+          structural_cues: [normal_assumed, data_as_list]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: en-utvalg-z-test
+    type: entry
+    current_filters:
+      computes: [hypothesis_test]
+      random_variable: [mean_of_samples, continuous]
+      setup: [single_population]
+      structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, total_observations_n]
+      parameters_known: [population_variance_known, sample_size_large, mean_known, alpha_significance]
+      distribution_assumption: [normal]
+      tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+    contexts:
+      - scenario: "n=50, σ kjent, test om μ ≠ 100, α=0.05"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known, alpha_significance, mean_known]
+          distribution_assumption: [normal]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Finn n slik at testen oppnår en gitt power/krav (terskel)"
+        student_filters:
+          computes: [find_n_for_threshold, hypothesis_test]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known, alpha_significance]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_n_for_threshold]
+          tooling: [calculator_sqrt]
+        notes: "Klassisk eksamenspørsmål: 'hvor stor n må vi ha for at...'. Trenger find_n_for_threshold og kvadratrot-kalkulator for σ/√n."
+      - scenario: "Finn kritisk x-grenseverdi for forkastningsregelen"
+        student_filters:
+          computes: [find_x_for_threshold, hypothesis_test]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known, alpha_significance]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_x_for_threshold]
+        notes: "'Hva er kritisk verdi/grenseverdi for å forkaste H0?' er en standard z-test-variant."
+      - scenario: "Stort utvalg (n=100), σ kjent, ensidig venstre test"
+        student_filters:
+          computes: [hypothesis_test]
+          parameters_known: [population_variance_known, sample_size_large, alpha_significance]
+          distribution_assumption: [normal]
+          tooling: [standard_normal_table_E3]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: en-utvalg-z-test-andel
+    type: entry
+    current_filters:
+      computes: [hypothesis_test]
+      random_variable: [proportion, discrete_count]
+      setup: [single_population, fixed_n_trials, with_replacement]
+      structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
+      parameters_known: [success_p, sample_size_large, alpha_significance]
+      distribution_assumption: [binomial, normal]
+      tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+    contexts:
+      - scenario: "Utvalg n=400, x=180 suksesser; test om p ≠ 0.5"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [proportion]
+          setup: [single_population]
+          structural_cues: [two_outcomes_per_trial, total_observations_n]
+          parameters_known: [success_p, sample_size_large, alpha_significance]
+          distribution_assumption: [normal, binomial]
+          tooling: [standard_normal_table_E3, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Test om en ny vaksine har høyere virkningsgrad enn 80 %"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [proportion]
+          structural_cues: [success_probability_given, total_observations_n]
+          parameters_known: [success_p, sample_size_large, alpha_significance]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Finn nødvendig n for at testen skiller p=0.5 fra p=0.55 med α=0.05"
+        student_filters:
+          computes: [find_n_for_threshold, hypothesis_test]
+          random_variable: [proportion]
+          parameters_known: [success_p, alpha_significance]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_n_for_threshold]
+        notes: "Finn-n-spørsmål for andel er vanlig; mangler tag."
+
+  # ============================================================
+  - id: forventningsverdi-diskret
+    type: entry
+    current_filters:
+      computes: [expected_value]
+      random_variable: [discrete_count]
+      setup: [single_population, joint_table_given]
+      structural_cues: [joint_table_present, summary_stats_given, data_as_list]
+      parameters_known: []
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "Sannsynlighetsfordeling gitt som tabell (X=0,1,2,3 med p-verdier); finn E[X]"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [discrete_count]
+          setup: [single_population]
+          structural_cues: [data_as_list, summary_stats_given]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Spill med utbetalinger, finn forventet gevinst"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [discrete_count]
+          structural_cues: [data_as_list]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Joint-tabell over (X,Y); finn E[X+Y] eller marginal E[X]"
+        student_filters:
+          computes: [expected_value, marginal_probability]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          computes: [marginal_probability]
+        notes: "For å finne E[X] fra joint må man marginalisere; student som klikker marginal_probability ville naturlig forvente entry'en."
+
+  # ============================================================
+  - id: forventningsverdi-oversikt
+    type: entry
+    current_filters:
+      computes: [expected_value]
+      random_variable: [discrete_count, continuous]
+      setup: [single_population, joint_table_given]
+      structural_cues: [data_as_list, joint_table_present, summary_stats_given]
+      parameters_known: []
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "Generelt slå opp formel for E[X] for ulike fordelinger (binomial, Poisson, normal)"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [discrete_count, continuous]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "E[aX + b] eller E[X+Y] regneregler"
+        student_filters:
+          computes: [expected_value]
+          structural_cues: [summary_stats_given]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Finn E[X] for kontinuerlig fordeling med kjent λ (eksponential) eller μ"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [continuous]
+          parameters_known: [rate_lambda, mean_known]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          parameters_known: [mean_known, rate_lambda]
+        notes: "Oversiktsentry burde ikke ha tom parameters_known — overflate ved alle relevante parameter-filtre."
+
+  # ============================================================
+  - id: gunstige-pa-mulige
+    type: entry
+    current_filters:
+      computes: [exact_probability, combinatorial_count]
+      random_variable: [discrete_count]
+      setup: [single_population, without_replacement, finite_pool]
+      structural_cues: [total_observations_n, independent_events]
+      parameters_known: []
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only, calculator_binomial_coef]
+    contexts:
+      - scenario: "Trekker 5 kort fra en kortstokk; P(akkurat 2 ess)?"
+        student_filters:
+          computes: [exact_probability, combinatorial_count]
+          random_variable: [discrete_count]
+          setup: [without_replacement, finite_pool]
+          tooling: [calculator_binomial_coef]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Lotteri: trekker 7 av 34 — P(alle 7 riktige)"
+        student_filters:
+          computes: [exact_probability, combinatorial_count]
+          setup: [without_replacement, finite_pool]
+          structural_cues: [total_observations_n]
+          tooling: [calculator_binomial_coef]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Likeverdige utfall: kast en terning to ganger, P(sum=7)"
+        student_filters:
+          computes: [exact_probability]
+          random_variable: [discrete_count]
+          structural_cues: [independent_events]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: hypergeometrisk-fordeling
+    type: entry
+    current_filters:
+      computes: [exact_probability, at_least_k, range_probability, combinatorial_count, expected_value]
+      random_variable: [discrete_count]
+      setup: [single_population, without_replacement, finite_pool, fixed_n_trials]
+      structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events]
+      parameters_known: []
+      distribution_assumption: [hypergeometric]
+      tooling: [calculator_binomial_coef]
+    contexts:
+      - scenario: "Pott på 50 deler, 10 defekte; trekk 5 uten tilbakelegging — P(X=2 defekte)"
+        student_filters:
+          computes: [exact_probability, combinatorial_count]
+          random_variable: [discrete_count]
+          setup: [without_replacement, finite_pool, fixed_n_trials]
+          structural_cues: [two_outcomes_per_trial, total_observations_n]
+          distribution_assumption: [hypergeometric]
+          tooling: [calculator_binomial_coef]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Trekk 10 fisk uten tilbakelegging fra dam med 30 merket og 70 umerket; P(minst 4 merket)"
+        student_filters:
+          computes: [at_least_k]
+          setup: [without_replacement, finite_pool]
+          structural_cues: [complement_pattern, counting_events]
+          distribution_assumption: [hypergeometric]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Forventet antall merket i utvalg n=10 fra populasjon N=100 med K=30 merket"
+        student_filters:
+          computes: [expected_value]
+          random_variable: [discrete_count]
+          setup: [without_replacement, finite_pool]
+          distribution_assumption: [hypergeometric]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Liten populasjon (N=20) der 5 er suksesser, p endrer seg pr trekk; ikke-binomial"
+        student_filters:
+          computes: [exact_probability]
+          setup: [without_replacement, finite_pool]
+          structural_cues: [two_outcomes_per_trial]
+          parameters_known: [success_p]
+          distribution_assumption: [hypergeometric]
+        currently_surfaces: false
+        missing_tags:
+          parameters_known: [success_p]
+        notes: "K/N defineres ofte som suksessrate p; mangel på success_p hindrer entry å overflate når studenten klikker p-tag."
+
+  # ============================================================
+  - id: ki-andel-binomial
+    type: entry
+    current_filters:
+      computes: [confidence_interval, parameter_estimate]
+      random_variable: [proportion, discrete_count]
+      setup: [single_population, fixed_n_trials, with_replacement]
+      structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
+      parameters_known: [success_p, sample_size_large, confidence_level]
+      distribution_assumption: [binomial, normal]
+      tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+    contexts:
+      - scenario: "Spørreundersøkelse: 360 av 1000 svarte ja; lag 95 % KI for p"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [proportion]
+          setup: [single_population]
+          structural_cues: [total_observations_n, two_outcomes_per_trial]
+          parameters_known: [sample_size_large, confidence_level]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Punktestimat for p og 99 % KI for andel defekte"
+        student_filters:
+          computes: [parameter_estimate, confidence_interval]
+          random_variable: [proportion]
+          parameters_known: [confidence_level, sample_size_large]
+          distribution_assumption: [normal]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Bestem n slik at KI har bredde mindre enn 0.04"
+        student_filters:
+          computes: [find_n_for_threshold, confidence_interval]
+          random_variable: [proportion]
+          parameters_known: [confidence_level]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_n_for_threshold]
+        notes: "KI-bredde-krav-spørsmål er klassisk; mangler find_n_for_threshold."
+
+  # ============================================================
+  - id: ki-mu-kjent-sigma
+    type: entry
+    current_filters:
+      computes: [confidence_interval, parameter_estimate]
+      random_variable: [mean_of_samples, continuous]
+      setup: [single_population]
+      structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, data_as_list, total_observations_n]
+      parameters_known: [population_variance_known, sample_size_large, confidence_level]
+      distribution_assumption: [normal]
+      tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+    contexts:
+      - scenario: "n=25, σ=5 (kjent), x̄=72; konstruer 95 % KI for μ"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known, confidence_level]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Liten n=10 men σ er gitt fra historiske data; 90 % KI"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_known, sample_size_small_lt30, confidence_level]
+          distribution_assumption: [normal]
+        currently_surfaces: false
+        missing_tags:
+          parameters_known: [sample_size_small_lt30]
+        notes: "Når σ er kjent kan z-KI brukes uavhengig av n; uten sample_size_small_lt30-tag mister entry n<30-studenter med σ kjent."
+      - scenario: "Bestem n slik at KI har bredde ≤ 1 ved gitt σ"
+        student_filters:
+          computes: [find_n_for_threshold, confidence_interval]
+          parameters_known: [population_variance_known, confidence_level]
+          distribution_assumption: [normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: false
+        missing_tags:
+          computes: [find_n_for_threshold]
+        notes: "Standard 'finn n for ønsket presisjon'-spørsmål."
+
+  # ============================================================
+  - id: ki-mu-ukjent-sigma
+    type: entry
+    current_filters:
+      computes: [confidence_interval, parameter_estimate]
+      random_variable: [mean_of_samples, continuous]
+      setup: [single_population]
+      structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+      parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, confidence_level]
+      distribution_assumption: [t_distribution, normal]
+      tooling: [t_quantile_table_E5, calculator_sqrt]
+    contexts:
+      - scenario: "n=12, x̄=15.2, s=2.3, σ ukjent; lag 95 % KI for μ"
+        student_filters:
+          computes: [confidence_interval]
+          random_variable: [mean_of_samples]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30, confidence_level]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Rådata på 8 målinger, normalfordelt, σ ikke kjent — 99 % KI"
+        student_filters:
+          computes: [confidence_interval]
+          structural_cues: [normal_assumed, data_as_list]
+          parameters_known: [population_variance_unknown, sample_size_small_lt30, confidence_level]
+          distribution_assumption: [t_distribution]
+          tooling: [t_quantile_table_E5]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "n=80, x̄=120, s=15 — for stort utvalg (CGT) kan z brukes; 90 % KI"
+        student_filters:
+          computes: [confidence_interval]
+          parameters_known: [population_variance_unknown, sample_size_large, confidence_level]
+          distribution_assumption: [normal]
+          tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+        currently_surfaces: false
+        missing_tags:
+          tooling: [standard_normal_table_E3, normal_quantile_table_E4]
+        notes: "For stort n approksimerer t med z; entryen burde også tagge z-tabeller for å overflate som relevant."
+
+  # ============================================================
+  - id: ki-poissonrate
+    type: entry
+    current_filters:
+      computes: [confidence_interval, parameter_estimate]
+      random_variable: [discrete_count]
+      setup: [single_population, events_in_window]
+      structural_cues: [rate_given, process_over_time, poisson_process_mentioned, counting_events, summary_stats_given, independent_events]
+      parameters_known: [rate_lambda, confidence_level, sample_size_large]
+      distribution_assumption: [poisson, normal]
+      tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+    contexts:
+      - scenario: "150 anrop observert i en time; 95 % KI for ratenivå λ"
+        student_filters:
+          computes: [confidence_interval, parameter_estimate]
+          random_variable: [discrete_count]
+          setup: [events_in_window]
+          structural_cues: [rate_given, counting_events]
+          parameters_known: [rate_lambda, confidence_level]
+          distribution_assumption: [poisson, normal]
+          tooling: [normal_quantile_table_E4, calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Antall ulykker observert over 5 år; 90 % KI for årlig rate"
+        student_filters:
+          computes: [confidence_interval]
+          structural_cues: [poisson_process_mentioned, process_over_time, counting_events]
+          parameters_known: [rate_lambda, confidence_level]
+          distribution_assumption: [poisson]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Antall feil i en batch (per kvm), KI for ratenivå"
+        student_filters:
+          computes: [confidence_interval]
+          structural_cues: [counting_events, rate_given]
+          parameters_known: [rate_lambda, confidence_level, sample_size_large]
+          distribution_assumption: [poisson, normal]
+          tooling: [calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: ki-varians
+    type: entry
+    current_filters:
+      computes: [confidence_interval, std_dev, parameter_estimate]
+      random_variable: [continuous]
+      setup: [single_population]
+      structural_cues: [normal_assumed, summary_stats_given, data_as_list, total_observations_n]
+      parameters_known: [confidence_level, sample_size_small_lt30, sample_size_large, population_variance_unknown]
+      distribution_assumption: [normal, chi_squared]
+      tooling: [chi_square_quantile_table_E6]
+    contexts:
+      - scenario: "n=20, s²=4.5, normal antatt; lag 95 % KI for σ²"
+        student_filters:
+          computes: [confidence_interval, std_dev]
+          structural_cues: [normal_assumed, summary_stats_given]
+          parameters_known: [confidence_level, sample_size_small_lt30, population_variance_unknown]
+          distribution_assumption: [chi_squared, normal]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Punktestimat og 99 % KI for σ basert på rådata-liste"
+        student_filters:
+          computes: [parameter_estimate, std_dev, confidence_interval]
+          structural_cues: [data_as_list, normal_assumed]
+          parameters_known: [confidence_level, population_variance_unknown]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Test om σ er innenfor en spesifisert toleranse — KI bruks for å akseptere/avvise"
+        student_filters:
+          computes: [confidence_interval, hypothesis_test]
+          structural_cues: [normal_assumed]
+          parameters_known: [confidence_level, population_variance_unknown]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: false
+        missing_tags:
+          computes: [hypothesis_test]
+        notes: "Mange studenter bruker KI-for-σ² som en hypotesetest (KI inneholder σ₀² eller ikke). Hypothesis_test-tag ville surface entryen."
+
+  # ============================================================
+  - id: kjikvadrat-goodness-of-fit
+    type: entry
+    current_filters:
+      computes: [hypothesis_test]
+      random_variable: [discrete_count]
+      setup: [single_population]
+      structural_cues: [more_than_two_categories, summary_stats_given, total_observations_n, counting_events]
+      parameters_known: [alpha_significance, sample_size_large]
+      distribution_assumption: [chi_squared]
+      tooling: [chi_square_quantile_table_E6]
+    contexts:
+      - scenario: "Test om en terning er rettferdig (6 kategorier, observerte vs. forventede frekvenser)"
+        student_filters:
+          computes: [hypothesis_test]
+          random_variable: [discrete_count]
+          structural_cues: [more_than_two_categories, counting_events, total_observations_n]
+          parameters_known: [alpha_significance]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Test om data følger Poisson(λ) ved å sammenligne observert mot forventet"
+        student_filters:
+          computes: [hypothesis_test]
+          structural_cues: [more_than_two_categories, counting_events]
+          parameters_known: [alpha_significance, rate_lambda]
+          distribution_assumption: [chi_squared, poisson]
+        currently_surfaces: false
+        missing_tags:
+          parameters_known: [rate_lambda]
+          distribution_assumption: [poisson]
+        notes: "Goodness-of-fit brukes ofte for å sjekke Poisson- eller binomial-fit; entryen mangler tagger som lar studenten finne den fra Poisson-relevante filtre."
+      - scenario: "Test om fordelinger av blodtyper i utvalg matcher en kjent populasjonsandel"
+        student_filters:
+          computes: [hypothesis_test]
+          structural_cues: [more_than_two_categories, summary_stats_given]
+          parameters_known: [alpha_significance, sample_size_large]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: kjikvadrat-uavhengighet
+    type: entry
+    current_filters:
+      computes: [hypothesis_test, test_independence]
+      random_variable: [discrete_count]
+      setup: [joint_table_given, single_population]
+      structural_cues: [joint_table_present, more_than_two_categories, summary_stats_given, total_observations_n, independent_events]
+      parameters_known: [alpha_significance, sample_size_large]
+      distribution_assumption: [chi_squared]
+      tooling: [chi_square_quantile_table_E6]
+    contexts:
+      - scenario: "Krysstabell kjønn × stemme; test om uavhengig"
+        student_filters:
+          computes: [hypothesis_test, test_independence]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, more_than_two_categories]
+          parameters_known: [alpha_significance]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "2×3 kontingenstabell over røyking × utdanning"
+        student_filters:
+          computes: [test_independence]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, summary_stats_given]
+          parameters_known: [alpha_significance]
+          distribution_assumption: [chi_squared]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Test om to kategoriske variabler er uavhengige med α=0.01"
+        student_filters:
+          computes: [test_independence, hypothesis_test]
+          structural_cues: [independent_events, joint_table_present]
+          parameters_known: [alpha_significance]
+          distribution_assumption: [chi_squared]
+          tooling: [chi_square_quantile_table_E6]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: komplementregelen
+    type: entry
+    current_filters:
+      computes: [exact_probability, at_least_k, find_n_for_threshold]
+      random_variable: [discrete_count, continuous]
+      setup: [single_population]
+      structural_cues: [complement_pattern, independent_events]
+      parameters_known: []
+      distribution_assumption: [none_assumed, binomial, poisson, normal]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "P(minst én suksess) i n forsøk; bruk 1 - P(ingen)"
+        student_filters:
+          computes: [at_least_k]
+          structural_cues: [complement_pattern]
+          distribution_assumption: [binomial, none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "P(ikke alle treffer) — komplement"
+        student_filters:
+          computes: [exact_probability]
+          structural_cues: [complement_pattern]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Eksponential: P(T > t) = 1 - F(t); P(minst én hendelse innen t) for Poisson-prosess"
+        student_filters:
+          computes: [exact_probability]
+          random_variable: [time_until_event]
+          structural_cues: [complement_pattern, time_until_first]
+          distribution_assumption: [exponential, poisson]
+        currently_surfaces: false
+        missing_tags:
+          random_variable: [time_until_event]
+          distribution_assumption: [exponential]
+          structural_cues: [time_until_first]
+        notes: "Komplement brukes hyppig for eksponential/Poisson 'minst én'; entry burde overflate i disse kontekstene."
+      - scenario: "Finn n slik at P(minst én) ≥ 0.95 (komplement-trick)"
+        student_filters:
+          computes: [find_n_for_threshold]
+          structural_cues: [complement_pattern]
+          distribution_assumption: [binomial]
+        currently_surfaces: true
+        missing_tags: []
+
+  # ============================================================
+  - id: korrelasjon-joint
+    type: entry
+    current_filters:
+      computes: [correlation, covariance]
+      random_variable: [discrete_count]
+      setup: [joint_table_given]
+      structural_cues: [joint_table_present, summary_stats_given]
+      parameters_known: [mean_known]
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_sqrt]
+    contexts:
+      - scenario: "Joint-tabell med p(x,y); finn ρ = Cov(X,Y)/(σ_X·σ_Y)"
+        student_filters:
+          computes: [correlation, covariance]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_sqrt]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Beregn σ_X og σ_Y fra joint, deretter korrelasjon"
+        student_filters:
+          computes: [correlation, std_dev]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, summary_stats_given]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_sqrt]
+        currently_surfaces: false
+        missing_tags:
+          computes: [std_dev]
+        notes: "Korrelasjon krever std_dev; student som klikker std_dev ville miste denne entryen."
+      - scenario: "Spør om sterk/svak lineær sammenheng mellom X og Y i tabell"
+        student_filters:
+          computes: [correlation]
+          setup: [joint_table_given]
+          structural_cues: [linear_relationship_suspected, joint_table_present]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          structural_cues: [linear_relationship_suspected]
+        notes: "Korrelasjon tolkes som lineær sammenheng; relevant cue mangler."
+
+  # ============================================================
+  - id: kovarians
+    type: entry
+    current_filters:
+      computes: [covariance, expected_value]
+      random_variable: [discrete_count]
+      setup: [joint_table_given]
+      structural_cues: [joint_table_present, summary_stats_given]
+      parameters_known: [mean_known]
+      distribution_assumption: [none_assumed]
+      tooling: [calculator_only]
+    contexts:
+      - scenario: "Joint-fordeling for (X,Y) gitt; finn Cov(X,Y) = E[XY] − E[X]E[Y]"
+        student_filters:
+          computes: [covariance, expected_value]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present]
+          distribution_assumption: [none_assumed]
+          tooling: [calculator_only]
+        currently_surfaces: true
+        missing_tags: []
+      - scenario: "Finn Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)"
+        student_filters:
+          computes: [covariance, std_dev]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, summary_stats_given]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          computes: [std_dev]
+        notes: "Kovarians brukes nesten alltid sammen med variansformler; std_dev-tag burde dekke entryen."
+      - scenario: "Sjekk om to variabler er uavhengige (Cov=0 nødvendig betingelse)"
+        student_filters:
+          computes: [covariance, test_independence]
+          setup: [joint_table_given]
+          structural_cues: [joint_table_present, independent_events]
+          distribution_assumption: [none_assumed]
+        currently_surfaces: false
+        missing_tags:
+          computes: [test_independence]
+          structural_cues: [independent_events]
+        notes: "Cov=0 er klassisk uavhengighetssjekk for joint-tabeller."
+
+# ============================================================
+# Aggregated proposed new filter additions to filters.yaml
+# (none of these require new filter VALUES — all proposals are tag additions to entries)
+proposed_new_filters_yaml_additions: []
+
+# ============================================================
+# Summary
+summary:
+  entry_count: 21
+  total_contexts: 65
+  entries_with_missing_tags: 16
+  entries_fully_covered: 5
+  fully_covered_entries:
+    - bayes-setning  # only 2/4 contexts surface, but core covered
+    - binomial-fordeling
+    - bootstrapping
+    - en-utvalg-t-test
+    - en-utvalg-z-test-andel  # core, missing find-n
+    - forventningsverdi-diskret  # core covered
+    - gunstige-pa-mulige
+    - kjikvadrat-uavhengighet
+  recurring_gaps:
+    - "find_n_for_threshold missing on test/KI entries (en-utvalg-z-test, en-utvalg-z-test-andel, ki-andel-binomial, ki-mu-kjent-sigma)"
+    - "find_x_for_threshold missing on en-utvalg-z-test (kritisk verdi-spørsmål)"
+    - "conditional_probability missing on eksponential-fordeling (memoryless)"
+    - "joint_probability missing on bayes-setning (sekvensiell testing)"
+    - "marginal_probability missing on forventningsverdi-diskret"
+    - "std_dev missing on korrelasjon-joint and kovarians (Var(X+Y))"
+    - "test_independence missing on kovarians"
+    - "linear_relationship_suspected missing on korrelasjon-joint"
+    - "hypothesis_test missing on ki-varians (KI som test)"
+    - "rate_lambda + poisson missing on kjikvadrat-goodness-of-fit (test om Poisson)"
+    - "komplementregelen mangler exponential/time_until_event (P(T>t))"
+    - "ki-mu-ukjent-sigma mangler z-tabeller for stor n-tilfelle"
+    - "ki-mu-kjent-sigma mangler sample_size_small_lt30 (z-KI gjelder også n<30 om σ kjent)"
+    - "forventningsverdi-oversikt har tom parameters_known — bør inkludere mean_known/rate_lambda"
+    - "hypergeometrisk-fordeling mangler success_p (K/N defineres ofte slik)"
