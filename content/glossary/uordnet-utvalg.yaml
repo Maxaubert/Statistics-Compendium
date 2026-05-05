@@ -1,0 +1,26 @@
+id: uordnet-utvalg
+term_no: Uordnet utvalg
+short_def: "Et utvalg der rekkefølgen elementene er trukket IKKE teller. {a, b, c} er det samme som {b, a, c}."
+aliases:
+  - "uordnet utvalg"
+  - "uordnede utvalg"
+  - "kombinasjon"
+  - "kombinasjoner"
+filters:
+  computes: [combinatorial_count]
+  random_variable: [discrete_count]
+  setup: [without_replacement, finite_pool]
+long_def: |
+  I et **uordnet utvalg** spiller rekkefølgen ingen rolle — bare hvilke
+  elementer som er valgt. To utvalg som inneholder de samme elementene
+  regnes som identiske, uavhengig av i hvilken rekkefølge de ble plukket.
+
+  Antall uordnede utvalg av k fra n (uten tilbakelegging) gis av
+  binomialkoeffisienten `C(n, k) = n! / (k! · (n − k)!)`.
+
+  Eksempler: lottokupong (7 av 34), poker-hand (5 av 52), komitévalg
+  (3 av 10 personer der vi ikke skiller på rolle).
+see_also:
+  - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
+  - { id: ordnet-utvalg, kind: glossary }
+  - { id: multiplikasjonsprinsippet, kind: glossary }

@@ -1,0 +1,28 @@
+id: multiplikasjonsprinsippet
+term_no: Multiplikasjonsprinsippet (telleregelen)
+short_def: "Hvis du kan gjøre A på n₁ måter og B på n₂ måter, kan du gjøre A og B på n₁ · n₂ måter."
+aliases:
+  - "multiplikasjonsprinsippet"
+  - "multiplikasjonsprinsipp"
+  - "telleregelen"
+  - "produktregelen for telling"
+filters:
+  computes: [combinatorial_count]
+long_def: |
+  **Multiplikasjonsprinsippet** (også kalt telleregelen) er grunnsteinen i
+  kombinatorikk: hvis en oppgave kan deles opp i `r` uavhengige steg, der
+  steg `i` har `n_i` mulige utfall, så er totalt antall mulige utfall
+  produktet `n_1 · n_2 · ... · n_r`.
+
+  Eksempler:
+  - Antrekk: 4 skjorter og 3 bukser → `4 · 3 = 12` kombinasjoner.
+  - 4-sifret PIN: `10 · 10 · 10 · 10 = 10 000` koder.
+  - Topp-3 fra 10 deltakere: `10 · 9 · 8 = 720` rangeringer.
+
+  Både `n^k` og `P(n, k)` er spesialtilfeller av multiplikasjonsprinsippet.
+see_also:
+  - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
+  - { id: ordnet-utvalg-uten-tilbakelegging, kind: entry }
+  - { id: gunstige-pa-mulige, kind: entry }
+  - { id: ordnet-utvalg, kind: glossary }
+  - { id: uordnet-utvalg, kind: glossary }

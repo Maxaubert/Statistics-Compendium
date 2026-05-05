@@ -1,0 +1,25 @@
+id: ordnet-utvalg
+term_no: Ordnet utvalg
+short_def: "Et utvalg der rekkefølgen elementene er trukket teller. (a, b, c) er ulikt fra (b, a, c)."
+aliases:
+  - "ordnet utvalg"
+  - "ordnede utvalg"
+  - "permutasjon"
+  - "permutasjoner"
+filters:
+  computes: [combinatorial_count]
+  random_variable: [discrete_count]
+long_def: |
+  I et **ordnet utvalg** spiller rekkefølgen en rolle. To utvalg som inneholder
+  de samme elementene i ulik rekkefølge regnes som forskjellige.
+
+  - **Med tilbakelegging:** antall sekvenser = `n^k` (samme element kan gjentas).
+  - **Uten tilbakelegging:** antall sekvenser = `n! / (n − k)!` (permutasjoner).
+
+  Eksempler: PIN-koder, medaljefordeling (gull/sølv/bronse), kort trukket i
+  rekkefølge, sitteplasser i en bestemt orden.
+see_also:
+  - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
+  - { id: ordnet-utvalg-uten-tilbakelegging, kind: entry }
+  - { id: uordnet-utvalg, kind: glossary }
+  - { id: multiplikasjonsprinsippet, kind: glossary }
