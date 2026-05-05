@@ -1,227 +1,317 @@
-# Konsept-opprydding: merge til ordliste der det er duplisert
+# Konsept-opprydding: merge til ordliste, samle resten i Formler
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development to implement this plan task-by-task.
 
-**Goal:** Reduser antall konseptsider ved å merge duplikat-innhold inn i tilsvarende ordliste-oppføringer, slik at konsept-seksjonen bare inneholder ekte oversikter og prosess-/metode-sider.
+**Goal:** Fjern konsept-typen fra innholdet ved å (a) merge duplikater inn i ordlisten, (b) flytte gjenværende oversikts-/metode-sider til entries. Sluttresultat: én samlet seksjon "Formler og konsepter" på listsiden.
 
-**Architecture:** For hver konseptside identifisert som duplikat, flytt manglende informasjon (typisk konkrete formel-detaljer eller eksempler) inn i den tilsvarende glossary-oppføringen, oppdater alle interne `[label](/concept/X)`-lenker til å peke på `(glossary:X)`, og slett konseptfilen.
+**Architecture:** Tre faser: ordliste-merger først (lavrisiko), deretter nye ordliste-oppføringer fra korte konsepter, til sist UI/schema-restrukturering der `content/concepts/` tømmes og fila flyttes til `content/entries/`.
 
-**Tech Stack:** YAML content + react-router routes. Tester via vitest.
+**Tech Stack:** YAML-innhold, Zod-schema, React-Router (HashRouter), vitest.
 
 ---
 
-## Inventory
+## Endelige beslutninger fra avklarings-runden
 
-| # | Concepts | Entries | Glossary | Tables |
-|---|---------:|--------:|---------:|-------:|
-|   |       20 |      35 |       89 |      6 |
+### Kategori A — merge konsept til eksisterende glossary (alle 9 godkjent)
 
-## Konseptsider — kategorisert
+Alltid gjør **fluff-vurdering** ved merging — vi vil ikke tekst uten verdi.
 
-### Kategori A: Klare merge-kandidater (9 stk)
+| # | Konsept | → Ordliste | Notat |
+|---|---------|-----------|-------|
+| 1 | `frihetsgrader` | `frihetsgrader-glos` | bare slett + lenker |
+| 2 | `interpolert-varians` | `pooled-varians` | sørg for at oversikten på `/entry/varians-oversikt` fortsatt viser den |
+| 3 | `p-verdi` | `p-verdi-glos` | legg til ensidig/tosidig formler |
+| 4 | `signifikansnivaa` | `signifikansniva-glos` | legg til "tre måter å bruke α" |
+| 5 | `betinget-sannsynlighet` | `betinget-sannsynlighet-glos` | legg til Bayes/produktregel/total |
+| 6 | `disjunkte-hendelser` | `disjunkte-hendelser-glos` | legg til A ⊆ B̄-konsekvens |
+| 7 | `uavhengighet-hendelser` | `uavhengighet-glos` | legg til "TESTE uavhengighet"-prosedyre |
+| 8 | `sentralgrenseteoremet` | `sentralgrenseteoremet-glos` | bare slett + lenker |
+| 9 | `standardnormalisering` | `normalisering` | nevn at det også kalles standardnormalisering |
 
-Disse har en glossary-oppføring som dekker det samme. Merge alt unikt innhold inn i glossary, oppdater lenker, slett konsept.
+### Kategori C — nye glossary-oppføringer (alle 4 godkjent)
 
-| Konsept-id | Glossary-id | Hva mangler i glossary i dag |
-|------------|-------------|-------------------------------|
-| `betinget-sannsynlighet` | `betinget-sannsynlighet-glos` | sammenheng med produktregel/Bayes/total sannsynlighet |
-| `disjunkte-hendelser` | `disjunkte-hendelser-glos` | A ⊆ B̄-konsekvensen |
-| `frihetsgrader` | `frihetsgrader-glos` | (allerede dekket — bare slette + omdirigere lenker) |
-| `interpolert-varians` | `pooled-varians` | (dekket — slette + omdirigere) |
-| `p-verdi` | `p-verdi-glos` | venstresidig/høyresidig/tosidig formler |
-| `sentralgrenseteoremet` | `sentralgrenseteoremet-glos` | (dekket — slette + omdirigere) |
-| `signifikansnivaa` | `signifikansniva-glos` | "tre måter å bruke α" |
-| `standardnormalisering` | `normalisering` | (dekket — slette + omdirigere) |
-| `uavhengighet-hendelser` | `uavhengighet-glos` | "TESTE uavhengighet"-prosedyre + utvalg-uavhengighet |
+| # | Konsept | → Ny glossary |
+|---|---------|---------------|
+| 10 | `de-morgans-lov` | `de-morgans-lov` |
+| 11 | `poisson-prosess` | `poisson-prosess` |
+| 12 | `qq-plott` | `qq-plott` |
+| 13 | `spredningsplott` | `spredningsplott` |
 
-### Kategori B: Behold som ekte oversikter (3 stk)
+### Fellesfordeling
 
-Disse er fortsatt verdifulle som strukturerte oversiktssider og har ikke ett enkelt glossary-motstykke:
+| # | Konsept | → Ordliste |
+|---|---------|-----------|
+| 14 | `fellesfordeling` | `simultanfordeling` (legg til "fra fellesfordelingen kan vi utlede"-listen) |
 
-- `varians` — oversikt over alle 11 variansformer
-- `standardavvik` — parallell oversikt for σ-formene
-- `forventningsverdi` — oversikt over de 6 formene/regnereglene
+### Konsepter som flyttes til entries (6 stk)
 
-### Kategori C: Usikre — trenger din avgjørelse (8 stk)
+| # | Konsept | Ny entry-id | Notat |
+|---|---------|-------------|-------|
+| 15 | `bootstrapping` | `bootstrapping` | metode med 5-stegs algoritme |
+| 16 | `gunstige-pa-mulige` | `gunstige-pa-mulige` | regneprinsipp |
+| 17 | `prosentilintervall` | `prosentilintervall` | KI-metode |
+| 18 | `varians` (oversikt) | `varians-oversikt` | id-kollisjon med glossary-term `varians` |
+| 19 | `standardavvik` (oversikt) | `standardavvik-oversikt` | id-kollisjon med glossary-term `standardavvik` |
+| 20 | `forventningsverdi` (oversikt) | `forventningsverdi-oversikt` | id-kollisjon med glossary-term `forventningsverdi` |
 
-Disse er metode-/verktøy-/prosedyre-sider som ikke har en åpenbar duplikat i ordlisten, men kunne kanskje bli nye glossary-oppføringer i stedet for konsepter:
+### UI / schema
 
-| Konsept | Type | Forslag |
-|---------|------|---------|
-| `bootstrapping` | metode m/ algoritme | **BEHOLD som konsept** — har 5-stegs prosedyre, lengre forklaring, ikke en term |
-| `de-morgans-lov` | regel | **MERGE til ny glossary `de-morgans-lov`** — kort regel passer bra som ordliste |
-| `fellesfordeling` | meta-konsept | **BEHOLD?** — beskriver hvordan jobbe med simultanfordelings-tabell. Glossary `simultanfordeling` finnes. Kanskje merge inn der? |
-| `gunstige-pa-mulige` | regneprinsipp | **BEHOLD som konsept** — regneoppskrift, ikke en term |
-| `poisson-prosess` | meta-konsept | **MERGE til ny glossary `poisson-prosess`** — binder Poisson + eksponential. Kort nok |
-| `prosentilintervall` | metode | **BEHOLD som konsept** — algoritme/prosedyre |
-| `qq-plott` | visuell test | **MERGE til ny glossary `qq-plott`** — kort, definisjonsaktig |
-| `spredningsplott` | visuell test | **MERGE til ny glossary `spredningsplott`** — kort, definisjonsaktig |
+- Schema: utvid `EntryTypeSchema` med `"overview"` og `"method"`. Gjør `formula_main`, `formula_latex`, `what_it_does` valgfri når `type` er `"overview"` eller `"method"`. Legg til valgfritt `what_it_means`-felt.
+- Banner: fjern "Konsepter"-knappen. Behold "Formler" og "Tabeller". Rename "Formler" til **"Formler og konsepter"**.
+- Routing: behold `/concept/<id>` som redirect-shim som mapper gamle id → ny entry-id (`varians` → `varians-oversikt`, etc.).
+- ListView: fjern `?tab=konsepter`-grenen.
 
-**Hvis vi gjør alle merger i kategori A + de fire mergene i kategori C: 8 konsepter slettes, ny totaltelling 12 konsepter.**
+### Konflikter løst på vei inn
+
+- **Same-id-kollisjon mellom concept og glossary** (`varians`, `standardavvik`, `forventningsverdi`): nye entries får suffix `-oversikt`.
+- **`/concept/<id>` URL-er i tidligere markdown og lenker:** scriptet `scripts/audit-prose-links.mjs` brukes til å finne alle gjenværende referanser; alle erstattes til `/entry/<new-id>`.
+
+---
+
+## File Structure (etter rydding)
+
+```
+content/
+  concepts/                         ← TOMT, mappa slettes
+  entries/
+    bootstrapping.yaml              ← ny (flyttet fra concepts/)
+    gunstige-pa-mulige.yaml         ← ny
+    prosentilintervall.yaml         ← ny
+    varians-oversikt.yaml           ← ny
+    standardavvik-oversikt.yaml     ← ny
+    forventningsverdi-oversikt.yaml ← ny
+    ... (eksisterende 35)
+  glossary/
+    de-morgans-lov.yaml             ← ny (Kategori C)
+    poisson-prosess.yaml            ← ny
+    qq-plott.yaml                   ← ny
+    spredningsplott.yaml            ← ny
+    ... (eksisterende 89, 9 utvidede + simultanfordeling)
+src/
+  data/schema.ts                    ← EntryTypeSchema utvides; fields valgfrie
+  components/shell/Banner.tsx       ← fjern Konsepter-knapp, rename Formler
+  routes/ListView.tsx               ← fjern konsepter-tab
+  routes/ConceptDetail.tsx          ← redirect-shim ELLER slettes
+  data/loadContent.ts               ← konsepter-loading fjernes
+```
+
+---
 
 ## Tasks
 
-> Kategori A først. Kategori C avklares med bruker FØR den blir oppgaver.
+### Fase 1 — Kategori A (9 ordliste-merger, lavrisiko)
 
-### Task 1: Merge `frihetsgrader` (concept) → `frihetsgrader-glos`
+#### Task 1: Merge `frihetsgrader` (concept) → `frihetsgrader-glos`
 
 **Files:**
 - Delete: `content/concepts/frihetsgrader.yaml`
-- Modify (cross-refs): all files matching grep `concept/frihetsgrader` or `id: frihetsgrader,\s*kind:\s*concept`
+- Search-and-replace cross-refs
 
-- [ ] **Step 1: Diff content**
+- [ ] **Step 1: Verifiser at ordlisten dekker alt unikt** (gjør den allerede)
+
+- [ ] **Step 2: Finn referanser**
 
 ```bash
-diff <(grep -E "ν|frihetsgrader" content/concepts/frihetsgrader.yaml) content/glossary/frihetsgrader-glos.yaml
+grep -rn "frihetsgrader\b" content/ src/ | grep -v "frihetsgrader-glos"
 ```
 
-Bekreft at glossary inneholder alt unikt fra konseptet (det gjør den allerede).
+- [ ] **Step 3: Erstatt referanser**
 
-- [ ] **Step 2: Find all references to /concept/frihetsgrader**
+For hver `(/concept/frihetsgrader)` → `(glossary:frihetsgrader-glos)`.
+For hver `{ id: frihetsgrader, kind: concept }` → `{ id: frihetsgrader-glos, kind: glossary }`.
 
-Run: `grep -rn "concept/frihetsgrader\|kind: concept.*id: frihetsgrader\|frihetsgrader.*kind: concept" content/ src/`
-
-- [ ] **Step 3: Update each reference**
-
-For hver `(/concept/frihetsgrader)` → `(glossary:frihetsgrader-glos)` i `what_it_means`-blokker.
-For hver `{ id: frihetsgrader, kind: concept }` i `related:` → `{ id: frihetsgrader-glos, kind: glossary }`.
-
-- [ ] **Step 4: Delete concept file**
+- [ ] **Step 4: Slett, test, commit**
 
 ```bash
 rm content/concepts/frihetsgrader.yaml
-```
-
-- [ ] **Step 5: Run tests**
-
-```bash
 npm test -- --run
-```
-
-Forventet: alle tester passerer (ingen test referer direkte til konseptfila).
-
-- [ ] **Step 6: Commit**
-
-```bash
 git add -A && git commit -m "content: merge frihetsgrader concept → glossary entry"
 ```
 
-### Task 2: Merge `interpolert-varians` (concept) → `pooled-varians` (glossary)
+#### Task 2: Merge `sentralgrenseteoremet` (concept) → `sentralgrenseteoremet-glos`
 
-**Files:**
-- Delete: `content/concepts/interpolert-varians.yaml`
-- Modify: `content/concepts/varians.yaml` (oversikten linker til konseptet)
-- Modify: andre cross-refs
+Samme mønster som Task 1. Ordlisten dekker allerede alt. Bare slett + ref-erstatning + test + commit.
 
-- [ ] **Step 1: Sjekk at `pooled-varians` glossary er fullstendig**
+#### Task 3: Merge `interpolert-varians` (concept) → `pooled-varians`
 
-Glossary har: formel, vekting-forklaring, antakelse om lik σ², `S_P` formel.
-Konsept har samme + "Standardfeilen i to-utvalgs t-test bruker S_P · √(1/n_X + 1/n_Y)" — legg til i glossary hvis ikke der.
+- [ ] **Step 1: Sjekk om "S_P · √(1/n_X + 1/n_Y)"-linja er i `pooled-varians`**
 
-- [ ] **Step 2: Update `concepts/varians.yaml`**
+Den er ikke der i dag. Legg den inn under en **Standardfeil i to-utvalgs t-test:** seksjon i `pooled-varians.yaml`.
 
-```diff
-- Konsept: [Interpolert (pooled) varians](/concept/interpolert-varians).
-+ (fjern hele linja — pooled-varians glossary popup er allerede headeren)
+```
+**Standardfeil i to-utvalgs t-test:**
+
+    SE = S_P · √(1/n_X + 1/n_Y)
 ```
 
-- [ ] **Step 3: Find andre referanser**
+- [ ] **Step 2: Update `content/entries/varians-oversikt.yaml` (opprettes i Fase 3)**
 
-Run: `grep -rn "interpolert-varians" content/ src/`
+Inntil videre: i `content/concepts/varians.yaml` slettes "Konsept: [Interpolert (pooled) varians]"-linjen. Glossary-popup på header dekker det.
 
-- [ ] **Step 4: Update referanser**
+- [ ] **Step 3: Erstatt cross-refs**
 
-Erstatt `/concept/interpolert-varians` med `glossary:pooled-varians`. Erstatt `{ id: interpolert-varians, kind: concept }` med `{ id: pooled-varians, kind: glossary }`.
+`(/concept/interpolert-varians)` → `(glossary:pooled-varians)`.
+`{ id: interpolert-varians, kind: concept }` → `{ id: pooled-varians, kind: glossary }`.
 
-- [ ] **Step 5: Delete + test + commit**
+- [ ] **Step 4: Slett, test, commit**
 
-```bash
-rm content/concepts/interpolert-varians.yaml
-npm test -- --run
-git add -A && git commit -m "content: merge interpolert-varians concept → pooled-varians glossary"
+#### Task 4: Merge `p-verdi` (concept) → `p-verdi-glos`
+
+- [ ] **Step 1: Utvid `p-verdi-glos.yaml`** med ensidig/tosidig formler som display-blokker. Fluff-sjekk: ikke gjenta eksisterende innhold.
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+#### Task 5: Merge `signifikansnivaa` (concept) → `signifikansniva-glos`
+
+- [ ] **Step 1: Utvid `signifikansniva-glos.yaml`** med "tre måter å bruke α"-listen.
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+#### Task 6: Merge `betinget-sannsynlighet` (concept) → `betinget-sannsynlighet-glos`
+
+- [ ] **Step 1: Utvid glossary** med Bayes/produktregel/total-sammenhengs-blokk.
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+#### Task 7: Merge `disjunkte-hendelser` (concept) → `disjunkte-hendelser-glos`
+
+- [ ] **Step 1: Utvid glossary** med "A ⊆ B̄ → P(A | B̄) = P(A)/(1 − P(B))".
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+#### Task 8: Merge `uavhengighet-hendelser` (concept) → `uavhengighet-glos`
+
+- [ ] **Step 1: Utvid glossary** med teste-prosedyre + utvalg-uavhengighet.
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+#### Task 9: Merge `standardnormalisering` (concept) → `normalisering`
+
+- [ ] **Step 1: Legg til alias** `standardnormalisering` i `normalisering.yaml`.
+- [ ] **Step 2: Slett, cross-refs, commit**
+
+### Fase 2 — Kategori C (4 nye glossary + fellesfordeling-merge)
+
+#### Task 10: Lag `glossary/de-morgans-lov.yaml`
+
+- [ ] **Step 1:** Lag fil med to lover (display-blokker), kort eksempel.
+- [ ] **Step 2:** Slett konseptet, oppdater cross-refs, commit.
+
+#### Task 11: Lag `glossary/poisson-prosess.yaml`
+
+- [ ] **Step 1:** Tre punkter: telleantall (Poisson(λt)), ventetid (eksponential), uavhengige vinduer.
+- [ ] **Step 2:** Slett, cross-refs, commit.
+
+#### Task 12: Lag `glossary/qq-plott.yaml`
+
+- [ ] **Step 1:** Definisjon, S-kurve / krumning, bruksområde.
+- [ ] **Step 2:** Slett, cross-refs, commit.
+
+#### Task 13: Lag `glossary/spredningsplott.yaml`
+
+- [ ] **Step 1:** Definisjon + bruksområde.
+- [ ] **Step 2:** Slett, cross-refs, commit.
+
+#### Task 14: Merge `fellesfordeling` (concept) → `simultanfordeling` (glossary)
+
+- [ ] **Step 1:** Legg "fra fellesfordelingen kan vi utlede"-bullet-listen til `simultanfordeling.yaml`.
+- [ ] **Step 2:** Slett, cross-refs, commit.
+
+### Fase 3 — Schema og UI for samling
+
+#### Task 15: Utvid Entry-schema
+
+**Files:**
+- Modify: `src/data/schema.ts`
+
+- [ ] **Step 1: Skriv test for ny type**
+
+```ts
+it("accepts overview entry without formula_main", () => {
+  const e = EntrySchema.parse({
+    id: "varians-oversikt",
+    name_no: "Varians (oversikt)",
+    type: "overview",
+    tagline: "...",
+    what_it_means: "...",
+    recognition_cues: ["..."],
+    filters: {},
+  });
+  expect(e.type).toBe("overview");
+});
 ```
 
-### Task 3: Merge `p-verdi` (concept) → `p-verdi-glos`
+- [ ] **Step 2: Oppdater schema**
 
-**Files:**
-- Modify: `content/glossary/p-verdi-glos.yaml` (legg til ensidig/tosidig formler)
-- Delete: `content/concepts/p-verdi.yaml`
+```ts
+export const EntryTypeSchema = z.enum([
+  "distribution", "test", "regression", "identity", "rule", "combinatorics",
+  "overview", "method",
+]);
 
-- [ ] **Step 1: Utvid `p-verdi-glos`**
+export const EntrySchema = z.object({
+  // ... eksisterende
+  formula_main: z.string().optional(),
+  formula_latex: z.string().optional(),
+  what_it_does: z.string().optional(),
+  what_it_means: z.string().optional(),
+  // ... resten
+});
+```
 
-Legg inn **Venstresidig**, **Høyresidig**, **Tosidig** med formler i display-blokker — ta innholdet fra konseptet.
+- [ ] **Step 3: Test, commit**
 
-- [ ] **Step 2: Cross-ref + slett + test + commit**
+#### Task 16: Lag `content/entries/varians-oversikt.yaml`
 
-### Task 4: Merge `signifikansnivaa` (concept) → `signifikansniva-glos`
+- [ ] **Step 1:** Kopier `content/concepts/varians.yaml`-innholdet, endre `id: varians-oversikt`, `type: overview`, behold `what_it_means`.
+- [ ] **Step 2:** Cross-refs: `(/concept/varians)` → `(/entry/varians-oversikt)`. `{ id: varians, kind: concept }` → `{ id: varians-oversikt, kind: entry }`.
+- [ ] **Step 3:** Slett `content/concepts/varians.yaml`, test, commit.
 
-**Files:**
-- Modify: `content/glossary/signifikansniva-glos.yaml` (legg til "tre måter å bruke α")
-- Delete: `content/concepts/signifikansnivaa.yaml`
+#### Task 17: Lag `content/entries/standardavvik-oversikt.yaml`
 
-NB: `signifikansnivaa` (med dobbel a) er konsept-id, `signifikansniva-glos` er ordliste-id.
+Samme mønster som Task 16.
 
-- [ ] **Step 1: Utvid `signifikansniva-glos`** med tre-måter-listen.
-- [ ] **Step 2: Cross-ref + slett + test + commit**
+#### Task 18: Lag `content/entries/forventningsverdi-oversikt.yaml`
 
-### Task 5: Merge `betinget-sannsynlighet` (concept) → `betinget-sannsynlighet-glos`
+Samme mønster.
 
-**Files:**
-- Modify: `content/glossary/betinget-sannsynlighet-glos.yaml` (legg til Bayes/produktregel/total sammenhenger)
-- Delete: `content/concepts/betinget-sannsynlighet.yaml`
+#### Task 19: Flytt `bootstrapping`, `gunstige-pa-mulige`, `prosentilintervall` til entries
 
-- [ ] **Step 1: Utvid glossary** med "Tett knyttet til produktregelen, Bayes', total sannsynlighet"-blokken.
-- [ ] **Step 2: Cross-ref + slett + test + commit**
+- [ ] **Step 1:** For hver: kopier konseptfil til `content/entries/<id>.yaml` med `type: method` (eller `overview` for bootstrapping).
+- [ ] **Step 2:** Slett konseptfilene.
+- [ ] **Step 3:** Cross-refs: `(/concept/X)` → `(/entry/X)`, `{ id: X, kind: concept }` → `{ id: X, kind: entry }`.
+- [ ] **Step 4:** Test, commit.
 
-### Task 6: Merge `disjunkte-hendelser` (concept) → `disjunkte-hendelser-glos`
+#### Task 20: EntryDetail-renderer for overview/method
 
-**Files:**
-- Modify: `content/glossary/disjunkte-hendelser-glos.yaml` (legg til A ⊆ B̄ konsekvensen)
-- Delete: `content/concepts/disjunkte-hendelser.yaml`
+- [ ] **Step 1: Test først** — render varians-oversikt, forvent at `what_it_means` vises i stedet for `formula_main` + `what_it_does`.
+- [ ] **Step 2:** Hvis `type === "overview"` eller `type === "method"`: render `what_it_means` med Prose, skip formula-rader, behold recognition_cues.
+- [ ] **Step 3:** Test, commit.
 
-- [ ] **Step 1: Utvid glossary** med "A ⊆ B̄ → P(A | B̄) = P(A)/(1−P(B))".
-- [ ] **Step 2: Cross-ref + slett + test + commit**
+#### Task 21: Slett `/concept/<id>`-route, legg til redirect
 
-### Task 7: Merge `uavhengighet-hendelser` (concept) → `uavhengighet-glos`
+- [ ] **Step 1:** I `App.tsx`: legg til `<Route path="/concept/:id" element={<ConceptRedirect />} />`-shim som mapper gamle id → ny id og bruker `<Navigate>`.
+- [ ] **Step 2:** Slett `ConceptDetail.tsx` og `loadContent.ts`-konsept-loading hvis ingen andre lesere.
+- [ ] **Step 3:** Test (smoke-test gamle URL-er), commit.
 
-**Files:**
-- Modify: `content/glossary/uavhengighet-glos.yaml` (legg til "TESTE uavhengighet"-prosedyre)
-- Delete: `content/concepts/uavhengighet-hendelser.yaml`
+#### Task 22: Banner — fjern Konsepter-knapp, rename Formler
 
-- [ ] **Step 1: Utvid glossary** med teste-prosedyren.
-- [ ] **Step 2: Cross-ref + slett + test + commit**
+- [ ] **Step 1: Test først**
 
-### Task 8: Merge `sentralgrenseteoremet` (concept) → `sentralgrenseteoremet-glos`
+```tsx
+it("does not show Konsepter button", () => {
+  render(<Banner />);
+  expect(screen.queryByText("Konsepter")).toBeNull();
+  expect(screen.getByText("Formler og konsepter")).toBeInTheDocument();
+});
+```
 
-Glossary er allerede full. Bare cross-ref + slett.
+- [ ] **Step 2:** Endre `Banner.tsx`.
+- [ ] **Step 3:** Test, commit.
 
-- [ ] **Step 1: `grep -rn "sentralgrenseteoremet" content/ src/`**
-- [ ] **Step 2: Erstatt `kind: concept` → `kind: glossary` og id → `sentralgrenseteoremet-glos`**
-- [ ] **Step 3: Slett, test, commit**
+#### Task 23: ListView — fjern konsepter-tab
 
-### Task 9: Merge `standardnormalisering` (concept) → `normalisering` (glossary)
+- [ ] **Step 1:** Fjern `tab === "konsepter"`-grenen, fjern konsept-cross-search, behold formler+tabeller.
+- [ ] **Step 2:** Test, commit.
 
-NB: Ulikt navn — konsept har id `standardnormalisering`, glossary har id `normalisering`.
+#### Task 24: Final smoketest + cleanup
 
-- [ ] **Step 1: Erstatt cross-refs**
-  - `/concept/standardnormalisering` → `glossary:normalisering`
-  - `{ id: standardnormalisering, kind: concept }` → `{ id: normalisering, kind: glossary }`
-- [ ] **Step 2: Slett, test, commit**
-
-### Task 10: Final review
-
-- [ ] **Step 1:** Run `npm test -- --run` — alle 150 tester må passere
-- [ ] **Step 2:** Manuell smoketest — start dev-server, naviger til /konsepter, sjekk antall (skal være 11), åpne hver gjenværende konseptside
-- [ ] **Step 3:** Sjekk at popup-lenker fungerer for alle merge-mål
-
----
-
-## Avklaringer trengt FØR vi starter
-
-1. Kategori A (de 9 mergene) — godkjenner du alle?
-2. Kategori C — hvilke av disse fire bør bli glossary?
-   - `de-morgans-lov` → glossary?
-   - `poisson-prosess` → glossary?
-   - `qq-plott` → glossary?
-   - `spredningsplott` → glossary?
-3. `fellesfordeling` — beholde som konsept, eller merge inn i `simultanfordeling` glossary?
+- [ ] **Step 1:** `npm test -- --run` — alle tester passerer.
+- [ ] **Step 2:** Start dev-server, gå gjennom: `/`, `/?tab=tabeller`, `/entry/varians-oversikt`, `/entry/bootstrapping`, gamle `/concept/varians` (skal redirecte), åpne glossary-popup for `de-morgans-lov`.
+- [ ] **Step 3:** Slett tom `content/concepts/`-mappe.
+- [ ] **Step 4:** Final commit + merge til main.
