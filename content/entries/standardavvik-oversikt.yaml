@@ -12,11 +12,23 @@ what_it_means: |
   **Klikk på overskriften** for å åpne ordliste-popupen med detaljert
   forklaring og om du trenger rådata eller ikke.
 
-  ## [Utvalgsgjennomsnitt (x̄)](glossary:gjennomsnitt)
+  ## [Standardavvik for diskret stokastisk variabel](glossary:diskret-varians)
 
-      x̄ = Σ xᵢ / n
+      σ = √( Σ (xᵢ − μ)² · P(X = xᵢ) )
 
-  Midtpunktet i dataene og estimat for `μ`.
+  Når du har en PMF-tabell. Vekt = sannsynligheten.
+
+  Entry: [Varians og standardavvik (diskret stokastisk variabel)](/entry/varians-standardavvik-diskret).
+
+  ## [Populasjonsstandardavvik (σ)](glossary:populasjonsstandardavvik)
+
+      σ = √( Σ (xᵢ − μ)² / N )
+
+  Den «sanne» spredningen i hele populasjonen. Antas kjent eller estimeres
+  med utvalgsstandardavviket `s` når den ikke er gitt.
+
+  Brukes i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
+  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
 
   ## [Utvalgsstandardavvik (s)](glossary:utvalgsstandardavvik)
 
@@ -27,6 +39,14 @@ what_it_means: |
 
   Brukes i: [Én-utvalg t-test](/entry/en-utvalg-t-test),
   [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma).
+
+  ## [Pooled standardavvik (S_P)](glossary:pooled-varians)
+
+      S_P = √( ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2) )
+
+  Felles standardavvik-estimat for to grupper med antatt lik `σ`.
+
+  Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
 
   ## [Residualstandardavvik (S_E)](glossary:residualstandardavvik)
 
@@ -53,6 +73,14 @@ what_it_means: |
       σ = 1/λ   (lik forventningen)
 
   Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
+
+  ## [Standardavvik for hypergeometrisk](glossary:hypergeometrisk-varians)
+
+      σ = √( n · (K/N) · ((N−K)/N) · ((N−n)/(N−1)) )
+
+  Som binomial-σ, men med endelig-populasjon-korreksjonen.
+
+  Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
 
   ## [Standardfeil til utvalgsgjennomsnittet](glossary:variansen-til-utvalgsgjennomsnittet)
 
