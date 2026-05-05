@@ -153,7 +153,7 @@ export function ListView() {
           )}
 
           {tab === "tabeller" && (
-            <div className="mx-auto max-w-[1200px]">
+            <div className="px-5">
               <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
                 Tabeller
               </h1>
