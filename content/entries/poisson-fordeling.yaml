@@ -44,7 +44,7 @@ properties:
   std_dev: "σ = √(λt)"
 
 filters:
-  computes: [exact_probability, at_least_k]
+  computes: [exact_probability, at_least_k, range_probability, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, events_in_window]
   structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, counting_events, complement_pattern]

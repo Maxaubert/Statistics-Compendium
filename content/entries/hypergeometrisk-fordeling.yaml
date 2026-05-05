@@ -42,10 +42,10 @@ properties:
   std_dev: "σ = √(Var[X])"
 
 filters:
-  computes: [exact_probability, at_least_k, combinatorial_count]
+  computes: [exact_probability, at_least_k, range_probability, combinatorial_count, expected_value]
   random_variable: [discrete_count]
-  setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n, complement_pattern]
+  setup: [single_population, without_replacement, finite_pool, fixed_n_trials]
+  structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events]
   parameters_known: []
   distribution_assumption: [hypergeometric]
   tooling: [calculator_binomial_coef]

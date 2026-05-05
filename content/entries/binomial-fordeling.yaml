@@ -44,10 +44,10 @@ properties:
   std_dev: "σ = √(np(1-p))"
 
 filters:
-  computes: [exact_probability, at_least_k, find_n_for_threshold]
+  computes: [exact_probability, at_least_k, range_probability, find_n_for_threshold, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n, counting_events]
   parameters_known: [success_p]
   distribution_assumption: [binomial]
   tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
