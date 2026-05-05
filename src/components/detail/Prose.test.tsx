@@ -84,6 +84,15 @@ describe("Prose", () => {
     expect(container.querySelectorAll("p")).toHaveLength(2);
   });
 
+  it("renders 4-space indented lines as a code block", () => {
+    const body = "Formel:\n\n    P(B) = Σ P(Aᵢ)·P(B|Aᵢ)\n\nEtterpå.";
+    const { container } = render(<Prose body={body} />);
+    const pre = container.querySelector("pre");
+    expect(pre).not.toBeNull();
+    expect(pre!.textContent).toBe("P(B) = Σ P(Aᵢ)·P(B|Aᵢ)");
+    expect(container.querySelectorAll("p")).toHaveLength(2);
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,

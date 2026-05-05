@@ -84,6 +84,13 @@ export function Prose({
         if (block.kind === "rule") {
           return <hr key={i} className={ruleClass} />;
         }
+        if (block.kind === "code_block") {
+          return (
+            <pre key={i} className={CODE_BLOCK_CLASS[theme]}>
+              {block.lines.join("\n")}
+            </pre>
+          );
+        }
         return (
           <p key={i} className={pClass}>
             {renderInline(block.text, aliases, popup?.openTerm, theme)}
@@ -106,6 +113,12 @@ const RULE_CLASS: Record<ProseTheme, string> = {
   light: "my-2 border-t border-line",
   dark: "my-2 border-t border-white/10",
 };
+const CODE_BLOCK_CLASS: Record<ProseTheme, string> = {
+  light:
+    "m-0 overflow-x-auto rounded-md border border-line bg-paper-2 px-4 py-3 font-mono text-[13.5px] leading-relaxed text-ink",
+  dark:
+    "m-0 overflow-x-auto rounded-md bg-white/[0.05] px-4 py-3 font-mono text-[13.5px] leading-relaxed text-[inherit]",
+};
 
 // ---- Block parser -----------------------------------------------------
 
@@ -113,11 +126,13 @@ interface ParagraphBlock { kind: "paragraph"; text: string }
 interface ListBlock { kind: "list"; items: string[] }
 interface OrderedListBlock { kind: "ordered"; items: string[] }
 interface RuleBlock { kind: "rule" }
-type Block = ParagraphBlock | ListBlock | OrderedListBlock | RuleBlock;
+interface CodeBlock { kind: "code_block"; lines: string[] }
+type Block = ParagraphBlock | ListBlock | OrderedListBlock | RuleBlock | CodeBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
 const NUMBERED_RE = /^\s*\d+\.\s+/;
 const RULE_RE = /^\s*-{3,}\s*$/;
+const INDENTED_CODE_RE = /^(?: {4}|\t)(.*)$/;
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -132,6 +147,34 @@ function parseBlocks(body: string): Block[] {
     if (RULE_RE.test(lines[i])) {
       blocks.push({ kind: "rule" });
       i++;
+      continue;
+    }
+    // Indented code block: 4+ spaces or tab at start. Standard markdown
+    // convention for display formulas. Multiple consecutive indented
+    // lines collapse into one block; blank line ends it.
+    const codeMatch = lines[i].match(INDENTED_CODE_RE);
+    if (codeMatch) {
+      const codeLines: string[] = [];
+      while (i < lines.length) {
+        const m = lines[i].match(INDENTED_CODE_RE);
+        if (m) {
+          codeLines.push(m[1]);
+          i++;
+          continue;
+        }
+        if (lines[i].trim() === "") {
+          // Lookahead: if next non-blank line is also indented, keep as same block
+          let j = i + 1;
+          while (j < lines.length && lines[j].trim() === "") j++;
+          if (j < lines.length && INDENTED_CODE_RE.test(lines[j])) {
+            codeLines.push("");
+            i = j;
+            continue;
+          }
+        }
+        break;
+      }
+      blocks.push({ kind: "code_block", lines: codeLines });
       continue;
     }
     if (BULLET_RE.test(lines[i])) {

@@ -14,7 +14,7 @@ const browser = await puppeteer.launch({
   args: ["--hide-scrollbars", "--disable-gpu", "--no-sandbox"],
 });
 
-async function capturePopup(termId, name) {
+async function capturePopup(needle, name) {
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 1000 });
   await page.goto(`http://localhost:${PORT}/#/ordliste`, { waitUntil: "networkidle0" });
@@ -22,29 +22,28 @@ async function capturePopup(termId, name) {
     () => Array.from(document.querySelectorAll("h1")).some((h) => /Ordliste/i.test(h.textContent ?? "")),
     { timeout: 15000 },
   );
+  // Filter the grid down to the single card, then click it.
+  await page.type('input[type="search"]', needle, { delay: 30 });
   await new Promise((r) => setTimeout(r, 400));
-  await page.evaluate((id) => {
-    const cards = Array.from(document.querySelectorAll("button"));
-    // The cards have aria-label "Vis definisjon av <term_no>" — we don't know term_no
-    // exactly here, so just find any button whose surrounding card matches by data.
-    // Easier: open via Glossary's openId by clicking the card with aria-label including the term.
-    // Fallback: iterate all and pick by id-like substring.
-    for (const c of cards) {
-      const label = c.getAttribute("aria-label") ?? "";
-      const text = (c.textContent ?? "").toLowerCase();
-      if (label.toLowerCase().includes(id) || text.includes(id)) {
-        c.click();
-        return;
-      }
-    }
-  }, name);
+  const ok = await page.evaluate(() => {
+    const cards = Array.from(document.querySelectorAll('button[aria-label^="Vis definisjon"]'));
+    if (cards.length === 0) return false;
+    cards[0].scrollIntoView({ block: "center" });
+    cards[0].click();
+    return true;
+  });
+  if (!ok) {
+    console.log(`  no card found for "${needle}"`);
+    await page.close();
+    return;
+  }
   await new Promise((r) => setTimeout(r, 600));
   await page.screenshot({
-    path: path.join(OUT, `popup-${termId}.png`),
+    path: path.join(OUT, `popup-${name}.png`),
     fullPage: false,
   });
   await page.close();
-  console.log(`captured popup-${termId}`);
+  console.log(`captured popup-${name}`);
 }
 
 try {
@@ -53,6 +52,8 @@ try {
   await capturePopup("observatortest", "testobservator");
   await capturePopup("forkastningsomrade", "forkastningsomr");
   await capturePopup("standardavvik", "standardavvik");
+  await capturePopup("total sannsynlighet", "total-sannsynlighet");
+  await capturePopup("konfidensintervall", "konfidensintervall");
 } finally {
   await browser.close();
 }
