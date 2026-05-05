@@ -291,7 +291,7 @@ related:
   - { id: "normalfordeling",         kind: "entry" }
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "p-verdi-glos",            kind: "glossary" }
-  - { id: "signifikansnivaa",        kind: "concept" }
+  - { id: "signifikansniva-glos",    kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 

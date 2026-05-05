@@ -14,4 +14,4 @@ long_def: |
   bevis nok mot den.
 see_also:
   - { id: en-utvalg-z-test, kind: entry }
-  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }

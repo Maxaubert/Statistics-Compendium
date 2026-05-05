@@ -94,7 +94,7 @@ detailed_solution_variants:
 
 related:
   - { id: frihetsgrader-glos, kind: glossary }
-  - { id: signifikansnivaa, kind: concept }
+  - { id: signifikansniva-glos, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:

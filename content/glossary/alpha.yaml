@@ -10,7 +10,6 @@ long_def: |
   - **Signifikansnivå:** sannsynligheten du godtar for å forkaste `H₀` når `H₀` er sann (type-I-feil). Vanlige verdier: `0.10`, `0.05`, `0.01`. Konfidensnivå = `1 − α`.
   - **Regresjon:** konstantleddet (intercept), altså verdien til `Y` når `X = 0`.
 see_also:
-  - { id: signifikansnivaa, kind: concept }
   - { id: signifikansniva-glos, kind: glossary }
   - { id: intercept, kind: glossary }
   - { id: regresjon-estimat-alpha-beta, kind: entry }
