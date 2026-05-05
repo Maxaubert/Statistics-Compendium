@@ -4,7 +4,9 @@ type: overview
 tagline: "Kvadratrot av variansen — spredning i samme enhet som dataene. Hver variansform har sin parallell."
 
 what_it_means: |
-  Standardavvik er kvadratroten av variansen, i samme enhet som dataene.
+  Standardavviket sier hvor langt en typisk observasjon ligger fra
+  gjennomsnittet — et mål på spredning i samme enhet som dataene.
+  Det er kvadratroten av variansen.
 
       σ = √Var(X)
 
