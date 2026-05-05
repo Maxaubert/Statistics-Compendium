@@ -90,27 +90,15 @@ export function Banner() {
               to={link.to}
               aria-current={active ? "page" : undefined}
               className={
+                // Always font-semibold so width is constant; differentiate
+                // active/inactive purely with color and background.
                 active
                   ? "flex items-center gap-1.5 rounded-md bg-white/15 px-2.5 py-1 font-semibold text-white no-underline"
-                  : "flex items-center gap-1.5 rounded-md px-2.5 py-1 text-white/85 no-underline hover:bg-white/10 hover:text-white"
+                  : "flex items-center gap-1.5 rounded-md px-2.5 py-1 font-semibold text-white/70 no-underline hover:bg-white/10 hover:text-white"
               }
             >
               <link.Icon size={13} />
-              {/*
-                Render the label twice: visible text is regular weight when
-                inactive and bold when active; the hidden ::before sibling
-                always reserves the bold width so the nav doesn't shift
-                when an item becomes active.
-              */}
-              <span className="grid">
-                <span
-                  aria-hidden
-                  className="invisible col-start-1 row-start-1 font-semibold"
-                >
-                  {link.label}
-                </span>
-                <span className="col-start-1 row-start-1">{link.label}</span>
-              </span>
+              {link.label}
             </Link>
           );
         })}

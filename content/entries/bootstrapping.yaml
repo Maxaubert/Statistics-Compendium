@@ -1,27 +1,53 @@
 id: bootstrapping
 name_no: "Bootstrapping"
 type: method
-tagline: "Metode for å estimere usikkerhet uten å anta normalfordeling – gjenta utvalg med tilbakelegging fra dataene."
+tagline: "Resample med tilbakelegging fra dataene for å estimere usikkerhet uten å anta normalfordeling."
 
 what_it_means: |
-  Bootstrapping er en metode for å estimere usikkerheten i en statistisk
-  estimator (typisk gjennomsnitt eller median) når dataene er for få eller
-  for skjevtfordelt til at sentralgrenseteoremet kan brukes.
+  Bootstrapping estimerer usikkerheten i en statistikk (typisk gjennomsnitt
+  eller median) ved å trekke nye «utvalg» fra de observasjonene du har —
+  med tilbakelegging — og se hvor mye statistikken varierer mellom
+  resamplene. Brukes når dataene er for få eller for skjevtfordelte til at
+  sentralgrenseteoremet kan anvendes.
 
-  Prosedyre:
-  1. Behandle de N observasjonene som om de var "populasjonen".
-  2. Plukk et tilfeldig utvalg på N elementer MED TILBAKELEGGING. Samme observasjon kan dukke opp flere ganger.
-  3. Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet.
-  4. Gjenta steg 2-3 mange ganger (typisk 999 eller 1000).
-  5. Den empiriske fordelingen til disse statistikkene er bootstrap-fordelingen.
+  Kjerneidé: behandle ditt utvalg som om det var populasjonen, og bruk
+  kjent sampling-statistikk på det.
 
-  To måter å lage 95 % KI:
-  - Tradisjonelt: x̄ ± z_(α/2) · standardfeil (= utvalgsstd.av av bootstrap-statistikker).
-    Antar at bootstrap-fordelingen er tilnærmet normal.
-  - Prosentilintervall: 2.5 % og 97.5 % prosentilen i sortert bootstrap-fordeling.
-    Antar ingen ting om formen.
+solution_variants:
+  - label: "Tradisjonelt bootstrap-KI"
+    steps:
+      - "Behandle de N observasjonene som om de var «populasjonen»."
+      - "Trekk et tilfeldig utvalg på N elementer MED TILBAKELEGGING (samme observasjon kan trekkes flere ganger)."
+      - "Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet og lagre verdien."
+      - "Gjenta steg 2–3 mange ganger — typisk 999 eller 1000."
+      - "Beregn standardfeilen som utvalgsstandardavviket av de 999 bootstrap-statistikkene: SE = std-av-bootstrap-snittene."
+      - "Lag KI: x̄ ± z_(α/2) · SE. Antar at bootstrap-fordelingen er tilnærmet normal."
+      - { text: "Sjekk bootstrap-fordelingen før du bruker normaltilnærmingen — er den skjev eller har tunge haler, bruk prosentilintervall i stedet.", conditional: true }
+  - label: "Prosentilintervall"
+    steps:
+      - "Behandle de N observasjonene som om de var «populasjonen»."
+      - "Trekk et tilfeldig utvalg på N elementer MED TILBAKELEGGING."
+      - "Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet og lagre verdien."
+      - "Gjenta steg 2–3 mange ganger — typisk 999 eller 1000."
+      - "Sorter de 999 bootstrap-statistikkene fra minst til størst."
+      - "For 95 % KI: ta verdi nummer 25 (≈ 2.5-prosentilen) som nedre grense og verdi nummer 975 (≈ 97.5-prosentilen) som øvre grense."
+      - { text: "Antar ingenting om at fordelingen er symmetrisk eller normal — egnet når bootstrap-fordelingen er skjev eller har tunge haler.", conditional: true }
 
-  Forutsetning: at de opprinnelige observasjonene er representative for populasjonen.
+common_traps: |
+  **Forutsetning som ofte glemmes:** at de opprinnelige observasjonene er
+  representative for populasjonen. Bootstrap «lager ikke noe ut av
+  ingenting» — det estimerer bare usikkerhet, ikke korriger feil i utvalget.
+
+  Ikke forveksle bootstrap-fordelingen (av estimatet `x̄`) med
+  populasjonsfordelingen (av enkeltobservasjoner).
+
+python_snippet: |
+  import numpy as np
+  resamples = np.array([
+      np.random.choice(data, size=len(data), replace=True).mean()
+      for _ in range(1000)
+  ])
+  ki_lo, ki_hi = np.percentile(resamples, [2.5, 97.5])
 
 recognition_cues:
   - "Få observasjoner og fordelingen ser ikke normalfordelt ut (qq-plott avviker)"

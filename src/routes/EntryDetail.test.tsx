@@ -71,14 +71,14 @@ describe("EntryDetail", () => {
     expect(
       screen.getByRole("heading", { name: "Bootstrapping" }),
     ).toBeInTheDocument();
-    // A distinctive sentence from the bootstrapping what_it_means
+    // what_it_means body shows up — kjerneidé phrase is distinctive
     expect(
-      screen.getByText(/Behandle de N observasjonene/),
+      screen.getByText(/Kjerneid/),
     ).toBeInTheDocument();
-    // Recognition cues hidden for method entries
+    // Recognition cues are shown for method entries (hidden only for overview).
     expect(
-      screen.queryByText("Slik gjenkjenner du den i en oppgave"),
-    ).not.toBeInTheDocument();
+      screen.getByText("Slik gjenkjenner du den i en oppgave"),
+    ).toBeInTheDocument();
     expect(screen.queryByText("Hva den gjør")).not.toBeInTheDocument();
     expect(screen.queryByText("Hovedformel")).not.toBeInTheDocument();
   });
