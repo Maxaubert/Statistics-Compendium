@@ -62,6 +62,12 @@ export function EntryDetail() {
   const prev = idx > 0 ? sameType[idx - 1] : undefined;
   const next = idx >= 0 && idx < sameType.length - 1 ? sameType[idx + 1] : undefined;
 
+  // Overview / method entries are prose-first: they have a `what_it_means`
+  // markdown body instead of a hero formula + `what_it_does` row. The rest
+  // of the page (recognition cues, related-pills, common_traps, …) still
+  // applies, so we just swap the lead-in section.
+  const isProseEntry = entry.type === "overview" || entry.type === "method";
+
   return (
     <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="entry-detail" className="min-h-screen bg-paper">
@@ -98,12 +104,25 @@ export function EntryDetail() {
           </div>
         </header>
 
-        <DistributionThumbnail entry={entry} />
-        <HeroFormula latex={entry.formula_latex} />
-
-        <Section title="Hva den gjør" icon={Info}>
-          <Prose body={entry.what_it_does} glossary={data.glossary} />
-        </Section>
+        {isProseEntry ? (
+          entry.what_it_means && (
+            <Section title="Hva det betyr" icon={Info}>
+              <Prose body={entry.what_it_means} glossary={data.glossary} />
+            </Section>
+          )
+        ) : (
+          <>
+            <DistributionThumbnail entry={entry} />
+            {entry.formula_latex && (
+              <HeroFormula latex={entry.formula_latex} />
+            )}
+            {entry.what_it_does && (
+              <Section title="Hva den gjør" icon={Info}>
+                <Prose body={entry.what_it_does} glossary={data.glossary} />
+              </Section>
+            )}
+          </>
+        )}
 
         <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
           <RecognitionCues cues={entry.recognition_cues} />
