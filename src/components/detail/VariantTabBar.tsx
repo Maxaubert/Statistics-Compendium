@@ -10,26 +10,34 @@ interface Props {
 }
 
 /**
- * Two-line variant tab strip: small-caps category tag (FOROVER /
- * INVERS / VENSTRE / …) over the cleaned-up label. When none of the
- * labels yield a category (e.g. Bayes-setning's method-style labels),
- * the tag row is omitted so the strip stays single-line.
+ * Disclosure-style variant tab strip with stable layout. Each tab
+ * shows its natural-language name (e.g. "Mindre enn", "Finn x") and
+ * reserves space below for the formula expression. The formula is
+ * faded in only on the active tab — total tab height is constant so
+ * the rest of the page never shifts when a tab is selected.
+ *
+ * The forover/invers distinction is carried by colour on the active
+ * state (indigo vs amber) and not by an explicit small-caps tag —
+ * the natural name itself is the category label.
  */
 export function VariantTabBar({ labels, active, onSelect, ariaLabel }: Props) {
   const metas = labels.map(deriveTabMeta);
-  const anyTag = metas.some((m) => m.tag !== null);
+  const anyFormula = metas.some((m) => m.formula);
 
   return (
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className="flex flex-wrap gap-x-7 gap-y-0 border-b border-line"
+      className="flex flex-wrap items-stretch gap-x-7 gap-y-0 border-b border-line"
     >
       {labels.map((label, i) => {
         const meta = metas[i];
         const isActive = i === active;
-        const tagColor =
-          meta.kind === "invers" ? "text-amber-700" : "text-primary-2/70";
+        const activeText =
+          meta.kind === "invers" ? "text-amber-700" : "text-primary-2";
+        const activeUnderline =
+          meta.kind === "invers" ? "bg-amber-500" : "bg-primary-2";
+
         return (
           <button
             key={label}
@@ -39,35 +47,37 @@ export function VariantTabBar({ labels, active, onSelect, ariaLabel }: Props) {
             aria-label={label}
             onClick={() => onSelect(i)}
             className={clsx(
-              "relative flex flex-col items-start gap-0.5 px-1 pb-2 pt-1.5 leading-none transition-colors",
-              "focus:outline-none focus-visible:ring-2 focus-visible:rounded-sm focus-visible:ring-primary-2/60",
-              isActive ? "text-primary-2" : "text-ink-3 hover:text-ink-2",
+              "relative flex flex-col items-start px-1 pb-2 pt-2 leading-none",
+              "focus:outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-primary-2/60",
+              isActive
+                ? clsx(activeText, "transition-colors")
+                : "text-ink-3 transition-colors hover:text-ink-2",
             )}
           >
-            {anyTag && (
-              <span
-                aria-hidden
-                className={clsx(
-                  "font-mono text-[9.5px] font-semibold uppercase tracking-[0.16em]",
-                  meta.tag ? tagColor : "select-none opacity-0",
-                )}
-              >
-                {meta.tag ?? "—"}
-              </span>
-            )}
             <span
               className={clsx(
-                "font-mono text-[12.5px]",
+                "font-mono text-[13px] transition-[font-weight] duration-150",
                 isActive && "font-semibold",
               )}
             >
               {meta.short}
             </span>
+            {anyFormula && (
+              <span
+                aria-hidden={!isActive}
+                className={clsx(
+                  "mt-1 font-mono text-[11.5px] transition-opacity duration-200 ease-out",
+                  isActive ? "opacity-100" : "opacity-0",
+                )}
+              >
+                {meta.formula ?? " "}
+              </span>
+            )}
             <span
               aria-hidden
               className={clsx(
-                "absolute inset-x-1.5 -bottom-px h-[2.5px] rounded-t-sm transition-all",
-                isActive ? "bg-primary-2" : "bg-transparent",
+                "absolute inset-x-0 -bottom-px h-[2.5px] rounded-t-sm transition-all",
+                isActive ? activeUnderline : "bg-transparent",
               )}
             />
           </button>
