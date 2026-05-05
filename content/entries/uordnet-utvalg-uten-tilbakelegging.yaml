@@ -38,7 +38,7 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: []
   setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n]
+  structural_cues: [total_observations_n, complement_pattern]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_binomial_coef, calculator_factorial]

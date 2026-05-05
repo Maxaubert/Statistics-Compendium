@@ -38,7 +38,7 @@ symbols:
   - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
 
 filters:
-  computes: [marginal_probability]
+  computes: [marginal_probability, expected_value]
   random_variable: [discrete_count]
   setup: [joint_table_given]
   structural_cues: [joint_table_present]

@@ -52,7 +52,7 @@ properties:
   std_dev: "σ"
 
 filters:
-  computes: [exact_probability, range_probability, find_mu_for_threshold]
+  computes: [exact_probability, range_probability, find_mu_for_threshold, find_x_for_threshold]
   random_variable: [continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, mean_and_sd_given]

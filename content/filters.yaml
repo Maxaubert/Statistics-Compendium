@@ -17,8 +17,11 @@ dimensions:
       - { key: hypothesis_test,         label_no: "Hypotesetest" }
       - { key: parameter_estimate,      label_no: "Punktestimat for parameter" }
       - { key: combinatorial_count,     label_no: "Kombinatorisk telling" }
+      - { key: union_probability,       label_no: "Sannsynlighet for union P(A ∪ B)" }
+      - { key: test_independence,       label_no: "Test om hendelser/variabler er uavhengige" }
       - { key: find_n_for_threshold,    label_no: "Finn n som oppfyller terskelkrav" }
       - { key: find_mu_for_threshold,   label_no: "Finn μ som oppfyller terskelkrav" }
+      - { key: find_x_for_threshold,    label_no: "Finn x (invers) som oppfyller terskelkrav" }
 
   - key: random_variable
     label_no: "Tilfeldig variabel"

@@ -33,7 +33,7 @@ symbols:
   - { sym: "ν",    means: "frihetsgrader = (r − 1)(c − 1)" }
 
 filters:
-  computes: [hypothesis_test]
+  computes: [hypothesis_test, test_independence]
   random_variable: [discrete_count]
   setup: [joint_table_given]
   structural_cues: [joint_table_present, more_than_two_categories]

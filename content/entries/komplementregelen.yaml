@@ -31,7 +31,7 @@ symbols:
   - { sym: "A̅",     means: "komplementet av A (A̅ inntreffer hvis A ikke gjør det)" }
 
 filters:
-  computes: [exact_probability, at_least_k]
+  computes: [exact_probability, at_least_k, find_n_for_threshold]
   random_variable: []
   setup: [single_population]
   structural_cues: [complement_pattern]
