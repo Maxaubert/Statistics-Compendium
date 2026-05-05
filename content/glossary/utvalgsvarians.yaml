@@ -1,0 +1,21 @@
+id: utvalgsvarians
+term_no: Utvalgsvarians (s²)
+short_def: "Estimat for `σ²` regnet ut fra rådata: `s² = Σ(xᵢ − x̄)² / (n − 1)`."
+long_def: |
+  Den vanligste variansformen i praksis: gjennomsnittlig kvadrert avvik
+  fra `x̄`, med `n − 1` i nevneren (Bessels korreksjon) for å være
+  forventningsrett for `σ²`.
+
+  - **Trenger rådata** `x_1, …, x_n` for å regne `Σ(xᵢ − x̄)²`.
+  - Standardavviket er `s = √s²`.
+  - Brukes i én-utvalg t-test, KI for `μ` (ukjent `σ`), KI for `σ²`,
+    pooled varians.
+aliases:
+  - utvalgsvarians
+  - utvalgsvariansen
+  - s²
+see_also:
+  - { id: utvalgsvarians-radata, kind: entry }
+  - { id: utvalgsstandardavvik, kind: glossary }
+  - { id: varians, kind: concept }
+  - { id: en-utvalg-t-test, kind: entry }

@@ -120,6 +120,17 @@ describe("Prose", () => {
     expect(link).toHaveAttribute("href", "/entry/poisson-fordeling");
   });
 
+  it("renders [label](glossary:id) as popup-opening buttons", () => {
+    renderInProvider(
+      <Prose body="[Varians](glossary:varians)" />,
+    );
+    // It is a button (not a router link).
+    const btn = screen.getByRole("button", { name: "Varians" });
+    expect(btn.tagName).toBe("BUTTON");
+    // Sanity: not also rendered as a router link.
+    expect(screen.queryByRole("link", { name: "Varians" })).toBeNull();
+  });
+
   it("renders inline bold and code", () => {
     const { container } = render(
       <Prose body="Pass på **fortegnet** i `(x − μ)²`." />,

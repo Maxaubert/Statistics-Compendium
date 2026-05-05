@@ -12,106 +12,103 @@ what_it_means: |
 
       varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»
 
-  Vekten og delingsleddet endrer seg etter hva du har og hva du estimerer.
-  Sidene under dekker hver av de viktige variansformene én gang hver.
+  Sidene under er en kjapp oversikt over hver variansform. **Klikk på
+  overskriften** for å åpne ordliste-popupen med detaljert forklaring,
+  inkludert om du trenger rådata eller ikke.
 
-  ## Diskret SV med PMF
+  ## [Variansen til diskret SV](glossary:diskret-varians)
 
       Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)
 
-  Bruk når du har en tabell med verdier `xᵢ` og sannsynligheter `P(X = xᵢ)`.
-  Multiplisér hvert kvadrert avvik med sin sannsynlighet og summér.
-  Snarvei for uniform fordeling: `Var(X) = E[X²] − μ²`.
+  Når du har en PMF-tabell. Vekt = sannsynligheten.
 
   Entry: [Varians og standardavvik (diskret SV)](/entry/varians-standardavvik-diskret).
 
-  ## Utvalgsvarians (s²)
+  ## [Utvalgsvarians (s²)](glossary:utvalgsvarians)
 
       s² = Σ (xᵢ − x̄)² / (n − 1)
 
-  Bruk når du har en liste med `n` observasjoner og ingen kjent fordeling —
-  den vanligste formen i praksis. `n − 1` (Bessels korreksjon) gjør `s²`
-  forventningsrett for `σ²`. Standardavviket er `s = √s²`.
+  Den vanligste formen i praksis — fra rådata når fordelingen er ukjent.
 
   Entry: [Utvalgsvarians fra rådata](/entry/utvalgsvarians-radata). Brukes i:
   [Én-utvalg t-test](/entry/en-utvalg-t-test),
   [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma),
   [KI for σ²](/entry/ki-varians).
 
-  ## Pooled (interpolert) varians (S_P²)
+  ## [Pooled (interpolert) varians (S_P²)](glossary:pooled-varians)
 
       S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
 
-  Bruk når du sammenligner to grupper med antatt felles `σ²` i to-utvalgs
-  t-test. Vektet snitt der vekten er antall frihetsgrader.
+  Felles variansestimat for to grupper med antatt lik `σ²`.
 
   Konsept: [Interpolert (pooled) varians](/concept/interpolert-varians).
   Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
 
-  ## Residualvarians (S_E²)
+  ## [Residualvarians (S_E²)](glossary:residualvarians)
 
       S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)
 
-  Måler hvor langt observasjonene ligger unna regresjonslinjen i snitt.
-  `n − 2` fordi vi har estimert både `α̂` og `β̂` fra samme data.
+  Spredningen i avvikene fra regresjonslinjen.
 
-  Entry: [Residualenes varians S_E²](/entry/regresjon-residualvarians).
+  Entry: [Residualenes varians](/entry/regresjon-residualvarians).
   Brukes i: [SE(β̂)](/entry/regresjon-standardfeil-stigningstall),
   [Hypotesetest for β](/entry/regresjon-test-stigningstall),
   [Prediksjonsintervall](/entry/regresjon-prediksjonsintervall).
 
-  ## Binomialvarians
+  ## [Binomialvarians](glossary:binomialvarians)
 
       Var(X) = np(1 − p)
 
-  For `B(n, p)`. Størst når `p = 0.5`. Detaljer: binomialvarians.
+  For `B(n, p)`. Størst når `p = 0.5`.
+
   Entry: [Binomialfordeling](/entry/binomial-fordeling).
 
-  ## Poissonvarians
+  ## [Poissonvarians](glossary:poissonvarians)
 
       Var(X) = λ   (eller λt for et vindu)
 
-  Spesielt for Poisson: `E[X] = Var(X) = λ`. Detaljer: poissonvarians.
+  Spesielt: `E[X] = Var(X) = λ` for Poisson.
+
   Entry: [Poissonfordeling](/entry/poisson-fordeling).
 
-  ## Eksponentialvarians
+  ## [Eksponentialvarians](glossary:eksponentialvarians)
 
       Var(T) = 1/λ²
 
-  For ventetid med rate `λ`. Detaljer: eksponentialvarians.
+  Ventetid med rate `λ`.
+
   Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
 
-  ## Hypergeometrisk varians
+  ## [Hypergeometrisk varians](glossary:hypergeometrisk-varians)
 
       Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))
 
-  Som binomialvariansen, men ganget med endelig-populasjon-korreksjonen
-  `(N−n)/(N−1)`. Detaljer: hypergeometrisk varians.
+  Som binomialvariansen, men med endelig-populasjon-korreksjon.
+
   Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
 
-  ## Normalvarians
+  ## [Normalvarians](glossary:normalvarians)
 
       Var(X) = σ²
 
   Trivielt — `σ²` er parameteren selv.
+
   Entry: [Normalfordeling](/entry/normalfordeling).
 
-  ## Variansen til utvalgsgjennomsnittet
+  ## [Variansen til utvalgsgjennomsnittet](glossary:variansen-til-utvalgsgjennomsnittet)
 
       Var(X̄) = σ²/n          SE(X̄) = σ/√n
 
-  Spredningen i selve estimatet `X̄`, ikke i dataene. Bruker `s/√n` hvis
-  `σ` er ukjent. Stort `n` → liten `Var(X̄)` → smalt KI, presis test.
-  Detaljer: variansen til utvalgsgjennomsnittet.
+  Spredningen i selve estimatet `X̄`, ikke i dataene.
 
   Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
   [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
 
-  ## Variansen til stigningstallet
+  ## [Variansen til stigningstallet](glossary:variansen-til-stigningstallet)
 
       Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))
 
-  Stor `S_XX` (mye spredning i `x`) → liten `SE(β̂)` → presis estimering.
+  Hvor presist vi kjenner regresjonsstigningen.
 
   Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
 

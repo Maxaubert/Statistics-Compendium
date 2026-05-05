@@ -1,0 +1,21 @@
+id: diskret-varians
+term_no: Variansen til diskret SV
+short_def: "Når du har en PMF: `Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)` — vektet sum av kvadrerte avvik der vekten er sannsynligheten."
+long_def: |
+  Direkte beregning av variansen for en diskret stokastisk variabel
+  med kjent sannsynlighetsfordeling.
+
+  - **Trenger rådata?** Ikke i form av observasjoner — du trenger
+    PMF-tabellen `xᵢ → P(X = xᵢ)` og forventningsverdien `μ`.
+  - **Snarvei for uniform fordeling:** `Var(X) = E[X²] − μ²`. Når alle
+    sannsynligheter er like, er det ofte raskere å regne `Σ x_i²·P` og
+    trekke fra `μ²` enn å regne hver `(x − μ)²` for seg.
+  - Standardavviket `σ = √Var(X)` har samme enhet som `X`.
+aliases:
+  - varians til diskret sv
+  - variansen til diskret sv
+  - diskret varians
+see_also:
+  - { id: varians-standardavvik-diskret, kind: entry }
+  - { id: forventningsverdi-diskret, kind: entry }
+  - { id: varians, kind: concept }

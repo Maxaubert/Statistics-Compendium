@@ -6,12 +6,13 @@ long_def: |
   som bruker `n − 1` i nevneren (Bessels korreksjon) for å være
   forventningsrett for `σ²`.
 
-  Brukes i stedet for det ukjente `σ` i alle praktiske t-baserte
-  inferenser:
-
-  - **Testobservator (t-test):** `T = (X̄ − μ₀)/(s/√n)`
-  - **KI for μ:** `X̄ ± t_(α/2, n−1) · s/√n`
-  - **Frihetsgrader:** `ν = n − 1`
+  - **Trenger rådata?** Ja — du må ha observasjonene `x_1, …, x_n` for
+    å regne `Σ(xᵢ − x̄)²`. Hvis bare `s` (eller `s²`) er oppgitt, kan du
+    selvsagt bruke det videre uten å ha selve dataene.
+  - Brukes i stedet for det ukjente `σ` i alle t-baserte inferenser:
+    - **Testobservator (t-test):** `T = (X̄ − μ₀)/(s/√n)`
+    - **KI for μ:** `X̄ ± t_(α/2, n−1) · s/√n`
+    - **Frihetsgrader:** `ν = n − 1`
 
   Skiller seg fra populasjonsstandardavviket `σ`, som er en konstant —
   `s` er en stokastisk variabel som varierer fra utvalg til utvalg.

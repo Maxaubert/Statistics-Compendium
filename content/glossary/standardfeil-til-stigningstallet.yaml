@@ -1,0 +1,21 @@
+id: standardfeil-til-stigningstallet
+term_no: Standardfeil til stigningstallet (SE(β̂))
+short_def: "`SE(β̂) = √(S_E² / S_XX)` — kvadratroten av Var(β̂). Hvor presist vi kjenner regresjonsstigningen."
+long_def: |
+  Standardfeilen til estimatet `β̂`. Står i nevneren av testobservatoren
+  `T = β̂ / SE(β̂)` og brukes i KI: `β̂ ± t_(α/2, n−2) · SE(β̂)`.
+
+  - **Trenger rådata?** Indirekte: trenger `S_E²` og `S_XX`, som beregnes
+    fra `(xᵢ, yᵢ)`. Hvis disse er oppgitt, trenger du ikke rådataene.
+  - **Tolkning:** liten `SE(β̂)` → presis estimat → smalt KI; stor → høy usikkerhet.
+  - **Frihetsgrader** for testen er `n − 2`.
+aliases:
+  - standardfeil til stigningstallet
+  - se(β̂)
+  - se(beta-hat)
+see_also:
+  - { id: variansen-til-stigningstallet, kind: glossary }
+  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: regresjon-test-stigningstall, kind: entry }
+  - { id: beta-koeffisient, kind: glossary }
+  - { id: standardfeil, kind: glossary }

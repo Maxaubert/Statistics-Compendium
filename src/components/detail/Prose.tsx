@@ -364,6 +364,23 @@ function renderInline(
       );
     }
     if (tok.kind === "link") {
+      // Special protocol: [label](glossary:term-id) opens the popup for
+      // that glossary id instead of routing. Useful in headings where
+      // we want a click to surface the term definition without leaving
+      // the page.
+      if (tok.href.startsWith("glossary:")) {
+        const termId = tok.href.slice("glossary:".length);
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => openTerm?.(termId)}
+            className={MD_LINK_CLASS[theme]}
+          >
+            {tok.label}
+          </button>
+        );
+      }
       return (
         <RouterLink key={i} to={tok.href} className={MD_LINK_CLASS[theme]}>
           {tok.label}
