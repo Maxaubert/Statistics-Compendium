@@ -33,11 +33,11 @@ symbols:
   - { sym: "ν",        means: "frihetsgrader = n − 1" }
 
 filters:
-  computes: [confidence_interval, std_dev]
+  computes: [confidence_interval, std_dev, parameter_estimate]
   random_variable: [continuous]
   setup: [single_population]
-  structural_cues: [normal_assumed, summary_stats_given]
-  parameters_known: [confidence_level, sample_size_small_lt30]
+  structural_cues: [normal_assumed, summary_stats_given, data_as_list, total_observations_n]
+  parameters_known: [confidence_level, sample_size_small_lt30, sample_size_large, population_variance_unknown]
   distribution_assumption: [normal, chi_squared]
   tooling: [chi_square_quantile_table_E6]
 

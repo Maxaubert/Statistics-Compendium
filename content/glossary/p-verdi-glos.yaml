@@ -1,6 +1,9 @@
 id: p-verdi-glos
 term_no: P-verdi
 short_def: "Sannsynligheten for å se data minst like ekstreme som dine, gitt at `H₀` er sann."
+filters:
+  computes: [hypothesis_test]
+  parameters_known: [alpha_significance]
 long_def: |
   P-verdien måler hvor godt dataene passer med `H₀`. Liten `p`-verdi
   betyr at dataene er rare hvis `H₀` stemmer — altså bevis mot `H₀`.

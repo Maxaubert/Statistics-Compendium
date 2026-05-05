@@ -39,12 +39,12 @@ symbols:
 
 filters:
   computes: [hypothesis_test]
-  random_variable: [mean_of_samples]
+  random_variable: [mean_of_samples, continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
-  parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, alpha_significance]
-  distribution_assumption: [t_distribution]
-  tooling: [t_quantile_table_E5]
+  parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, sample_size_large, alpha_significance]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_variants:
   - label: "H₁: μ < μ₀ (venstre)"

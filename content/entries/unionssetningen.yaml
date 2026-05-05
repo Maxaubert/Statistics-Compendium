@@ -29,10 +29,10 @@ symbols:
   - { sym: "P(A ∪ B)",   means: "sannsynlighet for at minst én inntreffer" }
 
 filters:
-  computes: [exact_probability, union_probability]
-  random_variable: []
+  computes: [exact_probability, union_probability, joint_probability]
+  random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [disjoint_events]
+  structural_cues: [disjoint_events, independent_events]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]

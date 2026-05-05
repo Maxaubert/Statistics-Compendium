@@ -1,6 +1,10 @@
 id: kritisk-verdi
 term_no: Kritisk verdi
 short_def: "Tabellverdien testobservatoren må passere for at `H₀` skal forkastes."
+filters:
+  computes: [hypothesis_test]
+  parameters_known: [alpha_significance]
+  tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6]
 long_def: |
   Slå opp i z-, t-, eller χ²-tabellen med `α` (og `df` hvis nødvendig).
   Hvis testobservatoren er mer ekstrem enn den kritiske verdien, ligger

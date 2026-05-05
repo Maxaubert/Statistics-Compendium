@@ -33,8 +33,8 @@ symbols:
 
 filters:
   computes: [exact_probability, conditional_probability, joint_probability, test_independence]
-  random_variable: []
-  setup: [single_population, without_replacement]
+  random_variable: [discrete_count]
+  setup: [single_population, without_replacement, with_replacement, finite_pool]
   structural_cues: [conditional_given, independent_events]
   parameters_known: []
   distribution_assumption: [none_assumed]

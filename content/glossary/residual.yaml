@@ -1,6 +1,10 @@
 id: residual
 term_no: Residual
 short_def: "Forskjellen mellom observert `y` og predikert `ŷ` i en regresjonsmodell."
+filters:
+  setup: [linear_relationship]
+  parameters_known: [residual_variance]
+  structural_cues: [linear_relationship_suspected]
 long_def: |
   Formel:
 

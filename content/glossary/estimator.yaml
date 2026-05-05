@@ -1,6 +1,8 @@
 id: estimator
 term_no: Estimator
 short_def: "En funksjon av dataene som gir et tallestimat for en ukjent parameter."
+filters:
+  computes: [parameter_estimate]
 long_def: |
   En **estimator** er regelen (formelen), mens **estimatet** er tallet
   du får ut. Eksempel:

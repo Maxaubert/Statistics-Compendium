@@ -34,7 +34,7 @@ filters:
   computes: [expected_value]
   random_variable: [discrete_count]
   setup: [single_population, joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given]
+  structural_cues: [joint_table_present, summary_stats_given, data_as_list]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]

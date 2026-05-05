@@ -1,6 +1,12 @@
 id: poisson-prosess
 term_no: Poissonprosess
 short_def: "Tellestrøm der hendelser inntreffer uavhengig med konstant rate `λ` over tid eller område."
+filters:
+  distribution_assumption: [poisson, exponential]
+  setup: [events_in_window]
+  structural_cues: [poisson_process_mentioned, rate_given, process_over_time, counting_events, time_until_first]
+  parameters_known: [rate_lambda]
+  random_variable: [discrete_count, time_until_event]
 aliases:
   - poissonprosess
   - poisson-prosess

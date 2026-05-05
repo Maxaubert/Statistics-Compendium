@@ -1,6 +1,9 @@
 id: tosidig-test
 term_no: Tosidig test (to-sidig)
 short_def: "Hypotesen ser begge retninger — `H₁: μ ≠ μ₀`."
+filters:
+  computes: [hypothesis_test]
+  parameters_known: [alpha_significance]
 long_def: |
   En tosidig test forkaster hvis observatoren er langt unna i begge
   retninger. `α` deles likt i to haler (`α/2` i hver).

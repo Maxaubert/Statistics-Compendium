@@ -1,6 +1,10 @@
 id: normalapproksimasjon
 term_no: Normalapproksimasjon
 short_def: "Tilnærming der en diskret fordeling (binomial, poisson) byttes ut med en normalfordeling."
+filters:
+  distribution_assumption: [normal, binomial, poisson]
+  tooling: [standard_normal_table_E3]
+  parameters_known: [sample_size_large]
 long_def: |
   **Binomial:** hvis `n·p·(1−p) ≥ 5`, så
 

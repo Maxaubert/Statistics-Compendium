@@ -37,8 +37,8 @@ filters:
   computes: [hypothesis_test]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [more_than_two_categories, summary_stats_given]
-  parameters_known: [alpha_significance]
+  structural_cues: [more_than_two_categories, summary_stats_given, total_observations_n, counting_events]
+  parameters_known: [alpha_significance, sample_size_large]
   distribution_assumption: [chi_squared]
   tooling: [chi_square_quantile_table_E6]
 

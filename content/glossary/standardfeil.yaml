@@ -1,6 +1,9 @@
 id: standardfeil
 term_no: Standardfeil (SE)
 short_def: "Standardavviket til et estimat — hvor mye estimatet typisk varierer fra utvalg til utvalg."
+filters:
+  computes: [std_dev, confidence_interval, hypothesis_test]
+  random_variable: [mean_of_samples]
 aliases:
   - standardfeil
   - standardfeilen

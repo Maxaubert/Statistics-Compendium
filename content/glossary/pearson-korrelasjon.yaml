@@ -1,6 +1,10 @@
 id: pearson-korrelasjon
 term_no: "Pearson-korrelasjon (r)"
 short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom `−1` og `1`."
+filters:
+  computes: [correlation, covariance]
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
 aliases:
   - pearson-korrelasjon
   - pearson-korrelasjonen

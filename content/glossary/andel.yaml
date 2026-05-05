@@ -1,6 +1,11 @@
 id: andel
 term_no: Andel (p, p̂)
 short_def: "Brøkdelen av en populasjon (`p`) eller et utvalg (`p̂ = X/n`) som har en bestemt egenskap."
+filters:
+  random_variable: [proportion]
+  parameters_known: [success_p]
+  distribution_assumption: [binomial, normal]
+  computes: [confidence_interval, hypothesis_test, parameter_estimate]
 long_def: |
   `p` er populasjonsandelen — det vi prøver å estimere. `p̂` er
   utvalgsandelen — antall «suksesser» delt på antall observasjoner:

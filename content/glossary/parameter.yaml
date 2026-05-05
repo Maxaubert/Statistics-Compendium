@@ -1,6 +1,8 @@
 id: parameter
 term_no: Parameter
 short_def: "En ukjent populasjonsstørrelse (μ, σ², p, λ) som du vil estimere fra data."
+filters:
+  computes: [parameter_estimate]
 long_def: |
   Parametere beskriver populasjonen og er konstante (ikke tilfeldige).
   Vanlige parametere:

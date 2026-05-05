@@ -1,6 +1,11 @@
 id: utvalgsstandardavvik
 term_no: Utvalgsstandardavvik (s, S)
 short_def: "Estimat for `σ` regnet ut fra utvalget: `s = √S²`, der `S² = Σ(xᵢ − x̄)²/(n − 1)`."
+filters:
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+  computes: [std_dev, parameter_estimate]
+  structural_cues: [data_as_list]
 long_def: |
   `s` (av og til skrevet `S`) er kvadratroten av utvalgsvariansen:
 

@@ -52,11 +52,11 @@ properties:
   std_dev: "σ"
 
 filters:
-  computes: [exact_probability, range_probability, find_mu_for_threshold, find_x_for_threshold]
-  random_variable: [continuous]
+  computes: [exact_probability, range_probability, find_mu_for_threshold, find_x_for_threshold, find_n_for_threshold]
+  random_variable: [continuous, mean_of_samples]
   setup: [single_population]
-  structural_cues: [normal_assumed, mean_and_sd_given]
-  parameters_known: [population_variance_known, mean_known]
+  structural_cues: [normal_assumed, mean_and_sd_given, complement_pattern]
+  parameters_known: [population_variance_known, mean_known, sample_size_large]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 

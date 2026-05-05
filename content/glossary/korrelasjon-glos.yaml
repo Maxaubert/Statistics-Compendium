@@ -1,6 +1,10 @@
 id: korrelasjon-glos
 term_no: Korrelasjon (ρ, r)
 short_def: "Tall mellom `−1` og `1` som måler styrken på den lineære sammenhengen mellom to variabler."
+filters:
+  computes: [correlation, covariance]
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
 long_def: |
   Formel:
 

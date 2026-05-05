@@ -1,6 +1,8 @@
 id: alternativhypotese
 term_no: Alternativhypotese (H₁)
 short_def: "Påstanden du vil bevise — det `H₀` må vike for hvis dataene er ekstreme nok."
+filters:
+  computes: [hypothesis_test]
 aliases:
   - alternativhypotese
   - alternativhypotesen

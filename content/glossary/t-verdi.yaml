@@ -1,6 +1,11 @@
 id: t-verdi
 term_no: T-verdi (t-observator)
 short_def: "Standardisert utvalgsgjennomsnitt når `σ` er ukjent: `t = (X̄ − μ₀)/(s/√n)`."
+filters:
+  distribution_assumption: [t_distribution]
+  parameters_known: [population_variance_unknown]
+  tooling: [t_quantile_table_E5]
+  computes: [hypothesis_test]
 aliases:
   - t-verdi
   - t-observator

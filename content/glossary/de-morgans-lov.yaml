@@ -1,6 +1,9 @@
 id: de-morgans-lov
 term_no: De Morgans lov
 short_def: "Komplementet av en union er snittet av komplementene — og omvendt."
+filters:
+  computes: [union_probability, exact_probability]
+  structural_cues: [complement_pattern]
 aliases:
   - de morgans lov
   - de morgans lover

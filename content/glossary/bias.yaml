@@ -1,6 +1,8 @@
 id: bias
 term_no: Bias (forventningsskjevhet)
 short_def: "Differansen `E[θ̂] − θ` — hvor mye estimatoren systematisk bommer i snitt."
+filters:
+  computes: [parameter_estimate]
 long_def: |
   Definisjon:
 

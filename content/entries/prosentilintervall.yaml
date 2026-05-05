@@ -21,7 +21,14 @@ recognition_cues:
   - "Spørsmål om alternativ til 'tradisjonelt' KI"
   - "Bootstrap-fordelingen er skjev"
 
-filters: {}
+filters:
+  computes: [confidence_interval, parameter_estimate]
+  random_variable: [continuous, mean_of_samples]
+  setup: [single_population]
+  structural_cues: [data_as_list, summary_stats_given]
+  parameters_known: [confidence_level, population_variance_unknown]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only]
 
 related:
   - { id: "bootstrapping",     kind: "entry" }

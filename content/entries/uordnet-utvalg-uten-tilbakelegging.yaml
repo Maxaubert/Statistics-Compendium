@@ -37,11 +37,11 @@ symbols:
 
 filters:
   computes: [combinatorial_count, exact_probability]
-  random_variable: []
+  random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool]
   structural_cues: [total_observations_n, complement_pattern]
   parameters_known: []
-  distribution_assumption: [none_assumed]
+  distribution_assumption: [none_assumed, hypergeometric]
   tooling: [calculator_binomial_coef, calculator_factorial]
 
 solution_variants:

@@ -1,6 +1,11 @@
 id: paret-test
 term_no: Paret test (parvis)
 short_def: "Hver observasjon i utvalg 1 hører til en bestemt observasjon i utvalg 2 — test differansen `Dᵢ = Xᵢ − Yᵢ`."
+filters:
+  setup: [paired_samples]
+  computes: [hypothesis_test]
+  distribution_assumption: [t_distribution, normal]
+  parameters_known: [population_variance_unknown]
 aliases:
   - paret test
   - parede tester

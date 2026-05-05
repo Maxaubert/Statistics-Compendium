@@ -1,6 +1,12 @@
 id: poissonvarians
 term_no: Poissonvarians (Var(X) = λ)
 short_def: "Spesielt for Poisson: variansen er **lik** forventningsverdien — `E[X] = Var(X) = λ`."
+filters:
+  distribution_assumption: [poisson]
+  random_variable: [discrete_count]
+  parameters_known: [rate_lambda]
+  setup: [events_in_window]
+  computes: [std_dev, expected_value]
 long_def: |
   For en `Poisson(λ)`-fordelt variabel `X`:
 

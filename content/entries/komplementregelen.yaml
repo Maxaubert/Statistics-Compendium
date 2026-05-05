@@ -32,11 +32,11 @@ symbols:
 
 filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
-  random_variable: []
+  random_variable: [discrete_count, continuous]
   setup: [single_population]
-  structural_cues: [complement_pattern]
+  structural_cues: [complement_pattern, independent_events]
   parameters_known: []
-  distribution_assumption: [none_assumed]
+  distribution_assumption: [none_assumed, binomial, poisson, normal]
   tooling: [calculator_only]
 
 solution_variants:

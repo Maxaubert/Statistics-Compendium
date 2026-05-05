@@ -30,11 +30,11 @@ symbols:
   - { sym: "σ_X, σ_Y", means: "standardavvikene til X og Y" }
 
 filters:
-  computes: [correlation]
+  computes: [correlation, covariance]
   random_variable: [discrete_count]
   setup: [joint_table_given]
   structural_cues: [joint_table_present, summary_stats_given]
-  parameters_known: []
+  parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 

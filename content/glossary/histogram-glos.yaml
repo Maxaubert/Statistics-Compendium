@@ -1,6 +1,8 @@
 id: histogram-glos
 term_no: Histogram
 short_def: "Stolpediagram der hver stolpe viser frekvensen (eller tettheten) i et tallintervall."
+filters:
+  structural_cues: [data_as_list]
 long_def: |
   Histogrammet deler dataene i kasser (bins) og tegner en stolpe med
   høyde lik antall observasjoner i hver kasse.

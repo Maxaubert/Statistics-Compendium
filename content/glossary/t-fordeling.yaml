@@ -1,6 +1,11 @@
 id: t-fordeling
 term_no: T-fordeling (Student's t)
 short_def: "Klokkeformet, men bredere enn standardnormal — formen styres av frihetsgrader `ν`."
+filters:
+  distribution_assumption: [t_distribution]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30]
+  tooling: [t_quantile_table_E5]
+  computes: [hypothesis_test, confidence_interval]
 long_def: |
   T-fordelingen brukes når vi standardiserer et utvalgsgjennomsnitt med
   utvalgsstandardavviket `s` i stedet for det kjente `σ`. Da følger

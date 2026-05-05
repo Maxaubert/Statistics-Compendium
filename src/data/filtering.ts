@@ -1,7 +1,10 @@
-import type { Entry } from "./schema";
-
 export type FilterSelection = Record<string, string[]>;
-type Filterable = Pick<Entry, "filters">;
+/**
+ * Generic shape for anything that can be filtered by the dimension
+ * system. Both `Entry` and `GlossaryTerm` satisfy this so the same
+ * `applyFilters` / `computeFacetCounts` machinery works for both.
+ */
+type Filterable = { filters: Record<string, string[]> };
 
 export function applyFilters<T extends Filterable>(
   items: T[],

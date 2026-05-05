@@ -1,6 +1,10 @@
 id: frihetsgrader-glos
 term_no: Frihetsgrader (df, ν)
 short_def: "Hvor mange uavhengige biter informasjon som er igjen etter at noe er estimert fra dataene."
+filters:
+  distribution_assumption: [t_distribution, chi_squared]
+  tooling: [t_quantile_table_E5, chi_square_quantile_table_E6]
+  parameters_known: [population_variance_unknown]
 aliases:
   - frihetsgrader
   - frihetsgrad

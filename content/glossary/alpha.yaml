@@ -1,6 +1,9 @@
 id: alpha
 term_no: Alfa (α)
 short_def: "Signifikansnivå i hypotesetesting — også konstantleddet i regresjonslinja `Y = α + β·X`."
+filters:
+  parameters_known: [alpha_significance, confidence_level]
+  computes: [hypothesis_test, confidence_interval]
 aliases:
   - alfa
   - α

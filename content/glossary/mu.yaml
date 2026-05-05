@@ -1,6 +1,10 @@
 id: mu
 term_no: My (μ)
 short_def: "Populasjonens forventningsverdi — det «sanne» gjennomsnittet du prøver å estimere."
+filters:
+  parameters_known: [mean_known]
+  random_variable: [mean_of_samples]
+  computes: [expected_value, parameter_estimate, confidence_interval]
 aliases:
   - μ
   - my

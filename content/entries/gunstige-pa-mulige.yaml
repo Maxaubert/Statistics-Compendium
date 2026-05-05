@@ -24,7 +24,13 @@ recognition_cues:
   - "Det første steget er å telle 'gunstige' og 'mulige'"
 
 filters:
-  setup: [without_replacement]
+  computes: [exact_probability, combinatorial_count]
+  random_variable: [discrete_count]
+  setup: [single_population, without_replacement, finite_pool]
+  structural_cues: [total_observations_n, independent_events]
+  parameters_known: []
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only, calculator_binomial_coef]
 
 related:
   - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }

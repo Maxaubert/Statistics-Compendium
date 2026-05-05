@@ -1,6 +1,11 @@
 id: utvalgsvarians
 term_no: Utvalgsvarians (s²)
 short_def: "Estimat for `σ²` regnet ut fra rådata: `s² = Σ(xᵢ − x̄)² / (n − 1)`."
+filters:
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution, chi_squared]
+  computes: [std_dev, parameter_estimate]
+  structural_cues: [data_as_list]
 long_def: |
   Formel:
 

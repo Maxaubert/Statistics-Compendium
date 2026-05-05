@@ -37,9 +37,9 @@ symbols:
 
 filters:
   computes: [parameter_estimate]
-  random_variable: [slope_estimate]
+  random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, total_observations_n]
   parameters_known: [sum_xx_sxy]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]

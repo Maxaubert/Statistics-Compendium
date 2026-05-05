@@ -1,6 +1,11 @@
 id: goodness-of-fit
 term_no: Goodness-of-fit (tilpasningstest)
 short_def: "Test som sjekker om observerte antall i kategorier samsvarer med en forventet fordeling."
+filters:
+  distribution_assumption: [chi_squared]
+  computes: [hypothesis_test]
+  structural_cues: [more_than_two_categories]
+  tooling: [chi_square_quantile_table_E6]
 long_def: |
   Sammenligner observerte antall `Oᵢ` med forventede antall `Eᵢ` under
   en gitt hypotese (likedeling, bestemt teoretisk fordeling, etc.).

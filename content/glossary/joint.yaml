@@ -1,6 +1,10 @@
 id: joint
 term_no: Joint (felles)
 short_def: "Engelsk for «felles» — som i joint distribution = simultanfordeling."
+filters:
+  computes: [joint_probability, marginal_probability]
+  setup: [joint_table_given]
+  structural_cues: [joint_table_present]
 aliases:
   - joint
   - joint distribution

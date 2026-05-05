@@ -31,11 +31,11 @@ symbols:
   - { sym: "μ_X, μ_Y",  means: "forventningsverdiene" }
 
 filters:
-  computes: [covariance]
+  computes: [covariance, expected_value]
   random_variable: [discrete_count]
   setup: [joint_table_given]
   structural_cues: [joint_table_present, summary_stats_given]
-  parameters_known: []
+  parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 

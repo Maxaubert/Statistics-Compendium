@@ -38,13 +38,13 @@ symbols:
   - { sym: "T",     means: "testobservator, t-fordelt under H₀" }
 
 filters:
-  computes: [hypothesis_test]
-  random_variable: [slope_estimate]
+  computes: [hypothesis_test, test_independence]
+  random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given]
-  parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy]
-  distribution_assumption: [t_distribution]
-  tooling: [t_quantile_table_E5]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, total_observations_n]
+  parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy, population_variance_unknown]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
   - "Formuler hypotesene H₀: β = 0 vs H₁: β ≠ 0 (typisk tosidig test)"

@@ -36,11 +36,11 @@ symbols:
   - { sym: "E[X²]",      means: "Σ x_i² · P(X = x_i)" }
 
 filters:
-  computes: [std_dev]
+  computes: [std_dev, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, joint_table_given]
   structural_cues: [joint_table_present, summary_stats_given]
-  parameters_known: []
+  parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 

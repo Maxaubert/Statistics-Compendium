@@ -1,6 +1,10 @@
 id: beta
 term_no: Beta (β)
 short_def: "Stigningstall i regresjon — også sannsynligheten for type-II-feil i hypotesetesting."
+filters:
+  random_variable: [slope_estimate]
+  setup: [linear_relationship]
+  computes: [hypothesis_test, parameter_estimate]
 aliases:
   - beta
   - β

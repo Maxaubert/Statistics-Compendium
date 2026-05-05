@@ -1,6 +1,9 @@
 id: populasjonsstandardavvik
 term_no: Populasjonsstandardavvik (σ)
 short_def: "Den «sanne» spredningen i hele populasjonen — `σ = √Var(X)`, antatt kjent eller estimert."
+filters:
+  parameters_known: [population_variance_known]
+  computes: [std_dev]
 long_def: |
   Definisjon:
 

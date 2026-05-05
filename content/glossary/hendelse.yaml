@@ -1,6 +1,8 @@
 id: hendelse
 term_no: Hendelse (event)
 short_def: "En delmengde av utfallsrommet — noe som enten inntreffer eller ikke."
+filters:
+  computes: [exact_probability]
 long_def: |
   En hendelse `A` er et utvalg av mulige utfall, og `P(A)` er
   sannsynligheten for at minst ett av dem inntreffer. Hendelser kan
