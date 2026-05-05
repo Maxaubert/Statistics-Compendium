@@ -1,6 +1,45 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { PrintedTable } from "./PrintedTable";
+
+describe("PrintedTable — expand toggle", () => {
+  it.each([
+    "normal_cumulative",
+    "poisson",
+    "t_quantile",
+    "chi_squared_quantile",
+    "binomial",
+  ] as const)("renders an expand toggle for %s", (dist) => {
+    const inputs: Record<string, number> = {
+      z: 1.96, μ: 1, k: 0, df: 5, α: 0.05, n: 10, p: 0.5,
+    };
+    render(<PrintedTable distribution={dist} inputs={inputs} />);
+    expect(screen.getByRole("button", { name: /vis hele tabellen/i })).toBeInTheDocument();
+  });
+
+  it("clicking the toggle expands the Z-table to show many more rows", () => {
+    render(<PrintedTable distribution="normal_cumulative" inputs={{ z: 1.96 }} />);
+    const rowsBefore = document.querySelectorAll("tbody tr").length;
+    fireEvent.click(screen.getByRole("button", { name: /vis hele tabellen/i }));
+    const rowsAfter = document.querySelectorAll("tbody tr").length;
+    expect(rowsAfter).toBeGreaterThan(rowsBefore * 5);
+    // Button label flips to collapse
+    expect(screen.getByRole("button", { name: /skjul hele tabellen/i })).toBeInTheDocument();
+  });
+
+  it("clicking again collapses back to the windowed view", () => {
+    render(<PrintedTable distribution="normal_cumulative" inputs={{ z: 1.96 }} />);
+    const initial = document.querySelectorAll("tbody tr").length;
+    fireEvent.click(screen.getByRole("button", { name: /vis hele tabellen/i }));
+    fireEvent.click(screen.getByRole("button", { name: /skjul hele tabellen/i }));
+    expect(document.querySelectorAll("tbody tr").length).toBe(initial);
+  });
+
+  it("z-quantile (short table) has no toggle since it's already complete", () => {
+    render(<PrintedTable distribution="normal_quantile" inputs={{}} />);
+    expect(screen.queryByRole("button", { name: /vis hele tabellen/i })).not.toBeInTheDocument();
+  });
+});
 
 // ===================== Z-tabell (normal cumulative) =====================
 describe("PrintedTable — Z (normal cumulative)", () => {
