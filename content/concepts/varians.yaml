@@ -41,7 +41,6 @@ what_it_means: |
 
   Felles variansestimat for to grupper med antatt lik `σ²`.
 
-  Konsept: [Interpolert (pooled) varians](/concept/interpolert-varians).
   Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
 
   ## [Residualvarians (S_E²)](glossary:residualvarians)
@@ -136,6 +135,6 @@ related:
   - { id: "to-utvalgs-t-test",                     kind: "entry" }
   - { id: "regresjon-residualvarians",             kind: "entry" }
   - { id: "regresjon-standardfeil-stigningstall",  kind: "entry" }
-  - { id: "interpolert-varians",                   kind: "concept" }
+  - { id: "pooled-varians",                        kind: "glossary" }
   - { id: "standardavvik",                         kind: "concept" }
   - { id: "frihetsgrader-glos",                    kind: "glossary" }

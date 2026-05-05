@@ -17,6 +17,11 @@ long_def: |
   **Antakelse:** lik `σ²` i begge grupper. Hvis ikke, bruk Welch t-test.
 
   Standardavviket er `S_P = √S_P²`.
+
+  **Standardfeil i to-utvalgs t-test:**
+
+      SE = S_P · √(1/n_X + 1/n_Y)
+
 aliases:
   - pooled varians
   - pooled-varians
@@ -25,6 +30,5 @@ aliases:
   - s_p²
   - sp²
 see_also:
-  - { id: interpolert-varians, kind: concept }
   - { id: to-utvalgs-t-test, kind: entry }
   - { id: utvalgsvarians, kind: glossary }
