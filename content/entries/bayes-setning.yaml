@@ -34,10 +34,10 @@ symbols:
   - { sym: "P(B | A)",  means: "betinget sannsynlighet for B gitt A" }
 
 filters:
-  computes: [conditional_probability]
-  random_variable: []
+  computes: [conditional_probability, exact_probability, marginal_probability]
+  random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given]
+  structural_cues: [conditional_given, more_than_two_categories]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]

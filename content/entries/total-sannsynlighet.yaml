@@ -29,10 +29,10 @@ symbols:
   - { sym: "P(B)",    means: "den marginale (totale) sannsynligheten for B" }
 
 filters:
-  computes: [exact_probability, marginal_probability]
-  random_variable: []
+  computes: [exact_probability, marginal_probability, conditional_probability, joint_probability]
+  random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories]
+  structural_cues: [conditional_given, more_than_two_categories, disjoint_events]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
