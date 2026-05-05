@@ -27,7 +27,7 @@ nodes:
           - { id: produktregel, kind: entry }
       - label: "P(A | B) – betinget sannsynlighet"
         leads_to:
-          - { id: betinget-sannsynlighet, kind: concept }
+          - { id: betinget-sannsynlighet-glos, kind: glossary }
           - { id: produktregel, kind: entry }
       - label: "P(Ā) – komplement, 'ikke A', eller 'minst én' via 1 − P(ingen)"
         leads_to:

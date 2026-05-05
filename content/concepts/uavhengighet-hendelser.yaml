@@ -28,5 +28,5 @@ filters:
 
 related:
   - { id: "produktregel",            kind: "entry" }
-  - { id: "betinget-sannsynlighet",  kind: "concept" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
   - { id: "disjunkte-hendelser",     kind: "concept" }

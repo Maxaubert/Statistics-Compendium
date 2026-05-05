@@ -25,4 +25,4 @@ filters:
 related:
   - { id: "unionssetningen",           kind: "entry" }
   - { id: "uavhengighet-hendelser",    kind: "concept" }
-  - { id: "betinget-sannsynlighet",    kind: "concept" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
