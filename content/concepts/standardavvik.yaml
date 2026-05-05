@@ -1,73 +1,102 @@
 id: standardavvik
 name_no: "Standardavvik (oversikt over de ulike formene)"
 type: concept
-tagline: "Kvadratrot av variansen — spredning i samme enhet som dataene. Tre store grupper: data, kjent fordeling, og estimat."
+tagline: "Kvadratrot av variansen — spredning i samme enhet som dataene. Hver variansform har sin parallell."
 
 what_it_means: |
-  **Standardavvik er kvadratroten av variansen** og har samme enhet som
-  dataene (mens variansen har enhet kvadrert). Hver variansform har derfor
-  en parallell standardavvik-form. Strukturen følger
+  Standardavvik er kvadratroten av variansen og har samme enhet som
+  dataene (variansen har enhet kvadrert). Strukturen følger
   [Varians (oversikt)](/concept/varians) — under er de viktigste formene
-  for standardavvik.
+  for standardavvik, hver med sin egen seksjon.
 
-  ---
+  ## Utregnet fra dine data
 
-  ## A. Utregnet fra dine data
+  ### Utvalgsgjennomsnitt (x̄)
 
-  Trenger rådata `x_1, …, x_n`:
+      x̄ = Σ xᵢ / n
 
-  - **`x̄ = Σ xᵢ / n`** — utvalgsgjennomsnittet, midtpunktet i dataene og
-    estimat for `μ`. (Klikk gjennomsnittet for definisjon.)
-  - **`s = √( Σ(xᵢ − x̄)² / (n − 1) )`** — utvalgsstandardavviket,
-    spredningen i dataene og estimat for `σ` når populasjonens
-    standardavvik er ukjent. Brukes i
-    [Én-utvalg t-test](/entry/en-utvalg-t-test) og
-    [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma).
-  - **`S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )`** — residualstandardavviket i
-    regresjon, gjennomsnittlig størrelse på residualene. Se
-    [Residualenes varians](/entry/regresjon-residualvarians).
+  Midtpunktet i dataene og estimat for `μ`. Trenger rådata. Klikk
+  gjennomsnittet for definisjon.
 
-  ---
+  ### Utvalgsstandardavvik (s)
 
-  ## B. Avlest fra en kjent fordeling
+      s = √( Σ(xᵢ − x̄)² / (n − 1) )
 
-  Når fordelingen er navngitt, er `σ` en egenskap — du slipper å regne
-  fra rådata.
+  Spredningen i dataene og estimat for `σ` når populasjonens standardavvik
+  er ukjent. `n − 1` er Bessels korreksjon. Trenger rådata. Klikk
+  utvalgsstandardavviket for definisjon.
 
-  - **Normal `N(μ, σ)`:** `σ` (oppgitt direkte). Se
-    [Normalfordeling](/entry/normalfordeling).
-  - **Binomial `B(n, p)`:** `σ = √(np(1 − p))`. Se
-    [Binomialfordeling](/entry/binomial-fordeling); detalj-popup: binomialvarians.
-  - **Poisson `Poisson(λ)`:** `σ = √λ`. Se
-    [Poissonfordeling](/entry/poisson-fordeling); detalj-popup: poissonvarians.
-  - **Eksponential `Eksp(λ)`:** `σ = 1/λ` (lik forventningen). Se
-    [Eksponentialfordeling](/entry/eksponential-fordeling); detalj-popup: eksponentialvarians.
+  Brukes i: [Én-utvalg t-test](/entry/en-utvalg-t-test),
+  [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma).
 
-  Sjekk alltid «Egenskaper»-kortene på fordelings-siden for de eksakte
-  formlene.
+  ### Residualstandardavvik (S_E)
 
-  ---
+      S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )
 
-  ## C. Spredning til et estimat (standardfeil)
+  Gjennomsnittlig størrelse på residualene i regresjon — typisk avvik fra
+  regresjonslinjen.
 
-  Når du regner ut et tall fra et utvalg (et estimat), har det **selv** en
-  spredning — kalt **standardfeilen** (`SE`). Det er IKKE spredningen i
-  rådataene; det er hvor mye estimatet typisk varierer fra utvalg til utvalg.
+  Entry: [Residualenes varians](/entry/regresjon-residualvarians).
 
-  - **`σ_X̄ = σ/√n`** — standardfeilen til utvalgsgjennomsnittet.
-    Bruker `s/√n` hvis `σ` er ukjent. Trenger IKKE rådata — bare `σ` (eller
-    et estimat for den) og `n`. Innebygget i
-    [Én-utvalg z-test](/entry/en-utvalg-z-test) og
-    [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma). Detalj-popups:
-    variansen til utvalgsgjennomsnittet, standardfeilen.
-  - **`SE(β̂) = √(S_E² / S_XX)`** — standardfeilen til regresjonsstigningstallet.
-    Kjernen i hypotesetest og KI for `β`. Se
-    [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
-  - **`SE(p̂) = √(p̂(1 − p̂) / n)`** — standardfeilen til utvalgsandelen.
-    Brukes i [Z-test for andel p](/entry/en-utvalg-z-test-andel) og
-    [KI for andel p (binomial)](/entry/ki-andel-binomial).
+  ## Avlest fra en kjent fordeling
 
-  ---
+  Når fordelingen er navngitt, er `σ` en egenskap. Du slipper å regne fra rådata.
+
+  ### Normal
+
+      σ = σ   (parameteren selv)
+
+  Entry: [Normalfordeling](/entry/normalfordeling).
+
+  ### Binomial
+
+      σ = √(np(1 − p))
+
+  Detaljer: binomialvarians. Entry: [Binomialfordeling](/entry/binomial-fordeling).
+
+  ### Poisson
+
+      σ = √λ
+
+  Detaljer: poissonvarians. Entry: [Poissonfordeling](/entry/poisson-fordeling).
+
+  ### Eksponential
+
+      σ = 1/λ   (lik forventningen)
+
+  Detaljer: eksponentialvarians. Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
+
+  ## Spredning til et estimat (standardfeil)
+
+  Når du regner ut et tall fra et utvalg (et estimat), har det selv en
+  spredning — kalt standardfeilen `SE`. Det er IKKE spredningen i rådataene;
+  det er hvor mye estimatet typisk varierer fra utvalg til utvalg.
+
+  ### Standardfeil til utvalgsgjennomsnittet
+
+      σ_X̄ = σ/√n          (eller s/√n hvis σ er ukjent)
+
+  Trenger IKKE rådata — bare `σ` (eller et estimat) og `n`. Detaljer:
+  variansen til utvalgsgjennomsnittet, standardfeilen.
+
+  Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
+  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
+
+  ### Standardfeil til regresjonsstigningstallet
+
+      SE(β̂) = √(S_E² / S_XX)
+
+  Kjernen i hypotesetest og KI for `β`. Stor `S_XX` (mye spredning i x)
+  → presis estimering.
+
+  Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
+
+  ### Standardfeil til utvalgsandelen
+
+      SE(p̂) = √(p̂(1 − p̂) / n)
+
+  Brukes i [Z-test for andel p](/entry/en-utvalg-z-test-andel) og
+  [KI for andel p](/entry/ki-andel-binomial).
 
   ## Trenger du rådata eller ikke?
 
