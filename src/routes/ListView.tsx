@@ -1,7 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Banner } from "@/components/shell/Banner";
-import { TabBar } from "@/components/shell/TabBar";
 import { SearchBox } from "@/components/list/SearchBox";
 import { FilterSidebar } from "@/components/list/FilterSidebar";
 import { ActiveFilterPills } from "@/components/list/ActiveFilterPills";
@@ -20,16 +19,9 @@ const VALID_TABS = new Set(["formler", "konsepter", "tabeller"]);
 export function ListView() {
   const data = loadAllContent();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const rawTab = searchParams.get("tab") ?? "formler";
   const tab = VALID_TABS.has(rawTab) ? rawTab : "formler";
-
-  const setTab = (key: string) => {
-    setSearchParams(
-      key === "formler" ? {} : { tab: key },
-      { replace: true },
-    );
-  };
 
   const [conceptQuery, setConceptQuery] = useState("");
 
@@ -43,6 +35,11 @@ export function ListView() {
     remove,
     clear,
   } = useFilteredContent(data.entries);
+
+  useEffect(() => {
+    setQuery("");
+    setConceptQuery("");
+  }, [tab, setQuery]);
 
   const conceptFuse = useMemo(
     () => buildConceptSearchIndex(data.concepts),
@@ -99,20 +96,6 @@ export function ListView() {
           <div aria-hidden className="hidden md:block bg-paper border-r border-line" />
         )}
         <main className="bg-card px-7 py-5">
-          <TabBar
-            tabs={[
-              { key: "formler", label: "Formler", count: data.entries.length },
-              { key: "konsepter", label: "Konsepter", count: data.concepts.length },
-              { key: "tabeller", label: "Tabeller", count: data.tables.length },
-            ]}
-            active={tab}
-            onChange={(key) => {
-              setTab(key);
-              setQuery("");
-              setConceptQuery("");
-            }}
-          />
-
           {tab === "formler" && (
             <>
               <SearchBox
