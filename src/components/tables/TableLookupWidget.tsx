@@ -28,10 +28,6 @@ function toggleLabelFor(table: Table, mode: Mode): string {
   return table.inverse?.toggle_label ?? "p → z";
 }
 
-function hintFor(table: Table, mode: Mode): string | undefined {
-  return mode === "forward" ? table.input_hint : table.inverse?.input_hint;
-}
-
 export function TableLookupWidget({ table, vals, setVals }: Props) {
   const supportsInverse = !!table.inverse;
   const [mode, setMode] = useState<Mode>("forward");
@@ -59,19 +55,20 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
   const liveVals = mode === "inverse" ? inverseVals : vals;
   const writeVals = mode === "inverse" ? setInverseVals : setVals;
 
-  // Local string state per input so the user can temporarily clear/edit
-  // without forcing a numeric value back into the field.
+  // Local string state per input. Mirrors liveVals so users see the
+  // current default number (e.g. "0" for z) on mount — both forward
+  // and inverse modes. handleChange controls text after that.
   const [text, setText] = useState<Record<string, string>>(() =>
     Object.fromEntries(Object.entries(liveVals).map(([k, v]) => [k, String(v)])),
   );
+  // Re-sync when liveVals reference changes (mode toggle, table swap).
   useEffect(() => {
     setText((prev) => {
       const next = { ...prev };
       for (const [k, v] of Object.entries(liveVals)) {
         if (Number(prev[k]) !== v) next[k] = String(v);
       }
-      // Clear stale keys from the other mode so the input field doesn't
-      // render a value that doesn't belong to the active mode.
+      // Drop keys that don't belong to the active mode's inputs.
       for (const k of Object.keys(prev)) {
         if (!(k in liveVals)) delete next[k];
       }
@@ -81,7 +78,15 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 
   const handleChange = (name: string, raw: string) => {
     setText((prev) => ({ ...prev, [name]: raw }));
-    if (raw === "" || raw === "-" || raw === "." || raw === "-.") return;
+    // Empty field → reset to the input's default so the printed table
+    // and result widget stop showing the previous value.
+    if (raw === "") {
+      writeVals({ ...liveVals, [name]: defaultValueFor(name) });
+      return;
+    }
+    // Mid-typing intermediate states: don't push a number yet, but
+    // also don't clobber liveVals.
+    if (raw === "-" || raw === "." || raw === "-.") return;
     const num = Number(raw);
     if (!Number.isNaN(num)) {
       writeVals({ ...liveVals, [name]: num });
@@ -174,25 +179,11 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
               step={inp.type === "integer" ? 1 : "any"}
               onChange={(e) => handleChange(inp.name, e.target.value)}
               onFocus={(e) => e.target.select()}
-              className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5"
+              className="rounded-md border border-white/15 bg-white/5 px-3 py-2.5 text-[15px] font-medium text-white focus:border-cyan focus:outline-none focus:bg-cyan/5 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
           </label>
         ))}
       </div>
-
-      {hintFor(table, mode) && (
-        <div
-          className="-mt-3 mb-4 rounded-md border-l-2 px-3 py-2 text-[12px] leading-relaxed"
-          style={{
-            borderColor: "#818cf8",
-            background: "rgba(129, 140, 248, 0.06)",
-            color: "var(--color-calc-text)",
-          }}
-        >
-          <span className="opacity-70">↳ </span>
-          {hintFor(table, mode)}
-        </div>
-      )}
 
       <hr
         className="my-4 border-0"
@@ -206,8 +197,8 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
         Resultat
       </div>
       <div
-        className="text-[26px] font-bold tracking-wide"
-        style={{ color: "var(--color-calc-result)" }}
+        className="break-words font-mono text-[15px] font-semibold"
+        style={{ color: "var(--color-calc-text)" }}
       >
         {MODE_RESULT_PREFIX[mode](table)} ≈{" "}
         {Number.isFinite(result) ? result.toFixed(4) : "—"}
@@ -237,6 +228,14 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 }
 
 function defaultValueFor(name: string): number {
-  if (name === "p") return 0.95;
-  return 0;
+  switch (name) {
+    case "p":  return 0.95;
+    case "α":  return 0.05;
+    case "df": return 5;
+    case "z":  return 0;
+    case "μ":  return 1;
+    case "k":  return 0;
+    case "n":  return 10;
+    default:   return 0;
+  }
 }
