@@ -11,50 +11,37 @@ what_it_means: |
 
   Vekten er sannsynligheten (stokastisk variabel) eller `1/n` (utvalg).
 
-  ## [Forventningsverdi for diskret stokastisk variabel](glossary:forventningsverdi)
-
-      E[X] = Σ xᵢ · P(X = xᵢ)
-
-  Når du har en PMF-tabell. Vekten er sannsynligheten.
-
-  Entry: [Forventningsverdi for diskret stokastisk variabel](/entry/forventningsverdi-diskret).
-
-  ## Forventningsverdi for kontinuerlig stokastisk variabel
-
-      E[X] = ∫ x · f(x) dx
-
-  For kontinuerlige variabler (vekt, tid, lengde) med tetthet `f(x)`.
-  I praksis bruker du ferdige formler — `E[X] = μ` for normal, `E[T] = 1/λ`
-  for eksponential.
-
-  ## [Utvalgsgjennomsnitt (x̄)](glossary:gjennomsnitt)
-
-      x̄ = Σ xᵢ / n
-
-  Estimat for `μ` fra rådata. Forventningsrett: `E[X̄] = μ` når observasjonene
-  er iid.
-
-  ## Lineæritet
-
-      E[aX + b] = a·E[X] + b
-
-  Skalering og forskyvning. Eksempel: `Y = 2X + 5` med `E[X] = 3` gir `E[Y] = 11`.
-
-  ## Sum av variabler
-
-      E[X + Y] = E[X] + E[Y]
-
-  Forventningen til en sum er summen av forventningene — **krever IKKE
-  uavhengighet**. For `n` iid kopier: `E[X₁ + … + Xₙ] = n·μ`.
-
-  ## Produkt under uavhengighet
-
-      E[X · Y] = E[X] · E[Y]        (kun hvis X ⊥ Y)
-
-  Hvis ikke uavhengige: regn `E[X·Y]` direkte fra simultanfordelingen.
-  Sammenheng: `Cov(X, Y) = E[X·Y] − E[X]·E[Y]`.
-
-  Entry: [Kovarians Cov(X,Y)](/entry/kovarians).
+forms:
+  - title: "Forventningsverdi for diskret stokastisk variabel"
+    symbol: "Σ x·P"
+    glossary_id: forventningsverdi
+    formula: "E[X] = Σ xᵢ · P(X = xᵢ)"
+    description: "Når du har en PMF-tabell. Vekten er sannsynligheten."
+    entry_links:
+      - { id: forventningsverdi-diskret, label: "Entry" }
+  - title: "Forventningsverdi for kontinuerlig stokastisk variabel"
+    symbol: "∫ x·f(x)dx"
+    formula: "E[X] = ∫ x · f(x) dx"
+    description: "For kontinuerlige variabler (vekt, tid, lengde) med tetthet f(x). I praksis bruker du ferdige formler — E[X] = μ for normal, E[T] = 1/λ for eksponential."
+  - title: "Utvalgsgjennomsnitt"
+    symbol: "x̄"
+    glossary_id: gjennomsnitt
+    formula: "x̄ = Σ xᵢ / n"
+    description: "Estimat for μ fra rådata. Forventningsrett: E[X̄] = μ når observasjonene er iid."
+  - title: "Lineæritet"
+    symbol: "aX+b"
+    formula: "E[aX + b] = a·E[X] + b"
+    description: "Skalering og forskyvning. Eksempel: Y = 2X + 5 med E[X] = 3 gir E[Y] = 11."
+  - title: "Sum av variabler"
+    symbol: "X+Y"
+    formula: "E[X + Y] = E[X] + E[Y]"
+    description: "Forventningen til en sum er summen av forventningene — krever IKKE uavhengighet. For n iid kopier: E[X₁ + … + Xₙ] = n·μ."
+  - title: "Produkt under uavhengighet"
+    symbol: "X·Y"
+    formula: "E[X · Y] = E[X] · E[Y]        (kun hvis X ⊥ Y)"
+    description: "Hvis ikke uavhengige: regn E[X·Y] direkte fra simultanfordelingen. Sammenheng: Cov(X, Y) = E[X·Y] − E[X]·E[Y]."
+    entry_links:
+      - { id: kovarians, label: "Kovarians Cov(X,Y)" }
 
 recognition_cues:
   - "Oppgaven ber om E[X], μ, eller forventningsverdien"

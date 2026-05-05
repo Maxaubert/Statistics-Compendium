@@ -11,92 +11,84 @@ what_it_means: |
 
       varians = «vektet sum av kvadrerte avvik fra gjennomsnittet»
 
-  ## [Variansen til diskret stokastisk variabel](glossary:diskret-varians)
-
-      Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)
-
-  Når du har en PMF-tabell. Vekt = sannsynligheten.
-
-  Entry: [Varians og standardavvik (diskret stokastisk variabel)](/entry/varians-standardavvik-diskret).
-
-  ## [Utvalgsvarians (s²)](glossary:utvalgsvarians)
-
-      s² = Σ (xᵢ − x̄)² / (n − 1)
-
-  Den vanligste formen i praksis — fra rådata når fordelingen er ukjent.
-
-  Entry: [Utvalgsvarians fra rådata](/entry/utvalgsvarians-radata). Brukes i:
-  [Én-utvalg t-test](/entry/en-utvalg-t-test),
-  [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma),
-  [KI for σ²](/entry/ki-varians).
-
-  ## [Pooled (interpolert) varians (S_P²)](glossary:pooled-varians)
-
-      S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
-
-  Felles variansestimat for to grupper med antatt lik `σ²`.
-
-  Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
-
-  ## [Residualvarians (S_E²)](glossary:residualvarians)
-
-      S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)
-
-  Spredningen i avvikene fra regresjonslinjen.
-
-  Entry: [Residualenes varians](/entry/regresjon-residualvarians).
-  Brukes i: [SE(β̂)](/entry/regresjon-standardfeil-stigningstall),
-  [Hypotesetest for β](/entry/regresjon-test-stigningstall),
-  [Prediksjonsintervall](/entry/regresjon-prediksjonsintervall).
-
-  ## [Binomialvarians](glossary:binomialvarians)
-
-      Var(X) = np(1 − p)
-
-  For `B(n, p)`. Størst når `p = 0.5`.
-
-  Entry: [Binomialfordeling](/entry/binomial-fordeling).
-
-  ## [Poissonvarians](glossary:poissonvarians)
-
-      Var(X) = λ   (eller λt for et vindu)
-
-  Spesielt: `E[X] = Var(X) = λ` for Poisson.
-
-  Entry: [Poissonfordeling](/entry/poisson-fordeling).
-
-  ## [Eksponentialvarians](glossary:eksponentialvarians)
-
-      Var(T) = 1/λ²
-
-  Ventetid med rate `λ`.
-
-  Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
-
-  ## [Hypergeometrisk varians](glossary:hypergeometrisk-varians)
-
-      Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))
-
-  Som binomialvariansen, men med endelig-populasjon-korreksjon.
-
-  Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
-
-  ## [Variansen til utvalgsgjennomsnittet](glossary:variansen-til-utvalgsgjennomsnittet)
-
-      Var(X̄) = σ²/n          SE(X̄) = σ/√n
-
-  Spredningen i selve estimatet `X̄`, ikke i dataene.
-
-  Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
-  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
-
-  ## [Variansen til stigningstallet](glossary:variansen-til-stigningstallet)
-
-      Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))
-
-  Hvor presist vi kjenner regresjonsstigningen.
-
-  Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
+forms:
+  - title: "Variansen til diskret stokastisk variabel"
+    symbol: "Var(X)"
+    glossary_id: diskret-varians
+    formula: "Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)"
+    description: "Når du har en PMF-tabell. Vekt = sannsynligheten."
+    entry_links:
+      - { id: varians-standardavvik-diskret, label: "Entry" }
+  - title: "Utvalgsvarians"
+    symbol: "s²"
+    glossary_id: utvalgsvarians
+    formula: "s² = Σ (xᵢ − x̄)² / (n − 1)"
+    description: "Den vanligste formen i praksis — fra rådata når fordelingen er ukjent."
+    entry_links:
+      - { id: utvalgsvarians-radata, label: "Entry" }
+      - { id: en-utvalg-t-test, label: "Én-utvalg t-test" }
+      - { id: ki-mu-ukjent-sigma, label: "KI for μ (ukjent σ)" }
+      - { id: ki-varians, label: "KI for σ²" }
+  - title: "Pooled (interpolert) varians"
+    symbol: "S_P²"
+    glossary_id: pooled-varians
+    formula: "S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
+    description: "Felles variansestimat for to grupper med antatt lik σ²."
+    entry_links:
+      - { id: to-utvalgs-t-test, label: "To-utvalgs t-test (pooled)" }
+  - title: "Residualvarians"
+    symbol: "S_E²"
+    glossary_id: residualvarians
+    formula: "S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)"
+    description: "Spredningen i avvikene fra regresjonslinjen."
+    entry_links:
+      - { id: regresjon-residualvarians, label: "Entry" }
+      - { id: regresjon-standardfeil-stigningstall, label: "SE(β̂)" }
+      - { id: regresjon-test-stigningstall, label: "Hypotesetest for β" }
+      - { id: regresjon-prediksjonsintervall, label: "Prediksjonsintervall" }
+  - title: "Binomialvarians"
+    symbol: "B(n,p)"
+    glossary_id: binomialvarians
+    formula: "Var(X) = np(1 − p)"
+    description: "For B(n, p). Størst når p = 0.5."
+    entry_links:
+      - { id: binomial-fordeling, label: "Entry" }
+  - title: "Poissonvarians"
+    symbol: "Pois(λ)"
+    glossary_id: poissonvarians
+    formula: "Var(X) = λ   (eller λt for et vindu)"
+    description: "Spesielt: E[X] = Var(X) = λ for Poisson."
+    entry_links:
+      - { id: poisson-fordeling, label: "Entry" }
+  - title: "Eksponentialvarians"
+    symbol: "Eksp(λ)"
+    glossary_id: eksponentialvarians
+    formula: "Var(T) = 1/λ²"
+    description: "Ventetid med rate λ."
+    entry_links:
+      - { id: eksponential-fordeling, label: "Entry" }
+  - title: "Hypergeometrisk varians"
+    symbol: "Hg(N,K,n)"
+    glossary_id: hypergeometrisk-varians
+    formula: "Var(X) = n · (K/N) · ((N−K)/N) · ((N−n)/(N−1))"
+    description: "Som binomialvariansen, men med endelig-populasjon-korreksjon."
+    entry_links:
+      - { id: hypergeometrisk-fordeling, label: "Entry" }
+  - title: "Variansen til utvalgsgjennomsnittet"
+    symbol: "Var(X̄)"
+    glossary_id: variansen-til-utvalgsgjennomsnittet
+    formula: "Var(X̄) = σ²/n          SE(X̄) = σ/√n"
+    description: "Spredningen i selve estimatet X̄, ikke i dataene."
+    entry_links:
+      - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
+      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+  - title: "Variansen til stigningstallet"
+    symbol: "Var(β̂)"
+    glossary_id: variansen-til-stigningstallet
+    formula: "Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))"
+    description: "Hvor presist vi kjenner regresjonsstigningen."
+    entry_links:
+      - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
 
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"

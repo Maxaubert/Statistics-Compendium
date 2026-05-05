@@ -10,99 +10,91 @@ what_it_means: |
 
       σ = √Var(X)
 
-  ## [Standardavvik for diskret stokastisk variabel](glossary:diskret-varians)
-
-      σ = √( Σ (xᵢ − μ)² · P(X = xᵢ) )
-
-  Når du har en PMF-tabell. Vekt = sannsynligheten.
-
-  Entry: [Varians og standardavvik (diskret stokastisk variabel)](/entry/varians-standardavvik-diskret).
-
-  ## [Populasjonsstandardavvik (σ)](glossary:populasjonsstandardavvik)
-
-      σ = √( Σ (xᵢ − μ)² / N )
-
-  Den «sanne» spredningen i hele populasjonen. Antas kjent eller estimeres
-  med utvalgsstandardavviket `s` når den ikke er gitt.
-
-  Brukes i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
-  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
-
-  ## [Utvalgsstandardavvik (s)](glossary:utvalgsstandardavvik)
-
-      s = √( Σ(xᵢ − x̄)² / (n − 1) )
-
-  Estimat for `σ` når populasjonens standardavvik er ukjent. `n − 1` er
-  Bessels korreksjon.
-
-  Brukes i: [Én-utvalg t-test](/entry/en-utvalg-t-test),
-  [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma).
-
-  ## [Pooled standardavvik (S_P)](glossary:pooled-varians)
-
-      S_P = √( ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2) )
-
-  Felles standardavvik-estimat for to grupper med antatt lik `σ`.
-
-  Brukes i: [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test).
-
-  ## [Residualstandardavvik (S_E)](glossary:residualstandardavvik)
-
-      S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )
-
-  Typisk avvik fra regresjonslinjen.
-
-  Entry: [Residualenes varians](/entry/regresjon-residualvarians).
-
-  ## [Standardavvik for binomial](glossary:binomialvarians)
-
-      σ = √(np(1 − p))
-
-  Entry: [Binomialfordeling](/entry/binomial-fordeling).
-
-  ## [Standardavvik for poisson](glossary:poissonvarians)
-
-      σ = √λ
-
-  Entry: [Poissonfordeling](/entry/poisson-fordeling).
-
-  ## [Standardavvik for eksponential](glossary:eksponentialvarians)
-
-      σ = 1/λ   (lik forventningen)
-
-  Entry: [Eksponentialfordeling](/entry/eksponential-fordeling).
-
-  ## [Standardavvik for hypergeometrisk](glossary:hypergeometrisk-varians)
-
-      σ = √( n · (K/N) · ((N−K)/N) · ((N−n)/(N−1)) )
-
-  Som binomial-σ, men med endelig-populasjon-korreksjonen.
-
-  Entry: [Hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling).
-
-  ## [Standardfeil til utvalgsgjennomsnittet](glossary:variansen-til-utvalgsgjennomsnittet)
-
-      σ_X̄ = σ/√n          (eller s/√n hvis σ er ukjent)
-
-  Spredningen i selve estimatet `X̄`, ikke i rådataene.
-
-  Innebygget i: [Én-utvalg z-test](/entry/en-utvalg-z-test),
-  [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma).
-
-  ## [Standardfeil til regresjonsstigningstallet](glossary:standardfeil-til-stigningstallet)
-
-      SE(β̂) = √(S_E² / S_XX)
-
-  Kjernen i hypotesetest og KI for `β`.
-
-  Entry: [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall).
-
-  ## [Standardfeil til utvalgsandelen](glossary:standardfeil-til-andel)
-
-      SE(p̂) = √(p̂(1 − p̂) / n)
-
-  Brukes i [Z-test for andel p](/entry/en-utvalg-z-test-andel) og
-  [KI for andel p](/entry/ki-andel-binomial).
+forms:
+  - title: "Standardavvik for diskret stokastisk variabel"
+    symbol: "σ"
+    glossary_id: diskret-varians
+    formula: "σ = √( Σ (xᵢ − μ)² · P(X = xᵢ) )"
+    description: "Når du har en PMF-tabell. Vekt = sannsynligheten."
+    entry_links:
+      - { id: varians-standardavvik-diskret, label: "Entry" }
+  - title: "Populasjonsstandardavvik"
+    symbol: "σ"
+    glossary_id: populasjonsstandardavvik
+    formula: "σ = √( Σ (xᵢ − μ)² / N )"
+    description: "Den «sanne» spredningen i hele populasjonen. Antas kjent eller estimeres med utvalgsstandardavviket s når den ikke er gitt."
+    entry_links:
+      - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
+      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+  - title: "Utvalgsstandardavvik"
+    symbol: "s"
+    glossary_id: utvalgsstandardavvik
+    formula: "s = √( Σ(xᵢ − x̄)² / (n − 1) )"
+    description: "Estimat for σ når populasjonens standardavvik er ukjent. n − 1 er Bessels korreksjon."
+    entry_links:
+      - { id: en-utvalg-t-test, label: "Én-utvalg t-test" }
+      - { id: ki-mu-ukjent-sigma, label: "KI for μ (ukjent σ)" }
+  - title: "Pooled standardavvik"
+    symbol: "S_P"
+    glossary_id: pooled-varians
+    formula: "S_P = √( ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2) )"
+    description: "Felles standardavvik-estimat for to grupper med antatt lik σ."
+    entry_links:
+      - { id: to-utvalgs-t-test, label: "To-utvalgs t-test (pooled)" }
+  - title: "Residualstandardavvik"
+    symbol: "S_E"
+    glossary_id: residualstandardavvik
+    formula: "S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )"
+    description: "Typisk avvik fra regresjonslinjen."
+    entry_links:
+      - { id: regresjon-residualvarians, label: "Entry" }
+  - title: "Standardavvik for binomial"
+    symbol: "B(n,p)"
+    glossary_id: binomialvarians
+    formula: "σ = √(np(1 − p))"
+    entry_links:
+      - { id: binomial-fordeling, label: "Entry" }
+  - title: "Standardavvik for poisson"
+    symbol: "Pois(λ)"
+    glossary_id: poissonvarians
+    formula: "σ = √λ"
+    entry_links:
+      - { id: poisson-fordeling, label: "Entry" }
+  - title: "Standardavvik for eksponential"
+    symbol: "Eksp(λ)"
+    glossary_id: eksponentialvarians
+    formula: "σ = 1/λ   (lik forventningen)"
+    entry_links:
+      - { id: eksponential-fordeling, label: "Entry" }
+  - title: "Standardavvik for hypergeometrisk"
+    symbol: "Hg(N,K,n)"
+    glossary_id: hypergeometrisk-varians
+    formula: "σ = √( n · (K/N) · ((N−K)/N) · ((N−n)/(N−1)) )"
+    description: "Som binomial-σ, men med endelig-populasjon-korreksjonen."
+    entry_links:
+      - { id: hypergeometrisk-fordeling, label: "Entry" }
+  - title: "Standardfeil til utvalgsgjennomsnittet"
+    symbol: "σ_X̄"
+    glossary_id: variansen-til-utvalgsgjennomsnittet
+    formula: "σ_X̄ = σ/√n          (eller s/√n hvis σ er ukjent)"
+    description: "Spredningen i selve estimatet X̄, ikke i rådataene."
+    entry_links:
+      - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
+      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+  - title: "Standardfeil til regresjonsstigningstallet"
+    symbol: "SE(β̂)"
+    glossary_id: standardfeil-til-stigningstallet
+    formula: "SE(β̂) = √(S_E² / S_XX)"
+    description: "Kjernen i hypotesetest og KI for β."
+    entry_links:
+      - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
+  - title: "Standardfeil til utvalgsandelen"
+    symbol: "SE(p̂)"
+    glossary_id: standardfeil-til-andel
+    formula: "SE(p̂) = √(p̂(1 − p̂) / n)"
+    entry_links:
+      - { id: en-utvalg-z-test-andel, label: "Z-test for andel p" }
+      - { id: ki-andel-binomial, label: "KI for andel p" }
 
 recognition_cues:
   - "Oppgaven nevner spredning, standardavvik, eller standardfeil"
