@@ -15,9 +15,8 @@ what_it_does: |
 
 why_use: |
   Etter du har sett et spredningsplott, kvantifiserer r styrken av den
-  lineære sammenhengen. Skiller seg fra ρ (korrelasjon for fellesfordeling
-  fra populasjon) ved at r er et ESTIMAT basert på utvalg, og brukes i
-  regresjonsanalyse.
+  lineære sammenhengen. Skiller seg fra [ρ for fellesfordeling](/entry/korrelasjon-joint)
+  ved at r er et ESTIMAT basert på utvalg, og brukes i regresjonsanalyse.
 
 recognition_cues:
   - "Du har n par av observasjoner (x_i, y_i)"
@@ -25,7 +24,7 @@ recognition_cues:
   - "Datatabell viser S_XX, S_YY, S_XY eller summer som lar deg regne dem ut"
 
 when_NOT_to_use:
-  - "Du jobber med en simultanfordeling (felles teoretisk fordeling) → bruk ρ"
+  - "Du jobber med en simultanfordeling (felles teoretisk fordeling) → bruk [ρ for fellesfordeling](/entry/korrelasjon-joint)"
   - "Du forventer en ikke-lineær sammenheng → r kan være misvisende"
 
 symbols:
