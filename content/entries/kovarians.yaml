@@ -5,7 +5,7 @@ category: distribution_property
 tagline: "Mål for hvor mye to variabler 'beveger seg sammen'."
 
 formula_main: "Cov(X,Y) = E[XY] − μ_X · μ_Y    der    E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j)"
-formula_latex: "\\begin{aligned} \\text{Cov}(X, Y) &= E[XY] - \\mu_X\\,\\mu_Y \\\\[4pt] E[XY] &= \\sum_i \\sum_j x_i\\,y_j\\,P(X=x_i,\\,Y=y_j) \\end{aligned}"
+formula_latex: "\\begin{gathered} \\text{Cov}(X, Y) = E[XY] - \\mu_X\\,\\mu_Y \\\\[4pt] E[XY] = \\sum_i \\sum_j x_i\\,y_j\\,P(X=x_i,\\,Y=y_j) \\end{gathered}"
 
 what_it_does: |
   Beregner kovariansen mellom to stokastiske variabler X og Y fra en
