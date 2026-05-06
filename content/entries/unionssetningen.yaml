@@ -8,23 +8,27 @@ formula_main: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
 formula_latex: "P(A \\cup B) = P(A) + P(B) - P(A \\cap B)"
 
 what_it_does: |
-  Beregner sannsynligheten for at hendelse A eller B (eller begge) inntreffer.
-  Trekker fra P(A ∩ B) for å unngå dobbelttelling av overlappet. For
-  disjunkte hendelser er P(A ∩ B) = 0, så P(A ∪ B) = P(A) + P(B).
+  Beregner sannsynligheten for at hendelse `A` eller `B` (eller begge) inntreffer.
+  Trekker fra `P(A ∩ B)` for å unngå dobbelttelling av overlappet. For
+  disjunkte hendelser er `P(A ∩ B) = 0`, så `P(A ∪ B) = P(A) + P(B)`.
 
 why_use: |
-  Standardregel når oppgaven spør om "minst én av A eller B" eller "A
-  eller B inntreffer". Også grunnsteinen for den utvidede inkludering-
+  Standardregel når oppgaven spør om "minst én av `A` eller `B`" eller "`A`
+  eller `B` inntreffer". Også grunnsteinen for den utvidede inkludering-
   ekskludering for tre eller flere hendelser.
 
 recognition_cues:
-  - "Spørsmålet ber om P(A ∪ B), 'A eller B', eller 'minst én av to hendelser'"
-  - "Du har P(A), P(B), og P(A ∩ B) (eventuelt 0 hvis disjunkte)"
+  - "Spørsmålet ber om `P(A ∪ B)`, '`A` eller `B`', eller 'minst én av to hendelser'"
+  - "Du har `P(A)`, `P(B)`, og `P(A ∩ B)` (eventuelt `0` hvis disjunkte)"
   - "Venndiagram med to overlappende sirkler"
 
+when_NOT_to_use:
+  - "Du vil regne `P(A ∩ B)` (begge inntreffer) → bruk [produktregelen](/entry/produktregel) i stedet"
+  - "Spørsmålet er om komplementet `P(Ā)` → bruk [komplementregelen](/entry/komplementregelen)"
+
 symbols:
-  - { sym: "P(A)",       means: "sannsynlighet for hendelse A" }
-  - { sym: "P(B)",       means: "sannsynlighet for hendelse B" }
+  - { sym: "P(A)",       means: "sannsynlighet for hendelse `A`" }
+  - { sym: "P(B)",       means: "sannsynlighet for hendelse `B`" }
   - { sym: "P(A ∩ B)",   means: "sannsynlighet for at begge inntreffer" }
   - { sym: "P(A ∪ B)",   means: "sannsynlighet for at minst én inntreffer" }
 
@@ -37,14 +41,14 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 solution_template:
-  - "Identifiser hendelsene A og B"
-  - "Finn P(A), P(B), P(A ∩ B)"
-  - "Hvis disjunkte: P(A ∩ B) = 0"
-  - "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+  - "Identifiser hendelsene `A` og `B`"
+  - "Finn `P(A)`, `P(B)`, `P(A ∩ B)`"
+  - "Hvis disjunkte: `P(A ∩ B) = 0`"
+  - "`P(A ∪ B) = P(A) + P(B) − P(A ∩ B)`"
 
 common_traps: |
-  Glem ikke å trekke fra P(A ∩ B). For tre hendelser: P(A ∪ B ∪ C) =
-  P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C).
+  Glem ikke å trekke fra `P(A ∩ B)`. For tre hendelser: `P(A ∪ B ∪ C) =
+  P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C)`.
 
 detailed_solution_variants:
   - label: "Unionssetningen"

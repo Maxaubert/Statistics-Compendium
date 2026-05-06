@@ -2,31 +2,36 @@ id: total-sannsynlighet
 name_no: "Setningen om total sannsynlighet"
 type: rule
 category: probability_rule
-tagline: "Total sannsynlighet for B summert over alle 'måter' den kan inntreffe."
+tagline: "Total sannsynlighet for `B` summert over alle 'måter' den kan inntreffe."
 
 formula_main: "P(B) = P(A) · P(B|A) + P(A̅) · P(B|A̅)"
 formula_latex: "P(B) = P(A) \\cdot P(B|A) + P(\\overline{A}) \\cdot P(B|\\overline{A})"
 
 what_it_does: |
-  Bryter sannsynligheten for B opp i bidrag fra to disjunkte tilfeller A
-  og A̅ (eller mer generelt fra en partisjon av utfallsrommet). Brukes
-  ofte når B kan inntreffe på flere "måter" og betingede sannsynligheter
+  Bryter sannsynligheten for `B` opp i bidrag fra to disjunkte tilfeller `A`
+  og `Ā` (eller mer generelt fra en partisjon av utfallsrommet). Brukes
+  ofte når `B` kan inntreffe på flere "måter" og betingede sannsynligheter
   er gitt for hver.
 
 why_use: |
-  Standardteknikken når oppgaven gir P(B|A), P(B|A̅), og marginalsannsynlighetene
-  P(A), P(A̅), og spør etter P(B). Også grunnsteinen i Bayes' setning.
+  Standardteknikken når oppgaven gir `P(B|A)`, `P(B|Ā)`, og marginalsannsynlighetene
+  `P(A)`, `P(Ā)`, og spør etter `P(B)`. Også grunnsteinen i Bayes' setning.
 
 recognition_cues:
-  - "Du er gitt betingede sannsynligheter P(B|A) og P(B|A̅)"
-  - "Du vil finne den marginale (totale) sannsynligheten P(B)"
-  - "Spørsmålet handler om 'hva er sjansen for B totalt sett?'"
+  - "Du er gitt betingede sannsynligheter `P(B|A)` og `P(B|Ā)`"
+  - "Du vil finne den marginale (totale) sannsynligheten `P(B)`"
+  - "Spørsmålet handler om 'hva er sjansen for `B` totalt sett?'"
   - "Populasjonen er delt i grupper (kjønn, type, kategori) og du vil utlede en samlet rate"
+
+when_NOT_to_use:
+  - "Du har `P(B)` og en betinget — og spør om motsatt retning `P(A|B)` → bruk [Bayes' setning](/entry/bayes-setning) i stedet"
+  - "Du vil bare regne `P(Aᶜ) = 1 − P(A)` → bruk [komplementregelen](/entry/komplementregelen)"
+  - "Hendelsene `A` og `B` er uavhengige → forenkler til `P(B) = P(B|A) = P(B|Ā)` (ingen partisjonering nødvendig)"
 
 symbols:
   - { sym: "A, A̅",    means: "to disjunkte hendelser som dekker hele utfallsrommet" }
-  - { sym: "P(B|A)",  means: "sannsynlighet for B gitt A" }
-  - { sym: "P(B)",    means: "den marginale (totale) sannsynligheten for B" }
+  - { sym: "P(B|A)",  means: "sannsynlighet for `B` gitt `A`" }
+  - { sym: "P(B)",    means: "den marginale (totale) sannsynligheten for `B`" }
 
 filters:
   computes: [exact_probability, marginal_probability, conditional_probability, joint_probability]
@@ -55,9 +60,9 @@ solution_variants:
       - "Sjekk fornuft: svaret skal ligge i `[0, 1]` og være konsistent med marginalen"
 
 common_traps: |
-  Pass på at A og A̅ er DISJUNKTE og dekker hele utfallsrommet. For mer enn
-  to grupper, summer over alle: P(B) = Σ P(A_i)·P(B|A_i). Sjekk at
-  P(A) + P(A̅) = 1.
+  Pass på at `A` og `Ā` er DISJUNKTE og dekker hele utfallsrommet. For mer enn
+  to grupper, summer over alle: `P(B) = Σ P(A_i)·P(B|A_i)`. Sjekk at
+  `P(A) + P(Ā) = 1`.
 
 detailed_solution_variants:
   - label: "Total sannsynlighet"

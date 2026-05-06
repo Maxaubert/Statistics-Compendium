@@ -2,17 +2,17 @@ id: bayes-setning
 name_no: "Bayes' setning"
 type: rule
 category: probability_rule
-tagline: "Vender om en betinget sannsynlighet: P(A|B) ut fra P(B|A), P(A) og P(B)."
+tagline: "Vender om en betinget sannsynlighet: `P(A|B)` ut fra `P(B|A)`, `P(A)` og `P(B)`."
 
 formula_main: "P(A | B) = P(A) · P(B | A) / P(B)"
 formula_latex: "P(A | B) = \\frac{P(A) \\cdot P(B | A)}{P(B)}"
 
 what_it_does: |
   Snur retningen på en betinget sannsynlighet. Hvis du vet sjansen for
-  symptom B GITT sykdom A, så lar Bayes' setning deg regne ut sjansen
-  for sykdom A GITT symptom B – som er det vi egentlig vil vite.
+  symptom `B` GITT sykdom `A`, så lar Bayes' setning deg regne ut sjansen
+  for sykdom `A` GITT symptom `B` – som er det vi egentlig vil vite.
 
-  Mer generelt: gitt P(B|A), P(A), og P(B), finner du P(A|B). Hvis P(B)
+  Mer generelt: gitt `P(B|A)`, `P(A)`, og `P(B)`, finner du `P(A|B)`. Hvis `P(B)`
   ikke er oppgitt direkte, må du først regne det ut via setningen om
   total sannsynlighet.
 
@@ -23,15 +23,20 @@ why_use: |
   og spam-klassifisering.
 
 recognition_cues:
-  - "Oppgaven gir deg en betinget sannsynlighet i én retning (P(B|A)) og spør etter den motsatte (P(A|B))"
+  - "Oppgaven gir deg en betinget sannsynlighet i én retning (`P(B|A)`) og spør etter den motsatte (`P(A|B)`)"
   - "Ord som 'gitt at det spirer, hva er sannsynligheten for ringblomst?'"
   - "Diagnose- eller test-oppgaver: 'gitt at testen er positiv, hva er sannsynligheten for sykdom?'"
-  - "Du har P(A) og P(B|A), men spør etter P(A|B)"
+  - "Du har `P(A)` og `P(B|A)`, men spør etter `P(A|B)`"
   - "Spørsmålet starter med 'gitt at ...' og du må snu informasjonen om"
 
+when_NOT_to_use:
+  - "Du har `P(A)`, `P(A^c)` og likelihood for hver — men oppgaven spør om `P(B)` (ikke å snu retning) → bruk [total sannsynlighet](/entry/total-sannsynlighet) i stedet"
+  - "Hendelsene er uavhengige (`P(A|B) = P(A)`) → ingen Bayes nødvendig, bruk [produktregel](/entry/produktregel)"
+  - "Du vil bare beregne `P(Aᶜ)` fra `P(A)` → bruk [komplementregelen](/entry/komplementregelen)"
+
 symbols:
-  - { sym: "P(A | B)",  means: "betinget sannsynlighet for A gitt B" }
-  - { sym: "P(B | A)",  means: "betinget sannsynlighet for B gitt A" }
+  - { sym: "P(A | B)",  means: "betinget sannsynlighet for `A` gitt `B`" }
+  - { sym: "P(B | A)",  means: "betinget sannsynlighet for `B` gitt `A`" }
 
 filters:
   computes: [conditional_probability, exact_probability, marginal_probability, joint_probability]
@@ -87,10 +92,10 @@ solution_variants:
       - "Verifiser: alle endenoder skal summere til 1, og hver delsum (gren) skal stemme med priorene"
 
 common_traps: |
-  - **Snud retning**: P(A|B) er IKKE det samme som P(B|A). Dette er den klassiske 'confusion of the inverse'-feilslutningen. Eksempel: P(testen er positiv | sykdom) er ikke det samme som P(sykdom | testen er positiv).
-  - **Mangler P(B)**: Hvis P(B) ikke er gitt direkte, MÅ du regne det ut via total sannsynlighet før du bruker Bayes. Ikke bruk noe annet for P(B).
-  - **Disjunkte vs. uavhengige**: Hvis A og B er uavhengige er P(A|B) = P(A); ingen Bayes nødvendig.
-  - **Sjekk størrelsen**: Hvis P(A) er liten (sjelden sykdom) og P(B) er stor (mange falske positive), kan P(A|B) bli overraskende liten. Det er da Bayes' setning er nyttigst.
+  - **Snud retning**: `P(A|B)` er IKKE det samme som `P(B|A)`. Dette er den klassiske 'confusion of the inverse'-feilslutningen. Eksempel: `P(testen er positiv | sykdom)` er ikke det samme som `P(sykdom | testen er positiv)`.
+  - **Mangler `P(B)`**: Hvis `P(B)` ikke er gitt direkte, MÅ du regne det ut via total sannsynlighet før du bruker Bayes. Ikke bruk noe annet for `P(B)`.
+  - **Disjunkte vs. uavhengige**: Hvis `A` og `B` er uavhengige er `P(A|B) = P(A)`; ingen Bayes nødvendig.
+  - **Sjekk størrelsen**: Hvis `P(A)` er liten (sjelden sykdom) og `P(B)` er stor (mange falske positive), kan `P(A|B)` bli overraskende liten. Det er da Bayes' setning er nyttigst.
 
 detailed_solution_variants:
   - label: "Standard 2-veis"

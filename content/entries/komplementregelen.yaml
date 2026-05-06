@@ -15,20 +15,25 @@ what_it_does: |
 
 why_use: |
   Mange oppgaver er enklere å løse via komplementet enn direkte. Klassisk
-  eksempel: "minst én suksess i n forsøk". Direkte ville krevet sum over
-  alle k = 1, 2, ..., n. Via komplement: bare 1 - P(0 suksesser), én enkel
+  eksempel: "minst én suksess i `n` forsøk". Direkte ville krevet sum over
+  alle `k = 1, 2, ..., n`. Via komplement: bare `1 − P(0 suksesser)`, én enkel
   utregning.
 
 recognition_cues:
-  - "Spørsmålet inneholder ord som 'minst én', 'minst k', 'ingen', 'høyst k', 'ikke alle'"
+  - "Spørsmålet inneholder ord som 'minst én', 'minst `k`', 'ingen', 'høyst `k`', 'ikke alle'"
   - "Direkte beregning av det som spørres etter ville kreve sum over mange utfall"
   - "Negasjonen (det motsatte) er enklere å beskrive enn det spørsmålet ber om"
-  - "Du har en kumulativ tabell (E.1, E.2, E.3) som gir P(X ≤ k), men spørsmålet er om P(X ≥ k)"
-  - "Spørsmål som starter med 'finn n slik at sannsynligheten for ... overstiger ...' (terskelproblem)"
+  - "Du har en kumulativ tabell (E.1, E.2, E.3) som gir `P(X ≤ k)`, men spørsmålet er om `P(X ≥ k)`"
+  - "Spørsmål som starter med 'finn `n` slik at sannsynligheten for ... overstiger ...' (terskelproblem)"
+
+when_NOT_to_use:
+  - "Hendelsen er en union eller skjæring av flere ulike kategorier → bruk [unionssetningen](/entry/unionssetningen) eller [produktregelen](/entry/produktregel) i stedet"
+  - "Du har betingede sannsynligheter og partisjoner → bruk [total sannsynlighet](/entry/total-sannsynlighet)"
+  - "Du må snu retning på en betinget sannsynlighet → bruk [Bayes' setning](/entry/bayes-setning)"
 
 symbols:
   - { sym: "A",     means: "en hendelse" }
-  - { sym: "A̅",     means: "komplementet av A (A̅ inntreffer hvis A ikke gjør det)" }
+  - { sym: "A̅",     means: "komplementet av `A` (`Ā` inntreffer hvis `A` ikke gjør det)" }
 
 filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
@@ -75,9 +80,9 @@ solution_variants:
       - { text: "Hvis hendelsene IKKE er uavhengige, bruk addisjon med betinget-sannsynlighet i stedet for `(1 − p)^n`", conditional: true }
 
 common_traps: |
-  - **"Minst k" indeks-feil**: P(X ≥ k) = 1 − P(X ≤ k − 1), IKKE 1 − P(X ≤ k). For k = 3: P(X ≥ 3) = 1 − P(X ≤ 2).
-  - **"Ikke alle" ≠ "ingen"**: Hvis A er "alle 5 kort er hjerter", så er A̅ "minst ett kort er IKKE hjerter" (ikke "ingen er hjerter"). De to siste er forskjellige hendelser.
-  - **Komplement av disjunkt union**: P(A̅ ∩ B̅) = 1 − P(A ∪ B), via De Morgans lov. Brukes for "verken A eller B".
+  - **"Minst `k`" indeks-feil**: `P(X ≥ k) = 1 − P(X ≤ k − 1)`, IKKE `1 − P(X ≤ k)`. For `k = 3`: `P(X ≥ 3) = 1 − P(X ≤ 2)`.
+  - **"Ikke alle" ≠ "ingen"**: Hvis `A` er "alle 5 kort er hjerter", så er `Ā` "minst ett kort er IKKE hjerter" (ikke "ingen er hjerter"). De to siste er forskjellige hendelser.
+  - **Komplement av disjunkt union**: `P(Ā ∩ B̄) = 1 − P(A ∪ B)`, via De Morgans lov. Brukes for "verken `A` eller `B`".
   - **Komplement i tellinger**: For "minst én suksess", komplementet er "null suksesser" (ofte enkelt å regne).
 
 detailed_solution_variants:
