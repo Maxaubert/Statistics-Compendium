@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { renderInlineCode } from "./inline-code";
 
 interface Props {
   cues: string[];
@@ -28,7 +29,7 @@ export function RecognitionCues({ cues, variant = "positive" }: Props) {
                 : "bg-primary-2 shadow-[inset_0_0_0_2px_white]"
             )}
           />
-          {cue}
+          {renderInlineCode(cue, "light")}
         </li>
       ))}
     </ul>
