@@ -89,6 +89,14 @@ forms:
     description: "Hvor presist vi kjenner regresjonsstigningen."
     entry_links:
       - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
+  - title: "Kovarians"
+    symbol: "Cov(X,Y)"
+    glossary_id: kovarians-glos
+    formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
+    description: "Mål for samvariasjon mellom to variabler. Cov(X, X) = Var(X) — varians er kovarians med seg selv. Brukes som mellomsteg for korrelasjon ρ og for Var(X+Y)."
+    entry_links:
+      - { id: kovarians, label: "Entry" }
+      - { id: korrelasjon-joint, label: "ρ(X,Y)" }
 
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"
