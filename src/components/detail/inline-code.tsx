@@ -1,38 +1,71 @@
 import { Fragment, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 export type InlineCodeTheme = "light" | "dark" | "warn";
 
 /**
- * Render a string with `backtick`-delimited spans wrapped in <code> so
- * inline math/symbols (`Z = (X − μ)/σ`, `P(X < x)`) read as code on the
- * page rather than literal backtick characters. Plain unicode is
- * preserved as-is — KaTeX is not invoked here, the symbols are
- * already Unicode in the YAML.
+ * Render a string with three flavors of inline markdown:
+ *   - `backtick`-delimited spans → <code> pill
+ *   - [label](href) → router <Link> (only for `/entry/...`, `/table/...`
+ *     internal paths; external/protocol-prefixed hrefs render as plain text)
  *
- * Two themes:
- *  - `light` (default) — light-grey pill on white card, used by StepByStep
- *    where the surrounding text is serif on paper.
+ * Plain unicode is preserved as-is — KaTeX is not invoked here, the symbols
+ * are already Unicode in the YAML.
+ *
+ * Themes:
+ *  - `light` (default) — light-grey pill on white card.
  *  - `dark` — subtle white-tint, no border, used inside the dark calc-style
- *    DetailedSolution card where the surroundings are already monospace
- *    indigo-on-navy. The pill there is just a soft tint to mark the
- *    backticked region without competing with the text.
+ *    DetailedSolution card.
+ *  - `warn` — amber-tinted pill for warn-soft backgrounds.
  */
 export function renderInlineCode(
   text: string,
   theme: InlineCodeTheme = "light",
 ): ReactNode {
-  const parts = text.split(/(`[^`]+`)/g);
-  return parts.map((part, i) => {
+  // Split on backticks first; for the non-code parts, pull out [label](href)
+  // links before emitting plain text.
+  const codeParts = text.split(/(`[^`]+`)/g);
+  const out: ReactNode[] = [];
+  let key = 0;
+  for (const part of codeParts) {
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
-      return (
-        <code key={i} className={CODE_CLASS[theme]}>
+      out.push(
+        <code key={key++} className={CODE_CLASS[theme]}>
           {part.slice(1, -1)}
-        </code>
+        </code>,
       );
+      continue;
     }
-    return <Fragment key={i}>{part}</Fragment>;
-  });
+    if (part.length === 0) continue;
+    // Walk for [label](href) tokens.
+    let cursor = 0;
+    LINK_RE.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = LINK_RE.exec(part)) !== null) {
+      if (match.index > cursor) {
+        out.push(
+          <Fragment key={key++}>{part.slice(cursor, match.index)}</Fragment>,
+        );
+      }
+      out.push(
+        <Link
+          key={key++}
+          to={match[2]}
+          className={LINK_CLASS[theme]}
+        >
+          {match[1]}
+        </Link>,
+      );
+      cursor = match.index + match[0].length;
+    }
+    if (cursor < part.length) {
+      out.push(<Fragment key={key++}>{part.slice(cursor)}</Fragment>);
+    }
+  }
+  return out;
 }
+
+const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
 
 const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // Light: distinct pill against a serif/paper background.
@@ -47,4 +80,13 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // pop visibly while staying in the same hue family.
   warn:
     "rounded border border-amber-500/30 bg-amber-700/10 px-1.5 py-[1px] font-mono text-[13px] text-amber-900",
+};
+
+const LINK_CLASS: Record<InlineCodeTheme, string> = {
+  light:
+    "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+  dark:
+    "text-inherit underline decoration-white/50 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
+  warn:
+    "text-amber-900 underline decoration-amber-700/60 underline-offset-[3px] transition-colors hover:decoration-amber-900",
 };

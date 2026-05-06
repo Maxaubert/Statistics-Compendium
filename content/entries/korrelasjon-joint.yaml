@@ -21,7 +21,7 @@ recognition_cues:
   - "Du har allerede beregnet Cov(X,Y), σ_X, σ_Y"
 
 when_NOT_to_use:
-  - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk Pearsons korrelasjon `r` fra utvalget i stedet"
+  - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk [Pearsons korrelasjon r](/entry/regresjon-korrelasjonskoeffisient) fra utvalget i stedet"
   - "Sammenhengen er åpenbart ikke-lineær (f.eks. kvadratisk eller eksponentiell) → korrelasjon kan være lav selv om det finnes en sterk sammenheng — vurder å plotte først"
 
 symbols:
