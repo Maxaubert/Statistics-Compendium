@@ -50,51 +50,40 @@ common_traps: |
 detailed_solution_variants:
   - label: "Korrelasjon ρ fra simultantabell"
     solutions:
-      - source: "Eksamen jan26 · oppgave 2c (oppgradert)"
-        question: "Gitt simultantabell for (X, Y) med X ∈ {0, 1, 2} og Y ∈ {0, 5, 10}. Sannsynligheter: P(0,0)=0.10, P(0,5)=0.15, P(0,10)=0.05, P(1,0)=0.10, P(1,5)=0.20, P(1,10)=0.10, P(2,0)=0.05, P(2,5)=0.15, P(2,10)=0.10. Finn ρ(X, Y)."
+      - source: "Eksamen mai25 · oppgave 1d"
+        question: "Finn korrelasjonen `ρ(X, Y)`."
         sections:
-          - label: "Identifisering"
+          - label: "Steg"
             lines:
-              - { text: "Vi har en simultanfordeling og skal beregne korrelasjonskoeffisienten `ρ(X, Y)`." }
-              - { text: "Marginalfordeling for X:" }
-              - { text: "`P(X=0) = 0.10 + 0.15 + 0.05 = 0.30`", indent: 1 }
-              - { text: "`P(X=1) = 0.10 + 0.20 + 0.10 = 0.40`", indent: 1 }
-              - { text: "`P(X=2) = 0.05 + 0.15 + 0.10 = 0.30`", indent: 1 }
-              - { text: "Marginalfordeling for Y:" }
-              - { text: "`P(Y=0) = 0.10 + 0.10 + 0.05 = 0.25`", indent: 1 }
-              - { text: "`P(Y=5) = 0.15 + 0.20 + 0.15 = 0.50`", indent: 1 }
-              - { text: "`P(Y=10) = 0.05 + 0.10 + 0.10 = 0.25`", indent: 1 }
-          - label: "Marginalforventninger"
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · E[X], E[Y]", done: true }
+                    - { label: "3 · Var, σ", done: true }
+                    - { label: "4 · Cov", done: true }
+                    - { label: "5 · ρ" }
+          - label: "Simultantabellen"
             lines:
-              - { text: "`μ_X = 0·0.30 + 1·0.40 + 2·0.30 = 0.40 + 0.60 = 1.00`" }
-              - { text: "`μ_Y = 0·0.25 + 5·0.50 + 10·0.25 = 0 + 2.5 + 2.5 = 5.00`" }
-          - label: "Marginale varianser"
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2", "P(X)"]
+                  rows:
+                    - ["X = 0", "0.10", "0.20", "0.10", "0.40"]
+                    - ["X = 1", "0.40", "0.10", "0.10", "0.60"]
+                    - ["P(Y)", "0.50", "0.30", "0.20", "1.00"]
+                  margin_col: true
+                  margin_row: true
+          - label: "Forutsetninger fra de fire forrige stegene"
             lines:
-              - { text: "`E[X²] = 0²·0.30 + 1²·0.40 + 2²·0.30 = 0 + 0.40 + 1.20 = 1.60`" }
-              - { text: "`σ_X² = E[X²] − μ_X² = 1.60 − 1.00 = 0.60`" }
-              - { text: "`σ_X = √0.60 ≈ 0.7746`" }
-              - { text: "`E[Y²] = 0²·0.25 + 5²·0.50 + 10²·0.25 = 0 + 12.5 + 25 = 37.5`" }
-              - { text: "`σ_Y² = E[Y²] − μ_Y² = 37.5 − 25 = 12.5`" }
-              - { text: "`σ_Y = √12.5 ≈ 3.5355`" }
-          - label: "Kovarians"
-            lines:
-              - { text: "Beregner `E[XY]` ved å summere `x · y · P(X=x, Y=y)` over alle celler:" }
-              - { text: "Kun celler med `x > 0` og `y > 0` bidrar:", indent: 1 }
-              - { text: "`1·5·0.20 = 1.00`", indent: 2 }
-              - { text: "`1·10·0.10 = 1.00`", indent: 2 }
-              - { text: "`2·5·0.15 = 1.50`", indent: 2 }
-              - { text: "`2·10·0.10 = 2.00`", indent: 2 }
-              - { text: "`E[XY] = 1.00 + 1.00 + 1.50 + 2.00 = 5.50`" }
-              - { text: "`Cov(X, Y) = E[XY] − μ_X · μ_Y = 5.50 − 1.00 · 5.00 = 0.50`" }
+              - { text: "`μ_X = 0.60` · `μ_Y = 0.70`" }
+              - { text: "`σ_X ≈ 0.4899` · `σ_Y ≈ 0.7810`" }
+              - { text: "`Cov(X, Y) = −0.12`" }
           - label: "Korrelasjon"
             lines:
               - { text: "`ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)`" }
-              - { text: "`ρ = 0.50 / (0.7746 · 3.5355) = 0.50 / 2.7386 ≈ 0.1826`" }
-          - label: "Tolkning"
-            lines:
-              - { text: "`ρ ≈ 0.18` indikerer en svak positiv lineær sammenheng mellom X og Y." }
-              - { text: "Når X øker, har Y en svak tendens til å øke. Verdien er langt fra ±1, så avhengigheten er beskjeden." }
-        result: "`ρ(X, Y) ≈ 0.183` (svak positiv korrelasjon)"
+              - indent: "`      = −0.12 / (0.4899 · 0.7810)`"
+              - indent: "`      = −0.12 / 0.3826 ≈ −0.314`"
+              - tip: "`|ρ| < 0.5` → svak til moderat lineær sammenheng. Negativt fortegn ⇒ omvendt assosiasjon: når `X` øker, har `Y` tendens til å minke."
+        result: "`ρ(X, Y) ≈ −0.314`"
 
       - source: "Praksis · simultantabell med positiv kovarians"
         question: "La X ∈ {1, 2} og Y ∈ {1, 2} ha simultanfordeling: P(1,1)=0.4, P(1,2)=0.1, P(2,1)=0.1, P(2,2)=0.4. Finn ρ(X, Y)."
