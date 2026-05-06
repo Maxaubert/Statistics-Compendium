@@ -60,14 +60,12 @@ detailed_solution_variants:
               - text: "Vi skal beregne `Cov(X, Y) = E[XY] − μ_X · μ_Y`."
           - label: "Simultantabellen"
             lines:
-              - text: "Tabellen gir den felles sannsynligheten `P(X = x_i, Y = y_j)` for hver celle:"
-              - indent: "                Y=0    Y=1    Y=2   │  P(X)"
-              - indent: "        ───────────────────────────────┼───────"
-              - indent: "        X=0    0.10   0.20   0.10   │  0.40"
-              - indent: "        X=1    0.40   0.10   0.10   │  0.60"
-              - indent: "        ───────────────────────────────┼───────"
-              - indent: "        P(Y)   0.50   0.30   0.20   │  1.00"
-              - comment: "Marginalradene/-kolonnene (sum av rader/kolonner) summerer til 1."
+              - { text: "Tabellen gir den felles sannsynligheten `P(X = x_i, Y = y_j)` for hver celle:" }
+              - { text: "`           Y=0    Y=1    Y=2   |  P(X)`" }
+              - { text: "`X=0       0.10   0.20   0.10   |  0.40`" }
+              - { text: "`X=1       0.40   0.10   0.10   |  0.60`" }
+              - { text: "`P(Y)      0.50   0.30   0.20   |  1.00`" }
+              - { comment: "Marginalradene/-kolonnene (sum av rader/kolonner) summerer til 1." }
           - label: "Forventningsverdier (kontroll fra marginalene)"
             lines:
               - text: "`μ_X = 0 · P(X=0) + 1 · P(X=1) = 0 · 0.40 + 1 · 0.60 = 0.60` ✓"
@@ -75,16 +73,15 @@ detailed_solution_variants:
           - label: "E[XY] — pass på: bruk JOINT-sannsynlighet, ikke marginal × marginal"
             lines:
               - text: "Vanlig fallgruve: man tror `E[XY] = Σ x_i · y_j · P(X=x_i) · P(Y=y_j)`. Det er BARE riktig hvis `X` og `Y` er uavhengige. For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`."
-              - text: "Summen over ALLE seks cellene (med `x_i · y_j · p_{ij}`):"
-              - indent: "(0, 0):  0 · 0 · 0.10 = 0"
-              - indent: "(0, 1):  0 · 1 · 0.20 = 0"
-              - indent: "(0, 2):  0 · 2 · 0.10 = 0"
-              - indent: "(1, 0):  1 · 0 · 0.40 = 0"
-              - indent: "(1, 1):  1 · 1 · 0.10 = 0.10"
-              - indent: "(1, 2):  1 · 2 · 0.10 = 0.20"
-              - indent: "                          ─────"
-              - indent: "                  E[XY] = 0.30"
-              - comment: "Cellene med `x_i = 0` ELLER `y_j = 0` gir produktet 0 og bidrar ikke. Det er bare de to siste cellene som teller — derfor `0.10 + 0.20`."
+              - { text: "Summen over ALLE seks cellene (med `x_i · y_j · p_{ij}`):" }
+              - { text: "`(0, 0):  0 · 0 · 0.10 = 0`" }
+              - { text: "`(0, 1):  0 · 1 · 0.20 = 0`" }
+              - { text: "`(0, 2):  0 · 2 · 0.10 = 0`" }
+              - { text: "`(1, 0):  1 · 0 · 0.40 = 0`" }
+              - { text: "`(1, 1):  1 · 1 · 0.10 = 0.10`" }
+              - { text: "`(1, 2):  1 · 2 · 0.10 = 0.20`" }
+              - { text: "`                  E[XY] = 0.30`" }
+              - { comment: "Cellene med `x_i = 0` ELLER `y_j = 0` gir produktet 0 og bidrar ikke. Det er bare de to siste cellene som teller — derfor `0.10 + 0.20`." }
           - label: "Kovarians"
             lines:
               - text: "Sett inn i kovariansformelen:"
