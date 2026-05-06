@@ -16,25 +16,25 @@ why_use: |
   Når problemet handler om TID TIL noe skjer (i kontrast til antall ting
   som skjer), og vi vet eller antar at hendelsene følger en poissonprosess.
   Tett knyttet sammen med Poissonfordeling: hvis antall hendelser er
-  Poisson(λt), så er ventetiden eksponentialfordelt med parameter λ.
+  `Poisson(λt)`, så er ventetiden eksponentialfordelt med parameter `λ`.
 
 recognition_cues:
   - "Spørsmålet handler om tid TIL første hendelse, eller mellom to hendelser"
-  - "T er en kontinuerlig stokastisk variabel (positivt reelt tall)"
+  - "`T` er en kontinuerlig stokastisk variabel (positivt reelt tall)"
   - "Det er allerede etablert i oppgaven at hendelsene er en poissonprosess"
-  - "Spørsmålet er på formen P(T > t), P(T < t) eller P(a < T < b)"
-  - "Rate λ er gitt"
+  - "Spørsmålet er på formen `P(T > t)`, `P(T < t)` eller `P(a < T < b)`"
+  - "Rate `λ` er gitt"
 
 when_NOT_to_use:
-  - "Spørsmålet teller hendelser i et fast vindu → bruk Poissonfordeling"
+  - "Spørsmålet teller hendelser i et fast vindu → bruk [Poissonfordeling](/entry/poisson-fordeling) i stedet"
   - "Tiden er ikke knyttet til en poissonprosess → annen kontinuerlig fordeling"
 
 symbols:
-  - { sym: "λ",  means: "rate (samme λ som i den underliggende poissonprosessen)" }
-  - { sym: "t",  means: "ventetiden (alltid > 0)" }
+  - { sym: "λ",  means: "rate (samme `λ` som i den underliggende poissonprosessen)" }
+  - { sym: "t",  means: "ventetiden (alltid `> 0`)" }
   - { sym: "f(t)", means: "sannsynlighetstettheten – areal under = sannsynlighet" }
-  - { sym: "F(t)", means: "kumulativ fordelingsfunksjon, P(T ≤ t)" }
-  - { sym: "e",  means: "Eulers tall ≈ 2.71828" }
+  - { sym: "F(t)", means: "kumulativ fordelingsfunksjon, `P(T ≤ t)`" }
+  - { sym: "e",  means: "Eulers tall `≈ 2.71828`" }
 
 properties:
   expected_value: "E[T] = 1/λ"
@@ -89,10 +89,10 @@ solution_variants:
       - "Tolk: ventetidsfordelingen 'starter på nytt' hvert øyeblikk uten hendelse — typisk for poissonprosesser"
 
 common_traps: |
-  Eksponentialfordeling og Poissonfordeling deler samme λ men måler ulike
+  Eksponentialfordeling og Poissonfordeling deler samme `λ` men måler ulike
   ting: Poisson teller hendelser, eksponential måler ventetid. Dobbelsjekk
-  at oppgaven faktisk spør om TID, ikke ANTALL. P(T > t) (overlevelse) er
-  e^(-λt), ikke 1 - e^(-λt). Husk samme tidsenhet som raten.
+  at oppgaven faktisk spør om TID, ikke ANTALL. `P(T > t)` (overlevelse) er
+  `e^(-λt)`, ikke `1 - e^(-λt)`. Husk samme tidsenhet som raten.
 
 python_snippet: |
   from scipy.stats import expon

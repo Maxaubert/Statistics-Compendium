@@ -101,7 +101,7 @@ forms:
 recognition_cues:
   - "Oppgaven nevner spredning, varians, eller standardavvik"
   - "Du må velge mellom flere variansformer (rådata vs. fordeling vs. residual)"
-  - "Du trenger et estimat for σ² for å gå videre i en t-test eller KI"
+  - "Du trenger et estimat for `σ²` for å gå videre i en t-test eller KI"
 
 filters:
   computes: [std_dev]

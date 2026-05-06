@@ -8,33 +8,33 @@ formula_main: "P(X = k) = C(K, k) · C(N-K, n-k) / C(N, n)"
 formula_latex: "P(X = k) = \\frac{\\binom{K}{k} \\binom{N-K}{n-k}}{\\binom{N}{n}}"
 
 what_it_does: |
-  Modellerer antall "vellykkede" trekninger når man trekker n elementer
-  uten tilbakelegging fra en endelig populasjon med N elementer, hvorav
-  K er "vellykkede".
+  Modellerer antall "vellykkede" trekninger når man trekker `n` elementer
+  uten tilbakelegging fra en endelig populasjon med `N` elementer, hvorav
+  `K` er "vellykkede".
 
 why_use: |
   Korrekt fordeling for trekning fra endelig pott uten tilbakelegging,
   for eksempel kortspill, utplukk av varer fra en kasse, kvalitetskontroll.
-  Skiller seg fra binomial nettopp ved at p endrer seg etter hver trekning.
+  Skiller seg fra binomial nettopp ved at `p` endrer seg etter hver trekning.
 
 recognition_cues:
   - "Trekker fra endelig populasjon UTEN tilbakelegging"
-  - "Det er gitt et antall N totalt og K 'vellykkede' i populasjonen"
-  - "Du trekker n stykker"
-  - "Spørsmålet handler om antall vellykkede k blant de n trukne"
+  - "Det er gitt et antall `N` totalt og `K` 'vellykkede' i populasjonen"
+  - "Du trekker `n` stykker"
+  - "Spørsmålet handler om antall vellykkede `k` blant de `n` trukne"
   - "I praksis: trekninger ut av en hatt, kort fra kortstokk, utplukk av varer"
 
 when_NOT_to_use:
-  - "Trekker MED tilbakelegging eller fra uendelig populasjon → bruk binomial"
+  - "Trekker MED tilbakelegging eller fra uendelig populasjon → bruk [binomial](/entry/binomial-fordeling) i stedet"
   - "Antall trekninger er ikke fastlagt → vurder geometrisk eller annet"
-  - "n/N er liten (< 5%) – da er binomial en god tilnærming"
+  - "`n/N` er liten (`< 5%`) – da er [binomial](/entry/binomial-fordeling) en god tilnærming"
 
 symbols:
   - { sym: "N",  means: "total antall i populasjonen" }
   - { sym: "K",  means: "antall 'vellykkede' i populasjonen" }
   - { sym: "n",  means: "antall trekninger" }
-  - { sym: "k",  means: "antall vellykkede blant de n trukne (det vi spør om)" }
-  - { sym: "C(a,b)", means: "binomialkoeffisient a over b" }
+  - { sym: "k",  means: "antall vellykkede blant de `n` trukne (det vi spør om)" }
+  - { sym: "C(a,b)", means: "binomialkoeffisient `a` over `b`" }
 
 properties:
   expected_value: "E[X] = n · K/N"
@@ -50,16 +50,16 @@ filters:
   distribution_assumption: [hypergeometric]
   tooling: [calculator_binomial_coef]
 solution_template:
-  - "Identifiser N (totalt), K (vellykkede), n (trekninger), k (spørsmål)"
-  - "Skriv X ~ Hyp(N, K, n)"
-  - "Sett inn i formelen: g/m = C(K,k)·C(N-K,n-k) / C(N,n)"
+  - "Identifiser `N` (totalt), `K` (vellykkede), `n` (trekninger), `k` (spørsmål)"
+  - "Skriv `X ~ Hyp(N, K, n)`"
+  - "Sett inn i formelen: `g/m = C(K,k)·C(N-K,n-k) / C(N,n)`"
   - "Forenkle binomialkoeffisienten der mulig før du multipliserer"
 
 common_traps: |
-  Pass på rollene: K er vellykkede i populasjonen, n er antall trekninger,
-  k er antall vellykkede blant de trukne. Lett å forveksle K og n.
-  Ikke bland sammen med binomial: binomial har konstant p; hypergeometrisk
-  har p som endrer seg etter hver trekning.
+  Pass på rollene: `K` er vellykkede i populasjonen, `n` er antall trekninger,
+  `k` er antall vellykkede blant de trukne. Lett å forveksle `K` og `n`.
+  Ikke bland sammen med binomial: binomial har konstant `p`; hypergeometrisk
+  har `p` som endrer seg etter hver trekning.
 
 python_snippet: |
   from scipy.stats import hypergeom

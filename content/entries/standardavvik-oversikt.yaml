@@ -97,7 +97,7 @@ forms:
       - { id: ki-andel-binomial, label: "KI for andel p" }
 recognition_cues:
   - "Oppgaven nevner spredning, standardavvik, eller standardfeil"
-  - "Du må velge mellom σ (kjent), s (estimat fra rådata), og σ/√n (spredning til X̄)"
+  - "Du må velge mellom `σ` (kjent), `s` (estimat fra rådata), og `σ/√n` (spredning til `X̄`)"
   - "Du har et estimat og skal kvantifisere usikkerheten i det"
 
 filters:
