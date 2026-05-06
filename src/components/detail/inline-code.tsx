@@ -46,5 +46,5 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // used by "IKKE bruk når" cues. Slightly darker amber than the cue bg to
   // pop visibly while staying in the same hue family.
   warn:
-    "rounded border border-amber-400/70 bg-amber-200 px-1.5 py-[1px] font-mono text-[13px] text-amber-900",
+    "rounded border border-amber-500/30 bg-amber-700/10 px-1.5 py-[1px] font-mono text-[13px] text-amber-900",
 };
