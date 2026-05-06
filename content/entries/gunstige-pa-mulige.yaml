@@ -23,6 +23,13 @@ recognition_cues:
   - "Spørsmål om sannsynlighet uten en navngitt fordeling"
   - "Det første steget er å telle 'gunstige' og 'mulige'"
 
+when_NOT_to_use:
+  - "Utfall er IKKE like sannsynlige → bruk en navngitt fordeling (binomial, hypergeometrisk, normal, …)"
+  - "Du må telle 'gunstige' eller 'mulige' først → bruk en av kombinatorikk-entryene (ordnet/uordnet utvalg) for selve tellingen"
+  - "Du teller ordnede sekvenser med tilbakelegging → bruk ordnet utvalg med tilbakelegging (n^k)"
+  - "Du teller ordnede sekvenser uten tilbakelegging → bruk ordnet utvalg uten tilbakelegging (n!/(n−k)!)"
+  - "Du teller uordnede utvalg uten tilbakelegging → bruk uordnet utvalg uten tilbakelegging (C(n,k))"
+
 filters:
   computes: [exact_probability, combinatorial_count]
   random_variable: [discrete_count]
@@ -33,5 +40,15 @@ filters:
   tooling: [calculator_only, calculator_binomial_coef]
 
 related:
-  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
-  - { id: "hypergeometrisk-fordeling",          kind: "entry" }
+  - { id: "uordnet-utvalg-uten-tilbakelegging",  kind: "entry" }
+  - { id: "ordnet-utvalg-med-tilbakelegging",    kind: "entry" }
+  - { id: "ordnet-utvalg-uten-tilbakelegging",   kind: "entry" }
+  - { id: "hypergeometrisk-fordeling",           kind: "entry" }
+  - { id: "multiplikasjonsprinsippet",           kind: "glossary" }
+  - { id: "ordnet-utvalg",                       kind: "glossary" }
+  - { id: "uordnet-utvalg",                      kind: "glossary" }
+
+tags:
+  - "kombinatorikk"
+  - "telling"
+  - "sannsynlighet"

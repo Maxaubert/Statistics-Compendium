@@ -109,6 +109,7 @@ related:
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "ki-mu-ukjent-sigma",      kind: "entry" }
   - { id: "signifikansniva-glos",    kind: "glossary" }
+  - { id: "tosidig-test",            kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

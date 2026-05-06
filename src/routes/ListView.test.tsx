@@ -12,7 +12,8 @@ describe("ListView", () => {
       </MemoryRouter>
     );
     expect(screen.getByText("Statistikk-kompendium")).toBeInTheDocument();
-    expect(screen.getByText(/Formler og konsepter/i)).toBeInTheDocument();
+    // Both the nav link and the page heading say "Formler og konsepter"
+    expect(screen.getAllByText(/Formler og konsepter/i).length).toBeGreaterThan(0);
     expect(screen.getByText("Poissonfordeling")).toBeInTheDocument();
   });
 
@@ -45,9 +46,11 @@ describe("ListView", () => {
         <ListView />
       </MemoryRouter>,
     );
-    // Tabeller tab shows a banner-style hint instead of a search input.
+    // Tabeller tab renders cards. Z-tabell is one of them — match the heading
+    // exactly to avoid colliding with "Z-kvantiltabell" which contains "Z-tabell"
+    // as a substring under regex /Z-tabell/i.
     expect(
-      await screen.findByText(/Tabellene er interaktive/i),
+      await screen.findByRole("heading", { name: /^Z-tabell$/, level: 3 }),
     ).toBeInTheDocument();
   });
 

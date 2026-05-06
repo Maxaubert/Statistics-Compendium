@@ -351,6 +351,7 @@ related:
   - { id: "produktregel",         kind: "entry" }
   - { id: "total-sannsynlighet",  kind: "entry" }
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "disjunkte-hendelser-glos", kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, divisjon"

@@ -116,6 +116,9 @@ related:
   - { id: "ki-andel-binomial",       kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "p-verdi-glos",            kind: "glossary" }
+  - { id: "signifikansniva-glos",    kind: "glossary" }
+  - { id: "ensidig-test",            kind: "glossary" }
+  - { id: "tosidig-test",            kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

@@ -342,6 +342,7 @@ related:
   - { id: "binomial-fordeling",   kind: "entry" }
   - { id: "komplementregelen",    kind: "entry" }
   - { id: "ki-poissonrate",       kind: "entry" }
+  - { id: "poissonvarians",       kind: "glossary" }
   - { id: "E2-poisson-kumulativ", kind: "table" }
 
 tools:

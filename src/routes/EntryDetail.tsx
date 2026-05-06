@@ -136,7 +136,7 @@ export function EntryDetail() {
           </>
         )}
 
-        {!isProseEntry && entry.recognition_cues && entry.recognition_cues.length > 0 && (
+        {entry.type !== "overview" && entry.recognition_cues && entry.recognition_cues.length > 0 && (
           <Section title="Slik gjenkjenner du den i en oppgave" icon={Search}>
             <RecognitionCues cues={entry.recognition_cues} />
           </Section>

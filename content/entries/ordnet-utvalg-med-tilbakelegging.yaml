@@ -1,0 +1,225 @@
+id: ordnet-utvalg-med-tilbakelegging
+name_no: "Ordnet utvalg med tilbakelegging (n^k)"
+type: combinatorics
+category: combinatorics
+tagline: "Antall ordnede sekvenser når samme verdi kan gjentas — n velg k med tilbakelegging og rekkefølge."
+
+formula_main: "Antall sekvenser = n^k"
+formula_latex: "n^{k}"
+
+what_it_does: |
+  Beregner antall mulige ordnede sekvenser av lengde `k` når hver posisjon
+  uavhengig kan fylles med ett av `n` mulige elementer (tilbakelegging tillatt
+  — samme verdi kan gjentas). Brukes også som telleregel for sannsynlighet
+  for spesifikke sekvenser når alle utfall er like sannsynlige.
+
+why_use: |
+  Klassisk telleregel for kodelås, PIN-koder, terningkast over k forsøk,
+  passord, trekninger fra urne med tilbakelegging, og generelt enhver situasjon
+  med `k` uavhengige forsøk hvor hvert forsøk har `n` mulige utfall. Sammen
+  med "gunstige på mulige" gir dette sannsynligheter direkte. For "minst én"-
+  spørsmål brukes komplementtrikset `1 − (1 − p)^k`.
+
+recognition_cues:
+  - "Du har k posisjoner / forsøk å fylle, hver med n mulige utfall"
+  - "Samme verdi kan dukke opp flere ganger (tilbakelegging tillatt)"
+  - "Rekkefølgen teller — (1, 2, 3) er ulikt fra (3, 2, 1)"
+  - "Trekningene / forsøkene er uavhengige"
+  - "Typisk: PIN-kode, passord, k terningkast, k myntkast, k trekninger med tilbakelegging"
+
+when_NOT_to_use:
+  - "Rekkefølgen IKKE teller → bruk uordnet utvalg (C(n,k))"
+  - "Uten tilbakelegging (samme element kan ikke gjentas) → bruk ordnet utvalg uten tilbakelegging (n!/(n−k)!)"
+  - "Antall suksesser i k forsøk (ikke selve sekvensen) → bruk binomialfordeling"
+
+symbols:
+  - { sym: "n",    means: "antall mulige verdier per posisjon (f.eks. 6 for terning, 10 for siffer)" }
+  - { sym: "k",    means: "antall posisjoner / forsøk i sekvensen" }
+  - { sym: "n^k",  means: "antall ordnede sekvenser av lengde k" }
+  - { sym: "p",    means: "sannsynlighet for et bestemt utfall på ett forsøk (typisk 1/n ved likt sannsynlige utfall)" }
+
+filters:
+  computes: [combinatorial_count, exact_probability]
+  random_variable: [discrete_count]
+  setup: [with_replacement, fixed_n_trials]
+  structural_cues: [total_observations_n, complement_pattern, independent_events]
+  parameters_known: [success_p]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only]
+
+solution_variants:
+  - label: "Antall mulige sekvenser"
+    steps:
+      - "Identifiser `n` (antall mulige verdier per posisjon) og `k` (antall posisjoner / forsøk)"
+      - "Bekreft at samme verdi kan gjentas (tilbakelegging) og at rekkefølgen teller"
+      - "Antall mulige sekvenser = `n^k`"
+      - "Eksempel — 4-sifret PIN-kode: `n = 10`, `k = 4` → `10^4 = 10 000` mulige koder"
+      - "Eksempel — kast en terning 6 ganger: `n = 6`, `k = 6` → `6^6 = 46 656` mulige sekvenser"
+      - text: "Pass på: dette teller sekvenser, ikke utfall. (1, 2, 3) og (3, 2, 1) regnes som to ulike sekvenser."
+        conditional: true
+  - label: "Sannsynlighet for spesifikk sekvens"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for en bestemt sekvens / mønster i k uavhengige forsøk'"
+      - "Tell antall gunstige sekvenser (de som matcher mønsteret)"
+      - "Antall mulige sekvenser totalt = `n^k`"
+      - "Sannsynligheten = gunstige / mulige"
+      - "Alternativt — ved uavhengige forsøk med samme p: `P = p_1 · p_2 · ... · p_k` (produktregel)"
+      - "Eksempel — kast en terning 6 ganger, P(første tre er sekser):"
+      - "  Gunstige: 6³ = 216 (de tre siste posisjonene er fri)"
+      - "  Mulige: 6⁶ = 46 656"
+      - "  P = 216 / 46 656 = 1/216"
+      - "  Eller med produktregelen: `(1/6)³ · 1³ = 1/216`. Begge gir samme svar."
+      - text: "Pass på: 'spesifikk sekvens' betyr at rekkefølgen er gitt. Hvis spørsmålet er 'tre seksere et eller annet sted i seks kast', er det binomial — ikke n^k direkte."
+        conditional: true
+  - label: "Sannsynlighet 'minst én' (komplement)"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for minst én X i k forsøk'"
+      - "Identifiser `p` (sannsynligheten for X på ett forsøk)"
+      - "Komplementet 'ingen X i k forsøk' har sannsynlighet `(1 − p)^k`"
+      - "Sannsynligheten for minst én X: `P(minst én) = 1 − (1 − p)^k`"
+      - "Eksempel — kast en terning 6 ganger, P(minst én sekser):"
+      - "  p = 1/6, k = 6"
+      - "  P(ingen sekser) = (5/6)⁶ ≈ 0.3349"
+      - "  P(minst én sekser) = 1 − (5/6)⁶ ≈ 0.6651"
+      - text: "Pass på: dette krever uavhengige forsøk med konstant p — altså med tilbakelegging. Uten tilbakelegging (endelig populasjon) må du bruke hypergeometrisk eller direkte kombinatorisk telling."
+        conditional: true
+
+common_traps: |
+  - `n^k` ≠ `k^n`. Husk: n er antall valg per posisjon, k er antall posisjoner.
+  - Forveksles ofte med permutasjoner (`n!/(n−k)!`). Forskjellen: med tilbakelegging
+    kan samme verdi dukke opp flere ganger; uten tilbakelegging kan den ikke det.
+  - "Minst én"-spørsmål må alltid løses via komplement — ikke ved å summere
+    P(nøyaktig 1) + P(nøyaktig 2) + ... (det blir tungvint og feilbenektende).
+
+detailed_solution_variants:
+  - label: "Antall mulige sekvenser"
+    solutions:
+      - source: "Praksiseksempel · PIN-kode"
+        question: "Hvor mange mulige 4-sifret PIN-koder finnes (sifre 0–9, gjentakelse tillatt)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hver av de 4 posisjonene kan være ett av 10 sifre (0–9)." }
+              - { text: "Gjentakelse er tillatt (samme siffer kan dukke opp i flere posisjoner)." }
+              - { text: "Rekkefølgen teller — 1234 er ulikt fra 4321." }
+              - { text: "Dette er ordnet utvalg med tilbakelegging, så vi bruker `n^k`." }
+          - label: "Formel"
+            lines:
+              - { text: "Antall mulige sekvenser = `n^k`" }
+              - { indent: "der `n = 10` (antall mulige sifre) og `k = 4` (antall posisjoner)." }
+          - label: "Innsatt"
+            lines:
+              - { text: "`10^4 = 10 · 10 · 10 · 10 = 10 000`" }
+        result: "10 000 mulige PIN-koder"
+
+      - source: "Praksiseksempel · Terningkast"
+        question: "En terning kastes 6 ganger. Hvor mange ulike sekvenser av utfall kan vi observere?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hvert kast har `n = 6` mulige utfall (1, 2, 3, 4, 5, 6)." }
+              - { text: "Vi har `k = 6` kast i rekkefølge." }
+              - { text: "Samme verdi kan dukke opp flere ganger (tilbakelegging) og rekkefølgen teller." }
+          - label: "Formel"
+            lines:
+              - { text: "Antall sekvenser = `n^k = 6^6`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`6^6 = 46 656`" }
+        result: "46 656 mulige sekvenser"
+
+  - label: "Sannsynlighet for spesifikk sekvens"
+    solutions:
+      - source: "Praksiseksempel · Terningkast"
+        question: "Vi kaster en terning 6 ganger. Hva er sannsynligheten for at de tre første kastene gir sekser?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi spør om en spesifikk sekvens: kast 1, 2 og 3 er alle 6, mens kast 4, 5 og 6 er hva som helst." }
+              - { text: "Hver terning har `n = 6` likt sannsynlige utfall, kastene er uavhengige." }
+              - { text: "Vi kan løse dette via gunstige/mulige eller via produktregelen for uavhengige hendelser." }
+          - label: "Metode 1 — gunstige / mulige"
+            lines:
+              - { text: "Antall mulige sekvenser: `6^6 = 46 656`" }
+              - { text: "Antall gunstige sekvenser (kast 1–3 fastlåst på 6, kast 4–6 fritt):" }
+              - { indent: "`1 · 1 · 1 · 6 · 6 · 6 = 6³ = 216`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 216 / 46 656 = 1/216`" }
+          - label: "Metode 2 — produktregel"
+            lines:
+              - { text: "Hvert av de tre første kastene gir 6 med sannsynlighet `1/6`." }
+              - { text: "De tre siste kastene har ingen krav, så `P = 1` for hver av dem." }
+              - { text: "Siden kastene er uavhengige:" }
+              - { indent: "`P = (1/6)³ · 1³ = 1/216`" }
+              - { comment: "Begge metodene gir samme svar — det er en god sjekk." }
+        result: "`P(første tre er sekser) = 1/216 ≈ 0.00463`"
+
+      - source: "Praksiseksempel · PIN-kode"
+        question: "En 4-sifret PIN-kode velges tilfeldig. Hva er sannsynligheten for at koden er nøyaktig 1234?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Antall mulige koder: `10^4 = 10 000`." }
+              - { text: "Antall gunstige sekvenser (akkurat 1234): `1`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P = gunstige / mulige`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P = 1 / 10 000 = 0.0001`" }
+        result: "`P(PIN = 1234) = 1/10 000`"
+
+  - label: "Sannsynlighet 'minst én' (komplement)"
+    solutions:
+      - source: "Praksiseksempel · Terningkast"
+        question: "Vi kaster en terning 6 ganger. Hva er sannsynligheten for å få minst én sekser?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi spør om P(minst én sekser i 6 kast)." }
+              - { text: "Sannsynlighet for sekser på ett kast: `p = 1/6`." }
+              - { text: "Kastene er uavhengige (terning er memoryless)." }
+              - { text: "Bruk komplementtrikset: P(minst én) = 1 − P(ingen)." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(minst én) = 1 − (1 − p)^k`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(ingen sekser i 6 kast) = (5/6)^6`" }
+              - { indent: "`= 15 625 / 46 656 ≈ 0.3349`" }
+              - { text: "`P(minst én sekser) = 1 − 0.3349 ≈ 0.6651`" }
+              - { comment: "Eller eksakt: 1 − (5/6)⁶ = 31 031 / 46 656." }
+        result: "`P(minst én sekser) ≈ 0.665`"
+
+      - source: "Praksiseksempel · Lotterilodd"
+        question: "Et lotterilodd har 1 % sjanse for gevinst. Hvis du kjøper 100 lodd, hva er sannsynligheten for å vinne minst én gang? (Anta uavhengige trekninger.)"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`p = 0.01`, `k = 100`, uavhengige forsøk." }
+              - { text: "P(minst én gevinst) = 1 − P(ingen gevinst i 100 lodd)." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(minst én) = 1 − (1 − p)^k = 1 − 0.99^100`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`0.99^100 ≈ 0.3660`" }
+              - { text: "`P(minst én) ≈ 1 − 0.3660 = 0.6340`" }
+              - { comment: "Et klassisk overraskende resultat: selv med 1 % sjanse per lodd, gir 100 lodd ca. 63 % sjanse for minst én gevinst — IKKE 100 %." }
+        result: "`P(minst én gevinst) ≈ 0.634`"
+
+related:
+  - { id: "ordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "gunstige-pa-mulige",                kind: "entry" }
+  - { id: "binomial-fordeling",                kind: "entry" }
+  - { id: "med-tilbakelegging",                kind: "glossary" }
+  - { id: "ordnet-utvalg",                     kind: "glossary" }
+  - { id: "multiplikasjonsprinsippet",         kind: "glossary" }
+
+tools:
+  - "Kalkulator: x^y eller power-funksjon"
+
+tags:
+  - "kombinatorikk"
+  - "telling"

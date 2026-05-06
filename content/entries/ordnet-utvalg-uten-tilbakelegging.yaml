@@ -1,0 +1,215 @@
+id: ordnet-utvalg-uten-tilbakelegging
+name_no: "Ordnet utvalg uten tilbakelegging (permutasjoner, P(n,k))"
+type: combinatorics
+category: combinatorics
+tagline: "Antall ordnede utvalg av k elementer fra n, der rekkefølgen teller og hvert element kan velges maksimalt én gang."
+
+formula_main: "P(n, k) = n! / (n − k)! = n · (n − 1) · ... · (n − k + 1)"
+formula_latex: "P(n,k) = \\frac{n!}{(n-k)!} = n \\cdot (n-1) \\cdots (n-k+1)"
+
+what_it_does: |
+  Beregner antall ordnede sekvenser av lengde `k` som kan dannes ved å velge fra
+  `n` forskjellige elementer uten gjentakelse (uten tilbakelegging). Også kjent
+  som **permutasjoner** av k fra n. Når `k = n` reduseres formelen til `n!`
+  (alle elementene i rekke). Kan også brukes til å beregne sannsynligheten for
+  en spesifikk ordnet sekvens når alle utfall er like sannsynlige.
+
+why_use: |
+  Klassisk telleregel for "topp-k"-problemer (medaljer, podium, rangering),
+  for å sette personer/gjenstander i en bestemt rekkefølge, og for å regne ut
+  sannsynligheten for spesifikke trekninger uten tilbakelegging der rekkefølgen
+  spiller en rolle.
+
+recognition_cues:
+  - "Du velger ut k elementer fra n, og rekkefølgen TELLER"
+  - "UTEN tilbakelegging — hvert element kan velges maksimalt én gang"
+  - "k spesifikke posisjoner skal fylles (1. plass, 2. plass, ..., k-te plass)"
+  - "Typisk: medaljer / podium, kortrekker i rekkefølge, anagram, sitteplasser i bestemt rekkefølge"
+  - "Hvis k = n: alle elementene skal stilles opp på rekke (n!)"
+
+when_NOT_to_use:
+  - "Rekkefølgen IKKE teller → bruk uordnet utvalg (C(n,k))"
+  - "Tilbakelegging er tillatt (samme element kan gjentas) → bruk ordnet utvalg med tilbakelegging (n^k)"
+  - "Du teller bare hvor mange utfall som har en egenskap → bruk gunstige/mulige direkte"
+
+symbols:
+  - { sym: "n",        means: "antall forskjellige elementer å velge fra" }
+  - { sym: "k",        means: "antall posisjoner / elementer som skal velges (k ≤ n)" }
+  - { sym: "n!",       means: "n-fakultet, n · (n − 1) · ... · 1; per konvensjon 0! = 1" }
+  - { sym: "P(n, k)",  means: "antall permutasjoner av k fra n; også skrevet ⁿPₖ eller nPr" }
+
+filters:
+  computes: [combinatorial_count, exact_probability]
+  random_variable: [discrete_count]
+  setup: [single_population, without_replacement, finite_pool]
+  structural_cues: [total_observations_n]
+  parameters_known: []
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_factorial, calculator_only]
+
+solution_variants:
+  - label: "Antall ordnede utvalg (k < n)"
+    steps:
+      - "Identifiser `n` (antall elementer å velge fra) og `k` (antall posisjoner)"
+      - "Bekreft: rekkefølgen teller, og samme element kan IKKE velges to ganger"
+      - "Antall ordnede utvalg = `n · (n − 1) · ... · (n − k + 1) = n! / (n − k)!`"
+      - "Eksempel — gull/sølv/bronse fra 10 deltakere: `P(10, 3) = 10 · 9 · 8 = 720`"
+      - "Eksempel — 5 personer på 3 stoler (i bestemt rekkefølge): `P(5, 3) = 5 · 4 · 3 = 60`"
+      - text: "Pass på: hvis rekkefølgen IKKE teller (f.eks. 'velg ut 3 personer til en komité') skal du bruke `C(n, k) = P(n, k) / k!` i stedet."
+        conditional: true
+  - label: "Hele permutasjoner (k = n)"
+    steps:
+      - "Når alle n elementene skal settes på rekke i en bestemt rekkefølge: antall = `n!`"
+      - "Eksempel — 5 personer på rekke: `5! = 120` ulike rekkefølger"
+      - "Eksempel — bokstavene i 'BIL': `3! = 6` ulike anagram (BIL, BLI, IBL, ILB, LBI, LIB)"
+      - "Hvis det er duplikater i mengden, deler du på fakultetet til hver duplikatgruppe."
+      - "Eksempel — anagram av 'MATTE' (1 M, 1 A, 2 T, 1 E): `5! / 2! = 60`"
+      - text: "Pass på: 0! = 1 per definisjon, så `P(n, n) = n! / 0! = n!` — formelen funker også når k = n."
+        conditional: true
+  - label: "Sannsynlighet for spesifikk ordnet sekvens uten tilbakelegging"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for en spesifikk ordnet sekvens fra en endelig populasjon uten tilbakelegging'"
+      - "Antall mulige ordnede sekvenser = `P(n, k) = n! / (n − k)!`"
+      - "Antall gunstige (én bestemt sekvens) = 1"
+      - "Sannsynligheten = `1 / P(n, k)`"
+      - "Alternativt — produktregel sekvensielt: `(1/n) · (1/(n−1)) · ... · (1/(n−k+1))`"
+      - "Eksempel — trekk 3 spesifikke kort i bestemt rekkefølge fra 52-korts stokk:"
+      - "  P = `1 / (52 · 51 · 50) = 1 / 132 600 ≈ 7.54 · 10⁻⁶`"
+      - "Eksempel — 3 spesifikke personer i bestemt rekkefølge ut av 10:"
+      - "  P = `1 / (10 · 9 · 8) = 1 / 720`"
+      - text: "Pass på: hvis du spør om en hvilken som helst rekkefølge av 3 spesifikke kort, må du multiplisere med `3! = 6` (gunstige rekkefølger)."
+        conditional: true
+
+common_traps: |
+  - `P(n, k)` ≠ `C(n, k)`. Permutasjoner skiller på rekkefølge (`P = C · k!`).
+  - Fakultet vokser raskt: `10! ≈ 3.6 millioner`, `20! ≈ 2.4 · 10¹⁸`. Bruk
+    den utvidete formen `n · (n−1) · ... · (n−k+1)` når k er mye mindre enn n
+    — du slipper å regne hele fakultetet.
+  - Når mengden inneholder duplikater (samme bokstav, samme farge), del på
+    fakultetet til hver duplikatgruppe for å unngå dobbelttelling.
+  - Ikke bland sammen "spesifikk sekvens" (1 gunstig) med "spesifikt sett i en eller annen rekkefølge" (k! gunstige).
+
+detailed_solution_variants:
+  - label: "Antall ordnede utvalg (k < n)"
+    solutions:
+      - source: "Praksiseksempel · Medaljer"
+        question: "I en konkurranse med 10 deltakere skal det deles ut gull, sølv og bronse. På hvor mange måter kan medaljene fordeles?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi velger `k = 3` deltakere fra `n = 10` til tre rangerte plasser." }
+              - { text: "Rekkefølgen teller — gull til Anna og sølv til Bjørn er ulikt fra gull til Bjørn og sølv til Anna." }
+              - { text: "Samme deltaker kan ikke vinne to medaljer (uten tilbakelegging)." }
+              - { text: "Dette er ordnet utvalg uten tilbakelegging — vi bruker `P(n, k)`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(n, k) = n! / (n − k)! = n · (n − 1) · ... · (n − k + 1)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(10, 3) = 10 · 9 · 8 = 720`" }
+              - { comment: "Alternativ form: `10! / 7! = 3 628 800 / 5 040 = 720`. Samme svar." }
+        result: "720 mulige medaljefordelinger"
+
+      - source: "Praksiseksempel · Sitteplasser"
+        question: "Vi har 5 personer og 3 stoler i en rekke. På hvor mange måter kan vi sette 3 av personene på stolene (rekkefølgen teller)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` personer, `k = 3` stoler i rekkefølge." }
+              - { text: "Rekkefølgen teller (stol 1, 2, 3 er forskjellige plasser)." }
+              - { text: "Samme person kan ikke sitte på to stoler." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(n, k) = n · (n − 1) · ... · (n − k + 1)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(5, 3) = 5 · 4 · 3 = 60`" }
+        result: "60 mulige plasseringer"
+
+  - label: "Hele permutasjoner (k = n)"
+    solutions:
+      - source: "Praksiseksempel · Personer på rekke"
+        question: "På hvor mange måter kan 5 personer stille seg på rekke?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Alle `n = 5` personer skal plasseres i en bestemt rekkefølge." }
+              - { text: "Dette er en hel permutasjon — `k = n = 5`." }
+          - label: "Formel"
+            lines:
+              - { text: "Antall rekkefølger = `n!`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`5! = 5 · 4 · 3 · 2 · 1 = 120`" }
+        result: "120 ulike rekkefølger"
+
+      - source: "Praksiseksempel · Anagram"
+        question: "Hvor mange ulike anagram (bokstavkombinasjoner) finnes av ordet «MATTE»?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Ordet har 5 bokstaver: M, A, T, T, E." }
+              - { text: "Bokstaven T forekommer 2 ganger — det er duplikater i mengden." }
+              - { text: "Vi må dele på fakultetet til hver duplikatgruppe for å unngå dobbelttelling." }
+          - label: "Formel"
+            lines:
+              - { text: "Antall anagram = `n! / (n_1! · n_2! · ... · n_r!)`" }
+              - { indent: "der `n_i` er antall forekomster av hver duplikat." }
+          - label: "Innsatt"
+            lines:
+              - { text: "`5! / 2! = 120 / 2 = 60`" }
+              - { comment: "(Bare T er duplikat. M, A og E forekommer hver bare én gang, så deres 1! = 1 påvirker ikke nevneren.)" }
+        result: "60 ulike anagram"
+
+  - label: "Sannsynlighet for spesifikk ordnet sekvens uten tilbakelegging"
+    solutions:
+      - source: "Praksiseksempel · Kortstokk"
+        question: "Vi trekker 3 kort fra en kortstokk med 52 kort uten tilbakelegging. Hva er sannsynligheten for å trekke spar ess, hjerter dame, kløver 7 — i akkurat denne rekkefølgen?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi spør om en spesifikk ordnet sekvens av `k = 3` kort fra `n = 52`." }
+              - { text: "Trekningene er uten tilbakelegging (rekkefølgen teller)." }
+              - { text: "Antall mulige ordnede sekvenser = `P(52, 3)`. Antall gunstige = 1 (bare denne ene rekkefølgen)." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(52, 3) = 52 · 51 · 50`" }
+              - { text: "`P(spesifikk sekvens) = 1 / P(52, 3)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`52 · 51 · 50 = 132 600`" }
+              - { text: "`P = 1 / 132 600 ≈ 7.54 · 10⁻⁶`" }
+              - { comment: "Sjekk via produktregel: `(1/52) · (1/51) · (1/50) = 1/132 600`. Samme svar." }
+        result: "`P ≈ 7.54 · 10⁻⁶`"
+
+      - source: "Praksiseksempel · Personer i kø"
+        question: "10 personer stiller seg tilfeldig i kø. Hva er sannsynligheten for at Anna, Bjørn og Cecilie står først, andre og tredje (i akkurat den rekkefølgen)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi spør om en spesifikk ordnet sekvens for de 3 første plassene blant 10 personer." }
+              - { text: "Antall mulige ordnede utvalg av 3 fra 10: `P(10, 3) = 10 · 9 · 8 = 720`." }
+              - { text: "Antall gunstige: 1 (bare den ene rekkefølgen Anna-Bjørn-Cecilie)." }
+          - label: "Formel"
+            lines:
+              - { text: "`P = 1 / P(10, 3)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P = 1 / 720 ≈ 0.00139`" }
+              - { comment: "Hvis vi i stedet spurte 'Anna, Bjørn og Cecilie først (i hvilken som helst rekkefølge)', ville gunstige vært `3! = 6`, og P = 6/720 = 1/120." }
+        result: "`P = 1/720 ≈ 0.00139`"
+
+related:
+  - { id: "ordnet-utvalg-med-tilbakelegging",   kind: "entry" }
+  - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "gunstige-pa-mulige",                 kind: "entry" }
+  - { id: "uten-tilbakelegging-glos",           kind: "glossary" }
+  - { id: "ordnet-utvalg",                      kind: "glossary" }
+  - { id: "multiplikasjonsprinsippet",          kind: "glossary" }
+
+tools:
+  - "Kalkulator: k! (fakultet) eller nPr-funksjon"
+
+tags:
+  - "kombinatorikk"
+  - "telling"

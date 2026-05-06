@@ -315,6 +315,8 @@ related:
   - { id: "komplementregelen",      kind: "entry" }
   - { id: "ki-andel-binomial",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel", kind: "entry" }
+  - { id: "binomialvarians",        kind: "glossary" }
+  - { id: "bernoulli-forsoek",      kind: "glossary" }
   - { id: "E1-binomial-kumulativ",  kind: "table" }
 
 tools:

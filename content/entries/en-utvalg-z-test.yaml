@@ -291,6 +291,8 @@ related:
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "signifikansniva-glos",    kind: "glossary" }
+  - { id: "ensidig-test",            kind: "glossary" }
+  - { id: "tosidig-test",            kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 

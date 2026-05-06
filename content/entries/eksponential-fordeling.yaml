@@ -304,6 +304,7 @@ related:
   - { id: "poisson-prosess",    kind: "glossary" }
   - { id: "normalfordeling",    kind: "entry" }
   - { id: "komplementregelen",  kind: "entry" }
+  - { id: "eksponentialvarians", kind: "glossary" }
 
 tools:
   - "Kalkulator: e^x"
