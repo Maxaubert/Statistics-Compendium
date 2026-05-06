@@ -24,9 +24,9 @@ forms:
     formula: "E[X] = ∫ x · f(x) dx"
     description: "For kontinuerlige variabler (vekt, tid, lengde) med tetthet f(x). I praksis bruker du ferdige formler — E[X] = μ for normal, E[T] = 1/λ for eksponential."
   - title: "Utvalgsgjennomsnitt"
-    symbol: "x̄"
+    symbol: "X̄"
     glossary_id: gjennomsnitt
-    formula: "x̄ = Σ xᵢ / n"
+    formula: "X̄ = Σ Xᵢ / n"
     description: "Estimat for μ fra rådata. Forventningsrett: E[X̄] = μ når observasjonene er iid."
   - title: "Lineæritet"
     symbol: "aX+b"
