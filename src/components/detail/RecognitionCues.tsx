@@ -29,7 +29,7 @@ export function RecognitionCues({ cues, variant = "positive" }: Props) {
                 : "bg-primary-2 shadow-[inset_0_0_0_2px_white]"
             )}
           />
-          {renderInlineCode(cue, "light")}
+          {renderInlineCode(cue, isWarn ? "warn" : "light")}
         </li>
       ))}
     </ul>
