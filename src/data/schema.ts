@@ -33,6 +33,26 @@ export const SolutionLineSchema = z.union([
   z.object({ indent: z.string() }),
   z.object({ table_lookup: z.object({ ref: z.string(), text: z.string() }) }),
   z.object({ tip: z.string() }),
+  z.object({
+    table: z.object({
+      headers: z.array(z.string()),
+      rows: z.array(z.array(z.string())),
+      // Optional: tint the last column (e.g., P(X) marginals) and/or last row (P(Y))
+      margin_col: z.boolean().optional(),
+      margin_row: z.boolean().optional(),
+    }),
+  }),
+  z.object({
+    step_trail: z.object({
+      steps: z.array(
+        z.object({
+          label: z.string(),
+          // if true → ✓ check (done), if undefined → current
+          done: z.boolean().optional(),
+        }),
+      ),
+    }),
+  }),
 ]);
 
 export const SolutionSectionSchema = z.object({
