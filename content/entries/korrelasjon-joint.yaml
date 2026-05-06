@@ -72,11 +72,25 @@ detailed_solution_variants:
                     - ["P(Y)", "0.50", "0.30", "0.20", "1.00"]
                   margin_col: true
                   margin_row: true
-          - label: "Forutsetninger fra de fire forrige stegene"
+          - label: "Marginalforventninger"
             lines:
-              - { text: "`μ_X = 0.60` · `μ_Y = 0.70`" }
-              - { text: "`σ_X ≈ 0.4899` · `σ_Y ≈ 0.7810`" }
-              - { text: "`Cov(X, Y) = −0.12`" }
+              - { text: "`μ_X = 0·0.40 + 1·0.60 = 0.60`" }
+              - { text: "`μ_Y = 0·0.50 + 1·0.30 + 2·0.20 = 0.70`" }
+          - label: "Marginale varianser"
+            lines:
+              - { text: "`E[X²] = 0²·0.40 + 1²·0.60 = 0.60`" }
+              - { text: "`σ_X² = 0.60 − 0.60² = 0.60 − 0.36 = 0.24`" }
+              - { text: "`σ_X = √0.24 ≈ 0.4899`" }
+              - { text: "`E[Y²] = 0²·0.50 + 1²·0.30 + 2²·0.20 = 1.10`" }
+              - { text: "`σ_Y² = 1.10 − 0.70² = 1.10 − 0.49 = 0.61`" }
+              - { text: "`σ_Y = √0.61 ≈ 0.7810`" }
+          - label: "Kovarians"
+            lines:
+              - { text: "`E[XY] = Σ x·y·P(X=x, Y=y)` — kun celler der både `x ≠ 0` og `y ≠ 0` bidrar:" }
+              - { text: "`1·1·0.10 = 0.10`", indent: 1 }
+              - { text: "`1·2·0.10 = 0.20`", indent: 1 }
+              - { text: "`E[XY] = 0.10 + 0.20 = 0.30`" }
+              - { text: "`Cov(X, Y) = E[XY] − μ_X · μ_Y = 0.30 − 0.60 · 0.70 = 0.30 − 0.42 = −0.12`" }
           - label: "Korrelasjon"
             lines:
               - { text: "`ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)`" }
