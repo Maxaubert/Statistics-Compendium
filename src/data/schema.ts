@@ -32,6 +32,7 @@ export const SolutionLineSchema = z.union([
   z.object({ comment: z.string() }),
   z.object({ indent: z.string() }),
   z.object({ table_lookup: z.object({ ref: z.string(), text: z.string() }) }),
+  z.object({ tip: z.string() }),
 ]);
 
 export const SolutionSectionSchema = z.object({
