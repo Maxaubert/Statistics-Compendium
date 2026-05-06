@@ -15,7 +15,7 @@ export function DetailedSolution({ solution }: { solution: DS }) {
           {solution.source}
         </div>
         <p className="m-0 font-serif text-[14px] italic leading-snug text-ink-2 before:text-ink-4 before:content-['«_'] after:text-ink-4 after:content-['_»']">
-          {solution.question}
+          {renderInlineCode(solution.question, "light")}
         </p>
       </div>
       <div
