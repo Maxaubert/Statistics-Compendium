@@ -14,9 +14,21 @@ aliases:
   - korrelasjonskoeffisient
   - korrelasjonskoeffisienten
 long_def: |
-  Formel:
+  To formler — samme tall, ulike datatyper:
+
+  **Fra rådata-par `(x_i, y_i)`** (regresjons-konteksten):
+
+      r = S_XY / √(S_XX · S_YY)
+
+  der `S_XX = Σ(x_i − x̄)²`, `S_YY = Σ(y_i − ȳ)²`, `S_XY = Σ(x_i − x̄)(y_i − ȳ)`.
+
+  **Fra simultanfordeling** (joint-distribution-konteksten):
 
       r = Cov(X, Y) / (σ_X · σ_Y)
+
+  Begge gir samme verdi når dataene er konsistente. Bruk rådata-formelen
+  når du har observerte par; bruk joint-formelen når oppgaven gir en PMF
+  for `(X, Y)`.
 
   - `r = 1`: perfekt positiv lineær sammenheng
   - `r = −1`: perfekt negativ
