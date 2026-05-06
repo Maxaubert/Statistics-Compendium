@@ -95,15 +95,6 @@ forms:
     entry_links:
       - { id: en-utvalg-z-test-andel, label: "Z-test for andel p" }
       - { id: ki-andel-binomial, label: "KI for andel p" }
-  - title: "Korrelasjon"
-    symbol: "ρ(X,Y)"
-    glossary_id: korrelasjon-glos
-    formula: "ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)"
-    description: "Skala-uavhengig mål mellom −1 og 1. Den «standardavviks-versjonen» av kovarians: deler Cov med produktet av standardavvikene, så enheten faller bort."
-    entry_links:
-      - { id: korrelasjon-joint, label: "Entry" }
-      - { id: kovarians, label: "Cov(X,Y)" }
-
 recognition_cues:
   - "Oppgaven nevner spredning, standardavvik, eller standardfeil"
   - "Du må velge mellom σ (kjent), s (estimat fra rådata), og σ/√n (spredning til X̄)"
