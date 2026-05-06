@@ -70,9 +70,9 @@ detailed_solution_variants:
             lines:
               - text: "`μ_X = 0 · P(X=0) + 1 · P(X=1) = 0 · 0.40 + 1 · 0.60 = 0.60` ✓"
               - text: "`μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0 + 0.30 + 0.40 = 0.70` ✓"
-          - label: "E[XY] — pass på: bruk JOINT-sannsynlighet, ikke marginal × marginal"
+          - label: "E[XY] — bruk JOINT-sannsynlighet fra simultantabellen"
             lines:
-              - text: "Vanlig fallgruve: man tror `E[XY] = Σ x_i · y_j · P(X=x_i) · P(Y=y_j)`. Det er BARE riktig hvis `X` og `Y` er uavhengige. For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`."
+              - text: "For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`, ikke produktet av marginalsannsynlighetene."
               - { text: "Summen over ALLE seks cellene (med `x_i · y_j · p_{ij}`):" }
               - { text: "`(0, 0):  0 · 0 · 0.10 = 0`" }
               - { text: "`(0, 1):  0 · 1 · 0.20 = 0`" }
