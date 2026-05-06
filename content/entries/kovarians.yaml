@@ -4,8 +4,8 @@ type: identity
 category: distribution_property
 tagline: "Mål for hvor mye to variabler 'beveger seg sammen'."
 
-formula_main: "Cov(X,Y) = E[XY] - μ_X · μ_Y;  E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j)"
-formula_latex: "\\text{Cov}(X, Y) = E[XY] - \\mu_X \\mu_Y, \\quad E[XY] = \\sum_i \\sum_j x_i y_j P(X=x_i, Y=y_j)"
+formula_main: "Cov(X,Y) = E[XY] − μ_X · μ_Y    der    E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j)"
+formula_latex: "\\begin{aligned} \\text{Cov}(X, Y) &= E[XY] - \\mu_X\\,\\mu_Y \\\\[4pt] E[XY] &= \\sum_i \\sum_j x_i\\,y_j\\,P(X=x_i,\\,Y=y_j) \\end{aligned}"
 
 what_it_does: |
   Beregner kovariansen mellom to stokastiske variabler X og Y fra en
@@ -51,31 +51,51 @@ detailed_solution_variants:
   - label: "Kovarians fra simultantabell"
     solutions:
       - source: "Eksamen mai25 · oppgave 1c"
-        question: "Gitt simultanfordelingen for `X` og `Y` der `μ_X = 0.6` og `μ_Y = 0.7`. Cellene med positiv sannsynlighet er `P(X=1, Y=1) = 0.1` og `P(X=1, Y=2) = 0.1`. Finn `Cov(X, Y)`."
+        question: "Gitt simultanfordelingen for `X` og `Y` der `μ_X = 0.6` og `μ_Y = 0.7`. Finn `Cov(X, Y)`."
         sections:
           - label: "Identifisering"
             lines:
-              - text: "Vi har en simultantabell for to diskrete variabler `X` og `Y`."
-              - text: "Marginalforventningene `μ_X` og `μ_Y` er gitt fra deloppgaver."
+              - text: "Vi har en simultantabell for to diskrete variabler `X ∈ {0, 1}` og `Y ∈ {0, 1, 2}`."
+              - text: "Marginalforventningene `μ_X` og `μ_Y` er gitt fra deloppgaver (a) og (b)."
               - text: "Vi skal beregne `Cov(X, Y) = E[XY] − μ_X · μ_Y`."
-          - label: "Forventningsverdier"
+          - label: "Simultantabellen"
             lines:
-              - text: "`μ_X = E[X] = 0.6` (gitt fra marginalfordelingen til `X`)."
-              - text: "`μ_Y = E[Y] = 0.7` (gitt fra marginalfordelingen til `Y`)."
-              - text: "Beregn `E[XY]` ved å summere `x · y · P(X=x, Y=y)` over alle celler:"
-              - indent: "`E[XY] = 1 · 1 · 0.1 + 1 · 2 · 0.1`"
-              - indent: "`     = 0.1 + 0.2 = 0.3`"
-              - comment: "Celler med `x = 0` eller `y = 0` bidrar ikke."
+              - text: "Tabellen gir den felles sannsynligheten `P(X = x_i, Y = y_j)` for hver celle:"
+              - indent: "                Y=0    Y=1    Y=2   │  P(X)"
+              - indent: "        ───────────────────────────────┼───────"
+              - indent: "        X=0    0.10   0.20   0.10   │  0.40"
+              - indent: "        X=1    0.40   0.10   0.10   │  0.60"
+              - indent: "        ───────────────────────────────┼───────"
+              - indent: "        P(Y)   0.50   0.30   0.20   │  1.00"
+              - comment: "Marginalradene/-kolonnene (sum av rader/kolonner) summerer til 1."
+          - label: "Forventningsverdier (kontroll fra marginalene)"
+            lines:
+              - text: "`μ_X = 0 · P(X=0) + 1 · P(X=1) = 0 · 0.40 + 1 · 0.60 = 0.60` ✓"
+              - text: "`μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0 + 0.30 + 0.40 = 0.70` ✓"
+          - label: "E[XY] — pass på: bruk JOINT-sannsynlighet, ikke marginal × marginal"
+            lines:
+              - text: "Vanlig fallgruve: man tror `E[XY] = Σ x_i · y_j · P(X=x_i) · P(Y=y_j)`. Det er BARE riktig hvis `X` og `Y` er uavhengige. For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`."
+              - text: "Summen over ALLE seks cellene (med `x_i · y_j · p_{ij}`):"
+              - indent: "(0, 0):  0 · 0 · 0.10 = 0"
+              - indent: "(0, 1):  0 · 1 · 0.20 = 0"
+              - indent: "(0, 2):  0 · 2 · 0.10 = 0"
+              - indent: "(1, 0):  1 · 0 · 0.40 = 0"
+              - indent: "(1, 1):  1 · 1 · 0.10 = 0.10"
+              - indent: "(1, 2):  1 · 2 · 0.10 = 0.20"
+              - indent: "                          ─────"
+              - indent: "                  E[XY] = 0.30"
+              - comment: "Cellene med `x_i = 0` ELLER `y_j = 0` gir produktet 0 og bidrar ikke. Det er bare de to siste cellene som teller — derfor `0.10 + 0.20`."
           - label: "Kovarians"
             lines:
               - text: "Sett inn i kovariansformelen:"
               - indent: "`Cov(X, Y) = E[XY] − μ_X · μ_Y`"
-              - indent: "`         = 0.3 − 0.6 · 0.7`"
-              - indent: "`         = 0.3 − 0.42 = −0.12`"
+              - indent: "`         = 0.30 − 0.60 · 0.70`"
+              - indent: "`         = 0.30 − 0.42 = −0.12`"
           - label: "Tolkning"
             lines:
               - text: "`Cov(X, Y) = −0.12 < 0`, så `X` og `Y` er negativt assosierte."
-              - text: "Når `X` er stor, har `Y` tendens til å være liten, og omvendt."
+              - text: "Når `X` er stor (`= 1`), har `Y` tendens til å være liten, og omvendt."
+              - text: "Sjekk: hadde `X` og `Y` vært uavhengige, ville `E[XY] = μ_X · μ_Y = 0.42` og `Cov = 0`. Avviket `−0.12` viser graden av (negativ) avhengighet."
         result: "`Cov(X, Y) = −0.12`"
 
       - source: "Praksis · simultanfordeling 2 × 2"
