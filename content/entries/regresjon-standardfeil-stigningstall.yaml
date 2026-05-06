@@ -2,29 +2,29 @@ id: regresjon-standardfeil-stigningstall
 name_no: "Standardfeil til stigningstallet, SE(β̂)"
 type: regression
 category: regression_estimate
-tagline: "Mål for usikkerheten i estimatet av β̂ – inngår i hypotesetest og KI for β."
+tagline: "Mål for usikkerheten i estimatet av `β̂` – inngår i hypotesetest og KI for `β`."
 
 formula_main: "SE(β̂) = √(S_E² / Σ(x_i - x̄)²) = √(S_E² / S_XX)"
 formula_latex: "\\text{SE}(\\hat{\\beta}) = \\sqrt{\\frac{S_E^2}{\\sum (x_i - \\bar{x})^2}}"
 
 what_it_does: |
-  Beregner standardfeilen til stigningstallet β̂ i en lineær regresjon.
-  Standardfeilen kvantifiserer hvor mye β̂ "varierer" fra utvalg til
-  utvalg, og brukes i hypotesetest og konfidensintervaller for β.
+  Beregner standardfeilen til stigningstallet `β̂` i en lineær regresjon.
+  Standardfeilen kvantifiserer hvor mye `β̂` "varierer" fra utvalg til
+  utvalg, og brukes i hypotesetest og konfidensintervaller for `β`.
 
 why_use: |
   Mellomsteg i nesten all inferens på regresjonsstigningstallet. Mindre
-  SE(β̂) betyr at β̂ er presist estimert (mindre usikkerhet).
+  `SE(β̂)` betyr at `β̂` er presist estimert (mindre usikkerhet).
 
 recognition_cues:
-  - "Du jobber med regresjon og skal teste eller lage KI for β"
-  - "Spørsmålet ber om SE(β̂) eller standardfeil til stigningstallet"
-  - "Du har S_E² (residualvariansen) og S_XX = Σ(x-x̄)²"
+  - "Du jobber med regresjon og skal teste eller lage KI for `β`"
+  - "Spørsmålet ber om `SE(β̂)` eller standardfeil til stigningstallet"
+  - "Du har `S_E²` (residualvariansen) og `S_XX = Σ(x − x̄)²`"
 
 symbols:
-  - { sym: "SE(β̂)",  means: "standardfeilen til β̂" }
+  - { sym: "SE(β̂)",  means: "standardfeilen til `β̂`" }
   - { sym: "S_E²",    means: "estimat for residualenes varians" }
-  - { sym: "S_XX",    means: "Σ(x_i - x̄)² (sum av kvadrerte avvik for x)" }
+  - { sym: "S_XX",    means: "`Σ(x_i − x̄)²` (sum av kvadrerte avvik for `x`)" }
 
 filters:
   computes: [parameter_estimate, std_dev, confidence_interval]
@@ -35,14 +35,14 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:
-  - "Beregn S_E² først (residualvariansen)"
-  - "Beregn S_XX = Σ(x_i - x̄)²"
-  - "SE(β̂) = √(S_E² / S_XX)"
+  - "Beregn `S_E²` først (residualvariansen)"
+  - "Beregn `S_XX = Σ(x_i − x̄)²`"
+  - "`SE(β̂) = √(S_E² / S_XX)`"
 
 common_traps: |
-  Husk at SE(β̂) ≠ S_E. SE(β̂) er √(S_E²/S_XX), altså S_E delt på √S_XX.
-  Sjekkk dimensjonen: hvis y er i prosent og x i timer, er β̂ i prosent/time
-  og det samme er SE(β̂).
+  Husk at `SE(β̂) ≠ S_E`. `SE(β̂)` er `√(S_E²/S_XX)`, altså `S_E` delt på `√S_XX`.
+  Sjekk dimensjonen: hvis `y` er i prosent og `x` i timer, er `β̂` i prosent/time
+  og det samme er `SE(β̂)`.
 
 python_snippet: |
   SE2 = 6.093

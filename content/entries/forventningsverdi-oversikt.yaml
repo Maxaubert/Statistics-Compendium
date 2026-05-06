@@ -1,7 +1,7 @@
 id: forventningsverdi-oversikt
 name_no: "Forventningsverdi (oversikt)"
 type: overview
-tagline: "E[X] = vektet gjennomsnitt. Alle formene er samme idé med forskjellige vekter eller datakilder."
+tagline: "`E[X]` = vektet gjennomsnitt. Alle formene er samme idé med forskjellige vekter eller datakilder."
 
 what_it_means: |
   Forventningsverdien er det langsiktige snittet av en variabel — det
@@ -44,10 +44,10 @@ forms:
       - { id: kovarians, label: "Kovarians Cov(X,Y)" }
 
 recognition_cues:
-  - "Oppgaven ber om E[X], μ, eller forventningsverdien"
-  - "Oppgaven gir en transformert variabel (Y = aX + b) og spør om E[Y]"
-  - "Oppgaven gir simultanfordeling og spør om E[X · Y] eller E[X + Y]"
-  - "Du har rådata og trenger gjennomsnittet x̄"
+  - "Oppgaven ber om `E[X]`, `μ`, eller forventningsverdien"
+  - "Oppgaven gir en transformert variabel (`Y = aX + b`) og spør om `E[Y]`"
+  - "Oppgaven gir simultanfordeling og spør om `E[X · Y]` eller `E[X + Y]`"
+  - "Du har rådata og trenger gjennomsnittet `x̄`"
 
 filters:
   computes: [expected_value]

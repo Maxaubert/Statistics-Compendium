@@ -2,15 +2,15 @@ id: regresjon-estimat-alpha-beta
 name_no: "Lineær regresjon – estimater for α og β"
 type: regression
 category: regression_estimate
-tagline: "Punktestimater for skjæringspunktet α̂ og stigningstallet β̂ i ŷ = α̂ + β̂·x."
+tagline: "Punktestimater for skjæringspunktet `α̂` og stigningstallet `β̂` i `ŷ = α̂ + β̂·x`."
 
 formula_main: "β̂ = Σ(x_i - x̄)(y_i - ȳ) / Σ(x_i - x̄)²;  α̂ = ȳ - β̂·x̄"
 formula_latex: "\\hat{\\beta} = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum (x_i - \\bar{x})^2}, \\quad \\hat{\\alpha} = \\bar{y} - \\hat{\\beta} \\bar{x}"
 
 what_it_does: |
   Beregner minste-kvadraters-estimater for parametrene i en enkel
-  lineær regresjon ŷ = α̂ + β̂·x. β̂ er stigningstallet (hvor mye y endres
-  per enhet x), α̂ er skjæringspunktet (verdi av y når x = 0).
+  lineær regresjon `ŷ = α̂ + β̂·x`. `β̂` er stigningstallet (hvor mye `y` endres
+  per enhet `x`), `α̂` er skjæringspunktet (verdi av `y` når `x = 0`).
 
 why_use: |
   Første steg i enhver enkel lineær regresjonsanalyse. Gir den "beste"
@@ -18,10 +18,10 @@ why_use: |
   residualer).
 
 recognition_cues:
-  - "Du har n par av observasjoner (x_i, y_i)"
-  - "Du skal finne en lineær sammenheng y = α + β·x fra data"
-  - "Spørsmålet ber om 'estimer regresjonslinjen' eller 'finn ŷ"
-  - "Datatabell med Σ(x-x̄)², Σ(x-x̄)(y-ȳ) er typisk gitt"
+  - "Du har `n` par av observasjoner `(x_i, y_i)`"
+  - "Du skal finne en lineær sammenheng `y = α + β·x` fra data"
+  - "Spørsmålet ber om 'estimer regresjonslinjen' eller 'finn `ŷ`'"
+  - "Datatabell med `Σ(x−x̄)²`, `Σ(x−x̄)(y−ȳ)` er typisk gitt"
 
 when_NOT_to_use:
   - "Sammenhengen er åpenbart ikke-lineær (kurvet, eksponentiell, osv.)"
@@ -29,11 +29,11 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "x_i, y_i",      means: "observasjonsparene" }
-  - { sym: "x̄, ȳ",         means: "gjennomsnitt av x og y" }
+  - { sym: "x̄, ȳ",         means: "gjennomsnitt av `x` og `y`" }
   - { sym: "α̂",            means: "estimat for skjæringspunktet (intercept)" }
   - { sym: "β̂",            means: "estimat for stigningstallet (slope)" }
-  - { sym: "S_XX",          means: "Σ(x_i - x̄)² (sum av kvadrerte avvik for x)" }
-  - { sym: "S_XY",          means: "Σ(x_i - x̄)(y_i - ȳ) (krysssum)" }
+  - { sym: "S_XX",          means: "`Σ(x_i − x̄)²` (sum av kvadrerte avvik for `x`)" }
+  - { sym: "S_XY",          means: "`Σ(x_i − x̄)(y_i − ȳ)` (krysssum)" }
 
 filters:
   computes: [parameter_estimate]
@@ -45,16 +45,16 @@ filters:
   tooling: [calculator_only]
 
 solution_template:
-  - "Beregn x̄ og ȳ"
-  - "Beregn S_XX = Σ(x_i - x̄)² og S_XY = Σ(x_i - x̄)(y_i - ȳ)"
-  - "β̂ = S_XY / S_XX"
-  - "α̂ = ȳ - β̂·x̄"
-  - "Skriv regresjonslinjen ŷ = α̂ + β̂·x"
+  - "Beregn `x̄` og `ȳ`"
+  - "Beregn `S_XX = Σ(x_i − x̄)²` og `S_XY = Σ(x_i − x̄)(y_i − ȳ)`"
+  - "`β̂ = S_XY / S_XX`"
+  - "`α̂ = ȳ − β̂·x̄`"
+  - "Skriv regresjonslinjen `ŷ = α̂ + β̂·x`"
 
 common_traps: |
-  Pass på rekkefølgen i krysssummen: Σ(x_i - x̄)(y_i - ȳ) er IKKE det samme
-  som Σx_i·y_i. Hvis bare Σx_i·y_i er gitt, må krysssummen omformes:
-  Σ(x_i - x̄)(y_i - ȳ) = Σx_i·y_i - n·x̄·ȳ.
+  Pass på rekkefølgen i krysssummen: `Σ(x_i − x̄)(y_i − ȳ)` er IKKE det samme
+  som `Σx_i·y_i`. Hvis bare `Σx_i·y_i` er gitt, må krysssummen omformes:
+  `Σ(x_i − x̄)(y_i − ȳ) = Σx_i·y_i − n·x̄·ȳ`.
 
 python_snippet: |
   import numpy as np

@@ -2,7 +2,7 @@ id: ordnet-utvalg-med-tilbakelegging
 name_no: "Ordnet utvalg med tilbakelegging (n^k)"
 type: combinatorics
 category: combinatorics
-tagline: "Antall ordnede sekvenser når samme verdi kan gjentas — n velg k med tilbakelegging og rekkefølge."
+tagline: "Antall ordnede sekvenser når samme verdi kan gjentas — `n` velg `k` med tilbakelegging og rekkefølge."
 
 formula_main: "Antall sekvenser = n^k"
 formula_latex: "n^{k}"
@@ -14,29 +14,29 @@ what_it_does: |
   for spesifikke sekvenser når alle utfall er like sannsynlige.
 
 why_use: |
-  Klassisk telleregel for kodelås, PIN-koder, terningkast over k forsøk,
+  Klassisk telleregel for kodelås, PIN-koder, terningkast over `k` forsøk,
   passord, trekninger fra urne med tilbakelegging, og generelt enhver situasjon
   med `k` uavhengige forsøk hvor hvert forsøk har `n` mulige utfall. Sammen
   med "gunstige på mulige" gir dette sannsynligheter direkte. For "minst én"-
   spørsmål brukes komplementtrikset `1 − (1 − p)^k`.
 
 recognition_cues:
-  - "Du har k posisjoner / forsøk å fylle, hver med n mulige utfall"
+  - "Du har `k` posisjoner / forsøk å fylle, hver med `n` mulige utfall"
   - "Samme verdi kan dukke opp flere ganger (tilbakelegging tillatt)"
-  - "Rekkefølgen teller — (1, 2, 3) er ulikt fra (3, 2, 1)"
+  - "Rekkefølgen teller — `(1, 2, 3)` er ulikt fra `(3, 2, 1)`"
   - "Trekningene / forsøkene er uavhengige"
-  - "Typisk: PIN-kode, passord, k terningkast, k myntkast, k trekninger med tilbakelegging"
+  - "Typisk: PIN-kode, passord, `k` terningkast, `k` myntkast, `k` trekninger med tilbakelegging"
 
 when_NOT_to_use:
-  - "Rekkefølgen IKKE teller → bruk uordnet utvalg (C(n,k))"
-  - "Uten tilbakelegging (samme element kan ikke gjentas) → bruk ordnet utvalg uten tilbakelegging (n!/(n−k)!)"
-  - "Antall suksesser i k forsøk (ikke selve sekvensen) → bruk binomialfordeling"
+  - "Rekkefølgen IKKE teller → bruk [uordnet utvalg](/entry/uordnet-utvalg-uten-tilbakelegging) (`C(n,k)`)"
+  - "Uten tilbakelegging (samme element kan ikke gjentas) → bruk [ordnet utvalg uten tilbakelegging](/entry/ordnet-utvalg-uten-tilbakelegging) (`n!/(n−k)!`)"
+  - "Antall suksesser i `k` forsøk (ikke selve sekvensen) → bruk [binomialfordeling](/entry/binomial-fordeling)"
 
 symbols:
-  - { sym: "n",    means: "antall mulige verdier per posisjon (f.eks. 6 for terning, 10 for siffer)" }
+  - { sym: "n",    means: "antall mulige verdier per posisjon (f.eks. `6` for terning, `10` for siffer)" }
   - { sym: "k",    means: "antall posisjoner / forsøk i sekvensen" }
-  - { sym: "n^k",  means: "antall ordnede sekvenser av lengde k" }
-  - { sym: "p",    means: "sannsynlighet for et bestemt utfall på ett forsøk (typisk 1/n ved likt sannsynlige utfall)" }
+  - { sym: "n^k",  means: "antall ordnede sekvenser av lengde `k`" }
+  - { sym: "p",    means: "sannsynlighet for et bestemt utfall på ett forsøk (typisk `1/n` ved likt sannsynlige utfall)" }
 
 filters:
   computes: [combinatorial_count, exact_probability]

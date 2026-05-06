@@ -2,14 +2,14 @@ id: forventningsverdi-diskret
 name_no: "Forventningsverdi for diskret stokastisk variabel"
 type: identity
 category: distribution_property
-tagline: "E[X] = veid gjennomsnitt av verdiene, vektet med sannsynlighetene."
+tagline: "`E[X]` = veid gjennomsnitt av verdiene, vektet med sannsynlighetene."
 
 formula_main: "E[X] = Σ x_i · P(X = x_i)"
 formula_latex: "E[X] = \\sum_i x_i \\cdot P(X = x_i)"
 
 what_it_does: |
   Beregner forventningsverdien (gjennomsnittet på lang sikt) til en
-  diskret stokastisk variabel X som gjennomsnittet av X-verdiene vektet
+  diskret stokastisk variabel `X` som gjennomsnittet av `X`-verdiene vektet
   med deres sannsynligheter.
 
 why_use: |
@@ -18,15 +18,16 @@ why_use: |
 
 recognition_cues:
   - "Diskret stokastisk variabel med kjent sannsynlighetsfordeling"
-  - "Spørsmålet ber om E[X], μ, eller forventningsverdien"
-  - "Du har en tabell med x-verdier og P(X=x)-verdier"
+  - "Spørsmålet ber om `E[X]`, `μ`, eller forventningsverdien"
+  - "Du har en tabell med `x`-verdier og `P(X=x)`-verdier"
 
 when_NOT_to_use:
-  - "X er kontinuerlig (måling, tid, mengde) → bruk integralet `E[X] = ∫ x · f(x) dx`"
+  - "`X` er kontinuerlig (måling, tid, mengde) → bruk integralet `E[X] = ∫ x · f(x) dx`"
   - "Du har ikke en sannsynlighetsfordeling, kun rådata → bruk utvalgsgjennomsnittet `x̄ = (Σx_i)/n` i stedet"
+  - "Du står overfor en simultantabell og blander vekt-summen for forventning med selve marginalen → bruk [marginalfordeling](/entry/marginalfordeling) først for å hente ut riktige `P(X=x)`"
 
 symbols:
-  - { sym: "x_i",      means: "verdiene X kan ta" }
+  - { sym: "x_i",      means: "verdiene `X` kan ta" }
   - { sym: "P(X=x_i)", means: "sannsynlighet for hver verdi" }
   - { sym: "E[X], μ",   means: "forventningsverdien" }
 
@@ -39,13 +40,13 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 solution_template:
-  - "List opp alle verdier x_i og P(X = x_i)"
-  - "Multipliser hver x_i med P(X = x_i)"
+  - "List opp alle verdier `x_i` og `P(X = x_i)`"
+  - "Multipliser hver `x_i` med `P(X = x_i)`"
   - "Summer alle produktene"
 
 common_traps: |
-  For en simultanfordeling må du først finne marginalfordelingen P(X=x)
-  ved å summere over y. Ikke vekt med rad-summer i stedet for marginalsumane.
+  For en simultanfordeling må du først finne marginalfordelingen `P(X=x)`
+  ved å summere over `y`. Ikke vekt med rad-summer i stedet for marginalsumane.
 
 detailed_solution_variants:
   - label: "Forventningsverdi (diskret)"

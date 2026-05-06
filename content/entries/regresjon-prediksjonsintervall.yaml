@@ -2,36 +2,36 @@ id: regresjon-prediksjonsintervall
 name_no: "Prediksjonsintervall for Y i lineær regresjon"
 type: regression
 category: regression_estimate
-tagline: "(1-α)·100 % intervall for hvor en NY observasjon Y vil ligge gitt en x-verdi."
+tagline: "`(1−α)·100 %` intervall for hvor en NY observasjon `Y` vil ligge gitt en `x`-verdi."
 
 formula_main: "α̂ + β̂·x ± t_(α/2, n-2) · S_E · √(1 + 1/n + ((x - x̄) / (S_E / SE(β̂)))²)"
 formula_latex: "\\hat{\\alpha} + \\hat{\\beta} x \\pm t_{\\alpha/2, n-2} \\cdot S_E \\cdot \\sqrt{1 + \\frac{1}{n} + \\left(\\frac{x - \\bar{x}}{S_E / \\text{SE}(\\hat{\\beta})}\\right)^2}"
 
 what_it_does: |
-  Gir et intervall som med (1-α)·100 % sikkerhet inneholder en ENKELT
-  fremtidig observasjon Y for en gitt x-verdi. Forskjellig fra
-  konfidensintervall for E[Y|x], som gjelder forventningsverdien.
+  Gir et intervall som med `(1−α)·100 %` sikkerhet inneholder en ENKELT
+  fremtidig observasjon `Y` for en gitt `x`-verdi. Forskjellig fra
+  konfidensintervall for `E[Y|x]`, som gjelder forventningsverdien.
 
 why_use: |
-  Brukes når du vil predikere et nytt utfall (en enkel observasjon Y),
-  ikke gjennomsnittet. Bredere intervall enn KI for E[Y|x] fordi det
+  Brukes når du vil predikere et nytt utfall (en enkel observasjon `Y`),
+  ikke gjennomsnittet. Bredere intervall enn KI for `E[Y|x]` fordi det
   inneholder både usikkerhet i regresjonslinjen og naturlig spredning.
 
 recognition_cues:
-  - "Spørsmålet ber om prediksjonsintervall for en enkel ny y-verdi gitt x"
-  - "Spørsmålet er typisk 'er det sannsynlig at y > 75 % når x = 5?'"
-  - "Du har α̂, β̂, S_E (eller S_E²), og SE(β̂)"
+  - "Spørsmålet ber om prediksjonsintervall for en enkel ny `y`-verdi gitt `x`"
+  - "Spørsmålet er typisk 'er det sannsynlig at `y > 75 %` når `x = 5`?'"
+  - "Du har `α̂`, `β̂`, `S_E` (eller `S_E²`), og `SE(β̂)`"
 
 when_NOT_to_use:
-  - "Du vil ha intervall for forventningsverdien E[Y|x] → bruk KI for E[Y|x]"
-  - "Du vil teste om β = 0 → bruk hypotesetest for stigningstallet"
+  - "Du vil ha intervall for forventningsverdien `E[Y|x]` → bruk KI for `E[Y|x]`"
+  - "Du vil teste om `β = 0` → bruk [hypotesetest for stigningstallet](/entry/regresjon-test-stigningstall)"
 
 symbols:
   - { sym: "α̂, β̂",         means: "estimerte regresjonskoeffisienter" }
-  - { sym: "x̄",              means: "gjennomsnitt av x-observasjonene" }
+  - { sym: "x̄",              means: "gjennomsnitt av `x`-observasjonene" }
   - { sym: "S_E",             means: "estimat for residualenes standardavvik" }
   - { sym: "SE(β̂)",          means: "standardfeil til stigningstallet" }
-  - { sym: "t_(α/2, n-2)",    means: "kvantil i t-fordelingen med n-2 frihetsgrader" }
+  - { sym: "t_(α/2, n-2)",    means: "kvantil i t-fordelingen med `n−2` frihetsgrader" }
 
 filters:
   computes: [prediction_interval, find_x_for_threshold]
@@ -53,10 +53,10 @@ solution_template:
   - "Sjekk svaret ved å sammenligne mot oppgavens spørsmål (f.eks. ligger en gitt verdi innenfor intervallet?)"
 
 common_traps: |
-  Frihetsgrader er n - 2 (lineær regresjon). Tall under kvadratroten
-  må regnes nøye: 1 + 1/n + ((x-x̄)/(S_E/SE(β̂)))². Husk at
-  S_E/SE(β̂) = √(S_XX). Dette er viktig – ekvivalent formulering:
-  punkt ± t·S_E·√(1 + 1/n + (x-x̄)²/S_XX).
+  Frihetsgrader er `n − 2` (lineær regresjon). Tall under kvadratroten
+  må regnes nøye: `1 + 1/n + ((x−x̄)/(S_E/SE(β̂)))²`. Husk at
+  `S_E/SE(β̂) = √(S_XX)`. Dette er viktig – ekvivalent formulering:
+  `punkt ± t·S_E·√(1 + 1/n + (x−x̄)²/S_XX)`.
 
 python_snippet: |
   import math

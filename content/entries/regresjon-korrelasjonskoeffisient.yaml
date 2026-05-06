@@ -2,7 +2,7 @@ id: regresjon-korrelasjonskoeffisient
 name_no: "Korrelasjonskoeffisient r (Pearson)"
 type: regression
 category: regression_estimate
-tagline: "Mål på styrken og retningen av en lineær sammenheng mellom x og y."
+tagline: "Mål på styrken og retningen av en lineær sammenheng mellom `x` og `y`."
 
 formula_main: "r = S_XY / (√S_XX · √S_YY) = Σ(x_i - x̄)(y_i - ȳ) / √(Σ(x_i - x̄)² · Σ(y_i - ȳ)²)"
 formula_latex: "r = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum (x_i - \\bar{x})^2 \\cdot \\sum (y_i - \\bar{y})^2}}"
@@ -19,19 +19,19 @@ why_use: |
   ved at r er et ESTIMAT basert på utvalg, og brukes i regresjonsanalyse.
 
 recognition_cues:
-  - "Du har n par av observasjoner (x_i, y_i)"
+  - "Du har `n` par av observasjoner `(x_i, y_i)`"
   - "Spørsmålet ber om 'korrelasjonskoeffisient' eller 'styrken av sammenhengen'"
-  - "Datatabell viser S_XX, S_YY, S_XY eller summer som lar deg regne dem ut"
+  - "Datatabell viser `S_XX`, `S_YY`, `S_XY` eller summer som lar deg regne dem ut"
 
 when_NOT_to_use:
   - "Du jobber med en simultanfordeling (felles teoretisk fordeling) → bruk [ρ for fellesfordeling](/entry/korrelasjon-joint)"
-  - "Du forventer en ikke-lineær sammenheng → r kan være misvisende"
+  - "Du forventer en ikke-lineær sammenheng → `r` kan være misvisende"
 
 symbols:
   - { sym: "r",       means: "korrelasjonskoeffisient (utvalgsestimat)" }
-  - { sym: "S_XX",    means: "Σ(x_i - x̄)²" }
-  - { sym: "S_YY",    means: "Σ(y_i - ȳ)²" }
-  - { sym: "S_XY",    means: "Σ(x_i - x̄)(y_i - ȳ)" }
+  - { sym: "S_XX",    means: "`Σ(x_i − x̄)²`" }
+  - { sym: "S_YY",    means: "`Σ(y_i − ȳ)²`" }
+  - { sym: "S_XY",    means: "`Σ(x_i − x̄)(y_i − ȳ)`" }
 
 filters:
   computes: [correlation, parameter_estimate]
@@ -43,15 +43,15 @@ filters:
   tooling: [calculator_sqrt]
 
 solution_template:
-  - "Beregn x̄, ȳ"
-  - "Beregn S_XX, S_YY, S_XY (eller hent fra datatabell)"
-  - "r = S_XY / √(S_XX · S_YY)"
-  - "Tolk: nær 1 = sterk positiv, nær -1 = sterk negativ, nær 0 = ingen lineær sammenheng"
+  - "Beregn `x̄`, `ȳ`"
+  - "Beregn `S_XX`, `S_YY`, `S_XY` (eller hent fra datatabell)"
+  - "`r = S_XY / √(S_XX · S_YY)`"
+  - "Tolk: nær `1` = sterk positiv, nær `−1` = sterk negativ, nær `0` = ingen lineær sammenheng"
 
 common_traps: |
-  r måler bare LINEÆR sammenheng. Sterk ikke-lineær sammenheng (f.eks.
-  kvadratisk) kan gi r ≈ 0. Husk forskjellen på r og ρ: r er estimat
-  fra utvalg av (x,y)-par; ρ er korrelasjon fra en fellesfordeling.
+  `r` måler bare LINEÆR sammenheng. Sterk ikke-lineær sammenheng (f.eks.
+  kvadratisk) kan gi `r ≈ 0`. Husk forskjellen på `r` og `ρ`: `r` er estimat
+  fra utvalg av `(x,y)`-par; `ρ` er korrelasjon fra en fellesfordeling.
 
 detailed_solution_variants:
   - label: "Korrelasjonskoeffisient r"

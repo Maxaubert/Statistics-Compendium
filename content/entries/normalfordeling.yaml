@@ -26,25 +26,25 @@ why_use: |
   i z-tester, t-tester og konfidensintervaller.
 
 recognition_cues:
-  - "Oppgaven sier eksplisitt 'normalfordelt med forventningsverdi μ og standardavvik σ'"
-  - "Oppgaven oppgir både en gjennomsnittsverdi μ og en spredning σ for en kontinuerlig størrelse"
-  - "Spørsmålet er på formen P(X < x), P(X > x) eller P(a < X < b) for kontinuerlig X"
-  - "Stort antall observasjoner (n ≥ 30) der man ser på gjennomsnittet – sentralgrenseteoremet gir tilnærmet normalfordeling"
-  - "Spørsmålet ber om 'sannsynligheten for at en tilfeldig valgt X overstiger / underskrider en verdi'"
-  - "Skjult variant: 'finn x slik at P(X < x) = p' (invers normal – bruk z-kvantiltabellen E.4)"
+  - "Oppgaven sier eksplisitt 'normalfordelt med forventningsverdi `μ` og standardavvik `σ`'"
+  - "Oppgaven oppgir både en gjennomsnittsverdi `μ` og en spredning `σ` for en kontinuerlig størrelse"
+  - "Spørsmålet er på formen `P(X < x)`, `P(X > x)` eller `P(a < X < b)` for kontinuerlig `X`"
+  - "Stort antall observasjoner (`n ≥ 30`) der man ser på gjennomsnittet – sentralgrenseteoremet gir tilnærmet normalfordeling"
+  - "Spørsmålet ber om 'sannsynligheten for at en tilfeldig valgt `X` overstiger / underskrider en verdi'"
+  - "Skjult variant: 'finn `x` slik at `P(X < x) = p`' (invers normal – bruk z-kvantiltabellen E.4)"
 
 when_NOT_to_use:
-  - "Variabelen er diskret (heltall) → bruk binomial, Poisson, eller hypergeometrisk"
-  - "Datamaterialet ser klart skjevt ut (qq-plott avviker) → vurder bootstrap"
-  - "Variabelen er bare positiv tid mellom hendelser → bruk eksponentialfordeling"
+  - "Variabelen er diskret (heltall) → bruk [binomial](/entry/binomial-fordeling), [Poisson](/entry/poisson-fordeling), eller [hypergeometrisk](/entry/hypergeometrisk-fordeling)"
+  - "Datamaterialet ser klart skjevt ut (qq-plott avviker) → vurder [bootstrap](/entry/bootstrapping)"
+  - "Variabelen er bare positiv tid mellom hendelser → bruk [eksponentialfordeling](/entry/eksponential-fordeling)"
 
 symbols:
   - { sym: "μ",     means: "forventningsverdien (sentrum av klokken)" }
   - { sym: "σ",     means: "standardavviket (spredning)" }
   - { sym: "σ²",    means: "variansen" }
-  - { sym: "Z",     means: "standardnormalisert variabel, Z = (X − μ)/σ" }
-  - { sym: "G(z)",  means: "kumulativ standardnormalfordeling, P(Z ≤ z)" }
-  - { sym: "z_α",   means: "α-kvantilet, slik at P(Z > z_α) = α" }
+  - { sym: "Z",     means: "standardnormalisert variabel, `Z = (X − μ)/σ`" }
+  - { sym: "G(z)",  means: "kumulativ standardnormalfordeling, `P(Z ≤ z)`" }
+  - { sym: "z_α",   means: "`α`-kvantilet, slik at `P(Z > z_α) = α`" }
 
 properties:
   expected_value: "E[X] = μ"
@@ -110,12 +110,12 @@ solution_template:
   - "Standardiser med `Z = (X − μ)/σ`, slå opp i E.3 (kumulativ) eller E.4 (kvantil)."
 
 common_traps: |
-  - **Forveksle ikke σ (standardavvik) med σ² (varians).** Hvis oppgaven sier "varians 25", er σ = 5, ikke 25.
-  - **G(z) gir arealet til VENSTRE.** For "større enn z", bruk 1 − G(z).
-  - **Symmetri**: G(−z) = 1 − G(z). Brukes for negative z hvis tabellen kun viser positive (vår tabell viser begge).
-  - **Standardisering må gjøres riktig**: Z = (X − μ)/σ, ikke (μ − X)/σ. Sjekk fortegnet.
-  - **Avrunding av z**: rund til 2 desimaler for å passe tabellen (z = -2.08, ikke -2.0833).
-  - **Invers-oppgaver**: hvis P(X < 300) er liten (< 0.5) og verdien står til venstre for μ, må z være negativ. Ikke bare bruk z fra tabellen direkte; reflekter fortegnet.
+  - **Forveksle ikke `σ` (standardavvik) med `σ²` (varians).** Hvis oppgaven sier "varians 25", er `σ = 5`, ikke 25.
+  - **`G(z)` gir arealet til VENSTRE.** For "større enn `z`", bruk `1 − G(z)`.
+  - **Symmetri**: `G(−z) = 1 − G(z)`. Brukes for negative `z` hvis tabellen kun viser positive (vår tabell viser begge).
+  - **Standardisering må gjøres riktig**: `Z = (X − μ)/σ`, ikke `(μ − X)/σ`. Sjekk fortegnet.
+  - **Avrunding av `z`**: rund til 2 desimaler for å passe tabellen (`z = -2.08`, ikke `-2.0833`).
+  - **Invers-oppgaver**: hvis `P(X < 300)` er liten (`< 0.5`) og verdien står til venstre for `μ`, må `z` være negativ. Ikke bare bruk `z` fra tabellen direkte; reflekter fortegnet.
 
 python_snippet: |
   from scipy.stats import norm

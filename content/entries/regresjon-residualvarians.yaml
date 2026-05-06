@@ -9,26 +9,30 @@ formula_latex: "S_E^2 = \\frac{\\text{SSE}}{n - 2}, \\quad \\text{SSE} = \\sum (
 
 what_it_does: |
   Estimat for variansen til residualene (avvik mellom observert og
-  predikert y). Inngår i utregning av SE(β̂) og prediksjonsintervaller.
-  S_E (kvadratroten) kalles ofte "standard error" i regresjon.
+  predikert `y`). Inngår i utregning av `SE(β̂)` og prediksjonsintervaller.
+  `S_E` (kvadratroten) kalles ofte "standard error" i regresjon.
 
 why_use: |
   Nødvendig som mellomberegning for nesten alt videre i regresjon:
-  hypotesetest for β, KI for β, prediksjonsintervaller. Måler også
+  hypotesetest for `β`, KI for `β`, prediksjonsintervaller. Måler også
   generelt hvor "sprett" datapunktene er rundt regresjonslinjen.
 
 recognition_cues:
   - "Du jobber med lineær regresjon"
-  - "Du trenger SSE eller residualenes spredning"
+  - "Du trenger `SSE` eller residualenes spredning"
   - "Spørsmålet snakker om 'residualenes varians' eller 'standardfeil'"
-  - "Datatabell inkluderer kolonne (y_i - α̂ - β̂·x_i)²"
+  - "Datatabell inkluderer kolonne `(y_i − α̂ − β̂·x_i)²`"
+
+when_NOT_to_use:
+  - "Du har bare ett utvalg uten regresjon (rådata `x_1, ..., x_n`) → bruk [utvalgsvarians s²](/entry/utvalgsvarians-radata) i stedet (deler på `n − 1`, ikke `n − 2`)"
+  - "Du jobber med en diskret stokastisk variabel med kjent PMF → bruk [diskret varians](/entry/varians-standardavvik-diskret)"
 
 symbols:
-  - { sym: "SSE",     means: "Sum of Squared Errors, Σ(y_i - α̂ - β̂·x_i)²" }
+  - { sym: "SSE",     means: "Sum of Squared Errors, `Σ(y_i − α̂ − β̂·x_i)²`" }
   - { sym: "S_E²",    means: "estimat for residualenes varians" }
   - { sym: "S_E",     means: "estimat for residualenes standardavvik" }
   - { sym: "n",       means: "antall observasjonspar" }
-  - { sym: "ν",       means: "frihetsgrader, n - 2" }
+  - { sym: "ν",       means: "frihetsgrader, `n − 2`" }
 
 filters:
   computes: [parameter_estimate, std_dev]
@@ -39,13 +43,13 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:
-  - "Beregn SSE = Σ(y_i - α̂ - β̂·x_i)² (eller hent fra tabell)"
-  - "S_E² = SSE / (n - 2)"
-  - "S_E = √S_E² (standardavviket)"
+  - "Beregn `SSE = Σ(y_i − α̂ − β̂·x_i)²` (eller hent fra tabell)"
+  - "`S_E² = SSE / (n − 2)`"
+  - "`S_E = √S_E²` (standardavviket)"
 
 common_traps: |
-  Frihetsgrader er n - 2 (ikke n - 1), fordi to parametre (α̂, β̂) er
-  estimert. SSE forveksles ofte med S_XX = Σ(x-x̄)² – disse er HELT
+  Frihetsgrader er `n − 2` (ikke `n − 1`), fordi to parametre (`α̂`, `β̂`) er
+  estimert. `SSE` forveksles ofte med `S_XX = Σ(x − x̄)²` – disse er HELT
   forskjellige.
 
 python_snippet: |

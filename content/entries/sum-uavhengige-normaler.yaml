@@ -2,15 +2,15 @@ id: sum-uavhengige-normaler
 name_no: "Sum av uavhengige normalfordelte variabler"
 type: identity
 category: distribution_property
-tagline: "Hvis X_i ~ N(μ, σ) og uavhengige, er ΣX_i ~ N(nμ, σ·√n)."
+tagline: "Hvis `X_i ~ N(μ, σ)` og uavhengige, er `ΣX_i ~ N(nμ, σ·√n)`."
 
 formula_main: "Hvis X_1, ..., X_n er uavhengige, identisk fordelte N(μ, σ), så er Y = X_1 + ... + X_n ~ N(n·μ, σ·√n)"
 formula_latex: "Y = \\sum_{i=1}^n X_i \\sim N(n\\mu, \\sigma \\sqrt{n}) \\text{ når } X_i \\text{ iid } N(\\mu, \\sigma)"
 
 what_it_does: |
-  Sier at summen av n uavhengige, identisk fordelte normalfordelte
-  variabler er igjen normalfordelt. Forventningsverdien skaleres med n,
-  standardavviket med √n (variansen med n).
+  Sier at summen av `n` uavhengige, identisk fordelte normalfordelte
+  variabler er igjen normalfordelt. Forventningsverdien skaleres med `n`,
+  standardavviket med `√n` (variansen med `n`).
 
 why_use: |
   Brukes når flere uavhengige målinger skal slås sammen – typisk
@@ -19,15 +19,15 @@ why_use: |
 recognition_cues:
   - "Oppgaven beskriver gjentatte uavhengige målinger fra samme normalfordeling"
   - "Du skal regne ut sannsynlighet for SUMMEN, ikke gjennomsnittet"
-  - "Begrunnelse for å bruke z-test ved store n følger samme prinsipp"
+  - "Begrunnelse for å bruke z-test ved store `n` følger samme prinsipp"
 
 when_NOT_to_use:
-  - "Du jobber med GJENNOMSNITTET av flere observasjoner – da blir σ → σ/√n (mindre spredning, ikke større)"
+  - "Du jobber med GJENNOMSNITTET av flere observasjoner – da blir `σ → σ/√n` (mindre spredning, ikke større) — bruk [normalfordeling](/entry/normalfordeling) på `X̄`"
   - "Variablene er ikke uavhengige eller ikke normalfordelte"
 
 symbols:
-  - { sym: "X_i",      means: "iid normalfordelte (μ, σ)" }
-  - { sym: "Y = ΣX_i", means: "summen, normalfordelt N(nμ, σ√n)" }
+  - { sym: "X_i",      means: "iid normalfordelte `(μ, σ)`" }
+  - { sym: "Y = ΣX_i", means: "summen, normalfordelt `N(nμ, σ√n)`" }
 
 properties:
   expected_value: "E[Y] = n·μ"
@@ -50,8 +50,8 @@ solution_template:
   - "Bytt deretter til normalfordelingen-oppslaget med disse parametrene — bruk variant `P(X < x)`, `P(X > x)` eller `P(a < X < b)` etter hva oppgaven spør om"
 
 common_traps: |
-  Variansen for sum: Var(Y) = n·σ², altså σ_Y = σ·√n (IKKE n·σ).
-  For gjennomsnittet X̄ = (1/n)·ΣX_i er σ_(X̄) = σ/√n (mindre, ikke større).
+  Variansen for sum: `Var(Y) = n·σ²`, altså `σ_Y = σ·√n` (IKKE `n·σ`).
+  For gjennomsnittet `X̄ = (1/n)·ΣX_i` er `σ_(X̄) = σ/√n` (mindre, ikke større).
 
 python_snippet: |
   from scipy.stats import norm

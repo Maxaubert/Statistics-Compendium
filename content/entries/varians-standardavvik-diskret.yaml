@@ -26,8 +26,8 @@ recognition_cues:
   - "Spørsmålet ber om Var(X), σ², σ, eller standardavviket"
 
 when_NOT_to_use:
-  - "X er kontinuerlig → bruk integralet `Var(X) = ∫ (x − μ)² · f(x) dx`"
-  - "Du har kun rådata uten fordeling → bruk utvalgsvariansen `s² = Σ(x_i − x̄)² / (n − 1)`"
+  - "`X` er kontinuerlig → bruk integralet `Var(X) = ∫ (x − μ)² · f(x) dx`"
+  - "Du har kun rådata uten fordeling → bruk [utvalgsvariansen `s²` fra rådata](/entry/utvalgsvarians-radata) (`Σ(x_i − x̄)² / (n − 1)`) i stedet"
 
 symbols:
   - { sym: "Var(X), σ²", means: "variansen" }

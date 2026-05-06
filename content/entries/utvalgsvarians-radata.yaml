@@ -2,7 +2,7 @@ id: utvalgsvarians-radata
 name_no: "Utvalgsvarians fra rådata"
 type: identity
 category: descriptive_statistics
-tagline: "s² = Σ(x_i − x̄)²/(n − 1) — variansen til en datamengde, beregnet direkte fra observasjonene."
+tagline: "`s² = Σ(x_i − x̄)²/(n − 1)` — variansen til en datamengde, beregnet direkte fra observasjonene."
 
 formula_main: "s² = Σ(x_i − x̄)² / (n − 1);  s = √s²"
 formula_latex: "s^2 = \\frac{\\sum_{i=1}^{n} (x_i - \\bar{x})^2}{n - 1}, \\quad s = \\sqrt{s^2}"
@@ -25,22 +25,24 @@ why_use: |
 
 recognition_cues:
   - "Oppgaven gir en liste med observasjoner (f.eks. «målingene var 297, 300, 293, 296, 304, 302»)"
-  - "Spørsmålet ber om utvalgsstandardavvik s, eller varians s² fra dataene"
-  - "Du trenger s² som inngang til t-test eller KI"
+  - "Spørsmålet ber om utvalgsstandardavvik `s`, eller varians `s²` fra dataene"
+  - "Du trenger `s²` som inngang til t-test eller KI"
   - "Ingen sannsynlighetsfordeling er gitt — bare rådata"
 
 when_NOT_to_use:
-  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk varians for diskret stokastisk variabel i stedet"
-  - "Oppgaven oppgir s² eller σ² direkte → ingen utregning nødvendig"
+  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk [varians for diskret stokastisk variabel](/entry/varians-standardavvik-diskret) i stedet"
+  - "Oppgaven oppgir `s²` eller `σ²` direkte → ingen utregning nødvendig"
   - "Du har hele populasjonen (svært sjelden i pensum) → del på `n` i stedet for `n − 1`"
+  - "Du jobber med residualer i regresjon → bruk [residualvarians S_E²](/entry/regresjon-residualvarians) (deler på `n − 2`)"
+  - "Du kombinerer to grupper med antatt lik varians → bruk [pooled S_P² i to-utvalgs t-test](/entry/to-utvalgs-t-test)"
 
 symbols:
-  - { sym: "x_i",   means: "den i-te observasjonen i datamengden" }
-  - { sym: "x̄",     means: "utvalgsgjennomsnittet, x̄ = Σ x_i / n" }
+  - { sym: "x_i",   means: "den `i`-te observasjonen i datamengden" }
+  - { sym: "x̄",     means: "utvalgsgjennomsnittet, `x̄ = Σ x_i / n`" }
   - { sym: "n",     means: "antall observasjoner" }
-  - { sym: "n − 1", means: "frihetsgrader (Bessels korreksjon — gir forventningsrett estimator for σ²)" }
-  - { sym: "s²",    means: "utvalgsvariansen — estimat for populasjonsvariansen σ²" }
-  - { sym: "s",     means: "utvalgsstandardavviket, s = √s²" }
+  - { sym: "n − 1", means: "frihetsgrader (Bessels korreksjon — gir forventningsrett estimator for `σ²`)" }
+  - { sym: "s²",    means: "utvalgsvariansen — estimat for populasjonsvariansen `σ²`" }
+  - { sym: "s",     means: "utvalgsstandardavviket, `s = √s²`" }
 
 filters:
   computes: [std_dev, parameter_estimate]
