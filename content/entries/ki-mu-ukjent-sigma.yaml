@@ -2,35 +2,35 @@ id: ki-mu-ukjent-sigma
 name_no: "Konfidensintervall for μ (ukjent σ)"
 type: identity
 category: confidence_interval
-tagline: "(1-α)·100 % KI for forventningsverdien når σ er ukjent og estimert som S."
+tagline: "`(1−α)·100 %` KI for forventningsverdien når `σ` er ukjent og estimert som `S`."
 
 formula_main: "x̄ ± t_(α/2, n-1) · s/√n"
 formula_latex: "\\overline{x} \\pm t_{\\alpha/2, n-1} \\cdot \\frac{s}{\\sqrt{n}}"
 
 what_it_does: |
-  Gir et intervall som med (1-α)·100 % sikkerhet inneholder μ, når
-  populasjonens σ ikke er kjent og må estimeres med utvalgs-standardavviket
-  s. Bruker t-fordelingen med n - 1 frihetsgrader.
+  Gir et intervall som med `(1−α)·100 %` sikkerhet inneholder `μ`, når
+  populasjonens `σ` ikke er kjent og må estimeres med utvalgs-standardavviket
+  `s`. Bruker t-fordelingen med `n − 1` frihetsgrader.
 
 why_use: |
-  Standardvalg når σ ikke er kjent. T-fordelingen er bredere enn standardnormal
-  for små n, og tar dermed hensyn til usikkerheten i estimatet av σ.
+  Standardvalg når `σ` ikke er kjent. T-fordelingen er bredere enn standardnormal
+  for små `n`, og tar dermed hensyn til usikkerheten i estimatet av `σ`.
 
 recognition_cues:
-  - "Spørsmålet ber om et konfidensintervall for μ"
-  - "σ er IKKE oppgitt; kun s eller s² fra utvalg er tilgjengelig"
+  - "Spørsmålet ber om et konfidensintervall for `μ`"
+  - "`σ` er IKKE oppgitt; kun `s` eller `s²` fra utvalg er tilgjengelig"
   - "Konfidensnivå er gitt"
 
 when_NOT_to_use:
-  - "σ er kjent → bruk z-basert KI"
+  - "`σ` er kjent → bruk [z-basert KI](/entry/ki-mu-kjent-sigma) i stedet"
   - "Du sammenligner to grupper → bruk to-utvalgs-formler"
-  - "Det handler om andel → bruk KI for andel"
+  - "Det handler om andel → bruk [KI for andel](/entry/ki-andel-binomial)"
 
 symbols:
   - { sym: "x̄",          means: "utvalgsgjennomsnittet" }
-  - { sym: "s",           means: "utvalgs-standardavvik (estimat for σ)" }
+  - { sym: "s",           means: "utvalgs-standardavvik (estimat for `σ`)" }
   - { sym: "n",           means: "antall observasjoner" }
-  - { sym: "ν",           means: "frihetsgrader, ν = n - 1" }
+  - { sym: "ν",           means: "frihetsgrader, `ν = n − 1`" }
   - { sym: "t_(α/2, n-1)", means: "kvantil i t-fordelingen" }
 
 filters:
@@ -42,16 +42,16 @@ filters:
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt, normal_quantile_table_E4, standard_normal_table_E3]
 solution_template:
-  - "Identifiser konfidensnivå (1-α) og α"
-  - "Beregn s² = (1/(n-1)) · Σ(xi - x̄)² (eller bruk gitt s)"
-  - "Slå opp t_(α/2, n-1) i tabell E.5 (kolonne for α/2, rad for n-1 frihetsgrader)"
-  - "Beregn marginen t_(α/2, n-1) · s/√n"
-  - "Sett opp intervallet x̄ ± margin"
+  - "Identifiser konfidensnivå `(1 − α)` og `α`"
+  - "Beregn `s² = (1/(n−1)) · Σ(x_i − x̄)²` (eller bruk gitt `s`)"
+  - "Slå opp `t_(α/2, n−1)` i tabell E.5 (kolonne for `α/2`, rad for `n−1` frihetsgrader)"
+  - "Beregn marginen `t_(α/2, n−1) · s/√n`"
+  - "Sett opp intervallet `x̄ ± margin`"
 
 common_traps: |
-  ν = n - 1 for én-utvalgs KI (ikke n - 2). T-kvantiltabellen E.5 har
-  α-verdier i kolonnehodene, så t_(α/2,ν) finnes ved å lete etter α/2
-  i kolonneraden. For 95 % KI med n=10: ν=9, α/2=0.025 → t = 2.262.
+  `ν = n − 1` for én-utvalgs KI (ikke `n − 2`). T-kvantiltabellen E.5 har
+  `α`-verdier i kolonnehodene, så `t_(α/2,ν)` finnes ved å lete etter `α/2`
+  i kolonneraden. For 95 % KI med `n = 10`: `ν = 9`, `α/2 = 0.025` → `t = 2.262`.
 
 python_snippet: |
   from scipy.stats import t

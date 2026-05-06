@@ -2,33 +2,34 @@ id: ki-andel-binomial
 name_no: "Konfidensintervall for andel p (binomial)"
 type: identity
 category: confidence_interval
-tagline: "(1-α)·100 % KI for sannsynlighet/andel p basert på X suksesser av n forsøk."
+tagline: "`(1−α)·100 %` KI for sannsynlighet/andel `p` basert på `X` suksesser av `n` forsøk."
 
 formula_main: "p̂ ± z_(α/2) · √(p̂·(1-p̂)/n)"
 formula_latex: "\\hat{p} \\pm z_{\\alpha/2} \\cdot \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}"
 
 what_it_does: |
-  Gir et tilnærmet intervall som med (1-α)·100 % sikkerhet inneholder
-  den sanne andelen p i en populasjon, basert på p̂ = X/n. Forutsetter
-  at n er stort nok (n·p̂·(1-p̂) ≥ 5).
+  Gir et tilnærmet intervall som med `(1−α)·100 %` sikkerhet inneholder
+  den sanne andelen `p` i en populasjon, basert på `p̂ = X/n`. Forutsetter
+  at `n` er stort nok (`n·p̂·(1−p̂) ≥ 5`).
 
 why_use: |
-  Brukes når problemet handler om en binomisk situasjon (n forsøk,
+  Brukes når problemet handler om en binomisk situasjon (`n` forsøk,
   hver med to mulige utfall) og vi vil estimere den underliggende
-  sannsynligheten p med usikkerhetsmål.
+  sannsynligheten `p` med usikkerhetsmål.
 
 recognition_cues:
   - "Spørsmålet ber om KI for en andel/sannsynlighet"
-  - "Du har observert X suksesser i n forsøk"
+  - "Du har observert `X` suksesser i `n` forsøk"
   - "Konfidensnivå er gitt"
-  - "Du har en binomisk situasjon (samme p i hvert forsøk, uavhengige)"
+  - "Du har en binomisk situasjon (samme `p` i hvert forsøk, uavhengige)"
 
 when_NOT_to_use:
-  - "Du estimerer en rate (per tidsenhet) → bruk KI for poissonrate"
-  - "n·p̂·(1-p̂) < 5 → normalapproksimasjon for unøyaktig"
+  - "Du estimerer en rate (per tidsenhet) → bruk [KI for poissonrate](/entry/ki-poissonrate)"
+  - "`n·p̂·(1−p̂) < 5` → normalapproksimasjon for unøyaktig"
+  - "Du vil teste `p` mot en spesifisert verdi `p₀` (ikke estimere intervall) → bruk [z-test for andel](/entry/en-utvalg-z-test-andel) i stedet"
 
 symbols:
-  - { sym: "p̂",        means: "punktestimat for andelen, p̂ = X/n" }
+  - { sym: "p̂",        means: "punktestimat for andelen, `p̂ = X/n`" }
   - { sym: "X",         means: "antall suksesser observert" }
   - { sym: "n",         means: "antall forsøk" }
   - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
@@ -51,8 +52,8 @@ solution_template:
   - "KI: `p̂ ± margin`"
 
 common_traps: |
-  Standard error i KI bruker p̂ (estimert), MEN i hypotesetest for andel
-  bruker man p₀ (verdien fra H₀). Pass på! Husk å sjekke approksimasjons-
+  Standard error i KI bruker `p̂` (estimert), MEN i [hypotesetest for andel](/entry/en-utvalg-z-test-andel)
+  bruker man `p₀` (verdien fra `H₀`). Pass på! Husk å sjekke approksimasjons-
   betingelsen før du bruker normalapproksimasjon.
 
 python_snippet: |

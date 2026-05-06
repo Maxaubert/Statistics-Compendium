@@ -2,35 +2,35 @@ id: ki-varians
 name_no: Konfidensintervall for varians (σ²)
 type: test
 category: confidence_interval
-tagline: "KI for σ² basert på utvalgsvariansen s² og χ²-fordelingen."
+tagline: "KI for `σ²` basert på utvalgsvariansen `s²` og `χ²`-fordelingen."
 
 formula_main: "((n−1)s² / χ²_(α/2, n−1),  (n−1)s² / χ²_(1−α/2, n−1))"
 formula_latex: "\\left( \\frac{(n-1)s^2}{\\chi^2_{\\alpha/2,\\, n-1}},\\ \\frac{(n-1)s^2}{\\chi^2_{1-\\alpha/2,\\, n-1}} \\right)"
 
 what_it_does: |
-  Beregner et (1 − α)-konfidensintervall for populasjonens varians σ²
-  ut fra en utvalgsvarians s². Asymmetrisk fordi χ²-fordelingen er
+  Beregner et `(1 − α)`-konfidensintervall for populasjonens varians `σ²`
+  ut fra en utvalgsvarians `s²`. Asymmetrisk fordi `χ²`-fordelingen er
   asymmetrisk.
 
 why_use: |
   Når oppgaven ber om å tallfeste usikkerheten i en estimert varians,
-  for eksempel for å vurdere om σ² ligger over en kritisk grenseverdi.
+  for eksempel for å vurdere om `σ²` ligger over en kritisk grenseverdi.
 
 recognition_cues:
-  - "Du har s² (utvalgsvarians) og n, og oppgaven ber om KI for σ² eller σ"
+  - "Du har `s²` (utvalgsvarians) og `n`, og oppgaven ber om KI for `σ²` eller `σ`"
   - "Normalfordeling antatt"
-  - "Konfidensnivå (1 − α) er gitt"
+  - "Konfidensnivå `(1 − α)` er gitt"
 
 when_NOT_to_use:
-  - "Du har ikke s² eller den er ikke regnet enda → regn s² først"
+  - "Du har ikke `s²` eller den er ikke regnet enda → regn `s²` først via [utvalgsvarians fra rådata](/entry/utvalgsvarians-radata)"
   - "Datafordelingen er ikke normal → KI er ikke pålitelig"
-  - "Spørsmålet gjelder μ, ikke σ → bruk t- eller z-basert KI for μ"
+  - "Spørsmålet gjelder `μ`, ikke `σ` → bruk [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma) eller [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma)"
 
 symbols:
-  - { sym: "s²",       means: "utvalgsvarians (estimat for σ²)" }
+  - { sym: "s²",       means: "utvalgsvarians (estimat for `σ²`)" }
   - { sym: "n",        means: "antall observasjoner" }
-  - { sym: "χ²_(α, ν)", means: "kritisk verdi (kvantil) for χ² med ν frihetsgrader" }
-  - { sym: "ν",        means: "frihetsgrader = n − 1" }
+  - { sym: "χ²_(α, ν)", means: "kritisk verdi (kvantil) for `χ²` med `ν` frihetsgrader" }
+  - { sym: "ν",        means: "frihetsgrader `= n − 1`" }
 
 filters:
   computes: [confidence_interval, std_dev, parameter_estimate, hypothesis_test]
@@ -42,16 +42,16 @@ filters:
   tooling: [chi_square_quantile_table_E6]
 solution_template:
   - "Bekreft at fordelingen er normalfordelt (eller antatt)"
-  - "Identifiser n og s²"
-  - "Bestem ν = n − 1"
-  - "Slå opp χ²_(α/2, ν) og χ²_(1−α/2, ν) i tabell E.6"
-  - "Sett inn: nedre grense = (n−1)s² / χ²_(α/2, ν)"
-  - "Sett inn: øvre grense = (n−1)s² / χ²_(1−α/2, ν)"
-  - "For KI for σ: ta kvadratroten av begge grensene"
+  - "Identifiser `n` og `s²`"
+  - "Bestem `ν = n − 1`"
+  - "Slå opp `χ²_(α/2, ν)` og `χ²_(1−α/2, ν)` i tabell E.6"
+  - "Sett inn: nedre grense `= (n−1)s² / χ²_(α/2, ν)`"
+  - "Sett inn: øvre grense `= (n−1)s² / χ²_(1−α/2, ν)`"
+  - "For KI for `σ`: ta kvadratroten av begge grensene"
 
 common_traps: |
   KI er asymmetrisk – ikke prøv å sentrere det. Den lille kvantilen
-  (1 − α/2) går i nevneren for ØVRE grense, og den store (α/2) i
+  `(1 − α/2)` går i nevneren for ØVRE grense, og den store `(α/2)` i
   nevneren for nedre grense. Lett å bytte om.
 
 python_snippet: |
