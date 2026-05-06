@@ -4,7 +4,7 @@ export interface PropertyExplanation {
   /** 1-2 sentence plain-language explanation, no derivation. */
   intuition: string;
   /** Ordered derivation steps. Each section is a labelled mini-card with one or more body lines. */
-  derivation: { label: string; lines: string[] }[];
+  derivation: { label: string; lines: string[]; note?: string }[];
   /** Concrete numeric example to anchor the formula in something real. */
   example?: { setup: string; result: string };
 }
@@ -32,6 +32,7 @@ export const PROPERTY_EXPLANATIONS: Record<
             "La `X_i = 1` hvis forsøk `i` er en suksess, ellers `X_i = 0`.",
             "`E[X_i] = 1 · p + 0 · (1 − p) = p`.",
           ],
+          note: "`0 · (1 − p)` blir åpenbart 0 og kunne droppes — vi tar det med for å vise at vi bruker den generelle formelen `E[X] = Σ x · P(X = x)` over begge utfall.",
         },
         {
           label: "Total antall suksesser",

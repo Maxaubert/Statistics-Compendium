@@ -64,6 +64,27 @@ export function PropertyDetailModal({ title, explanation, onClose }: Props) {
                   {renderInlineCode(line, "dark")}
                 </div>
               ))}
+              {step.note && (
+                <div
+                  className="mt-2 flex gap-2.5 rounded-md border-l-2 px-3 py-2 text-[13px] leading-relaxed"
+                  style={{
+                    borderColor: "var(--color-cyan-2)",
+                    background: "rgba(34, 211, 238, 0.08)",
+                    color: "var(--color-calc-text)",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    className="select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                    style={{ color: "var(--color-cyan-2)" }}
+                  >
+                    Forklaring
+                  </span>
+                  <span className="font-serif italic">
+                    {renderInlineCode(step.note, "dark")}
+                  </span>
+                </div>
+              )}
             </li>
           ))}
         </ol>
