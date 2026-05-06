@@ -90,8 +90,8 @@ detailed_solution_variants:
           - label: "Tolkning"
             lines:
               - text: "`Cov(X, Y) = −0.12 < 0`, så `X` og `Y` er negativt assosierte."
-              - text: "Når `X` er stor (`= 1`), har `Y` tendens til å være liten, og omvendt."
-              - text: "Sjekk: hadde `X` og `Y` vært uavhengige, ville `E[XY] = μ_X · μ_Y = 0.42` og `Cov = 0`. Avviket `−0.12` viser graden av (negativ) avhengighet."
+              - tip: "Når `X` er stor (`= 1`), har `Y` tendens til å være liten, og omvendt."
+              - tip: "Sanity check — hadde `X` og `Y` vært uavhengige, ville `E[XY] = μ_X · μ_Y = 0.42` og `Cov = 0`. Avviket `−0.12` viser graden av (negativ) avhengighet."
         result: "`Cov(X, Y) = −0.12`"
 
       - source: "Praksis · simultanfordeling 2 × 2"

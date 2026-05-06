@@ -78,6 +78,30 @@ export function DetailedSolution({ solution }: { solution: DS }) {
                   />
                 );
               }
+              if ("tip" in line) {
+                return (
+                  <div
+                    key={li}
+                    className="my-2 flex gap-2.5 rounded-md border-l-2 px-3 py-2 text-[13.5px] leading-relaxed"
+                    style={{
+                      borderColor: "var(--color-cyan-2)",
+                      background: "rgba(34, 211, 238, 0.08)",
+                      color: "var(--color-calc-text)",
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      className="select-none font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em]"
+                      style={{ color: "var(--color-cyan-2)" }}
+                    >
+                      Tips
+                    </span>
+                    <span className="font-serif italic">
+                      {renderInlineCode(line.tip, "dark")}
+                    </span>
+                  </div>
+                );
+              }
               return null;
             })}
           </div>
