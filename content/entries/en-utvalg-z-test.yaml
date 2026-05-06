@@ -2,44 +2,44 @@ id: en-utvalg-z-test
 name_no: "Én-utvalg z-test"
 type: test
 category: hypothesis_test
-tagline: "Tester forventningsverdien μ mot en gitt verdi μ₀ når σ er kjent."
+tagline: "Tester forventningsverdien `μ` mot en gitt verdi `μ₀` når `σ` er kjent."
 
 formula_main: "Z = (X̄ - μ₀) / (σ/√n)"
 formula_latex: "Z = \\frac{\\overline{X} - \\mu_0}{\\sigma / \\sqrt{n}}"
 
 what_it_does: |
-  Tester en påstand (hypotese) om forventningsverdien μ i en populasjon.
-  Du har en "påstandsverdi" μ₀ (f.eks. "gjennomsnittlig forbruk er 50 W") og
-  data fra et utvalg med kjent standardavvik σ. Z-testen sammenligner
-  utvalgets gjennomsnitt X̄ med μ₀ og angir om forskjellen er stor nok til
+  Tester en påstand (hypotese) om forventningsverdien `μ` i en populasjon.
+  Du har en "påstandsverdi" `μ₀` (f.eks. "gjennomsnittlig forbruk er 50 W") og
+  data fra et utvalg med kjent standardavvik `σ`. Z-testen sammenligner
+  utvalgets gjennomsnitt `X̄` med `μ₀` og angir om forskjellen er stor nok til
   å forkaste påstanden.
 
 why_use: |
-  Velg z-test framfor t-test når populasjonens standardavvik σ er kjent
+  Velg z-test framfor t-test når populasjonens standardavvik `σ` er kjent
   (oppgitt i problemet, ikke estimert fra utvalget). I praksis betyr dette
   ofte at oppgaven sier noe som "antar at standardavviket er 5 watt" eller
-  at utvalget er stort (n ≥ 30) slik at sentralgrenseteoremet gjør det
+  at utvalget er stort (`n ≥ 30`) slik at sentralgrenseteoremet gjør det
   tilnærmet samme test.
 
 recognition_cues:
-  - "Oppgaven oppgir en standardverdi/påstandsverdi μ₀ (typisk navngitt 'forventet' eller 'standardmodellen')"
-  - "Oppgaven oppgir at standardavviket σ er kjent eller 'antas kjent' (ofte med et tall – f.eks. 'σ = 5')"
-  - "Oppgaven oppgir et utvalg med n observasjoner (typisk n ≥ 30) og dets gjennomsnitt x̄"
-  - "Spørsmålet ber om en hypotesetest: 'undersøk om μ er høyere/lavere/forskjellig fra μ₀'"
-  - "Signifikansnivå α er gitt (vanligvis 0.05 eller 0.01)"
-  - "Spørsmål om p-verdi (signifikanssannsynlighet) er ofte med"
+  - "Oppgaven oppgir en standardverdi/påstandsverdi `μ₀` (typisk navngitt 'forventet' eller 'standardmodellen')"
+  - "Oppgaven oppgir at standardavviket `σ` er kjent eller 'antas kjent' (ofte med et tall – f.eks. '`σ = 5`')"
+  - "Oppgaven oppgir et utvalg med `n` observasjoner (typisk `n ≥ 30`) og dets gjennomsnitt `x̄`"
+  - "Spørsmålet ber om en hypotesetest: 'undersøk om `μ` er høyere/lavere/forskjellig fra `μ₀`'"
+  - "Signifikansnivå `α` er gitt (vanligvis `0.05` eller `0.01`)"
+  - "Spørsmål om `p`-verdi (signifikanssannsynlighet) er ofte med"
 
 when_NOT_to_use:
-  - "σ er ukjent (kun s estimert fra utvalg) → bruk én-utvalgs t-test"
-  - "Du sammenligner to grupper → bruk to-utvalgs t-test"
-  - "Du tester en andel/proporsjon → bruk z-test for andel"
+  - "`σ` er ukjent (kun `s` estimert fra utvalg) → bruk [én-utvalgs t-test](/entry/en-utvalg-t-test) i stedet"
+  - "Du sammenligner to grupper → bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Du tester en andel/proporsjon → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
 
 symbols:
   - { sym: "X̄", means: "utvalgsgjennomsnittet" }
   - { sym: "μ₀", means: "verdien vi tester mot (fra nullhypotesen)" }
   - { sym: "σ",  means: "populasjonens standardavvik (kjent)" }
   - { sym: "n",  means: "antall observasjoner" }
-  - { sym: "Z",  means: "testobservatoren, standardnormalfordelt under H₀" }
+  - { sym: "Z",  means: "testobservatoren, standardnormalfordelt under `H₀`" }
 
 filters:
   computes: [hypothesis_test, find_x_for_threshold, find_n_for_threshold]
@@ -87,11 +87,11 @@ solution_variants:
       - { text: "Hvis du beregner p-verdi i stedet for kritisk verdi, formelen er `p = 2·P(Z > |z|) = 2·(1 − G(|z|))` for tosidig (f.eks. `Z = 2.40 → p = 2·(1 − G(2.40)) ≈ 0.0164`). Forkast hvis `p < α`", conditional: true }
 
 common_traps: |
-  - **Ensidig vs. tosidig**: Hvis H₁ er "mindre enn" eller "større enn", er testen ensidig (bruk z_α). Hvis H₁ er "forskjellig fra", er den tosidig (bruk z_(α/2)).
-  - **Fortegn på sjekkverdi**: For venstresidig test (μ < μ₀) er sjekkverdien −z_α (negativ), ikke +z_α. Forkast hvis z < −z_α.
-  - **z_α vs. z_(α/2)**: Vanlig feil å bruke z_α også for tosidig test. For tosidig MÅ du bruke z_(α/2) (halvdelen av α i hver hale).
-  - **σ vs. s**: Hvis σ ikke er oppgitt og du må regne s² fra dataene, er det t-test du skal bruke, ikke z-test.
-  - **Konklusjonen tilbake til kontekst**: "Forkast H₀" er ikke nok. Si hva det betyr: "Det er grunn til å hevde at den nye produkten har lavere energiforbruk."
+  - **Ensidig vs. tosidig**: Hvis `H₁` er "mindre enn" eller "større enn", er testen ensidig (bruk `z_α`). Hvis `H₁` er "forskjellig fra", er den tosidig (bruk `z_(α/2)`).
+  - **Fortegn på sjekkverdi**: For venstresidig test (`μ < μ₀`) er sjekkverdien `−z_α` (negativ), ikke `+z_α`. Forkast hvis `z < −z_α`.
+  - **`z_α` vs. `z_(α/2)`**: Vanlig feil å bruke `z_α` også for tosidig test. For tosidig MÅ du bruke `z_(α/2)` (halvdelen av `α` i hver hale).
+  - **`σ` vs. `s`**: Hvis `σ` ikke er oppgitt og du må regne `s²` fra dataene, er det t-test du skal bruke, ikke z-test.
+  - **Konklusjonen tilbake til kontekst**: "Forkast `H₀`" er ikke nok. Si hva det betyr: "Det er grunn til å hevde at den nye produkten har lavere energiforbruk."
 
 python_snippet: |
   from scipy.stats import norm

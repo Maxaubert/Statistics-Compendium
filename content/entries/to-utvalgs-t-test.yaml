@@ -10,12 +10,12 @@ formula_latex: "T = \\frac{\\overline{X} - \\overline{Y}}{S_P \\sqrt{\\frac{1}{n
 what_it_does: |
   Tester om forventningsverdiene i to uavhengige populasjoner er like, gitt
   to utvalg fra normalfordelinger med ukjente, men antatt like, standardavvik.
-  Den interpolerte (pooled) variansen S_P² kombinerer informasjon fra begge
-  utvalg. Testobservatoren T er t-fordelt med ν = n_X + n_Y - 2 frihetsgrader.
+  Den interpolerte (pooled) variansen `S_P²` kombinerer informasjon fra begge
+  utvalg. Testobservatoren `T` er t-fordelt med `ν = n_X + n_Y − 2` frihetsgrader.
 
 why_use: |
   Standardvalg når man har to grupper og vil sammenligne gjennomsnittene
-  uten å kjenne σ. Pooled-formen forutsetter at variansene er like (eller
+  uten å kjenne `σ`. Pooled-formen forutsetter at variansene er like (eller
   i hvert fall sammenlignbare) i de to gruppene; den er typisk konvensjon
   i pensum for to-utvalgs t-test.
 
@@ -27,18 +27,18 @@ recognition_cues:
   - "Antall observasjoner kan være ulike i de to gruppene"
 
 when_NOT_to_use:
-  - "Du tester ett utvalg mot en kjent verdi → bruk én-utvalg z- eller t-test"
+  - "Du tester ett utvalg mot en kjent verdi → bruk [én-utvalg z-test](/entry/en-utvalg-z-test) eller [t-test](/entry/en-utvalg-t-test)"
   - "Observasjonene er paret (samme individ målt to ganger) → bruk paret t-test"
   - "Variansene er klart forskjellige → vurder Welch (uten pooling)"
-  - "Andelen testes, ikke gjennomsnitt → bruk z-test for andel"
+  - "Andelen testes, ikke gjennomsnitt → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
 
 symbols:
   - { sym: "X̄, Ȳ",    means: "gjennomsnittene i de to utvalgene" }
   - { sym: "S_X², S_Y²", means: "variansene i de to utvalgene (estimert fra dataene)" }
   - { sym: "n_X, n_Y", means: "antall observasjoner i hver gruppe" }
-  - { sym: "S_P²",     means: "interpolert (pooled) varians, vektet snitt av S_X² og S_Y²" }
-  - { sym: "ν",        means: "frihetsgrader, ν = n_X + n_Y - 2" }
-  - { sym: "T",        means: "testobservatoren, t-fordelt under H₀" }
+  - { sym: "S_P²",     means: "interpolert (pooled) varians, vektet snitt av `S_X²` og `S_Y²`" }
+  - { sym: "ν",        means: "frihetsgrader, `ν = n_X + n_Y − 2`" }
+  - { sym: "T",        means: "testobservatoren, t-fordelt under `H₀`" }
 
 filters:
   computes: [hypothesis_test]
@@ -61,10 +61,10 @@ solution_template:
     conditional: true
 
 common_traps: |
-  Tegnet på testobservatoren avhenger av rekkefølgen X − Y vs Y − X. Hvis
-  H₁ sier μ_Y > μ_X (ny er bedre), så vil T = (X̄ - Ȳ) være negativ, og
-  forkastningsregelen blir t < -t_α (venstresidig på X-Y), eller du kan
-  reformulere som T = (Ȳ - X̄) og bruke høyresidig regel. Hold styr på
+  Tegnet på testobservatoren avhenger av rekkefølgen `X − Y` vs `Y − X`. Hvis
+  `H₁` sier `μ_Y > μ_X` (ny er bedre), så vil `T = (X̄ − Ȳ)` være negativ, og
+  forkastningsregelen blir `t < −t_α` (venstresidig på `X − Y`), eller du kan
+  reformulere som `T = (Ȳ − X̄)` og bruke høyresidig regel. Hold styr på
   retningen.
 
 python_snippet: |

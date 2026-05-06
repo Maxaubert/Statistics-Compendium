@@ -2,40 +2,40 @@ id: regresjon-test-stigningstall
 name_no: "Hypotesetest for stigningstallet β i lineær regresjon"
 type: test
 category: hypothesis_test
-tagline: "Tester om det er en lineær sammenheng mellom x og y, dvs. om stigningstallet β er forskjellig fra null."
+tagline: "Tester om det er en lineær sammenheng mellom `x` og `y`, dvs. om stigningstallet `β` er forskjellig fra null."
 
 formula_main: "T = (β̂ - β₀) / SE(β̂);  SE(β̂) = √(S_E² / Σ(x_i - x̄)²)"
 formula_latex: "T = \\frac{\\hat{\\beta} - \\beta_0}{\\text{SE}(\\hat{\\beta})}, \\quad \\text{SE}(\\hat{\\beta}) = \\sqrt{\\frac{S_E^2}{\\sum (x_i - \\bar{x})^2}}"
 
 what_it_does: |
-  Tester om regresjonsparametern β (stigningstallet) er forskjellig fra
-  en gitt verdi β₀ (vanligvis 0, dvs. om det er sammenheng i det hele tatt).
-  Testobservatoren er t-fordelt med ν = n - 2 frihetsgrader.
+  Tester om regresjonsparametern `β` (stigningstallet) er forskjellig fra
+  en gitt verdi `β₀` (vanligvis `0`, dvs. om det er sammenheng i det hele tatt).
+  Testobservatoren er t-fordelt med `ν = n − 2` frihetsgrader.
 
 why_use: |
-  Etter du har estimert en regresjonslinje ŷ = α̂ + β̂·x, er det viktig å
+  Etter du har estimert en regresjonslinje `ŷ = α̂ + β̂·x`, er det viktig å
   vurdere om sammenhengen kan skyldes tilfeldigheter. Hvis vi ikke kan
-  forkaste H₀: β = 0, har vi ikke statistisk grunnlag for å si at det
+  forkaste `H₀: β = 0`, har vi ikke statistisk grunnlag for å si at det
   faktisk er en lineær sammenheng.
 
 recognition_cues:
   - "Du har en regresjonslinje og vil teste om sammenhengen er signifikant"
   - "Spørsmålet er av type: 'kan sammenhengen skyldes tilfeldigheter?'"
-  - "Du har β̂ og SE(β̂) gitt, eller du kan beregne dem"
-  - "n - 2 frihetsgrader nevnes (kjennetegn på regresjonstest)"
+  - "Du har `β̂` og `SE(β̂)` gitt, eller du kan beregne dem"
+  - "`n − 2` frihetsgrader nevnes (kjennetegn på regresjonstest)"
 
 when_NOT_to_use:
-  - "Du vil teste om μ = en verdi → bruk én-utvalgs t-test"
-  - "Du sammenligner to grupper → to-utvalgs t-test"
-  - "Du estimerer Y for en x-verdi (ikke selve sammenhengen) → prediksjonsintervall"
+  - "Du vil teste om `μ =` en verdi → bruk [én-utvalgs t-test](/entry/en-utvalg-t-test) i stedet"
+  - "Du sammenligner to grupper → [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Du estimerer `Y` for en `x`-verdi (ikke selve sammenhengen) → [prediksjonsintervall](/entry/regresjon-prediksjonsintervall)"
 
 symbols:
   - { sym: "β̂",    means: "estimert stigningstall" }
-  - { sym: "β₀",    means: "verdien vi tester mot, ofte 0" }
-  - { sym: "SE(β̂)", means: "standardfeilen til β̂" }
+  - { sym: "β₀",    means: "verdien vi tester mot, ofte `0`" }
+  - { sym: "SE(β̂)", means: "standardfeilen til `β̂`" }
   - { sym: "S_E²",   means: "estimat for residualenes varians" }
-  - { sym: "ν",     means: "frihetsgrader, ν = n - 2" }
-  - { sym: "T",     means: "testobservator, t-fordelt under H₀" }
+  - { sym: "ν",     means: "frihetsgrader, `ν = n − 2`" }
+  - { sym: "T",     means: "testobservator, t-fordelt under `H₀`" }
 
 filters:
   computes: [hypothesis_test, test_independence]
@@ -47,16 +47,16 @@ filters:
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
-  - "Formuler hypotesene H₀: β = 0 vs H₁: β ≠ 0 (typisk tosidig test)"
-  - "Beregn SE(β̂) = √(S_E² / Σ(x_i - x̄)²) hvis ikke gitt"
-  - "Beregn testobservator t = (β̂ - 0)/SE(β̂)"
-  - "Finn kvantil t_(α/2, n-2) i tabell E.5 (tosidig)"
-  - "Forkast H₀ hvis |t| > t_(α/2, n-2)"
+  - "Formuler hypotesene `H₀: β = 0` vs `H₁: β ≠ 0` (typisk tosidig test)"
+  - "Beregn `SE(β̂) = √(S_E² / Σ(x_i − x̄)²)` hvis ikke gitt"
+  - "Beregn testobservator `t = (β̂ − 0)/SE(β̂)`"
+  - "Finn kvantil `t_(α/2, n−2)` i tabell E.5 (tosidig)"
+  - "Forkast `H₀` hvis `|t| > t_(α/2, n−2)`"
   - "Konkluder om hvorvidt det er statistisk grunnlag for lineær sammenheng"
 
 common_traps: |
-  Frihetsgrader i regresjon: ν = n - 2 (ikke n - 1). Dette er fordi to
-  parametre er estimert (α̂ og β̂). Glem ikke kvadratroten i SE(β̂).
+  Frihetsgrader i regresjon: `ν = n − 2` (ikke `n − 1`). Dette er fordi to
+  parametre er estimert (`α̂` og `β̂`). Glem ikke kvadratroten i `SE(β̂)`.
 
 python_snippet: |
   import numpy as np

@@ -2,40 +2,40 @@ id: en-utvalg-t-test
 name_no: "Én-utvalg t-test"
 type: test
 category: hypothesis_test
-tagline: "Tester forventningsverdien μ mot en gitt verdi μ₀ når σ er ukjent."
+tagline: "Tester forventningsverdien `μ` mot en gitt verdi `μ₀` når `σ` er ukjent."
 
 formula_main: "T = (X̄ - μ₀) / (S/√n)"
 formula_latex: "T = \\frac{\\overline{X} - \\mu_0}{S / \\sqrt{n}}"
 
 what_it_does: |
-  Tester nullhypotesen om forventningsverdien μ er lik (eller minst/høyst)
-  en gitt verdi μ₀, når populasjonsstandardavviket σ er ukjent og må
-  estimeres med utvalgsstandardavviket S. Testobservatoren er t-fordelt
-  med ν = n - 1 frihetsgrader.
+  Tester nullhypotesen om forventningsverdien `μ` er lik (eller minst/høyst)
+  en gitt verdi `μ₀`, når populasjonsstandardavviket `σ` er ukjent og må
+  estimeres med utvalgsstandardavviket `S`. Testobservatoren er t-fordelt
+  med `ν = n − 1` frihetsgrader.
 
 why_use: |
-  Brukes når man ikke kjenner populasjonens σ, og kun har utvalgsstørrelse
-  og utvalgs-statistikk. Standardvalget i praksis siden σ sjelden er kjent.
-  Forutsetter normalfordelte observasjoner eller stort utvalg (n ≥ 30).
+  Brukes når man ikke kjenner populasjonens `σ`, og kun har utvalgsstørrelse
+  og utvalgs-statistikk. Standardvalget i praksis siden `σ` sjelden er kjent.
+  Forutsetter normalfordelte observasjoner eller stort utvalg (`n ≥ 30`).
 
 recognition_cues:
-  - "Du skal teste forventningsverdien μ mot en bestemt verdi μ₀"
-  - "Standardavviket σ er IKKE oppgitt; kun s² eller s kan beregnes fra utvalg"
-  - "Eller σ er et estimat fra dataene, ikke en kjent populasjonsverdi"
-  - "Spørsmålet kan være: 'er gjennomsnittet høyere/lavere/forskjellig fra μ₀?'"
+  - "Du skal teste forventningsverdien `μ` mot en bestemt verdi `μ₀`"
+  - "Standardavviket `σ` er IKKE oppgitt; kun `s²` eller `s` kan beregnes fra utvalg"
+  - "Eller `σ` er et estimat fra dataene, ikke en kjent populasjonsverdi"
+  - "Spørsmålet kan være: 'er gjennomsnittet høyere/lavere/forskjellig fra `μ₀`?'"
 
 when_NOT_to_use:
-  - "σ er kjent (oppgitt eksplisitt) → bruk z-test"
-  - "Du sammenligner to grupper → bruk to-utvalgs t-test"
-  - "Du tester en andel → bruk z-test for andel"
+  - "`σ` er kjent (oppgitt eksplisitt) → bruk [én-utvalg z-test](/entry/en-utvalg-z-test) i stedet"
+  - "Du sammenligner to grupper → bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Du tester en andel → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
 
 symbols:
   - { sym: "X̄",   means: "utvalgsgjennomsnittet" }
   - { sym: "μ₀",   means: "verdien vi tester mot (fra nullhypotesen)" }
-  - { sym: "S",    means: "utvalgs-standardavviket (estimat for σ)" }
+  - { sym: "S",    means: "utvalgs-standardavviket (estimat for `σ`)" }
   - { sym: "n",    means: "antall observasjoner" }
-  - { sym: "ν",    means: "frihetsgrader, ν = n - 1" }
-  - { sym: "T",    means: "testobservatoren, t-fordelt under H₀" }
+  - { sym: "ν",    means: "frihetsgrader, `ν = n − 1`" }
+  - { sym: "T",    means: "testobservatoren, t-fordelt under `H₀`" }
 
 filters:
   computes: [hypothesis_test]

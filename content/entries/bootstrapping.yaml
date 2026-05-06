@@ -16,17 +16,17 @@ what_it_means: |
 solution_variants:
   - label: "Tradisjonelt bootstrap-KI"
     steps:
-      - "Behandle de N observasjonene som om de var «populasjonen»."
-      - "Trekk et tilfeldig utvalg på N elementer MED TILBAKELEGGING (samme observasjon kan trekkes flere ganger)."
+      - "Behandle de `N` observasjonene som om de var «populasjonen»."
+      - "Trekk et tilfeldig utvalg på `N` elementer MED TILBAKELEGGING (samme observasjon kan trekkes flere ganger)."
       - "Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet og lagre verdien."
       - "Gjenta steg 2–3 mange ganger — typisk 999 eller 1000."
-      - "Beregn standardfeilen som utvalgsstandardavviket av de 999 bootstrap-statistikkene: SE = std-av-bootstrap-snittene."
-      - "Lag KI: x̄ ± z_(α/2) · SE. Antar at bootstrap-fordelingen er tilnærmet normal."
+      - "Beregn standardfeilen som utvalgsstandardavviket av de 999 bootstrap-statistikkene: `SE` = std-av-bootstrap-snittene."
+      - "Lag KI: `x̄ ± z_(α/2) · SE`. Antar at bootstrap-fordelingen er tilnærmet normal."
       - { text: "Sjekk bootstrap-fordelingen før du bruker normaltilnærmingen — er den skjev eller har tunge haler, bruk prosentilintervall i stedet.", conditional: true }
   - label: "Prosentilintervall"
     steps:
-      - "Behandle de N observasjonene som om de var «populasjonen»."
-      - "Trekk et tilfeldig utvalg på N elementer MED TILBAKELEGGING."
+      - "Behandle de `N` observasjonene som om de var «populasjonen»."
+      - "Trekk et tilfeldig utvalg på `N` elementer MED TILBAKELEGGING."
       - "Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet og lagre verdien."
       - "Gjenta steg 2–3 mange ganger — typisk 999 eller 1000."
       - "Sorter de 999 bootstrap-statistikkene fra minst til størst."

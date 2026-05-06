@@ -2,16 +2,16 @@ id: en-utvalg-z-test-andel
 name_no: "Z-test for andel p"
 type: test
 category: hypothesis_test
-tagline: "Tester om en suksessrate p i en populasjon er lik (eller minst/høyst) en gitt verdi p₀."
+tagline: "Tester om en suksessrate `p` i en populasjon er lik (eller minst/høyst) en gitt verdi `p₀`."
 
 formula_main: "Z = (X - n·p₀) / √(n · p₀ · (1 - p₀))"
 formula_latex: "Z = \\frac{X - n p_0}{\\sqrt{n p_0 (1 - p_0)}}"
 
 what_it_does: |
-  Tester nullhypotesen om sannsynligheten p (eller andelen) i en
-  populasjon er lik p₀, basert på at vi har observert X suksesser i
-  n forsøk. Bruker normalapproksimasjon for binomialfordelingen, som
-  er gyldig når n·p̂·(1-p̂) ≥ 5.
+  Tester nullhypotesen om sannsynligheten `p` (eller andelen) i en
+  populasjon er lik `p₀`, basert på at vi har observert `X` suksesser i
+  `n` forsøk. Bruker normalapproksimasjon for binomialfordelingen, som
+  er gyldig når `n·p̂·(1−p̂) ≥ 5`.
 
 why_use: |
   Når problemet handler om en andel – andelen syke i en populasjon,
@@ -19,21 +19,22 @@ why_use: |
   og ikke et gjennomsnitt. Vanlig type test i offentlige undersøkelser.
 
 recognition_cues:
-  - "Du har en BINOMISK situasjon: n forsøk med samme suksessannsynlighet"
-  - "Du tester om p (andelen suksesser i populasjonen) er lik en gitt p₀"
-  - "Du har observert X suksesser av n forsøk"
-  - "Antall forsøk er stort nok: n·p̂·(1-p̂) ≥ 5"
+  - "Du har en BINOMISK situasjon: `n` forsøk med samme suksessannsynlighet"
+  - "Du tester om `p` (andelen suksesser i populasjonen) er lik en gitt `p₀`"
+  - "Du har observert `X` suksesser av `n` forsøk"
+  - "Antall forsøk er stort nok: `n·p̂·(1−p̂) ≥ 5`"
 
 when_NOT_to_use:
-  - "n er liten og normalapproksimasjon ikke gyldig – bruk eksakt binomial"
-  - "Du tester gjennomsnitt, ikke andel – bruk z- eller t-test for μ"
+  - "`n` er liten og normalapproksimasjon ikke gyldig – bruk eksakt [binomial](/entry/binomial-fordeling)"
+  - "Du tester gjennomsnitt, ikke andel – bruk [z-test for μ](/entry/en-utvalg-z-test) eller [t-test for μ](/entry/en-utvalg-t-test) i stedet"
+  - "Du vil estimere `p` med usikkerhet i stedet for å teste mot en gitt `p₀` → bruk [KI for andel](/entry/ki-andel-binomial)"
 
 symbols:
   - { sym: "X",   means: "antall suksesser observert i utvalget" }
   - { sym: "n",   means: "totalt antall forsøk" }
   - { sym: "p₀",  means: "verdien for sannsynlighet vi tester mot" }
-  - { sym: "p̂",   means: "estimert andel, p̂ = X/n" }
-  - { sym: "Z",   means: "testobservator, standardnormalfordelt under H₀" }
+  - { sym: "p̂",   means: "estimert andel, `p̂ = X/n`" }
+  - { sym: "Z",   means: "testobservator, standardnormalfordelt under `H₀`" }
 
 filters:
   computes: [hypothesis_test, find_n_for_threshold]
@@ -44,16 +45,16 @@ filters:
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
-  - "Formuler hypotesene H₀: p = p₀ vs H₁ (én- eller tosidig)"
-  - "Bekreft normalapproksimasjon: n·p̂·(1-p̂) ≥ 5"
-  - "Beregn p̂ = x/n"
-  - "Beregn z = (x - n·p₀) / √(n·p₀·(1-p₀)) – eller ekvivalent z = (p̂ - p₀) / √(p₀(1-p₀)/n)"
-  - "Finn kvantil z_α (ensidig) eller z_(α/2) (tosidig) i tabell E.4"
+  - "Formuler hypotesene `H₀: p = p₀` vs `H₁` (én- eller tosidig)"
+  - "Bekreft normalapproksimasjon: `n·p̂·(1−p̂) ≥ 5`"
+  - "Beregn `p̂ = x/n`"
+  - "Beregn `z = (x − n·p₀) / √(n·p₀·(1−p₀))` – eller ekvivalent `z = (p̂ − p₀) / √(p₀(1−p₀)/n)`"
+  - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i tabell E.4"
   - "Sammenlign og konkluder"
 
 common_traps: |
-  Variansen i nevneren bruker p₀ (verdien fra H₀), IKKE p̂. Dette er
-  forskjellig fra konfidensintervall for andel, som bruker p̂. Husk
+  Variansen i nevneren bruker `p₀` (verdien fra `H₀`), IKKE `p̂`. Dette er
+  forskjellig fra [konfidensintervall for andel](/entry/ki-andel-binomial), som bruker `p̂`. Husk
   rotuttrykket – vanlig feil å glemme kvadratroten.
 
 python_snippet: |
