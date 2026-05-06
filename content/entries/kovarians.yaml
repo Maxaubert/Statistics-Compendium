@@ -72,8 +72,7 @@ detailed_solution_variants:
               - text: "`μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0 + 0.30 + 0.40 = 0.70` ✓"
           - label: "E[XY] — bruk JOINT-sannsynlighet fra simultantabellen"
             lines:
-              - text: "For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`, ikke produktet av marginalsannsynlighetene."
-              - { text: "Summen over ALLE seks cellene (med `x_i · y_j · p_{ij}`):" }
+              - text: "For en generell simultanfordeling må du bruke selve celle-sannsynligheten `P(X=x_i, Y=y_j)`."
               - { text: "`(0, 0):  0 · 0 · 0.10 = 0`" }
               - { text: "`(0, 1):  0 · 1 · 0.20 = 0`" }
               - { text: "`(0, 2):  0 · 2 · 0.10 = 0`" }
