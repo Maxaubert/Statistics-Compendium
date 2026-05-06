@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode } from "react";
 
-export type InlineCodeTheme = "light" | "dark";
+export type InlineCodeTheme = "light" | "dark" | "warn";
 
 /**
  * Render a string with `backtick`-delimited spans wrapped in <code> so
@@ -42,4 +42,8 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // the surrounding mono text color so the contrast is gentle, not loud.
   dark:
     "rounded bg-white/[0.06] px-1 py-[1px] font-mono text-[inherit]",
+  // Warn: amber-tinted pill that reads on the warn-soft (yellow) background
+  // used by "IKKE bruk når" cues.
+  warn:
+    "rounded border border-amber-300/80 bg-amber-50 px-1.5 py-[1px] font-mono text-[13px] text-amber-900",
 };
