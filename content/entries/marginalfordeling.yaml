@@ -53,32 +53,41 @@ solution_template:
 detailed_solution_variants:
   - label: "Marginalfordeling fra simultantabell"
     solutions:
-      - source: "Eksamen jan26 · oppgave 2"
-        question: "Gitt en simultanfordeling for `(X, Y)` i en 3×3-tabell. Finn marginalfordelingene til `X` og `Y`."
+      - source: "Eksamen mai25 · oppgave 1a"
+        question: "Gitt simultanfordelingen for `X` og `Y`. Finn marginalfordelingene."
         sections:
-          - label: "Identifisering"
+          - label: "Steg"
             lines:
-              - { text: "Vi har simultantabellen `P(X = x, Y = y)`:" }
-              - { text: "`         Y=0    Y=5    Y=10`" }
-              - { text: "`X=0      0.2    0.1    0.1   `" }
-              - { text: "`X=1      0.2    0.0    0.1   `" }
-              - { text: "`X=2      0.1    0.0    0.2   `" }
-              - { text: "Marginal av `X` er radsummer; marginal av `Y` er kolonnesummer." }
-          - label: "Marginal av X"
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal" }
+          - label: "Simultantabellen"
             lines:
-              - { text: "`P(X = 0) = 0.2 + 0.1 + 0.1 = 0.4`" }
-              - { text: "`P(X = 1) = 0.2 + 0.0 + 0.1 = 0.3`" }
-              - { text: "`P(X = 2) = 0.1 + 0.0 + 0.2 = 0.3`" }
-          - label: "Marginal av Y"
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2"]
+                  rows:
+                    - ["X = 0", "0.10", "0.20", "0.10"]
+                    - ["X = 1", "0.40", "0.10", "0.10"]
+          - label: "Marginal av X (rad-summer)"
             lines:
-              - { text: "`P(Y = 0)  = 0.2 + 0.2 + 0.1 = 0.5`" }
-              - { text: "`P(Y = 5)  = 0.1 + 0.0 + 0.0 = 0.1`" }
-              - { text: "`P(Y = 10) = 0.1 + 0.1 + 0.2 = 0.4`" }
-          - label: "Verifikasjon"
+              - { text: "`P(X=0) = 0.10 + 0.20 + 0.10 = 0.40`" }
+              - { text: "`P(X=1) = 0.40 + 0.10 + 0.10 = 0.60`" }
+          - label: "Marginal av Y (kolonne-summer)"
             lines:
-              - { text: "Sum av marginal for `X`: `0.4 + 0.3 + 0.3 = 1.0` ✓" }
-              - { text: "Sum av marginal for `Y`: `0.5 + 0.1 + 0.4 = 1.0` ✓" }
-        result: "P(X): (0.4, 0.3, 0.3); P(Y): (0.5, 0.1, 0.4)"
+              - { text: "`P(Y=0) = 0.10 + 0.40 = 0.50`" }
+              - { text: "`P(Y=1) = 0.20 + 0.10 = 0.30`" }
+              - { text: "`P(Y=2) = 0.10 + 0.10 = 0.20`" }
+          - label: "Tabellen med marginaler"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2", "P(X)"]
+                  rows:
+                    - ["X = 0", "0.10", "0.20", "0.10", "0.40"]
+                    - ["X = 1", "0.40", "0.10", "0.10", "0.60"]
+                    - ["P(Y)", "0.50", "0.30", "0.20", "1.00"]
+                  margin_col: true
+                  margin_row: true
+        result: "P(X=0) = 0.40, P(X=1) = 0.60 · P(Y=0) = 0.50, P(Y=1) = 0.30, P(Y=2) = 0.20"
 
       - source: "Praksiseksempel · 3×2-tabell"
         question: "Gitt simultanfordelingen `P(X = x, Y = y)` for `X ∈ {1, 2, 3}` og `Y ∈ {0, 1}`. Finn marginalfordelingene."

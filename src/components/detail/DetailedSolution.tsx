@@ -102,6 +102,152 @@ export function DetailedSolution({ solution }: { solution: DS }) {
                   </div>
                 );
               }
+              if ("step_trail" in line) {
+                return (
+                  <div key={li} className="mb-3 flex flex-wrap gap-1.5">
+                    {line.step_trail.steps.map((s, i) => {
+                      const isCurrent = !s.done;
+                      return (
+                        <span
+                          key={i}
+                          className="inline-flex items-center gap-1 rounded font-mono text-[10.5px] px-2 py-0.5"
+                          style={
+                            isCurrent
+                              ? {
+                                  background: "rgba(34, 211, 238, 0.18)",
+                                  color: "var(--color-calc-result)",
+                                  fontWeight: 600,
+                                }
+                              : {
+                                  background: "rgba(99, 102, 241, 0.18)",
+                                  color: "var(--color-calc-label)",
+                                }
+                          }
+                        >
+                          {s.done && (
+                            <span
+                              aria-hidden
+                              style={{ color: "var(--color-cyan-2)" }}
+                            >
+                              ✓
+                            </span>
+                          )}
+                          {s.label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              }
+              if ("table" in line) {
+                const t = line.table;
+                const lastColIdx = t.headers.length - 1;
+                const lastRowIdx = t.rows.length - 1;
+                return (
+                  <div
+                    key={li}
+                    className="my-2 overflow-hidden rounded-md"
+                    style={{ background: "rgba(0, 0, 0, 0.18)" }}
+                  >
+                    <table
+                      className="font-mono text-[13px]"
+                      style={{
+                        borderCollapse: "collapse",
+                        color: "var(--color-calc-text)",
+                        width: "auto",
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          {t.headers.map((h, hi) => {
+                            const isLast = hi === lastColIdx;
+                            const isCorner = hi === 0;
+                            const tintMarg = t.margin_col && isLast;
+                            return (
+                              <th
+                                key={hi}
+                                style={{
+                                  padding: "7px 14px",
+                                  textAlign: "center",
+                                  borderBottom: "1px solid var(--color-calc-divider)",
+                                  borderRight:
+                                    hi === lastColIdx
+                                      ? "none"
+                                      : "1px solid var(--color-calc-divider)",
+                                  background: tintMarg
+                                    ? "rgba(34, 211, 238, 0.08)"
+                                    : "rgba(99, 102, 241, 0.16)",
+                                  color: tintMarg
+                                    ? "var(--color-calc-result)"
+                                    : isCorner
+                                      ? "var(--color-calc-label)"
+                                      : "var(--color-calc-label)",
+                                  fontWeight: 600,
+                                  fontSize: "11.5px",
+                                  letterSpacing: "0.05em",
+                                }}
+                              >
+                                {h}
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {t.rows.map((row, ri) => {
+                          const isMargRow = t.margin_row && ri === lastRowIdx;
+                          return (
+                            <tr key={ri}>
+                              {row.map((cell, ci) => {
+                                const isFirstCell = ci === 0;
+                                const isLastCol = ci === lastColIdx;
+                                const isMargCol = t.margin_col && isLastCol;
+                                const tintMarg = isMargRow || isMargCol;
+                                const isHeaderCell = isFirstCell;
+                                const cellBg = tintMarg
+                                  ? "rgba(34, 211, 238, 0.08)"
+                                  : isHeaderCell
+                                    ? "rgba(99, 102, 241, 0.10)"
+                                    : "transparent";
+                                const cellColor = tintMarg
+                                  ? "var(--color-calc-result)"
+                                  : isHeaderCell
+                                    ? "var(--color-calc-label)"
+                                    : "var(--color-calc-text)";
+                                const Cell = isHeaderCell ? "th" : "td";
+                                return (
+                                  <Cell
+                                    key={ci}
+                                    style={{
+                                      padding: "7px 14px",
+                                      textAlign: "center",
+                                      borderBottom:
+                                        ri === lastRowIdx
+                                          ? "none"
+                                          : "1px solid var(--color-calc-divider)",
+                                      borderRight:
+                                        ci === lastColIdx
+                                          ? "none"
+                                          : "1px solid var(--color-calc-divider)",
+                                      background: cellBg,
+                                      color: cellColor,
+                                      fontWeight:
+                                        tintMarg || isHeaderCell ? 600 : 400,
+                                      fontSize: isHeaderCell ? "11.5px" : "13px",
+                                    }}
+                                  >
+                                    {cell}
+                                  </Cell>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              }
               return null;
             })}
           </div>
