@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ListView } from "./routes/ListView";
 import { EntryDetail } from "./routes/EntryDetail";
 import { ConceptRedirect } from "./routes/ConceptRedirect";
@@ -16,7 +16,7 @@ import { NotFound } from "./routes/NotFound";
 
 export function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<ListView />} />
         <Route path="/entry/:id" element={<EntryDetail />} />
@@ -33,6 +33,6 @@ export function App() {
         <Route path="/mockups/property" element={<MockupProperty />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }

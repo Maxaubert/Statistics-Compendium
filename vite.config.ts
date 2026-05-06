@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 export default defineConfig({
   plugins: [react(), yaml(), tailwindcss()],
-  base: "./",
+  base: "/",
   build: {
     chunkSizeWarningLimit: 700,
   },
