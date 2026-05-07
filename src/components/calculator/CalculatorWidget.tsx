@@ -131,11 +131,19 @@ export function CalculatorWidget() {
     }
   }, [panelPos]);
 
-  // ESC closes the panel
+  // ESC closes the panel; Ctrl/Cmd+K toggles it.
   useEffect(() => {
-    if (!open) return;
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+        return;
+      }
+      const isToggleHotkey =
+        (e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === "k";
+      if (isToggleHotkey) {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -263,7 +271,7 @@ export function CalculatorWidget() {
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-2/60",
           )}
           style={{ right: `${BUTTON_RIGHT}px`, bottom: `${BUTTON_BOTTOM}px` }}
-          title="Åpne kalkulator"
+          title="Åpne kalkulator (Ctrl/Cmd + K)"
         >
           <CalcIcon size={20} />
         </button>
