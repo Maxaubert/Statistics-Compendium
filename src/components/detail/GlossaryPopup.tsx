@@ -259,8 +259,47 @@ export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
 /**
  * Hook for descendants of GlossaryPopupProvider. Returns null if no
  * provider is mounted (allows components to be reused outside the
- * popup-aware context — they'll just render plain text).
+ * popup-aware context, they'll just render plain text).
  */
 export function useGlossaryPopup(): GlossaryPopupContextValue | null {
   return useContext(GlossaryPopupContext);
+}
+
+interface BackLabelScopeProps {
+  label: string;
+  children: React.ReactNode;
+}
+
+/**
+ * Wraps a subtree so any glossary-popup opened within it (whether by
+ * an explicit see-også link, an auto-linked term in Prose, or any other
+ * descendant call to `useGlossaryPopup().openTerm`) gets the same
+ * externalBackLabel applied automatically.
+ *
+ * Used by FormulaExplanationModal so the glossary popup that opens
+ * from within a formula popup always shows a 'Tilbake til <formula>'
+ * button regardless of which surface the user clicked.
+ */
+export function GlossaryPopupBackLabelScope({
+  label,
+  children,
+}: BackLabelScopeProps) {
+  const parent = useContext(GlossaryPopupContext);
+  const value = useMemo<GlossaryPopupContextValue | null>(() => {
+    if (!parent) return null;
+    return {
+      openTerm: (termId, opts) =>
+        parent.openTerm(termId, {
+          ...opts,
+          externalBackLabel: opts?.externalBackLabel ?? label,
+        }),
+    };
+  }, [parent, label]);
+
+  if (!value) return <>{children}</>;
+  return (
+    <GlossaryPopupContext.Provider value={value}>
+      {children}
+    </GlossaryPopupContext.Provider>
+  );
 }
