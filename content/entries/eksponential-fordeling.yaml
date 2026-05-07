@@ -18,19 +18,21 @@ what_it_does: |
   `f(t)` og `F(t)` beskriver samme fordeling, men svarer på forskjellige
   ting.
 
-  **`f(t) = λe^(-λt)` er sannsynlighetstettheten (PDF).** Den sier hvor
-  «tett» fordelingen ligger ved et punkt `t`. For en kontinuerlig
-  variabel er `P(T = t) = 0`, så `f(t)` er IKKE en sannsynlighet i seg
-  selv. Du må integrere `f` over et intervall for å få en sannsynlighet.
-  På eksamen brukes `f` mest hvis du skal tegne tetthetskurven.
+  **`f(t) = λe^(-λt)` er sannsynlighetstettheten (`PDF`).** Den sier hvor
+  *tett* fordelingen ligger ved et punkt `t`. For en kontinuerlig
+  variabel er `P(T = t) = 0`, så `f(t)` er **ikke** en sannsynlighet i
+  seg selv. Du må integrere `f` over et intervall for å få en
+  sannsynlighet. På eksamen brukes `f` mest hvis du skal tegne
+  tetthetskurven.
 
-  **`F(t) = 1 - e^(-λt)` er den kumulative fordelingsfunksjonen (CDF).**
-  Den gir sannsynligheten direkte: `F(t) = P(T ≤ t)`, altså at hendelsen
-  kommer innen tid `t`. Det er denne du nesten alltid bruker i utregning:
+  **`F(t) = 1 - e^(-λt)` er den kumulative fordelingsfunksjonen
+  (`CDF`).** Den gir sannsynligheten direkte: `F(t) = P(T ≤ t)`, altså
+  at hendelsen kommer innen tid `t`. Det er denne du nesten alltid
+  bruker i utregning:
 
-  - `P(T ≤ t) = F(t) = 1 - e^(-λt)` (hendelse innen `t`)
-  - `P(T > t) = 1 - F(t) = e^(-λt)` (overlevelse, ingen hendelse innen `t`)
-  - `P(a < T < b) = F(b) - F(a) = e^(-λa) - e^(-λb)` (intervall)
+  - `P(T ≤ t) = F(t) = 1 - e^(-λt)` *(hendelse innen `t`)*
+  - `P(T > t) = 1 - F(t) = e^(-λt)` *(overlevelse, ingen hendelse innen `t`)*
+  - `P(a < T < b) = F(b) - F(a) = e^(-λa) - e^(-λb)` *(intervall)*
 
 why_use: |
   Når problemet handler om TID TIL noe skjer (i kontrast til antall ting
