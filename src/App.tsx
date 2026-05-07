@@ -5,6 +5,8 @@ import { ConceptRedirect } from "./routes/ConceptRedirect";
 import { TableDetail } from "./routes/TableDetail";
 import { Glossary } from "./routes/Glossary";
 import { Wizard } from "./routes/Wizard";
+import { HelpIndex } from "./routes/HelpIndex";
+import { HelpCalculator } from "./routes/HelpCalculator";
 import { MockupTabs } from "./routes/MockupTabs";
 import { MockupSteps } from "./routes/MockupSteps";
 import { MockupStepsC } from "./routes/MockupStepsC";
@@ -26,6 +28,8 @@ export function App() {
         <Route path="/table/:id" element={<TableDetail />} />
         <Route path="/ordliste" element={<Glossary />} />
         <Route path="/veiviser" element={<Wizard />} />
+        <Route path="/hjelp" element={<HelpIndex />} />
+        <Route path="/hjelp/kalkulator" element={<HelpCalculator />} />
         <Route path="/mockups/tabs" element={<MockupTabs />} />
         <Route path="/mockups/steps" element={<MockupSteps />} />
         <Route path="/mockups/steps/c" element={<MockupStepsC />} />
