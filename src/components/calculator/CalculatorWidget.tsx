@@ -61,10 +61,10 @@ export function CalculatorWidget() {
 
   return (
     <>
-      {/* Full-page backdrop with blur. The dark overlay is a radial
-          gradient that pools darkness toward the centre (where the
-          calculator sits) and fades almost transparent at the edges,
-          so the user gets a spotlight effect on the calculator. */}
+      {/* Full-page backdrop. Heavy blur + slight indigo-tinted black
+          at uniform opacity. The blur is strong enough that the page
+          becomes a soft texture rather than legible content, which
+          stops the user's eye from getting pulled past the panel. */}
       {open && (
         <button
           type="button"
@@ -72,10 +72,9 @@ export function CalculatorWidget() {
           aria-label="Lukk kalkulator"
           className="fixed inset-0 z-30 cursor-default animate-[calc-fade_180ms_ease-out]"
           style={{
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            background:
-              "radial-gradient(ellipse at center, rgba(8, 6, 24, 0.78) 0%, rgba(8, 6, 24, 0.65) 25%, rgba(8, 6, 24, 0.4) 60%, rgba(8, 6, 24, 0.12) 100%)",
+            backdropFilter: "blur(14px) saturate(1.1)",
+            WebkitBackdropFilter: "blur(14px) saturate(1.1)",
+            background: "rgba(15, 12, 36, 0.48)",
           }}
         />
       )}
