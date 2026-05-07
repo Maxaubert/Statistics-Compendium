@@ -101,7 +101,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
       WebkitBackdropFilter: "blur(10px)",
     },
     panel: {
-      background: "rgba(15, 15, 22, 0.72)",
+      background: "rgba(0, 0, 0, 0.55)",
       backdropFilter: "blur(30px) saturate(180%)",
       WebkitBackdropFilter: "blur(30px) saturate(180%)",
       boxShadow:
@@ -120,7 +120,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(0, 0, 0, 0.13)",
+      background: "rgba(0, 0, 0, 0.10)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.10)",
@@ -129,7 +129,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     inputCaret: "white",
 
     resultRow: {
-      background: "rgba(0, 0, 0, 0.24)",
+      background: "rgba(0, 0, 0, 0.18)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.18)",
