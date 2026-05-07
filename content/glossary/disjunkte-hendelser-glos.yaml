@@ -13,9 +13,34 @@ long_def: |
   begge har positiv sannsynlighet, kan de ikke være uavhengige (vet du
   `A` skjedde, vet du sikkert `B` ikke skjedde).
 
-  Klassisk eksempel: «får krone» og «får mynt» i ett myntkast.
+  ## Slik kjenner du dem igjen
 
-  **Konsekvens:** disjunkthet gir `A ⊆ B̄`, slik at
+  Spør: kan de to hendelsene være sanne **på samme utfall**? Hvis nei,
+  er de disjunkte.
+
+  Tenk på selve utfallet (hele utvalget, hele kastet) — ikke på de
+  enkelte elementene i det.
+
+  **Enkelt eksempel:** «får krone» og «får mynt» i ett myntkast. Ett
+  utfall kan ikke samtidig være krone og mynt → disjunkte.
+
+  **Sammensatt eksempel:** trekk 5 kort fra en bunke med kategori A og
+  kategori B.
+
+      Hendelse 1: «alle 5 er fra A»     →  utvalget har 5A, 0B
+      Hendelse 2: «ingen er fra A»      →  utvalget har 0A, 5B
+
+  Ett utvalg kan ikke samtidig ha 5A og 0A. De to hendelsene er
+  gjensidig utelukkende → disjunkte.
+
+  > **Vanlig feil:** å begrunne med «hvert kort er enten fra A eller fra
+  > B». Det handler om enkeltelementer, ikke om hendelsene. Argumentet
+  > skal handle om at de to *hendelsesbeskrivelsene* ikke kan være
+  > sanne for samme utvalg.
+
+  ## Konsekvens
+
+  Disjunkthet gir `A ⊆ B̄`, slik at
 
       P(A | B̄) = P(A) / (1 − P(B))
 see_also:
