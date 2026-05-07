@@ -180,7 +180,9 @@ export function CalculatorWidget() {
 
       {/* Closed-state button: pinned to bottom-right. Held back until
           the close animation has fully unmounted the panel so the
-          two never overlap. */}
+          two never overlap. Styled to match the panel: solid #111
+          with the same hairline white border and a deep black drop
+          shadow, so the open and closed states feel like one object. */}
       {!mounted && (
         <button
           type="button"
@@ -189,11 +191,24 @@ export function CalculatorWidget() {
           aria-expanded={false}
           className={clsx(
             "fixed z-40 flex h-12 w-12 select-none items-center justify-center rounded-full transition-all",
-            "shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30",
-            "border border-primary-2/20 bg-primary-2 text-white hover:bg-primary-3",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-2/60",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30",
           )}
-          style={{ right: `${BUTTON_RIGHT}px`, bottom: `${BUTTON_BOTTOM}px` }}
+          style={{
+            right: `${BUTTON_RIGHT}px`,
+            bottom: `${BUTTON_BOTTOM}px`,
+            background: "#111111",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "rgba(255,255,255,0.95)",
+            boxShadow: "0 12px 30px rgba(0,0,0,0.55)",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "#1a1a1a";
+            e.currentTarget.style.boxShadow = "0 14px 36px rgba(0,0,0,0.65)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "#111111";
+            e.currentTarget.style.boxShadow = "0 12px 30px rgba(0,0,0,0.55)";
+          }}
           title="Åpne kalkulator (Ctrl/Cmd + K)"
         >
           <CalcIcon size={20} />
