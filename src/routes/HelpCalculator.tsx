@@ -6,7 +6,7 @@ export function HelpCalculator() {
   return (
     <>
       <Banner />
-      <main className="mx-auto max-w-[760px] px-6 py-10">
+      <main className="bg-card px-12 py-8">
         <Link
           to="/hjelp"
           className="mb-6 inline-flex items-center gap-1.5 text-[13px] text-ink-2 no-underline hover:text-primary-2"

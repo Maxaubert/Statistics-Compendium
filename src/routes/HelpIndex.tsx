@@ -23,7 +23,7 @@ export function HelpIndex() {
   return (
     <>
       <Banner />
-      <main className="mx-auto max-w-[960px] px-6 py-10">
+      <main className="bg-card px-12 py-8">
         <header className="mb-8 flex items-center gap-3">
           <div
             aria-hidden
