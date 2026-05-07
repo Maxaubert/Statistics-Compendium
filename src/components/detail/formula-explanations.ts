@@ -232,6 +232,8 @@ Svar: ca. 30 % sjanse for nøyaktig to syke trær i utplukket.
 - For HØYST \`k\` (\`P(X ≤ k)\`): slå opp i tabell E.1.
 - For MINST \`k\` (\`P(X ≥ k)\`): bruk komplement, \`1 − P(X ≤ k − 1)\`, og tabell E.1.
 
+> [!note] Pass på indeksen i komplementet: tabellen skal slås opp på \`k − 1\`, ikke \`k\`. F.eks. \`P(X ≥ 3) = 1 − P(X ≤ 2)\`. Bruker du \`P(X ≤ 3)\` i stedet, mister du bidraget fra \`X = 3\` selv og svaret blir for lavt.
+
 > [!read] E[X] = np
 > Forventet antall suksesser er \`n · p\`. For \`n = 10\`, \`p = 0.2\` får du \`E[X] = 2\`, så det er rimelig at nettopp \`k = 2\` er den mest sannsynlige verdien.
 `,
@@ -1532,6 +1534,8 @@ Svar: ca. 26 % sjanse for nøyaktig to sommerfugler i fellen.
 - For NØYAKTIG \`k\` hendelser: bruk formelen direkte (E.2 gir kumulativ, ikke punkt).
 - For HØYST \`k\` (\`P(X ≤ k)\`): slå opp i tabell E.2.
 - For MINST \`k\` (\`P(X ≥ k)\`): bruk komplement, \`1 − P(X ≤ k − 1)\`, og tabell E.2.
+
+> [!note] Pass på indeksen i komplementet: tabellen skal slås opp på \`k − 1\`, ikke \`k\`. F.eks. \`P(X ≥ 3) = 1 − P(X ≤ 2)\`. Bruker du \`P(X ≤ 3)\` i stedet, mister du bidraget fra \`X = 3\` selv og svaret blir for lavt.
 
 > [!read] μ = λt
 > Forventet antall hendelser er rate ganger vinduslengde. Pass på at \`λ\` og \`t\` har samme tidsenhet før du multipliserer.
