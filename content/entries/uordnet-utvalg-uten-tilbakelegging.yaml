@@ -52,7 +52,6 @@ solution_variants:
       - "Identifiser `n` (totalt antall elementer) og `k` (antall som skal velges)"
       - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
       - "Beregn `C(n, k) = n! / (k! · (n − k)!)` på kalkulator (typisk `nCr` eller `COMB`)"
-      - "Eksempel: 5 kort fra 52 → `C(52, 5) = 2 598 960` mulige hender"
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
   - label: "Sannsynlighet: alle k er av samme type"
@@ -62,7 +61,6 @@ solution_variants:
       - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
       - "Sannsynligheten: `P(alle k er A) = C(K, k) / C(N, k)`"
-      - "Eksempel: 5 hjerter blant 13 hjerter i 52-korts stokk → `C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴`"
       - text: "Alternativt, hvis sekvensiell beregning er enklere: bruk produktregelen `(K/N)·((K−1)/(N−1))·…·((K−k+1)/(N−k+1))`. Begge metodene gir samme svar."
         conditional: true
   - label: "Sannsynlighet: ingen av k er av en gitt type"
@@ -73,7 +71,6 @@ solution_variants:
       - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
       - "Sannsynligheten: `P(ingen av k er A) = C(N − K, k) / C(N, k)`"
-      - "Eksempel: ingen hjerter blant 5 trukne kort → `C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.2215`"
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
   - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
@@ -83,7 +80,6 @@ solution_variants:
       - "Antall mulige utvalg av `k`: `C(N, k)`"
       - "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen): `C(K_A, k₁) · C(K_B, k₂)`"
       - "Sannsynligheten: `P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)`"
-      - "Eksempel: klasse på 25 studenter (10 jenter, 15 gutter), velger 4. `P(2 jenter og 2 gutter) = C(10, 2) · C(15, 2) / C(25, 4) = 45 · 105 / 12 650 ≈ 0.3735`"
       - text: "Dette er hypergeometrisk sannsynlighet — det samme regnestykket som [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling), bare uttrykt direkte med binomialkoeffisienter. Pass på at `k₁ + k₂ = k` (totalt trukne)."
         conditional: true
 
