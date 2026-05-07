@@ -120,16 +120,16 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(0, 0, 0, 0.20)",
+      background: "rgba(0, 0, 0, 0.10)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
-      border: "1px solid rgba(255, 255, 255, 0.08)",
+      border: "1px solid rgba(255, 255, 255, 0.10)",
     },
     inputInk: "rgba(255, 255, 255, 0.95)",
     inputCaret: "white",
 
     resultRow: {
-      background: "rgba(0, 0, 0, 0.30)",
+      background: "rgba(0, 0, 0, 0.18)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.18)",
