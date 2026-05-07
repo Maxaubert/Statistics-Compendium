@@ -4900,107 +4900,33 @@ For tre hendelser må du både legge til og trekke fra etter et inkludering-eksk
   ],
   "uordnet-utvalg-uten-tilbakelegging": [
     {
-      id: "binomialkoeffisient",
-      name: "Uordnet utvalg uten tilbakelegging",
+      id: "antall-utvalg",
+      name: "Tell antall mulige utvalg",
       abbreviation: "Antall utvalg",
       formula: "C(n, k) = n! / (k! · (n − k)!)",
-      short: `Antall måter å plukke \`k\` elementer fra \`n\` når rekkefølgen ikke teller. Også kjent som binomialkoeffisienten «n velg k».`,
-      long: `Binomialkoeffisienten \`C(n, k)\` (skrives også \`ⁿCₖ\` eller «n velg k») teller hvor mange ulike utvalg av \`k\` elementer du kan trekke fra en mengde på \`n\` ulike elementer, når rekkefølgen ikke spiller noen rolle og samme element kan brukes høyst én gang.
+      short: `Antall måter å plukke \`k\` av \`n\` ulike elementer når rekkefølgen ikke teller. Også kalt binomialkoeffisienten «n velg k».`,
+      long: `> [!read] Når brukes denne?
+> Når oppgaven kun ber om **hvor mange måter / kombinasjoner / hender / utvalg** det finnes — ren telling, ingen sannsynlighet ennå. Stikkord: «på hvor mange måter», «hvor mange ulike komitéer», «hvor mange femkortshender».
+
+
+Binomialkoeffisienten \`C(n, k)\` (skrives også \`ⁿCₖ\` eller «n velg k») teller antall ulike utvalg av \`k\` elementer fra \`n\` ulike elementer, når rekkefølgen i utvalget er likegyldig og hvert element brukes høyst én gang.
 
 
 ## Hvordan lese formelen
 
 > [!read] C(n, k) = n! / (k! · (n − k)!)
-> Det er antall ordnede utvalg \`n! / (n − k)!\`, delt på \`k!\` for å fjerne dobbelttellingen som rekkefølgen gir. Alle \`k!\` rekkefølger av samme \`k\`-mengde regnes som ett utvalg.
+> Start med antall ordnede utvalg \`n! / (n − k)!\`, og del på \`k!\` for å fjerne dobbelttellingen som rekkefølgen gir. Alle \`k!\` rekkefølger av samme \`k\`-mengde regnes som ett utvalg.
 
-Når er \`C(n, k)\` riktig telleregel:
-
-- Du velger \`k\` av \`n\` ulike elementer
-- Rekkefølgen i utvalget er likegyldig (samme hånd uansett rekkefølge)
-- Uten tilbakelegging (samme element ikke to ganger)
-
-Symmetri som forenkler regning: \`C(n, k) = C(n, n − k)\`. For eksempel er \`C(52, 50) = C(52, 2) = 1 326\`, mye enklere enn å regne ut det første direkte.
+Nyttig symmetri: \`C(n, k) = C(n, n − k)\`. For eksempel er \`C(52, 50) = C(52, 2) = 1 326\`, mye enklere enn å regne ut det første direkte.
 
 
-## Sannsynlighet med gunstige på mulige
+## Eksempler
 
-For uniformt valgte uordnede utvalg er sannsynligheten ren telling:
+- Femkortshender: \`C(52, 5) = 2 598 960\`
+- Lottokuponger: \`C(34, 7) = 5 379 616\`
+- Komité på 3 fra 25 elever: \`C(25, 3) = 2 300\`
 
-> [!read] P(A) = C(K, k) / C(N, k)
-> Antall gunstige utvalg av \`k\` fra de \`K\` i kategorien, delt på antall mulige utvalg av \`k\` fra hele populasjonen \`N\`.
-
-> [!tip] Når du trekker uten tilbakelegging fra en endelig populasjon, er dette ikke det samme som binomial. \`(1 − p)^k\` undervurderer eller overvurderer svaret fordi \`p\` endrer seg etter hvert trekk. Bruk \`C(...)\` eller hypergeometrisk fordeling.
-
-
-## Eksempel: 5 kort fra en kortstokk
-
-Antall mulige femkortshender: \`n = 52\`, \`k = 5\`.
-
-    C(52, 5) = (52 · 51 · 50 · 49 · 48) / 5! = 2 598 960
-
-Sannsynligheten for å trekke 5 hjerter (det finnes \`K = 13\` hjerter):
-
-    Gunstige: C(13, 5) = 1 287
-    P(5 hjerter) = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴
-
-Norsk Lotto er samme idé i ren tellingsversjon: 7 av 34 tall, rekkefølgen teller ikke.
-
-    C(34, 7) = 5 379 616 mulige kuponger
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "ordnet-utvalg-uten-tilbakelegging",
-        },
-        {
-          kind: "entry",
-          id: "hypergeometrisk-fordeling",
-        },
-        {
-          kind: "glossary",
-          id: "uordnet-utvalg",
-        },
-      ],
-    },
-    {
-      id: "antall-utvalg",
-      name: "Antall mulige utvalg",
-      abbreviation: "Antall utvalg",
-      formula: "C(n, k) = n! / (k! · (n − k)!)",
-      short: `Antall måter å plukke \`k\` av \`n\` ulike elementer når rekkefølgen ikke teller. Også kalt binomialkoeffisienten «n velg k».`,
-      long: `Binomialkoeffisienten \`C(n, k)\` teller antall ulike utvalg av \`k\` elementer fra \`n\` ulike elementer, når rekkefølgen i utvalget er likegyldig og hvert element brukes høyst én gang.
-
-
-## Hvordan lese formelen
-
-> [!read] C(n, k) = P(n, k) / k! = n! / (k! · (n − k)!)
-> Start med antall ordnede utvalg \`P(n, k)\` og del på \`k!\` for å fjerne dobbelttellingen som rekkefølgen lager. Alle \`k!\` rekkefølger av samme \`k\`-mengde teller som ett utvalg.
-
-Nyttig symmetri: \`C(n, k) = C(n, n − k)\`. For eksempel er \`C(52, 50) = C(52, 2) = 1 326\`, mye lettere å regne enn det første direkte.
-
-
-## Når brukes \`C(n, k)\`?
-
-- Pokerhender og lottokuponger der rekkefølgen er likegyldig
-- Velge en komité på \`k\` personer fra \`n\` kandidater
-- Som «mulige» i gunstige på mulige når trekkene er uten tilbakelegging og rekkefølgen ikke teller
-
-> [!tip] Hvis spørsmålet involverer rekkefølge (gull, sølv, bronse) skal du bruke \`P(n, k)\` i stedet. Tell rekkefølgen bare hvis oppgaven faktisk skiller mellom de ulike rekkefølgene.
-
-
-## Eksempel: kortstokk og lotto
-
-Antall mulige femkortshender fra en stokk på 52 kort: \`n = 52\`, \`k = 5\`.
-
-    C(52, 5) = (52 · 51 · 50 · 49 · 48) / 5! = 2 598 960
-
-Norsk Lotto: 7 tall fra 34 mulige, rekkefølgen teller ikke.
-
-    C(34, 7) = 5 379 616 mulige kuponger
-
-Velge 3 representanter fra en klasse på 25 elever:
-
-    C(25, 3) = (25 · 24 · 23) / (3 · 2 · 1) = 2 300
+> [!tip] Hvis oppgaven involverer rekkefølge (gull, sølv, bronse), skal du bruke \`P(n, k) = n!/(n − k)!\` i stedet. Tell rekkefølge bare når oppgaven faktisk skiller mellom dem.
 `,
       see_also: [
         {
@@ -5019,11 +4945,15 @@ Velge 3 representanter fra en klasse på 25 elever:
     },
     {
       id: "p-alle-fra-kategori",
-      name: "Sannsynlighet: alle k fra én kategori",
+      name: "Sannsynlighet: alle `k` er av samme type",
       abbreviation: "Alle k fra K",
       formula: "P(alle k fra K) = C(K, k) / C(N, k)",
       short: `Trekker du \`k\` av \`N\` uten tilbakelegging, er sannsynligheten for at alle havner i kategorien (med \`K\` elementer) lik \`C(K, k)/C(N, k)\`.`,
-      long: `Når en populasjon på \`N\` elementer inneholder \`K\` av en bestemt kategori, og du trekker et uordnet utvalg på \`k\` uten tilbakelegging, gir gunstige på mulige sannsynligheten for at alle \`k\` ligger i kategorien.
+      long: `> [!read] Når brukes denne?
+> Når oppgaven spør «sannsynligheten for at **alle** de \`k\` uttrukne er av type A». Stikkord: «alle 5 kort er hjerter», «alle plukkene er røde», «alle de utvalgte er kvinner».
+
+
+Når en populasjon på \`N\` elementer inneholder \`K\` av en bestemt kategori, og du trekker et uordnet utvalg på \`k\` uten tilbakelegging, gir gunstige på mulige sannsynligheten for at alle \`k\` ligger i kategorien.
 
 
 ## Hvordan lese formelen
@@ -5078,11 +5008,15 @@ Trekk 4 kuler fra en bolle med 6 røde og 4 blå (\`N = 10\`, \`K = 6\`, \`k = 4
     },
     {
       id: "p-ingen-fra-kategori",
-      name: "Sannsynlighet: ingen av k fra én kategori",
+      name: "Sannsynlighet: ingen av `k` er av en gitt type",
       abbreviation: "Ingen fra K",
       formula: "P(ingen k fra K) = C(N − K, k) / C(N, k)",
       short: `Sannsynligheten for at ingen av de \`k\` trukne tilhører kategorien med \`K\` elementer er antall utvalg fra «de andre» delt på antall mulige utvalg.`,
-      long: `Speilbildet av forrige formel. Når du trekker \`k\` uten tilbakelegging fra \`N\`, er sannsynligheten for at ingen av dem havner i kategorien (med \`K\` elementer) lik \`C(N − K, k) / C(N, k)\`.
+      long: `> [!read] Når brukes denne?
+> Når oppgaven spør «sannsynligheten for at **ingen** av de uttrukne er av type A». Stikkord: «ingen hjerter», «ingen jenter blant de 4 valgte», «ingen defekte i utvalget».
+
+
+Speilbildet av forrige formel. Når du trekker \`k\` uten tilbakelegging fra \`N\`, er sannsynligheten for at ingen av dem havner i kategorien (med \`K\` elementer) lik \`C(N − K, k) / C(N, k)\`.
 
 
 ## Hvordan lese formelen
@@ -5120,6 +5054,72 @@ Lotto: ingen av dine 7 tall er blant de 7 vinnertallene. \`N = 34\`, \`K = 7\`, 
 Trekk 4 kuler fra 10 (\`K = 6\` røde, \`N − K = 4\` blå). Sannsynlighet for ingen røde:
 
     P(ingen røde) = C(4, 4) / C(10, 4) = 1 / 210 ≈ 0.00476
+`,
+      see_also: [
+        {
+          kind: "entry",
+          id: "hypergeometrisk-fordeling",
+        },
+        {
+          kind: "entry",
+          id: "gunstige-pa-mulige",
+        },
+        {
+          kind: "glossary",
+          id: "uten-tilbakelegging-glos",
+        },
+      ],
+    },
+    {
+      id: "p-blanding-to-kategorier",
+      name: "Sannsynlighet: blanding fra to kategorier",
+      abbreviation: "k₁ av A, k₂ av B",
+      formula: "P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)",
+      short: `Sannsynligheten for å trekke nøyaktig \`k₁\` fra A og \`k₂\` fra B uten tilbakelegging. Klassisk «2 jenter og 2 gutter»-mønster.`,
+      long: `> [!read] Når brukes denne?
+> Når oppgaven spør «sannsynligheten for å få **nøyaktig** \`k₁\` av type A **OG** \`k₂\` av type B». Stikkord: «2 jenter og 2 gutter», «3 hjerter og 2 ruter», «4 defekte og 6 OK i utvalget».
+
+
+Når en populasjon på \`N\` er delt i to kategorier — \`K_A\` av type A og \`K_B = N − K_A\` av type B — og du trekker \`k\` uten tilbakelegging, gir formelen sannsynligheten for å få nøyaktig \`k₁\` fra A og \`k₂ = k − k₁\` fra B.
+
+
+## Hvordan lese formelen
+
+> [!read] P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)
+> Velg \`k₁\` fra de \`K_A\` i kategori A, OG \`k₂\` fra de \`K_B\` i kategori B (de to valgene er uavhengige, så vi multipliserer). Del på antall mulige utvalg på \`k\` fra hele populasjonen.
+
+Krav for at formelen passer:
+
+- Endelig populasjon delt i to kategorier
+- Trekk uten tilbakelegging
+- Rekkefølgen i utvalget er likegyldig
+- \`k₁ + k₂ = k\` (totalt antall trukne)
+
+
+## Sammenheng med hypergeometrisk
+
+Dette er nøyaktig hypergeometrisk PMF: \`P(X = k₁) = C(K_A, k₁) · C(K_B, k − k₁) / C(N, k)\`. Når oppgaven har to kategorier (suksess vs. ikke-suksess), kan du like gjerne lese den som hypergeometrisk og bruke samme regnestykke.
+
+
+## Eksempel: klasse med jenter og gutter
+
+En klasse på \`N = 25\` har \`K_A = 10\` jenter og \`K_B = 15\` gutter. Læreren velger \`k = 4\` tilfeldig. Sannsynligheten for nøyaktig 2 jenter og 2 gutter:
+
+    P = C(10, 2) · C(15, 2) / C(25, 4)
+      = 45 · 105 / 12 650
+      = 4 725 / 12 650
+      ≈ 0.3735
+
+
+## Eksempel: kortene
+
+Trekk 5 kort fra 52, der \`K_A = 13\` er hjerter og \`K_B = 39\` ikke er. Sannsynlighet for nøyaktig 3 hjerter og 2 ikke-hjerter:
+
+    P = C(13, 3) · C(39, 2) / C(52, 5)
+      = 286 · 741 / 2 598 960
+      ≈ 0.0815
+
+> [!tip] Sjekk alltid at \`k₁ + k₂ = k\` før du regner. Hvis oppgaven gir flere enn to kategorier (f.eks. tre farger), generaliseres formelen til \`C(K_A, k₁) · C(K_B, k₂) · C(K_C, k₃) / C(N, k)\` så lenge \`k₁ + k₂ + k₃ = k\`.
 `,
       see_also: [
         {

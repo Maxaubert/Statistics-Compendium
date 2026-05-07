@@ -46,17 +46,18 @@ filters:
   tooling: [calculator_binomial_coef, calculator_factorial]
 
 solution_variants:
-  - label: "Antall mulige utvalg"
+  - label: "Tell antall mulige utvalg"
     steps:
-      - "Identifiser `N` (totalt antall elementer) og `k` (antall som skal velges)"
+      - "Bruk når oppgaven kun ber om hvor mange måter / kombinasjoner / hender det finnes (ingen sannsynlighet ennå)"
+      - "Identifiser `n` (totalt antall elementer) og `k` (antall som skal velges)"
       - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
-      - "Beregn `C(N, k) = N! / (k! · (N − k)!)` på kalkulator (typisk `nCr` eller `COMB`)"
+      - "Beregn `C(n, k) = n! / (k! · (n − k)!)` på kalkulator (typisk `nCr` eller `COMB`)"
       - "Eksempel: 5 kort fra 52 → `C(52, 5) = 2 598 960` mulige hender"
-      - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(N, k) = C(N, N − k)` for å redusere arbeidet"
+      - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
-  - label: "Sannsynlighet: alle k er av en kategori"
+  - label: "Sannsynlighet: alle `k` er av samme type"
     steps:
-      - "Bruk når oppgaven spør 'alle k uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter')"
+      - "Bruk når oppgaven spør 'sannsynligheten for at alle de `k` uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter', 'alle 3 plukkede er røde')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
@@ -64,9 +65,9 @@ solution_variants:
       - "Eksempel: 5 hjerter blant 13 hjerter i 52-korts stokk → `C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴`"
       - text: "Alternativt, hvis sekvensiell beregning er enklere: bruk produktregelen `(K/N)·((K−1)/(N−1))·…·((K−k+1)/(N−k+1))`. Begge metodene gir samme svar."
         conditional: true
-  - label: "Sannsynlighet: ingen av k er av en kategori"
+  - label: "Sannsynlighet: ingen av `k` er av en gitt type"
     steps:
-      - "Bruk når oppgaven spør 'ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter')"
+      - "Bruk når oppgaven spør 'sannsynligheten for at ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter', 'ingen jenter')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
       - "Antall mulige utvalg: `C(N, k)`"
@@ -75,37 +76,24 @@ solution_variants:
       - "Eksempel: ingen hjerter blant 5 trukne kort → `C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.2215`"
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
+  - label: "Sannsynlighet: blanding (`k₁` fra A og `k₂` fra B)"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for å få nøyaktig `k₁` av type A OG `k₂` av type B' (f.eks. '2 jenter og 2 gutter', '3 hjerter og 2 ruter')"
+      - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
+      - "Antall mulige utvalg av `k`: `C(N, k)`"
+      - "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen): `C(K_A, k₁) · C(K_B, k₂)`"
+      - "Sannsynligheten: `P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)`"
+      - "Eksempel: klasse på 25 studenter (10 jenter, 15 gutter), velger 4. `P(2 jenter og 2 gutter) = C(10, 2) · C(15, 2) / C(25, 4) = 45 · 105 / 12 650 ≈ 0.3735`"
+      - text: "Dette er hypergeometrisk sannsynlighet — det samme regnestykket som [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling), bare uttrykt direkte med binomialkoeffisienter. Pass på at `k₁ + k₂ = k` (totalt trukne)."
+        conditional: true
 
 common_traps: |
   C(n,k) er ikke det samme som n^k. Pass på at n og k er heltall og 0 ≤ k ≤ n.
   Symmetrien C(n,k) = C(n, n-k) er nyttig for å forenkle beregninger.
 
 detailed_solution_variants:
-  - label: "Uordnet utvalg uten tilbakelegging"
+  - label: "Tell antall mulige utvalg"
     solutions:
-      - source: "Eksamen jan25 · oppgave 1"
-        question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hvor mange mulige uordnete utvalg av 5 kort finnes, og hva er sannsynligheten for å få 5 hjerter?"
-        sections:
-          - label: "Identifisering"
-            lines:
-              - { text: "Vi trekker `k = 5` kort fra `n = 52` kort." }
-              - { text: "Rekkefølgen spiller ingen rolle (samme hånd uansett rekkefølge), og samme kort kan ikke trekkes to ganger." }
-              - { text: "Dette er et uordnet utvalg uten tilbakelegging, så vi bruker binomialkoeffisienten `C(n,k)`." }
-          - label: "Formel"
-            lines:
-              - { text: "`C(n, k) = n! / (k! · (n − k)!)`" }
-          - label: "Innsatt"
-            lines:
-              - { text: "Antall mulige hender:" }
-              - { indent: "`C(52, 5) = 52! / (5! · 47!)`" }
-              - { indent: "`= (52 · 51 · 50 · 49 · 48) / (5 · 4 · 3 · 2 · 1)`" }
-              - { indent: "`= 311 875 200 / 120 = 2 598 960`" }
-              - { text: "Antall hender med 5 hjerter (gunstige):" }
-              - { indent: "`C(13, 5) = 13! / (5! · 8!) = 1 287`" }
-              - { text: "Sannsynligheten:" }
-              - { indent: "`P = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴`" }
-        result: "`C(52,5) = 2 598 960`, `P(5 hjerter) ≈ 4.95 · 10⁻⁴`"
-
       - source: "Praksiseksempel · Lotto"
         question: "I norsk Lotto velger man 7 tall fra 34 mulige. På hvor mange måter kan dette gjøres?"
         sections:
@@ -114,7 +102,7 @@ detailed_solution_variants:
               - { text: "Populasjonen består av `n = 34` tall, og vi velger `k = 7` av disse." }
               - { text: "Rekkefølgen er likegyldig (en lottokupong er den samme uansett hvilken rekkefølge tallene krysses av i)." }
               - { text: "Hvert tall kan velges maksimalt én gang, altså uten tilbakelegging." }
-              - { comment: "Dette er klassisk binomialkoeffisient-anvendelse." }
+              - { comment: "Klassisk binomialkoeffisient-anvendelse: ren telling, ingen sannsynlighet." }
           - label: "Formel"
             lines:
               - { text: "`C(n, k) = n! / (k! · (n − k)!)`" }
@@ -126,28 +114,117 @@ detailed_solution_variants:
               - { indent: "`= 5 379 616`" }
         result: "`C(34, 7) = 5 379 616` mulige kuponger"
 
-      - source: "Praksiseksempel · Poker (fire like)"
-        question: "Hvor mange mulige femkortshender finnes fra en kortstokk med 52 kort, og hva er sannsynligheten for å få nøyaktig 'fire like'?"
+      - source: "Praksiseksempel · femkortshånd"
+        question: "Hvor mange ulike femkortshender finnes fra en kortstokk med 52 kort?"
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "Vi trekker `k = 5` kort fra `n = 52` uten tilbakelegging, og rekkefølgen i hånda spiller ingen rolle." }
-              - { text: "Antall mulige hender beregnes med `C(52, 5)`." }
-              - { text: "For 'fire like' velger vi først valør (13 valører), tar alle 4 kort av denne valøren, og legger til ett av de 48 gjenværende kortene." }
+              - { text: "`n = 52` ulike kort, `k = 5` trekkes." }
+              - { text: "Rekkefølgen i hånda spiller ingen rolle, og samme kort kan ikke trekkes to ganger." }
           - label: "Formel"
             lines:
-              - { text: "Mulige hender: `C(n, k) = n! / (k! · (n − k)!)`" }
-              - { text: "Gunstige: `gunstige = 13 · C(4,4) · 48 = 13 · 1 · 48`" }
-              - { text: "Sannsynlighet: `P = gunstige / mulige`" }
+              - { text: "`C(n, k) = n! / (k! · (n − k)!)`" }
           - label: "Innsatt"
             lines:
-              - { text: "Mulige hender:" }
+              - { text: "`C(52, 5) = 52! / (5! · 47!)`" }
+              - { indent: "`= (52 · 51 · 50 · 49 · 48) / (5 · 4 · 3 · 2 · 1)`" }
+              - { indent: "`= 311 875 200 / 120`" }
+              - { indent: "`= 2 598 960`" }
+        result: "`C(52, 5) = 2 598 960` mulige hender"
+
+  - label: "Sannsynlighet: alle `k` er av samme type"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 1"
+        question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for å få 5 hjerter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 52` kort, `K = 13` hjerter (kategori A), `k = 5` trukne kort." }
+              - { text: "«Alle 5 er hjerter» betyr at alle uttrukne kommer fra de `K = 13` hjertene." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(alle k er A) = C(K, k) / C(N, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Antall gunstige (5 hjerter blant 13):" }
+              - { indent: "`C(13, 5) = 13! / (5! · 8!) = 1 287`" }
+              - { text: "Antall mulige (5 kort blant 52):" }
               - { indent: "`C(52, 5) = 2 598 960`" }
-              - { text: "Gunstige hender (fire like):" }
-              - { indent: "`13 · 48 = 624`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴`" }
+        result: "`P(5 hjerter) ≈ 4.95 · 10⁻⁴`"
+
+  - label: "Sannsynlighet: ingen av `k` er av en gitt type"
+    solutions:
+      - source: "Praksiseksempel · ingen hjerter"
+        question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for at INGEN av de uttrukne er hjerter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 52` kort, `K = 13` hjerter (kategori A), `k = 5` trukne." }
+              - { text: "«Ingen hjerter» betyr at alle 5 kommer fra ikke-A-gruppen — de `N − K = 52 − 13 = 39` ikke-hjertene." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(ingen av k er A) = C(N − K, k) / C(N, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Antall gunstige (5 valgt fra 39 ikke-hjerter):" }
+              - { indent: "`C(39, 5) = 39! / (5! · 34!) = 575 757`" }
+              - { text: "Antall mulige (5 kort blant 52):" }
+              - { indent: "`C(52, 5) = 2 598 960`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 575 757 / 2 598 960 ≈ 0.2215`" }
+              - { comment: "Sjekk: dette er IKKE (1 − 13/52)^5 = 0.2373. Forskjellen kommer av at p endrer seg uten tilbakelegging." }
+        result: "`P(ingen hjerter) ≈ 0.2215`"
+
+  - label: "Sannsynlighet: blanding fra to kategorier"
+    solutions:
+      - source: "Praksiseksempel · klassetilfeldighet"
+        question: "En klasse har 25 studenter, hvorav 10 er jenter og 15 er gutter. Læreren skal velge tilfeldig en gruppe på 4 studenter til å presentere et prosjekt. Hva er sannsynligheten for at gruppen består av nøyaktig 2 jenter og 2 gutter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 25` studenter totalt, `K_A = 10` jenter, `K_B = 15` gutter." }
+              - { text: "Vi velger `k = 4` studenter, der vi vil ha `k₁ = 2` jenter og `k₂ = 2` gutter (`k₁ + k₂ = k`)." }
+              - { text: "Rekkefølgen spiller ingen rolle, og samme student kan ikke velges to ganger." }
+          - label: "Formel"
+            lines:
+              - { text: "`P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Antall måter å velge 2 jenter blant 10:" }
+              - { indent: "`C(10, 2) = 10! / (2! · 8!) = 45`" }
+              - { text: "Antall måter å velge 2 gutter blant 15:" }
+              - { indent: "`C(15, 2) = 15! / (2! · 13!) = 105`" }
+              - { text: "Antall mulige grupper på 4 fra 25:" }
+              - { indent: "`C(25, 4) = 25! / (4! · 21!) = 12 650`" }
+              - { text: "Antall gunstige (2 jenter OG 2 gutter):" }
+              - { indent: "`45 · 105 = 4 725`" }
+              - { text: "Sannsynligheten:" }
+              - { indent: "`P = 4 725 / 12 650 ≈ 0.3735`" }
+        result: "`P(2 jenter og 2 gutter) ≈ 0.3735`"
+
+      - source: "Praksiseksempel · Poker (fire like)"
+        question: "Hva er sannsynligheten for å få nøyaktig 'fire like' i en femkortshånd fra en standard kortstokk?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 52` kort, `k = 5` trukne." }
+              - { text: "«Fire like» = 4 kort av én valør + 1 kort av en hvilken som helst annen valør. Dette er en blanding fra to kategorier (den valgte valøren og resten)." }
+              - { text: "Vi må først velge HVILKEN valør som skal være firlingen (13 mulige valører), så telle utvalg." }
+          - label: "Formel"
+            lines:
+              - { text: "Per valg av valør: `C(K_A, k₁) · C(K_B, k₂)` med `K_A = 4` (kort av valøren), `k₁ = 4`, `K_B = 48` (alle andre kort), `k₂ = 1`." }
+              - { text: "Total gunstige: 13 · `C(4, 4) · C(48, 1)`" }
+              - { text: "Sannsynlighet: `P = gunstige / C(N, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Per valør: `C(4, 4) · C(48, 1) = 1 · 48 = 48`" }
+              - { text: "Multipliser med 13 valører: `13 · 48 = 624`" }
+              - { text: "Antall mulige hender: `C(52, 5) = 2 598 960`" }
               - { text: "Sannsynligheten:" }
               - { indent: "`P = 624 / 2 598 960 ≈ 2.40 · 10⁻⁴`" }
-        result: "`C(52,5) = 2 598 960`, `P(fire like) ≈ 0.00024`"
+        result: "`P(fire like) ≈ 0.00024`"
 
 related:
   - { id: "ordnet-utvalg-med-tilbakelegging",   kind: "entry" }
