@@ -873,8 +873,7 @@ F.eks. lottokuponger med \`p = 0.05\` og \`n = 20\` lodd: \`P(X ≥ 1) = 1 − 0
     },
     {
       id: "find-n-threshold",
-      name: "Invers: finn nødvendig n",
-      abbreviation: "FINN n",
+      name: "Finn nødvendig n",
       formula: "1 − (1 − p)^n ≥ p_terskel  ⇒  n ≥ ln(1 − p_terskel) / ln(1 − p)",
       short: "Hvor mange forsøk trengs for at sannsynligheten når en gitt terskel?",
       long: `Den inverse varianten snur problemet: i stedet for å regne ut en sannsynlighet for et gitt \`n\`, leter du etter det MINSTE \`n\` som gjør at en sannsynlighet når en bestemt terskel \`p_terskel\`. Den klassiske formen er «hvor mange lodd må jeg kjøpe for å vinne minst én gang med 99 % sannsynlighet?».
@@ -2755,8 +2754,7 @@ Svar: ca. 22 % av beholderne ligger i intervallet.
     },
     {
       id: "inverse-x",
-      name: "Invers: finn x",
-      abbreviation: "INV x",
+      name: "Finn x for sannsynlighet",
       formula: "x = μ + σ · z,  der G(z) = p",
       short: `Gitt en sannsynlighet \`p\`, finn terskelen \`x\`. Bruk z-kvantiltabellen E.4.`,
       long: `Den inverse varianten snur problemet: i stedet for å regne ut en sannsynlighet for et gitt \`x\`, leter du etter terskelen \`x\` som tilfredsstiller en gitt sannsynlighet \`p\`. Strategien er å slå opp kvantilet \`z\` i tabell E.4 og deretter sette inn i \`x = μ + σ · z\`.
@@ -2821,8 +2819,7 @@ F.eks. \`X ~ N(170, 6²)\`, søker \`P(X ≤ x) = 0.10\`:
     },
     {
       id: "inverse-mu-sigma",
-      name: "Invers: finn μ (eller σ)",
-      abbreviation: "INV μ/σ",
+      name: "Finn μ eller σ",
       formula: "G((g − μ)/σ) = p  ⇒  μ = g − σ · z   eller  σ = (g − μ)/z",
       short: `Gitt en grense \`g\` og målsannsynlighet \`p\`, finn parameteren som mangler.`,
       long: `Når oppgaven gir en grense \`g\`, en målsannsynlighet \`p\`, og én av parameterne (\`μ\` eller \`σ\`), løser du for den andre. Likningen kommer fra standardisering: \`G((g − μ)/σ) = p\`. Slå opp \`z = G⁻¹(p)\` i E.4 og løs algebraisk.
@@ -3657,8 +3654,7 @@ De to spørsmålene «ingen hendelser i vinduet \`[0, t]\`» og «ventetiden er 
     },
     {
       id: "find-k-threshold",
-      name: "Invers oppslag: finn k",
-      abbreviation: "FINN k",
+      name: "Finn k for terskel",
       formula: `Minste \`k\` slik at P(X ≥ k) ≤ p_terskel  (eller P(X ≤ k) ≥ p_terskel)`,
       short: `Gitt en sannsynlighetsterskel: hvilken verdi \`k\` tilfredsstiller den?`,
       long: `Den «inverse» varianten snur problemet: i stedet for å regne ut en sannsynlighet, leter du etter den minste (eller største) \`k\` som tilfredsstiller en gitt terskel \`p_terskel\`. Strategien er å bygge en liten tabell over \`P(X ≤ k)\` fra E.2 og lese av når kravet snus.
