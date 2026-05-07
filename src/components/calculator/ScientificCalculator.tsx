@@ -171,6 +171,14 @@ export function ScientificCalculator() {
     inputRef.current?.focus();
   }
 
+  function clearHistory() {
+    setHistory([]);
+  }
+
+  function deleteHistoryEntry(index: number) {
+    setHistory((prev) => prev.filter((_, i) => i !== index));
+  }
+
   return (
     <div className="flex flex-col">
       {/* Input */}
@@ -230,24 +238,60 @@ export function ScientificCalculator() {
       </div>
 
       {/* History */}
-      <div className="mt-3 flex max-h-[160px] flex-col gap-1 overflow-y-auto">
+      <div className="mt-3 flex flex-col">
         {history.length === 0 ? (
           <div className="rounded-md bg-paper-2/60 px-3 py-2 text-center font-serif text-[12px] italic text-ink-3">
             Trykk Enter for å lagre resultatet i historikken.
           </div>
         ) : (
-          history.map((h, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => recall(h)}
-              title="Klikk for å bruke på nytt"
-              className="flex items-baseline justify-between gap-3 rounded-md border border-line bg-card px-3 py-1.5 text-left font-mono text-[12px] transition-colors hover:border-primary-2/40 hover:bg-paper-2"
-            >
-              <span className="truncate text-ink-2">{h.expr}</span>
-              <span className="flex-shrink-0 font-semibold text-cyan-deep">= {h.result}</span>
-            </button>
-          ))
+          <>
+            <div className="mb-1 flex items-center justify-between px-1">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-3">
+                Historikk
+              </span>
+              <button
+                type="button"
+                onClick={clearHistory}
+                title="Slett all historikk"
+                className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3 transition-colors hover:text-warn"
+              >
+                Slett alle
+              </button>
+            </div>
+            <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto">
+              {history.map((h, i) => (
+                <div
+                  key={i}
+                  className="group flex items-stretch gap-1"
+                >
+                  <button
+                    type="button"
+                    onClick={() => recall(h)}
+                    title="Klikk for å bruke på nytt"
+                    className="flex flex-1 items-baseline justify-between gap-3 rounded-md border border-line bg-card px-3 py-1.5 text-left font-mono text-[12px] transition-colors hover:border-primary-2/40 hover:bg-paper-2"
+                  >
+                    <span className="truncate text-ink-2">{h.expr}</span>
+                    <span className="flex-shrink-0 font-semibold text-cyan-deep">= {h.result}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteHistoryEntry(i)}
+                    aria-label="Slett denne raden"
+                    title="Slett denne raden"
+                    className={clsx(
+                      "flex w-7 shrink-0 items-center justify-center rounded-md border border-line bg-card text-ink-4",
+                      "opacity-0 transition-opacity group-hover:opacity-100",
+                      "hover:border-warn/40 hover:bg-warn-soft/40 hover:text-warn",
+                    )}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
