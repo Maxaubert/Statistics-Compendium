@@ -79,15 +79,24 @@ solution_variants:
       - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
       - { text: "Hvis `k = 1`, forenkles uttrykket til `P(X ≥ 1) = 1 − (1−p)^n` (ingen tabell nødvendig)", conditional: true }
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
-  - label: "Finn n / sjansen overstiger X"
+  - label: "Finn n / sjansen er mindre enn X"
     steps:
-      - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`, `> 0.95`)"
-      - "Sett opp ulikheten i `n`, typisk via komplement: `(1−p)^n ≤ 0.01`"
-      - { text: "Vi konverterer terskelen via komplement: `1 − 0.99 = 0.01`, så `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 0.01`.", conditional: true }
-      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
-      - "Løs for `n`: `n ≥ ln(0.01) / ln(1−p)` (f.eks. `p = 0.5 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
+      - "Bruk når oppgaven sier 'sannsynligheten for ... skal være mindre enn X' eller når kravet naturlig leser seg som `(1−p)^n ≤ X` (f.eks. 'sjansen for å aldri lykkes synker under 1 %')"
+      - "Identifiser `p`, hendelsen som skal være lite sannsynlig, og terskelen `X`"
+      - "Sett opp ulikheten direkte: `(1−p)^n ≤ X`"
+      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(X)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
+      - "Løs for `n`: `n ≥ ln(X) / ln(1−p)` (f.eks. `p = 0.5, X = 0.01 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
       - "Rund opp til neste heltall siden `n` må være heltall (f.eks. `6.64 → n = 7`)"
       - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
+  - label: "Finn n / sjansen overstiger X"
+    steps:
+      - "Bruk når oppgaven sier 'sannsynligheten for minst én ... overstiger X' eller 'er minst X' (f.eks. 'minst én dose virker', 'vinne minst én gang')"
+      - "Identifiser `p` (per forsøk), suksess-hendelsen (typisk 'minst én'), og terskelen `X`"
+      - "Sett opp ulikheten direkte på suksess-formen: `P(X ≥ 1) = 1 − (1−p)^n ≥ X`"
+      - "Konverter til 'ingen suksess'-form for å kunne ta logaritme: `(1−p)^n ≤ 1 − X`"
+      - "Ta logaritme: `n · ln(1−p) ≤ ln(1 − X)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
+      - "Løs for `n`: `n ≥ ln(1 − X) / ln(1−p)` (f.eks. `p = 0.05, X = 0.99 → n ≥ ln(0.01)/ln(0.95) ≈ 89.78`)"
+      - "Rund opp til neste heltall (f.eks. `89.78 → n = 90`)"
       - { text: "Hvis terskelen gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), bruk tabell E.1 og prøv økende `n` til kravet er oppfylt", conditional: true }
 
 common_traps: |
@@ -267,6 +276,53 @@ detailed_solution_variants:
               - { text: "`P(X = 50) = 0.99^50 ≈ 0.6050`" }
         result: "`P(X ≥ 49) ≈ 0.9106`"
 
+  - label: "Finn n / sjansen er mindre enn X"
+    solutions:
+      - source: "Praksis · aldri krone"
+        question: "En mynt kastes `n` ganger. Hvor mange ganger må vi kaste for at sannsynligheten for å aldri få krone er mindre enn 1 %?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall kron i `n` kast" }
+              - { text: "`X ~ Bin(n, 0.5)`" }
+              - { comment: "krav: `P(X = 0) < 0.01` — sannsynligheten for at vi aldri får krone skal være mindre enn 1 %" }
+          - label: "Innsetting"
+            lines:
+              - { text: "`P(X = 0) = (1−p)^n = 0.5^n`" }
+              - { text: "`0.5^n < 0.01`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.5) < ln(0.01)`" }
+              - { comment: "`ln(0.5) < 0` snur ulikhetstegnet" }
+              - { text: "`n > ln(0.01) / ln(0.5)`" }
+              - { indent: "= −4.6052 / −0.6931" }
+              - { indent: "≈ 6.64" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp til neste heltall: `n = 7`" }
+              - { comment: "verifiser: `0.5^7 = 0.0078 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01`" }
+        result: "`n = 7` kast"
+      - source: "Praksis · ingen defekter"
+        question: "Hver del produseres med en defektrate på 1 % (`p = 0.01`). Hvor stor batch `n` kan vi produsere og fortsatt ha minst 95 % sannsynlighet for at ingen del er defekt?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall defekter i batch på `n`" }
+              - { text: "`X ~ Bin(n, 0.01)`" }
+              - { comment: "krav: `P(X = 0) ≥ 0.95` — formen blir `(1−p)^n ≥ X` (motsatt retning), så vi ender med MAKS `n`" }
+          - label: "Innsetting"
+            lines:
+              - { text: "`P(X = 0) = (1−p)^n = 0.99^n`" }
+              - { text: "`0.99^n ≥ 0.95`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.99) ≥ ln(0.95)`" }
+              - { comment: "`ln(0.99) < 0` snur ulikhetstegnet" }
+              - { text: "`n ≤ ln(0.95) / ln(0.99)`" }
+              - { indent: "= −0.05129 / −0.01005" }
+              - { indent: "≈ 5.10" }
+        result: "`n = 5` deler (maks batch)"
+
   - label: "Finn n / sjansen overstiger X"
     solutions:
       - source: "Praksis · minst én dose virker"
@@ -313,26 +369,6 @@ detailed_solution_variants:
               - { indent: "= −4.6052 / −0.05129" }
               - { indent: "≈ 89.78" }
         result: "`n = 90` lodd"
-      - source: "Praksis · ingen defekter"
-        question: "Hver del produseres med en defektrate på 1 % (`p = 0.01`). Hvor stor batch `n` kan vi produsere og fortsatt ha minst 95 % sannsynlighet for at ingen del er defekt?"
-        sections:
-          - label: "Identifisering"
-            lines:
-              - { text: "`X` = antall defekter i batch på `n`" }
-              - { text: "`X ~ Bin(n, 0.01)`" }
-              - { comment: "krav: `P(X = 0) ≥ 0.95`" }
-          - label: "Innsetting"
-            lines:
-              - { text: "`P(X = 0) = (1−p)^n = 0.99^n`" }
-              - { text: "`0.99^n ≥ 0.95`" }
-          - label: "Logaritme"
-            lines:
-              - { text: "`n · ln(0.99) ≥ ln(0.95)`" }
-              - { comment: "`ln(0.99) < 0` snur ulikhetstegnet" }
-              - { text: "`n ≤ ln(0.95) / ln(0.99)`" }
-              - { indent: "= −0.05129 / −0.01005" }
-              - { indent: "≈ 5.10" }
-        result: "`n = 5` deler"
 
 related:
   - { id: "poisson-fordeling",      kind: "entry" }
