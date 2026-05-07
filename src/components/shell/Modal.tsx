@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { clsx } from "clsx";
 import { X } from "lucide-react";
 import {
@@ -7,6 +7,7 @@ import {
   subscribe as subscribeModalStack,
   getStack,
   isTopOfStack,
+  closeAllModals,
 } from "./modal-stack";
 
 /** Keep in sync with the longest CSS transition duration on the modal panel. */
@@ -67,12 +68,19 @@ export function Modal({ ariaLabel, onClose, children, maxWidth = "640px" }: Prop
     };
   }, []);
 
-  // Each Modal registers itself in the global modal stack. Only the
-  // topmost modal renders the dark backdrop, so stacked popups don't
-  // multiply the tint and end up pitch-black behind the inner one.
+  // Each Modal registers itself in the global modal stack so:
+  //  1. only the topmost modal renders the dark backdrop tint
+  //  2. backdrop click can close ALL stacked popups (formula -> ordliste
+  //     -> ordliste collapses with one click outside)
+  // Use a ref to hand pushModal a stable function that always invokes
+  // the current requestClose, even though useCallback recreates it
+  // when onClose changes between renders.
+  const requestCloseRef = useRef(requestClose);
+  requestCloseRef.current = requestClose;
+
   const [myId, setMyId] = useState<number | null>(null);
   useEffect(() => {
-    const id = pushModal();
+    const id = pushModal(() => requestCloseRef.current());
     setMyId(id);
     return () => {
       popModal(id);
@@ -93,7 +101,7 @@ export function Modal({ ariaLabel, onClose, children, maxWidth = "640px" }: Prop
         <button
           type="button"
           aria-label="Lukk"
-          onClick={requestClose}
+          onClick={closeAllModals}
           className={clsx(
             "absolute inset-0 cursor-default bg-black/85 backdrop-blur-lg transition-opacity duration-200 ease-out",
             open ? "opacity-100" : "opacity-0",
