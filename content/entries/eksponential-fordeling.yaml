@@ -13,13 +13,13 @@ what_it_does: |
   kontinuerlig og positiv (`T > 0`).
 
 why_use: |
-  Når problemet handler om TID TIL noe skjer (i kontrast til antall ting
+  Når problemet handler om tid til noe skjer (i kontrast til antall ting
   som skjer), og vi vet eller antar at hendelsene følger en poissonprosess.
   Tett knyttet sammen med Poissonfordeling: hvis antall hendelser er
   `Poisson(λt)`, så er ventetiden eksponentialfordelt med parameter `λ`.
 
 recognition_cues:
-  - "Spørsmålet handler om tid TIL første hendelse, eller mellom to hendelser"
+  - "Spørsmålet handler om tid til første hendelse, eller mellom to hendelser"
   - "`T` er en kontinuerlig stokastisk variabel (positivt reelt tall)"
   - "Det er allerede etablert i oppgaven at hendelsene er en poissonprosess"
   - "Spørsmålet er på formen `P(T > t)`, `P(T < t)` eller `P(a < T < b)`"
@@ -50,9 +50,9 @@ filters:
   distribution_assumption: [exponential]
   tooling: [calculator_exp]
 solution_variants:
-  - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
+  - label: "P(T > t) — ingen hendelse innen t"
     steps:
-      - "Bekreft at problemet handler om tid TIL første hendelse i en poissonprosess, og at spørsmålet er på formen 'ingen hendelse innen t' eller 'T større enn t'"
+      - "Bekreft at problemet handler om tid til første hendelse i en poissonprosess, og at spørsmålet er på formen «ingen hendelse innen t» eller «T større enn t»"
       - "Identifiser raten `λ` og noter enheten (per minutt, per time, per år, ...)"
       - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først slik at `λ` og `t` har samme tidsenhet", conditional: true }
       - "Bruk overlevelsesformelen direkte: `P(T > t) = e^(−λt)`"
@@ -61,7 +61,7 @@ solution_variants:
 
   - label: "P(T < t) — hendelse innen t"
     steps:
-      - "Bekreft at spørsmålet er 'minst én hendelse innen t', 'hendelsen skjer før t', eller 'ventetiden er kortere enn t'"
+      - "Bekreft at spørsmålet er «minst én hendelse innen t», «hendelsen skjer før t», eller «ventetiden er kortere enn t»"
       - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet"
       - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først", conditional: true }
       - "Bruk kumulativ fordelingsfunksjon: `F(t) = P(T < t) = 1 − e^(−λt)`"
@@ -80,13 +80,13 @@ solution_variants:
 
   - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
     steps:
-      - { text: "Hvis spørsmålet sier 'gitt at det ikke har skjedd noe i de siste s minutter, hva er sannsynligheten for å vente t til', bruk memoryless-egenskapen i stedet for å betinget regne på vanlig måte", conditional: true }
-      - "Memoryless-egenskapen: `P(T > s + t | T > s) = P(T > t)` — fortiden 'glemmes', bare den nye ventetiden `t` betyr noe"
+      - { text: "Hvis spørsmålet sier «gitt at det ikke har skjedd noe i de siste s minutter, hva er sannsynligheten for å vente t til», bruk memoryless-egenskapen i stedet for å betinget regne på vanlig måte", conditional: true }
+      - "Memoryless-egenskapen: `P(T > s + t | T > s) = P(T > t)` — fortiden «glemmes», bare den nye ventetiden `t` betyr noe"
       - "Identifiser `λ` og den nye ventetiden `t` (ikke `s + t`); `s` brukes ikke i utregningen"
       - { text: "Hvis raten og `t` er i ulike enheter, konvertér først", conditional: true }
       - "Bruk overlevelsesformelen på `t` alene: `P(T > t) = e^(−λt)`"
       - "Sett inn tall (f.eks. `λ = 1/15` per min, har ventet `s = 20` min uten hendelse, vil vente `t = 10` min til → `P = e^(−10/15) ≈ 0.513`)"
-      - "Tolk: ventetidsfordelingen 'starter på nytt' hvert øyeblikk uten hendelse — typisk for poissonprosesser"
+      - "Tolk: ventetidsfordelingen «starter på nytt» hvert øyeblikk uten hendelse — typisk for poissonprosesser"
 
 common_traps: |
   Eksponentialfordeling og Poissonfordeling deler samme `λ` men måler ulike
@@ -107,7 +107,7 @@ python_snippet: |
   expon.cdf(t, scale=1/lam)       # 0.3812
 
 detailed_solution_variants:
-  - label: "P(T > t) — overlevelse (ingen hendelse innen t)"
+  - label: "P(T > t) — ingen hendelse innen t"
     solutions:
       - source: "Praksis · Lyspære med forventet levetid"
         question: "En lyspære har forventet levetid på 1000 timer. Hva er sannsynligheten for at den varer i mer enn 1500 timer?"
@@ -147,13 +147,13 @@ detailed_solution_variants:
               - { indent: "`≈ 0.0498`" }
         result: "`P(T > 30) ≈ 0.0498`"
 
-      - source: "Praksis · Komponentens MTBF"
-        question: "En komponent har MTBF (mean time between failures) på 5 år. Hva er sannsynligheten for at den fungerer i mer enn 10 år uten feil?"
+      - source: "Praksis · Komponentens gjennomsnittlige levetid"
+        question: "En komponent har en gjennomsnittlig levetid på 5 år. Hva er sannsynligheten for at den fungerer i mer enn 10 år uten feil?"
         sections:
           - label: "Identifisering"
             lines:
               - { text: "T = tid til feil" }
-              - { text: "`MTBF = E[T] = 5` år  ⇒  `λ = 1/5 = 0.2` per år" }
+              - { text: "Gjennomsnittlig levetid `E[T] = 5` år  ⇒  `λ = 1/5 = 0.2` per år" }
               - { text: "T ~ Eksponential(`λ = 0.2`)" }
               - { comment: "spørres om `P(T > 10)`" }
           - label: "Formel"
@@ -274,7 +274,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.3679`" }
           - label: "Tolkning"
             lines:
-              - { comment: "fordelingen 'starter på nytt' — de 5 minuttene som har gått teller ikke" }
+              - { comment: "fordelingen «starter på nytt»: de 5 minuttene som har gått teller ikke" }
         result: "`P(T > 10 | T > 5) = e^(−1) ≈ 0.3679`"
 
       - source: "Praksis · Lyspære som har kjørt i 500 timer"
@@ -295,7 +295,7 @@ detailed_solution_variants:
               - { indent: "`≈ 0.2231`" }
           - label: "Tolkning"
             lines:
-              - { comment: "pæren 'husker ikke' de 500 timene den allerede har brent" }
+              - { comment: "pæren «husker ikke» de 500 timene den allerede har brent" }
               - { comment: "i praksis er ikke pærer memoryless — slitasje gjør at modellen er en idealisering" }
         result: "`P(T > 1500 | T > 500) = e^(−1.5) ≈ 0.2231`"
 
