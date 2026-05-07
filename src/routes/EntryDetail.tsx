@@ -135,6 +135,8 @@ export function EntryDetail() {
                 <FormulaExplanationCards
                   explanations={FORMULA_EXPLANATIONS[entry.id]!}
                   glossary={data.glossary}
+                  entries={data.entries}
+                  tables={data.tables}
                 />
               </Section>
             )}

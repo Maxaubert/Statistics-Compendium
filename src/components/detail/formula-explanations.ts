@@ -14,7 +14,15 @@
  * formula page; they are not part of the global Ordliste.
  */
 
+export type FormulaSeeAlsoRef =
+  | { kind: "formula"; ref: string }
+  | { kind: "entry"; id: string }
+  | { kind: "glossary"; id: string }
+  | { kind: "table"; id: string };
+
 export interface FormulaExplanation {
+  /** Stable id within the entry's formula list, used by cross-references. */
+  id: string;
   /** Card title (e.g. "Sannsynlighetstetthet"). */
   name: string;
   /** Short uppercase abbreviation shown as a chip on the card. */
@@ -23,13 +31,16 @@ export interface FormulaExplanation {
   formula: string;
   /** One-line summary shown as the card body. */
   short: string;
-  /** Markdown body for the modal — supports Prose features. */
+  /** Markdown body for the modal, supports Prose features. */
   long: string;
+  /** Cross-references shown as a "Se også"-row at the bottom of the modal. */
+  see_also?: FormulaSeeAlsoRef[];
 }
 
 export const FORMULA_EXPLANATIONS: Record<string, FormulaExplanation[]> = {
   "eksponential-fordeling": [
     {
+      id: "pdf",
       name: "Sannsynlighetstetthet",
       abbreviation: "PDF",
       formula: "f(t) = λe^(-λt)",
@@ -63,14 +74,19 @@ I praksis trenger du sjelden å regne integralet selv. Det er allerede
 gjort og gitt deg som \`F(t)\` (se kortet ved siden av).
 
 
-## Når brukes \`f\` på eksamen?
+## Når bruke \`f(t)\`?
 
 - Tegne eller skissere tetthetskurven
 - Vise at fordelingen integrerer til 1 (dvs. at den faktisk er en gyldig fordeling)
-- Sjelden direkte i sannsynlighetsberegninger
+- Sjelden direkte i sannsynlighetsberegninger; bruk \`F(t)\` i stedet
 `,
+      see_also: [
+        { kind: "formula", ref: "cdf" },
+        { kind: "glossary", id: "poisson-prosess" },
+      ],
     },
     {
+      id: "cdf",
       name: "Kumulativ fordelingsfunksjon",
       abbreviation: "CDF",
       formula: "F(t) = 1 - e^(-λt)",
@@ -92,7 +108,7 @@ via \`F\` (eller komplementet til \`F\`):
 - \`P(T > t) = 1 - F(t) = e^(-λt)\` (overlevelse, ingen hendelse innen \`t\`)
 - \`P(a < T < b) = F(b) - F(a) = e^(-λa) - e^(-λb)\` (intervall)
 
-> [!tip] Det er denne du bruker på 95 % av eksamensoppgavene. Lær \`P(T > t) = e^(-λt)\` som refleks; det dekker «overlevelses»-mønsteret som dukker opp i de fleste poissonprosess-oppgaver.
+> [!tip] Lær \`P(T > t) = e^(-λt)\` som refleks; det dekker «overlevelses»-mønsteret som dukker opp i de fleste poissonprosess-oppgaver.
 
 
 ## Egenskaper du kan sjekke
@@ -101,6 +117,11 @@ via \`F\` (eller komplementet til \`F\`):
 - \`F(∞) = 1\` (vente lenge nok og hendelsen kommer alltid til slutt)
 - \`F\` vokser monotont fra 0 til 1
 `,
+      see_also: [
+        { kind: "formula", ref: "pdf" },
+        { kind: "entry", id: "komplementregelen" },
+        { kind: "glossary", id: "poisson-prosess" },
+      ],
     },
   ],
 };
