@@ -206,10 +206,7 @@ function StylePicker() {
  */
 function StylePreviewPanel({ config }: { config: CalculatorStyleConfig }) {
   return (
-    <div
-      className="relative overflow-hidden rounded-md"
-      style={{ ...config.backdrop, padding: "14px 12px" }}
-    >
+    <div className="relative">
       <div
         className="relative overflow-hidden rounded-[10px]"
         style={config.panel}
