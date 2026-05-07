@@ -124,7 +124,7 @@ via \`F\` (eller komplementet til \`F\`):
     {
       id: "survival",
       name: "Overlevelse: ingen hendelse innen t",
-      abbreviation: "P(T > t)",
+      abbreviation: "Større enn",
       formula: "P(T > t) = e^(-λt)",
       short: `«Ventetiden er lengre enn \`t\`». Den vanligste varianten i pensum.`,
       long: `\`P(T > t)\` er overlevelsesfunksjonen til eksponentialfordelingen. Den gir sannsynligheten for at ingen hendelse har inntruffet innen tid \`t\`, eller ekvivalent at ventetiden til neste hendelse er lengre enn \`t\`.
@@ -185,7 +185,7 @@ Den vanligste feilen er å miksbruk av tidsenheter mellom \`λ\` og \`t\`:
     {
       id: "event-by-t",
       name: "Hendelse innen t",
-      abbreviation: "P(T < t)",
+      abbreviation: "Mindre enn",
       formula: "P(T < t) = F(t) = 1 − e^(-λt)",
       short: `«Hendelsen skjer før \`t\`». Direkte fra kumulativ fordelingsfunksjon.`,
       long: `\`P(T < t)\` er den kumulative fordelingsfunksjonen og gir sannsynligheten for at minst én hendelse har inntruffet innen tid \`t\`. Det er den enkleste varianten å regne ut: bare sett inn i \`F(t) = 1 − e^(-λt)\`.
@@ -249,7 +249,7 @@ Velg den som passer regningen din. Hvis du allerede har regnet \`P(T > t)\` i en
     {
       id: "interval-ab",
       name: "Ventetid i intervall",
-      abbreviation: "P(a < T < b)",
+      abbreviation: "Intervall",
       formula: "P(a < T < b) = e^(-λa) − e^(-λb)",
       short: `Sannsynligheten for at ventetiden faller i intervallet \`(a, b)\`.`,
       long: `Når oppgaven ber om sannsynligheten for at ventetiden faller mellom to grenser \`a\` og \`b\`, regner du differansen mellom to overlevelser (eller ekvivalent to kumulative). For eksponential blir formelen særlig kompakt: \`e^(-λa) − e^(-λb)\`.
@@ -312,7 +312,7 @@ Svar: ca. 32 % sjanse for at neste buss kommer i intervallet (10, 30) minutter.
     {
       id: "memoryless",
       name: "Memoryless-egenskap",
-      abbreviation: "MEM",
+      abbreviation: "Memoryless",
       formula: "P(T > s + t | T > s) = P(T > t) = e^(-λt)",
       short: `Fortiden glemmes: gitt at det IKKE har skjedd noe i \`s\` enheter, starter ventetiden på nytt.`,
       long: `Memoryless-egenskapen er det som skiller eksponentialfordelingen fra de fleste andre fordelingene. Den sier at sannsynligheten for å vente \`t\` til, GITT at det ikke har skjedd noe ennå, ikke avhenger av hvor lenge du allerede har ventet. Bare den nye \`t\` teller.
@@ -376,7 +376,7 @@ Memoryless betyr at fenomenet ikke «slites» eller «modnes» med tid. For tekn
     {
       id: "bayes",
       name: "Bayes' setning",
-      abbreviation: "BAYES",
+      abbreviation: "Regel",
       formula: "P(A | B) = P(A) · P(B | A) / P(B)",
       short: "Snur retningen på en betinget sannsynlighet: fra P(B|A) til P(A|B).",
       long: `Bayes' setning lar deg snu retningen på en betinget sannsynlighet. Hvis du vet sannsynligheten for symptom \`B\` gitt sykdom \`A\`, kan du regne ut sannsynligheten for sykdom \`A\` gitt symptom \`B\`, som ofte er det du faktisk bryr deg om.
@@ -440,7 +440,7 @@ Bare 16.7 prosent, til tross for en svært god test. Dette er base-rate-fellen: 
     {
       id: "bayes-standard-2-veis",
       name: "Standard 2-veis Bayes",
-      abbreviation: "2-VEIS",
+      abbreviation: "2-veis",
       formula: "P(A | B) = P(A) · P(B | A) / P(B)",
       short: `Binær partisjon \`A\` vs \`Aᶜ\`. Den enkleste og vanligste varianten.`,
       long: `Standardvarianten av Bayes' setning bruker en binær partisjon: hypotesen \`A\` og dens komplement \`Aᶜ\`. Det er denne du møter når oppgaven har «to tilstander» (sant/usant, syk/frisk, defekt/OK).
@@ -502,8 +502,8 @@ Selv med en ganske god detektor er bare ca. 39 % av merkede deler faktisk defekt
     {
       id: "bayes-diagnose-test",
       name: "Diagnose-/test-mønster",
-      abbreviation: "TEST",
-      formula: "P(syk | +) = prevalens · sensitivitet / P(+)",
+      abbreviation: "Diagnose",
+      formula: "P(syk | +) = P(syk) · P(+ | syk) / P(+)",
       short: "Bayes med medisinsk vokabular: prevalens, sensitivitet og spesifisitet.",
       long: `Når Bayes formuleres rundt en test mot en sykdom, har de tre tallene faste navn. Strukturen er identisk med standard 2-veis-varianten, men oversettelsen mellom ord og symboler er der mange snubler.
 
@@ -562,7 +562,7 @@ Ved negativ test snur man bare på betingelsene:
     {
       id: "bayes-multi-hypotese",
       name: "Multi-hypotese (3+ partisjoner)",
-      abbreviation: "MULTI",
+      abbreviation: "Multi",
       formula: "P(Aᵢ | B) = P(Aᵢ) · P(B | Aᵢ) / Σⱼ P(Aⱼ) · P(B | Aⱼ)",
       short: "Bayes med tre eller flere disjunkte hypoteser som danner en partisjon.",
       long: `Når årsakene er flere enn to («maskin A, B eller C», «leverandør X, Y eller Z»), generaliseres Bayes ved å summere over alle hypotesene i nevneren. Strukturen er den samme som 2-veis, bare med flere ledd.
@@ -622,8 +622,8 @@ For eksempelet over: \`P(A | D) ≈ 0.238\`, \`P(B | D) ≈ 0.286\`, \`P(C | D) 
     {
       id: "bayes-tre-diagram",
       name: "Tre-diagram-arbeidsflyt",
-      abbreviation: "TRE",
-      formula: "P(A | B) = P(A ∩ B) / Σ P(stier til B)",
+      abbreviation: "Tre-diagram",
+      formula: "P(Aᵢ | B) = P(Aᵢ ∩ B) / Σⱼ P(Aⱼ ∩ B)",
       short: "Visuell oppskrift: tegn treet, multiplisér langs stiene, del Bayes-stien på summen.",
       long: `For ordrike eller flerstegs-oppgaver er det nesten alltid raskere å tegne et tre-diagram først. Treet sorterer informasjonen så formelen blir åpenbar.
 
@@ -688,7 +688,7 @@ Selv om bare 60 % av sjåførene er unge, kommer ca. 82 % av kravene fra dem.
     {
       id: "pmf",
       name: "Punktsannsynlighet",
-      abbreviation: "PMF",
+      abbreviation: "Eksakt k",
       formula: "P(X = k) = C(n, k) · p^k · (1 - p)^(n-k)",
       short: `Sannsynligheten for nøyaktig \`k\` suksesser i \`n\` uavhengige forsøk med suksessannsynlighet \`p\`.`,
       long: `\`P(X = k)\` er punktsannsynligheten i binomialfordelingen. Den gir sannsynligheten for at nøyaktig \`k\` av \`n\` uavhengige Bernoulli-forsøk lykkes, når hvert forsøk har samme suksessannsynlighet \`p\`.
@@ -751,7 +751,7 @@ Svar: ca. 30 % sjanse for nøyaktig to syke trær i utplukket.
     {
       id: "cdf-le-k",
       name: "Kumulativ sannsynlighet",
-      abbreviation: "P(X ≤ k)",
+      abbreviation: "Maks k",
       formula: "P(X ≤ k) = Σ C(n, i) · p^i · (1 − p)^(n − i)  for i = 0..k",
       short: `«Høyst \`k\` suksesser». Slå opp direkte i tabell E.1.`,
       long: `\`P(X ≤ k)\` er den kumulative sannsynligheten i binomialfordelingen og er nettopp det tabell E.1 leser direkte. Du slipper å summere punktsannsynlighetene for hånd så lenge \`n\`, \`p\` og \`k\` står i tabellen.
@@ -812,7 +812,7 @@ F.eks. \`X ~ Bin(8, 0.90)\`, søker \`P(X ≤ 6)\`. Sett \`Y ~ Bin(8, 0.10)\`, s
     {
       id: "cdf-ge-k",
       name: "Komplement: minst k",
-      abbreviation: "P(X ≥ k)",
+      abbreviation: "Minst k",
       formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)",
       short: `«Minst \`k\` suksesser». Komplement av kumulativ, med trapp på \`k − 1\`.`,
       long: `\`P(X ≥ k)\` står ikke direkte i E.1; bruk komplementet. Det avgjørende er at tabellen skal slås opp på \`k − 1\`, ellers mister du bidraget fra \`X = k\` selv og svaret blir for lavt.
@@ -874,6 +874,7 @@ F.eks. lottokuponger med \`p = 0.05\` og \`n = 20\` lodd: \`P(X ≥ 1) = 1 − 0
     {
       id: "find-n-threshold",
       name: "Finn nødvendig n",
+      abbreviation: "Finn n",
       formula: "1 − (1 − p)^n ≥ p_terskel  ⇒  n ≥ ln(1 − p_terskel) / ln(1 − p)",
       short: "Hvor mange forsøk trengs for at sannsynligheten når en gitt terskel?",
       long: `Den inverse varianten snur problemet: i stedet for å regne ut en sannsynlighet for et gitt \`n\`, leter du etter det MINSTE \`n\` som gjør at en sannsynlighet når en bestemt terskel \`p_terskel\`. Den klassiske formen er «hvor mange lodd må jeg kjøpe for å vinne minst én gang med 99 % sannsynlighet?».
@@ -940,7 +941,7 @@ Det bekrefter at \`n = 90\` er den minste verdien som tilfredsstiller kravet.
     {
       id: "t-observator",
       name: "T-observator (én-utvalgs t-test)",
-      abbreviation: "T",
+      abbreviation: "Observator",
       formula: "T = (X̄ − μ₀) / (S/√n)",
       short: `Som \`Z\`, men nevneren bruker estimert \`S\` i stedet for kjent \`σ\`. T-fordelt med \`ν = n − 1\` frihetsgrader.`,
       long: `\`T\` er testobservatoren i én-utvalgs t-test. Den fungerer som \`Z\`-observatoren, men siden populasjonsstandardavviket \`σ\` er ukjent estimerer vi det fra utvalget med \`S\` (utvalgsstandardavviket). Den ekstra usikkerheten gjør at fordelingen til \`T\` er bredere enn standardnormalen, særlig for små \`n\`.
@@ -993,7 +994,7 @@ Venstresidig på \`α = 0.05\` med \`ν = 11\` gir kritisk verdi \`−t_(0.05, 1
     {
       id: "t-venstresidig",
       name: "Venstresidig t-test (H₁: μ < μ₀)",
-      abbreviation: "T<",
+      abbreviation: "Venstre",
       formula: "Forkast H₀ hvis T < −t_(α, ν)   |   ν = n − 1",
       short: `Ensidig venstresidig med t-fordeling: kritisk verdi er negativ og leses opp på \`ν = n − 1\` frihetsgrader.`,
       long: `Strukturen er den samme som for venstresidig z-test, men siden \`σ\` er ukjent og estimeres med \`S\`, er testobservatoren \`T\` t-fordelt med \`ν = n − 1\` frihetsgrader. Kritisk verdi leses derfor av tabell E.5, ikke z-tabellen.
@@ -1041,7 +1042,7 @@ Forkast \`H₀\`: lyspærene varer i snitt «kortere» enn produsentens påstand
     {
       id: "t-hoyresidig",
       name: "Høyresidig t-test (H₁: μ > μ₀)",
-      abbreviation: "T>",
+      abbreviation: "Høyre",
       formula: "Forkast H₀ hvis T > +t_(α, ν)   |   ν = n − 1",
       short: `Ensidig høyresidig med t-fordeling: kritisk verdi er positiv og avhenger av frihetsgrader \`ν = n − 1\`.`,
       long: `For \`H₁: μ > μ₀\` med ukjent \`σ\` ligger forkastningsområdet i høyre hale av t-fordelingen med \`ν = n − 1\` frihetsgrader. Større utvalg gir t-fordeling som nærmer seg standardnormalen; for små utvalg er kritisk verdi merkbart større enn den tilsvarende z-kvantilen.
@@ -1089,7 +1090,7 @@ Forkast \`H₀\`: tallene gir grunn til å hevde at gjennomsnittlig avling «ove
     {
       id: "t-tosidig",
       name: "Tosidig t-test (H₁: μ ≠ μ₀)",
-      abbreviation: "T≠",
+      abbreviation: "Tosidig",
       formula: "Forkast H₀ hvis |T| > t_(α/2, ν)   |   ν = n − 1",
       short: `Tosidig med t-fordeling: del \`α\` på to og bruk \`t_(α/2, ν)\` på begge haler.`,
       long: `Tosidig t-test har ingen retningshypotese, så \`α\` fordeles likt på de to halene av t-fordelingen med \`ν = n − 1\` frihetsgrader. Den eneste praktiske forskjellen fra tosidig z-test er at vi slår opp i tabell E.5 og at frihetsgrader bestemmer kvantilen.
@@ -1139,7 +1140,7 @@ Forkast \`H₀\`: maskinen avviker signifikant fra 500 ml. Her er retningen posi
     {
       id: "z-observator",
       name: "Z-observator (én-utvalgs z-test)",
-      abbreviation: "Z",
+      abbreviation: "Observator",
       formula: "Z = (X̄ − μ₀) / (σ/√n)",
       short: `Måler hvor mange standardfeil utvalgsgjennomsnittet ligger fra påstandsverdien \`μ₀\`.`,
       long: `\`Z\` er testobservatoren i én-utvalgs z-test. Den måler hvor langt det observerte gjennomsnittet \`X̄\` ligger fra påstandsverdien \`μ₀\`, målt i antall standardfeil for gjennomsnittet (\`σ/√n\`).
@@ -1188,7 +1189,7 @@ Gjennomsnittet ligger ca. 2.53 standardfeil under \`μ₀\`. På venstresidig te
     {
       id: "z-venstresidig",
       name: "Venstresidig z-test (H₁: μ < μ₀)",
-      abbreviation: "Z<",
+      abbreviation: "Venstre",
       formula: "Forkast H₀ hvis Z < −z_α   |   p = G(z)",
       short: `Ensidig venstresidig: kritisk verdi er negativ, og p-verdien leses direkte fra \`G(z)\` i z-tabellen.`,
       long: `Når \`H₁: μ < μ₀\`, mistenker du at den sanne forventningsverdien ligger under påstandsverdien. Hele forkastningsområdet ligger derfor i venstre hale av standardnormalfordelingen.
@@ -1240,7 +1241,7 @@ Begge regler gir forkast: tallene tyder på at de nye lysene bruker «mindre» e
     {
       id: "z-hoyresidig",
       name: "Høyresidig z-test (H₁: μ > μ₀)",
-      abbreviation: "Z>",
+      abbreviation: "Høyre",
       formula: "Forkast H₀ hvis Z > +z_α   |   p = 1 − G(z)",
       short: `Ensidig høyresidig: kritisk verdi er positiv, og p-verdien er \`1 − G(z)\`.`,
       long: `Når \`H₁: μ > μ₀\`, leter du etter evidens for at sann forventningsverdi ligger over påstandsverdien. Hele forkastningsområdet ligger i høyre hale av standardnormalfordelingen.
@@ -1290,7 +1291,7 @@ Behold \`H₀\`: på strengt 1 %-nivå er det «ikke» nok evidens for at medika
     {
       id: "z-tosidig",
       name: "Tosidig z-test (H₁: μ ≠ μ₀)",
-      abbreviation: "Z≠",
+      abbreviation: "Tosidig",
       formula: "Forkast H₀ hvis |Z| > z_(α/2)   |   p = 2(1 − G(|z|))",
       short: `Tosidig: signifikansnivået fordeles likt på begge haler, så bruk \`z_(α/2)\` og doble p-verdien.`,
       long: `Når \`H₁: μ ≠ μ₀\`, har du ingen retningshypotese: avvik i begge retninger er av interesse. Da fordeles \`α\` likt på begge haler av standardnormalfordelingen.
@@ -1342,7 +1343,7 @@ Forkast \`H₀\`: maskinen avviker signifikant fra 500 ml (her: overfylling, men
     {
       id: "z-observator-andel",
       name: "Z-observator for andel",
-      abbreviation: "Z",
+      abbreviation: "Observator",
       formula: "Z = (X − n·p₀) / √(n·p₀·(1 − p₀))",
       short: `Standardiserer antall suksesser \`X\` mot binomial forventning \`n·p₀\` og varians \`n·p₀(1−p₀)\` under \`H₀\`.`,
       long: `\`Z\` er testobservatoren i z-test for en andel. Under \`H₀: p = p₀\` er antall suksesser \`X\` binomisk fordelt med forventningsverdi \`n·p₀\` og varians \`n·p₀·(1−p₀)\`. Når \`n\` er stor nok kan \`X\` approksimeres med normalfordelingen, og \`Z\` blir standardnormal under \`H₀\`.
@@ -1455,7 +1456,7 @@ Forventningsverdien \`-0.3\` er IKKE en av de mulige verdiene \`X\` kan ta. Det 
     {
       id: "uniform-sannsynlighet",
       name: "Gunstige på mulige",
-      abbreviation: "P(A)",
+      abbreviation: "Gunstige/mulige",
       formula: "P(A) = |A| / |Ω|",
       short: `Når alle utfall er like sannsynlige er sannsynligheten for \`A\` rett og slett antall gunstige delt på antall mulige.`,
       long: `\`P(A) = |A| / |Ω|\` er grunnregelen for sannsynlighet i en uniform fordeling, det vil si når alle elementære utfall er like sannsynlige. Da reduseres sannsynlighetsregning til ren telling.
@@ -1512,7 +1513,7 @@ Det er ren telling, ingen fordeling trengs.
     {
       id: "pmf",
       name: "Punktsannsynlighet",
-      abbreviation: "PMF",
+      abbreviation: "Eksakt k",
       formula: "P(X = k) = C(K, k) · C(N - K, n - k) / C(N, n)",
       short: `Sannsynligheten for nøyaktig \`k\` vellykkede når du trekker \`n\` uten tilbakelegging fra \`N\` (hvorav \`K\` er vellykkede).`,
       long: `\`P(X = k)\` er punktsannsynligheten i hypergeometrisk fordeling. Brøken er på formen «gunstige delt på mulige»: den teller antall måter å lage et utplukk med nøyaktig \`k\` vellykkede, og deler på antall måter å trekke et hvilket som helst utplukk på \`n\`.
@@ -1575,7 +1576,7 @@ Det er to enkle sanity-sjekker for telleren \`C(K, k) · C(N − K, n − k)\`:
     {
       id: "ki-andel",
       name: "Konfidensintervall for andel p",
-      abbreviation: "KI",
+      abbreviation: "Intervall",
       formula: "p̂ ± z_(α/2) · √(p̂(1−p̂)/n)",
       short: "Tilnærmet symmetrisk intervall for sannsynligheten p, basert på normalapproksimasjon av binomial.",
       long: `Formelen gir et tilnærmet konfidensintervall for den ukjente andelen \`p\` i en binomisk situasjon med \`X\` suksesser av \`n\` forsøk. Den hviler på at \`p̂ = X/n\` er tilnærmet normalfordelt rundt \`p\` når \`n\` er stort nok.
@@ -1632,7 +1633,7 @@ Vi er 90 % sikre på at den sanne andelen syke grantrær ligger mellom 20.4 % og
     {
       id: "ki-z",
       name: "Konfidensintervall for μ (kjent σ)",
-      abbreviation: "KI",
+      abbreviation: "Intervall",
       formula: "x̄ ± z_(α/2) · σ/√n",
       short: "Symmetrisk z-basert intervall som med (1−α)·100 % sikkerhet dekker forventningsverdien μ.",
       long: `Formelen gir et tosidig konfidensintervall for \`μ\` når populasjonens standardavvik \`σ\` er kjent. Punktestimatet \`x̄\` plasseres i sentrum, og marginen settes ut fra hvor mye et utvalgsgjennomsnitt typisk varierer.
@@ -1686,7 +1687,7 @@ Vi er 95 % sikre på at den sanne forventede effekten ligger mellom 46.45 og 49.
     {
       id: "ki-t",
       name: "Konfidensintervall for μ (ukjent σ)",
-      abbreviation: "KI",
+      abbreviation: "Intervall",
       formula: "x̄ ± t_(α/2, n−1) · s/√n",
       short: "T-basert intervall som korrigerer for at σ må estimeres fra utvalget med s.",
       long: `Formelen gir et tosidig konfidensintervall for \`μ\` når populasjonens standardavvik er ukjent. Vi erstatter \`σ\` med utvalgs-standardavviket \`s\`, og bruker t-fordelingen med \`ν = n − 1\` frihetsgrader for å kompensere for den ekstra usikkerheten i \`s\`.
@@ -1737,7 +1738,7 @@ Vi er 95 % sikre på at forventet testresultat ligger mellom 61.05 og 81.55.
     {
       id: "ki-rate",
       name: "Konfidensintervall for poissonrate λ",
-      abbreviation: "KI",
+      abbreviation: "Intervall",
       formula: "λ̂ ± z_(α/2) · √(λ̂/t)",
       short: "Tilnærmet KI for raten λ i en poissonprosess, basert på Y hendelser i tidsvindu t.",
       long: `Formelen gir et tilnærmet konfidensintervall for raten \`λ\` i en poissonprosess. Vi har observert \`Y\` hendelser i et vindu av lengde \`t\`, og estimerer \`λ̂ = Y/t\`. Standardfeilen følger av at \`Var(Y) = λt\`, slik at \`Var(λ̂) = λ/t\`.
@@ -1793,7 +1794,7 @@ Vi er 90 % sikre på at fangstraten ligger mellom 0.0103 og 0.0254 sommerfugler 
     {
       id: "ki-sigma2",
       name: "Konfidensintervall for σ²",
-      abbreviation: "KI",
+      abbreviation: "Intervall",
       formula: "((n−1)s² / χ²_(α/2, n−1),  (n−1)s² / χ²_(1−α/2, n−1))",
       short: "Asymmetrisk KI for variansen, bygget på at (n−1)s²/σ² er χ²-fordelt med n−1 frihetsgrader.",
       long: `Formelen gir et \`(1 − α)·100 %\` konfidensintervall for populasjonens varians \`σ²\` ut fra utvalgsvariansen \`s²\`. Intervallet er asymmetrisk fordi \`χ²\`-fordelingen i seg selv er skjev.
@@ -1851,7 +1852,7 @@ Vi er 95 % sikre på at \`σ²\` ligger mellom 2.41 og 11.19.
     {
       id: "chi-observator",
       name: "χ²-observator (tilpasningstest)",
-      abbreviation: "χ²",
+      abbreviation: "Observator",
       formula: "χ² = Σ (O_i − E_i)² / E_i",
       short: "Summerer kvadratavvik mellom observert og forventet antall, skalert med forventet. Stor verdi = dårlig tilpasning.",
       long: `\`χ²\` er testobservatoren i kjikvadrat-tilpasningstest. Den måler det totale avviket mellom observerte antall \`O_i\` og forventede antall \`E_i\` (under \`H₀\`) på tvers av alle \`k\` kategoriene.
@@ -1911,7 +1912,7 @@ Med \`ν = k − 1 = 5\` og \`α = 0.05\` er kritisk verdi \`χ²_(0.05, 5) = 11
     {
       id: "chi-observator-kontingenstabell",
       name: "χ²-observator for kontingenstabell",
-      abbreviation: "χ²",
+      abbreviation: "Observator",
       formula: "χ² = Σ (O_ij − E_ij)² / E_ij,    E_ij = (rad_i · kol_j) / n",
       short: "Samme idé som tilpasningstest, men forventet antall i celle (i, j) regnes fra rad- og kolonnesummer under uavhengighet.",
       long: `\`χ²\` for uavhengighet sammenligner observerte og forventede antall i en \`r × c\`-kontingenstabell. Forskjellen fra goodness-of-fit er hvordan \`E_ij\` regnes ut: under \`H₀\` (uavhengighet) er forventet antall i celle (\`i\`, \`j\`) lik produkt av marginalandeler ganger totalen.
@@ -1977,7 +1978,7 @@ Med \`ν = (2−1)(2−1) = 1\` og \`α = 0.05\` er kritisk verdi \`χ²_(0.05, 
     {
       id: "komplement",
       name: "Komplementregelen",
-      abbreviation: "KOMPL",
+      abbreviation: "Regel",
       formula: "P(Aᶜ) = 1 − P(A)",
       short: "Sannsynligheten for at noe IKKE skjer er én minus sannsynligheten for at det skjer.",
       long: `\`P(Aᶜ) = 1 − P(A)\` sier at sannsynligheten for at hendelsen \`A\` IKKE inntreffer er én minus sannsynligheten for at den inntreffer. Dette er den enkleste regelen i sannsynlighetsregning, men også en av de mest brukte.
@@ -2031,7 +2032,7 @@ For \`k = 3\` er \`P(X ≥ 3) = 1 − P(X ≤ 2)\`, ikke \`1 − P(X ≤ 3)\`. H
     {
       id: "komplement-minst-k",
       name: "Minst k via komplement",
-      abbreviation: "MIN-K",
+      abbreviation: "Minst k",
       formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)",
       short: `«Minst \`k\`» blir «høyst \`k − 1\`» via komplement. Pass på indeksen.`,
       long: `«Minst \`k\`» er det vanligste mønsteret der komplementet sparer arbeid. Direkte måtte du summere \`P(X = k) + P(X = k + 1) + ...\`, mens komplementet er ett enkelt tabelloppslag.
@@ -2084,7 +2085,7 @@ Feil-versjonen \`1 − P(X ≤ 2) ≈ 1 − 0.3828 = 0.6172\` ville mistet bidra
     {
       id: "komplement-ingen",
       name: "Ingen / null forekomster",
-      abbreviation: "NULL",
+      abbreviation: "Ingen",
       formula: "P(X = 0) = 1 − P(X ≥ 1)",
       short: "«Ingen» og «minst én» er hverandres komplementer. Regn det som er enklest.",
       long: `«Ingen» og «minst én» er to sider av samme sak. Når du har den ene, har du den andre gratis.
@@ -2134,7 +2135,7 @@ Og som bonus: \`P(X ≥ 1) = 1 − 0.0498 ≈ 0.9502\`. Regnet du ut det første
     {
       id: "komplement-ikke-alle",
       name: "Ikke alle",
-      abbreviation: "IKKE-ALLE",
+      abbreviation: "Ikke alle",
       formula: "P(ikke alle) = 1 − P(alle) = 1 − p^n",
       short: "«Ikke alle» er komplementet til «alle». Forveksles ofte med «ingen».",
       long: `«Ikke alle» betyr «minst én er motsatt», og er komplementet til «alle». Den vanligste regnefeilen er å forveksle «ikke alle» med «ingen», men det er to helt ulike hendelser.
@@ -2189,7 +2190,7 @@ For trekk uten tilbakelegging gjelder ikke \`p^n\`. Bruk hypergeometrisk for \`P
     {
       id: "komplement-finn-n",
       name: "Finn n for terskel",
-      abbreviation: "n*",
+      abbreviation: "Finn n",
       formula: "n ≥ ln(1 − τ) / ln(1 − p)",
       short: `Hvor mange forsøk trengs for at \`P(minst én)\` overstiger en terskel \`τ\`?`,
       long: `Et klassisk planleggingsspørsmål: hvor mange uavhengige forsøk må vi gjøre for at sannsynligheten for minst én suksess skal være minst \`τ\`? Komplementet gjør oppgaven til en lineær logaritme-utregning.
@@ -2386,7 +2387,7 @@ Sett inn:
     {
       id: "marginal",
       name: "Marginalfordeling fra simultanfordeling",
-      abbreviation: "P(X)",
+      abbreviation: "Marginal",
       formula: "P(X = x) = Σ_y P(X = x, Y = y)",
       short: `Sum ut den andre variabelen: rad-summer for \`P(X)\`, kolonnesummer for \`P(Y)\`.`,
       long: `Marginalfordelingen er sannsynlighetsfordelingen til \`X\` alene, hentet ut fra simultanfordelingen for \`(X, Y)\`. Du «summerer ut» \`Y\` ved å legge sammen alle simultansannsynligheter for hver fast \`x\`.
@@ -2509,7 +2510,7 @@ Tallet \`0.831\` er IKKE en sannsynlighet (det er ikke engang \`≤ 1\` for alle
     {
       id: "standardisering",
       name: "Standardisering",
-      abbreviation: "Z",
+      abbreviation: "Standardisering",
       formula: "Z = (X - μ) / σ ~ N(0, 1)",
       short: "Gjør om en hvilken som helst normalfordeling til standardnormal slik at du kan slå opp i Z-tabellen.",
       long: `Standardisering er trikset som gjør at du KUN trenger én tabell (E.3) for ALLE normalfordelinger. Du regner om \`X ~ N(μ, σ)\` til en variabel \`Z\` som er standardnormal, dvs. \`N(0, 1)\`.
@@ -2563,7 +2564,7 @@ Svar: ca. 5.5 % av beholderne har mer enn 310 ml.
     {
       id: "cdf-lt-x",
       name: "Kumulativ: under x",
-      abbreviation: "P(X < x)",
+      abbreviation: "Mindre enn",
       formula: "P(X < x) = G((x − μ)/σ)",
       short: `Standardiser, slå opp \`G(z)\` direkte i tabell E.3.`,
       long: `\`P(X < x)\` er den kumulative sannsynligheten for normalfordelingen, og er nettopp det tabell E.3 gir deg etter standardisering. Du regner ut \`z = (x − μ)/σ\`, runder til 2 desimaler, og leser av \`G(z)\`.
@@ -2626,7 +2627,7 @@ Når \`x < μ\` blir \`z\` negativ. Vår E.3 dekker både fortegn, så du leser 
     {
       id: "cdf-gt-x",
       name: "Komplement: over x",
-      abbreviation: "P(X > x)",
+      abbreviation: "Større enn",
       formula: "P(X > x) = 1 − G((x − μ)/σ)",
       short: `E.3 gir venstrearealet, så for «over \`x\`» tar du komplementet.`,
       long: `\`P(X > x)\` finnes ikke direkte i E.3 (tabellen leser kumulativen, dvs. arealet til venstre). Bruk komplementet etter standardisering: \`1 − G(z)\`.
@@ -2689,7 +2690,7 @@ Hvis du allerede har regnet \`P(X < x)\` i en deloppgave, tar du \`1 −\` det s
     {
       id: "interval-ab",
       name: "Intervall via to oppslag",
-      abbreviation: "P(a < X < b)",
+      abbreviation: "Intervall",
       formula: "P(a < X < b) = G((b − μ)/σ) − G((a − μ)/σ)",
       short: "Differanse av to kumulative, etter standardisering av begge endepunkter.",
       long: `For sannsynligheten at \`X\` faller i et intervall standardiserer du begge endepunktene og trekker venstrearealet på \`a\` fra venstrearealet på \`b\`. Resultatet er det kumulative arealet mellom de to grensene.
@@ -2755,6 +2756,7 @@ Svar: ca. 22 % av beholderne ligger i intervallet.
     {
       id: "inverse-x",
       name: "Finn x for sannsynlighet",
+      abbreviation: "Finn x",
       formula: "x = μ + σ · z,  der G(z) = p",
       short: `Gitt en sannsynlighet \`p\`, finn terskelen \`x\`. Bruk z-kvantiltabellen E.4.`,
       long: `Den inverse varianten snur problemet: i stedet for å regne ut en sannsynlighet for et gitt \`x\`, leter du etter terskelen \`x\` som tilfredsstiller en gitt sannsynlighet \`p\`. Strategien er å slå opp kvantilet \`z\` i tabell E.4 og deretter sette inn i \`x = μ + σ · z\`.
@@ -2820,6 +2822,7 @@ F.eks. \`X ~ N(170, 6²)\`, søker \`P(X ≤ x) = 0.10\`:
     {
       id: "inverse-mu-sigma",
       name: "Finn μ eller σ",
+      abbreviation: "Finn μ/σ",
       formula: "G((g − μ)/σ) = p  ⇒  μ = g − σ · z   eller  σ = (g − μ)/z",
       short: `Gitt en grense \`g\` og målsannsynlighet \`p\`, finn parameteren som mangler.`,
       long: `Når oppgaven gir en grense \`g\`, en målsannsynlighet \`p\`, og én av parameterne (\`μ\` eller \`σ\`), løser du for den andre. Likningen kommer fra standardisering: \`G((g − μ)/σ) = p\`. Slå opp \`z = G⁻¹(p)\` i E.4 og løs algebraisk.
@@ -2893,7 +2896,7 @@ La merke til: større \`σ\` gir bredere fordeling, og dermed høyere \`P(X < 40
     {
       id: "n-opphoyd-k",
       name: "Ordnet utvalg med tilbakelegging",
-      abbreviation: "n^k",
+      abbreviation: "Antall sekvenser",
       formula: "Antall sekvenser = n^k",
       short: `Antall ordnede sekvenser av lengde \`k\` når hver posisjon kan velges fritt blant \`n\` verdier (gjentakelse tillatt).`,
       long: `\`n^k\` teller hvor mange ulike ordnede sekvenser du kan lage når hver av de \`k\` posisjonene uavhengig kan fylles med en av \`n\` verdier, og samme verdi gjerne kan dukke opp flere ganger.
@@ -2957,7 +2960,7 @@ Kast en terning seks ganger og spør om minst én sekser. Her er \`p = 1/6\` og 
     {
       id: "antall-sekvenser",
       name: "Antall mulige sekvenser",
-      abbreviation: "n^k",
+      abbreviation: "Antall sekvenser",
       formula: "|Ω| = n^k",
       short: `Total størrelse på utfallsrommet når hver av \`k\` posisjoner uavhengig kan fylles med en av \`n\` verdier.`,
       long: `\`n^k\` er størrelsen på utfallsrommet \`Ω\` når du lager en ordnet sekvens av lengde \`k\` og hver posisjon har \`n\` mulige verdier, med gjentakelse tillatt.
@@ -3010,7 +3013,7 @@ Sekssidet terning kastet tre ganger: \`n = 6\`, \`k = 3\` gir \`6^3 = 216\` muli
     {
       id: "p-spesifikk-sekvens",
       name: "Sannsynlighet for spesifikk sekvens",
-      abbreviation: "1/n^k",
+      abbreviation: "Spesifikk sekvens",
       formula: "P(spesifikk sekvens) = 1 / n^k",
       short: `Når alle \`n^k\` sekvenser er like sannsynlige, har én bestemt sekvens sannsynlighet \`1/n^k\`.`,
       long: `Når utfallsrommet er uniformt og inneholder \`n^k\` like sannsynlige sekvenser, gir gunstige på mulige umiddelbart at én bestemt sekvens har sannsynlighet \`1/n^k\`.
@@ -3066,7 +3069,7 @@ Fire myntkast og sekvensen kron, mynt, kron, mynt:
     {
       id: "p-minst-en",
       name: "Sannsynlighet for «minst én»",
-      abbreviation: "1 − q^k",
+      abbreviation: "Minst én",
       formula: "P(minst én X) = 1 − ((n − 1)/n)^k",
       short: `Komplementtrikset: regn ut sannsynligheten for «ingen X i \`k\` forsøk» og trekk fra 1.`,
       long: `Når du gjentar et uavhengig forsøk \`k\` ganger og lurer på «minst én X», er det nesten alltid lettere å regne ut komplementet «ingen X» og trekke fra 1.
@@ -3124,7 +3127,7 @@ Sjekk en 4-sifret PIN-kode: hva er sannsynligheten for minst ett \`7\`? Med \`n 
     {
       id: "permutasjon",
       name: "Ordnet utvalg uten tilbakelegging",
-      abbreviation: "P(n,k)",
+      abbreviation: "Antall ordnede",
       formula: "P(n, k) = n! / (n − k)!",
       short: `Antall ordnede utvalg av \`k\` elementer fra \`n\`, der rekkefølgen teller og hvert element kan brukes høyst én gang.`,
       long: `\`P(n, k)\` (også skrevet \`ⁿPₖ\`) teller antall ordnede sekvenser av lengde \`k\` du kan lage ved å plukke fra \`n\` ulike elementer uten gjentakelse. Dette kalles permutasjoner av \`k\` fra \`n\`.
@@ -3183,7 +3186,7 @@ Trekk 3 kort fra en stokk på 52 i en bestemt rekkefølge (for eksempel spar ess
     {
       id: "antall-ordnede-utvalg",
       name: "Antall ordnede utvalg",
-      abbreviation: "P(n,k)",
+      abbreviation: "Antall ordnede",
       formula: "P(n, k) = n! / (n − k)!",
       short: `Antall ordnede utvalg av \`k\` ulike elementer fra \`n\`, der rekkefølgen teller og hvert element brukes høyst én gang.`,
       long: `\`P(n, k)\` teller antall ordnede sekvenser av lengde \`k\` du kan lage fra \`n\` ulike elementer uten gjentakelse. Brukes når \`k < n\` og rekkefølgen i utvalget faktisk betyr noe.
@@ -3240,7 +3243,7 @@ Fordel topp-5-plasseringer i et løp med 12 utøvere:
     {
       id: "hele-permutasjoner",
       name: "Hele permutasjoner (k = n)",
-      abbreviation: "n!",
+      abbreviation: "Hele permutasjoner",
       formula: "P(n, n) = n!",
       short: `Antall måter å stille \`n\` ulike elementer på rekke. Spesialtilfellet av \`P(n, k)\` med \`k = n\`.`,
       long: `Når du bruker hele utvalget på rekke, blir \`P(n, k)\` til \`n!\`. Dette er antall ulike permutasjoner av \`n\` ulike elementer.
@@ -3297,7 +3300,7 @@ Det er flere enn antall atomer på jorden, og forklarer hvorfor en godt stokket 
     {
       id: "p-spesifikk-ordnet",
       name: "Sannsynlighet for spesifikk ordnet sekvens",
-      abbreviation: "1/P(n,k)",
+      abbreviation: "Spesifikk sekvens",
       formula: "P(spesifikk sekvens) = 1 / P(n, k) = (n − k)! / n!",
       short: `Når alle ordnede utvalg er like sannsynlige, har én bestemt sekvens uten tilbakelegging sannsynlighet \`1/P(n, k)\`.`,
       long: `Når alle \`P(n, k)\` ordnede sekvenser uten tilbakelegging er like sannsynlige, gir gunstige på mulige direkte at én bestemt sekvens har sannsynlighet \`1/P(n, k)\`.
@@ -3356,7 +3359,7 @@ Trekk 5 kort i en bestemt rekkefølge:
     {
       id: "pmf",
       name: "Punktsannsynlighet",
-      abbreviation: "PMF",
+      abbreviation: "Eksakt k",
       formula: "P(X = k) = e^(-λt) · (λt)^k / k!",
       short: `Sannsynligheten for nøyaktig \`k\` hendelser i et tidsvindu med rate \`λ\` og lengde \`t\`.`,
       long: `\`P(X = k)\` er punktsannsynligheten i poissonfordelingen. Den gir sannsynligheten for at NØYAKTIG \`k\` hendelser inntreffer i et vindu der vi forventer \`μ = λt\` hendelser.
@@ -3419,7 +3422,7 @@ Svar: ca. 26 % sjanse for nøyaktig to sommerfugler i fellen.
     {
       id: "cdf-le-k",
       name: "Kumulativ sannsynlighet",
-      abbreviation: "P(X ≤ k)",
+      abbreviation: "Maks k",
       formula: "P(X ≤ k) = Σ e^(-μ) · μ^i / i!  for i = 0..k",
       short: `«Høyst \`k\` hendelser». Slå opp direkte i tabell E.2.`,
       long: `\`P(X ≤ k)\` er den kumulative sannsynligheten for at antall hendelser i vinduet er HØYST \`k\`. Dette er nettopp formen tabell E.2 leser direkte, så du slipper å summere punktsannsynligheter for hånd.
@@ -3480,7 +3483,7 @@ E.2 lister \`μ\` i runde steg. Hvis verdien din ligger mellom to oppslag:
     {
       id: "cdf-ge-k",
       name: "Komplement: minst k",
-      abbreviation: "P(X ≥ k)",
+      abbreviation: "Minst k",
       formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)",
       short: `«Minst \`k\` hendelser». Komplement av kumulativ, med trapp på \`k − 1\`.`,
       long: `\`P(X ≥ k)\` finnes ikke direkte i tabell E.2. I stedet skriver vi det om via komplement og slår opp \`P(X ≤ k − 1)\`. Det avgjørende er at trappen i tabellen er på \`k − 1\`, ikke på \`k\`.
@@ -3536,7 +3539,7 @@ For \`k = 1\` faller utregningen sammen med den enkle formelen for «ingen»:
     {
       id: "interval-ab",
       name: "Intervall via to oppslag",
-      abbreviation: "P(a ≤ X ≤ b)",
+      abbreviation: "Intervall",
       formula: "P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)",
       short: `«Mellom \`a\` og \`b\` hendelser». Differanse av to kumulative oppslag.`,
       long: `Når oppgaven ber om antall hendelser i et intervall, regner du differansen mellom to kumulative oppslag i E.2. Den eneste fellen er at nedre grense slås opp på \`a − 1\`, ikke på \`a\` selv, ellers mister du bidraget fra \`X = a\`.
@@ -3595,7 +3598,7 @@ Svaret må være positivt og mindre enn både \`P(X ≤ b)\` og \`P(X ≥ a)\` h
     {
       id: "p-x-zero",
       name: "Ingen hendelser",
-      abbreviation: "P(X = 0)",
+      abbreviation: "Ingen",
       formula: "P(X = 0) = e^(-μ)",
       short: `Spesialtilfellet «ingen hendelser». Hele formelen kollapser til \`e^(-μ)\`.`,
       long: `Når oppgaven spør om sannsynligheten for null hendelser, kollapser punktformelen helt: \`μ⁰ = 1\` og \`0! = 1\`, så det eneste som står igjen er \`e^(-μ)\`. Du trenger ingen tabell og ingen kalkulator utover eksponentialfunksjonen.
@@ -3655,6 +3658,7 @@ De to spørsmålene «ingen hendelser i vinduet \`[0, t]\`» og «ventetiden er 
     {
       id: "find-k-threshold",
       name: "Finn k for terskel",
+      abbreviation: "Finn k",
       formula: "k = min { j : P(X ≥ j) ≤ τ }",
       short: `Gitt en sannsynlighetsterskel: hvilken verdi \`k\` tilfredsstiller den?`,
       long: `Den «inverse» varianten snur problemet: i stedet for å regne ut en sannsynlighet, leter du etter den minste (eller største) \`k\` som tilfredsstiller en gitt terskel \`p_terskel\`. Strategien er å bygge en liten tabell over \`P(X ≤ k)\` fra E.2 og lese av når kravet snus.
@@ -3713,7 +3717,7 @@ E.2 dekker gjerne \`k\` opp til 15 eller 20 for hver \`μ\`. Hvis ingen rad tilf
     {
       id: "produkt",
       name: "Produktregelen",
-      abbreviation: "PROD",
+      abbreviation: "Regel",
       formula: "P(A ∩ B) = P(A) · P(B | A)",
       short: "Sannsynligheten for at både A og B inntreffer, regnet sekvensielt.",
       long: `\`P(A ∩ B) = P(A) · P(B | A)\` sier hvordan sannsynligheter kombineres når to hendelser skjer sammen. Først må \`A\` skje, så må \`B\` skje gitt at \`A\` allerede har skjedd.
@@ -3769,7 +3773,7 @@ La \`A\` = «første rød» og \`B\` = «andre rød». Hendelsene er avhengige s
     {
       id: "produkt-snitt",
       name: "Snitt P(A ∩ B) forover",
-      abbreviation: "SNITT",
+      abbreviation: "Snitt",
       formula: "P(A ∩ B) = P(A) · P(B | A)",
       short: `Sannsynlighet for at både \`A\` og \`B\` skjer, regnet sekvensielt.`,
       long: `Forover-varianten av produktregelen brukes når oppgaven har to hendelser som skjer i sekvens, eller når du har en betinget sannsynlighet og en marginal og vil regne ut snittet.
@@ -3824,7 +3828,7 @@ Kast en mynt og en terning samtidig. Sannsynlighet for «krone OG sekser»?
     {
       id: "produkt-betinget-direkte",
       name: "Betinget P(A | B) direkte",
-      abbreviation: "BET",
+      abbreviation: "Betinget",
       formula: "P(A | B) = P(A ∩ B) / P(B)",
       short: "Definisjonen omskrevet: del snittet på betingelsens sannsynlighet.",
       long: `Når du har snittet \`P(A ∩ B)\` og marginalen \`P(B)\`, faller den betingede ut direkte fra definisjonen, uten Bayes.
@@ -3877,7 +3881,7 @@ Hvis \`P(A ∩ B)\` ikke er gitt eksplisitt, må du regne det først. Vanlige ve
     {
       id: "produkt-uavhengighet-test",
       name: "Test om A og B er uavhengige",
-      abbreviation: "INDEP",
+      abbreviation: "Uavhengig",
       formula: "A ⫫ B  ⇔  P(A ∩ B) = P(A) · P(B)",
       short: "Sammenlign produkt av marginaler med faktisk snitt. Like: uavhengige.",
       long: `Uavhengighet er en ren regnetest, ikke et skjønn. Hendelsene \`A\` og \`B\` er uavhengige hvis og bare hvis snittet faktoriserer som produktet av marginalene.
@@ -3933,7 +3937,7 @@ Siden \`0.41 ≠ 0.36\`, er hendelsene IKKE uavhengige. Differansen \`0.41 − 0
     {
       id: "beta-hat",
       name: "Stigningstallet β̂",
-      abbreviation: "SLOPE",
+      abbreviation: "β̂",
       formula: "β̂ = S_XY / S_XX",
       short: "Hvor mye y endres per enhet x. Minste-kvadraters-estimatet for stigningstallet.",
       long: `\`β̂\` er minste-kvadraters-estimatet for stigningstallet i den lineære modellen \`y = α + β·x + ε\`. Den forteller hvor mye \`y\` i gjennomsnitt endres når \`x\` øker med én enhet.
@@ -3981,7 +3985,7 @@ Med \`S_XY = 103.4\` og \`S_XX = 15.6\` får vi \`β̂ = 103.4 / 15.6 ≈ 6.63\`
     {
       id: "alpha-hat",
       name: "Skjæringspunktet α̂",
-      abbreviation: "INTERCEPT",
+      abbreviation: "α̂",
       formula: "α̂ = ȳ − β̂·x̄",
       short: "Verdien av ŷ når x = 0. Plasserer regresjonslinjen vertikalt etter at β̂ er bestemt.",
       long: `\`α̂\` er minste-kvadraters-estimatet for skjæringspunktet (intercept) i \`ŷ = α̂ + β̂·x\`. Geometrisk er det \`y\`-verdien der den estimerte linjen krysser \`y\`-aksen (\`x = 0\`).
@@ -4028,7 +4032,7 @@ Med \`ȳ = 79.7\`, \`β̂ = 6.63\` og \`x̄ = 6.8\` får vi \`α̂ = 79.7 − 6.
     {
       id: "r",
       name: "Pearson-korrelasjon r",
-      abbreviation: "CORR",
+      abbreviation: "r",
       formula: "r = S_XY / √(S_XX · S_YY)",
       short: "Mål på styrken og retningen av lineær sammenheng. Ligger alltid mellom −1 og 1.",
       long: `\`r\` er Pearsons utvalgskorrelasjon. Den standardiserer krysssummen \`S_XY\` slik at resultatet alltid ligger i \`[−1, 1]\`, uavhengig av hvilke enheter \`x\` og \`y\` måles i.
@@ -4084,7 +4088,7 @@ Tolkning: sterk positiv lineær sammenheng. \`r² ≈ 0.933\`, så ca. 93 % av v
     {
       id: "pi-y",
       name: "Prediksjonsintervall for ny Y",
-      abbreviation: "PI",
+      abbreviation: "Ny y",
       formula: "ŷ₀ ± t_(α/2, n−2) · S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)",
       short: "Intervall for hvor en ENKELT ny y-observasjon vil ligge ved x = x₀. Bredere enn KI for E[Y|x].",
       long: `Prediksjonsintervallet (PI) gir et intervall som med \`(1−α)·100 %\` sannsynlighet inneholder en ENKELT ny observasjon \`Y\` målt ved \`x = x₀\`. Det er forskjellig fra konfidensintervallet for forventningsverdien \`E[Y|x₀]\`.
@@ -4152,7 +4156,7 @@ En ny student med \`5\` timers søvn vil med 95 % sannsynlighet score mellom ca.
     {
       id: "se-squared",
       name: "Residualvarians S_E²",
-      abbreviation: "VAR",
+      abbreviation: "S_E²",
       formula: "S_E² = SSE / (n − 2)",
       short: "Variansen til feilene rundt regresjonslinjen. Forventningsrett estimat med n − 2 frihetsgrader.",
       long: `\`S_E²\` er det forventningsrette estimatet for variansen til residualene \`ε_i = y_i − α̂ − β̂·x_i\` i en enkel lineær regresjon. Kvadratroten \`S_E = √S_E²\` er residualenes standardavvik og kalles ofte regresjonens "standard error of the estimate".
@@ -4204,7 +4208,7 @@ Med \`SSE = 48.7437\` og \`n = 10\` blir \`S_E² = 48.7437 / 8 ≈ 6.093\`, så 
     {
       id: "se-beta",
       name: "Standardfeil til β̂",
-      abbreviation: "SE",
+      abbreviation: "SE(β̂)",
       formula: "SE(β̂) = √(S_E² / S_XX)",
       short: "Hvor mye β̂ varierer fra utvalg til utvalg. Inngår direkte i t-test og KI for β.",
       long: `\`SE(β̂)\` er det estimerte standardavviket til stigningstallet \`β̂\`. Den kvantifiserer hvor mye \`β̂\` ville variert hvis vi gjorde forsøket om igjen med nye \`y\`-verdier ved samme \`x\`-design.
@@ -4260,7 +4264,7 @@ Denne verdien brukes direkte i \`T = β̂ / SE(β̂)\` for hypotesetesten, og i 
     {
       id: "t-slope",
       name: "Testobservator T = β̂ / SE(β̂)",
-      abbreviation: "T",
+      abbreviation: "Test β=0",
       formula: "T = (β̂ − β₀) / SE(β̂)",
       short: "T-fordelt under H₀ med n − 2 frihetsgrader. Sammenlignes med t_(α/2, n−2) i tabell E.5.",
       long: `\`T\` er testobservatoren for hypotesen \`H₀: β = β₀\` i en enkel lineær regresjon. Når \`β₀ = 0\` (det vanligste) tester den om det finnes en lineær sammenheng mellom \`x\` og \`y\` overhodet.
@@ -4317,7 +4321,7 @@ Med \`β̂ = 6.63\`, \`SE(β̂) = 0.625\`, \`n = 10\` og \`α = 0.05\` (tosidig)
     {
       id: "sum-formel",
       name: "Fordelingen til summen",
-      abbreviation: "SUM",
+      abbreviation: "Sum",
       formula: "Y = X_1 + ... + X_n ~ N(n·μ, σ·√n)",
       short: `Summen av \`n\` uavhengige \`N(μ, σ)\`-variabler er igjen normalfordelt, med forventning \`n·μ\` og standardavvik \`σ·√n\`.`,
       long: `Når du legger sammen \`n\` uavhengige normalfordelte variabler med samme forventning \`μ\` og standardavvik \`σ\`, får du igjen en normalfordeling. Forventningsverdien skaleres med \`n\`, men standardavviket vokser bare med \`√n\` (variansen vokser med \`n\`).
@@ -4493,7 +4497,7 @@ Med \`ν = 17\` og \`α = 0.01\` venstresidig er kritisk verdi \`−t_(0.01, 17)
     {
       id: "total",
       name: "Setningen om total sannsynlighet",
-      abbreviation: "TOTAL",
+      abbreviation: "Regel",
       formula: "P(B) = Σ P(Aᵢ) · P(B | Aᵢ)",
       short: "Bryter P(B) opp i bidrag fra hver disjunkte gruppe i en partisjon.",
       long: `Setningen om total sannsynlighet bryter sannsynligheten for \`B\` opp i bidrag fra hver gruppe i en partisjon. Hver gruppe \`Aᵢ\` bidrar med sin egen marginalsannsynlighet ganger den betingede sannsynligheten for \`B\` gitt at man er i den gruppen.
@@ -4543,7 +4547,7 @@ Altså 2.1 prosent totalt. Sjekk at marginalsannsynlighetene summerer til 1: \`0
     {
       id: "total-forover",
       name: "Forover: finn P(B)",
-      abbreviation: "FWD",
+      abbreviation: "Forover",
       formula: "P(B) = Σᵢ P(Aᵢ) · P(B | Aᵢ)",
       short: "Vanlig retning: gitt partisjonen og betingede rater, summer bidragene til marginalen.",
       long: `Forover-varianten er standardbruken: oppgaven gir en partisjon og betingede rater, og du skal finne den marginale (totale) sannsynligheten \`P(B)\`.
@@ -4598,7 +4602,7 @@ Altså 28.28 % av befolkningen drikker tran daglig.
     {
       id: "total-bakover",
       name: "Bakover: finn ukjent betinget",
-      abbreviation: "BWD",
+      abbreviation: "Bakover",
       formula: "P(B | Aᶜ) = (P(B) − P(A) · P(B | A)) / P(Aᶜ)",
       short: `Snu om: gitt \`P(B)\`, finn den manglende betingede \`P(B | Aᵢ)\`.`,
       long: `Bakover-varianten bruker samme ligning som forover, men løst for et annet ukjent ledd. Du har den marginale \`P(B)\` og én av de betingede ratene, og skal finne den andre.
@@ -4654,7 +4658,7 @@ Andre frø spirer altså med 65 % sannsynlighet.
     {
       id: "union",
       name: "Unionssetningen",
-      abbreviation: "UNION",
+      abbreviation: "Union",
       formula: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)",
       short: "Sannsynligheten for at minst én av to hendelser inntreffer. Trekk fra overlappet.",
       long: `\`P(A ∪ B)\` er sannsynligheten for at hendelse \`A\` eller \`B\` (eller begge) inntreffer. Formelen legger sammen de to enkeltsannsynlighetene og trekker fra overlappet for å unngå dobbelttelling.
@@ -4710,7 +4714,7 @@ For tre hendelser må du både legge til og trekke fra etter et inkludering-eksk
     {
       id: "binomialkoeffisient",
       name: "Uordnet utvalg uten tilbakelegging",
-      abbreviation: "C(n,k)",
+      abbreviation: "Antall utvalg",
       formula: "C(n, k) = n! / (k! · (n − k)!)",
       short: `Antall måter å plukke \`k\` elementer fra \`n\` når rekkefølgen ikke teller. Også kjent som binomialkoeffisienten «n velg k».`,
       long: `Binomialkoeffisienten \`C(n, k)\` (skrives også \`ⁿCₖ\` eller «n velg k») teller hvor mange ulike utvalg av \`k\` elementer du kan trekke fra en mengde på \`n\` ulike elementer, når rekkefølgen ikke spiller noen rolle og samme element kan brukes høyst én gang.
@@ -4773,7 +4777,7 @@ Norsk Lotto er samme idé i ren tellingsversjon: 7 av 34 tall, rekkefølgen tell
     {
       id: "antall-utvalg",
       name: "Antall mulige utvalg",
-      abbreviation: "C(n,k)",
+      abbreviation: "Antall utvalg",
       formula: "C(n, k) = n! / (k! · (n − k)!)",
       short: `Antall måter å plukke \`k\` av \`n\` ulike elementer når rekkefølgen ikke teller. Også kalt binomialkoeffisienten «n velg k».`,
       long: `Binomialkoeffisienten \`C(n, k)\` teller antall ulike utvalg av \`k\` elementer fra \`n\` ulike elementer, når rekkefølgen i utvalget er likegyldig og hvert element brukes høyst én gang.
@@ -4828,7 +4832,7 @@ Velge 3 representanter fra en klasse på 25 elever:
     {
       id: "p-alle-fra-kategori",
       name: "Sannsynlighet: alle k fra én kategori",
-      abbreviation: "C(K,k)/C(N,k)",
+      abbreviation: "Alle k fra K",
       formula: "P(alle k fra K) = C(K, k) / C(N, k)",
       short: `Trekker du \`k\` av \`N\` uten tilbakelegging, er sannsynligheten for at alle havner i kategorien (med \`K\` elementer) lik \`C(K, k)/C(N, k)\`.`,
       long: `Når en populasjon på \`N\` elementer inneholder \`K\` av en bestemt kategori, og du trekker et uordnet utvalg på \`k\` uten tilbakelegging, gir gunstige på mulige sannsynligheten for at alle \`k\` ligger i kategorien.
@@ -4887,7 +4891,7 @@ Trekk 4 kuler fra en bolle med 6 røde og 4 blå (\`N = 10\`, \`K = 6\`, \`k = 4
     {
       id: "p-ingen-fra-kategori",
       name: "Sannsynlighet: ingen av k fra én kategori",
-      abbreviation: "C(N−K,k)/C(N,k)",
+      abbreviation: "Ingen fra K",
       formula: "P(ingen k fra K) = C(N − K, k) / C(N, k)",
       short: `Sannsynligheten for at ingen av de \`k\` trukne tilhører kategorien med \`K\` elementer er antall utvalg fra «de andre» delt på antall mulige utvalg.`,
       long: `Speilbildet av forrige formel. Når du trekker \`k\` uten tilbakelegging fra \`N\`, er sannsynligheten for at ingen av dem havner i kategorien (med \`K\` elementer) lik \`C(N − K, k) / C(N, k)\`.
@@ -4949,7 +4953,7 @@ Trekk 4 kuler fra 10 (\`K = 6\` røde, \`N − K = 4\` blå). Sannsynlighet for 
     {
       id: "s-squared",
       name: "Utvalgsvarians fra rådata",
-      abbreviation: "s²",
+      abbreviation: "s² fra rådata",
       formula: "s² = Σ(x_i − x̄)² / (n − 1);  s = √s²",
       short: `Estimat for populasjonsvariansen \`σ²\` fra en liste observasjoner. Del på \`n − 1\`, ikke \`n\`.`,
       long: `\`s²\` er utvalgsvariansen, et estimat for populasjonsvariansen \`σ²\` basert på \`n\` observasjoner \`x_1, x_2, …, x_n\`. Bruk denne når du har rådata, ikke en kjent sannsynlighetsfordeling.
@@ -5015,7 +5019,7 @@ Når du har en PMF, veier du med \`P(X = x)\` og deler IKKE på noe. Når du har
     {
       id: "varians",
       name: "Varians og standardavvik for diskret stokastisk variabel",
-      abbreviation: "Var(X)",
+      abbreviation: "Var(X), σ",
       formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i);  σ = √Var(X)",
       short: `Vektet sum av kvadrerte avvik fra \`μ\`. Standardavviket \`σ\` er kvadratroten.`,
       long: `\`Var(X)\` måler hvor langt fra forventningsverdien \`μ = E[X]\` verdiene typisk ligger. Du beregner avviket \`(x_i − μ)\`, kvadrerer det, og veier med sannsynligheten.
@@ -5074,7 +5078,7 @@ Den ekvivalente formelen sparer ofte regning når sannsynlighetene er like:
     {
       id: "bootstrap-se",
       name: "Tradisjonelt bootstrap-KI",
-      abbreviation: "SE-BOOT",
+      abbreviation: "Tradisjonelt",
       formula: "x̄ ± z_(α/2) · SE_boot",
       short: `Klassisk KI-form, men SE er standardavviket av bootstrap-statistikkene i stedet for \`s/√n\`.`,
       long: `Den tradisjonelle bootstrap-varianten bygger et konfidensintervall på samme form som det klassiske \`x̄ ± z · SE\`, men erstatter den teoretiske standardfeilen med \`SE_boot\`, som er standardavviket av de mange bootstrap-statistikkene du har generert. Du beholder altså normaltilnærmingen, men slipper å anta noe om fordelingen til de underliggende dataene.
@@ -5139,7 +5143,7 @@ Konklusjon: vi er 95 prosent sikre på at populasjonens gjennomsnittlige venteti
     {
       id: "prosentilintervall",
       name: "Prosentilintervall",
-      abbreviation: "PCT",
+      abbreviation: "Prosentil",
       formula: "[ q_(α/2),  q_(1 − α/2) ]",
       short: `Bruker \`α/2\`- og \`1 − α/2\`-prosentilen av bootstrap-fordelingen direkte som intervallgrenser.`,
       long: `Prosentilintervallet kutter ut normaltilnærmingen helt. I stedet for \`x̄ ± z · SE\` ber du bootstrap-fordelingen selv om sine ytterpunkter: nedre grense er \`α/2\`-prosentilen av de \`B\` bootstrap-statistikkene, øvre grense er \`1 − α/2\`-prosentilen. Intervallet trenger ikke være symmetrisk rundt \`x̄\`, og det skal det heller ikke være hvis fordelingen er skjev.
