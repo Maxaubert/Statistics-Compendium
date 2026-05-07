@@ -85,8 +85,8 @@ solution_variants:
       - "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`: `P(X = 0) = (1 − p)^n = 0.5^n`"
       - "Sett inn i kravet: `0.5^n < 0.01`"
       - "Ta naturlig logaritme på begge sider: `n · ln(0.5) < ln(0.01)`"
-      - { text: "`ln(0.5) ≈ −0.693` er negativt. Når vi deler på et negativt tall i neste steg, flippes ulikhetstegnet: `<` blir `>`.", conditional: true }
-      - "Løs for `n` (del på `ln(0.5)`, tegnet snur): `n > ln(0.01) / ln(0.5) ≈ 6.64`"
+      - { text: "Vi deler på `ln(0.5)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
+      - "Løs for `n`: `n > ln(0.01) / ln(0.5) ≈ 6.64`"
       - "Rund opp til nærmeste heltall: `n = 7`"
       - "Verifisér: `0.5^7 = 0.00781 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01` (så `n = 7` er minste verdi som tilfredsstiller kravet)"
   - label: "Finn n / sjansen overstiger X"
@@ -94,10 +94,11 @@ solution_variants:
       - "Definer variabelen og noter kravet. F.eks. lotto-eksempel: `X` = antall vinst på `n` lodd, `X ~ Bin(n, 0.05)`. Krav: `P(X ≥ 1) > 0.99` (sannsynligheten for minst én vinst skal overstige 99 %)"
       - "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste): `P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)^n = 1 − 0.95^n`"
       - "Sett inn i kravet: `1 − 0.95^n > 0.99`"
-      - "Trekk fra og snu: `0.95^n < 1 − 0.99 = 0.01`"
+      - { text: "Vi multipliserer med `−1` for å isolere `0.95^n` i neste steg: `>` flippes til `<`.", conditional: true }
+      - "Isoler `0.95^n`: `0.95^n < 1 − 0.99 = 0.01`"
       - "Ta naturlig logaritme på begge sider: `n · ln(0.95) < ln(0.01)`"
-      - { text: "`ln(0.95) ≈ −0.0513` er negativt. Når vi deler på et negativt tall i neste steg, flippes ulikhetstegnet: `<` blir `>`.", conditional: true }
-      - "Løs for `n` (del på `ln(0.95)`, tegnet snur): `n > ln(0.01) / ln(0.95) ≈ 89.78`"
+      - { text: "Vi deler på `ln(0.95)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
+      - "Løs for `n`: `n > ln(0.01) / ln(0.95) ≈ 89.78`"
       - "Rund opp til nærmeste heltall: `n = 90`"
       - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i tabell E.1 til kravet er oppfylt.", conditional: true }
 
