@@ -51,10 +51,7 @@ export function FormulaExplanationCards({ explanations, glossary }: Props) {
             <div className="font-math text-lg font-medium text-ink">
               {renderInlineCode(expl.formula, "light")}
             </div>
-            <div className="mt-2 text-[13px] leading-snug text-ink-2">
-              {expl.short}
-            </div>
-            <span className="absolute bottom-2 right-3 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-primary-2/70 opacity-0 transition-opacity group-hover:opacity-100">
+            <span className="mt-2 inline-block font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-primary-2/70 opacity-0 transition-opacity group-hover:opacity-100">
               Les mer →
             </span>
           </button>
