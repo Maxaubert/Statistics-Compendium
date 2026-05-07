@@ -121,7 +121,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(0, 0, 0, 0.05)",
+      background: "rgba(255, 255, 255, 0.06)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.10)",
