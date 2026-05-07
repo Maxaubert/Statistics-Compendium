@@ -78,7 +78,6 @@ solution_variants:
       - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `μ = 1.68`)"
       - "Skriv om via komplement: `P(X ≥ k) = 1 − P(X ≤ k − 1)`"
       - { text: "Tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt.", conditional: true }
-      - { text: "Hvis `k = 1`: forenkle til `P(X ≥ 1) = 1 − P(X = 0) = 1 − e^(-μ)` — raskere enn E.2", conditional: true }
       - "Slå opp `P(X ≤ k − 1)` i tabell E.2 med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
       - "Trekk tabellverdien fra 1 for å få svaret"
@@ -90,7 +89,6 @@ solution_variants:
       - "Les av nedre grense `a` og øvre grense `b` fra oppgaven (formuleringer som «mellom `a` og `b`», «`a` eller `b`», «minst `a`, høyst `b`»)"
       - "Skriv intervallet via to kumulative oppslag: `P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)`"
       - { text: "Tabellen skal slås opp på `a − 1`, IKKE på `a`. Bruker du `P(X ≤ a)` mister du bidraget fra `X = a` selv. F.eks. for `P(2 ≤ X ≤ 5)` slå opp `P(X ≤ 1)`, ikke `P(X ≤ 2)`.", conditional: true }
-      - { text: "Hvis `a = 1`: forenkles til `P(1 ≤ X ≤ b) = P(X ≤ b) − P(X = 0) = P(X ≤ b) − e^(-μ)`", conditional: true }
       - "Slå opp begge verdiene i tabell E.2 (kolonne for `μ`, rader for `b` og `a − 1`)"
       - "Trekk de to: `P(X ≤ b) − P(X ≤ a − 1)`"
       - { text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte, `P(X = a) + P(X = a + 1) + ... + P(X = b)`", conditional: true }
