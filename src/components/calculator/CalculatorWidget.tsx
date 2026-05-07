@@ -232,7 +232,6 @@ export function CalculatorWidget() {
               "flex select-none items-center justify-between border-b border-line px-4 py-3",
               "cursor-grab active:cursor-grabbing touch-none",
             )}
-            title="Dra for å flytte"
           >
             <div className="flex items-center gap-2">
               <CalcIcon size={16} className="text-primary-2" />
