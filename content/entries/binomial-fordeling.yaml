@@ -81,22 +81,23 @@ solution_variants:
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
   - label: "Finn n / sjansen er mindre enn X"
     steps:
-      - "Bruk når oppgaven sier 'sannsynligheten for ... skal være mindre enn X' eller når kravet naturlig leser seg som `(1−p)^n ≤ X` (f.eks. 'sjansen for å aldri lykkes synker under 1 %')"
-      - "Identifiser `p`, hendelsen som skal være lite sannsynlig, og terskelen `X`"
-      - "Sett opp ulikheten direkte: `(1−p)^n ≤ X`"
-      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(X)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
-      - "Løs for `n`: `n ≥ ln(X) / ln(1−p)` (f.eks. `p = 0.5, X = 0.01 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
-      - "Rund opp til neste heltall siden `n` må være heltall (f.eks. `6.64 → n = 7`)"
-      - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
+      - "Definer variabelen og noter kravet. F.eks. mynt-eksperiment: `X` = antall kron i `n` kast, `X ~ Bin(n, 0.5)`. Krav: `P(X = 0) < 0.01` (sannsynligheten for å aldri få kron skal være under 1 %)"
+      - "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`: `P(X = 0) = (1 − p)^n = 0.5^n`"
+      - "Sett inn i kravet: `0.5^n < 0.01`"
+      - "Ta naturlig logaritme på begge sider: `n · ln(0.5) < ln(0.01)`. Siden `ln(0.5) < 0` snur ulikhetstegnet når vi deler"
+      - "Løs for `n`: `n > ln(0.01) / ln(0.5) ≈ 6.64`"
+      - "Rund opp til nærmeste heltall: `n = 7`"
+      - "Verifisér: `0.5^7 = 0.00781 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01` (så `n = 7` er minste verdi som tilfredsstiller kravet)"
   - label: "Finn n / sjansen overstiger X"
     steps:
-      - "Identifiser `p` (per forsøk), suksess-hendelsen (typisk 'minst én'), og terskelen for sannsynligheten. F.eks. `p = 0.05` og terskel `0.99` (sannsynligheten for å vinne minst én gang skal overstige 99 %)"
-      - "Sett opp ulikheten på suksess-formen: `1 − (1−p)^n ≥ 0.99` ⇒ `1 − 0.95^n ≥ 0.99`"
-      - "Konverter til 'ingen suksess'-form for å kunne ta logaritme: `0.95^n ≤ 1 − 0.99 = 0.01`"
-      - "Ta logaritme: `n · ln(0.95) ≤ ln(0.01)`; husk at `ln(0.95) < 0` snur ulikhetstegnet"
-      - "Løs for `n`: `n ≥ ln(0.01) / ln(0.95) ≈ 89.78`"
-      - "Rund opp til neste heltall: `n = 90`"
-      - { text: "Hvis terskelen gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), bruk tabell E.1 og prøv økende `n` til kravet er oppfylt", conditional: true }
+      - "Definer variabelen og noter kravet. F.eks. lotto-eksempel: `X` = antall vinst på `n` lodd, `X ~ Bin(n, 0.05)`. Krav: `P(X ≥ 1) > 0.99` (sannsynligheten for minst én vinst skal overstige 99 %)"
+      - "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste): `P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)^n = 1 − 0.95^n`"
+      - "Sett inn i kravet: `1 − 0.95^n > 0.99`"
+      - "Trekk fra og snu: `0.95^n < 1 − 0.99 = 0.01`"
+      - "Ta naturlig logaritme på begge sider: `n · ln(0.95) < ln(0.01)`. Siden `ln(0.95) < 0` snur ulikhetstegnet når vi deler"
+      - "Løs for `n`: `n > ln(0.01) / ln(0.95) ≈ 89.78`"
+      - "Rund opp til nærmeste heltall: `n = 90`"
+      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i tabell E.1 til kravet er oppfylt.", conditional: true }
 
 common_traps: |
   Vær sikker på at `p` er konstant fra forsøk til forsøk. Hvis du trekker
