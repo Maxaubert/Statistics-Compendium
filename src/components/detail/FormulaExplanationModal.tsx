@@ -119,11 +119,11 @@ export function FormulaExplanationModal({
             >
               Se også
             </span>
-            {explanation.see_also.map((ref, i) => (
-              <Fragment key={`${ref.kind}-${refKey(ref)}`}>
+            {explanation.see_also.map((link, i) => (
+              <Fragment key={`${link.kind}-${refKey(link)}`}>
                 {i > 0 && ", "}
                 <SeeAlsoLink
-                  ref={ref}
+                  link={link}
                   glossary={glossary}
                   entries={entries}
                   tables={tables}
@@ -141,12 +141,12 @@ export function FormulaExplanationModal({
   );
 }
 
-function refKey(ref: FormulaSeeAlsoRef): string {
-  return ref.kind === "formula" ? ref.ref : ref.id;
+function refKey(link: FormulaSeeAlsoRef): string {
+  return link.kind === "formula" ? link.ref : link.id;
 }
 
 interface SeeAlsoLinkProps {
-  ref: FormulaSeeAlsoRef;
+  link: FormulaSeeAlsoRef;
   glossary?: GlossaryTerm[];
   entries?: Entry[];
   tables?: Table[];
@@ -157,7 +157,7 @@ interface SeeAlsoLinkProps {
 }
 
 function SeeAlsoLink({
-  ref,
+  link,
   glossary,
   entries,
   tables,
@@ -176,16 +176,16 @@ function SeeAlsoLink({
     cursor: "pointer",
   } as const;
 
-  if (ref.kind === "formula") {
-    const target = allFormulas?.find((f) => f.id === ref.ref);
+  if (link.kind === "formula") {
+    const target = allFormulas?.find((f) => f.id === link.ref);
     const label = target?.abbreviation
       ? `${target.name} (${target.abbreviation})`
-      : target?.name ?? ref.ref;
+      : target?.name ?? link.ref;
     return (
       <>
         <button
           type="button"
-          onClick={() => onOpenFormula?.(ref.ref)}
+          onClick={() => onOpenFormula?.(link.ref)}
           className={linkClass}
           style={linkStyle}
         >
@@ -196,15 +196,15 @@ function SeeAlsoLink({
     );
   }
 
-  if (ref.kind === "glossary") {
-    const term = glossary?.find((t) => t.id === ref.id);
-    const label = term?.term_no ?? ref.id;
+  if (link.kind === "glossary") {
+    const term = glossary?.find((t) => t.id === link.id);
+    const label = term?.term_no ?? link.id;
     if (onOpenGlossary) {
       return (
         <>
           <button
             type="button"
-            onClick={() => onOpenGlossary(ref.id)}
+            onClick={() => onOpenGlossary(link.id)}
             className={linkClass}
             style={linkStyle}
           >
@@ -217,7 +217,7 @@ function SeeAlsoLink({
     return (
       <>
         <Link
-          to={`/ordliste#${ref.id}`}
+          to={`/ordliste#${link.id}`}
           className={linkClass}
           style={{ color: "var(--color-calc-lookup-border)" }}
           onClick={onClose}
@@ -229,13 +229,13 @@ function SeeAlsoLink({
     );
   }
 
-  if (ref.kind === "entry") {
-    const entry = entries?.find((e) => e.id === ref.id);
-    const label = entry?.name_no ?? ref.id;
+  if (link.kind === "entry") {
+    const entry = entries?.find((e) => e.id === link.id);
+    const label = entry?.name_no ?? link.id;
     return (
       <>
         <Link
-          to={`/entry/${ref.id}`}
+          to={`/entry/${link.id}`}
           className={linkClass}
           style={{ color: "var(--color-calc-lookup-border)" }}
           onClick={onClose}
@@ -248,12 +248,12 @@ function SeeAlsoLink({
   }
 
   // table
-  const table = tables?.find((t) => t.id === ref.id);
-  const label = table?.name_no ?? ref.id;
+  const table = tables?.find((t) => t.id === link.id);
+  const label = table?.name_no ?? link.id;
   return (
     <>
       <Link
-        to={`/table/${ref.id}`}
+        to={`/table/${link.id}`}
         className={linkClass}
         style={{ color: "var(--color-calc-lookup-border)" }}
         onClick={onClose}
