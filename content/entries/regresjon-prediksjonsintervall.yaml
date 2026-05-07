@@ -4,7 +4,7 @@ type: regression
 category: regression_estimate
 tagline: "`(1−α)·100 %` intervall for hvor en NY observasjon `Y` vil ligge gitt en `x`-verdi."
 
-formula_main: "α̂ + β̂·x ± t_(α/2, n-2) · S_E · √(1 + 1/n + ((x - x̄) / (S_E / SE(β̂)))²)"
+formula_main: "αˆ + βˆ·x ± t_(α/2, n-2) · S_E · √(1 + 1/n + ((x - x̄) / (S_E / SE(βˆ)))²)"
 formula_latex: "\\hat{\\alpha} + \\hat{\\beta} x \\pm t_{\\alpha/2, n-2} \\cdot S_E \\cdot \\sqrt{1 + \\frac{1}{n} + \\left(\\frac{x - \\bar{x}}{S_E / \\text{SE}(\\hat{\\beta})}\\right)^2}"
 
 what_it_does: |
@@ -20,17 +20,17 @@ why_use: |
 recognition_cues:
   - "Spørsmålet ber om prediksjonsintervall for en enkel ny `y`-verdi gitt `x`"
   - "Spørsmålet er typisk 'er det sannsynlig at `y > 75 %` når `x = 5`?'"
-  - "Du har `α̂`, `β̂`, `S_E` (eller `S_E²`), og `SE(β̂)`"
+  - "Du har `αˆ`, `βˆ`, `S_E` (eller `S_E²`), og `SE(βˆ)`"
 
 when_NOT_to_use:
   - "Du vil ha intervall for forventningsverdien `E[Y|x]` → bruk KI for `E[Y|x]`"
   - "Du vil teste om `β = 0` → bruk [hypotesetest for stigningstallet](/entry/regresjon-test-stigningstall)"
 
 symbols:
-  - { sym: "α̂, β̂",         means: "estimerte regresjonskoeffisienter" }
+  - { sym: "αˆ, βˆ",         means: "estimerte regresjonskoeffisienter" }
   - { sym: "x̄",              means: "gjennomsnitt av `x`-observasjonene" }
   - { sym: "S_E",             means: "estimat for residualenes standardavvik" }
-  - { sym: "SE(β̂)",          means: "standardfeil til stigningstallet" }
+  - { sym: "SE(βˆ)",          means: "standardfeil til stigningstallet" }
   - { sym: "t_(α/2, n-2)",    means: "kvantil i t-fordelingen med `n−2` frihetsgrader" }
 
 filters:
@@ -43,19 +43,19 @@ filters:
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
-  - "Identifiser oppgitt: `α̂`, `β̂`, `S_E` (eller `S_E²`), `SE(β̂)`, antall observasjoner `n`, og `x`-verdien det skal predikeres for"
+  - "Identifiser oppgitt: `αˆ`, `βˆ`, `S_E` (eller `S_E²`), `SE(βˆ)`, antall observasjoner `n`, og `x`-verdien det skal predikeres for"
   - "Hvis `x̄` ikke er gitt, regn det ut fra rådata: `x̄ = (Σx_i) / n`"
   - "Finn `α` fra konfidensnivået (f.eks. 95 % gir `α = 0.05`, så `α/2 = 0.025`)"
   - "Slå opp `t_(α/2, n−2)` i tabell E.5 (n−2 frihetsgrader)"
-  - "Beregn punktestimatet: `ŷ = α̂ + β̂·x`"
-  - "Beregn margin: `t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(β̂) / S_E)²)`"
+  - "Beregn punktestimatet: `ŷ = αˆ + βˆ·x`"
+  - "Beregn margin: `t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(βˆ) / S_E)²)`"
   - "Prediksjonsintervall: `ŷ ± margin`"
   - "Sjekk svaret ved å sammenligne mot oppgavens spørsmål (f.eks. ligger en gitt verdi innenfor intervallet?)"
 
 common_traps: |
   Frihetsgrader er `n − 2` (lineær regresjon). Tall under kvadratroten
-  må regnes nøye: `1 + 1/n + ((x−x̄)/(S_E/SE(β̂)))²`. Husk at
-  `S_E/SE(β̂) = √(S_XX)`. Dette er viktig – ekvivalent formulering:
+  må regnes nøye: `1 + 1/n + ((x−x̄)/(S_E/SE(βˆ)))²`. Husk at
+  `S_E/SE(βˆ) = √(S_XX)`. Dette er viktig – ekvivalent formulering:
   `punkt ± t·S_E·√(1 + 1/n + (x−x̄)²/S_XX)`.
 
 python_snippet: |
@@ -76,22 +76,22 @@ detailed_solution_variants:
   - label: "Prediksjonsintervall for ny y"
     solutions:
       - source: "Eksamen jan26 · oppgave 6"
-        question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(β̂) = 0.625, n = 10, x̄ = 6.8. Finn et 95 % prediksjonsintervall for Y når x₀ = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+        question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(βˆ) = 0.625, n = 10, x̄ = 6.8. Finn et 95 % prediksjonsintervall for Y når x₀ = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "α̂ = 34.6, β̂ = 6.63, S_E² = 6.093 ⇒ S_E = √6.093 ≈ 2.4684" }
-              - { text: "SE(β̂) = 0.625, n = 10, x̄ = 6.8" }
+              - { text: "αˆ = 34.6, βˆ = 6.63, S_E² = 6.093 ⇒ S_E = √6.093 ≈ 2.4684" }
+              - { text: "SE(βˆ) = 0.625, n = 10, x̄ = 6.8" }
               - { text: "Nytt x₀ = 5, konfidensnivå 1 − α = 0.95" }
-              - { comment: "S_XX = (S_E/SE(β̂))² = (2.4684/0.625)² ≈ 15.59" }
+              - { comment: "S_XX = (S_E/SE(βˆ))² = (2.4684/0.625)² ≈ 15.59" }
           - label: "Predikert verdi"
             lines:
-              - { text: "ŷ₀ = α̂ + β̂·x₀ = 34.6 + 6.63·5" }
+              - { text: "ŷ₀ = αˆ + βˆ·x₀ = 34.6 + 6.63·5" }
               - { indent: "= 34.6 + 33.15 = 67.75" }
           - label: "Standardfeil for prediksjon"
             lines:
               - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
-              - { text: "Bruker ekvivalent form med S_E/SE(β̂):" }
+              - { text: "Bruker ekvivalent form med S_E/SE(βˆ):" }
               - { indent: "= 2.4684 · √(1 + 1/10 + ((5 − 6.8)/(2.4684/0.625))²)" }
               - { indent: "= 2.4684 · √(1 + 0.1 + (−1.8/3.949)²)" }
               - { indent: "= 2.4684 · √(1 + 0.1 + 0.207)" }
@@ -112,16 +112,16 @@ detailed_solution_variants:
         result: "95 % prediksjonsintervall: [61.24, 74.26]. 75 % er usannsynlig."
 
       - source: "Praksisoppgave · standard datasett, x₀ nær x̄"
-        question: "Et lite datasett (1,2), (2,3), (3,5), (4,6), (5,8) gir β̂ = 1.5, α̂ = 0.3, S_E = √0.1 ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5. Finn et 95 % prediksjonsintervall for en NY observasjon Y når x₀ = 4."
+        question: "Et lite datasett (1,2), (2,3), (3,5), (4,6), (5,8) gir βˆ = 1.5, αˆ = 0.3, S_E = √0.1 ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5. Finn et 95 % prediksjonsintervall for en NY observasjon Y når x₀ = 4."
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162" }
+              - { text: "αˆ = 0.3, βˆ = 1.5, S_E ≈ 0.3162" }
               - { text: "S_XX = 10, x̄ = 3, n = 5" }
               - { text: "Nytt x₀ = 4, konfidensnivå 1 − α = 0.95" }
           - label: "Predikert verdi"
             lines:
-              - { text: "ŷ₀ = α̂ + β̂·x₀ = 0.3 + 1.5·4" }
+              - { text: "ŷ₀ = αˆ + βˆ·x₀ = 0.3 + 1.5·4" }
               - { indent: "= 0.3 + 6.0 = 6.3" }
           - label: "Standardfeil for prediksjon"
             lines:
@@ -146,16 +146,16 @@ detailed_solution_variants:
         result: "95 % prediksjonsintervall ved x₀ = 4: [5.15, 7.45]."
 
       - source: "Praksisoppgave · samme datasett, x₀ langt fra x̄"
-        question: "Med samme datasett som over (β̂ = 1.5, α̂ = 0.3, S_E ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5), finn et 95 % prediksjonsintervall for en NY Y når x₀ = 7. Sammenlign bredden med intervallet ved x₀ = 4."
+        question: "Med samme datasett som over (βˆ = 1.5, αˆ = 0.3, S_E ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5), finn et 95 % prediksjonsintervall for en NY Y når x₀ = 7. Sammenlign bredden med intervallet ved x₀ = 4."
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162" }
+              - { text: "αˆ = 0.3, βˆ = 1.5, S_E ≈ 0.3162" }
               - { text: "S_XX = 10, x̄ = 3, n = 5" }
               - { text: "Nytt x₀ = 7 (4 enheter unna x̄), 1 − α = 0.95" }
           - label: "Predikert verdi"
             lines:
-              - { text: "ŷ₀ = α̂ + β̂·x₀ = 0.3 + 1.5·7" }
+              - { text: "ŷ₀ = αˆ + βˆ·x₀ = 0.3 + 1.5·7" }
               - { indent: "= 0.3 + 10.5 = 10.8" }
               - { comment: "Merk: x₀ = 7 ligger utenfor observert x-spenn (1–5) → ekstrapolering, vær forsiktig." }
           - label: "Standardfeil for prediksjon"

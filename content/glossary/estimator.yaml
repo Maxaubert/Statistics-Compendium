@@ -14,8 +14,8 @@ long_def: |
 
   er en estimator for `μ`; for konkrete data blir `X̄ = 4.2` et estimat.
 
-  En god estimator er forventningsrett (`E[θ̂] = θ`) og har lav varians.
-  Vi noterer estimatorer ofte med hatt: `μ̂`, `σ̂²`, `β̂`.
+  En god estimator er forventningsrett (`E[θˆ] = θ`) og har lav varians.
+  Vi noterer estimatorer ofte med hatt: `μˆ`, `σˆ²`, `βˆ`.
 see_also:
   - { id: punktestimat, kind: glossary }
   - { id: forventningsrett, kind: glossary }

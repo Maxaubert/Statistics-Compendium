@@ -20,11 +20,11 @@ long_def: |
   rådataene.
 
   **`n − 2` i nevneren:** to frihetsgrader er brukt opp på å estimere
-  `α̂` og `β̂`.
+  `αˆ` og `βˆ`.
 
   Inngår i:
 
-      SE(β̂) = √(S_E² / S_XX)
+      SE(βˆ) = √(S_E² / S_XX)
 
   og i prediksjonsintervaller.
 aliases:

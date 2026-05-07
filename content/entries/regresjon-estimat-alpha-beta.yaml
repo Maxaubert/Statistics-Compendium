@@ -2,15 +2,15 @@ id: regresjon-estimat-alpha-beta
 name_no: "Lineær regresjon – estimater for α og β"
 type: regression
 category: regression_estimate
-tagline: "Punktestimater for skjæringspunktet `α̂` og stigningstallet `β̂` i `ŷ = α̂ + β̂·x`."
+tagline: "Punktestimater for skjæringspunktet `αˆ` og stigningstallet `βˆ` i `ŷ = αˆ + βˆ·x`."
 
-formula_main: "β̂ = Σ(x_i - x̄)(y_i - ȳ) / Σ(x_i - x̄)²;  α̂ = ȳ - β̂·x̄"
+formula_main: "βˆ = Σ(x_i - x̄)(y_i - ȳ) / Σ(x_i - x̄)²;  αˆ = ȳ - βˆ·x̄"
 formula_latex: "\\hat{\\beta} = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum (x_i - \\bar{x})^2}, \\quad \\hat{\\alpha} = \\bar{y} - \\hat{\\beta} \\bar{x}"
 
 what_it_does: |
   Beregner minste-kvadraters-estimater for parametrene i en enkel
-  lineær regresjon `ŷ = α̂ + β̂·x`. `β̂` er stigningstallet (hvor mye `y` endres
-  per enhet `x`), `α̂` er skjæringspunktet (verdi av `y` når `x = 0`).
+  lineær regresjon `ŷ = αˆ + βˆ·x`. `βˆ` er stigningstallet (hvor mye `y` endres
+  per enhet `x`), `αˆ` er skjæringspunktet (verdi av `y` når `x = 0`).
 
 why_use: |
   Første steg i enhver enkel lineær regresjonsanalyse. Gir den "beste"
@@ -30,8 +30,8 @@ when_NOT_to_use:
 symbols:
   - { sym: "x_i, y_i",      means: "observasjonsparene" }
   - { sym: "x̄, ȳ",         means: "gjennomsnitt av `x` og `y`" }
-  - { sym: "α̂",            means: "estimat for skjæringspunktet (intercept)" }
-  - { sym: "β̂",            means: "estimat for stigningstallet (slope)" }
+  - { sym: "αˆ",            means: "estimat for skjæringspunktet (intercept)" }
+  - { sym: "βˆ",            means: "estimat for stigningstallet (slope)" }
   - { sym: "S_XX",          means: "`Σ(x_i − x̄)²` (sum av kvadrerte avvik for `x`)" }
   - { sym: "S_XY",          means: "`Σ(x_i − x̄)(y_i − ȳ)` (krysssum)" }
 
@@ -47,9 +47,9 @@ filters:
 solution_template:
   - "Beregn `x̄` og `ȳ`"
   - "Beregn `S_XX = Σ(x_i − x̄)²` og `S_XY = Σ(x_i − x̄)(y_i − ȳ)`"
-  - "`β̂ = S_XY / S_XX`"
-  - "`α̂ = ȳ − β̂·x̄`"
-  - "Skriv regresjonslinjen `ŷ = α̂ + β̂·x`"
+  - "`βˆ = S_XY / S_XX`"
+  - "`αˆ = ȳ − βˆ·x̄`"
+  - "Skriv regresjonslinjen `ŷ = αˆ + βˆ·x`"
 
 common_traps: |
   Pass på rekkefølgen i krysssummen: `Σ(x_i − x̄)(y_i − ȳ)` er IKKE det samme
@@ -70,10 +70,10 @@ python_snippet: |
   alpha_hat = y_bar - beta_hat * x_bar   # 34.6
 
 detailed_solution_variants:
-  - label: "Estimater α̂ og β̂"
+  - label: "Estimater αˆ og βˆ"
     solutions:
       - source: "Eksamen mai25 · oppgave 5c"
-        question: "Fra datatabellen oppgis: `Σ(x_i - x̄)² = 15.6`, `Σ(x_i - x̄)(y_i - ȳ) = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`. Finn den estimerte regresjonslinjen `ŷ = α̂ + β̂·x`."
+        question: "Fra datatabellen oppgis: `Σ(x_i - x̄)² = 15.6`, `Σ(x_i - x̄)(y_i - ȳ) = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`. Finn den estimerte regresjonslinjen `ŷ = αˆ + βˆ·x`."
         sections:
           - label: "Identifisering"
             lines:
@@ -85,20 +85,20 @@ detailed_solution_variants:
               - { text: "`S_XY = Σ(x_i - x̄)(y_i - ȳ) = 103.4`" }
           - label: "Estimater"
             lines:
-              - { text: "`β̂ = S_XY / S_XX = 103.4 / 15.6`" }
+              - { text: "`βˆ = S_XY / S_XX = 103.4 / 15.6`" }
               - { indent: "`= 6.628...`" }
               - { indent: "`≈ 6.63`" }
-              - { text: "`α̂ = ȳ - β̂·x̄ = 79.7 - 6.63·6.8`" }
+              - { text: "`αˆ = ȳ - βˆ·x̄ = 79.7 - 6.63·6.8`" }
               - { indent: "`= 79.7 - 45.08`" }
               - { indent: "`≈ 34.62`" }
           - label: "Linjelikning"
             lines:
-              - { text: "Setter inn estimatene i `ŷ = α̂ + β̂·x`:" }
+              - { text: "Setter inn estimatene i `ŷ = αˆ + βˆ·x`:" }
               - { indent: "`ŷ = 34.62 + 6.63·x`" }
         result: "`ŷ = 34.62 + 6.63·x`"
 
       - source: "Praksis · 5 datapunkter"
-        question: "Gitt datapunktene `(1, 2)`, `(2, 3)`, `(3, 5)`, `(4, 6)`, `(5, 8)`. Estimer `α̂` og `β̂` i den enkle lineære regresjonsmodellen `ŷ = α̂ + β̂·x`."
+        question: "Gitt datapunktene `(1, 2)`, `(2, 3)`, `(3, 5)`, `(4, 6)`, `(5, 8)`. Estimer `αˆ` og `βˆ` i den enkle lineære regresjonsmodellen `ŷ = αˆ + βˆ·x`."
         sections:
           - label: "Identifisering"
             lines:
@@ -117,17 +117,17 @@ detailed_solution_variants:
               - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 87 - 5·3·4.8 = 87 - 72 = 15`" }
           - label: "Estimater"
             lines:
-              - { text: "`β̂ = S_XY / S_XX = 15 / 10 = 1.5`" }
-              - { text: "`α̂ = ȳ - β̂·x̄ = 4.8 - 1.5·3`" }
+              - { text: "`βˆ = S_XY / S_XX = 15 / 10 = 1.5`" }
+              - { text: "`αˆ = ȳ - βˆ·x̄ = 4.8 - 1.5·3`" }
               - { indent: "`= 4.8 - 4.5 = 0.3`" }
           - label: "Linjelikning"
             lines:
-              - { text: "Setter inn i `ŷ = α̂ + β̂·x`:" }
+              - { text: "Setter inn i `ŷ = αˆ + βˆ·x`:" }
               - { indent: "`ŷ = 0.3 + 1.5·x`" }
-        result: "`α̂ = 0.3`, `β̂ = 1.5`, `ŷ = 0.3 + 1.5·x`"
+        result: "`αˆ = 0.3`, `βˆ = 1.5`, `ŷ = 0.3 + 1.5·x`"
 
       - source: "Praksis · lab-data (strekk vs. last)"
-        question: "I et fysikkforsøk måles forlengelsen `y` (mm) av en fjær for ulike laster `x` (N). Data: `(2, 4.2)`, `(4, 7.8)`, `(6, 12.1)`, `(8, 15.9)`. Finn regresjonslinjen `ŷ = α̂ + β̂·x`."
+        question: "I et fysikkforsøk måles forlengelsen `y` (mm) av en fjær for ulike laster `x` (N). Data: `(2, 4.2)`, `(4, 7.8)`, `(6, 12.1)`, `(8, 15.9)`. Finn regresjonslinjen `ŷ = αˆ + βˆ·x`."
         sections:
           - label: "Identifisering"
             lines:
@@ -147,14 +147,14 @@ detailed_solution_variants:
               - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 239.4 - 4·5·10 = 239.4 - 200 = 39.4`" }
           - label: "Estimater"
             lines:
-              - { text: "`β̂ = S_XY / S_XX = 39.4 / 20 = 1.97`" }
-              - { text: "`α̂ = ȳ - β̂·x̄ = 10.0 - 1.97·5`" }
+              - { text: "`βˆ = S_XY / S_XX = 39.4 / 20 = 1.97`" }
+              - { text: "`αˆ = ȳ - βˆ·x̄ = 10.0 - 1.97·5`" }
               - { indent: "`= 10.0 - 9.85 = 0.15`" }
           - label: "Linjelikning"
             lines:
               - { text: "Setter inn estimatene:" }
               - { indent: "`ŷ = 0.15 + 1.97·x`" }
-        result: "`α̂ ≈ 0.15`, `β̂ ≈ 1.97`, `ŷ = 0.15 + 1.97·x`"
+        result: "`αˆ ≈ 0.15`, `βˆ ≈ 1.97`, `ŷ = 0.15 + 1.97·x`"
 
 related:
   - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }

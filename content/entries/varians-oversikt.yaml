@@ -43,7 +43,7 @@ forms:
     description: "Spredningen i avvikene fra regresjonslinjen."
     entry_links:
       - { id: regresjon-residualvarians, label: "Entry" }
-      - { id: regresjon-standardfeil-stigningstall, label: "SE(β̂)" }
+      - { id: regresjon-standardfeil-stigningstall, label: "SE(βˆ)" }
       - { id: regresjon-test-stigningstall, label: "Hypotesetest for β" }
       - { id: regresjon-prediksjonsintervall, label: "Prediksjonsintervall" }
   - title: "Binomialvarians"
@@ -83,9 +83,9 @@ forms:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
       - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
   - title: "Variansen til stigningstallet"
-    symbol: "Var(β̂)"
+    symbol: "Var(βˆ)"
     glossary_id: variansen-til-stigningstallet
-    formula: "Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))"
+    formula: "Var(βˆ) = S_E² / S_XX          SE(βˆ) = √(Var(βˆ))"
     description: "Hvor presist vi kjenner regresjonsstigningen."
     entry_links:
       - { id: regresjon-standardfeil-stigningstall, label: "Entry" }

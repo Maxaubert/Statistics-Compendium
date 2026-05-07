@@ -82,16 +82,16 @@ forms:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
       - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
   - title: "Standardfeil til regresjonsstigningstallet"
-    symbol: "SE(β̂)"
+    symbol: "SE(βˆ)"
     glossary_id: standardfeil-til-stigningstallet
-    formula: "SE(β̂) = √(S_E² / S_XX)"
+    formula: "SE(βˆ) = √(S_E² / S_XX)"
     description: "Kjernen i hypotesetest og KI for β."
     entry_links:
       - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
   - title: "Standardfeil til utvalgsandelen"
-    symbol: "SE(p̂)"
+    symbol: "SE(pˆ)"
     glossary_id: standardfeil-til-andel
-    formula: "SE(p̂) = √(p̂(1 − p̂) / n)"
+    formula: "SE(pˆ) = √(pˆ(1 − pˆ) / n)"
     entry_links:
       - { id: en-utvalg-z-test-andel, label: "Z-test for andel p" }
       - { id: ki-andel-binomial, label: "KI for andel p" }

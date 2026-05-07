@@ -18,10 +18,10 @@ long_def: |
       Y ≈ N(λ, √λ)
 
   Normalapproksimasjon er drivkraften bak z-test og KI for andel og for
-  poissonrate. Tommelfingerregel for andel-KI: bruk `p̂` i stedet for `p`
+  poissonrate. Tommelfingerregel for andel-KI: bruk `pˆ` i stedet for `p`
   i sjekken:
 
-      n · p̂ · (1 − p̂) ≥ 5
+      n · pˆ · (1 − pˆ) ≥ 5
 aliases:
   - normalapproksimasjon
   - normalapproksimasjonen
