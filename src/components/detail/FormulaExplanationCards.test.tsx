@@ -12,6 +12,9 @@ const explanations: FormulaExplanation[] = [
     formula: "f(t) = λe^(-λt)",
     short: "PDF kort",
     long: "PDF kropp",
+    // Test fixture keeps a cross-formula see-også so the back-stack
+    // tests can still exercise the in-popup formula stack code path,
+    // even though production data no longer wires PDF<->CDF this way.
     see_also: [{ kind: "formula", ref: "cdf" }],
   },
   {
