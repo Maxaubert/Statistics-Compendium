@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kalkulator · v5 — Carbon fiber sport-tech</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 25%, rgba(99, 102, 241, 0.40) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 75%, rgba(252, 211, 77, 0.22) 0%, transparent 50%),
+      linear-gradient(135deg, #1e1b4b 0%, #0a0a14 100%);
+    display: grid;
+    place-items: center;
+  }
+
+  .bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .bg .glyph {
+    position: absolute;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.10);
+  }
+  .bg .formula {
+    position: absolute;
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.18);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* ===== CARBON FIBER — visible woven texture + amber accent stripe ===== */
+  .panel {
+    position: relative;
+    width: 460px;
+    border-radius: 14px;
+    overflow: hidden;
+    background:
+      /* the carbon weave: two diagonal stripe gradients combined */
+      repeating-linear-gradient(
+        45deg,
+        #15161a 0px,
+        #15161a 4px,
+        #1c1d22 4px,
+        #1c1d22 8px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.04) 0px,
+        rgba(255, 255, 255, 0.04) 4px,
+        transparent 4px,
+        transparent 8px
+      ),
+      #0e0f12;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  /* amber racing stripe at top */
+  .panel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      #fcd34d 20%,
+      #f59e0b 50%,
+      #fcd34d 80%,
+      transparent 100%
+    );
+    box-shadow: 0 0 8px rgba(252, 211, 77, 0.6);
+  }
+  /* faint horizontal scan-line every 80px */
+  .panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 79px,
+      rgba(255, 255, 255, 0.025) 79px,
+      rgba(255, 255, 255, 0.025) 80px
+    );
+  }
+
+  .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .brand-icon { color: #fcd34d; display: grid; place-items: center; }
+  .close {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .body { padding: 16px 20px 20px; position: relative; }
+  .row-input {
+    display: flex; align-items: center;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background: #08090b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.65);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .row-result {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background: #08090b;
+    border: 1px solid rgba(252, 211, 77, 0.25);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.65);
+    font-family: "JetBrains Mono", monospace;
+  }
+  .eq { color: rgba(255, 255, 255, 0.5); font-size: 16px; font-weight: bold; }
+  .value { color: #fcd34d; font-size: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="glyph" style="top: 12%; left: 8%; font-size: 200px;">σ</div>
+  <div class="glyph" style="top: 60%; right: 10%; font-size: 240px;">μ</div>
+  <div class="formula" style="top: 35%; left: 6%;">P(X = k) = C(n, k) · p^k · (1−p)^(n−k)</div>
+  <div class="formula" style="bottom: 18%; right: 6%;">f(x) = (1/(σ√2π)) · e^(−(x−μ)²/(2σ²))</div>
+</div>
+
+<div class="panel">
+  <div class="header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="14" r="0.5"/><circle cx="12" cy="14" r="0.5"/><circle cx="16" cy="14" r="0.5"/><circle cx="8" cy="18" r="0.5"/><circle cx="12" cy="18" r="0.5"/><circle cx="16" cy="18" r="0.5"/></svg>
+      </div>
+      Kalkulator
+    </div>
+    <div class="close">×</div>
+  </div>
+  <div class="body">
+    <div class="row-input">combinations(52, 5)</div>
+    <div class="row-result">
+      <span class="eq">=</span>
+      <span class="value">2 598 960</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

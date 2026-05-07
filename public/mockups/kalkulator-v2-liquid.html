@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kalkulator · v2 — See-through glass</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 25%, rgba(99, 102, 241, 0.40) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 75%, rgba(252, 211, 77, 0.22) 0%, transparent 50%),
+      linear-gradient(135deg, #1e1b4b 0%, #0a0a14 100%);
+    display: grid;
+    place-items: center;
+  }
+
+  .bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .bg .glyph {
+    position: absolute;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.10);
+    user-select: none;
+  }
+  .bg .formula {
+    position: absolute;
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.18);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  /* A formula deliberately positioned BEHIND where the panel will sit, so
+     v2's transparency is visible. */
+  .bg .center-formula {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.30);
+    font-size: 22px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* ===== SEE-THROUGH GLASS — only 25% opaque ===== */
+  .panel {
+    position: relative;
+    width: 460px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(30, 30, 50, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.40),
+      inset 1px 0 0 rgba(255, 255, 255, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  /* glass-edge highlight */
+  .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.20) 0%, transparent 30%);
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+    position: relative;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  .brand-icon { display: grid; place-items: center; }
+  .close {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 20px;
+    cursor: pointer;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+
+  .body { padding: 16px 20px 20px; position: relative; }
+  .row-input {
+    display: flex; align-items: center;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  .row-result {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-family: "JetBrains Mono", monospace;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  .eq { color: rgba(255, 255, 255, 0.7); font-size: 16px; font-weight: bold; }
+  .value { color: white; font-size: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="glyph" style="top: 12%; left: 8%; font-size: 200px;">σ</div>
+  <div class="glyph" style="top: 60%; right: 10%; font-size: 240px;">μ</div>
+  <div class="formula" style="top: 35%; left: 6%;">P(X = k) = C(n, k) · p^k · (1−p)^(n−k)</div>
+  <div class="formula" style="bottom: 18%; right: 6%;">f(x) = (1/(σ√2π)) · e^(−(x−μ)²/(2σ²))</div>
+  <div class="center-formula">1 − 0.7^9 ≈ 0.960</div>
+</div>
+
+<div class="panel">
+  <div class="header">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="14" r="0.5"/><circle cx="12" cy="14" r="0.5"/><circle cx="16" cy="14" r="0.5"/><circle cx="8" cy="18" r="0.5"/><circle cx="12" cy="18" r="0.5"/><circle cx="16" cy="18" r="0.5"/></svg>
+      </div>
+      Kalkulator
+    </div>
+    <div class="close">×</div>
+  </div>
+  <div class="body">
+    <div class="row-input">1 − 0.7^9</div>
+    <div class="row-result">
+      <span class="eq">=</span>
+      <span class="value">0.960</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

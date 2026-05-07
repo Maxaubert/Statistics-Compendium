@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { evaluate } from "mathjs";
+import { useCalculatorStyle } from "./calculator-style";
 
 const STORAGE_EXPR = "calc-widget-expr";
 
@@ -60,6 +61,7 @@ function normalizeExpression(input: string): string {
  * and-reopen and page navigation.
  */
 export function ScientificCalculator() {
+  const [, , style] = useCalculatorStyle();
   const [expr, setExpr] = useState<string>(() => loadString(STORAGE_EXPR));
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -92,17 +94,14 @@ export function ScientificCalculator() {
       {/* Input */}
       <div
         className="flex items-center rounded-md px-3 py-3"
-        style={{
-          background: "#151515",
-          border: "1px solid rgba(255,255,255,0.08)",
-        }}
+        style={style.inputRow}
       >
         <input
           ref={inputRef}
           className="w-full bg-transparent font-mono text-[16px] outline-none"
           style={{
-            color: "rgba(255,255,255,0.95)",
-            caretColor: "white",
+            color: style.inputInk,
+            caretColor: style.inputCaret,
           }}
           type="text"
           spellCheck={false}
@@ -119,14 +118,11 @@ export function ScientificCalculator() {
           stable as content swaps between placeholder/error/value. */}
       <div
         className="mt-2 flex h-[52px] items-center gap-2.5 rounded-md px-3"
-        style={{
-          background: "#151515",
-          border: "1px solid rgba(255,255,255,0.14)",
-        }}
+        style={style.resultRow}
       >
         <span
           className="font-mono text-[15px] font-bold leading-none"
-          style={{ color: "rgba(255,255,255,0.6)" }}
+          style={{ color: style.resultEq }}
         >
           =
         </span>
@@ -135,13 +131,13 @@ export function ScientificCalculator() {
             {errorMsg}
           </span>
         ) : !expr.trim() ? (
-          <span className="font-mono text-[12px] italic leading-none" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <span className="font-mono text-[12px] italic leading-none" style={{ color: style.resultPlaceholder }}>
             resultat vises her
           </span>
         ) : (
           <span
             className="break-all font-mono text-[20px] font-bold leading-none"
-            style={{ color: "white" }}
+            style={{ color: style.resultValueInk }}
           >
             {liveResult || "—"}
           </span>

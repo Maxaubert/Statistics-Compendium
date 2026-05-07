@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 import { Calculator as CalcIcon, X } from "lucide-react";
 import { ScientificCalculator } from "./ScientificCalculator";
+import { useCalculatorStyle } from "./calculator-style";
 
 const STORAGE_OPEN = "calc-widget-open";
 
@@ -25,6 +26,7 @@ const CLOSE_ANIM_MS = 180;
  * The widget is mounted at the App root so it overlays every page.
  */
 export function CalculatorWidget() {
+  const [, , style] = useCalculatorStyle();
   const [open, setOpen] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     try {
@@ -127,7 +129,7 @@ export function CalculatorWidget() {
           aria-modal="true"
           aria-label="Kalkulator"
           className={clsx(
-            "pointer-events-auto overflow-hidden rounded-[18px]",
+            "pointer-events-auto relative overflow-hidden rounded-[18px]",
             closing
               ? "animate-[calc-pop-out_180ms_ease-out_forwards]"
               : "animate-[calc-pop_180ms_ease-out]",
@@ -135,20 +137,30 @@ export function CalculatorWidget() {
           style={{
             width: `${PANEL_WIDTH}px`,
             maxWidth: "calc(100vw - 40px)",
-            background: "#111111",
-            border: "1px solid rgba(255,255,255,0.1)",
-            boxShadow: "0 24px 70px rgba(0,0,0,0.7)",
+            ...style.panel,
           }}
         >
+          {style.topAccent && (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-0 right-0 top-0"
+              style={{
+                height: `${style.topAccent.height}px`,
+                background: style.topAccent.gradient,
+                boxShadow: style.topAccent.glow,
+                zIndex: 1,
+              }}
+            />
+          )}
           <header
             className="flex select-none items-center justify-between px-5 py-3.5"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+            style={{ borderBottom: style.headerDivider }}
           >
             <div className="flex items-center gap-2">
-              <CalcIcon size={16} style={{ color: "rgba(255,255,255,0.95)" }} />
+              <CalcIcon size={16} style={{ color: style.headerInk }} />
               <span
                 className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em]"
-                style={{ color: "rgba(255,255,255,0.95)" }}
+                style={{ color: style.headerInk }}
               >
                 Kalkulator
               </span>
@@ -158,14 +170,14 @@ export function CalculatorWidget() {
               onClick={() => setOpen(false)}
               aria-label="Lukk kalkulator"
               className="flex h-7 w-7 items-center justify-center rounded-md transition-colors"
-              style={{ color: "rgba(255,255,255,0.55)" }}
+              style={{ color: style.closeRest }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                e.currentTarget.style.color = "white";
+                e.currentTarget.style.background = style.closeHoverBg;
+                e.currentTarget.style.color = style.closeHoverInk;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "rgba(255,255,255,0.55)";
+                e.currentTarget.style.color = style.closeRest;
               }}
             >
               <X size={16} />

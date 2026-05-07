@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kalkulator · v4 — Holographic dichroic</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 25%, rgba(99, 102, 241, 0.40) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 75%, rgba(252, 211, 77, 0.22) 0%, transparent 50%),
+      linear-gradient(135deg, #1e1b4b 0%, #0a0a14 100%);
+    display: grid;
+    place-items: center;
+  }
+
+  .bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .bg .glyph {
+    position: absolute;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.10);
+  }
+  .bg .formula {
+    position: absolute;
+    font-family: "JetBrains Mono", monospace;
+    color: rgba(255, 255, 255, 0.18);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* ===== HOLOGRAPHIC — rainbow conic border + multi-hue overlay ===== */
+  .panel {
+    position: relative;
+    width: 460px;
+    padding: 1.5px;
+    border-radius: 18px;
+    background:
+      conic-gradient(
+        from 0deg,
+        #a855f7,
+        #22d3ee,
+        #4ade80,
+        #fcd34d,
+        #f472b6,
+        #a855f7
+      );
+    box-shadow:
+      0 30px 60px rgba(168, 85, 247, 0.30),
+      0 12px 30px rgba(34, 211, 238, 0.18),
+      0 4px 12px rgba(244, 114, 182, 0.20);
+    animation: hueRotate 14s linear infinite;
+  }
+  @keyframes hueRotate {
+    0%   { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  .panel-inner {
+    position: relative;
+    border-radius: 16.5px;
+    overflow: hidden;
+    background:
+      linear-gradient(135deg,
+        rgba(168, 85, 247, 0.28) 0%,
+        rgba(34, 211, 238, 0.28) 25%,
+        rgba(74, 222, 128, 0.24) 50%,
+        rgba(252, 211, 77, 0.28) 75%,
+        rgba(244, 114, 182, 0.28) 100%
+      ),
+      linear-gradient(45deg,
+        rgba(168, 85, 247, 0.16) 0%,
+        rgba(34, 211, 238, 0.16) 50%,
+        rgba(244, 114, 182, 0.16) 100%
+      ),
+      #0a0a14;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #a855f7, #22d3ee, #fcd34d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-icon {
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, #a855f7, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-icon svg { color: #c4b5fd; }
+  .close {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .body { padding: 16px 20px 20px; }
+  .row-input {
+    display: flex; align-items: center;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background:
+      linear-gradient(120deg, rgba(168, 85, 247, 0.10), rgba(34, 211, 238, 0.10)),
+      #0a0a14;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .row-result {
+    margin-top: 10px;
+    display: flex; align-items: center; gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background:
+      linear-gradient(120deg, rgba(252, 211, 77, 0.10), rgba(244, 114, 182, 0.10)),
+      #0a0a14;
+    border: 1px solid rgba(252, 211, 77, 0.30);
+    font-family: "JetBrains Mono", monospace;
+  }
+  .eq { color: #c4b5fd; font-size: 16px; font-weight: bold; }
+  .value {
+    background: linear-gradient(90deg, #fcd34d, #f472b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(252, 211, 77, 0.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="glyph" style="top: 12%; left: 8%; font-size: 200px;">σ</div>
+  <div class="glyph" style="top: 60%; right: 10%; font-size: 240px;">μ</div>
+  <div class="formula" style="top: 35%; left: 6%;">ln(0.05) / ln(0.7)</div>
+  <div class="formula" style="bottom: 18%; right: 6%;">P(X ≥ 1) = 1 − (1−p)^n</div>
+</div>
+
+<div class="panel">
+  <div class="panel-inner">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="14" r="0.5"/><circle cx="12" cy="14" r="0.5"/><circle cx="16" cy="14" r="0.5"/><circle cx="8" cy="18" r="0.5"/><circle cx="12" cy="18" r="0.5"/><circle cx="16" cy="18" r="0.5"/></svg>
+        </div>
+        Kalkulator
+      </div>
+      <div class="close">×</div>
+    </div>
+    <div class="body">
+      <div class="row-input">ln(0.05) / ln(0.7)</div>
+      <div class="row-result">
+        <span class="eq">=</span>
+        <span class="value">8.396</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

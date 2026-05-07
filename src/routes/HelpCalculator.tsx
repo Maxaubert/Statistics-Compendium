@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Calculator, Keyboard, Save, Sigma } from "lucide-react";
+import { ArrowLeft, Calculator, Check, Keyboard, Palette, Save, Sigma } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
+import {
+  CALCULATOR_STYLES,
+  useCalculatorStyle,
+  type CalculatorStyleConfig,
+  type CalculatorStyleId,
+} from "@/components/calculator/calculator-style";
 
 export function HelpCalculator() {
   return (
@@ -21,6 +27,13 @@ export function HelpCalculator() {
           En flytende, alltid tilgjengelig uttrykksevaluator. Skriv hva du
           vil regne, få svaret med én gang.
         </p>
+
+        <Section icon={Palette} title="Stil">
+          <p>
+            Velg hvordan kalkulator-panelet ser ut. Standard er mørk monokrom; akrylglass-varianten har bakgrunnsuskarphet og en regnbue-stripe på toppen.
+          </p>
+          <StylePicker />
+        </Section>
 
         <Section icon={Keyboard} title="Slik åpner og lukker du den">
           <p>
@@ -126,5 +139,135 @@ function Code({ children }: { children: React.ReactNode }) {
     <code className="rounded border border-line bg-paper-2 px-1 py-px font-mono text-[12.5px] text-ink">
       {children}
     </code>
+  );
+}
+
+/**
+ * Two-up grid of clickable style preview cards. The selected style
+ * gets an indigo ring + a check badge in the corner. Clicking a card
+ * persists the choice via the shared useCalculatorStyle hook, which
+ * the live calculator widget listens to and re-skins instantly.
+ */
+function StylePicker() {
+  const [activeId, setActiveId] = useCalculatorStyle();
+  const ids = Object.keys(CALCULATOR_STYLES) as CalculatorStyleId[];
+  return (
+    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {ids.map((id) => {
+        const config = CALCULATOR_STYLES[id];
+        const selected = activeId === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setActiveId(id)}
+            aria-pressed={selected}
+            className={
+              "group relative flex flex-col gap-3 rounded-lg border bg-card p-3 text-left transition-all " +
+              (selected
+                ? "border-primary-2 shadow-[0_0_0_3px_rgba(99,102,241,0.18)]"
+                : "border-line hover:border-primary-3/60 hover:shadow-sm")
+            }
+          >
+            <StylePreviewPanel config={config} />
+            <div className="px-1">
+              <div className="flex items-center justify-between">
+                <span className="font-serif text-[14.5px] font-semibold text-ink">
+                  {config.label}
+                  {id === "monochrome" && (
+                    <span className="ml-1.5 text-[11px] font-normal text-ink-3">
+                      · standard
+                    </span>
+                  )}
+                </span>
+                {selected && (
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-2 text-white">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                )}
+              </div>
+              <span className="mt-0.5 block text-[12.5px] leading-snug text-ink-2">
+                {config.description}
+              </span>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Compact rendering of the calculator panel using a given style config,
+ * shrunk to fit the picker card. Mirrors the live widget's outer panel
+ * + header + input row + result row, so what you see here is what you
+ * get when you select.
+ */
+function StylePreviewPanel({ config }: { config: CalculatorStyleConfig }) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-[10px]"
+      style={{
+        ...config.panel,
+        // The preview sits inside a light card so the panel needs a
+        // dark backdrop for backdrop-filter blurs to read correctly.
+        // We supply that via a layered radial gradient behind it.
+        backgroundColor: undefined,
+      }}
+    >
+      {/* mini-page texture so backdrop-blur has something to refract */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse at 25% 30%, rgba(99,102,241,0.45), transparent 55%), radial-gradient(ellipse at 80% 75%, rgba(252,211,77,0.30), transparent 50%), linear-gradient(135deg, #1e1b4b, #0a0a14)",
+        }}
+      />
+      {/* Now layer the panel skin on top of the textured backdrop */}
+      <div className="relative" style={config.panel}>
+        {config.topAccent && (
+          <div
+            aria-hidden
+            className="absolute left-0 right-0 top-0"
+            style={{
+              height: `${config.topAccent.height}px`,
+              background: config.topAccent.gradient,
+              boxShadow: config.topAccent.glow,
+              zIndex: 1,
+            }}
+          />
+        )}
+        <div
+          className="flex items-center justify-between px-3 py-2"
+          style={{ borderBottom: config.headerDivider }}
+        >
+          <span
+            className="font-mono text-[8px] font-semibold uppercase tracking-[0.18em]"
+            style={{ color: config.headerInk }}
+          >
+            Kalkulator
+          </span>
+          <span style={{ color: config.closeRest, fontSize: 11 }}>×</span>
+        </div>
+        <div className="flex flex-col gap-1.5 px-3 py-2.5">
+          <div
+            className="rounded-md px-2 py-1.5 font-mono text-[10px]"
+            style={{ ...config.inputRow, color: config.inputInk }}
+          >
+            1 − 0.7^9
+          </div>
+          <div
+            className="flex items-center gap-1.5 rounded-md px-2 py-1.5 font-mono text-[10px]"
+            style={config.resultRow}
+          >
+            <span style={{ color: config.resultEq, fontWeight: 700 }}>=</span>
+            <span style={{ color: config.resultValueInk, fontWeight: 700 }}>
+              0.960
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
