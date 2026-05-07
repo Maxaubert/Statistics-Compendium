@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · Variant 1 (Sigma silhouett)</title>
+<style>
+  :root {
+    --ink: #f5f5f4;
+    --ink-2: #d6d3d1;
+    --ink-3: #a8a29e;
+    --bg-deep: #0b0b1f;
+    --bg-mid: #14143a;
+    --line: rgba(255,255,255,0.10);
+    --primary: #818cf8;
+    --primary-2: #6366f1;
+    --accent: #fcd34d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-deep);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+  }
+  /* Top nav (mock) */
+  .nav {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 78vh;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0b0b1f 0%, #1a1a3f 100%);
+    display: flex;
+    align-items: center;
+    padding: 80px 8vw;
+  }
+  .hero .art {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+  .hero .art svg {
+    width: 95vh;
+    max-width: 1100px;
+    height: auto;
+    opacity: 0.55;
+  }
+  .hero .text {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: clamp(72px, 12vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: white;
+  }
+  .hero h1 .dot { color: var(--accent); }
+  .hero p {
+    margin-top: 28px;
+    max-width: 520px;
+    font-size: 17px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .hero .cta {
+    margin-top: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .hero .cta .pip { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #1c1917; display: grid; place-items: center; font-weight: 800; }
+
+  /* Cards section */
+  .cards {
+    background: var(--bg-mid);
+    padding: 80px 8vw;
+    border-top: 1px solid var(--line);
+  }
+  .cards h2 {
+    margin: 0 0 24px;
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: white;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    display: block;
+  }
+  .card:hover { border-color: rgba(252, 211, 77, 0.4); transform: translateY(-2px); }
+  .card .icon { width: 42px; height: 42px; border-radius: 10px; background: rgba(252, 211, 77, 0.15); border: 1px solid rgba(252, 211, 77, 0.3); display: grid; place-items: center; color: var(--accent); margin-bottom: 14px; }
+  .card h3 { margin: 0 0 6px; font-family: "Source Serif 4", Georgia, serif; font-size: 18px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-3); font-size: 13.5px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="art" aria-hidden="true">
+    <!-- Wireframe sigma silhouette -->
+    <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wire" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.4"/>
+        </linearGradient>
+      </defs>
+      <!-- Outer sigma shape as polygons -->
+      <g stroke="url(#wire)" stroke-width="0.9" fill="none">
+        <!-- triangulated mesh of sigma letter -->
+        <path d="M 100 100 L 500 100 L 480 130 L 130 130 Z" />
+        <path d="M 130 130 L 480 130 L 320 290 L 280 290 Z" />
+        <path d="M 280 290 L 320 290 L 290 350 L 270 350 Z" />
+        <path d="M 270 350 L 290 350 L 470 540 L 110 540 Z" />
+        <path d="M 110 540 L 470 540 L 500 600 L 100 600 Z" />
+        <!-- dense triangulation overlays -->
+        <path d="M 100 100 L 280 290 L 130 130 Z" />
+        <path d="M 100 100 L 280 290 L 270 350 Z" />
+        <path d="M 100 100 L 270 350 L 110 540 Z" />
+        <path d="M 100 100 L 110 540 L 100 600 Z" />
+        <path d="M 500 100 L 320 290 L 480 130 Z" />
+        <path d="M 500 100 L 320 290 L 290 350 Z" />
+        <path d="M 500 100 L 290 350 L 470 540 Z" />
+        <path d="M 500 100 L 470 540 L 500 600 Z" />
+        <path d="M 280 290 L 270 350 L 320 290 Z" />
+        <path d="M 320 290 L 270 350 L 290 350 Z" />
+      </g>
+      <!-- vertices -->
+      <g fill="#818cf8" opacity="0.85">
+        <circle cx="100" cy="100" r="2.2"/>
+        <circle cx="500" cy="100" r="2.2"/>
+        <circle cx="130" cy="130" r="1.8"/>
+        <circle cx="480" cy="130" r="1.8"/>
+        <circle cx="280" cy="290" r="2"/>
+        <circle cx="320" cy="290" r="2"/>
+        <circle cx="270" cy="350" r="1.8"/>
+        <circle cx="290" cy="350" r="1.8"/>
+        <circle cx="110" cy="540" r="2"/>
+        <circle cx="470" cy="540" r="2"/>
+        <circle cx="100" cy="600" r="2.2"/>
+        <circle cx="500" cy="600" r="2.2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="text">
+    <h1>HJELP<span class="dot">.</span></h1>
+    <p>Korte forklaringer på hvordan du bruker kompendiet — kalkulatoren, søk, veiviser og resten av verktøyene.</p>
+    <a href="#cards" class="cta"><span class="pip">›</span> Til emnene</a>
+  </div>
+</section>
+
+<section class="cards" id="cards">
+  <h2>Emner</h2>
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <h3>Kalkulator</h3>
+      <p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p>
+    </a>
+    <a href="#" class="card" style="opacity:0.45;pointer-events:none;">
+      <div class="icon">⌕</div>
+      <h3>Søk og filter</h3>
+      <p>Slik finner du frem i formel-listen.</p>
+    </a>
+    <a href="#" class="card" style="opacity:0.45;pointer-events:none;">
+      <div class="icon">🧭</div>
+      <h3>Veiviser</h3>
+      <p>Gå fra oppgavetekst til riktig formel.</p>
+    </a>
+    <a href="#" class="card" style="opacity:0.45;pointer-events:none;">
+      <div class="icon">⌨</div>
+      <h3>Hurtigtaster</h3>
+      <p>Snarveier som sparer deg klikk.</p>
+    </a>
+  </div>
+</section>
+
+</body>
+</html>
