@@ -55,7 +55,7 @@ solution_variants:
       - "Eksempel: 5 kort fra 52 → `C(52, 5) = 2 598 960` mulige hender"
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
-  - label: "Sannsynlighet: alle `k` er av samme type"
+  - label: "Sannsynlighet: alle k er av samme type"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for at alle de `k` uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter', 'alle 3 plukkede er røde')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
@@ -65,7 +65,7 @@ solution_variants:
       - "Eksempel: 5 hjerter blant 13 hjerter i 52-korts stokk → `C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴`"
       - text: "Alternativt, hvis sekvensiell beregning er enklere: bruk produktregelen `(K/N)·((K−1)/(N−1))·…·((K−k+1)/(N−k+1))`. Begge metodene gir samme svar."
         conditional: true
-  - label: "Sannsynlighet: ingen av `k` er av en gitt type"
+  - label: "Sannsynlighet: ingen av k er av en gitt type"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for at ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter', 'ingen jenter')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
@@ -76,7 +76,7 @@ solution_variants:
       - "Eksempel: ingen hjerter blant 5 trukne kort → `C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.2215`"
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
-  - label: "Sannsynlighet: blanding (`k₁` fra A og `k₂` fra B)"
+  - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for å få nøyaktig `k₁` av type A OG `k₂` av type B' (f.eks. '2 jenter og 2 gutter', '3 hjerter og 2 ruter')"
       - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
@@ -132,7 +132,7 @@ detailed_solution_variants:
               - { indent: "`= 2 598 960`" }
         result: "`C(52, 5) = 2 598 960` mulige hender"
 
-  - label: "Sannsynlighet: alle `k` er av samme type"
+  - label: "Sannsynlighet: alle k er av samme type"
     solutions:
       - source: "Eksamen jan25 · oppgave 1"
         question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for å få 5 hjerter?"
@@ -154,7 +154,7 @@ detailed_solution_variants:
               - { indent: "`P = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴`" }
         result: "`P(5 hjerter) ≈ 4.95 · 10⁻⁴`"
 
-  - label: "Sannsynlighet: ingen av `k` er av en gitt type"
+  - label: "Sannsynlighet: ingen av k er av en gitt type"
     solutions:
       - source: "Praksiseksempel · ingen hjerter"
         question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for at INGEN av de uttrukne er hjerter?"

@@ -4945,7 +4945,7 @@ Nyttig symmetri: \`C(n, k) = C(n, n − k)\`. For eksempel er \`C(52, 50) = C(52
     },
     {
       id: "p-alle-fra-kategori",
-      name: "Sannsynlighet: alle `k` er av samme type",
+      name: "Sannsynlighet: alle k er av samme type",
       abbreviation: "Alle k fra K",
       formula: "P(alle k fra K) = C(K, k) / C(N, k)",
       short: `Trekker du \`k\` av \`N\` uten tilbakelegging, er sannsynligheten for at alle havner i kategorien (med \`K\` elementer) lik \`C(K, k)/C(N, k)\`.`,
@@ -5008,7 +5008,7 @@ Trekk 4 kuler fra en bolle med 6 røde og 4 blå (\`N = 10\`, \`K = 6\`, \`k = 4
     },
     {
       id: "p-ingen-fra-kategori",
-      name: "Sannsynlighet: ingen av `k` er av en gitt type",
+      name: "Sannsynlighet: ingen av k er av en gitt type",
       abbreviation: "Ingen fra K",
       formula: "P(ingen k fra K) = C(N − K, k) / C(N, k)",
       short: `Sannsynligheten for at ingen av de \`k\` trukne tilhører kategorien med \`K\` elementer er antall utvalg fra «de andre» delt på antall mulige utvalg.`,
