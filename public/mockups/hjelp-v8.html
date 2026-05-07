@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hjelp · v8 (Residual histogram + Q-Q strip)</title>
+<title>Hjelp · v8 (Library shelf)</title>
 <style>
   :root {
     --ink: #1c1917;
@@ -67,242 +67,251 @@
 </header>
 
 <main>
-  <!-- v8: Residual histogram (left) + Q-Q plot (right). Diagnostic dashboard. -->
   <div class="art" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Histogram bar gradient: primary-soft fill, indigo top -->
-        <linearGradient id="barFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#6366f1" stop-opacity="0.55"/>
-          <stop offset="55%" stop-color="#eef2ff" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#eef2ff" stop-opacity="1"/>
+        <linearGradient id="spineIndigo" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3730a3"/>
+          <stop offset="50%" stop-color="#4338ca"/>
+          <stop offset="100%" stop-color="#312e81"/>
         </linearGradient>
-        <!-- Bell curve overlay -->
-        <linearGradient id="bellFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#4338ca" stop-opacity="0.20"/>
-          <stop offset="100%" stop-color="#4338ca" stop-opacity="0"/>
+        <linearGradient id="spineIndigo2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#4f46e5"/>
+          <stop offset="50%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#4338ca"/>
+        </linearGradient>
+        <linearGradient id="spineAmber" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#92400e"/>
+          <stop offset="50%" stop-color="#b45309"/>
+          <stop offset="100%" stop-color="#78350f"/>
+        </linearGradient>
+        <linearGradient id="spineCyan" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#0e7490"/>
+          <stop offset="50%" stop-color="#22d3ee"/>
+          <stop offset="100%" stop-color="#155e75"/>
+        </linearGradient>
+        <linearGradient id="spineSoft" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#e0e7ff"/>
+          <stop offset="50%" stop-color="#eef2ff"/>
+          <stop offset="100%" stop-color="#c7d2fe"/>
+        </linearGradient>
+        <linearGradient id="shelfWood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fafaf7"/>
+          <stop offset="100%" stop-color="#e7e5e4"/>
         </linearGradient>
       </defs>
 
-      <!-- ======================== LEFT: Residual histogram ======================== -->
-      <!-- Plot area: x [60..760], y [430..760], baseline at y=760 -->
-      <!-- Cards occupy max-width 760 so we sit BELOW the cards (y >= ~430) -->
+      <!-- ===========================================================
+           Library shelf in slight perspective.
+           Vanishing point is at roughly (1600, 720) — far right.
+           Each spine is a 4-point quad: top-left, top-right, bottom-right, bottom-left.
+           Books closer to the right are slightly taller and wider; further left, smaller.
+           ============================================================ -->
 
-      <!-- Frame -->
-      <g stroke="#e7e5e4" stroke-width="1" fill="none">
-        <line x1="60"  y1="430" x2="60"  y2="760"/>
-        <line x1="60"  y1="760" x2="760" y2="760"/>
-      </g>
+      <!-- Soft halo wash behind the shelf -->
+      <ellipse cx="1100" cy="700" rx="700" ry="220" fill="#eef2ff" opacity="0.5"/>
 
-      <!-- Zero residual axis (vertical mid line) -->
-      <line x1="410" y1="430" x2="410" y2="760" stroke="#a8a29e" stroke-width="0.8" stroke-dasharray="3 3"/>
+      <!-- Faint wall line behind the books (top of shelf back) -->
+      <line x1="380" y1="540" x2="1560" y2="535" stroke="#e7e5e4" stroke-width="1"/>
 
-      <!-- Bell curve overlay (theoretical normal) -->
-      <path d="
-        M 90 760
-        C 160 758, 220 750, 270 720
-        C 320 690, 360 600, 410 470
-        C 460 600, 500 690, 550 720
-        C 600 750, 660 758, 730 760
-        Z"
-        fill="url(#bellFill)" stroke="#4338ca" stroke-width="1.2" stroke-opacity="0.55"/>
+      <!-- ============= Books, drawn left-to-right ============= -->
 
-      <!-- Histogram bars (irregular heights, 18 bins, baseline 760) -->
+      <!-- B1: tall narrow indigo, leftmost (smallest in perspective) -->
       <g>
-        <!-- bin width 36, gap 2 -->
-        <rect x="62"  y="744" width="36" height="16"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="100" y="730" width="36" height="30"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="138" y="710" width="36" height="50"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="176" y="688" width="36" height="72"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="214" y="654" width="36" height="106" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="252" y="618" width="36" height="142" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="290" y="572" width="36" height="188" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="328" y="528" width="36" height="232" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="366" y="484" width="36" height="276" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="404" y="476" width="36" height="284" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="442" y="500" width="36" height="260" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="480" y="544" width="36" height="216" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="518" y="600" width="36" height="160" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="556" y="640" width="36" height="120" fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="594" y="676" width="36" height="84"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="632" y="700" width="36" height="60"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="670" y="722" width="36" height="38"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
-        <rect x="708" y="740" width="36" height="20"  fill="url(#barFill)" stroke="#4338ca" stroke-width="0.8"/>
+        <path d="M 420 580 L 470 575 L 470 800 L 418 802 Z"
+              fill="url(#spineIndigo)" stroke="#1e1b4b" stroke-width="1"/>
+        <line x1="425" y1="600" x2="465" y2="597" stroke="#fef3c7" stroke-width="0.7" opacity="0.7"/>
+        <line x1="425" y1="780" x2="465" y2="780" stroke="#fef3c7" stroke-width="0.7" opacity="0.7"/>
+        <!-- Abstract icon: dot + slash -->
+        <circle cx="445" cy="660" r="3" fill="#fef3c7" opacity="0.8"/>
+        <line x1="438" y1="690" x2="453" y2="678" stroke="#fef3c7" stroke-width="1" opacity="0.7"/>
       </g>
 
-      <!-- X-axis ticks for histogram -->
-      <g stroke="#a8a29e" stroke-width="0.8">
-        <line x1="60"  y1="760" x2="60"  y2="766"/>
-        <line x1="200" y1="760" x2="200" y2="766"/>
-        <line x1="340" y1="760" x2="340" y2="766"/>
-        <line x1="410" y1="760" x2="410" y2="766"/>
-        <line x1="480" y1="760" x2="480" y2="766"/>
-        <line x1="620" y1="760" x2="620" y2="766"/>
-        <line x1="760" y1="760" x2="760" y2="766"/>
-      </g>
-      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#78716c">
-        <text x="60"  y="780" text-anchor="middle">−3σ</text>
-        <text x="200" y="780" text-anchor="middle">−2σ</text>
-        <text x="340" y="780" text-anchor="middle">−1σ</text>
-        <text x="410" y="780" text-anchor="middle">0</text>
-        <text x="480" y="780" text-anchor="middle">+1σ</text>
-        <text x="620" y="780" text-anchor="middle">+2σ</text>
-        <text x="760" y="780" text-anchor="middle">+3σ</text>
-      </g>
-
-      <!-- Y-axis tick label (mono) -->
-      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#78716c">
-        <text x="52" y="434" text-anchor="end">freq</text>
-        <text x="52" y="764" text-anchor="end">0</text>
-      </g>
-
-      <!-- Axis label -->
-      <g font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="13" fill="#44403c">
-        <text x="410" y="800" text-anchor="middle">residual e_i = y_i − ŷ_i</text>
-      </g>
-
-      <!-- Caption -->
-      <g font-family="Source Serif 4, Georgia, serif" fill="#312e81">
-        <text x="60" y="416" font-size="14" font-style="italic">Figur A ·</text>
-        <text x="120" y="416" font-size="13" fill="#44403c">fordeling av residualer (n = 184, σ̂ = 1.04)</text>
-      </g>
-
-      <!-- ======================== RIGHT: Q-Q plot ======================== -->
-      <!-- Plot area: x [880..1500], y [430..760] -->
-
-      <!-- Frame -->
-      <g stroke="#e7e5e4" stroke-width="1" fill="none">
-        <line x1="880"  y1="430" x2="880"  y2="760"/>
-        <line x1="880"  y1="760" x2="1500" y2="760"/>
-        <line x1="1500" y1="430" x2="1500" y2="760"/>
-        <line x1="880"  y1="430" x2="1500" y2="430"/>
-      </g>
-
-      <!-- Faint grid (5x5) -->
-      <g stroke="#f5f5f4" stroke-width="1">
-        <line x1="1004" y1="430" x2="1004" y2="760"/>
-        <line x1="1128" y1="430" x2="1128" y2="760"/>
-        <line x1="1252" y1="430" x2="1252" y2="760"/>
-        <line x1="1376" y1="430" x2="1376" y2="760"/>
-        <line x1="880" y1="496" x2="1500" y2="496"/>
-        <line x1="880" y1="562" x2="1500" y2="562"/>
-        <line x1="880" y1="628" x2="1500" y2="628"/>
-        <line x1="880" y1="694" x2="1500" y2="694"/>
-      </g>
-
-      <!-- y = x reference line (dashed) -->
-      <line x1="880" y1="760" x2="1500" y2="430"
-            stroke="#78716c" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.7"/>
-
-      <!-- Q-Q dots clustered along y=x with normal-tail S-curve.
-           Plot range: theoretical -3..+3 mapped to x [880..1500] (step ~103.3 per unit)
-           Same vertical mapping. ~30 dots with slight S deviation at tails. -->
-      <g fill="#312e81">
-        <!-- left tail: observed slightly LOWER than theoretical (heavier left tail) -->
-        <circle cx="900"  cy="746" r="3.2"/>
-        <circle cx="918"  cy="734" r="3.2"/>
-        <circle cx="938"  cy="724" r="3.2"/>
-        <circle cx="960"  cy="712" r="3.2"/>
-        <circle cx="984"  cy="700" r="3.2"/>
-        <circle cx="1010" cy="686" r="3.2"/>
-        <circle cx="1036" cy="670" r="3.2"/>
-        <circle cx="1062" cy="654" r="3.2"/>
-        <!-- middle: tightly on the line -->
-        <circle cx="1088" cy="640" r="3.2"/>
-        <circle cx="1112" cy="624" r="3.2"/>
-        <circle cx="1138" cy="608" r="3.2"/>
-        <circle cx="1162" cy="592" r="3.2"/>
-        <circle cx="1188" cy="576" r="3.2"/>
-        <circle cx="1212" cy="560" r="3.2"/>
-        <circle cx="1238" cy="544" r="3.2"/>
-        <circle cx="1262" cy="528" r="3.2"/>
-        <circle cx="1288" cy="512" r="3.2"/>
-        <circle cx="1312" cy="496" r="3.2"/>
-        <circle cx="1338" cy="480" r="3.2"/>
-        <circle cx="1362" cy="466" r="3.2"/>
-        <!-- right tail: observed slightly HIGHER than theoretical (drift up) -->
-        <circle cx="1388" cy="454" r="3.2"/>
-        <circle cx="1412" cy="442" r="3.2"/>
-        <circle cx="1436" cy="436" r="3.2"/>
-        <circle cx="1462" cy="442" r="3.2"/>
-        <!-- a couple more interior -->
-        <circle cx="1024" cy="676" r="3.2"/>
-        <circle cx="1100" cy="632" r="3.2"/>
-        <circle cx="1176" cy="586" r="3.2"/>
-        <circle cx="1252" cy="538" r="3.2"/>
-        <circle cx="1328" cy="488" r="3.2"/>
-      </g>
-
-      <!-- Single amber outlier in upper-right (one point that deviates from the line) -->
+      <!-- B2: short, soft indigo (light), like a thin reference book -->
       <g>
-        <circle cx="1480" cy="450" r="6.5" fill="none" stroke="#b45309" stroke-width="2"/>
-        <circle cx="1480" cy="450" r="3.5" fill="#b45309"/>
-        <!-- label -->
-        <line x1="1486" y1="448" x2="1500" y2="438" stroke="#b45309" stroke-width="0.8"/>
-        <text x="1502" y="436" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#b45309" text-anchor="end">obs #142</text>
+        <path d="M 472 600 L 520 595 L 522 802 L 472 803 Z"
+              fill="url(#spineSoft)" stroke="#4338ca" stroke-width="1"/>
+        <line x1="478" y1="615" x2="516" y2="612" stroke="#4338ca" stroke-width="0.6" opacity="0.5"/>
+        <line x1="478" y1="785" x2="518" y2="785" stroke="#4338ca" stroke-width="0.6" opacity="0.5"/>
+        <!-- Abstract icon: small square -->
+        <rect x="490" y="690" width="12" height="12" fill="none" stroke="#4338ca" stroke-width="1" opacity="0.7"/>
       </g>
 
-      <!-- X-axis ticks (theoretical) -->
-      <g stroke="#a8a29e" stroke-width="0.8">
-        <line x1="880"  y1="760" x2="880"  y2="766"/>
-        <line x1="1004" y1="760" x2="1004" y2="766"/>
-        <line x1="1128" y1="760" x2="1128" y2="766"/>
-        <line x1="1190" y1="760" x2="1190" y2="766"/>
-        <line x1="1252" y1="760" x2="1252" y2="766"/>
-        <line x1="1376" y1="760" x2="1376" y2="766"/>
-        <line x1="1500" y1="760" x2="1500" y2="766"/>
-      </g>
-      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#78716c">
-        <text x="880"  y="780" text-anchor="middle">−3</text>
-        <text x="1004" y="780" text-anchor="middle">−2</text>
-        <text x="1128" y="780" text-anchor="middle">−1</text>
-        <text x="1190" y="780" text-anchor="middle">0</text>
-        <text x="1252" y="780" text-anchor="middle">1</text>
-        <text x="1376" y="780" text-anchor="middle">2</text>
-        <text x="1500" y="780" text-anchor="middle">3</text>
+      <!-- B3: medium amber -->
+      <g>
+        <path d="M 525 570 L 590 565 L 595 802 L 524 804 Z"
+              fill="url(#spineAmber)" stroke="#451a03" stroke-width="1"/>
+        <line x1="535" y1="588" x2="585" y2="585" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <line x1="535" y1="780" x2="588" y2="781" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <!-- Abstract icon: triangle -->
+        <path d="M 553 670 L 568 670 L 560 656 Z" fill="#fef3c7" opacity="0.85"/>
       </g>
 
-      <!-- Y-axis ticks (observed) -->
-      <g stroke="#a8a29e" stroke-width="0.8">
-        <line x1="874" y1="430" x2="880" y2="430"/>
-        <line x1="874" y1="496" x2="880" y2="496"/>
-        <line x1="874" y1="562" x2="880" y2="562"/>
-        <line x1="874" y1="628" x2="880" y2="628"/>
-        <line x1="874" y1="694" x2="880" y2="694"/>
-        <line x1="874" y1="760" x2="880" y2="760"/>
-      </g>
-      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#78716c">
-        <text x="868" y="434" text-anchor="end">3</text>
-        <text x="868" y="500" text-anchor="end">2</text>
-        <text x="868" y="566" text-anchor="end">1</text>
-        <text x="868" y="632" text-anchor="end">0</text>
-        <text x="868" y="698" text-anchor="end">−1</text>
-        <text x="868" y="764" text-anchor="end">−2</text>
+      <!-- B4: tall primary-3 -->
+      <g>
+        <path d="M 597 545 L 668 540 L 675 803 L 596 805 Z"
+              fill="url(#spineIndigo2)" stroke="#312e81" stroke-width="1"/>
+        <line x1="608" y1="565" x2="666" y2="563" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="608" y1="784" x2="668" y2="784" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: two horizontal bars -->
+        <rect x="618" y="660" width="38" height="3" fill="#fef3c7" opacity="0.7"/>
+        <rect x="618" y="672" width="28" height="3" fill="#fef3c7" opacity="0.7"/>
       </g>
 
-      <!-- Axis labels -->
-      <g font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="13" fill="#44403c">
-        <text x="1190" y="800" text-anchor="middle">teoretiske kvantiler (Φ⁻¹)</text>
-        <text x="836" y="595" text-anchor="middle" transform="rotate(-90 836 595)">observerte kvantiler</text>
+      <!-- B5: narrow cyan accent -->
+      <g>
+        <path d="M 678 575 L 718 570 L 725 803 L 678 804 Z"
+              fill="url(#spineCyan)" stroke="#083344" stroke-width="1"/>
+        <line x1="685" y1="592" x2="720" y2="590" stroke="#ecfeff" stroke-width="0.7" opacity="0.85"/>
+        <line x1="685" y1="784" x2="722" y2="785" stroke="#ecfeff" stroke-width="0.7" opacity="0.85"/>
+        <!-- Abstract: diamond -->
+        <path d="M 700 665 L 710 675 L 700 685 L 690 675 Z" fill="#ecfeff" opacity="0.85"/>
       </g>
 
-      <!-- Caption -->
-      <g font-family="Source Serif 4, Georgia, serif" fill="#312e81">
-        <text x="880" y="416" font-size="14" font-style="italic">Figur B ·</text>
-        <text x="940" y="416" font-size="13" fill="#44403c">Q–Q-plott mot N(0,1)  —  Shapiro–Wilk W = 0.987</text>
+      <!-- B6: medium indigo with faux-leather lines -->
+      <g>
+        <path d="M 728 555 L 800 550 L 810 803 L 728 804 Z"
+              fill="url(#spineIndigo)" stroke="#1e1b4b" stroke-width="1"/>
+        <line x1="740" y1="575" x2="798" y2="572" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="740" y1="612" x2="798" y2="609" stroke="#fef3c7" stroke-width="0.5" opacity="0.55"/>
+        <line x1="740" y1="755" x2="800" y2="754" stroke="#fef3c7" stroke-width="0.5" opacity="0.55"/>
+        <line x1="740" y1="784" x2="800" y2="784" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: circle outline -->
+        <circle cx="769" cy="675" r="10" fill="none" stroke="#fef3c7" stroke-width="1" opacity="0.8"/>
       </g>
 
-      <!-- Section header tying both panels together -->
-      <g font-family="Source Serif 4, Georgia, serif" fill="#1c1917">
-        <text x="60" y="370" font-size="18" font-style="italic" fill="#312e81">diagnostikk</text>
-        <line x1="180" y1="365" x2="1500" y2="365" stroke="#e7e5e4" stroke-width="1"/>
-        <text x="1500" y="370" font-size="11" fill="#78716c" text-anchor="end" font-family="JetBrains Mono, monospace">resid · qq</text>
+      <!-- B7: PULLED-FORWARD book (lighter, slightly tilted, with bookmark) -->
+      <g>
+        <!-- Drop shadow -->
+        <path d="M 822 540 L 906 533 L 920 818 L 824 822 Z"
+              fill="#1c1917" opacity="0.10" transform="translate(6,4)"/>
+        <!-- Body -->
+        <path d="M 822 540 L 906 533 L 920 818 L 824 822 Z"
+              fill="url(#spineSoft)" stroke="#4338ca" stroke-width="1.4"/>
+        <!-- Top edge band -->
+        <line x1="828" y1="558" x2="912" y2="552" stroke="#4338ca" stroke-width="1"/>
+        <line x1="826" y1="800" x2="916" y2="797" stroke="#4338ca" stroke-width="1"/>
+        <!-- Front edge highlight (the book is pulled out so a sliver of pages shows) -->
+        <path d="M 822 540 L 818 545 L 820 822 L 824 822 Z"
+              fill="#ffffff" stroke="#4338ca" stroke-width="0.8"/>
+        <!-- Title plate -->
+        <rect x="838" y="640" width="60" height="80" fill="#ffffff" stroke="#4338ca" stroke-width="0.8" opacity="0.95"/>
+        <!-- Abstract glyph in plate -->
+        <circle cx="868" cy="668" r="6" fill="none" stroke="#4338ca" stroke-width="1.2"/>
+        <line x1="858" y1="690" x2="878" y2="690" stroke="#4338ca" stroke-width="1.2"/>
+        <line x1="858" y1="700" x2="876" y2="700" stroke="#4338ca" stroke-width="0.8"/>
+        <line x1="858" y1="708" x2="872" y2="708" stroke="#4338ca" stroke-width="0.8"/>
+        <!-- Amber bookmark sticking out the top -->
+        <path d="M 856 528 L 884 525 L 882 488 L 870 498 L 858 491 Z"
+              fill="#b45309" stroke="#78350f" stroke-width="0.8" stroke-linejoin="round"/>
+        <!-- Bookmark highlight -->
+        <line x1="868" y1="495" x2="868" y2="525" stroke="#fef3c7" stroke-width="1" opacity="0.6"/>
       </g>
 
-      <!-- Tiny meta strip below both -->
-      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#a8a29e">
-        <text x="60"  y="858">model: lm(y ~ x₁ + x₂)   ·   R² = 0.74   ·   df = 181</text>
-        <text x="1500" y="858" text-anchor="end">Jarque–Bera p = 0.31    ·    Breusch–Pagan p = 0.18</text>
+      <!-- B8: tall primary-2 -->
+      <g>
+        <path d="M 922 550 L 1000 558 L 1014 815 L 924 814 Z"
+              fill="url(#spineIndigo)" stroke="#1e1b4b" stroke-width="1"/>
+        <line x1="934" y1="572" x2="998" y2="578" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="934" y1="794" x2="1004" y2="796" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: vertical bars -->
+        <rect x="954" y="660" width="3" height="36" fill="#fef3c7" opacity="0.75"/>
+        <rect x="966" y="668" width="3" height="28" fill="#fef3c7" opacity="0.75"/>
+        <rect x="978" y="654" width="3" height="42" fill="#fef3c7" opacity="0.75"/>
+      </g>
+
+      <!-- B9: medium primary-3 -->
+      <g>
+        <path d="M 1015 540 L 1090 547 L 1106 814 L 1016 815 Z"
+              fill="url(#spineIndigo2)" stroke="#312e81" stroke-width="1"/>
+        <line x1="1027" y1="563" x2="1086" y2="568" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="1027" y1="792" x2="1097" y2="794" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: cross -->
+        <line x1="1050" y1="675" x2="1075" y2="675" stroke="#fef3c7" stroke-width="1.4" opacity="0.8"/>
+        <line x1="1062" y1="660" x2="1063" y2="690" stroke="#fef3c7" stroke-width="1.4" opacity="0.8"/>
+      </g>
+
+      <!-- B10: short amber -->
+      <g>
+        <path d="M 1108 580 L 1175 588 L 1192 814 L 1110 815 Z"
+              fill="url(#spineAmber)" stroke="#451a03" stroke-width="1"/>
+        <line x1="1120" y1="600" x2="1172" y2="605" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <line x1="1120" y1="794" x2="1184" y2="796" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <!-- Abstract: hex outline -->
+        <path d="M 1140 670 L 1156 670 L 1164 682 L 1156 694 L 1140 694 L 1132 682 Z"
+              fill="none" stroke="#fef3c7" stroke-width="1" opacity="0.85"/>
+      </g>
+
+      <!-- B11: tall primary-2 -->
+      <g>
+        <path d="M 1194 530 L 1280 538 L 1300 815 L 1196 814 Z"
+              fill="url(#spineIndigo)" stroke="#1e1b4b" stroke-width="1"/>
+        <line x1="1208" y1="554" x2="1276" y2="560" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="1208" y1="788" x2="1290" y2="792" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: stacked dots -->
+        <circle cx="1240" cy="660" r="3" fill="#fef3c7" opacity="0.85"/>
+        <circle cx="1240" cy="675" r="3" fill="#fef3c7" opacity="0.85"/>
+        <circle cx="1240" cy="690" r="3" fill="#fef3c7" opacity="0.85"/>
+      </g>
+
+      <!-- B12: narrow cyan -->
+      <g>
+        <path d="M 1302 565 L 1348 572 L 1370 814 L 1304 814 Z"
+              fill="url(#spineCyan)" stroke="#083344" stroke-width="1"/>
+        <line x1="1310" y1="585" x2="1346" y2="590" stroke="#ecfeff" stroke-width="0.7" opacity="0.85"/>
+        <line x1="1310" y1="792" x2="1362" y2="794" stroke="#ecfeff" stroke-width="0.7" opacity="0.85"/>
+        <!-- Abstract: zigzag -->
+        <path d="M 1320 670 L 1330 660 L 1340 670 L 1350 660" fill="none" stroke="#ecfeff" stroke-width="1.2" opacity="0.85"/>
+      </g>
+
+      <!-- B13: medium primary-3 with horizontal bands -->
+      <g>
+        <path d="M 1372 545 L 1448 552 L 1474 813 L 1374 813 Z"
+              fill="url(#spineIndigo2)" stroke="#312e81" stroke-width="1"/>
+        <rect x="1384" y="612" width="80" height="6" fill="#fef3c7" opacity="0.75" transform="skewY(0.5)"/>
+        <line x1="1386" y1="568" x2="1446" y2="574" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <line x1="1386" y1="788" x2="1466" y2="792" stroke="#fef3c7" stroke-width="0.8" opacity="0.7"/>
+        <!-- Abstract: arrow -->
+        <path d="M 1408 690 L 1430 690 L 1430 685 L 1438 695 L 1430 705 L 1430 700 L 1408 700 Z" fill="#fef3c7" opacity="0.8"/>
+      </g>
+
+      <!-- B14: short amber, rightmost (largest in perspective) -->
+      <g>
+        <path d="M 1476 580 L 1554 590 L 1582 813 L 1478 813 Z"
+              fill="url(#spineAmber)" stroke="#451a03" stroke-width="1"/>
+        <line x1="1488" y1="602" x2="1550" y2="610" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <line x1="1488" y1="788" x2="1572" y2="792" stroke="#fef3c7" stroke-width="0.8" opacity="0.85"/>
+        <!-- Abstract: two-prong -->
+        <line x1="1518" y1="660" x2="1518" y2="690" stroke="#fef3c7" stroke-width="1.5" opacity="0.85"/>
+        <line x1="1505" y1="675" x2="1531" y2="675" stroke="#fef3c7" stroke-width="1.5" opacity="0.85"/>
+      </g>
+
+      <!-- ============= Shelf surface (perspective) ============= -->
+      <!-- Front edge of shelf, slight perspective: left end higher than right -->
+      <path d="M 380 815 L 1600 818 L 1600 838 L 380 832 Z"
+            fill="url(#shelfWood)" stroke="#e7e5e4" stroke-width="1"/>
+      <!-- Lower shadow under shelf -->
+      <path d="M 380 838 L 1600 838 L 1600 850 L 380 846 Z"
+            fill="#1c1917" opacity="0.05"/>
+
+      <!-- Faint vertical guide hairlines hint at depth (back wall of shelf cabinet) -->
+      <line x1="380" y1="540" x2="380" y2="815" stroke="#e7e5e4" stroke-width="0.8"/>
+      <line x1="1600" y1="535" x2="1600" y2="818" stroke="#e7e5e4" stroke-width="0.8"/>
+
+      <!-- A subtle title-card / sticker lower-left, like a library spine label -->
+      <g opacity="0.85">
+        <rect x="445" y="755" width="20" height="24" fill="#fef3c7" stroke="#b45309" stroke-width="0.8"/>
+        <line x1="450" y1="765" x2="460" y2="765" stroke="#b45309" stroke-width="0.6"/>
+        <line x1="450" y1="770" x2="460" y2="770" stroke="#b45309" stroke-width="0.6"/>
+      </g>
+
+      <!-- A whisper of dust motes for atmosphere -->
+      <g fill="#4338ca" opacity="0.18">
+        <circle cx="700" cy="350" r="1.4"/>
+        <circle cx="1100" cy="280" r="1.6"/>
+        <circle cx="1320" cy="420" r="1.2"/>
+        <circle cx="900" cy="200" r="1"/>
+        <circle cx="1450" cy="320" r="1.4"/>
       </g>
     </svg>
   </div>
