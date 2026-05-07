@@ -87,7 +87,7 @@ solution_variants:
   - label: "P(a ≤ X ≤ b)"
     steps:
       - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `λ = 0.05` pr. natt, `t = 60` → `μ = 3`)"
-      - "Les av nedre grense `a` og øvre grense `b` fra oppgaven (formuleringer som 'mellom `a` og `b`', '`a` eller `b`', 'minst `a`, høyst `b`')"
+      - "Les av nedre grense `a` og øvre grense `b` fra oppgaven (formuleringer som «mellom `a` og `b`», «`a` eller `b`», «minst `a`, høyst `b`»)"
       - "Skriv intervallet via to kumulative oppslag: `P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)`"
       - { text: "Tabellen skal slås opp på `a − 1`, IKKE på `a`. Bruker du `P(X ≤ a)` mister du bidraget fra `X = a` selv. F.eks. for `P(2 ≤ X ≤ 5)` slå opp `P(X ≤ 1)`, ikke `P(X ≤ 2)`.", conditional: true }
       - { text: "Hvis `a = 1`: forenkles til `P(1 ≤ X ≤ b) = P(X ≤ b) − P(X = 0) = P(X ≤ b) − e^(-μ)`", conditional: true }
