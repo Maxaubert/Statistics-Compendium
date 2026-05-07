@@ -121,19 +121,19 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(255, 255, 255, 0.04)",
+      background: "rgba(255, 255, 255, 0.06)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
-      border: "1px solid rgba(255, 255, 255, 0.10)",
+      border: "1px solid rgba(255, 255, 255, 0.12)",
     },
     inputInk: "rgba(255, 255, 255, 0.95)",
     inputCaret: "white",
 
     resultRow: {
-      background: "rgba(255, 255, 255, 0.03)",
+      background: "rgba(255, 255, 255, 0.045)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
-      border: "1px solid rgba(255, 255, 255, 0.14)",
+      border: "1px solid rgba(255, 255, 255, 0.16)",
     },
     resultEq: "rgba(255, 255, 255, 0.65)",
     resultValueInk: "white",
