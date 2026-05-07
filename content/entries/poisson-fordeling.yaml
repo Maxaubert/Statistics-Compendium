@@ -77,7 +77,7 @@ solution_variants:
     steps:
       - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `μ = 1.68`)"
       - "Skriv om via komplement: `P(X ≥ k) = 1 − P(X ≤ k − 1)`"
-      - "Pass på: tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt."
+      - { text: "Tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt.", conditional: true }
       - { text: "Hvis `k = 1`: forenkle til `P(X ≥ 1) = 1 − P(X = 0) = 1 − e^(-μ)` — raskere enn E.2", conditional: true }
       - "Slå opp `P(X ≤ k − 1)` i tabell E.2 med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
