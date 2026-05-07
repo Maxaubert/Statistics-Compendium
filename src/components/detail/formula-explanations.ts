@@ -3655,7 +3655,7 @@ De to spørsmålene «ingen hendelser i vinduet \`[0, t]\`» og «ventetiden er 
     {
       id: "find-k-threshold",
       name: "Finn k for terskel",
-      formula: `Minste \`k\` slik at P(X ≥ k) ≤ p_terskel  (eller P(X ≤ k) ≥ p_terskel)`,
+      formula: "k = min { j : P(X ≥ j) ≤ τ }",
       short: `Gitt en sannsynlighetsterskel: hvilken verdi \`k\` tilfredsstiller den?`,
       long: `Den «inverse» varianten snur problemet: i stedet for å regne ut en sannsynlighet, leter du etter den minste (eller største) \`k\` som tilfredsstiller en gitt terskel \`p_terskel\`. Strategien er å bygge en liten tabell over \`P(X ≤ k)\` fra E.2 og lese av når kravet snus.
 
