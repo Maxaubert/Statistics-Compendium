@@ -90,13 +90,12 @@ solution_variants:
       - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
   - label: "Finn n / sjansen overstiger X"
     steps:
-      - "Bruk når oppgaven sier 'sannsynligheten for minst én ... overstiger X' eller 'er minst X' (f.eks. 'minst én dose virker', 'vinne minst én gang')"
-      - "Identifiser `p` (per forsøk), suksess-hendelsen (typisk 'minst én'), og terskelen `X`"
-      - "Sett opp ulikheten direkte på suksess-formen: `P(X ≥ 1) = 1 − (1−p)^n ≥ X`"
-      - "Konverter til 'ingen suksess'-form for å kunne ta logaritme: `(1−p)^n ≤ 1 − X`"
-      - "Ta logaritme: `n · ln(1−p) ≤ ln(1 − X)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
-      - "Løs for `n`: `n ≥ ln(1 − X) / ln(1−p)` (f.eks. `p = 0.05, X = 0.99 → n ≥ ln(0.01)/ln(0.95) ≈ 89.78`)"
-      - "Rund opp til neste heltall (f.eks. `89.78 → n = 90`)"
+      - "Identifiser `p` (per forsøk), suksess-hendelsen (typisk 'minst én'), og terskelen for sannsynligheten. F.eks. `p = 0.05` og terskel `0.99` (sannsynligheten for å vinne minst én gang skal overstige 99 %)"
+      - "Sett opp ulikheten på suksess-formen: `1 − (1−p)^n ≥ 0.99` ⇒ `1 − 0.95^n ≥ 0.99`"
+      - "Konverter til 'ingen suksess'-form for å kunne ta logaritme: `0.95^n ≤ 1 − 0.99 = 0.01`"
+      - "Ta logaritme: `n · ln(0.95) ≤ ln(0.01)`; husk at `ln(0.95) < 0` snur ulikhetstegnet"
+      - "Løs for `n`: `n ≥ ln(0.01) / ln(0.95) ≈ 89.78`"
+      - "Rund opp til neste heltall: `n = 90`"
       - { text: "Hvis terskelen gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), bruk tabell E.1 og prøv økende `n` til kravet er oppfylt", conditional: true }
 
 common_traps: |
