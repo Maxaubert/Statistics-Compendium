@@ -6,7 +6,7 @@ import { ScientificCalculator } from "./ScientificCalculator";
 const STORAGE_OPEN = "calc-widget-open";
 const STORAGE_POS = "calc-widget-position";
 
-const PANEL_WIDTH = 360;
+const PANEL_WIDTH = 460;
 const EDGE_MARGIN = 0;
 const BUTTON_RIGHT = 20;
 const BUTTON_BOTTOM = 20;
@@ -206,14 +206,29 @@ export function CalculatorWidget() {
 
   return (
     <>
+      {/* Full-page backdrop with blur. Click to close. Behind the
+          calculator panel but above the page content. */}
+      {open && (
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Lukk kalkulator"
+          className="fixed inset-0 z-30 cursor-default animate-[calc-fade_180ms_ease-out]"
+          style={{
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            background: "rgba(15, 12, 41, 0.45)",
+          }}
+        />
+      )}
+
       {open && (
         <div
           ref={panelRef}
           role="dialog"
           aria-label="Kalkulator"
           className={clsx(
-            "fixed z-40 rounded-xl border border-line bg-card",
-            "shadow-2xl shadow-primary/15",
+            "fixed z-40 overflow-hidden rounded-2xl",
             "animate-[calc-pop_180ms_ease-out]",
           )}
           style={{
@@ -221,6 +236,9 @@ export function CalculatorWidget() {
             bottom: `${panelPos.bottom}px`,
             width: `${PANEL_WIDTH}px`,
             maxWidth: "calc(100vw - 40px)",
+            background: "linear-gradient(180deg, #0a0a0e 0%, #050507 100%)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
           }}
         >
           <header
@@ -229,13 +247,19 @@ export function CalculatorWidget() {
             onPointerUp={onHeaderPointerUp}
             onPointerCancel={onHeaderPointerUp}
             className={clsx(
-              "flex select-none items-center justify-between border-b border-line px-4 py-3",
+              "flex select-none items-center justify-between px-5 py-3.5",
               "cursor-grab active:cursor-grabbing touch-none",
             )}
+            style={{
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+            }}
           >
             <div className="flex items-center gap-2">
-              <CalcIcon size={16} className="text-primary-2" />
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-2">
+              <CalcIcon size={16} style={{ color: "rgba(245,158,11,0.85)" }} />
+              <span
+                className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em]"
+                style={{ color: "rgba(245,158,11,0.85)" }}
+              >
                 Kalkulator
               </span>
             </div>
@@ -244,12 +268,23 @@ export function CalculatorWidget() {
               onClick={() => setOpen(false)}
               onPointerDown={(e) => e.stopPropagation()}
               aria-label="Lukk kalkulator"
-              className="flex h-7 w-7 items-center justify-center rounded-md text-ink-3 transition-colors hover:bg-paper-2 hover:text-ink"
+              className="flex h-7 w-7 items-center justify-center rounded-md transition-colors"
+              style={{
+                color: "rgba(255,255,255,0.55)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "rgba(255,255,255,0.55)";
+              }}
             >
               <X size={16} />
             </button>
           </header>
-          <div className="px-4 pb-4 pt-3">
+          <div className="px-5 pb-5 pt-4">
             <ScientificCalculator />
           </div>
         </div>

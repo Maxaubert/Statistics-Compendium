@@ -27,4 +27,10 @@ body {
   }
 }
 
+/* Backdrop fade-in for the calculator overlay. */
+@keyframes calc-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @import "./print.css";
