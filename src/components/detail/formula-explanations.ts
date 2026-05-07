@@ -4905,8 +4905,9 @@ For tre hendelser må du både legge til og trekke fra etter et inkludering-eksk
       abbreviation: "Antall utvalg",
       formula: "C(n, k) = n! / (k! · (n − k)!)",
       short: `Antall måter å plukke \`k\` av \`n\` ulike elementer når rekkefølgen ikke teller. Også kalt binomialkoeffisienten «n velg k».`,
-      long: `> [!read] Når brukes denne?
-> Når oppgaven kun ber om **hvor mange måter / kombinasjoner / hender / utvalg** det finnes — ren telling, ingen sannsynlighet ennå. Stikkord: «på hvor mange måter», «hvor mange ulike komitéer», «hvor mange femkortshender».
+      long: `## Når brukes denne?
+
+Når oppgaven kun ber om **hvor mange måter / kombinasjoner / hender / utvalg** det finnes — ren telling, ingen sannsynlighet ennå. Stikkord: «på hvor mange måter», «hvor mange ulike komitéer», «hvor mange femkortshender».
 
 
 Binomialkoeffisienten \`C(n, k)\` (skrives også \`ⁿCₖ\` eller «n velg k») teller antall ulike utvalg av \`k\` elementer fra \`n\` ulike elementer, når rekkefølgen i utvalget er likegyldig og hvert element brukes høyst én gang.
@@ -4949,8 +4950,9 @@ Nyttig symmetri: \`C(n, k) = C(n, n − k)\`. For eksempel er \`C(52, 50) = C(52
       abbreviation: "Alle k fra K",
       formula: "P(alle k fra K) = C(K, k) / C(N, k)",
       short: `Trekker du \`k\` av \`N\` uten tilbakelegging, er sannsynligheten for at alle havner i kategorien (med \`K\` elementer) lik \`C(K, k)/C(N, k)\`.`,
-      long: `> [!read] Når brukes denne?
-> Når oppgaven spør «sannsynligheten for at **alle** de \`k\` uttrukne er av type A». Stikkord: «alle 5 kort er hjerter», «alle plukkene er røde», «alle de utvalgte er kvinner».
+      long: `## Når brukes denne?
+
+Når oppgaven spør «sannsynligheten for at **alle** de \`k\` uttrukne er av type A». Stikkord: «alle 5 kort er hjerter», «alle plukkene er røde», «alle de utvalgte er kvinner».
 
 
 Når en populasjon på \`N\` elementer inneholder \`K\` av en bestemt kategori, og du trekker et uordnet utvalg på \`k\` uten tilbakelegging, gir gunstige på mulige sannsynligheten for at alle \`k\` ligger i kategorien.
@@ -5012,8 +5014,9 @@ Trekk 4 kuler fra en bolle med 6 røde og 4 blå (\`N = 10\`, \`K = 6\`, \`k = 4
       abbreviation: "Ingen fra K",
       formula: "P(ingen k fra K) = C(N − K, k) / C(N, k)",
       short: `Sannsynligheten for at ingen av de \`k\` trukne tilhører kategorien med \`K\` elementer er antall utvalg fra «de andre» delt på antall mulige utvalg.`,
-      long: `> [!read] Når brukes denne?
-> Når oppgaven spør «sannsynligheten for at **ingen** av de uttrukne er av type A». Stikkord: «ingen hjerter», «ingen jenter blant de 4 valgte», «ingen defekte i utvalget».
+      long: `## Når brukes denne?
+
+Når oppgaven spør «sannsynligheten for at **ingen** av de uttrukne er av type A». Stikkord: «ingen hjerter», «ingen jenter blant de 4 valgte», «ingen defekte i utvalget».
 
 
 Speilbildet av forrige formel. Når du trekker \`k\` uten tilbakelegging fra \`N\`, er sannsynligheten for at ingen av dem havner i kategorien (med \`K\` elementer) lik \`C(N − K, k) / C(N, k)\`.
@@ -5076,8 +5079,9 @@ Trekk 4 kuler fra 10 (\`K = 6\` røde, \`N − K = 4\` blå). Sannsynlighet for 
       abbreviation: "k₁ av A, k₂ av B",
       formula: "P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)",
       short: `Sannsynligheten for å trekke nøyaktig \`k₁\` fra A og \`k₂\` fra B uten tilbakelegging. Klassisk «2 jenter og 2 gutter»-mønster.`,
-      long: `> [!read] Når brukes denne?
-> Når oppgaven spør «sannsynligheten for å få **nøyaktig** \`k₁\` av type A **OG** \`k₂\` av type B». Stikkord: «2 jenter og 2 gutter», «3 hjerter og 2 ruter», «4 defekte og 6 OK i utvalget».
+      long: `## Når brukes denne?
+
+Når oppgaven spør «sannsynligheten for å få **nøyaktig** \`k₁\` av type A **OG** \`k₂\` av type B». Stikkord: «2 jenter og 2 gutter», «3 hjerter og 2 ruter», «4 defekte og 6 OK i utvalget».
 
 
 Når en populasjon på \`N\` er delt i to kategorier — \`K_A\` av type A og \`K_B = N − K_A\` av type B — og du trekker \`k\` uten tilbakelegging, gir formelen sannsynligheten for å få nøyaktig \`k₁\` fra A og \`k₂ = k − k₁\` fra B.
