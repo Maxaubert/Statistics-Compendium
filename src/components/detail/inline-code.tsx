@@ -31,7 +31,7 @@ export function renderInlineCode(
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
       out.push(
         <code key={key++} className={CODE_CLASS[theme]}>
-          {part.slice(1, -1)}
+          {renderHats(part.slice(1, -1))}
         </code>,
       );
       continue;
@@ -66,6 +66,41 @@ export function renderInlineCode(
 }
 
 const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+/**
+ * Greek letters with U+0302 COMBINING CIRCUMFLEX ACCENT (estimator
+ * notation: λ̂, μ̂, σ̂, p̂, β̂) render badly in JetBrains Mono on
+ * Windows — the zero-width combining mark squashes against the next
+ * character. Cambria Math composes the letter+hat pair correctly,
+ * so we splice in a math-font span around each affected pair.
+ *
+ * The pattern matches any non-newline character followed immediately
+ * by U+0302; the math font handles non-Greek letters (β̂, p̂) just
+ * as well as Greek (λ̂).
+ */
+const HAT_RE = /[^\n]̂/g;
+function renderHats(text: string): ReactNode {
+  if (!text.includes("̂")) return text;
+  const out: ReactNode[] = [];
+  let cursor = 0;
+  let key = 0;
+  let m: RegExpExecArray | null;
+  HAT_RE.lastIndex = 0;
+  while ((m = HAT_RE.exec(text)) !== null) {
+    if (m.index > cursor) out.push(text.slice(cursor, m.index));
+    out.push(
+      <span
+        key={key++}
+        style={{ fontFamily: "var(--font-math), var(--font-mono)" }}
+      >
+        {m[0]}
+      </span>,
+    );
+    cursor = m.index + m[0].length;
+  }
+  if (cursor < text.length) out.push(text.slice(cursor));
+  return out;
+}
 
 const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // Light: distinct pill against a serif/paper background.
