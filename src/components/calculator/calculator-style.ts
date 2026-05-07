@@ -121,7 +121,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(255, 255, 255, 0.06)",
+      background: "rgba(255, 255, 255, 0.04)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.10)",
@@ -130,10 +130,10 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     inputCaret: "white",
 
     resultRow: {
-      background: "rgba(0, 0, 0, 0.50)",
+      background: "rgba(255, 255, 255, 0.03)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
-      border: "1px solid rgba(255, 255, 255, 0.16)",
+      border: "1px solid rgba(255, 255, 255, 0.14)",
     },
     resultEq: "rgba(255, 255, 255, 0.65)",
     resultValueInk: "white",
