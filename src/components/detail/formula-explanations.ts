@@ -1789,6 +1789,57 @@ Vi er 90 % sikre på at fangstraten ligger mellom 0.0103 og 0.0254 sommerfugler 
         },
       ],
     },
+    {
+      id: "lambda-hat",
+      name: "Punktestimat for raten λ",
+      abbreviation: "Estimat",
+      formula: "λ̂ = Y/t",
+      short: "Antall hendelser delt på observasjonstiden. Punktestimatet som intervallet bygger rundt.",
+      long: `\`λ̂\` er punktestimatet for raten \`λ\` i en poissonprosess: antall observerte hendelser \`Y\` delt på lengden \`t\` av observasjonsvinduet.
+
+
+## Hvorfor akkurat Y/t?
+
+For en poissonprosess med rate \`λ\` er forventet antall hendelser i et vindu av lengde \`t\` lik \`E[Y] = λt\`. Vi vet \`Y\` (det vi observerte) og \`t\` (vinduets lengde), men ikke \`λ\`. Løs \`E[Y] = λt\` for \`λ\`:
+
+> [!read] λ̂ = Y/t
+> Estimert rate er antall hendelser pr. tidsenhet.
+
+Dette er momentestimatet og samtidig maximum-likelihood-estimatet for poissonraten — de to faller sammen her.
+
+
+## Egenskaper
+
+- **Forventningsrett:** \`E[λ̂] = E[Y]/t = λt/t = λ\`. I gjennomsnitt treffer estimatet riktig.
+- **Variansen:** \`Var(λ̂) = Var(Y)/t² = λt/t² = λ/t\`. Standardfeilen er derfor \`√(λ/t)\`, som vi i praksis bytter ut med \`√(λ̂/t)\`.
+- **Konsistent:** lar du \`t\` vokse, krymper variansen mot null og \`λ̂ → λ\`.
+
+> [!tip] Sørg for at \`Y\` og \`t\` er i samme enhet før du regner. Får du \`Y = 15\` fanger på 5 uker og raten skal være pr. time, må du først regne om: \`t = 5 · 7 · 24 = 840\` timer.
+
+
+## Eksempel
+
+\`Y = 15\` klippeblåvinger fanget i \`t = 840\` timer:
+
+    λ̂ = 15/840 ≈ 0.01786 fangster pr. time
+
+Dette tallet er sentrum i konfidensintervallet \`λ̂ ± z_(α/2) · √(λ̂/t)\`.
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "ki-rate",
+        },
+        {
+          kind: "glossary",
+          id: "poisson-prosess",
+        },
+        {
+          kind: "glossary",
+          id: "estimator",
+        },
+      ],
+    },
   ],
   "ki-varians": [
     {
@@ -2447,6 +2498,46 @@ Begge marginalfordelingene må summere til 1:
         {
           kind: "entry",
           id: "kovarians",
+        },
+      ],
+    },
+    {
+      id: "marginal-y",
+      name: "Marginalen av Y",
+      abbreviation: "Marginal Y",
+      formula: "P(Y = y) = Σ_x P(X = x, Y = y)",
+      short: "Symmetrisk speilbilde: kolonnesum istedenfor radsum gir marginalfordelingen til Y.",
+      long: `Marginalfordelingen til \`Y\` er det symmetriske speilbildet av marginalen til \`X\`: du «summerer ut» \`X\` ved å legge sammen simultansannsynligheter for hver fast \`y\`.
+
+
+## Forskjellen fra marginalen til X
+
+I en simultantabell der \`X\` står i radene og \`Y\` i kolonnene:
+
+> [!read] P(Y = y) = Σ_x P(X = x, Y = y)
+> Marginalsannsynligheten for \`Y = y\` er summen langs kolonnen \`y\`.
+
+Sammenlikn med marginalen til \`X\`, som er rad-summen. Det er den samme operasjonen, bare i den andre retningen i tabellen.
+
+
+## Hvorfor begge?
+
+\`X\` og \`Y\` har generelt forskjellige fordelinger, så du trenger begge marginalene:
+
+- \`E[X]\` og \`Var(X)\` regnes fra \`P(X = x)\` (rad-summer).
+- \`E[Y]\` og \`Var(Y)\` regnes fra \`P(Y = y)\` (kolonne-summer).
+- For \`Cov(X, Y)\` og \`ρ(X, Y)\` trenger du begge to pluss simultanfordelingen.
+
+> [!tip] Skriv begge marginalene rett i margen av tabellen — én rad nederst og én kolonne til høyre. Da har du alt du trenger til E, Var, Cov og ρ uten å hoppe rundt i regningen.
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "marginal",
+        },
+        {
+          kind: "glossary",
+          id: "simultanfordeling",
         },
       ],
     },
@@ -4203,6 +4294,60 @@ Med \`SSE = 48.7437\` og \`n = 10\` blir \`S_E² = 48.7437 / 8 ≈ 6.093\`, så 
         },
       ],
     },
+    {
+      id: "sse",
+      name: "Sum av kvadrerte residualer",
+      abbreviation: "SSE",
+      formula: "SSE = Σ(y_i − α̂ − β̂·x_i)²",
+      short: "Total kvadrert avstand fra observasjoner til regresjonslinjen. Telleren i S_E².",
+      long: `\`SSE\` (Sum of Squared Errors) er totalen av de kvadrerte residualene — altså hvor langt observasjonene \`y_i\` ligger fra det regresjonslinjen forutsier, kvadrert og lagt sammen.
+
+
+## Direkte fra residualene
+
+Residualet for observasjon \`i\` er forskjellen mellom det vi observerte og det linjen sier:
+
+    e_i = y_i − ŷ_i = y_i − α̂ − β̂·x_i
+
+\`SSE\` er summen av disse kvadrert:
+
+> [!read] SSE = Σ(y_i − α̂ − β̂·x_i)²
+> Hvor mye linjen samlet sett bommer, regnet i kvadrerte enheter.
+
+Linjen \`α̂, β̂\` valgt etter minste-kvadraters-metode minimerer akkurat denne summen — derav navnet på metoden.
+
+
+## Snarvei via avvikssummer
+
+Når du allerede har avvikssummene \`S_XX\`, \`S_YY\`, \`S_XY\` ute, slipper du å regne ut alle \`n\` residualene:
+
+- \`SSE = S_YY − β̂ · S_XY\`
+- ekvivalent: \`SSE = S_YY − S_XY² / S_XX\`
+
+De tre uttrykkene gir samme tall (avvik kun i avrunding). Velg det som passer regningen din.
+
+> [!tip] Sjekk fortegnet: SSE er en sum av kvadrater og må være ≥ 0. Får du et negativt tall, er noe galt — typisk en regnefeil i \`S_YY\` eller forveksling med \`S_XY\`.
+
+
+## SSE er ikke det samme som S_E²
+
+\`SSE\` er en sum, mens \`S_E² = SSE / (n − 2)\` er et gjennomsnitt (varians). \`SSE\` har enheten \`y²\`. Når du senere skal teste eller lage KI bruker du \`S_E²\` (eller standardavviket \`S_E\`), ikke \`SSE\` direkte.
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "se-squared",
+        },
+        {
+          kind: "entry",
+          id: "regresjon-estimat-alpha-beta",
+        },
+        {
+          kind: "glossary",
+          id: "minste-kvadraters-metode",
+        },
+      ],
+    },
   ],
   "regresjon-standardfeil-stigningstall": [
     {
@@ -4313,6 +4458,49 @@ Med \`β̂ = 6.63\`, \`SE(β̂) = 0.625\`, \`n = 10\` og \`α = 0.05\` (tosidig)
         {
           kind: "table",
           id: "E5-t-tabell",
+        },
+      ],
+    },
+    {
+      id: "se-beta",
+      name: "Standardfeil til β̂",
+      abbreviation: "SE(β̂)",
+      formula: "SE(β̂) = √(S_E² / S_XX)",
+      short: "Estimert standardavvik til β̂. Nevneren i T-observatoren.",
+      long: `\`SE(β̂)\` er det estimerte standardavviket til stigningstallet — altså hvor mye \`β̂\` typisk ville variere fra utvalg til utvalg ved samme \`x\`-design. Dette er nevneren i \`T = (β̂ − β₀) / SE(β̂)\`.
+
+
+## Hvor formelen kommer fra
+
+Under standard-regresjonsantakelsene gjelder \`Var(β̂) = σ² / S_XX\`, der \`S_XX = Σ(x_i − x̄)²\`. Vi kjenner ikke \`σ²\`, så vi setter inn estimatet \`S_E²\` og tar kvadratrot:
+
+> [!read] SE(β̂) = √(S_E² / S_XX) = S_E / √S_XX
+> Residualenes standardavvik delt på kvadratroten av \`x\`-spredningen.
+
+To skrivemåter, samme tall.
+
+
+## Hva styrer størrelsen?
+
+- **Liten \`S_E²\`** (god tilpasning, lite støy) ⇒ liten \`SE(β̂)\`
+- **Stor \`S_XX\`** (godt spredte \`x\`-verdier) ⇒ liten \`SE(β̂)\`
+
+Stor \`SE(β̂)\` betyr stor usikkerhet i hvor stigningstallet egentlig er, og dermed både bredt KI for \`β\` og lav \`|T|\`-verdi i hypotesetesten.
+
+> [!tip] For en grundigere gjennomgang, se [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall) — egen oppslagsside med utledning og eksempler.
+`,
+      see_also: [
+        {
+          kind: "entry",
+          id: "regresjon-standardfeil-stigningstall",
+        },
+        {
+          kind: "entry",
+          id: "regresjon-residualvarians",
+        },
+        {
+          kind: "formula",
+          ref: "t-slope",
         },
       ],
     },
@@ -4953,8 +5141,8 @@ Trekk 4 kuler fra 10 (\`K = 6\` røde, \`N − K = 4\` blå). Sannsynlighet for 
     {
       id: "s-squared",
       name: "Utvalgsvarians fra rådata",
-      abbreviation: "s² fra rådata",
-      formula: "s² = Σ(x_i − x̄)² / (n − 1);  s = √s²",
+      abbreviation: "Varians s²",
+      formula: "s² = Σ(x_i − x̄)² / (n − 1)",
       short: `Estimat for populasjonsvariansen \`σ²\` fra en liste observasjoner. Del på \`n − 1\`, ikke \`n\`.`,
       long: `\`s²\` er utvalgsvariansen, et estimat for populasjonsvariansen \`σ²\` basert på \`n\` observasjoner \`x_1, x_2, …, x_n\`. Bruk denne når du har rådata, ikke en kjent sannsynlighetsfordeling.
 
@@ -5014,13 +5202,53 @@ Når du har en PMF, veier du med \`P(X = x)\` og deler IKKE på noe. Når du har
         },
       ],
     },
+    {
+      id: "s-stdev",
+      name: "Utvalgsstandardavvik",
+      abbreviation: "Standardavvik s",
+      formula: "s = √s²",
+      short: "Kvadratroten av variansen. Tilbake i samme enhet som dataene.",
+      long: `\`s\` er utvalgsstandardavviket — kvadratroten av utvalgsvariansen \`s²\`. Hensikten er å få et spredningsmål i samme enhet som dataene.
+
+
+## Hvorfor ta kvadratroten?
+
+\`s²\` har enheten kvadrert (er dataene i ml, har \`s²\` enheten ml²), som er upraktisk å tolke. Standardavviket \`s\` har samme enhet som observasjonene:
+
+> [!read] s = √s²
+> Standardavvik = kvadratroten av varians.
+
+Et typisk avvik fra gjennomsnittet er ca. \`s\` enheter — i samme målestokk som rådataene.
+
+
+## Eksempel
+
+Med \`s² ≈ 16.67\` (såpebeholdere i ml²):
+
+    s = √16.67 ≈ 4.08 ml
+
+Tolkning: en typisk beholder ligger ca. 4 ml unna gjennomsnittet på 298.7 ml.
+
+> [!tip] \`s\` brukes overalt: t-tester, KI for \`μ\`, regresjon. Vi regner med \`s²\` underveis (varianser legger seg pent sammen), men rapporterer \`s\` til slutt — det er det leseren kan tolke.
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "s-squared",
+        },
+        {
+          kind: "glossary",
+          id: "utvalgsvarians",
+        },
+      ],
+    },
   ],
   "varians-standardavvik-diskret": [
     {
       id: "varians",
-      name: "Varians og standardavvik for diskret stokastisk variabel",
-      abbreviation: "Var(X), σ",
-      formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i);  σ = √Var(X)",
+      name: "Varians for diskret stokastisk variabel",
+      abbreviation: "Var(X)",
+      formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)",
       short: `Vektet sum av kvadrerte avvik fra \`μ\`. Standardavviket \`σ\` er kvadratroten.`,
       long: `\`Var(X)\` måler hvor langt fra forventningsverdien \`μ = E[X]\` verdiene typisk ligger. Du beregner avviket \`(x_i − μ)\`, kvadrerer det, og veier med sannsynligheten.
 
@@ -5070,6 +5298,43 @@ Den ekvivalente formelen sparer ofte regning når sannsynlighetene er like:
         {
           kind: "entry",
           id: "utvalgsvarians-radata",
+        },
+      ],
+    },
+    {
+      id: "sigma",
+      name: "Standardavvik for diskret stokastisk variabel",
+      abbreviation: "Standardavvik σ",
+      formula: "σ = √Var(X)",
+      short: "Kvadratroten av variansen. Samme enhet som X — det vi rapporterer videre.",
+      long: `\`σ\` er standardavviket til \`X\` — kvadratroten av variansen. Det er det spredningsmålet du som regel rapporterer videre, fordi enheten matcher selve variabelen.
+
+
+## Hvorfor ta kvadratroten?
+
+\`Var(X)\` har enheten til \`X\` kvadrert. Hvis \`X\` er antall mål i en kamp, har \`Var(X)\` enheten "mål²", som er meningsløst å tolke. Kvadratroten bringer enheten tilbake:
+
+> [!read] σ = √Var(X)
+> Standardavvik = kvadratroten av variansen.
+
+Tommelfingerregel: en typisk verdi av \`X\` ligger ca. \`σ\` unna forventningsverdien \`μ = E[X]\`.
+
+
+## Når regne videre med σ vs. Var(X)?
+
+- **Var(X)** når du legger sammen variabler: \`Var(X + Y) = Var(X) + Var(Y)\` (under uavhengighet). Variansene legger seg pent sammen, standardavvikene gjør IKKE.
+- **σ** for tolkning, presentasjon, og for å normalisere (som i \`Z = (X − μ)/σ\`).
+
+> [!tip] For en lineær transformasjon: \`σ(aX + b) = |a|·σ(X)\`. Konstantleddet \`b\` flytter fordelingen, men endrer ikke spredningen. Faktoren \`a\` skalerer standardavviket lineært (i motsetning til variansen, som blir \`a²·Var(X)\`).
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "varians",
+        },
+        {
+          kind: "glossary",
+          id: "diskret-varians",
         },
       ],
     },
