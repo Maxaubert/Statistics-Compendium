@@ -82,8 +82,8 @@ solution_variants:
   - label: "Finn n / sjansen overstiger X"
     steps:
       - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`, `> 0.95`)"
-      - "Sett opp ulikheten i `n`, typisk via komplement: `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 0.01`"
-      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(1 − 0.99) ⇔ n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
+      - "Sett opp ulikheten i `n`, typisk via komplement: `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 1 − 0.99 = 0.01` (vi konverterer terskelen `0.99` til `1 − 0.99` så høyresiden blir `0.01`)"
+      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
       - "Løs for `n`: `n ≥ ln(0.01) / ln(1−p)` (f.eks. `p = 0.5 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
       - "Rund opp til neste heltall siden `n` må være heltall (f.eks. `6.64 → n = 7`)"
       - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
