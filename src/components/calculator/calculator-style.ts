@@ -15,6 +15,11 @@ export interface CalculatorStyleConfig {
   label: string;
   description: string;
 
+  /** Full-page backdrop (the layer covering the page when the panel
+   *  is open). Defaults to a uniform dark blur; acrylic-style skins
+   *  override with a colored gradient so the panel's backdrop-filter
+   *  has something colorful to refract. */
+  backdrop: CSSProperties;
   /** Outer panel — applied to the dialog shell. */
   panel: CSSProperties;
   /** Optional decorative pseudo-stripe drawn at the top of the panel
@@ -50,6 +55,11 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     label: "Monokrom",
     description: "Standard mørk monokrom — solid #111 panel, hårtynn hvit kant og dyp svart skygge.",
 
+    backdrop: {
+      background: "rgba(0, 0, 0, 0.7)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+    },
     panel: {
       background: "#111111",
       border: "1px solid rgba(255,255,255,0.1)",
@@ -83,10 +93,18 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     description:
       "macOS-style frostet akryl med backdrop-blur og en regnbue-aksent øverst på panelet.",
 
+    backdrop: {
+      // Indigo + amber gradient over a dimmed dark base so the
+      // panel's backdrop-filter has saturated colors to refract.
+      background:
+        "radial-gradient(ellipse at 25% 30%, rgba(99, 102, 241, 0.55) 0%, transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(252, 211, 77, 0.30) 0%, transparent 50%), rgba(8, 8, 16, 0.85)",
+      backdropFilter: "blur(8px)",
+      WebkitBackdropFilter: "blur(8px)",
+    },
     panel: {
-      background: "rgba(20, 20, 30, 0.55)",
-      backdropFilter: "blur(40px) saturate(200%)",
-      WebkitBackdropFilter: "blur(40px) saturate(200%)",
+      background: "rgba(20, 20, 30, 0.40)",
+      backdropFilter: "blur(30px) saturate(200%)",
+      WebkitBackdropFilter: "blur(30px) saturate(200%)",
       boxShadow:
         "0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
     },

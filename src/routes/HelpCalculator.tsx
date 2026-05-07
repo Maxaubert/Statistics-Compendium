@@ -152,7 +152,7 @@ function StylePicker() {
   const [activeId, setActiveId] = useCalculatorStyle();
   const ids = Object.keys(CALCULATOR_STYLES) as CalculatorStyleId[];
   return (
-    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <div className="mt-3 flex flex-wrap gap-3">
       {ids.map((id) => {
         const config = CALCULATOR_STYLES[id];
         const selected = activeId === id;
@@ -163,30 +163,30 @@ function StylePicker() {
             onClick={() => setActiveId(id)}
             aria-pressed={selected}
             className={
-              "group relative flex flex-col gap-3 rounded-lg border bg-card p-3 text-left transition-all " +
+              "group relative flex w-[260px] flex-col gap-2.5 rounded-lg border bg-card p-2.5 text-left transition-all " +
               (selected
                 ? "border-primary-2 shadow-[0_0_0_3px_rgba(99,102,241,0.18)]"
                 : "border-line hover:border-primary-3/60 hover:shadow-sm")
             }
           >
             <StylePreviewPanel config={config} />
-            <div className="px-1">
+            <div className="px-0.5">
               <div className="flex items-center justify-between">
-                <span className="font-serif text-[14.5px] font-semibold text-ink">
+                <span className="font-serif text-[13.5px] font-semibold text-ink">
                   {config.label}
                   {id === "monochrome" && (
-                    <span className="ml-1.5 text-[11px] font-normal text-ink-3">
+                    <span className="ml-1 text-[10.5px] font-normal text-ink-3">
                       · standard
                     </span>
                   )}
                 </span>
                 {selected && (
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-2 text-white">
-                    <Check size={12} strokeWidth={3} />
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full bg-primary-2 text-white">
+                    <Check size={10} strokeWidth={3} />
                   </span>
                 )}
               </div>
-              <span className="mt-0.5 block text-[12.5px] leading-snug text-ink-2">
+              <span className="mt-0.5 block text-[11.5px] leading-snug text-ink-2">
                 {config.description}
               </span>
             </div>
@@ -199,33 +199,21 @@ function StylePicker() {
 
 /**
  * Compact rendering of the calculator panel using a given style config,
- * shrunk to fit the picker card. Mirrors the live widget's outer panel
- * + header + input row + result row, so what you see here is what you
- * get when you select.
+ * shown over the same backdrop the live widget uses, so the preview
+ * matches what you'll see on the page. Outer wrapper paints the
+ * backdrop; the panel sits centered inside with a small margin so the
+ * acrylic blur picks up the colored gradient behind it.
  */
 function StylePreviewPanel({ config }: { config: CalculatorStyleConfig }) {
   return (
     <div
-      className="relative overflow-hidden rounded-[10px]"
-      style={{
-        ...config.panel,
-        // The preview sits inside a light card so the panel needs a
-        // dark backdrop for backdrop-filter blurs to read correctly.
-        // We supply that via a layered radial gradient behind it.
-        backgroundColor: undefined,
-      }}
+      className="relative overflow-hidden rounded-md"
+      style={{ ...config.backdrop, padding: "14px 12px" }}
     >
-      {/* mini-page texture so backdrop-blur has something to refract */}
       <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse at 25% 30%, rgba(99,102,241,0.45), transparent 55%), radial-gradient(ellipse at 80% 75%, rgba(252,211,77,0.30), transparent 50%), linear-gradient(135deg, #1e1b4b, #0a0a14)",
-        }}
-      />
-      {/* Now layer the panel skin on top of the textured backdrop */}
-      <div className="relative" style={config.panel}>
+        className="relative overflow-hidden rounded-[10px]"
+        style={config.panel}
+      >
         {config.topAccent && (
           <div
             aria-hidden

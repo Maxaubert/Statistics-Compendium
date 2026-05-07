@@ -112,11 +112,7 @@ export function CalculatorWidget() {
               ? "animate-[calc-fade-out_180ms_ease-out_forwards]"
               : "animate-[calc-fade_180ms_ease-out]",
           )}
-          style={{
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            background: "rgba(0, 0, 0, 0.7)",
-          }}
+          style={style.backdrop}
         />
       )}
 
