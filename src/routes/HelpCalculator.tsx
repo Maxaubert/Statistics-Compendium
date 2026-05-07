@@ -4,7 +4,7 @@ import { Banner } from "@/components/shell/Banner";
 
 export function HelpCalculator() {
   return (
-    <>
+    <div className="min-h-screen bg-paper">
       <Banner />
       <main className="bg-card px-12 py-8">
         <Link
@@ -14,23 +14,13 @@ export function HelpCalculator() {
           <ArrowLeft size={14} /> Tilbake til Hjelp
         </Link>
 
-        <header className="mb-8 flex items-center gap-3">
-          <div
-            aria-hidden
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-paper-2 text-primary-2"
-          >
-            <Calculator size={18} />
-          </div>
-          <div>
-            <h1 className="m-0 font-serif text-[26px] font-semibold text-ink">
-              Kalkulator
-            </h1>
-            <p className="m-0 mt-0.5 text-[14px] text-ink-2">
-              En flytende, alltid tilgjengelig uttrykksevaluator. Skriv hva du
-              vil regne, få svaret med én gang.
-            </p>
-          </div>
-        </header>
+        <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
+          Kalkulator
+        </h1>
+        <p className="mb-8 font-serif italic text-ink-3">
+          En flytende, alltid tilgjengelig uttrykksevaluator. Skriv hva du
+          vil regne, få svaret med én gang.
+        </p>
 
         <Section icon={Keyboard} title="Slik åpner og lukker du den">
           <p>
@@ -97,7 +87,7 @@ export function HelpCalculator() {
           </p>
         </Section>
       </main>
-    </>
+    </div>
   );
 }
 

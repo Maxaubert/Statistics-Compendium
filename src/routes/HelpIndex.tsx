@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Calculator, ChevronRight, LifeBuoy } from "lucide-react";
+import { Calculator, ChevronRight } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
 
 interface HelpCard {
@@ -21,25 +21,15 @@ const HELP_CARDS: HelpCard[] = [
 
 export function HelpIndex() {
   return (
-    <>
+    <div className="min-h-screen bg-paper">
       <Banner />
       <main className="bg-card px-12 py-8">
-        <header className="mb-8 flex items-center gap-3">
-          <div
-            aria-hidden
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-paper-2 text-primary-2"
-          >
-            <LifeBuoy size={18} />
-          </div>
-          <div>
-            <h1 className="m-0 font-serif text-[26px] font-semibold text-ink">
-              Hjelp
-            </h1>
-            <p className="m-0 mt-0.5 text-[14px] text-ink-2">
-              Korte forklaringer på hvordan du bruker funksjonene i kompendiet.
-            </p>
-          </div>
-        </header>
+        <h1 className="m-0 mb-2 font-serif text-[36px] font-semibold text-ink">
+          Hjelp
+        </h1>
+        <p className="mb-5 font-serif italic text-ink-3">
+          Korte forklaringer på hvordan du bruker funksjonene i kompendiet.
+        </p>
         <ul className="grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2">
           {HELP_CARDS.map((card) => (
             <li key={card.to} className="m-0">
@@ -70,6 +60,6 @@ export function HelpIndex() {
           ))}
         </ul>
       </main>
-    </>
+    </div>
   );
 }
