@@ -45,9 +45,8 @@ long_def: |
 
   **1. Antall hendelser i et vindu er Poissonfordelt.**
 
-      X ~ Poisson(λt)
-
-  > [!read] X følger en Poisson-fordeling med parameter `λt`.
+  > [!read] X ~ Poisson(λt)
+  > X følger en Poisson-fordeling med parameter `λt`.
 
   `X` er antall hendelser i et vindu av lengde `t`. Du bruker dette til
   å svare på *hvor mange* hendelser kommer (f.eks. `P(X = 5)`,
@@ -55,9 +54,8 @@ long_def: |
 
   **2. Ventetiden til neste hendelse er eksponentialfordelt.**
 
-      T ~ Eksponential(λ)
-
-  > [!read] T følger en eksponentialfordeling med rate `λ`.
+  > [!read] T ~ Eksponential(λ)
+  > T følger en eksponentialfordeling med rate `λ`.
 
   `T` er hvor lenge du venter (i samme tidsenhet som `λ`) før neste
   hendelse inntreffer. Du bruker dette til å svare på *når* neste
