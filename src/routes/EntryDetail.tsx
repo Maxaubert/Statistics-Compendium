@@ -11,6 +11,8 @@ import { RecognitionCues } from "@/components/detail/RecognitionCues";
 import { SymbolGrid } from "@/components/detail/SymbolGrid";
 import { PropertyCards } from "@/components/detail/PropertyCards";
 import { PROPERTY_EXPLANATIONS } from "@/components/detail/property-explanations";
+import { FormulaExplanationCards } from "@/components/detail/FormulaExplanationCards";
+import { FORMULA_EXPLANATIONS } from "@/components/detail/formula-explanations";
 import { StepByStep } from "@/components/detail/StepByStep";
 import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
@@ -127,6 +129,14 @@ export function EntryDetail() {
             <DistributionThumbnail entry={entry} />
             {entry.formula_latex && (
               <HeroFormula latex={entry.formula_latex} />
+            )}
+            {FORMULA_EXPLANATIONS[entry.id] && (
+              <Section title="Formelforklaring" icon={Pi}>
+                <FormulaExplanationCards
+                  explanations={FORMULA_EXPLANATIONS[entry.id]!}
+                  glossary={data.glossary}
+                />
+              </Section>
             )}
             {entry.what_it_does && (
               <Section title="Hva den gjør" icon={Info}>
