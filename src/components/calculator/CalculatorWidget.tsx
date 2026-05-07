@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 import { Calculator as CalcIcon, X } from "lucide-react";
 import { ScientificCalculator } from "./ScientificCalculator";
@@ -8,6 +8,8 @@ const STORAGE_OPEN = "calc-widget-open";
 const PANEL_WIDTH = 460;
 const BUTTON_RIGHT = 20;
 const BUTTON_BOTTOM = 20;
+
+const CLOSE_ANIM_MS = 180;
 
 /**
  * Floating calculator widget.
@@ -31,6 +33,39 @@ export function CalculatorWidget() {
       return false;
     }
   });
+
+  // `mounted` lags behind `open` during close so the panel and backdrop
+  // can play an exit animation before unmounting. `closing` flips on
+  // for that brief window so we can swap the keyframe class.
+  const [mounted, setMounted] = useState<boolean>(open);
+  const [closing, setClosing] = useState<boolean>(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (open) {
+      if (closeTimer.current) {
+        clearTimeout(closeTimer.current);
+        closeTimer.current = null;
+      }
+      setMounted(true);
+      setClosing(false);
+      return;
+    }
+    if (mounted) {
+      setClosing(true);
+      closeTimer.current = setTimeout(() => {
+        setMounted(false);
+        setClosing(false);
+        closeTimer.current = null;
+      }, CLOSE_ANIM_MS);
+    }
+  }, [open, mounted]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
 
   // Persist open state
   useEffect(() => {
@@ -64,12 +99,17 @@ export function CalculatorWidget() {
       {/* Full-page backdrop. Uniform 10px blur + 70% pure black so
           the page becomes a faint texture and focus snaps to the
           monochrome panel. */}
-      {open && (
+      {mounted && (
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Lukk kalkulator"
-          className="fixed inset-0 z-30 cursor-default animate-[calc-fade_180ms_ease-out]"
+          className={clsx(
+            "fixed inset-0 z-30 cursor-default",
+            closing
+              ? "animate-[calc-fade-out_180ms_ease-out_forwards]"
+              : "animate-[calc-fade_180ms_ease-out]",
+          )}
           style={{
             backdropFilter: "blur(10px)",
             WebkitBackdropFilter: "blur(10px)",
@@ -78,7 +118,7 @@ export function CalculatorWidget() {
         />
       )}
 
-      {open && (
+      {mounted && (
         <div
           className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center"
         >
@@ -88,7 +128,9 @@ export function CalculatorWidget() {
           aria-label="Kalkulator"
           className={clsx(
             "pointer-events-auto overflow-hidden rounded-[18px]",
-            "animate-[calc-pop_180ms_ease-out]",
+            closing
+              ? "animate-[calc-pop-out_180ms_ease-out_forwards]"
+              : "animate-[calc-pop_180ms_ease-out]",
           )}
           style={{
             width: `${PANEL_WIDTH}px`,
@@ -136,8 +178,10 @@ export function CalculatorWidget() {
         </div>
       )}
 
-      {/* Closed-state button: pinned to bottom-right. */}
-      {!open && (
+      {/* Closed-state button: pinned to bottom-right. Held back until
+          the close animation has fully unmounted the panel so the
+          two never overlap. */}
+      {!mounted && (
         <button
           type="button"
           onClick={() => setOpen(true)}
