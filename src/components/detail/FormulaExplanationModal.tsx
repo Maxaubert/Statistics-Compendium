@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Modal } from "@/components/shell/Modal";
 import { Prose } from "./Prose";
 import { renderInlineCode } from "./inline-code";
-import { useGlossaryPopup } from "./GlossaryPopup";
+import { useGlossaryPopup, GlossaryPopupBackLabelScope } from "./GlossaryPopup";
 import type {
   FormulaExplanation,
   FormulaSeeAlsoRef,
@@ -50,6 +50,7 @@ export function FormulaExplanationModal({
 
   return (
     <Modal ariaLabel={`Forklaring av ${explanation.name}`} onClose={onClose}>
+      <GlossaryPopupBackLabelScope label={explanation.name}>
       <header
         className="border-b px-7 py-5"
         style={{ borderColor: "var(--color-calc-border)" }}
@@ -144,6 +145,7 @@ export function FormulaExplanationModal({
           </div>
         </div>
       )}
+      </GlossaryPopupBackLabelScope>
     </Modal>
   );
 }
