@@ -1,6 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { clsx } from "clsx";
 import { X } from "lucide-react";
+import {
+  pushModal,
+  popModal,
+  subscribe as subscribeModalStack,
+  getStack,
+  isTopOfStack,
+} from "./modal-stack";
 
 /** Keep in sync with the longest CSS transition duration on the modal panel. */
 const CLOSE_ANIM_MS = 180;
@@ -60,6 +67,21 @@ export function Modal({ ariaLabel, onClose, children, maxWidth = "640px" }: Prop
     };
   }, []);
 
+  // Each Modal registers itself in the global modal stack. Only the
+  // topmost modal renders the dark backdrop, so stacked popups don't
+  // multiply the tint and end up pitch-black behind the inner one.
+  const [myId, setMyId] = useState<number | null>(null);
+  useEffect(() => {
+    const id = pushModal();
+    setMyId(id);
+    return () => {
+      popModal(id);
+    };
+  }, []);
+  // Re-render whenever the modal stack changes so isTop stays accurate.
+  useSyncExternalStore(subscribeModalStack, getStack);
+  const isTop = myId !== null && isTopOfStack(myId);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8"
@@ -67,15 +89,23 @@ export function Modal({ ariaLabel, onClose, children, maxWidth = "640px" }: Prop
       aria-modal="true"
       aria-label={ariaLabel}
     >
-      <button
-        type="button"
-        aria-label="Lukk"
-        onClick={requestClose}
-        className={clsx(
-          "absolute inset-0 cursor-default bg-black/85 backdrop-blur-lg transition-opacity duration-200 ease-out",
-          open ? "opacity-100" : "opacity-0",
-        )}
-      />
+      {isTop ? (
+        <button
+          type="button"
+          aria-label="Lukk"
+          onClick={requestClose}
+          className={clsx(
+            "absolute inset-0 cursor-default bg-black/85 backdrop-blur-lg transition-opacity duration-200 ease-out",
+            open ? "opacity-100" : "opacity-0",
+          )}
+        />
+      ) : (
+        // Keep a transparent overlay so clicks outside the inner panel
+        // still pass through to nothing (don't accidentally hit the
+        // popup behind us). The actual dark/blurred backdrop lives on
+        // the topmost modal.
+        <div aria-hidden className="absolute inset-0" />
+      )}
       <div
         className={clsx(
           "relative max-h-full w-full overflow-y-auto rounded-xl border shadow-2xl transition-[opacity,transform] duration-200 ease-out",
