@@ -13,10 +13,12 @@ import { MockupTabsV2 } from "./routes/MockupTabsV2";
 import { MockupTabsV3 } from "./routes/MockupTabsV3";
 import { MockupProperty } from "./routes/MockupProperty";
 import { NotFound } from "./routes/NotFound";
+import { CalculatorWidget } from "./components/calculator/CalculatorWidget";
 
 export function App() {
   return (
     <BrowserRouter>
+      <CalculatorWidget />
       <Routes>
         <Route path="/" element={<ListView />} />
         <Route path="/entry/:id" element={<EntryDetail />} />
