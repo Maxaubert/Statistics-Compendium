@@ -79,17 +79,17 @@ export function CalculatorWidget() {
 
       {open && (
         <div
+          className="pointer-events-none fixed inset-0 z-40 flex items-center justify-center"
+        >
+        <div
           role="dialog"
           aria-modal="true"
           aria-label="Kalkulator"
           className={clsx(
-            "fixed z-40 overflow-hidden rounded-2xl",
+            "pointer-events-auto overflow-hidden rounded-2xl",
             "animate-[calc-pop_180ms_ease-out]",
           )}
           style={{
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
             width: `${PANEL_WIDTH}px`,
             maxWidth: "calc(100vw - 40px)",
             background: "linear-gradient(180deg, #0a0a0e 0%, #050507 100%)",
@@ -131,6 +131,7 @@ export function CalculatorWidget() {
           <div className="px-5 pb-5 pt-4">
             <ScientificCalculator />
           </div>
+        </div>
         </div>
       )}
 
