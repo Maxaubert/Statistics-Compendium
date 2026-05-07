@@ -60,7 +60,7 @@ export function Prose({
   const ruleClass = RULE_CLASS[theme];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {blocks.map((block, i) => {
         if (block.kind === "list") {
           return (
@@ -231,12 +231,12 @@ const CALLOUT_CONFIG: Record<string, CalloutConfig> = {
 
 const HEADING_CLASS: Record<ProseTheme, Record<2 | 3, string>> = {
   light: {
-    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-ink",
-    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-ink",
+    2: "mt-7 mb-2 font-serif text-[22px] font-semibold leading-tight text-ink",
+    3: "mt-5 mb-1.5 font-serif text-[17px] font-semibold leading-tight text-ink",
   },
   dark: {
-    2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-white",
-    3: "mt-3 mb-1 font-serif text-[17px] font-semibold leading-tight text-white",
+    2: "mt-7 mb-2 font-serif text-[22px] font-semibold leading-tight text-white",
+    3: "mt-5 mb-1.5 font-serif text-[17px] font-semibold leading-tight text-white",
   },
 };
 
