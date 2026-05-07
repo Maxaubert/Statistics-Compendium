@@ -102,7 +102,9 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
       WebkitBackdropFilter: "blur(10px)",
     },
     panel: {
-      background: "#000000",
+      background: "rgba(0, 0, 0, 0.55)",
+      backdropFilter: "blur(30px) saturate(180%)",
+      WebkitBackdropFilter: "blur(30px) saturate(180%)",
       boxShadow:
         "0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
     },
@@ -119,15 +121,19 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "#0c0c0c",
-      border: "1px solid rgba(255, 255, 255, 0.08)",
+      background: "rgba(0, 0, 0, 0.30)",
+      backdropFilter: "blur(12px) saturate(150%)",
+      WebkitBackdropFilter: "blur(12px) saturate(150%)",
+      border: "1px solid rgba(255, 255, 255, 0.10)",
     },
     inputInk: "rgba(255, 255, 255, 0.95)",
     inputCaret: "white",
 
     resultRow: {
-      background: "#101010",
-      border: "1px solid rgba(255, 255, 255, 0.14)",
+      background: "rgba(0, 0, 0, 0.42)",
+      backdropFilter: "blur(12px) saturate(150%)",
+      WebkitBackdropFilter: "blur(12px) saturate(150%)",
+      border: "1px solid rgba(255, 255, 255, 0.16)",
     },
     resultEq: "rgba(255, 255, 255, 0.65)",
     resultValueInk: "white",
