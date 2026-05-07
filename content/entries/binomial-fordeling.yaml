@@ -79,9 +79,9 @@ solution_variants:
       - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
       - { text: "Hvis `k = 1`, forenkles uttrykket til `P(X ≥ 1) = 1 − (1−p)^n` (ingen tabell nødvendig)", conditional: true }
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
-  - label: "Finn n for terskel"
+  - label: "Finn n / sjansen overstiger X"
     steps:
-      - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`)"
+      - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`, `> 0.95`)"
       - "Sett opp ulikheten i `n`, typisk via komplement: `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 0.01`"
       - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
       - "Løs for `n`: `n ≥ ln(0.01) / ln(1−p)` (f.eks. `p = 0.5 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
@@ -266,8 +266,32 @@ detailed_solution_variants:
               - { text: "`P(X = 50) = 0.99^50 ≈ 0.6050`" }
         result: "`P(X ≥ 49) ≈ 0.9106`"
 
-  - label: "Finn n for terskel"
+  - label: "Finn n / sjansen overstiger X"
     solutions:
+      - source: "Praksis · minst én dose virker"
+        question: "En medisinsk dose virker uavhengig på hver pasient med sannsynlighet `p = 0.4`. Hvor mange doser `n` trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall doser som virker av `n`" }
+              - { text: "`X ~ Bin(n, 0.4)`" }
+              - { comment: "krav: `P(X ≥ 1) > 0.95`" }
+          - label: "Komplementregelen"
+            lines:
+              - { text: "`P(X ≥ 1) = 1 − (1−p)^n > 0.95`" }
+              - { indent: "= `0.6^n < 0.05`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.6) < ln(0.05)`" }
+              - { comment: "`ln(0.6) < 0` snur ulikhetstegnet" }
+              - { text: "`n > ln(0.05) / ln(0.6)`" }
+              - { indent: "= −2.9957 / −0.5108" }
+              - { indent: "≈ 5.86" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp til neste heltall: `n = 6`" }
+              - { comment: "verifiser: `1 − 0.6^6 = 1 − 0.0467 ≈ 0.953 > 0.95` ✓" }
+        result: "`n = 6` doser"
       - source: "Praksis · minst én vinst"
         question: "Hvert lodd har vinnersannsynlighet `p = 0.05`. Hvor mange lodd må vi kjøpe for at sannsynligheten for å vinne minst én gang er minst 0.99?"
         sections:

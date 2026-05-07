@@ -873,7 +873,7 @@ F.eks. lottokuponger med \`p = 0.05\` og \`n = 20\` lodd: \`P(X ≥ 1) = 1 − 0
     },
     {
       id: "find-n-threshold",
-      name: "Finn nødvendig n",
+      name: "Finn n / sjansen overstiger X",
       abbreviation: "Finn n",
       formula: "1 − (1 − p)^n ≥ p_terskel  ⇒  n ≥ ln(1 − p_terskel) / ln(1 − p)",
       short: "Hvor mange forsøk trengs for at sannsynligheten når en gitt terskel?",
