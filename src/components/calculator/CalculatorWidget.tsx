@@ -1,28 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
-import { Calculator as CalcIcon, X, GripVertical } from "lucide-react";
+import { Calculator as CalcIcon, X } from "lucide-react";
 import { ScientificCalculator } from "./ScientificCalculator";
 
 const STORAGE_OPEN = "calc-widget-open";
 const STORAGE_POS = "calc-widget-position";
 
 const PANEL_WIDTH = 360;
+const PANEL_HEIGHT_ESTIMATE = 520;
+const EDGE_MARGIN = 10;
+const BUTTON_RIGHT = 20;
+const BUTTON_BOTTOM = 20;
 
 interface Position {
-  // Distance from the right and bottom edges. We anchor to right/bottom
-  // (rather than left/top) so the widget sticks to its corner when the
-  // window resizes.
+  // Distance from the right and bottom edges of the viewport. We anchor
+  // the panel to right/bottom (rather than left/top) so it sticks to
+  // its corner when the window resizes.
   right: number;
   bottom: number;
 }
 
-const DEFAULT_POSITION: Position = { right: 20, bottom: 20 };
+const DEFAULT_PANEL_POSITION: Position = { right: BUTTON_RIGHT, bottom: BUTTON_BOTTOM };
 
-function loadPosition(): Position {
-  if (typeof window === "undefined") return DEFAULT_POSITION;
+function loadPanelPosition(): Position {
+  if (typeof window === "undefined") return DEFAULT_PANEL_POSITION;
   try {
     const raw = window.localStorage.getItem(STORAGE_POS);
-    if (!raw) return DEFAULT_POSITION;
+    if (!raw) return DEFAULT_PANEL_POSITION;
     const parsed = JSON.parse(raw);
     if (
       parsed &&
@@ -34,38 +38,42 @@ function loadPosition(): Position {
   } catch {
     // fall through
   }
-  return DEFAULT_POSITION;
+  return DEFAULT_PANEL_POSITION;
 }
 
-function clampPosition(pos: Position): Position {
+/**
+ * Clamp the panel's right/bottom anchor so the panel never escapes
+ * the viewport. We approximate the panel's size with PANEL_WIDTH and
+ * PANEL_HEIGHT_ESTIMATE; if the viewport is too small to fit the
+ * panel at all we just pin it to (EDGE_MARGIN, EDGE_MARGIN).
+ */
+function clampPanelPosition(pos: Position): Position {
   if (typeof window === "undefined") return pos;
-  // Keep the widget at least partially on-screen so a resize can't
-  // strand it off the viewport. Reserve enough margin that the
-  // calc button stays visible (roughly its own width + a few px).
-  const margin = 10;
-  const maxRight = Math.max(margin, window.innerWidth - 60);
-  const maxBottom = Math.max(margin, window.innerHeight - 60);
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const maxRight = Math.max(EDGE_MARGIN, vw - PANEL_WIDTH - EDGE_MARGIN);
+  const maxBottom = Math.max(EDGE_MARGIN, vh - PANEL_HEIGHT_ESTIMATE - EDGE_MARGIN);
   return {
-    right: Math.min(maxRight, Math.max(margin, pos.right)),
-    bottom: Math.min(maxBottom, Math.max(margin, pos.bottom)),
+    right: Math.min(maxRight, Math.max(EDGE_MARGIN, pos.right)),
+    bottom: Math.min(maxBottom, Math.max(EDGE_MARGIN, pos.bottom)),
   };
 }
 
 /**
- * Floating calculator widget pinned to a corner of the viewport.
- * Closed it shows a small button with a calculator glyph; click to
- * open a panel that holds the full ScientificCalculator (mathjs,
- * keypad, history). The panel is mounted at the App root so it
- * appears above all routes.
+ * Floating calculator widget.
  *
- * Persistence (all via localStorage):
- *  - open/closed state survives navigation and reload
- *  - the active expression and history survive close-and-reopen
- *  - the dragged position sticks across sessions
+ * Layout rules:
+ *  - The closed-state button is ALWAYS pinned to the bottom-right
+ *    corner regardless of where the user dragged the open panel.
+ *  - The open panel can be dragged via its header bar to any spot
+ *    that keeps it fully on-screen. The dragged position is
+ *    persisted in localStorage so the panel reappears in the same
+ *    place next time it's opened.
+ *  - Open/closed state is also persisted across page navigations.
+ *  - Expression and history (in ScientificCalculator) survive
+ *    close-and-reopen via their own localStorage keys.
  *
- * Drag handle: header bar (and the closed button itself) accept
- * pointer drags. Clicks shorter than 4px translation are treated
- * as taps so the user can still toggle by clicking the button.
+ * The widget is mounted at the App root so it overlays every page.
  */
 export function CalculatorWidget() {
   const [open, setOpen] = useState<boolean>(() => {
@@ -76,16 +84,17 @@ export function CalculatorWidget() {
       return false;
     }
   });
-  const [position, setPosition] = useState<Position>(() => clampPosition(loadPosition()));
+  const [panelPos, setPanelPos] = useState<Position>(() =>
+    clampPanelPosition(loadPanelPosition()),
+  );
   const dragRef = useRef<{
     startRight: number;
     startBottom: number;
     startX: number;
     startY: number;
-    moved: boolean;
   } | null>(null);
 
-  // Persist open and position
+  // Persist open and panel position
   useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_OPEN, open ? "1" : "0");
@@ -95,11 +104,11 @@ export function CalculatorWidget() {
   }, [open]);
   useEffect(() => {
     try {
-      window.localStorage.setItem(STORAGE_POS, JSON.stringify(position));
+      window.localStorage.setItem(STORAGE_POS, JSON.stringify(panelPos));
     } catch {
       // ignore
     }
-  }, [position]);
+  }, [panelPos]);
 
   // ESC closes the panel
   useEffect(() => {
@@ -111,103 +120,81 @@ export function CalculatorWidget() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Reclamp position on viewport resize so the widget never strands
-  // itself off-screen if the user shrinks the window.
+  // Reclamp panel position on viewport resize so the panel never
+  // strands itself off-screen if the user shrinks the window.
   useEffect(() => {
     function onResize() {
-      setPosition((p) => clampPosition(p));
+      setPanelPos((p) => clampPanelPosition(p));
     }
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const onDragPointerDown = useCallback(
+  // ---- Header drag handlers (open panel only) ----
+  const onHeaderPointerDown = useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
-      // Only react to primary button (left click / single touch).
       if (e.button !== 0 && e.pointerType === "mouse") return;
-      const target = e.currentTarget;
-      target.setPointerCapture(e.pointerId);
+      e.currentTarget.setPointerCapture(e.pointerId);
       dragRef.current = {
-        startRight: position.right,
-        startBottom: position.bottom,
+        startRight: panelPos.right,
+        startBottom: panelPos.bottom,
         startX: e.clientX,
         startY: e.clientY,
-        moved: false,
       };
     },
-    [position],
+    [panelPos],
   );
 
-  const onDragPointerMove = useCallback(
+  const onHeaderPointerMove = useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
       const drag = dragRef.current;
       if (!drag) return;
       const dx = e.clientX - drag.startX;
       const dy = e.clientY - drag.startY;
-      if (!drag.moved && Math.hypot(dx, dy) > 4) {
-        drag.moved = true;
-      }
-      if (drag.moved) {
-        // Right grows leftward, bottom grows upward, so the deltas flip.
-        const nextPos = clampPosition({
-          right: drag.startRight - dx,
-          bottom: drag.startBottom - dy,
-        });
-        setPosition(nextPos);
-      }
+      // right grows leftward, bottom grows upward, so deltas flip.
+      const nextPos = clampPanelPosition({
+        right: drag.startRight - dx,
+        bottom: drag.startBottom - dy,
+      });
+      setPanelPos(nextPos);
     },
     [],
   );
 
-  const onDragPointerUp = useCallback(
+  const onHeaderPointerUp = useCallback(
     (e: React.PointerEvent<HTMLElement>) => {
-      const drag = dragRef.current;
       const target = e.currentTarget;
       if (target.hasPointerCapture(e.pointerId)) {
         target.releasePointerCapture(e.pointerId);
       }
       dragRef.current = null;
-      // If the pointer barely moved, treat as a click (toggle open).
-      // The wrapper button handles the actual toggle via onClick, but
-      // we have to suppress that click when a drag did happen so the
-      // user doesn't toggle after dragging.
-      if (drag && drag.moved) {
-        // Block the synthetic click that follows pointerup on some browsers.
-        const block = (ev: MouseEvent) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          window.removeEventListener("click", block, true);
-        };
-        window.addEventListener("click", block, true);
-      }
     },
     [],
   );
 
   return (
-    <div
-      className="fixed z-40 flex flex-col items-end gap-3"
-      style={{
-        right: `${position.right}px`,
-        bottom: `${position.bottom}px`,
-      }}
-    >
+    <>
       {open && (
         <div
           role="dialog"
           aria-label="Kalkulator"
           className={clsx(
-            "rounded-xl border border-line bg-card",
+            "fixed z-40 rounded-xl border border-line bg-card",
             "shadow-2xl shadow-primary/15",
             "animate-[calc-pop_180ms_ease-out]",
           )}
-          style={{ width: `${PANEL_WIDTH}px`, maxWidth: "calc(100vw - 40px)" }}
+          style={{
+            right: `${panelPos.right}px`,
+            bottom: `${panelPos.bottom}px`,
+            width: `${PANEL_WIDTH}px`,
+            maxWidth: "calc(100vw - 40px)",
+          }}
         >
           <header
-            onPointerDown={onDragPointerDown}
-            onPointerMove={onDragPointerMove}
-            onPointerUp={onDragPointerUp}
-            onPointerCancel={onDragPointerUp}
+            onPointerDown={onHeaderPointerDown}
+            onPointerMove={onHeaderPointerMove}
+            onPointerUp={onHeaderPointerUp}
+            onPointerCancel={onHeaderPointerUp}
             className={clsx(
               "flex select-none items-center justify-between border-b border-line px-4 py-3",
               "cursor-grab active:cursor-grabbing touch-none",
@@ -215,7 +202,6 @@ export function CalculatorWidget() {
             title="Dra for å flytte"
           >
             <div className="flex items-center gap-2">
-              <GripVertical size={14} className="text-ink-4" aria-hidden />
               <CalcIcon size={16} className="text-primary-2" />
               <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-2">
                 Kalkulator
@@ -237,29 +223,26 @@ export function CalculatorWidget() {
         </div>
       )}
 
-      {/* Closed state: floating button. Also draggable. */}
+      {/* Closed-state button is always pinned to the bottom-right
+          corner; only the open panel inherits the dragged position. */}
       {!open && (
         <button
           type="button"
           onClick={() => setOpen(true)}
-          onPointerDown={onDragPointerDown}
-          onPointerMove={onDragPointerMove}
-          onPointerUp={onDragPointerUp}
-          onPointerCancel={onDragPointerUp}
           aria-label="Åpne kalkulator"
           aria-expanded={false}
           className={clsx(
-            "flex h-12 w-12 select-none items-center justify-center rounded-full transition-all",
+            "fixed z-40 flex h-12 w-12 select-none items-center justify-center rounded-full transition-all",
             "shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30",
             "border border-primary-2/20 bg-primary-2 text-white hover:bg-primary-3",
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-2/60",
-            "cursor-grab active:cursor-grabbing touch-none",
           )}
-          title="Åpne kalkulator (dra for å flytte)"
+          style={{ right: `${BUTTON_RIGHT}px`, bottom: `${BUTTON_BOTTOM}px` }}
+          title="Åpne kalkulator"
         >
           <CalcIcon size={20} />
         </button>
       )}
-    </div>
+    </>
   );
 }
