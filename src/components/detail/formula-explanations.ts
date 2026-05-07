@@ -41,7 +41,7 @@ export const FORMULA_EXPLANATIONS: Record<string, FormulaExplanation[]> = {
   "eksponential-fordeling": [
     {
       id: "pdf",
-      name: "Sannsynlighetstetthet",
+      name: "Sannsynlighetstetthetsfunksjon",
       abbreviation: "PDF",
       formula: "f(t) = λe^(-λt)",
       short: "Hvor tett fordelingen ligger ved et punkt t. Brukes mest for å tegne kurven.",
