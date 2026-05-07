@@ -27,10 +27,29 @@ body {
   }
 }
 
+/* Floating calculator widget exit animation. Mirrors calc-pop in
+   reverse so the panel sinks and shrinks gently as it fades out. */
+@keyframes calc-pop-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+}
+
 /* Backdrop fade-in for the calculator overlay. */
 @keyframes calc-fade {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Backdrop fade-out, paired with calc-pop-out. */
+@keyframes calc-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @import "./print.css";
