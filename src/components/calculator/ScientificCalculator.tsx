@@ -82,10 +82,20 @@ export function ScientificCalculator() {
   return (
     <div className="flex flex-col">
       {/* Input */}
-      <div className="flex items-center rounded-md border border-line bg-paper-2 px-3 py-2.5">
+      <div
+        className="flex items-center rounded-md px-3 py-3"
+        style={{
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
         <input
           ref={inputRef}
-          className="w-full bg-transparent font-mono text-[15px] text-ink outline-none placeholder:italic placeholder:text-ink-3"
+          className="w-full bg-transparent font-mono text-[16px] outline-none"
+          style={{
+            color: "#e0e7ff",
+            caretColor: "#fbbf24",
+          }}
           type="text"
           spellCheck={false}
           autoComplete="off"
@@ -99,14 +109,34 @@ export function ScientificCalculator() {
 
       {/* Live result. Fixed height + items-center keeps the row size
           stable as content swaps between placeholder/error/value. */}
-      <div className="mt-1.5 flex h-[44px] items-center gap-2.5 rounded-md border border-cyan-2/30 bg-cyan-soft/30 px-3">
-        <span className="font-mono text-[14px] font-bold leading-none text-cyan-deep/70">=</span>
+      <div
+        className="mt-2 flex h-[52px] items-center gap-2.5 rounded-md px-3"
+        style={{
+          background: "rgba(245,158,11,0.06)",
+          border: "1px solid rgba(245,158,11,0.18)",
+        }}
+      >
+        <span
+          className="font-mono text-[15px] font-bold leading-none"
+          style={{ color: "rgba(245,158,11,0.55)" }}
+        >
+          =
+        </span>
         {errorMsg ? (
-          <span className="font-mono text-[12px] font-semibold leading-none text-warn">{errorMsg}</span>
+          <span className="font-mono text-[12px] font-semibold leading-none" style={{ color: "#f87171" }}>
+            {errorMsg}
+          </span>
         ) : !expr.trim() ? (
-          <span className="font-mono text-[12px] italic leading-none text-ink-3">resultat vises her</span>
+          <span className="font-mono text-[12px] italic leading-none" style={{ color: "rgba(224,231,255,0.4)" }}>
+            resultat vises her
+          </span>
         ) : (
-          <span className="break-all font-mono text-[18px] font-bold leading-none text-cyan-deep">{liveResult || "—"}</span>
+          <span
+            className="break-all font-mono text-[20px] font-bold leading-none"
+            style={{ color: "#fbbf24" }}
+          >
+            {liveResult || "—"}
+          </span>
         )}
       </div>
     </div>
