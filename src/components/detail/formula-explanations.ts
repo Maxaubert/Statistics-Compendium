@@ -45,9 +45,8 @@ export const FORMULA_EXPLANATIONS: Record<string, FormulaExplanation[]> = {
       abbreviation: "PDF",
       formula: "f(t) = λe^(-λt)",
       short: "Hvor tett fordelingen ligger ved et punkt t. Brukes mest for å tegne kurven.",
-      long: `\`f(t)\` er tetthetsfunksjonen (på engelsk *probability density
-function*, derav PDF) til eksponentialfordelingen. Den beskriver hvor
-«tett» fordelingen ligger ved et bestemt punkt \`t\`.
+      long: `\`f(t)\` er tetthetsfunksjonen til eksponentialfordelingen.
+Den beskriver hvor «tett» fordelingen ligger ved et bestemt punkt \`t\`.
 
 
 ## Hvorfor er ikke \`f(t)\` en sannsynlighet?
@@ -71,16 +70,17 @@ Du får en faktisk sannsynlighet ved å integrere \`f\` over et intervall:
 > Sannsynligheten for at \`T\` faller mellom \`a\` og \`b\` er arealet under \`f\` mellom de to punktene.
 
 I praksis trenger du sjelden å regne integralet selv. Det er allerede
-gjort og gitt deg som \`F(t)\` (se kortet ved siden av).
+regnet ut og gitt deg som den kumulative fordelingsfunksjonen.
 
 
 ## Når bruke \`f(t)\`?
 
 - Tegne eller skissere tetthetskurven
 - Vise at fordelingen integrerer til 1 (dvs. at den faktisk er en gyldig fordeling)
-- Sjelden direkte i sannsynlighetsberegninger; bruk \`F(t)\` i stedet
+- Sjelden direkte i sannsynlighetsberegninger
 `,
       see_also: [
+        { kind: "glossary", id: "sannsynlighetsfordeling" },
         { kind: "glossary", id: "poisson-prosess" },
       ],
     },
@@ -90,9 +90,8 @@ gjort og gitt deg som \`F(t)\` (se kortet ved siden av).
       abbreviation: "CDF",
       formula: "F(t) = 1 - e^(-λt)",
       short: "Gir sannsynligheten direkte: P(T ≤ t). Den du faktisk bruker i utregning.",
-      long: `\`F(t)\` er kumulativ fordelingsfunksjon (på engelsk *cumulative
-distribution function*, derav CDF). I motsetning til \`f(t)\` gir den
-en sannsynlighet direkte:
+      long: `\`F(t)\` er kumulativ fordelingsfunksjon for
+eksponentialfordelingen. Den gir sannsynligheten direkte:
 
 > [!read] F(t) = P(T ≤ t)
 > Sannsynligheten for at hendelsen kommer innen tid \`t\`.
@@ -117,6 +116,7 @@ via \`F\` (eller komplementet til \`F\`):
 - \`F\` vokser monotont fra 0 til 1
 `,
       see_also: [
+        { kind: "glossary", id: "sannsynlighetsfordeling" },
         { kind: "entry", id: "komplementregelen" },
         { kind: "glossary", id: "poisson-prosess" },
       ],
