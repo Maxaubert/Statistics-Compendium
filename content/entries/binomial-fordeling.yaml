@@ -328,6 +328,31 @@ detailed_solution_variants:
 
   - label: "Finn n / sjansen overstiger X"
     solutions:
+      - source: "Praksis · legemiddel (a + b)"
+        question: "Et legemiddel har 30 % sannsynlighet for å virke ved hver enkelt dose. Forsøkene antas uavhengige. **a)** Hva er sannsynligheten for at minst én av tre doser virker? **b)** Hvor mange doser trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall doser som virker av `n`" }
+              - { text: "`X ~ Bin(n, 0.3)`" }
+              - { comment: "samme oppsett brukes i a) og b); kun `n` og kravet endres" }
+          - label: "a) Sannsynlighet med n = 3"
+            lines:
+              - { text: "Vi vil ha `P(X ≥ 1)` for `n = 3`" }
+              - { text: "`P(X ≥ 1) = 1 − P(X = 0) = 1 − (1−p)^n = 1 − 0.7^3`" }
+              - { indent: "= 1 − 0.343 = 0.657" }
+          - label: "b) Finn n med terskel 0.95"
+            lines:
+              - { text: "Krav: `P(X ≥ 1) > 0.95`" }
+              - { text: "`1 − 0.7^n > 0.95`" }
+              - { comment: "vi multipliserer med −1 i neste steg: > flippes til <" }
+              - { text: "`0.7^n < 1 − 0.95 = 0.05`" }
+              - { text: "`n · ln(0.7) < ln(0.05)`" }
+              - { comment: "`ln(0.7) ≈ −0.357` (negativt): < flippes til >" }
+              - { text: "`n > ln(0.05) / ln(0.7) ≈ 8.39`" }
+              - { text: "Rund opp: `n = 9`" }
+              - { comment: "verifiser: `1 − 0.7^9 ≈ 0.960 > 0.95` ✓" }
+        result: "a) `P(X ≥ 1) ≈ 0.657`     b) `n = 9` doser"
       - source: "Praksis · minst én dose virker"
         question: "En medisinsk dose virker uavhengig på hver pasient med sannsynlighet `p = 0.4`. Hvor mange doser `n` trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
         sections:
@@ -372,31 +397,6 @@ detailed_solution_variants:
               - { indent: "= −4.6052 / −0.05129" }
               - { indent: "≈ 89.78" }
         result: "`n = 90` lodd"
-      - source: "Praksis · legemiddel (a + b)"
-        question: "Et legemiddel har 30 % sannsynlighet for å virke ved hver enkelt dose. Forsøkene antas uavhengige. **a)** Hva er sannsynligheten for at minst én av tre doser virker? **b)** Hvor mange doser trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
-        sections:
-          - label: "Identifisering"
-            lines:
-              - { text: "`X` = antall doser som virker av `n`" }
-              - { text: "`X ~ Bin(n, 0.3)`" }
-              - { comment: "samme oppsett brukes i a) og b); kun `n` og kravet endres" }
-          - label: "a) Sannsynlighet med n = 3"
-            lines:
-              - { text: "Vi vil ha `P(X ≥ 1)` for `n = 3`" }
-              - { text: "`P(X ≥ 1) = 1 − P(X = 0) = 1 − (1−p)^n = 1 − 0.7^3`" }
-              - { indent: "= 1 − 0.343 = 0.657" }
-          - label: "b) Finn n med terskel 0.95"
-            lines:
-              - { text: "Krav: `P(X ≥ 1) > 0.95`" }
-              - { text: "`1 − 0.7^n > 0.95`" }
-              - { comment: "vi multipliserer med −1 i neste steg: > flippes til <" }
-              - { text: "`0.7^n < 1 − 0.95 = 0.05`" }
-              - { text: "`n · ln(0.7) < ln(0.05)`" }
-              - { comment: "`ln(0.7) ≈ −0.357` (negativt): < flippes til >" }
-              - { text: "`n > ln(0.05) / ln(0.7) ≈ 8.39`" }
-              - { text: "Rund opp: `n = 9`" }
-              - { comment: "verifiser: `1 − 0.7^9 ≈ 0.960 > 0.95` ✓" }
-        result: "a) `P(X ≥ 1) ≈ 0.657`     b) `n = 9` doser"
 
 related:
   - { id: "poisson-fordeling",      kind: "entry" }
