@@ -85,7 +85,7 @@ export function ScientificCalculator() {
       <div
         className="flex items-center rounded-md px-3 py-3"
         style={{
-          background: "rgba(255,255,255,0.05)",
+          background: "#050505",
           border: "1px solid rgba(255,255,255,0.08)",
         }}
       >
@@ -112,8 +112,8 @@ export function ScientificCalculator() {
       <div
         className="mt-2 flex h-[52px] items-center gap-2.5 rounded-md px-3"
         style={{
-          background: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.18)",
+          background: "#050505",
+          border: "1px solid rgba(255,255,255,0.14)",
         }}
       >
         <span
