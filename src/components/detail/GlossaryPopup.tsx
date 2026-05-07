@@ -155,9 +155,19 @@ export function GlossaryPopup({ term, onClose, onBack, backToLabel }: PopupProps
 
 // ---- Context plumbing for inline links --------------------------------
 
+interface OpenTermOptions {
+  /**
+   * Label of the surface that opened this term (e.g. a formula popup name).
+   * When provided, the glossary popup shows a back button that closes the
+   * glossary and reveals the originating popup, even though there is no
+   * previous glossary in the stack.
+   */
+  externalBackLabel?: string;
+}
+
 interface GlossaryPopupContextValue {
   /** Open the popup for a glossary term by id. No-ops if id is unknown. */
-  openTerm: (termId: string) => void;
+  openTerm: (termId: string, opts?: OpenTermOptions) => void;
 }
 
 const GlossaryPopupContext = createContext<GlossaryPopupContextValue | null>(null);
@@ -175,9 +185,15 @@ interface ProviderProps {
  * Maintains a navigation stack: opening a new term while a popup is open
  * pushes onto the stack. The back button in the header pops one level.
  * Closing the popup clears the entire stack.
+ *
+ * Callers can pass `externalBackLabel` in the open options to enable a
+ * back button on the FIRST glossary popup that closes the glossary
+ * (revealing whatever modal opened it). Used by the formula explanation
+ * popup so the user sees `Tilbake til <formula>` instead of just an X.
  */
 export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
   const [stack, setStack] = useState<string[]>([]);
+  const [externalBackLabel, setExternalBackLabel] = useState<string | null>(null);
   const byId = useMemo(() => {
     const m = new Map<string, GlossaryTerm>();
     for (const t of glossary) m.set(t.id, t);
@@ -185,11 +201,18 @@ export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
   }, [glossary]);
 
   const openTerm = useCallback(
-    (termId: string) => {
+    (termId: string, opts?: OpenTermOptions) => {
       if (!byId.has(termId)) return;
       setStack((prev) => {
         // Don't push duplicate consecutive entries
         if (prev[prev.length - 1] === termId) return prev;
+        // Only register the external back label when starting a fresh
+        // glossary stack from outside; if we're navigating between
+        // glossary terms (stack non-empty), we keep the old label so
+        // the user can still return to the formula popup at the bottom.
+        if (prev.length === 0 && opts?.externalBackLabel) {
+          setExternalBackLabel(opts.externalBackLabel);
+        }
         return [...prev, termId];
       });
     },
@@ -202,6 +225,7 @@ export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
 
   const close = useCallback(() => {
     setStack([]);
+    setExternalBackLabel(null);
   }, []);
 
   const value = useMemo(() => ({ openTerm }), [openTerm]);
@@ -210,6 +234,13 @@ export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
   const open = currentId ? byId.get(currentId) ?? null : null;
   const prev = prevId ? byId.get(prevId) ?? null : null;
 
+  // Back button targets, in priority order:
+  //  1. Previous glossary term in the stack (in-popup back navigation).
+  //  2. External label (close the glossary entirely, reveal the surface
+  //     that opened it). Only shown on the bottom of the stack.
+  const backTo = prev?.term_no ?? (stack.length === 1 ? externalBackLabel : null);
+  const handleBack = prev ? goBack : close;
+
   return (
     <GlossaryPopupContext.Provider value={value}>
       {children}
@@ -217,8 +248,8 @@ export function GlossaryPopupProvider({ glossary, children }: ProviderProps) {
         <GlossaryPopup
           term={open}
           onClose={close}
-          onBack={prev ? goBack : undefined}
-          backToLabel={prev?.term_no}
+          onBack={backTo ? handleBack : undefined}
+          backToLabel={backTo ?? undefined}
         />
       )}
     </GlossaryPopupContext.Provider>

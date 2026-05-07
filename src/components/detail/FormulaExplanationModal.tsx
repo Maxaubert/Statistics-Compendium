@@ -129,7 +129,14 @@ export function FormulaExplanationModal({
                   tables={tables}
                   allFormulas={allFormulas}
                   onOpenFormula={onOpenFormula}
-                  onOpenGlossary={glossaryPopup?.openTerm}
+                  onOpenGlossary={
+                    glossaryPopup
+                      ? (id) =>
+                          glossaryPopup.openTerm(id, {
+                            externalBackLabel: explanation.name,
+                          })
+                      : undefined
+                  }
                   onClose={onClose}
                 />
               </Fragment>

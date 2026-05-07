@@ -81,7 +81,6 @@ gjort og gitt deg som \`F(t)\` (se kortet ved siden av).
 - Sjelden direkte i sannsynlighetsberegninger; bruk \`F(t)\` i stedet
 `,
       see_also: [
-        { kind: "formula", ref: "cdf" },
         { kind: "glossary", id: "poisson-prosess" },
       ],
     },
@@ -118,7 +117,6 @@ via \`F\` (eller komplementet til \`F\`):
 - \`F\` vokser monotont fra 0 til 1
 `,
       see_also: [
-        { kind: "formula", ref: "pdf" },
         { kind: "entry", id: "komplementregelen" },
         { kind: "glossary", id: "poisson-prosess" },
       ],
