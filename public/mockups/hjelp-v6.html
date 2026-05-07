@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v6 (Polyhedral data sphere)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: var(--warn-soft); font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); position: relative; z-index: 2; }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); position: relative; z-index: 2; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  /* Polyhedral sphere, anchored bottom-right with axis line */
+  .sphere {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    width: 50vw;
+    max-width: 720px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .sphere svg { width: 100%; height: auto; display: block; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+
+  <!--
+    v6 — Polyhedral data sphere "captured mid-rotation".
+    viewBox 720x680. Sphere centred at (380, 320), radius ~210.
+    Vertices come from an icosphere-like projection (icosahedron + sub-divisions
+    flattened to 2D with a slight elliptical squash for perspective: y-radius
+    195, slight tilt). Hand-tuned for clean wireframe read.
+  -->
+  <div class="sphere" aria-hidden="true">
+    <svg viewBox="0 0 720 680" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="v6-glow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#eef2ff" stop-opacity="0.85"/>
+          <stop offset="60%" stop-color="#eef2ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#eef2ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="v6-shadow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#4338ca" stop-opacity="0.20"/>
+          <stop offset="70%" stop-color="#4338ca" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#4338ca" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="v6-edge-front" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.75"/>
+          <stop offset="100%" stop-color="#4338ca" stop-opacity="0.55"/>
+        </linearGradient>
+        <linearGradient id="v6-edge-back" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.25"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Soft halo behind sphere -->
+      <circle cx="380" cy="320" r="240" fill="url(#v6-glow)"/>
+
+      <!-- Cast shadow on ground -->
+      <ellipse cx="380" cy="560" rx="210" ry="14" fill="url(#v6-shadow)"/>
+
+      <!-- ===========================================================
+           BACK HEMISPHERE — drawn first, low opacity (further from viewer)
+           ===========================================================
+           Vertex naming: T=top pole, B=bottom pole.
+           Upper ring (5 verts) U1..U5  (lat ~+30, slightly behind for U2-U4)
+           Mid ring   (10 verts) M1..M10
+           Lower ring (5 verts) L1..L5
+      -->
+
+      <!-- Back-half edges of mid latitude (passing behind sphere) -->
+      <g stroke="url(#v6-edge-back)" stroke-width="0.8" fill="none" stroke-dasharray="2.5 2">
+        <!-- horizontal great-circle (back arc) -->
+        <path d="M 170 320 Q 380 240 590 320"/>
+        <!-- vertical great-circle (back arc, tilted) -->
+        <path d="M 380 110 Q 320 320 380 530"/>
+        <!-- secondary tilted great-circle -->
+        <path d="M 230 165 Q 460 360 540 470"/>
+      </g>
+
+      <!-- Back-face icosphere edges (subtler) -->
+      <g stroke="url(#v6-edge-back)" stroke-width="0.85" fill="none">
+        <!-- Connect top pole T(380,110) to upper ring back vertices -->
+        <line x1="380" y1="110" x2="280" y2="180"/>
+        <line x1="380" y1="110" x2="480" y2="180"/>
+        <!-- Upper ring back triangles -->
+        <line x1="280" y1="180" x2="480" y2="180"/>
+        <line x1="280" y1="180" x2="220" y2="245"/>
+        <line x1="480" y1="180" x2="540" y2="245"/>
+        <!-- Mid back diagonals -->
+        <line x1="220" y1="245" x2="320" y2="265"/>
+        <line x1="540" y1="245" x2="440" y2="265"/>
+        <line x1="320" y1="265" x2="440" y2="265"/>
+        <line x1="280" y1="180" x2="320" y2="265"/>
+        <line x1="480" y1="180" x2="440" y2="265"/>
+        <!-- Bottom-back ring -->
+        <line x1="320" y1="265" x2="270" y2="385"/>
+        <line x1="440" y1="265" x2="490" y2="385"/>
+        <line x1="270" y1="385" x2="490" y2="385"/>
+        <!-- Bottom pole connections (back) -->
+        <line x1="270" y1="385" x2="380" y2="530"/>
+        <line x1="490" y1="385" x2="380" y2="530"/>
+      </g>
+
+      <!-- ===========================================================
+           FRONT HEMISPHERE — sharper, higher opacity
+           =========================================================== -->
+
+      <!-- Outer silhouette (the sphere's profile circle, slightly squashed) -->
+      <ellipse cx="380" cy="320" rx="210" ry="200" fill="none"
+               stroke="#4338ca" stroke-width="0.9" opacity="0.55"/>
+
+      <!-- Front great circles for "rotation" feel -->
+      <g stroke="url(#v6-edge-front)" stroke-width="1.0" fill="none">
+        <!-- horizontal equator front arc -->
+        <path d="M 170 320 Q 380 400 590 320"/>
+        <!-- vertical great circle front arc -->
+        <path d="M 380 110 Q 440 320 380 530"/>
+        <!-- tilted great circle front -->
+        <path d="M 230 165 Q 300 280 540 470"/>
+      </g>
+
+      <!-- Front-face icosphere edges (top pole down through front) -->
+      <g stroke="url(#v6-edge-front)" stroke-width="1.0" fill="none">
+        <!-- Top pole to upper-front ring -->
+        <line x1="380" y1="110" x2="310" y2="195"/>
+        <line x1="380" y1="110" x2="450" y2="195"/>
+        <!-- Upper-front ring -->
+        <line x1="310" y1="195" x2="450" y2="195"/>
+        <!-- Upper-front to mid-front -->
+        <line x1="310" y1="195" x2="240" y2="290"/>
+        <line x1="450" y1="195" x2="520" y2="290"/>
+        <line x1="310" y1="195" x2="345" y2="305"/>
+        <line x1="450" y1="195" x2="415" y2="305"/>
+        <line x1="310" y1="195" x2="380" y2="110"/>
+        <!-- Mid-front ring (10 vertices, alternating high/low) -->
+        <line x1="240" y1="290" x2="345" y2="305"/>
+        <line x1="345" y1="305" x2="415" y2="305"/>
+        <line x1="415" y1="305" x2="520" y2="290"/>
+        <line x1="240" y1="290" x2="295" y2="365"/>
+        <line x1="345" y1="305" x2="295" y2="365"/>
+        <line x1="345" y1="305" x2="380" y2="380"/>
+        <line x1="415" y1="305" x2="380" y2="380"/>
+        <line x1="415" y1="305" x2="465" y2="365"/>
+        <line x1="520" y1="290" x2="465" y2="365"/>
+        <line x1="295" y1="365" x2="380" y2="380"/>
+        <line x1="380" y1="380" x2="465" y2="365"/>
+        <!-- Mid-front to lower-front ring -->
+        <line x1="295" y1="365" x2="320" y2="455"/>
+        <line x1="380" y1="380" x2="320" y2="455"/>
+        <line x1="380" y1="380" x2="445" y2="455"/>
+        <line x1="465" y1="365" x2="445" y2="455"/>
+        <line x1="320" y1="455" x2="445" y2="455"/>
+        <!-- Lower-front to bottom pole -->
+        <line x1="320" y1="455" x2="380" y2="530"/>
+        <line x1="445" y1="455" x2="380" y2="530"/>
+        <!-- Outer silhouette tie-ins -->
+        <line x1="240" y1="290" x2="170" y2="320"/>
+        <line x1="520" y1="290" x2="590" y2="320"/>
+        <line x1="295" y1="365" x2="170" y2="320"/>
+        <line x1="465" y1="365" x2="590" y2="320"/>
+        <line x1="320" y1="455" x2="170" y2="320"/>
+        <line x1="445" y1="455" x2="590" y2="320"/>
+      </g>
+
+      <!-- Stochastic vertex dots — some marked, some not -->
+      <g fill="#4338ca">
+        <!-- Marked vertices (front, prominent) -->
+        <circle cx="380" cy="110" r="2.6"/>
+        <circle cx="310" cy="195" r="2.2"/>
+        <circle cx="450" cy="195" r="2.2"/>
+        <circle cx="240" cy="290" r="2.4"/>
+        <circle cx="520" cy="290" r="2.4"/>
+        <circle cx="380" cy="380" r="2.2"/>
+        <circle cx="320" cy="455" r="2.2"/>
+        <circle cx="445" cy="455" r="2.2"/>
+        <circle cx="380" cy="530" r="2.6"/>
+        <circle cx="170" cy="320" r="2.4"/>
+        <circle cx="590" cy="320" r="2.4"/>
+      </g>
+      <!-- Smaller, faded back dots -->
+      <g fill="#6366f1" opacity="0.55">
+        <circle cx="280" cy="180" r="1.6"/>
+        <circle cx="480" cy="180" r="1.6"/>
+        <circle cx="220" cy="245" r="1.4"/>
+        <circle cx="540" cy="245" r="1.4"/>
+        <circle cx="320" cy="265" r="1.4"/>
+        <circle cx="440" cy="265" r="1.4"/>
+        <circle cx="270" cy="385" r="1.4"/>
+        <circle cx="490" cy="385" r="1.4"/>
+      </g>
+
+      <!-- Scattered "data points" inside / near the sphere — probability cloud -->
+      <g fill="#4338ca" opacity="0.42">
+        <circle cx="305" cy="260" r="1.1"/>
+        <circle cx="362" cy="240" r="1.1"/>
+        <circle cx="420" cy="262" r="1.1"/>
+        <circle cx="335" cy="335" r="1.1"/>
+        <circle cx="395" cy="325" r="1.1"/>
+        <circle cx="285" cy="395" r="1.1"/>
+        <circle cx="430" cy="410" r="1.1"/>
+        <circle cx="365" cy="425" r="1.1"/>
+        <circle cx="265" cy="335" r="1.1"/>
+        <circle cx="500" cy="350" r="1.1"/>
+        <circle cx="340" cy="180" r="1.1"/>
+        <circle cx="425" cy="345" r="1.1"/>
+      </g>
+      <!-- A few outliers outside the sphere -->
+      <g fill="#22d3ee" opacity="0.65">
+        <circle cx="120" cy="280" r="1.4"/>
+        <circle cx="630" cy="380" r="1.4"/>
+        <circle cx="155" cy="450" r="1.4"/>
+        <circle cx="615" cy="240" r="1.4"/>
+        <circle cx="90"  cy="380" r="1.2"/>
+      </g>
+
+      <!-- Amber accent vertex (front-top-right) -->
+      <circle cx="450" cy="195" r="5" fill="#fcd34d" opacity="0.95"/>
+      <circle cx="450" cy="195" r="11" fill="#fcd34d" opacity="0.22"/>
+
+      <!-- ============================================================
+           AXIS / GROUND LINE beneath sphere with tick marks
+           ============================================================ -->
+      <g>
+        <!-- main axis line -->
+        <line x1="80" y1="600" x2="700" y2="600"
+              stroke="#78716c" stroke-width="0.9" opacity="0.7"/>
+        <!-- right-end arrowhead -->
+        <path d="M 700 600 L 690 596 L 690 604 Z" fill="#78716c" opacity="0.7"/>
+        <!-- ticks -->
+        <g stroke="#78716c" stroke-width="0.8" opacity="0.6">
+          <line x1="120" y1="596" x2="120" y2="604"/>
+          <line x1="180" y1="596" x2="180" y2="604"/>
+          <line x1="240" y1="594" x2="240" y2="606"/>
+          <line x1="300" y1="596" x2="300" y2="604"/>
+          <line x1="360" y1="596" x2="360" y2="604"/>
+          <line x1="420" y1="594" x2="420" y2="606"/>
+          <line x1="480" y1="596" x2="480" y2="604"/>
+          <line x1="540" y1="596" x2="540" y2="604"/>
+          <line x1="600" y1="594" x2="600" y2="606"/>
+          <line x1="660" y1="596" x2="660" y2="604"/>
+        </g>
+        <!-- axis label -->
+        <text x="700" y="624" text-anchor="end"
+              font-family="Source Serif 4, Georgia, serif" font-style="italic"
+              font-size="13" fill="#78716c" opacity="0.85">x</text>
+        <!-- A small mu marker tick under sphere centre -->
+        <text x="380" y="624" text-anchor="middle"
+              font-family="Source Serif 4, Georgia, serif" font-style="italic"
+              font-size="13" fill="#4338ca" opacity="0.75">μ</text>
+        <line x1="380" y1="592" x2="380" y2="608"
+              stroke="#4338ca" stroke-width="1" opacity="0.7"/>
+      </g>
+    </svg>
+  </div>
+</main>
+
+</body>
+</html>

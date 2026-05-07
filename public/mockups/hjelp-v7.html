@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v7 (Scatter + regression with marginals)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  .art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <!-- v7: Scatter + regression with marginals (bottom-right quadrant) -->
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Confidence band fill -->
+        <linearGradient id="ciBand" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#6366f1" stop-opacity="0.10"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0.04"/>
+        </linearGradient>
+        <!-- Marginal fill -->
+        <linearGradient id="margTop" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4338ca" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#4338ca" stop-opacity="0.10"/>
+        </linearGradient>
+        <linearGradient id="margRight" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#4338ca" stop-opacity="0.10"/>
+          <stop offset="100%" stop-color="#4338ca" stop-opacity="0.55"/>
+        </linearGradient>
+        <!-- Clip the plot area for the regression band -->
+        <clipPath id="plotClip">
+          <rect x="820" y="280" width="640" height="440"/>
+        </clipPath>
+      </defs>
+
+      <!-- Plot frame (bottom-right quadrant; cards live top-left max-width 760) -->
+      <!-- Plot area: x from 820 to 1460 (width 640), y from 280 to 720 (height 440) -->
+
+      <!-- Marginal density along TOP edge of plot frame (above y=280, height ~52) -->
+      <!-- Approx normal-ish density curve -->
+      <path d="
+        M 820 278
+        C 870 278, 900 274, 930 268
+        C 970 260, 1010 246, 1050 224
+        C 1090 202, 1130 192, 1170 200
+        C 1210 208, 1250 232, 1290 250
+        C 1330 266, 1370 274, 1410 277
+        C 1430 278, 1450 278, 1460 278
+        L 1460 230
+        C 1430 225, 1400 218, 1370 208
+        C 1330 196, 1290 178, 1250 168
+        C 1210 158, 1170 156, 1130 162
+        C 1090 168, 1050 184, 1010 200
+        C 970 216, 930 230, 890 244
+        C 860 254, 840 264, 820 272
+        Z"
+        fill="url(#margTop)" stroke="#4338ca" stroke-width="0.7" stroke-opacity="0.6"/>
+
+      <!-- Marginal density along RIGHT edge of plot frame (right of x=1460, width ~52) -->
+      <path d="
+        M 1462 720
+        C 1462 690, 1466 660, 1472 630
+        C 1480 590, 1494 555, 1508 520
+        C 1520 490, 1526 460, 1522 430
+        C 1518 400, 1504 372, 1488 348
+        C 1474 326, 1466 308, 1462 292
+        L 1462 280
+        L 1512 280
+        C 1518 305, 1530 332, 1548 360
+        C 1566 390, 1580 420, 1582 452
+        C 1584 484, 1572 516, 1556 548
+        C 1540 580, 1526 612, 1516 644
+        C 1508 672, 1504 696, 1502 720
+        Z"
+        fill="url(#margRight)" stroke="#4338ca" stroke-width="0.7" stroke-opacity="0.6"/>
+
+      <!-- Subtle plot frame -->
+      <g stroke="#e7e5e4" stroke-width="1" fill="none">
+        <line x1="820" y1="280" x2="820" y2="720"/>
+        <line x1="820" y1="720" x2="1460" y2="720"/>
+        <line x1="1460" y1="280" x2="1460" y2="720"/>
+        <line x1="820" y1="280" x2="1460" y2="280"/>
+      </g>
+
+      <!-- Faint axis ticks (x: bottom, y: left) -->
+      <g stroke="#a8a29e" stroke-width="0.8">
+        <line x1="884"  y1="720" x2="884"  y2="726"/>
+        <line x1="948"  y1="720" x2="948"  y2="726"/>
+        <line x1="1012" y1="720" x2="1012" y2="726"/>
+        <line x1="1076" y1="720" x2="1076" y2="726"/>
+        <line x1="1140" y1="720" x2="1140" y2="726"/>
+        <line x1="1204" y1="720" x2="1204" y2="726"/>
+        <line x1="1268" y1="720" x2="1268" y2="726"/>
+        <line x1="1332" y1="720" x2="1332" y2="726"/>
+        <line x1="1396" y1="720" x2="1396" y2="726"/>
+        <line x1="1460" y1="720" x2="1460" y2="726"/>
+
+        <line x1="820" y1="324" x2="814" y2="324"/>
+        <line x1="820" y1="368" x2="814" y2="368"/>
+        <line x1="820" y1="412" x2="814" y2="412"/>
+        <line x1="820" y1="456" x2="814" y2="456"/>
+        <line x1="820" y1="500" x2="814" y2="500"/>
+        <line x1="820" y1="544" x2="814" y2="544"/>
+        <line x1="820" y1="588" x2="814" y2="588"/>
+        <line x1="820" y1="632" x2="814" y2="632"/>
+        <line x1="820" y1="676" x2="814" y2="676"/>
+      </g>
+
+      <!-- Tick labels (mono) -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#78716c">
+        <text x="820"  y="742" text-anchor="middle">0</text>
+        <text x="948"  y="742" text-anchor="middle">2</text>
+        <text x="1076" y="742" text-anchor="middle">4</text>
+        <text x="1204" y="742" text-anchor="middle">6</text>
+        <text x="1332" y="742" text-anchor="middle">8</text>
+        <text x="1460" y="742" text-anchor="middle">10</text>
+
+        <text x="808" y="724" text-anchor="end">0</text>
+        <text x="808" y="636" text-anchor="end">2</text>
+        <text x="808" y="548" text-anchor="end">4</text>
+        <text x="808" y="460" text-anchor="end">6</text>
+        <text x="808" y="372" text-anchor="end">8</text>
+        <text x="808" y="284" text-anchor="end">10</text>
+      </g>
+
+      <!-- Axis titles -->
+      <g font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="14" fill="#44403c">
+        <text x="1140" y="772" text-anchor="middle">x — uavhengig variabel</text>
+        <text x="780" y="500" text-anchor="middle" transform="rotate(-90 780 500)">y — respons</text>
+      </g>
+
+      <!-- Confidence band (around regression line, plot coords)
+           Regression line: y = 9 - 0.7x (in plot units 0..10)
+           At x=0 -> y=9 ; at x=10 -> y=2
+           Mapped: px(x) = 820 + x*64 ; py(y) = 720 - y*44
+           Line goes from (820, 324) to (1460, 632)
+           Band widens at ends -->
+      <g clip-path="url(#plotClip)">
+        <path d="
+          M 820 296
+          L 1460 604
+          L 1460 660
+          L 820 352
+          Z" fill="url(#ciBand)"/>
+      </g>
+
+      <!-- Regression line -->
+      <line x1="820" y1="324" x2="1460" y2="632"
+            stroke="#4338ca" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Scatter cloud: ~30 dots along upward slope (note: in chart, 'upward-sloping cloud'
+           reads visually as going from low-left to high-right, which in screen coords means
+           y-screen decreases as x increases. So slope is NEGATIVE in screen coords.) -->
+      <g fill="#312e81">
+        <!-- 30 points scattered around regression line with noise -->
+        <circle cx="846"  cy="338" r="4" opacity="0.85"/>
+        <circle cx="868"  cy="350" r="4" opacity="0.85"/>
+        <circle cx="884"  cy="318" r="4" opacity="0.85"/>
+        <circle cx="906"  cy="362" r="4" opacity="0.85"/>
+        <circle cx="932"  cy="346" r="4" opacity="0.85"/>
+        <circle cx="958"  cy="380" r="4" opacity="0.85"/>
+        <circle cx="982"  cy="358" r="4" opacity="0.85"/>
+        <circle cx="1004" cy="402" r="4" opacity="0.85"/>
+        <circle cx="1028" cy="386" r="4" opacity="0.85"/>
+        <circle cx="1052" cy="420" r="4" opacity="0.85"/>
+        <circle cx="1078" cy="396" r="4" opacity="0.85"/>
+        <circle cx="1104" cy="438" r="4" opacity="0.85"/>
+        <circle cx="1126" cy="422" r="4" opacity="0.85"/>
+        <circle cx="1148" cy="468" r="4" opacity="0.85"/>
+        <circle cx="1172" cy="448" r="4" opacity="0.85"/>
+        <circle cx="1196" cy="490" r="4" opacity="0.85"/>
+        <circle cx="1220" cy="472" r="4" opacity="0.85"/>
+        <circle cx="1244" cy="514" r="4" opacity="0.85"/>
+        <circle cx="1268" cy="498" r="4" opacity="0.85"/>
+        <circle cx="1292" cy="540" r="4" opacity="0.85"/>
+        <circle cx="1316" cy="522" r="4" opacity="0.85"/>
+        <circle cx="1338" cy="566" r="4" opacity="0.85"/>
+        <circle cx="1360" cy="548" r="4" opacity="0.85"/>
+        <circle cx="1382" cy="592" r="4" opacity="0.85"/>
+        <circle cx="1404" cy="574" r="4" opacity="0.85"/>
+        <circle cx="1424" cy="618" r="4" opacity="0.85"/>
+        <circle cx="1442" cy="600" r="4" opacity="0.85"/>
+        <!-- a few extras to break linearity slightly -->
+        <circle cx="900"  cy="392" r="4" opacity="0.65"/>
+        <circle cx="1180" cy="412" r="4" opacity="0.65"/>
+        <circle cx="1340" cy="510" r="4" opacity="0.65"/>
+      </g>
+
+      <!-- Two highlighted points with amber rings (outliers / influential) -->
+      <g>
+        <!-- Influential point #1 -->
+        <circle cx="1004" cy="402" r="9" fill="none" stroke="#b45309" stroke-width="2" opacity="0.95"/>
+        <circle cx="1004" cy="402" r="4" fill="#b45309"/>
+        <!-- Influential point #2 -->
+        <circle cx="1340" cy="510" r="9" fill="none" stroke="#b45309" stroke-width="2" opacity="0.95"/>
+        <circle cx="1340" cy="510" r="4" fill="#b45309"/>
+      </g>
+
+      <!-- Equation + r value below the plot -->
+      <g font-family="Source Serif 4, Georgia, serif" fill="#1c1917">
+        <text x="820" y="800" font-style="italic" font-size="22">ŷ = α̂ + β̂x</text>
+        <text x="990" y="800" font-style="italic" font-size="16" fill="#78716c">·</text>
+        <text x="1010" y="800" font-style="italic" font-size="18" fill="#44403c">r ≈ 0.91</text>
+      </g>
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#78716c">
+        <text x="820" y="822">n = 30   ·   se(β̂) = 0.04   ·   p &lt; 0.001</text>
+      </g>
+
+      <!-- Faint title for the whole figure -->
+      <g font-family="Source Serif 4, Georgia, serif" fill="#312e81">
+        <text x="820" y="258" font-size="15" font-style="italic" opacity="0.85">Figur 1 ·</text>
+        <text x="880" y="258" font-size="14" opacity="0.75">spredning med tilpasset linje og marginale fordelinger</text>
+      </g>
+
+      <!-- Tiny legend swatch -->
+      <g transform="translate(1280, 244)">
+        <rect x="0" y="0" width="14" height="6" fill="#6366f1" opacity="0.18"/>
+        <text x="20" y="6" font-family="JetBrains Mono, monospace" font-size="10" fill="#78716c">95% KI</text>
+        <line x1="74" y1="3" x2="92" y2="3" stroke="#4338ca" stroke-width="2"/>
+        <text x="98" y="6" font-family="JetBrains Mono, monospace" font-size="10" fill="#78716c">OLS</text>
+        <circle cx="138" cy="3" r="3" fill="#b45309"/>
+        <text x="146" y="6" font-family="JetBrains Mono, monospace" font-size="10" fill="#78716c">innflytelsesrik</text>
+      </g>
+    </svg>
+  </div>
+
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v4 (Bell as a poster plate)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  /* Art lives in the lower-right, sized so it does not collide with cards */
+  .art {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(1100px, 64%);
+    height: 78%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <!-- Single bell, treated like a textbook plate -->
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1100 800" preserveAspectRatio="xMaxYMax meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Inner ±1σ wash -->
+        <linearGradient id="fill1sigma" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.32"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0.10"/>
+        </linearGradient>
+        <!-- Outer ±2σ ring lighter -->
+        <linearGradient id="fill2sigma" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0.03"/>
+        </linearGradient>
+
+        <!-- Faint plate frame -->
+        <pattern id="plateFine" width="20" height="20" patternUnits="userSpaceOnUse">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e7e5e4" stroke-width="0.4"/>
+        </pattern>
+      </defs>
+
+      <!-- Plate frame: thin double border evokes textbook plate -->
+      <rect x="40" y="40" width="1020" height="700" fill="none" stroke="#e7e5e4" stroke-width="1"/>
+      <rect x="48" y="48" width="1004" height="684" fill="none" stroke="#e7e5e4" stroke-width="0.5"/>
+      <!-- Plate caption corners -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="#a8a29e" letter-spacing="0.18em">
+        <text x="56" y="60">PL.  IV</text>
+        <text x="1044" y="60" text-anchor="end">N(μ, σ²)</text>
+        <text x="56" y="728">FIG. NORMALFORDELING</text>
+        <text x="1044" y="728" text-anchor="end">— STATISTIKK-KOMPENDIUM —</text>
+      </g>
+
+      <!--
+        Geometry:
+          baseline y = 640
+          mu     x = 580
+          sigma in px = 110
+          μ−2σ = 360, μ−σ = 470, μ = 580, μ+σ = 690, μ+2σ = 800
+          peak y = 230
+        bell drawn with cubic curves matching gaussian shape.
+      -->
+
+      <!-- Subtle background fine grid only inside plate -->
+      <rect x="48" y="48" width="1004" height="592" fill="url(#plateFine)" opacity="0.55"/>
+
+      <!-- ±2σ ring (full bell area) -->
+      <path d="
+        M 220 640
+        L 220 638
+        C 280 632, 330 624, 360 612
+        C 400 596, 440 562, 470 510
+        C 510 438, 545 332, 580 248
+        C 615 332, 650 438, 690 510
+        C 720 562, 760 596, 800 612
+        C 830 624, 880 632, 940 638
+        L 940 640 Z"
+        fill="url(#fill2sigma)"/>
+
+      <!-- ±1σ inner wash, clipped to bell shape, drawn as the central slab -->
+      <path d="
+        M 470 640
+        L 470 510
+        C 510 438, 545 332, 580 248
+        C 615 332, 650 438, 690 510
+        L 690 640 Z"
+        fill="url(#fill1sigma)"/>
+
+      <!-- Bell stroke (front) -->
+      <path d="
+        M 220 640
+        C 280 634, 330 624, 360 612
+        C 400 596, 440 562, 470 510
+        C 510 438, 545 332, 580 248
+        C 615 332, 650 438, 690 510
+        C 720 562, 760 596, 800 612
+        C 830 624, 880 634, 940 640"
+        fill="none" stroke="#4338ca" stroke-width="2"/>
+
+      <!-- Baseline / x-axis -->
+      <line x1="180" y1="640" x2="980" y2="640" stroke="#78716c" stroke-width="1"/>
+      <!-- arrow tip -->
+      <path d="M 980 640 L 974 636 L 974 644 Z" fill="#78716c"/>
+
+      <!-- Vertical sigma guide lines -->
+      <g stroke="#4338ca" stroke-width="0.8" stroke-dasharray="3 4" opacity="0.55">
+        <line x1="360" y1="612" x2="360" y2="640"/>
+        <line x1="470" y1="510" x2="470" y2="640"/>
+        <line x1="580" y1="248" x2="580" y2="640"/>
+        <line x1="690" y1="510" x2="690" y2="640"/>
+        <line x1="800" y1="612" x2="800" y2="640"/>
+      </g>
+
+      <!-- Tick marks on baseline -->
+      <g stroke="#78716c" stroke-width="1">
+        <line x1="360" y1="640" x2="360" y2="648"/>
+        <line x1="470" y1="640" x2="470" y2="648"/>
+        <line x1="580" y1="640" x2="580" y2="648"/>
+        <line x1="690" y1="640" x2="690" y2="648"/>
+        <line x1="800" y1="640" x2="800" y2="648"/>
+      </g>
+
+      <!-- σ tick labels (serif italic) -->
+      <g font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="15" fill="#1c1917" text-anchor="middle">
+        <text x="360" y="668">μ−2σ</text>
+        <text x="470" y="668">μ−σ</text>
+        <text x="580" y="668">μ</text>
+        <text x="690" y="668">μ+σ</text>
+        <text x="800" y="668">μ+2σ</text>
+      </g>
+
+      <!-- Cumulative probability annotations (mono) -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#78716c" text-anchor="middle">
+        <text x="360" y="688">Φ ≈ 0.025</text>
+        <text x="470" y="688">Φ ≈ 0.16</text>
+        <text x="580" y="688">Φ = 0.50</text>
+        <text x="690" y="688">Φ ≈ 0.84</text>
+        <text x="800" y="688">Φ ≈ 0.975</text>
+      </g>
+
+      <!-- 68 / 95 brackets above baseline -->
+      <g stroke="#4338ca" fill="none" stroke-width="1" opacity="0.6">
+        <!-- 68% bracket spanning ±1σ -->
+        <path d="M 470 552 L 470 542 L 690 542 L 690 552"/>
+        <!-- 95% bracket spanning ±2σ -->
+        <path d="M 360 595 L 360 580 L 800 580 L 800 595"/>
+      </g>
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#4338ca" text-anchor="middle">
+        <text x="580" y="535">68.27%</text>
+        <text x="580" y="573">95.45%</text>
+      </g>
+
+      <!-- PDF formula floating above peak -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" fill="#78716c" text-anchor="middle">
+        <text x="580" y="138" font-size="18" letter-spacing="0.04em" opacity="0.55">f(x) = (1 / σ√2π) · exp( −(x−μ)² / 2σ² )</text>
+        <text x="580" y="160" font-size="11" opacity="0.45">probability density · normalfordeling</text>
+      </g>
+
+      <!-- Decorative serif title to the left of the bell -->
+      <g font-family="Source Serif 4, Georgia, serif" fill="#1c1917">
+        <text x="80" y="240" font-size="58" font-style="italic" font-weight="600">Bell.</text>
+        <text x="82" y="276" font-size="14" fill="#78716c" font-style="italic">— en plate over normalfordelingen</text>
+        <line x1="82" y1="294" x2="220" y2="294" stroke="#b45309" stroke-width="1.2"/>
+        <text x="82" y="324" font-size="12" font-family="JetBrains Mono, ui-monospace, monospace" fill="#78716c" letter-spacing="0.1em">PARAMETERE</text>
+        <text x="82" y="348" font-size="14" font-style="italic" fill="#1c1917">μ = forventet verdi</text>
+        <text x="82" y="370" font-size="14" font-style="italic" fill="#1c1917">σ = standardavvik</text>
+        <text x="82" y="392" font-size="14" font-style="italic" fill="#1c1917">σ² = varians</text>
+      </g>
+
+      <!-- Mu label at apex -->
+      <g font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="22" fill="#4338ca" text-anchor="middle">
+        <text x="580" y="222">μ</text>
+      </g>
+
+      <!-- Amber peak dot -->
+      <circle cx="580" cy="248" r="6" fill="#fcd34d" stroke="#b45309" stroke-width="1.2"/>
+      <circle cx="580" cy="248" r="11" fill="none" stroke="#b45309" stroke-width="0.6" opacity="0.45"/>
+
+      <!-- y-axis tiny tick at peak (decorative) -->
+      <line x1="180" y1="248" x2="188" y2="248" stroke="#78716c" stroke-width="1"/>
+      <text x="174" y="252" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#a8a29e" text-anchor="end">1/(σ√2π)</text>
+      <line x1="180" y1="640" x2="180" y2="220" stroke="#78716c" stroke-width="1"/>
+      <path d="M 180 220 L 176 226 L 184 226 Z" fill="#78716c"/>
+      <text x="174" y="216" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="14" fill="#78716c" text-anchor="end">f(x)</text>
+      <text x="980" y="660" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="14" fill="#78716c">x</text>
+    </svg>
+  </div>
+
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+</main>
+
+</body>
+</html>

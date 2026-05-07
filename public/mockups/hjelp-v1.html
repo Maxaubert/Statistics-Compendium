@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v1 (Formula network)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  .art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <!-- Decorative formula network behind cards (z-index 0) -->
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Capsule fill: very faint indigo wash -->
+        <linearGradient id="capFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#eef2ff" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#eef2ff" stop-opacity="0.35"/>
+        </linearGradient>
+        <linearGradient id="capFillWarm" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fef3c7" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#fef3c7" stop-opacity="0.18"/>
+        </linearGradient>
+        <!-- Edge fade mask: solid where capsules should appear, fading toward bottom-right edges -->
+        <radialGradient id="fade" cx="0.78" cy="0.62" r="0.62">
+          <stop offset="0%" stop-color="white" stop-opacity="1"/>
+          <stop offset="65%" stop-color="white" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0.15"/>
+        </radialGradient>
+        <mask id="fadeMask">
+          <rect x="0" y="0" width="1600" height="900" fill="url(#fade)"/>
+        </mask>
+        <!-- node halo -->
+        <radialGradient id="nodeHalo" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Everything inside the fading mask -->
+      <g mask="url(#fadeMask)">
+
+        <!-- ===== Connecting lines (drawn first, behind capsules) ===== -->
+        <g stroke="#6366f1" fill="none" opacity="0.55">
+          <!-- E[X] hub -> Var(X), Cov, sum-of-X -->
+          <path d="M 980 380 C 1080 370, 1160 340, 1230 320" stroke-width="0.9"/>
+          <path d="M 980 380 C 1020 470, 1080 540, 1170 580" stroke-width="0.9"/>
+          <path d="M 980 380 C 900 430, 850 490, 820 560" stroke-width="0.9"/>
+          <!-- Var <-> sigma^2 (short tight) -->
+          <path d="M 1230 320 C 1310 360, 1370 410, 1410 470" stroke-width="0.9"/>
+          <!-- Var -> CDF normal -->
+          <path d="M 1170 580 C 1280 600, 1370 620, 1430 650" stroke-width="0.7"/>
+          <!-- PMF binomial -> E[X] -->
+          <path d="M 760 280 C 840 320, 900 350, 980 380" stroke-width="0.9"/>
+          <!-- PMF binomial -> CDF -->
+          <path d="M 760 280 C 770 380, 770 490, 820 560" stroke-width="0.7"/>
+          <!-- sigma^2 -> std.dev (small) -->
+          <path d="M 1410 470 C 1480 500, 1500 540, 1500 580" stroke-width="0.7"/>
+          <!-- standard normal integral -> CDF -->
+          <path d="M 1430 650 C 1340 720, 1240 760, 1170 780" stroke-width="0.7"/>
+          <!-- LLN -> E[X] (top arc) -->
+          <path d="M 760 180 C 850 210, 920 280, 980 380" stroke-width="0.7"/>
+          <!-- bayes -> binomial -->
+          <path d="M 600 380 C 660 340, 700 310, 760 280" stroke-width="0.7"/>
+          <!-- Cov node into network -->
+          <path d="M 1170 580 C 1100 650, 1020 700, 960 740" stroke-width="0.7"/>
+        </g>
+
+        <!-- ===== Tiny nodes at intersections ===== -->
+        <g fill="#4338ca" opacity="0.55">
+          <circle cx="980" cy="380" r="2.4"/>
+          <circle cx="1230" cy="320" r="2"/>
+          <circle cx="1170" cy="580" r="2.4"/>
+          <circle cx="820" cy="560" r="2"/>
+          <circle cx="1410" cy="470" r="2"/>
+          <circle cx="1430" cy="650" r="2"/>
+          <circle cx="760" cy="280" r="2.4"/>
+          <circle cx="600" cy="380" r="1.8"/>
+          <circle cx="1500" cy="580" r="1.8"/>
+          <circle cx="760" cy="180" r="1.8"/>
+          <circle cx="960" cy="740" r="2"/>
+          <circle cx="1170" cy="780" r="1.8"/>
+        </g>
+
+        <!-- ===== Halos behind primary capsules ===== -->
+        <g>
+          <circle cx="980" cy="380" r="80" fill="url(#nodeHalo)"/>
+          <circle cx="1170" cy="580" r="70" fill="url(#nodeHalo)"/>
+          <circle cx="760" cy="280" r="68" fill="url(#nodeHalo)"/>
+        </g>
+
+        <!-- ===== Capsules (formula cards) ===== -->
+        <!-- Primary hub: E[X] -->
+        <g transform="translate(980 380)">
+          <rect x="-92" y="-22" width="184" height="44" rx="22" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="6" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="20" fill="#312e81">
+            E[X] = <tspan font-size="22">Σ</tspan> x · p(x)
+          </text>
+        </g>
+
+        <!-- Var(X) = E[X²] − μ² (slightly larger, primary) -->
+        <g transform="translate(1170 580)">
+          <rect x="-118" y="-24" width="236" height="48" rx="24" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="6" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="20" fill="#312e81">
+            Var(X) = E[X²] − <tspan font-style="italic">μ</tspan>²
+          </text>
+        </g>
+
+        <!-- Binomial PMF -->
+        <g transform="translate(760 280)">
+          <rect x="-128" y="-22" width="256" height="44" rx="22" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="6" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="18" fill="#312e81">
+            P(X = k) = C(n,k) p<tspan font-size="13" dy="-6">k</tspan><tspan dy="6">(1−p)</tspan><tspan font-size="13" dy="-6">n−k</tspan>
+          </text>
+        </g>
+
+        <!-- σ² (compact, small) -->
+        <g transform="translate(1230 320)">
+          <rect x="-58" y="-20" width="116" height="40" rx="20" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="6" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="18" fill="#312e81">
+            σ² = Var(X)
+          </text>
+        </g>
+
+        <!-- Standard deviation (warn-soft accent) -->
+        <g transform="translate(1410 470)">
+          <rect x="-72" y="-19" width="144" height="38" rx="19" fill="url(#capFillWarm)" stroke="#fde68a" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="17" fill="#92400e">
+            σ = √Var(X)
+          </text>
+        </g>
+
+        <!-- CDF normal -->
+        <g transform="translate(1430 650)">
+          <rect x="-92" y="-22" width="184" height="44" rx="22" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="6" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="17" fill="#312e81">
+            Φ(z) = ∫<tspan font-size="11" dy="-6">z</tspan><tspan dy="6"> </tspan>φ(t) dt
+          </text>
+        </g>
+
+        <!-- Density φ(x) (small) -->
+        <g transform="translate(820 560)" opacity="0.92">
+          <rect x="-100" y="-20" width="200" height="40" rx="20" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="16" fill="#312e81">
+            φ(x) = (1/√2π) e<tspan font-size="11" dy="-6">−x²/2</tspan>
+          </text>
+        </g>
+
+        <!-- LLN (faint, far) -->
+        <g transform="translate(760 180)" opacity="0.78">
+          <rect x="-86" y="-18" width="172" height="36" rx="18" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="15" fill="#312e81">
+            X̄<tspan font-size="11" dy="3">n</tspan><tspan dy="-3"> → μ</tspan>
+          </text>
+        </g>
+
+        <!-- Bayes (faint left edge) -->
+        <g transform="translate(600 380)" opacity="0.7">
+          <rect x="-92" y="-18" width="184" height="36" rx="18" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="14" fill="#312e81">
+            P(A|B) = P(B|A) P(A) / P(B)
+          </text>
+        </g>
+
+        <!-- Cov (small, lower) -->
+        <g transform="translate(960 740)" opacity="0.85">
+          <rect x="-104" y="-19" width="208" height="38" rx="19" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="15" fill="#312e81">
+            Cov(X,Y) = E[(X−μₓ)(Y−μᵧ)]
+          </text>
+        </g>
+
+        <!-- z = (x−μ)/σ small standalone -->
+        <g transform="translate(1170 780)" opacity="0.78">
+          <rect x="-72" y="-17" width="144" height="34" rx="17" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="5" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="14" fill="#312e81">
+            z = (x − μ) / σ
+          </text>
+        </g>
+
+        <!-- σ_X̄ standalone right edge (small) -->
+        <g transform="translate(1500 580)" opacity="0.7">
+          <rect x="-50" y="-15" width="100" height="30" rx="15" fill="url(#capFill)" stroke="#c7d2fe" stroke-width="1"/>
+          <text x="0" y="4" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-style="italic" font-size="13" fill="#312e81">
+            σ/√n
+          </text>
+        </g>
+
+        <!-- ===== Amber accent dots at key nodes ===== -->
+        <circle cx="1410" cy="470" r="4.5" fill="#f59e0b" opacity="0.95"/>
+        <circle cx="980" cy="380" r="3.8" fill="#f59e0b" opacity="0.85"/>
+
+        <!-- ===== Far-background scatter dots ===== -->
+        <g fill="#6366f1" opacity="0.18">
+          <circle cx="1540" cy="240" r="1.4"/>
+          <circle cx="1480" cy="180" r="1.6"/>
+          <circle cx="1380" cy="220" r="1.2"/>
+          <circle cx="1320" cy="160" r="1.4"/>
+          <circle cx="1560" cy="380" r="1.4"/>
+          <circle cx="660" cy="500" r="1.4"/>
+          <circle cx="540" cy="540" r="1.2"/>
+          <circle cx="700" cy="650" r="1.6"/>
+          <circle cx="1280" cy="850" r="1.4"/>
+          <circle cx="1380" cy="820" r="1.2"/>
+        </g>
+      </g>
+
+      <!-- Outside the mask: deep-background formula fragments very faint, full-bleed lower band -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" fill="#312e81" font-size="11" opacity="0.07">
+        <text x="60" y="870">F(t) = 1 − e<tspan font-size="9" dy="-3">−λt</tspan></text>
+        <text x="60" y="850">P(X = k) = (λ<tspan font-size="9" dy="-3">k</tspan><tspan dy="3"> e</tspan><tspan font-size="9" dy="-3">−λ</tspan><tspan dy="3">) / k!</tspan></text>
+        <text x="380" y="870">∫ f(x) dx = 1</text>
+      </g>
+    </svg>
+  </div>
+
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+</main>
+
+</body>
+</html>

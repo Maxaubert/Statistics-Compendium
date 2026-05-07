@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v9 (Bivariate Gaussian contour map)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); position: relative; z-index: 2; }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); position: relative; z-index: 2; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  .art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+
+  .caption {
+    position: absolute;
+    right: 56px;
+    bottom: 28px;
+    z-index: 2;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-align: right;
+    line-height: 1.5;
+  }
+  .caption b { color: var(--ink-2); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <!-- Bivariate Gaussian contour map -->
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="peak" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#6366f1" stop-opacity="0.18"/>
+          <stop offset="60%" stop-color="#6366f1" stop-opacity="0.05"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+        </radialGradient>
+        <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#6366f1" stroke-width="0.4" opacity="0.18"/>
+        </pattern>
+        <!-- Group rotated for correlation, centered around mean (1100, 640) -->
+      </defs>
+
+      <!-- Subtle paper texture grid in lower half -->
+      <g stroke="#e7e5e4" stroke-width="0.5" opacity="0.7">
+        <line x1="0" y1="380" x2="1600" y2="380"/>
+        <line x1="0" y1="460" x2="1600" y2="460"/>
+        <line x1="0" y1="540" x2="1600" y2="540"/>
+        <line x1="0" y1="620" x2="1600" y2="620"/>
+        <line x1="0" y1="700" x2="1600" y2="700"/>
+        <line x1="0" y1="780" x2="1600" y2="780"/>
+        <line x1="120" y1="340" x2="120" y2="900"/>
+        <line x1="320" y1="340" x2="320" y2="900"/>
+        <line x1="520" y1="340" x2="520" y2="900"/>
+        <line x1="720" y1="340" x2="720" y2="900"/>
+        <line x1="920" y1="340" x2="920" y2="900"/>
+        <line x1="1120" y1="340" x2="1120" y2="900"/>
+        <line x1="1320" y1="340" x2="1320" y2="900"/>
+        <line x1="1520" y1="340" x2="1520" y2="900"/>
+      </g>
+
+      <!-- Halo behind the density peak -->
+      <circle cx="1100" cy="640" r="280" fill="url(#peak)"/>
+
+      <!-- Bivariate Gaussian contours: concentric ellipses, rotated 28deg, ratio rx:ry -->
+      <!-- Outermost (lowest density) → innermost (highest) -->
+      <g transform="translate(1100 640) rotate(28)" fill="none" stroke="#6366f1">
+        <ellipse rx="540" ry="260" stroke-width="0.6" opacity="0.10"/>
+        <ellipse rx="480" ry="232" stroke-width="0.6" opacity="0.13"/>
+        <ellipse rx="420" ry="204" stroke-width="0.6" opacity="0.16"/>
+        <ellipse rx="360" ry="176" stroke-width="0.7" opacity="0.20"/>
+        <ellipse rx="300" ry="148" stroke-width="0.7" opacity="0.25"/>
+        <ellipse rx="240" ry="120" stroke-width="0.8" opacity="0.32"/>
+        <ellipse rx="190" ry="96"  stroke-width="0.8" opacity="0.40"/>
+        <ellipse rx="146" ry="74"  stroke-width="0.9" opacity="0.50"/>
+        <ellipse rx="108" ry="56"  stroke-width="1.0" opacity="0.62"/>
+        <ellipse rx="76"  ry="40"  stroke-width="1.0" opacity="0.74"/>
+        <ellipse rx="48"  ry="26"  stroke-width="1.1" opacity="0.85"/>
+        <ellipse rx="24"  ry="14"  stroke-width="1.1" opacity="0.95" stroke="#4338ca"/>
+      </g>
+
+      <!-- Contour labels (placed along approximate ellipse arcs) -->
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#4338ca" letter-spacing="0.04em">
+        <!-- 0.95 outer -->
+        <text x="1500" y="500" opacity="0.55">0.95</text>
+        <!-- 0.50 mid -->
+        <text x="1330" y="600" opacity="0.70">0.50</text>
+        <!-- 0.25 -->
+        <text x="950" y="780" opacity="0.65">0.25</text>
+        <!-- 0.10 closer to peak -->
+        <text x="1140" y="612" opacity="0.85" font-weight="600">0.10</text>
+      </g>
+
+      <!-- Tiny tick marks along bottom axis -->
+      <g stroke="#78716c" stroke-width="0.7" opacity="0.55">
+        <line x1="60"   y1="862" x2="1540" y2="862"/>
+        <!-- ticks -->
+        <line x1="60"   y1="858" x2="60"   y2="868"/>
+        <line x1="260"  y1="858" x2="260"  y2="868"/>
+        <line x1="460"  y1="858" x2="460"  y2="868"/>
+        <line x1="660"  y1="858" x2="660"  y2="868"/>
+        <line x1="860"  y1="858" x2="860"  y2="868"/>
+        <line x1="1060" y1="858" x2="1060" y2="868"/>
+        <line x1="1260" y1="858" x2="1260" y2="868"/>
+        <line x1="1460" y1="858" x2="1460" y2="868"/>
+      </g>
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="#78716c" text-anchor="middle" opacity="0.7">
+        <text x="60"   y="884">−4σ</text>
+        <text x="260"  y="884">−3σ</text>
+        <text x="460"  y="884">−2σ</text>
+        <text x="660"  y="884">−σ</text>
+        <text x="860"  y="884">0</text>
+        <text x="1060" y="884">σ</text>
+        <text x="1260" y="884">2σ</text>
+        <text x="1460" y="884">3σ</text>
+      </g>
+
+      <!-- Y axis tick marks on right edge -->
+      <g stroke="#78716c" stroke-width="0.7" opacity="0.55">
+        <line x1="1554" y1="380" x2="1554" y2="820"/>
+        <line x1="1550" y1="380" x2="1558" y2="380"/>
+        <line x1="1550" y1="490" x2="1558" y2="490"/>
+        <line x1="1550" y1="600" x2="1558" y2="600"/>
+        <line x1="1550" y1="710" x2="1558" y2="710"/>
+        <line x1="1550" y1="820" x2="1558" y2="820"/>
+      </g>
+      <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="#78716c" opacity="0.7">
+        <text x="1564" y="384">+2</text>
+        <text x="1564" y="494">+1</text>
+        <text x="1564" y="604">0</text>
+        <text x="1564" y="714">−1</text>
+        <text x="1564" y="824">−2</text>
+      </g>
+
+      <!-- Mean cross marker -->
+      <g stroke="#b45309" stroke-width="1.4" opacity="0.95">
+        <line x1="1088" y1="640" x2="1112" y2="640"/>
+        <line x1="1100" y1="628" x2="1100" y2="652"/>
+      </g>
+      <circle cx="1100" cy="640" r="2.4" fill="#b45309"/>
+      <text x="1108" y="634" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="#b45309" letter-spacing="0.05em">μ</text>
+
+      <!-- Faint mathematical caption: bivariate Gaussian formula fragment -->
+      <text x="60" y="828" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#78716c" opacity="0.45" letter-spacing="0.03em">
+        f(x,y) = (2π·σₓ·σᵧ·√(1−ρ²))⁻¹ · exp(−Q/2)
+      </text>
+      <text x="60" y="846" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#78716c" opacity="0.30" letter-spacing="0.03em">
+        ρ = 0.62 · σₓ = 1.4 · σᵧ = 0.9
+      </text>
+    </svg>
+  </div>
+
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+
+  <div class="caption">
+    <b>fig. ix</b> &nbsp; bivariat normalfordeling<br>
+    nivåkurver · ρ = 0.62
+  </div>
+</main>
+
+</body>
+</html>
