@@ -93,19 +93,20 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     description:
       "macOS-style frostet akryl med backdrop-blur og en regnbue-aksent øverst på panelet.",
 
-    // Same monochrome dim+blur backdrop as the default skin — the
-    // acrylic look comes only from the panel itself.
+    // Darker backdrop than the monochrome default so that as the
+    // panel becomes more transparent, the page shows through as
+    // deep dimmed black instead of light grey.
     backdrop: {
-      background: "rgba(0, 0, 0, 0.7)",
+      background: "rgba(0, 0, 0, 0.85)",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
     },
     panel: {
-      background: "rgba(0, 0, 0, 0.55)",
+      background: "rgba(0, 0, 0, 0.40)",
       backdropFilter: "blur(30px) saturate(180%)",
       WebkitBackdropFilter: "blur(30px) saturate(180%)",
       boxShadow:
-        "0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
+        "0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
     },
     topAccent: {
       gradient:
@@ -120,7 +121,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     closeHoverInk: "white",
 
     inputRow: {
-      background: "rgba(0, 0, 0, 0.10)",
+      background: "rgba(0, 0, 0, 0.07)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.10)",
@@ -129,7 +130,7 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     inputCaret: "white",
 
     resultRow: {
-      background: "rgba(0, 0, 0, 0.18)",
+      background: "rgba(0, 0, 0, 0.13)",
       backdropFilter: "blur(12px) saturate(150%)",
       WebkitBackdropFilter: "blur(12px) saturate(150%)",
       border: "1px solid rgba(255, 255, 255, 0.18)",
