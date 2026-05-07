@@ -103,9 +103,11 @@ function renderHats(text: string): ReactNode {
 }
 
 const CODE_CLASS: Record<InlineCodeTheme, string> = {
-  // Light: distinct pill against a serif/paper background.
+  // Light: distinct pill against a serif/paper background. The
+  // glass-light-pill utility layers a subtle top-down highlight,
+  // inset top edge and soft drop shadow over the paper-2 fill.
   light:
-    "rounded border border-line bg-paper-2 px-1.5 py-[1px] font-mono text-[13px] text-ink",
+    "glass-light-pill rounded border border-line bg-paper-2 px-1.5 py-[1px] font-mono text-[13px] text-ink",
   // Dark: faint white tint on the indigo calc-card. No border. Inherits
   // the surrounding mono text color so the contrast is gentle, not loud.
   dark:

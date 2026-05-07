@@ -872,9 +872,63 @@ F.eks. lottokuponger med \`p = 0.05\` og \`n = 20\` lodd: \`P(X ≥ 1) = 1 − 0
       ],
     },
     {
+      id: "find-n-prob-less-than",
+      name: "Finn n / sjansen er mindre enn X",
+      abbreviation: "Finn n (<)",
+      formula: "(1 − p)^n ≤ X  ⇒  n ≥ ln(X) / ln(1 − p)",
+      short: "Hvor mange forsøk så sjansen for «aldri lykkes» (eller en annen «det går bra»-hendelse) faller under en terskel.",
+      long: `Direkte variant: oppgaven sier at en sannsynlighet skal være MINDRE enn en terskel \`X\`, og den naturlige formen er \`(1 − p)^n ≤ X\`. Vi tar logaritme rett på den, uten å gå via komplementet først.
+
+> [!read] (1 − p)^n ≤ X
+> Sannsynligheten for «ingen suksess i \`n\` forsøk» skal være under terskelen. \`n\` ligger i eksponenten — løs ut via logaritme.
+
+
+## Strategi
+
+1. Sett opp ulikheten direkte: \`(1 − p)^n ≤ X\`.
+2. Ta naturlig logaritme på begge sider: \`n · ln(1 − p) ≤ ln(X)\`.
+3. \`ln(1 − p) < 0\` snur ulikhetstegnet når du deler: \`n ≥ ln(X) / ln(1 − p)\`.
+4. Rund opp til nærmeste heltall.
+
+
+## Konkret eksempel
+
+«Hvor mange ganger må vi kaste en mynt for at sannsynligheten for å aldri få krone er mindre enn 1 %?»
+
+\`p = 0.5\`, \`X = 0.01\`, krav \`(1 − p)^n = 0.5^n ≤ 0.01\`.
+
+        n · ln(0.5) ≤ ln(0.01)        (ln(0.5) < 0 snur tegnet ved deling)
+        n ≥ ln(0.01) / ln(0.5)
+          = −4.6052 / −0.6931
+          ≈ 6.64
+
+Rund opp: \`n = 7\`.
+
+
+## Forholdet til «sjansen overstiger X»
+
+Algebraisk er dette den samme operasjonen som «sjansen overstiger X» med komplementet \`X' = 1 − X\` på terskelen. Hvilken variant du velger avgjøres av hvordan oppgaven er formulert:
+
+- «sannsynligheten for ... overstiger 0.99» → bruk «sjansen overstiger X»-varianten
+- «sannsynligheten for ... synker under 0.01» → bruk denne varianten direkte
+
+> [!tip] Hvis du vil sjekke deg selv: \`0.5^n ≤ 0.01\` ⇔ \`1 − 0.5^n ≥ 0.99\`. Begge gir \`n = 7\`.
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "find-n-threshold",
+        },
+        {
+          kind: "entry",
+          id: "komplementregelen",
+        },
+      ],
+    },
+    {
       id: "find-n-threshold",
-      name: "Finn nødvendig n",
-      abbreviation: "Finn n",
+      name: "Finn n / sjansen overstiger X",
+      abbreviation: "Finn n (>)",
       formula: "1 − (1 − p)^n ≥ p_terskel  ⇒  n ≥ ln(1 − p_terskel) / ln(1 − p)",
       short: "Hvor mange forsøk trengs for at sannsynligheten når en gitt terskel?",
       long: `Den inverse varianten snur problemet: i stedet for å regne ut en sannsynlighet for et gitt \`n\`, leter du etter det MINSTE \`n\` som gjør at en sannsynlighet når en bestemt terskel \`p_terskel\`. Den klassiske formen er «hvor mange lodd må jeg kjøpe for å vinne minst én gang med 99 % sannsynlighet?».

@@ -79,15 +79,28 @@ solution_variants:
       - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
       - { text: "Hvis `k = 1`, forenkles uttrykket til `P(X ≥ 1) = 1 − (1−p)^n` (ingen tabell nødvendig)", conditional: true }
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
-  - label: "Finn n for terskel"
+  - label: "Finn n / sjansen er mindre enn X"
     steps:
-      - "Identifiser `p`, hvilken sannsynlighet som skal nå terskelen, og terskelverdien (f.eks. `≥ 0.99`)"
-      - "Sett opp ulikheten i `n`, typisk via komplement: `1 − (1−p)^n ≥ 0.99` ⇔ `(1−p)^n ≤ 0.01`"
-      - "Ta logaritme på begge sider: `n · ln(1−p) ≤ ln(0.01)`; husk at `ln(1−p) < 0` snur ulikhetstegnet"
-      - "Løs for `n`: `n ≥ ln(0.01) / ln(1−p)` (f.eks. `p = 0.5 → n ≥ ln(0.01)/ln(0.5) ≈ 6.64`)"
-      - "Rund opp til neste heltall siden `n` må være heltall (f.eks. `6.64 → n = 7`)"
-      - "Verifisér ved å sette inn: sjekk at `n − 1` ikke oppfyller kravet, men `n` gjør det"
-      - { text: "Hvis terskelen gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), bruk tabell E.1 og prøv økende `n` til kravet er oppfylt", conditional: true }
+      - "Definer variabelen og noter kravet. F.eks. mynt-eksperiment: `X` = antall kron i `n` kast, `X ~ Bin(n, 0.5)`. Krav: `P(X = 0) < 0.01` (sannsynligheten for å aldri få kron skal være under 1 %)"
+      - "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`: `P(X = 0) = (1 − p)^n = 0.5^n`"
+      - "Sett inn i kravet: `0.5^n < 0.01`"
+      - "Ta naturlig logaritme på begge sider: `n · ln(0.5) < ln(0.01)`"
+      - { text: "Vi deler på `ln(0.5)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
+      - "Løs for `n`: `n > ln(0.01) / ln(0.5) ≈ 6.64`"
+      - "Rund opp til nærmeste heltall: `n = 7`"
+      - "Verifisér: `0.5^7 = 0.00781 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01` (så `n = 7` er minste verdi som tilfredsstiller kravet)"
+  - label: "Finn n / sjansen overstiger X"
+    steps:
+      - "Definer variabelen og noter kravet. F.eks. lotto-eksempel: `X` = antall vinst på `n` lodd, `X ~ Bin(n, 0.05)`. Krav: `P(X ≥ 1) > 0.99` (sannsynligheten for minst én vinst skal overstige 99 %)"
+      - "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste): `P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)^n = 1 − 0.95^n`"
+      - "Sett inn i kravet: `1 − 0.95^n > 0.99`"
+      - { text: "Vi multipliserer med `−1` for å isolere `0.95^n` i neste steg: `>` flippes til `<`.", conditional: true }
+      - "Isoler `0.95^n`: `0.95^n < 1 − 0.99 = 0.01`"
+      - "Ta naturlig logaritme på begge sider: `n · ln(0.95) < ln(0.01)`"
+      - { text: "Vi deler på `ln(0.95)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
+      - "Løs for `n`: `n > ln(0.01) / ln(0.95) ≈ 89.78`"
+      - "Rund opp til nærmeste heltall: `n = 90`"
+      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i tabell E.1 til kravet er oppfylt.", conditional: true }
 
 common_traps: |
   Vær sikker på at `p` er konstant fra forsøk til forsøk. Hvis du trekker
@@ -266,8 +279,104 @@ detailed_solution_variants:
               - { text: "`P(X = 50) = 0.99^50 ≈ 0.6050`" }
         result: "`P(X ≥ 49) ≈ 0.9106`"
 
-  - label: "Finn n for terskel"
+  - label: "Finn n / sjansen er mindre enn X"
     solutions:
+      - source: "Praksis · aldri krone"
+        question: "En mynt kastes `n` ganger. Hvor mange ganger må vi kaste for at sannsynligheten for å aldri få krone er mindre enn 1 %?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall kron i `n` kast" }
+              - { text: "`X ~ Bin(n, 0.5)`" }
+              - { comment: "krav: `P(X = 0) < 0.01` — sannsynligheten for at vi aldri får krone skal være mindre enn 1 %" }
+          - label: "Innsetting"
+            lines:
+              - { text: "`P(X = 0) = (1−p)^n = 0.5^n`" }
+              - { text: "`0.5^n < 0.01`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.5) < ln(0.01)`" }
+              - { comment: "`ln(0.5) < 0` snur ulikhetstegnet" }
+              - { text: "`n > ln(0.01) / ln(0.5)`" }
+              - { indent: "= −4.6052 / −0.6931" }
+              - { indent: "≈ 6.64" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp til neste heltall: `n = 7`" }
+              - { comment: "verifiser: `0.5^7 = 0.0078 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01`" }
+        result: "`n = 7` kast"
+      - source: "Praksis · ingen defekter"
+        question: "Hver del produseres med en defektrate på 1 % (`p = 0.01`). Hvor stor batch `n` kan vi produsere og fortsatt ha minst 95 % sannsynlighet for at ingen del er defekt?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall defekter i batch på `n`" }
+              - { text: "`X ~ Bin(n, 0.01)`" }
+              - { comment: "krav: `P(X = 0) ≥ 0.95` — formen blir `(1−p)^n ≥ X` (motsatt retning), så vi ender med MAKS `n`" }
+          - label: "Innsetting"
+            lines:
+              - { text: "`P(X = 0) = (1−p)^n = 0.99^n`" }
+              - { text: "`0.99^n ≥ 0.95`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.99) ≥ ln(0.95)`" }
+              - { comment: "`ln(0.99) < 0` snur ulikhetstegnet" }
+              - { text: "`n ≤ ln(0.95) / ln(0.99)`" }
+              - { indent: "= −0.05129 / −0.01005" }
+              - { indent: "≈ 5.10" }
+        result: "`n = 5` deler (maks batch)"
+
+  - label: "Finn n / sjansen overstiger X"
+    solutions:
+      - source: "Praksis · legemiddel (a + b)"
+        question: "Et legemiddel har 30 % sannsynlighet for å virke ved hver enkelt dose. Forsøkene antas uavhengige. **a)** Hva er sannsynligheten for at minst én av tre doser virker? **b)** Hvor mange doser trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall doser som virker av `n`" }
+              - { text: "`X ~ Bin(n, 0.3)`" }
+              - { comment: "samme oppsett brukes i a) og b); kun `n` og kravet endres" }
+          - label: "a) Sannsynlighet med n = 3"
+            lines:
+              - { text: "Vi vil ha `P(X ≥ 1)` for `n = 3`" }
+              - { text: "`P(X ≥ 1) = 1 − P(X = 0) = 1 − (1−p)^n = 1 − 0.7^3`" }
+              - { indent: "= 1 − 0.343 = 0.657" }
+          - label: "b) Finn n med terskel 0.95"
+            lines:
+              - { text: "Krav: `P(X ≥ 1) > 0.95`" }
+              - { text: "`1 − 0.7^n > 0.95`" }
+              - { comment: "vi multipliserer med −1 i neste steg: > flippes til <" }
+              - { text: "`0.7^n < 1 − 0.95 = 0.05`" }
+              - { text: "`n · ln(0.7) < ln(0.05)`" }
+              - { comment: "`ln(0.7) ≈ −0.357` (negativt): < flippes til >" }
+              - { text: "`n > ln(0.05) / ln(0.7) ≈ 8.39`" }
+              - { text: "Rund opp: `n = 9`" }
+              - { comment: "verifiser: `1 − 0.7^9 ≈ 0.960 > 0.95` ✓" }
+        result: "a) `P(X ≥ 1) ≈ 0.657`     b) `n = 9` doser"
+      - source: "Praksis · minst én dose virker"
+        question: "En medisinsk dose virker uavhengig på hver pasient med sannsynlighet `p = 0.4`. Hvor mange doser `n` trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall doser som virker av `n`" }
+              - { text: "`X ~ Bin(n, 0.4)`" }
+              - { comment: "krav: `P(X ≥ 1) > 0.95`" }
+          - label: "Komplementregelen"
+            lines:
+              - { text: "`P(X ≥ 1) = 1 − (1−p)^n > 0.95`" }
+              - { indent: "= `0.6^n < 0.05`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`n · ln(0.6) < ln(0.05)`" }
+              - { comment: "`ln(0.6) < 0` snur ulikhetstegnet" }
+              - { text: "`n > ln(0.05) / ln(0.6)`" }
+              - { indent: "= −2.9957 / −0.5108" }
+              - { indent: "≈ 5.86" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp til neste heltall: `n = 6`" }
+              - { comment: "verifiser: `1 − 0.6^6 = 1 − 0.0467 ≈ 0.953 > 0.95` ✓" }
+        result: "`n = 6` doser"
       - source: "Praksis · minst én vinst"
         question: "Hvert lodd har vinnersannsynlighet `p = 0.05`. Hvor mange lodd må vi kjøpe for at sannsynligheten for å vinne minst én gang er minst 0.99?"
         sections:
@@ -288,26 +397,6 @@ detailed_solution_variants:
               - { indent: "= −4.6052 / −0.05129" }
               - { indent: "≈ 89.78" }
         result: "`n = 90` lodd"
-      - source: "Praksis · ingen defekter"
-        question: "Hver del produseres med en defektrate på 1 % (`p = 0.01`). Hvor stor batch `n` kan vi produsere og fortsatt ha minst 95 % sannsynlighet for at ingen del er defekt?"
-        sections:
-          - label: "Identifisering"
-            lines:
-              - { text: "`X` = antall defekter i batch på `n`" }
-              - { text: "`X ~ Bin(n, 0.01)`" }
-              - { comment: "krav: `P(X = 0) ≥ 0.95`" }
-          - label: "Innsetting"
-            lines:
-              - { text: "`P(X = 0) = (1−p)^n = 0.99^n`" }
-              - { text: "`0.99^n ≥ 0.95`" }
-          - label: "Logaritme"
-            lines:
-              - { text: "`n · ln(0.99) ≥ ln(0.95)`" }
-              - { comment: "`ln(0.99) < 0` snur ulikhetstegnet" }
-              - { text: "`n ≤ ln(0.95) / ln(0.99)`" }
-              - { indent: "= −0.05129 / −0.01005" }
-              - { indent: "≈ 5.10" }
-        result: "`n = 5` deler"
 
 related:
   - { id: "poisson-fordeling",      kind: "entry" }

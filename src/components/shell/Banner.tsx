@@ -1,4 +1,4 @@
-import { Moon, Sun, Compass, BookA, Sigma, Table2 } from "lucide-react";
+import { Moon, Sun, Compass, BookA, Sigma, Table2, LifeBuoy } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -20,6 +20,31 @@ const HELPER_LINKS: NavLink[] = [
   { to: "/veiviser", label: "Veiviser", Icon: Compass },
 ];
 
+// Right-aligned support link. Treated separately so it pushes to the
+// far edge of the nav row regardless of how many primary links there are.
+const SUPPORT_LINKS: NavLink[] = [
+  { to: "/hjelp", label: "Hjelp", Icon: LifeBuoy },
+];
+
+function NavItem({ link, active }: { link: NavLink; active: boolean }) {
+  return (
+    <Link
+      to={link.to}
+      aria-current={active ? "page" : undefined}
+      className={
+        // Always font-semibold so width is constant; differentiate
+        // active/inactive purely with color and background.
+        active
+          ? "flex items-center gap-1.5 rounded-md bg-white/15 px-2.5 py-1 font-semibold text-white no-underline"
+          : "flex items-center gap-1.5 rounded-md px-2.5 py-1 font-semibold text-white/70 no-underline hover:bg-white/10 hover:text-white"
+      }
+    >
+      <link.Icon size={13} />
+      {link.label}
+    </Link>
+  );
+}
+
 function isActive(loc: ReturnType<typeof useLocation>, link: NavLink): boolean {
   if (link.tabParam !== undefined) {
     if (loc.pathname !== "/") return false;
@@ -27,6 +52,9 @@ function isActive(loc: ReturnType<typeof useLocation>, link: NavLink): boolean {
     const tab = params.get("tab") ?? "formler";
     return tab === link.tabParam;
   }
+  // Treat sub-paths as active for the parent link (e.g. /hjelp/kalkulator
+  // should still highlight the "Hjelp" tab).
+  if (link.to !== "/" && loc.pathname.startsWith(link.to)) return true;
   return loc.pathname === link.to;
 }
 
@@ -34,7 +62,7 @@ export function Banner() {
   const { theme, toggle } = useTheme();
   const location = useLocation();
   const Icon = theme === "light" ? Moon : Sun;
-  const allLinks = [...CATEGORY_LINKS, ...HELPER_LINKS];
+  const leftLinks = [...CATEGORY_LINKS, ...HELPER_LINKS];
   return (
     <header
       className="relative overflow-hidden text-white"
@@ -81,27 +109,15 @@ export function Banner() {
           <Icon size={16} />
         </button>
       </div>
-      <nav className="relative z-10 flex flex-wrap gap-1 border-t border-white/10 px-7 py-2 text-[12.5px]">
-        {allLinks.map((link) => {
-          const active = isActive(location, link);
-          return (
-            <Link
-              key={link.to + link.label}
-              to={link.to}
-              aria-current={active ? "page" : undefined}
-              className={
-                // Always font-semibold so width is constant; differentiate
-                // active/inactive purely with color and background.
-                active
-                  ? "flex items-center gap-1.5 rounded-md bg-white/15 px-2.5 py-1 font-semibold text-white no-underline"
-                  : "flex items-center gap-1.5 rounded-md px-2.5 py-1 font-semibold text-white/70 no-underline hover:bg-white/10 hover:text-white"
-              }
-            >
-              <link.Icon size={13} />
-              {link.label}
-            </Link>
-          );
-        })}
+      <nav className="relative z-10 flex flex-wrap items-center gap-1 border-t border-white/10 px-7 py-2 text-[12.5px]">
+        {leftLinks.map((link) => (
+          <NavItem key={link.to + link.label} link={link} active={isActive(location, link)} />
+        ))}
+        <span className="ml-auto flex items-center gap-1">
+          {SUPPORT_LINKS.map((link) => (
+            <NavItem key={link.to + link.label} link={link} active={isActive(location, link)} />
+          ))}
+        </span>
       </nav>
     </header>
   );

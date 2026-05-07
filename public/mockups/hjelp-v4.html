@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hjelp · v4 (Trail of footsteps to a signpost)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --paper: #fafaf7;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+    --cyan: #22d3ee;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+  .nav { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; color: white; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 17px; }
+  .nav .sigma { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; display: grid; place-items: center; background: rgba(255,255,255,0.10); font-style: italic; color: #fef3c7; font-family: "Source Serif 4", serif; font-size: 18px; }
+  .nav .links { display: flex; gap: 4px; font-size: 12.5px; opacity: 0.85; }
+  .nav .links span { padding: 4px 10px; border-radius: 6px; }
+  .nav .links span.active { background: rgba(255,255,255,0.15); opacity: 1; }
+  .nav .right { margin-left: auto; }
+
+  main { background: var(--card); padding: 32px 48px 0; min-height: calc(100vh - 100px); position: relative; overflow: hidden; }
+  h1 { margin: 0 0 8px; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 36px; color: var(--ink); }
+  .sub { margin: 0 0 24px; font-family: "Source Serif 4", Georgia, serif; font-style: italic; color: var(--ink-3); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; position: relative; z-index: 2; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: var(--ink); display: flex; gap: 12px; align-items: flex-start; transition: border-color 0.15s, box-shadow 0.15s; }
+  .card:hover { border-color: var(--primary-3); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.08); }
+  .card .icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary-2); display: grid; place-items: center; font-size: 16px; }
+  .card h3 { margin: 0 0 4px; font-family: "Source Serif 4", Georgia, serif; font-size: 16px; font-weight: 600; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 13.5px; line-height: 1.45; }
+  .card.disabled { opacity: 0.55; pointer-events: none; }
+
+  .art {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .art svg { width: 100%; height: 100%; display: block; }
+
+  @keyframes trailFlow { to { stroke-dashoffset: -180; } }
+  @keyframes signSway {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+  }
+  @keyframes amberGlow {
+    0%, 100% { opacity: 0.92; }
+    50% { opacity: 1; }
+  }
+  @keyframes printFade {
+    0% { opacity: 0; }
+    100% { opacity: var(--target, 0.45); }
+  }
+  .trail-flow { animation: trailFlow 10s linear infinite; }
+  .sign-sway { animation: signSway 6s ease-in-out infinite; transform-origin: 1340px 740px; transform-box: view-box; }
+  .amber-glow { animation: amberGlow 3s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <div class="sigma">σ</div>
+    <span>Statistikk-kompendium</span>
+  </div>
+  <div class="links">
+    <span>Σ Formler og konsepter</span>
+    <span>📖 Ordliste</span>
+    <span>⊞ Tabeller</span>
+    <span>🧭 Veiviser</span>
+    <span class="right active">⛑ Hjelp</span>
+  </div>
+</header>
+
+<main>
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="horizonFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#eef2ff" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#eef2ff" stop-opacity="0.6"/>
+        </linearGradient>
+        <linearGradient id="postFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4338ca"/>
+          <stop offset="100%" stop-color="#312e81"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#fef3c7" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#fef3c7" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Footprint motifs (left & right shoe) -->
+        <symbol id="footL" viewBox="0 0 24 36">
+          <ellipse cx="12" cy="22" rx="8.5" ry="12" fill="#4338ca"/>
+          <ellipse cx="13.5" cy="6" rx="3" ry="3.5" fill="#4338ca"/>
+          <ellipse cx="9" cy="3" rx="1.6" ry="1.8" fill="#4338ca"/>
+          <ellipse cx="6" cy="6" rx="1.4" ry="1.6" fill="#4338ca"/>
+        </symbol>
+        <symbol id="footR" viewBox="0 0 24 36">
+          <ellipse cx="12" cy="22" rx="8.5" ry="12" fill="#4338ca"/>
+          <ellipse cx="10.5" cy="6" rx="3" ry="3.5" fill="#4338ca"/>
+          <ellipse cx="15" cy="3" rx="1.6" ry="1.8" fill="#4338ca"/>
+          <ellipse cx="18" cy="6" rx="1.4" ry="1.6" fill="#4338ca"/>
+        </symbol>
+      </defs>
+
+      <!-- Soft horizon band behind signpost -->
+      <rect x="0" y="540" width="1600" height="360" fill="url(#horizonFade)"/>
+
+      <!-- Distant sun glow / amber accent in the sky -->
+      <circle cx="1380" cy="540" r="160" fill="url(#sunGlow)"/>
+
+      <!-- Horizon line -->
+      <line x1="0" y1="780" x2="1600" y2="780" stroke="#4338ca" stroke-width="0.8" opacity="0.30" stroke-dasharray="1 6"/>
+
+      <!-- Faint distant hill silhouettes -->
+      <g fill="#6366f1" opacity="0.10">
+        <path d="M 0 780 Q 200 740 400 770 T 800 770 L 800 780 Z"/>
+        <path d="M 600 780 Q 800 730 1000 765 T 1400 770 L 1400 780 Z"/>
+      </g>
+      <g fill="#6366f1" opacity="0.06">
+        <path d="M 0 780 Q 300 700 600 745 T 1200 745 T 1600 760 L 1600 780 Z"/>
+      </g>
+
+      <!-- Ground texture: tiny pebbles & blades scattered along the trail floor -->
+      <g fill="#4338ca" opacity="0.18">
+        <circle cx="220" cy="800" r="1.2"/>
+        <circle cx="280" cy="820" r="1"/>
+        <circle cx="380" cy="810" r="1.4"/>
+        <circle cx="510" cy="830" r="1"/>
+        <circle cx="640" cy="800" r="1.2"/>
+        <circle cx="780" cy="820" r="1"/>
+        <circle cx="900" cy="810" r="1.3"/>
+        <circle cx="1040" cy="830" r="1.1"/>
+        <circle cx="1180" cy="800" r="1.2"/>
+        <circle cx="1280" cy="820" r="1"/>
+      </g>
+
+      <!-- Long grass blades -->
+      <g stroke="#4338ca" stroke-width="0.8" fill="none" opacity="0.22" stroke-linecap="round">
+        <path d="M 160 815 Q 162 808 158 800"/>
+        <path d="M 165 816 Q 168 810 172 802"/>
+        <path d="M 480 820 Q 482 812 478 804"/>
+        <path d="M 485 821 Q 488 814 492 806"/>
+        <path d="M 870 815 Q 872 808 868 800"/>
+        <path d="M 1100 820 Q 1102 812 1098 804"/>
+      </g>
+
+      <!-- Solid faint guide trail -->
+      <path id="trailPath" d="M -40 760 C 140 740, 220 800, 400 770 S 620 720, 760 760 S 980 800, 1140 760 S 1280 720, 1340 760"
+            fill="none" stroke="#6366f1" stroke-width="0.8" opacity="0.30"/>
+
+      <!-- Dashed indigo trail (animated) -->
+      <path d="M -40 760 C 140 740, 220 800, 400 770 S 620 720, 760 760 S 980 800, 1140 760 S 1280 720, 1340 760"
+            fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round"
+            stroke-dasharray="3 10" opacity="0.55" class="trail-flow"/>
+
+      <!-- Footprints along the trail (alternating L/R, fading back) -->
+      <g>
+        <use href="#footL" x="40" y="745" width="14" height="20" opacity="0.18" transform="rotate(28 47 755)"/>
+        <use href="#footR" x="90" y="752" width="14" height="20" opacity="0.22" transform="rotate(22 97 762)"/>
+        <use href="#footL" x="160" y="744" width="14" height="20" opacity="0.26" transform="rotate(10 167 754)"/>
+        <use href="#footR" x="220" y="754" width="14" height="20" opacity="0.30" transform="rotate(-2 227 764)"/>
+        <use href="#footL" x="300" y="742" width="14" height="20" opacity="0.34" transform="rotate(-10 307 752)"/>
+        <use href="#footR" x="380" y="752" width="14" height="20" opacity="0.38" transform="rotate(-6 387 762)"/>
+        <use href="#footL" x="470" y="745" width="15" height="22" opacity="0.42" transform="rotate(8 477 756)"/>
+        <use href="#footR" x="560" y="755" width="15" height="22" opacity="0.46" transform="rotate(14 567 766)"/>
+        <use href="#footL" x="660" y="748" width="15" height="22" opacity="0.50" transform="rotate(10 667 759)"/>
+        <use href="#footR" x="760" y="754" width="15" height="22" opacity="0.54" transform="rotate(2 767 765)"/>
+        <use href="#footL" x="860" y="752" width="15" height="22" opacity="0.58" transform="rotate(-6 867 763)"/>
+        <use href="#footR" x="960" y="758" width="15" height="22" opacity="0.62" transform="rotate(-12 967 769)"/>
+        <use href="#footL" x="1060" y="754" width="15" height="22" opacity="0.66" transform="rotate(-8 1067 765)"/>
+        <use href="#footR" x="1160" y="752" width="15" height="22" opacity="0.70" transform="rotate(2 1167 763)"/>
+        <use href="#footL" x="1240" y="748" width="16" height="24" opacity="0.78" transform="rotate(8 1248 760)"/>
+      </g>
+
+      <!-- Small waypoint dots between footprints -->
+      <g fill="#6366f1" opacity="0.55">
+        <circle cx="120" cy="752" r="1.6"/>
+        <circle cx="350" cy="765" r="1.6"/>
+        <circle cx="610" cy="745" r="1.6"/>
+        <circle cx="900" cy="770" r="1.6"/>
+        <circle cx="1100" cy="755" r="1.6"/>
+      </g>
+
+      <!-- Signpost shadow -->
+      <ellipse cx="1340" cy="858" rx="34" ry="5" fill="#1c1917" opacity="0.10"/>
+
+      <!-- The signpost itself -->
+      <g class="sign-sway">
+        <!-- Vertical post -->
+        <rect x="1336" y="600" width="8" height="258" fill="url(#postFade)" rx="2"/>
+        <!-- Post shadow lines -->
+        <line x1="1339" y1="606" x2="1339" y2="855" stroke="#1e1b4b" stroke-width="1" opacity="0.35"/>
+
+        <!-- Top knob/cap -->
+        <circle cx="1340" cy="600" r="6" fill="#312e81"/>
+        <circle cx="1340" cy="600" r="3" fill="#6366f1"/>
+
+        <!-- Top arrow plate (amber accent — points right) -->
+        <g class="amber-glow">
+          <path d="M 1280 624 L 1395 624 L 1410 638 L 1395 652 L 1280 652 Z"
+                fill="#fef3c7" stroke="#b45309" stroke-width="1.4"/>
+          <text x="1322" y="643" font-family="JetBrains Mono, monospace" font-size="12" fill="#78350f" letter-spacing="1">kalkulator</text>
+          <!-- Tiny arrow chevron -->
+          <path d="M 1392 633 L 1402 638 L 1392 643 Z" fill="#b45309"/>
+          <!-- Nail dots -->
+          <circle cx="1290" cy="630" r="1.2" fill="#78350f"/>
+          <circle cx="1290" cy="646" r="1.2" fill="#78350f"/>
+        </g>
+
+        <!-- Middle arrow plate (indigo — points left) -->
+        <g>
+          <path d="M 1390 678 L 1280 678 L 1265 692 L 1280 706 L 1390 706 Z"
+                fill="#eef2ff" stroke="#4338ca" stroke-width="1.4"/>
+          <text x="1296" y="697" font-family="JetBrains Mono, monospace" font-size="12" fill="#312e81" letter-spacing="1">veiviser</text>
+          <path d="M 1278 685 L 1268 692 L 1278 699 Z" fill="#4338ca"/>
+          <circle cx="1380" cy="684" r="1.2" fill="#312e81"/>
+          <circle cx="1380" cy="700" r="1.2" fill="#312e81"/>
+        </g>
+
+        <!-- Bottom arrow plate (indigo — points right) -->
+        <g>
+          <path d="M 1290 732 L 1395 732 L 1410 746 L 1395 760 L 1290 760 Z"
+                fill="#eef2ff" stroke="#4338ca" stroke-width="1.4"/>
+          <text x="1310" y="751" font-family="JetBrains Mono, monospace" font-size="12" fill="#312e81" letter-spacing="1">ordliste</text>
+          <path d="M 1392 739 L 1402 746 L 1392 753 Z" fill="#4338ca"/>
+          <circle cx="1300" cy="738" r="1.2" fill="#312e81"/>
+          <circle cx="1300" cy="754" r="1.2" fill="#312e81"/>
+        </g>
+
+        <!-- Tiny string/screw detail at top of post -->
+        <line x1="1336" y1="612" x2="1344" y2="612" stroke="#1e1b4b" stroke-width="0.8" opacity="0.6"/>
+      </g>
+
+      <!-- Off-screen-left fade marker: small arrow indicator showing trail comes from elsewhere -->
+      <g opacity="0.55">
+        <path d="M 60 758 L 28 758" stroke="#4338ca" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 4"/>
+        <path d="M 36 754 L 28 758 L 36 762" fill="none" stroke="#4338ca" stroke-width="1" stroke-linecap="round"/>
+      </g>
+
+      <!-- Subtle map-corner cartographic detail bottom-left: distance label -->
+      <g font-family="JetBrains Mono, monospace" font-size="10" fill="#78716c" opacity="0.55">
+        <text x="80" y="855">leksjon → veiviser</text>
+        <line x1="80" y1="862" x2="180" y2="862" stroke="#4338ca" stroke-width="0.8" opacity="0.5"/>
+      </g>
+
+      <!-- Distance/bearing tag near signpost -->
+      <g font-family="JetBrains Mono, monospace" font-size="9" fill="#78716c" opacity="0.5" text-anchor="middle">
+        <text x="1340" y="582">rute · 03</text>
+      </g>
+    </svg>
+  </div>
+
+  <h1>Hjelp</h1>
+  <p class="sub">Korte forklaringer på hvordan du bruker funksjonene i kompendiet.</p>
+
+  <div class="grid">
+    <a href="#" class="card">
+      <div class="icon">⚙</div>
+      <div><h3>Kalkulator ›</h3><p>Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌕</div>
+      <div><h3>Søk og filter</h3><p>Slik finner du frem i formel-listen. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">🧭</div>
+      <div><h3>Veiviser</h3><p>Gå fra oppgavetekst til riktig formel. (kommer)</p></div>
+    </a>
+    <a href="#" class="card disabled">
+      <div class="icon">⌨</div>
+      <div><h3>Hurtigtaster</h3><p>Snarveier som sparer deg klikk. (kommer)</p></div>
+    </a>
+  </div>
+</main>
+
+</body>
+</html>
