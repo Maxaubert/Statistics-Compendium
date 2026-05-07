@@ -105,9 +105,10 @@ export function Prose({
         if (block.kind === "callout") {
           const config = CALLOUT_CONFIG[block.variant] ?? CALLOUT_CONFIG.note;
           // For [!read] callouts, the first content line is the formula
-          // (rendered mono and prominent), and the remaining lines are
-          // the spoken reading. For other variants, all lines render as
-          // regular prose.
+          // (rendered in its own highlighted box with a "FORMEL" label),
+          // and the remaining lines are the spoken reading under a
+          // "LESES SOM" label. For other variants, all lines render as
+          // regular prose under the variant label.
           const isRead = block.variant === "read";
           const formulaLine = isRead && block.lines.length > 0 ? block.lines[0] : null;
           const proseLines = isRead && block.lines.length > 0 ? block.lines.slice(1) : block.lines;
@@ -121,21 +122,40 @@ export function Prose({
                 color: theme === "dark" ? "var(--color-calc-text)" : undefined,
               }}
             >
-              <div
-                aria-hidden
-                className="mb-1.5 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
-                style={{ color: config.accent }}
-              >
-                {config.label}
-              </div>
-              {formulaLine && (
-                <pre
-                  className={`m-0 mb-1.5 whitespace-pre-wrap break-words font-mono text-[15px] leading-snug ${
-                    theme === "dark" ? "text-white" : "text-ink"
-                  }`}
+              {isRead && formulaLine ? (
+                <>
+                  <div
+                    aria-hidden
+                    className="mb-1 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                    style={{ color: config.accent }}
+                  >
+                    Formel
+                  </div>
+                  <pre
+                    className={`m-0 mb-2.5 overflow-x-auto whitespace-pre-wrap break-words rounded px-2.5 py-1.5 font-mono text-[15px] leading-snug ${
+                      theme === "dark"
+                        ? "bg-white/[0.06] text-white"
+                        : "border border-line bg-paper-2 text-ink"
+                    }`}
+                  >
+                    {formulaLine}
+                  </pre>
+                  <div
+                    aria-hidden
+                    className="mb-1 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                    style={{ color: config.accent }}
+                  >
+                    {config.label}
+                  </div>
+                </>
+              ) : (
+                <div
+                  aria-hidden
+                  className="mb-1.5 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                  style={{ color: config.accent }}
                 >
-                  {formulaLine}
-                </pre>
+                  {config.label}
+                </div>
               )}
               {proseLines.length > 0 && (
                 <div className="space-y-1 text-[13.5px] leading-relaxed">
