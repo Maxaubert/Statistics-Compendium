@@ -1,37 +1,100 @@
 id: sannsynlighetsfordeling
-term_no: Sannsynlighetsfordeling (PMF, PDF)
-short_def: "Funksjon som tilordner sannsynlighet til hver mulig verdi (diskret, PMF) eller tetthet i hvert intervall (kontinuerlig, PDF) av en stokastisk variabel."
+term_no: Sannsynlighetsfordeling (PMF, PDF, CDF)
+short_def: "Tre funksjoner som beskriver hvordan en stokastisk variabel fordeler sannsynlighet: PMF (diskret), PDF (kontinuerlig), CDF (kumulativ, begge typer)."
 filters:
   random_variable: [discrete_count, continuous]
   computes: [exact_probability, expected_value, std_dev, range_probability]
   structural_cues: [data_as_list]
   distribution_assumption: [poisson, binomial, normal]
-long_def: |
-  Forkortelsene står for engelsk:
-
-  - **PMF** = *probability mass function* (sannsynlighetsmassefunksjon) — for diskrete variabler.
-  - **PDF** = *probability density function* (tetthetsfunksjon) — for kontinuerlige variabler.
-
-  **Diskret stokastisk variabel (PMF):** sannsynlighet for hver verdi `xᵢ`:
-
-      P(X = xᵢ)        med    Σ P(X = xᵢ) = 1
-
-  **Kontinuerlig stokastisk variabel (PDF):** tetthet `f(x) ≥ 0` med:
-
-      ∫ f(x) dx = 1
-
-  Sannsynlighet for et intervall regnes som integral:
-
-      P(a ≤ X ≤ b) = ∫_a^b f(x) dx
-
-  PMF/PDF er fundamentet for `E[X]`, `Var(X)`, KI og hypotesetester.
 aliases:
   - sannsynlighetsfordeling
   - sannsynlighetsfordelingen
   - sannsynlighetsfordelinger
   - PMF
   - PDF
+  - CDF
+  - sannsynlighetstetthet
+  - tetthetsfunksjon
+  - probability density function
+  - probability mass function
+  - cumulative distribution function
+long_def: |
+  En stokastisk variabel kan beskrives på tre relaterte måter, avhengig
+  av om den er diskret eller kontinuerlig, og om du vil ha sannsynligheten
+  punktvis eller akkumulert.
+
+  ## PMF — for diskrete variabler
+
+  PMF (*probability mass function*) tilordner sannsynlighet direkte til
+  hver mulig verdi.
+
+  > [!read] P(X = x_i)
+  > Sannsynligheten for at `X` er nøyaktig lik `x_i`.
+
+  Egenskaper:
+
+  - Hver `P(X = x_i)` er en ekte sannsynlighet (mellom `0` og `1`)
+  - Summen over alle mulige verdier er `1`: `Σ P(X = x_i) = 1`
+
+  **Eksempel.** En rettferdig terning: `P(X = 1) = P(X = 2) = ... = P(X = 6) = 1/6`.
+  Summen er `6 · 1/6 = 1`.
+
+
+  ## PDF — for kontinuerlige variabler
+
+  PDF (*probability density function*) er IKKE en sannsynlighet, men en
+  *tetthet*. Den sier hvor mye sannsynlighetsmasse som ligger samlet
+  rundt et bestemt punkt.
+
+  > [!read] f(x)
+  > Tetthet ved punktet `x`. For å få en sannsynlighet må du integrere over et intervall.
+
+  Egenskaper:
+
+  - `P(X = x) = 0` for ethvert enkeltpunkt (kontinuerlige variabler)
+  - Sannsynlighet for et intervall: `P(a < X < b) = ∫ f(x) dx` fra `a` til `b`
+  - Hele integralet er `1`: `∫ f(x) dx = 1` over hele tallinjen
+
+  **Eksempel.** Ventetid `T` mellom kunder, eksponentialfordelt med
+  `λ = 0.1`: `f(t) = 0.1 · e^(-0.1t)`. Sannsynligheten for ventetid mellom
+  `5` og `10` minutter er `∫ f(t) dt` fra `5` til `10`.
+
+
+  ## CDF — kumulativ, for begge typer
+
+  CDF (*cumulative distribution function*) gir sannsynligheten direkte,
+  uansett om variabelen er diskret eller kontinuerlig.
+
+  > [!read] F(x) = P(X ≤ x)
+  > Sannsynligheten for at `X` er mindre enn eller lik `x`.
+
+  Egenskaper:
+
+  - `F(-∞) = 0`, `F(∞) = 1`
+  - `F` vokser monotont fra `0` til `1`
+  - Diskret: `F(x) = Σ P(X = x_i)` for alle `x_i ≤ x`
+  - Kontinuerlig: `F(x) = ∫ f(t) dt` fra `-∞` til `x`
+
+  Avledede sannsynligheter:
+
+  - `P(X > x) = 1 - F(x)`
+  - `P(a < X ≤ b) = F(b) - F(a)`
+
+  **Eksempel.** Standardnormaltabellen E.3 er en CDF: gir `G(z) = P(Z ≤ z)`
+  for `Z ~ N(0, 1)`. Slår du opp `G(1.96)`, får du `≈ 0.975`.
+
+
+  ## Forskjellen i én linje
+
+  PMF/PDF beskriver fordelingen *punktvis*; CDF beskriver den *akkumulert*.
+
+  > [!tip] På eksamen brukes CDF i nesten alle sannsynlighetsberegninger. PMF/PDF brukes mest når du regner ut `E[X]`, `Var(X)` eller skal tegne fordelingen.
+
+  - **PMF:** diskret, gir `P(X = x_i)` direkte
+  - **PDF:** kontinuerlig, må integreres for å gi sannsynlighet
+  - **CDF:** begge typer, gir `P(X ≤ x)` direkte
 see_also:
   - { id: forventningsverdi, kind: glossary }
   - { id: varians, kind: glossary }
   - { id: stokastisk-variabel, kind: glossary }
+  - { id: kumulativ, kind: glossary }
