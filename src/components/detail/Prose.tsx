@@ -17,7 +17,7 @@ export interface ProseProps {
   /**
    * If provided AND a GlossaryPopupProvider is mounted above us, technical
    * terms in the prose are auto-linked to glossary popups. Pass the full
-   * glossary array — the renderer builds its own alias index.
+   * glossary array; the renderer builds its own alias index.
    */
   glossary?: GlossaryTerm[];
   /** Tailwind classes applied to each rendered paragraph. */
@@ -102,6 +102,35 @@ export function Prose({
             </pre>
           );
         }
+        if (block.kind === "callout") {
+          const config = CALLOUT_CONFIG[block.variant] ?? CALLOUT_CONFIG.note;
+          return (
+            <div
+              key={i}
+              className="rounded-md border-l-2 px-3 py-2 text-[13.5px] leading-relaxed"
+              style={{
+                borderColor: config.accent,
+                background: config.bg[theme],
+                color: theme === "dark" ? "var(--color-calc-text)" : undefined,
+              }}
+            >
+              <div
+                aria-hidden
+                className="mb-1 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                style={{ color: config.accent }}
+              >
+                {config.label}
+              </div>
+              <div className="space-y-1">
+                {block.lines.map((line, li) => (
+                  <div key={li}>
+                    {renderInline(line, aliases, popup?.openTerm, theme)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        }
         return (
           <p key={i} className={pClass}>
             {renderInline(block.text, aliases, popup?.openTerm, theme)}
@@ -130,6 +159,38 @@ const CODE_BLOCK_CLASS: Record<ProseTheme, string> = {
   dark:
     "m-0 overflow-x-auto rounded-md bg-white/[0.05] px-4 py-3 font-mono text-[13.5px] leading-relaxed text-[inherit]",
 };
+interface CalloutConfig {
+  label: string;
+  accent: string;
+  bg: Record<ProseTheme, string>;
+}
+const CALLOUT_CONFIG: Record<string, CalloutConfig> = {
+  read: {
+    label: "Leses som",
+    accent: "var(--color-cyan-2)",
+    bg: {
+      light: "rgba(34, 211, 238, 0.10)",
+      dark: "rgba(34, 211, 238, 0.08)",
+    },
+  },
+  note: {
+    label: "Merk",
+    accent: "var(--color-cyan-2)",
+    bg: {
+      light: "rgba(34, 211, 238, 0.10)",
+      dark: "rgba(34, 211, 238, 0.08)",
+    },
+  },
+  tip: {
+    label: "Tips",
+    accent: "var(--color-cyan-2)",
+    bg: {
+      light: "rgba(34, 211, 238, 0.10)",
+      dark: "rgba(34, 211, 238, 0.08)",
+    },
+  },
+};
+
 const HEADING_CLASS: Record<ProseTheme, Record<2 | 3, string>> = {
   light: {
     2: "mt-5 mb-1.5 font-serif text-[22px] font-semibold leading-tight text-ink",
@@ -149,19 +210,23 @@ interface OrderedListBlock { kind: "ordered"; items: string[] }
 interface RuleBlock { kind: "rule" }
 interface CodeBlock { kind: "code_block"; lines: string[] }
 interface HeadingBlock { kind: "heading"; level: 2 | 3; text: string }
+interface CalloutBlock { kind: "callout"; variant: string; lines: string[] }
 type Block =
   | ParagraphBlock
   | ListBlock
   | OrderedListBlock
   | RuleBlock
   | CodeBlock
-  | HeadingBlock;
+  | HeadingBlock
+  | CalloutBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
 const NUMBERED_RE = /^\s*\d+\.\s+/;
 const RULE_RE = /^\s*-{3,}\s*$/;
 const INDENTED_CODE_RE = /^(?: {4}|\t)(.*)$/;
 const HEADING_RE = /^(##|###)\s+(.+)$/;
+const CALLOUT_OPEN_RE = /^>\s*\[!(\w+)\]\s*(.*)$/;
+const CALLOUT_CONT_RE = /^>\s?(.*)$/;
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -186,6 +251,25 @@ function parseBlocks(body: string): Block[] {
         text: headingMatch[2].trim(),
       });
       i++;
+      continue;
+    }
+    // Callout block: blockquote with a [!variant] tag on the first line.
+    // Subsequent `> ...` lines are part of the same callout. Blank line
+    // ends it. Used for "Leses som"-style read-aloud boxes.
+    const calloutOpen = lines[i].match(CALLOUT_OPEN_RE);
+    if (calloutOpen) {
+      const variant = calloutOpen[1].toLowerCase();
+      const calloutLines: string[] = [];
+      const firstLine = calloutOpen[2].trim();
+      if (firstLine) calloutLines.push(firstLine);
+      i++;
+      while (i < lines.length && lines[i].trim() !== "") {
+        const cont = lines[i].match(CALLOUT_CONT_RE);
+        if (!cont) break;
+        calloutLines.push(cont[1].trim());
+        i++;
+      }
+      blocks.push({ kind: "callout", variant, lines: calloutLines });
       continue;
     }
     // Indented code block: 4+ spaces or tab at start. Standard markdown
@@ -277,7 +361,7 @@ const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 /**
  * Tokenize an inline string into code spans, bold spans, italic spans,
- * markdown links, and plain text. Backticks have priority — content
+ * markdown links, and plain text. Backticks have priority: content
  * inside backticks is never further processed (so `**inside code**`
  * stays literal in code). Then `[label](href)` markdown links are split
  * out before bold/italic so link targets don't get parsed as emphasis.
@@ -418,7 +502,7 @@ const LINK_CLASS: Record<ProseTheme, string> = {
   dark:
     "cursor-pointer bg-transparent text-inherit underline decoration-dotted decoration-white/40 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
 };
-// Markdown links — same hover-driven affordance, but a SOLID underline so
+// Markdown links use the same hover-driven affordance, but with a SOLID underline so
 // they read as "navigates to a page" rather than "opens a popup" (which is
 // what the dotted glossary links do).
 const MD_LINK_CLASS: Record<ProseTheme, string> = {
