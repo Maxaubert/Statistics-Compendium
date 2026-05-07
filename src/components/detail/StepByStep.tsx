@@ -50,7 +50,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
             />
             <div
               className={clsx(
-                "rounded-lg px-5 py-4",
+                "glass-light-card rounded-lg px-5 py-4",
                 conditional
                   ? "ml-8 border border-amber-300/70 bg-amber-50/70"
                   : "border border-line bg-primary-soft/50",

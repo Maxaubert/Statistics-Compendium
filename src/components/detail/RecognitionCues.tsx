@@ -16,8 +16,8 @@ export function RecognitionCues({ cues, variant = "positive" }: Props) {
           className={clsx(
             "relative rounded-lg py-2.5 pl-9 pr-3.5 font-serif text-[14px] leading-snug",
             isWarn
-              ? "border-l-[3px] border-warn bg-warn-soft text-amber-900"
-              : "border-l-[3px] border-primary-2 bg-paper-2 text-ink-2"
+              ? "glass-light-card border-l-[3px] border-warn bg-warn-soft text-amber-900"
+              : "glass-light-card border-l-[3px] border-primary-2 bg-paper-2 text-ink-2"
           )}
         >
           <span
