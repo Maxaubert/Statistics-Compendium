@@ -7,8 +7,7 @@ const STORAGE_OPEN = "calc-widget-open";
 const STORAGE_POS = "calc-widget-position";
 
 const PANEL_WIDTH = 360;
-const PANEL_HEIGHT_ESTIMATE = 520;
-const EDGE_MARGIN = 10;
+const EDGE_MARGIN = 0;
 const BUTTON_RIGHT = 20;
 const BUTTON_BOTTOM = 20;
 
@@ -42,17 +41,17 @@ function loadPanelPosition(): Position {
 }
 
 /**
- * Clamp the panel's right/bottom anchor so the panel never escapes
- * the viewport. We approximate the panel's size with PANEL_WIDTH and
- * PANEL_HEIGHT_ESTIMATE; if the viewport is too small to fit the
- * panel at all we just pin it to (EDGE_MARGIN, EDGE_MARGIN).
+ * Clamp the panel's right/bottom anchor so the panel can be dragged
+ * all the way to (but not past) any viewport edge. The clamp uses
+ * the panel's measured height when available so the user can pull
+ * the panel's top edge flush against the viewport's top edge.
  */
-function clampPanelPosition(pos: Position): Position {
+function clampPanelPosition(pos: Position, panelHeight: number): Position {
   if (typeof window === "undefined") return pos;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const maxRight = Math.max(EDGE_MARGIN, vw - PANEL_WIDTH - EDGE_MARGIN);
-  const maxBottom = Math.max(EDGE_MARGIN, vh - PANEL_HEIGHT_ESTIMATE - EDGE_MARGIN);
+  const maxBottom = Math.max(EDGE_MARGIN, vh - panelHeight - EDGE_MARGIN);
   return {
     right: Math.min(maxRight, Math.max(EDGE_MARGIN, pos.right)),
     bottom: Math.min(maxBottom, Math.max(EDGE_MARGIN, pos.bottom)),
@@ -84,15 +83,37 @@ export function CalculatorWidget() {
       return false;
     }
   });
-  const [panelPos, setPanelPos] = useState<Position>(() =>
-    clampPanelPosition(loadPanelPosition()),
-  );
+  // Saved position; clamped lazily once we know the panel height.
+  const [panelPos, setPanelPos] = useState<Position>(loadPanelPosition);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const panelHeightRef = useRef<number>(0);
   const dragRef = useRef<{
     startRight: number;
     startBottom: number;
     startX: number;
     startY: number;
   } | null>(null);
+
+  // Measure the open panel and reclamp using the actual height. This
+  // runs whenever the panel mounts or its size changes (e.g. as the
+  // history list grows). ResizeObserver is the cheapest correct way
+  // to keep the clamp in sync with the panel's real dimensions.
+  useEffect(() => {
+    if (!open) return;
+    const el = panelRef.current;
+    if (!el) return;
+    const update = () => {
+      const h = el.offsetHeight;
+      if (h && h !== panelHeightRef.current) {
+        panelHeightRef.current = h;
+        setPanelPos((p) => clampPanelPosition(p, h));
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [open]);
 
   // Persist open and panel position
   useEffect(() => {
@@ -124,7 +145,7 @@ export function CalculatorWidget() {
   // strands itself off-screen if the user shrinks the window.
   useEffect(() => {
     function onResize() {
-      setPanelPos((p) => clampPanelPosition(p));
+      setPanelPos((p) => clampPanelPosition(p, panelHeightRef.current));
     }
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -152,10 +173,13 @@ export function CalculatorWidget() {
       const dx = e.clientX - drag.startX;
       const dy = e.clientY - drag.startY;
       // right grows leftward, bottom grows upward, so deltas flip.
-      const nextPos = clampPanelPosition({
-        right: drag.startRight - dx,
-        bottom: drag.startBottom - dy,
-      });
+      const nextPos = clampPanelPosition(
+        {
+          right: drag.startRight - dx,
+          bottom: drag.startBottom - dy,
+        },
+        panelHeightRef.current,
+      );
       setPanelPos(nextPos);
     },
     [],
@@ -176,6 +200,7 @@ export function CalculatorWidget() {
     <>
       {open && (
         <div
+          ref={panelRef}
           role="dialog"
           aria-label="Kalkulator"
           className={clsx(
