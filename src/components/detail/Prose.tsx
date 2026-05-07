@@ -104,10 +104,17 @@ export function Prose({
         }
         if (block.kind === "callout") {
           const config = CALLOUT_CONFIG[block.variant] ?? CALLOUT_CONFIG.note;
+          // For [!read] callouts, the first content line is the formula
+          // (rendered mono and prominent), and the remaining lines are
+          // the spoken reading. For other variants, all lines render as
+          // regular prose.
+          const isRead = block.variant === "read";
+          const formulaLine = isRead && block.lines.length > 0 ? block.lines[0] : null;
+          const proseLines = isRead && block.lines.length > 0 ? block.lines.slice(1) : block.lines;
           return (
             <div
               key={i}
-              className="rounded-md border-l-2 px-3 py-2 text-[13.5px] leading-relaxed"
+              className="rounded-md border-l-2 px-3 py-2.5"
               style={{
                 borderColor: config.accent,
                 background: config.bg[theme],
@@ -116,18 +123,29 @@ export function Prose({
             >
               <div
                 aria-hidden
-                className="mb-1 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
+                className="mb-1.5 select-none font-mono text-[10px] font-semibold uppercase tracking-[0.16em]"
                 style={{ color: config.accent }}
               >
                 {config.label}
               </div>
-              <div className="space-y-1">
-                {block.lines.map((line, li) => (
-                  <div key={li}>
-                    {renderInline(line, aliases, popup?.openTerm, theme)}
-                  </div>
-                ))}
-              </div>
+              {formulaLine && (
+                <pre
+                  className={`m-0 mb-1.5 whitespace-pre-wrap break-words font-mono text-[15px] leading-snug ${
+                    theme === "dark" ? "text-white" : "text-ink"
+                  }`}
+                >
+                  {formulaLine}
+                </pre>
+              )}
+              {proseLines.length > 0 && (
+                <div className="space-y-1 text-[13.5px] leading-relaxed">
+                  {proseLines.map((line, li) => (
+                    <div key={li}>
+                      {renderInline(line, aliases, popup?.openTerm, theme)}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           );
         }
