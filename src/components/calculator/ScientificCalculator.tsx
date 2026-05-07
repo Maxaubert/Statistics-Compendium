@@ -22,10 +22,10 @@ function saveString(key: string, value: string) {
 
 /**
  * Translate user-friendly unicode math symbols into mathjs syntax so
- * the user can type or paste √, π, ÷, ×, − directly. Mirrors the
- * Dashboard-react calculator's normaliser, with one extra rule for
- * combinatorics: `C(n, k)` is rewritten to `combinations(n, k)`,
- * matching the standard textbook shorthand.
+ * the user can type or paste √, π, ÷, ×, − directly. Also rewrites
+ * textbook shorthand mathjs doesn't know natively:
+ *   `C(n, k)`  →  `combinations(n, k)`
+ *   `ln(x)`    →  `log(x)`     (mathjs `log` defaults to natural log)
  */
 function normalizeExpression(input: string): string {
   const s = input
@@ -36,7 +36,10 @@ function normalizeExpression(input: string): string {
     // Only rewrites the call form `C(...)`, not bare `C` used as a
     // variable. Word boundary keeps things like `aC(` from being
     // hijacked.
-    .replace(/\bC\s*\(/g, "combinations(");
+    .replace(/\bC\s*\(/g, "combinations(")
+    // ln is not a mathjs function; map it to the single-argument
+    // `log(...)` form which IS the natural logarithm in mathjs.
+    .replace(/\bln\s*\(/g, "log(");
 
   return s.replace(
     /√\s*(\([^()]*\)|\d+(?:\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)?/g,

@@ -64,6 +64,11 @@ export function HelpCalculator() {
               Eksempel: <Code>C(10, 3)</Code> → <Code>120</Code>.
             </li>
             <li>
+              <strong>Naturlig logaritme:</strong> <Code>ln(x)</Code>{" "}
+              fungerer som forventet. Eksempel:{" "}
+              <Code>ln(0.05) / ln(0.7)</Code> → <Code>8.396…</Code>.
+            </li>
+            <li>
               <strong>Tilordning:</strong> <Code>x = 5</Code>, så{" "}
               <Code>x^2 + 1</Code>
             </li>
