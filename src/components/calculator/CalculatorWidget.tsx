@@ -61,10 +61,9 @@ export function CalculatorWidget() {
 
   return (
     <>
-      {/* Full-page backdrop. Heavy blur + slight indigo-tinted black
-          at uniform opacity. The blur is strong enough that the page
-          becomes a soft texture rather than legible content, which
-          stops the user's eye from getting pulled past the panel. */}
+      {/* Full-page backdrop. Uniform 10px blur + 70% pure black so
+          the page becomes a faint texture and focus snaps to the
+          monochrome panel. */}
       {open && (
         <button
           type="button"
@@ -72,9 +71,9 @@ export function CalculatorWidget() {
           aria-label="Lukk kalkulator"
           className="fixed inset-0 z-30 cursor-default animate-[calc-fade_180ms_ease-out]"
           style={{
-            backdropFilter: "blur(14px) saturate(1.1)",
-            WebkitBackdropFilter: "blur(14px) saturate(1.1)",
-            background: "rgba(8, 6, 22, 0.72)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            background: "rgba(0, 0, 0, 0.7)",
           }}
         />
       )}
@@ -88,26 +87,26 @@ export function CalculatorWidget() {
           aria-modal="true"
           aria-label="Kalkulator"
           className={clsx(
-            "pointer-events-auto overflow-hidden rounded-2xl",
+            "pointer-events-auto overflow-hidden rounded-[18px]",
             "animate-[calc-pop_180ms_ease-out]",
           )}
           style={{
             width: `${PANEL_WIDTH}px`,
             maxWidth: "calc(100vw - 40px)",
-            background: "linear-gradient(180deg, #0a0a0e 0%, #050507 100%)",
-            border: "1px solid rgba(255,255,255,0.07)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
+            background: "#111111",
+            border: "1px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 24px 70px rgba(0,0,0,0.7)",
           }}
         >
           <header
             className="flex select-none items-center justify-between px-5 py-3.5"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
           >
             <div className="flex items-center gap-2">
-              <CalcIcon size={16} style={{ color: "rgba(245,158,11,0.85)" }} />
+              <CalcIcon size={16} style={{ color: "rgba(255,255,255,0.95)" }} />
               <span
                 className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em]"
-                style={{ color: "rgba(245,158,11,0.85)" }}
+                style={{ color: "rgba(255,255,255,0.95)" }}
               >
                 Kalkulator
               </span>

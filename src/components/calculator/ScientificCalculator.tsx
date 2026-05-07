@@ -85,16 +85,16 @@ export function ScientificCalculator() {
       <div
         className="flex items-center rounded-md px-3 py-3"
         style={{
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "rgba(255,255,255,0.05)",
+          border: "1px solid rgba(255,255,255,0.08)",
         }}
       >
         <input
           ref={inputRef}
           className="w-full bg-transparent font-mono text-[16px] outline-none"
           style={{
-            color: "#e0e7ff",
-            caretColor: "#fbbf24",
+            color: "rgba(255,255,255,0.95)",
+            caretColor: "white",
           }}
           type="text"
           spellCheck={false}
@@ -112,13 +112,13 @@ export function ScientificCalculator() {
       <div
         className="mt-2 flex h-[52px] items-center gap-2.5 rounded-md px-3"
         style={{
-          background: "rgba(245,158,11,0.06)",
-          border: "1px solid rgba(245,158,11,0.18)",
+          background: "rgba(255,255,255,0.08)",
+          border: "1px solid rgba(255,255,255,0.18)",
         }}
       >
         <span
           className="font-mono text-[15px] font-bold leading-none"
-          style={{ color: "rgba(245,158,11,0.55)" }}
+          style={{ color: "rgba(255,255,255,0.6)" }}
         >
           =
         </span>
@@ -127,13 +127,13 @@ export function ScientificCalculator() {
             {errorMsg}
           </span>
         ) : !expr.trim() ? (
-          <span className="font-mono text-[12px] italic leading-none" style={{ color: "rgba(224,231,255,0.4)" }}>
+          <span className="font-mono text-[12px] italic leading-none" style={{ color: "rgba(255,255,255,0.4)" }}>
             resultat vises her
           </span>
         ) : (
           <span
             className="break-all font-mono text-[20px] font-bold leading-none"
-            style={{ color: "#fbbf24" }}
+            style={{ color: "white" }}
           >
             {liveResult || "—"}
           </span>
