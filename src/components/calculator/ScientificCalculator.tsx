@@ -23,15 +23,20 @@ function saveString(key: string, value: string) {
 /**
  * Translate user-friendly unicode math symbols into mathjs syntax so
  * the user can type or paste √, π, ÷, ×, − directly. Mirrors the
- * Dashboard-react calculator's normaliser; copied verbatim so behaviour
- * is identical between the two products.
+ * Dashboard-react calculator's normaliser, with one extra rule for
+ * combinatorics: `C(n, k)` is rewritten to `combinations(n, k)`,
+ * matching the standard textbook shorthand.
  */
 function normalizeExpression(input: string): string {
   const s = input
     .replace(/÷/g, "/")
     .replace(/×/g, "*")
     .replace(/−/g, "-") // unicode minus to ASCII hyphen
-    .replace(/π/g, "pi");
+    .replace(/π/g, "pi")
+    // Only rewrites the call form `C(...)`, not bare `C` used as a
+    // variable. Word boundary keeps things like `aC(` from being
+    // hijacked.
+    .replace(/\bC\s*\(/g, "combinations(");
 
   return s.replace(
     /√\s*(\([^()]*\)|\d+(?:\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)?/g,

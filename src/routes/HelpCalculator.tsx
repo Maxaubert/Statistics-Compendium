@@ -59,6 +59,11 @@ export function HelpCalculator() {
               <Code>combinations(10, 3)</Code>
             </li>
             <li>
+              <strong>Snarvei for binomialkoeffisient:</strong>{" "}
+              <Code>C(n, k)</Code> tolkes som <Code>combinations(n, k)</Code>.
+              Eksempel: <Code>C(10, 3)</Code> → <Code>120</Code>.
+            </li>
+            <li>
               <strong>Tilordning:</strong> <Code>x = 5</Code>, så{" "}
               <Code>x^2 + 1</Code>
             </li>
