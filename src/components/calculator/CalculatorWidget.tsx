@@ -61,8 +61,10 @@ export function CalculatorWidget() {
 
   return (
     <>
-      {/* Full-page backdrop with blur. Click to close. Sits behind the
-          calculator panel but above the page content. */}
+      {/* Full-page backdrop with blur. The dark overlay is a radial
+          gradient that pools darkness toward the centre (where the
+          calculator sits) and fades almost transparent at the edges,
+          so the user gets a spotlight effect on the calculator. */}
       {open && (
         <button
           type="button"
@@ -72,7 +74,8 @@ export function CalculatorWidget() {
           style={{
             backdropFilter: "blur(8px)",
             WebkitBackdropFilter: "blur(8px)",
-            background: "rgba(15, 12, 41, 0.45)",
+            background:
+              "radial-gradient(ellipse at center, rgba(8, 6, 24, 0.78) 0%, rgba(8, 6, 24, 0.65) 25%, rgba(8, 6, 24, 0.4) 60%, rgba(8, 6, 24, 0.12) 100%)",
           }}
         />
       )}
