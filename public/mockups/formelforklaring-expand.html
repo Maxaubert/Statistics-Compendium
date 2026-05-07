@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8" />
+<title>Formelforklaring-ekspandering · Mockups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --ink-4: #a8a29e;
+    --paper: #fafaf7;
+    --paper-2: #f5f5f0;
+    --card: #ffffff;
+    --line: #e7e5e4;
+    --line-2: #d6d3d1;
+
+    --primary: #312e81;
+    --primary-2: #4338ca;
+    --primary-3: #6366f1;
+    --primary-soft: #eef2ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  .frame {
+    max-width: 920px;
+    margin: 32px auto 80px;
+    padding: 0 24px;
+  }
+  h1 {
+    font-family: "Source Serif 4", serif;
+    font-size: 32px;
+    margin: 0 0 4px;
+  }
+  .lede {
+    color: var(--ink-3);
+    margin: 0 0 32px;
+    font-size: 14px;
+  }
+  .variant {
+    margin-bottom: 56px;
+  }
+  .variant-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--primary-2);
+    margin-bottom: 4px;
+  }
+  .variant-title {
+    font-family: "Source Serif 4", serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+  .variant-desc {
+    color: var(--ink-3);
+    font-size: 13.5px;
+    margin: 0 0 16px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head .pi {
+    width: 20px;
+    height: 20px;
+    color: var(--primary-2);
+  }
+  .section-head .label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-2);
+  }
+
+  /* ---------- card grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 120ms, background 120ms;
+  }
+  .card:hover {
+    border-color: rgba(67,56,202,0.4);
+    background: rgba(245,243,255,0.6);
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .card-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+  }
+  .chip {
+    background: var(--paper-2);
+    color: var(--ink-3);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+  .card-formula {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ---------- variant A: trailing 'vis flere' card ---------- */
+  .more-card {
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+    background: var(--paper-2);
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--primary-2);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    transition: border-color 120ms, background 120ms;
+  }
+  .more-card:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary-3);
+  }
+  .more-card .arrow { transition: transform 200ms; }
+  .more-card.open .arrow { transform: rotate(180deg); }
+
+  /* ---------- variant B: bottom bar ---------- */
+  .bottom-bar {
+    margin-top: 8px;
+    border-top: 1px solid var(--line);
+    padding: 12px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--ink-3);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    transition: color 120ms;
+  }
+  .bottom-bar:hover { color: var(--primary-2); }
+  .bottom-bar .count {
+    background: var(--primary-soft);
+    color: var(--primary-2);
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .bottom-bar .arrow { transition: transform 200ms; }
+  .bottom-bar.open .arrow { transform: rotate(180deg); }
+
+  /* ---------- variant C: section-head expand ---------- */
+  .section-head.with-toggle { justify-content: space-between; }
+  .head-left { display: flex; align-items: center; gap: 10px; }
+  .head-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 10px;
+    transition: color 120ms, border-color 120ms, background 120ms;
+  }
+  .head-toggle:hover {
+    color: var(--primary-2);
+    border-color: var(--primary-3);
+    background: var(--primary-soft);
+  }
+  .head-toggle .arrow { transition: transform 200ms; }
+  .head-toggle.open .arrow { transform: rotate(180deg); }
+
+  /* ---------- variant D: stack-peek ---------- */
+  .row-wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .stack-peek {
+    position: relative;
+  }
+  .stack-peek::before, .stack-peek::after {
+    content: "";
+    position: absolute;
+    left: 6px; right: -6px;
+    border-radius: 10px;
+    border: 1px solid var(--line-2);
+    background: var(--paper-2);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .stack-peek::before { top: 6px; bottom: -6px; opacity: 0.6; }
+  .stack-peek::after  { top: 12px; bottom: -12px; opacity: 0.35; }
+  .stack-peek-cta {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translate(50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--card);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    padding: 6px 10px 6px 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-2);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(28,25,23,0.06);
+    transition: color 120ms, border-color 120ms, background 120ms;
+  }
+  .stack-peek-cta:hover {
+    color: var(--primary-2);
+    border-color: var(--primary-3);
+    background: var(--primary-soft);
+  }
+  .stack-peek-cta .count {
+    background: var(--primary-soft);
+    color: var(--primary-2);
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  /* ---------- variant E: ghost-cards (placeholder slots) ---------- */
+  .ghost-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .ghost-card {
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+    background: rgba(120,113,108,0.03);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink-3);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    transition: color 120ms, border-color 120ms, background 120ms;
+    gap: 6px;
+  }
+  .ghost-card:hover {
+    color: var(--primary-2);
+    border-color: var(--primary-3);
+    background: var(--primary-soft);
+  }
+
+  /* ---------- expanded section ---------- */
+  .extra-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  /* utilities */
+  .icon { width: 14px; height: 14px; flex-shrink: 0; }
+  .small { font-size: 13px; color: var(--ink-3); margin: 0 0 12px; }
+
+  hr { border: 0; border-top: 1px solid var(--line); margin: 56px 0 56px; }
+
+  .nav-toc {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+  .nav-toc strong { display: block; margin-bottom: 6px; font-family: "JetBrains Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--ink-3); }
+  .nav-toc a { color: var(--primary-2); text-decoration: none; margin-right: 14px; }
+  .nav-toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="frame">
+  <h1>Formelforklaring · ekspander/kollaps-mockups</h1>
+  <p class="lede">Mål: vis bare én rad (to kort) som standard, med en mekanisme for å folde ut resten. Fem varianter under, hver med kollapset utgangspunkt + ekspandert tilstand. Klikk på CTA-en for å se overgangen.</p>
+
+  <div class="nav-toc">
+    <strong>Varianter</strong>
+    <a href="#a">A — «Vis flere»-kort i raden</a>
+    <a href="#b">B — Bunn-bar</a>
+    <a href="#c">C — Pille i overskriften</a>
+    <a href="#d">D — Stable-peek</a>
+    <a href="#e">E — Spøkelseskort</a>
+  </div>
+
+  <!-- ===================== Variant A ===================== -->
+  <div class="variant" id="a">
+    <div class="variant-label">Variant A</div>
+    <h2 class="variant-title">«Vis flere»-kort i raden</h2>
+    <p class="variant-desc">Andre kortplass blir et stiplet «+ vis N til»-kort. Klikk for å bytte ut dette kortet med en full liste under.</p>
+
+    <div class="section-head"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14M9 4v16M15 4l-3 16"/></svg><span class="label">Formelforklaring</span></div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-head"><span class="card-name">Punktsannsynlighet</span><span class="chip">Eksakt k</span></div>
+        <div class="card-formula">P(X = k) = e^(-λt) · (λt)^k / k!</div>
+      </div>
+      <div class="more-card" onclick="toggleA(this)">
+        <span>+ Vis 4 til</span>
+        <svg class="arrow icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="extra-row" id="extra-a" style="display:none;">
+      <div class="card"><div class="card-head"><span class="card-name">Kumulativ sannsynlighet</span><span class="chip">Maks k</span></div><div class="card-formula">P(X ≤ k) = Σ e^(-μ) · μ^i / i!</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Komplement: minst k</span><span class="chip">Minst k</span></div><div class="card-formula">P(X ≥ k) = 1 − P(X ≤ k − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Intervall via to oppslag</span><span class="chip">Intervall</span></div><div class="card-formula">P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Ingen hendelser</span><span class="chip">Ingen</span></div><div class="card-formula">P(X = 0) = e^(-μ)</div></div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- ===================== Variant B ===================== -->
+  <div class="variant" id="b">
+    <div class="variant-label">Variant B</div>
+    <h2 class="variant-title">Bunn-bar med teller</h2>
+    <p class="variant-desc">Begge øverste kort vises i full bredde, og under raden ligger en tynn bar med pil + teller. Klikk for å folde ut hele resten under.</p>
+
+    <div class="section-head"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14M9 4v16M15 4l-3 16"/></svg><span class="label">Formelforklaring</span></div>
+
+    <div class="grid">
+      <div class="card"><div class="card-head"><span class="card-name">Punktsannsynlighet</span><span class="chip">Eksakt k</span></div><div class="card-formula">P(X = k) = e^(-λt) · (λt)^k / k!</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Kumulativ sannsynlighet</span><span class="chip">Maks k</span></div><div class="card-formula">P(X ≤ k) = Σ e^(-μ) · μ^i / i!</div></div>
+    </div>
+
+    <div class="extra-row" id="extra-b" style="display:none; margin-top: 12px;">
+      <div class="card"><div class="card-head"><span class="card-name">Komplement: minst k</span><span class="chip">Minst k</span></div><div class="card-formula">P(X ≥ k) = 1 − P(X ≤ k − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Intervall via to oppslag</span><span class="chip">Intervall</span></div><div class="card-formula">P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Ingen hendelser</span><span class="chip">Ingen</span></div><div class="card-formula">P(X = 0) = e^(-μ)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Finn k for terskel</span><span class="chip">Finn k</span></div><div class="card-formula">k = min { j : P(X ≥ j) ≤ τ }</div></div>
+    </div>
+
+    <div class="bottom-bar" onclick="toggleB(this)" id="bar-b">
+      <span>Vis flere</span>
+      <span class="count" id="bar-b-count">4</span>
+      <svg class="arrow icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- ===================== Variant C ===================== -->
+  <div class="variant" id="c">
+    <div class="variant-label">Variant C</div>
+    <h2 class="variant-title">Pille i seksjonsoverskriften</h2>
+    <p class="variant-desc">Standard-toggle ved siden av FORMELFORKLARING-overskriften. Lite, holder fokus i raden. Bra hvis vi har plass til en høyrejustert kontroll.</p>
+
+    <div class="section-head with-toggle">
+      <div class="head-left">
+        <svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14M9 4v16M15 4l-3 16"/></svg>
+        <span class="label">Formelforklaring</span>
+      </div>
+      <button class="head-toggle" onclick="toggleC(this)">
+        <span><span style="opacity:0.6;">4 flere</span></span>
+        <svg class="arrow icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="grid">
+      <div class="card"><div class="card-head"><span class="card-name">Punktsannsynlighet</span><span class="chip">Eksakt k</span></div><div class="card-formula">P(X = k) = e^(-λt) · (λt)^k / k!</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Kumulativ sannsynlighet</span><span class="chip">Maks k</span></div><div class="card-formula">P(X ≤ k) = Σ e^(-μ) · μ^i / i!</div></div>
+    </div>
+
+    <div class="extra-row" id="extra-c" style="display:none;">
+      <div class="card"><div class="card-head"><span class="card-name">Komplement: minst k</span><span class="chip">Minst k</span></div><div class="card-formula">P(X ≥ k) = 1 − P(X ≤ k − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Intervall via to oppslag</span><span class="chip">Intervall</span></div><div class="card-formula">P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Ingen hendelser</span><span class="chip">Ingen</span></div><div class="card-formula">P(X = 0) = e^(-μ)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Finn k for terskel</span><span class="chip">Finn k</span></div><div class="card-formula">k = min { j : P(X ≥ j) ≤ τ }</div></div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- ===================== Variant D ===================== -->
+  <div class="variant" id="d">
+    <div class="variant-label">Variant D</div>
+    <h2 class="variant-title">Stable-peek</h2>
+    <p class="variant-desc">Det andre kortet får en visuell «stabel-effekt» under seg + en flytende pille som indikerer at det er flere stablet bak. Brukeren ser umiddelbart at det er mer å oppdage.</p>
+
+    <div class="section-head"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14M9 4v16M15 4l-3 16"/></svg><span class="label">Formelforklaring</span></div>
+
+    <div class="row-wrapper">
+      <div class="card"><div class="card-head"><span class="card-name">Punktsannsynlighet</span><span class="chip">Eksakt k</span></div><div class="card-formula">P(X = k) = e^(-λt) · (λt)^k / k!</div></div>
+      <div class="card stack-peek" onclick="toggleD(this.parentNode.parentNode)">
+        <div class="card-head"><span class="card-name">Kumulativ sannsynlighet</span><span class="chip">Maks k</span></div>
+        <div class="card-formula">P(X ≤ k) = Σ e^(-μ) · μ^i / i!</div>
+        <div class="stack-peek-cta">+<span class="count">3</span></div>
+      </div>
+    </div>
+
+    <div class="extra-row" id="extra-d" style="display:none;">
+      <div class="card"><div class="card-head"><span class="card-name">Komplement: minst k</span><span class="chip">Minst k</span></div><div class="card-formula">P(X ≥ k) = 1 − P(X ≤ k − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Intervall via to oppslag</span><span class="chip">Intervall</span></div><div class="card-formula">P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Ingen hendelser</span><span class="chip">Ingen</span></div><div class="card-formula">P(X = 0) = e^(-μ)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Finn k for terskel</span><span class="chip">Finn k</span></div><div class="card-formula">k = min { j : P(X ≥ j) ≤ τ }</div></div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- ===================== Variant E ===================== -->
+  <div class="variant" id="e">
+    <div class="variant-label">Variant E</div>
+    <h2 class="variant-title">Spøkelseskort i andre rad</h2>
+    <p class="variant-desc">En tynn andre rad med spøkelseskort som viser navnet på de skjulte (men ikke formelen). Skygger seg vekk når lukket. Klikk hvor som helst på et spøkelseskort for å åpne hele.</p>
+
+    <div class="section-head"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14M9 4v16M15 4l-3 16"/></svg><span class="label">Formelforklaring</span></div>
+
+    <div class="grid">
+      <div class="card"><div class="card-head"><span class="card-name">Punktsannsynlighet</span><span class="chip">Eksakt k</span></div><div class="card-formula">P(X = k) = e^(-λt) · (λt)^k / k!</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Kumulativ sannsynlighet</span><span class="chip">Maks k</span></div><div class="card-formula">P(X ≤ k) = Σ e^(-μ) · μ^i / i!</div></div>
+    </div>
+
+    <div class="ghost-row">
+      <div class="ghost-card" onclick="toggleE(this)">
+        <span>Minst k</span>
+        <span style="opacity:0.5;">·</span>
+        <span style="opacity:0.6;">Intervall</span>
+      </div>
+      <div class="ghost-card" onclick="toggleE(this)">
+        <span>Ingen</span>
+        <span style="opacity:0.5;">·</span>
+        <span>Finn k</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:6px;"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="extra-row" id="extra-e" style="display:none;">
+      <div class="card"><div class="card-head"><span class="card-name">Komplement: minst k</span><span class="chip">Minst k</span></div><div class="card-formula">P(X ≥ k) = 1 − P(X ≤ k − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Intervall via to oppslag</span><span class="chip">Intervall</span></div><div class="card-formula">P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Ingen hendelser</span><span class="chip">Ingen</span></div><div class="card-formula">P(X = 0) = e^(-μ)</div></div>
+      <div class="card"><div class="card-head"><span class="card-name">Finn k for terskel</span><span class="chip">Finn k</span></div><div class="card-formula">k = min { j : P(X ≥ j) ≤ τ }</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggleVisible(el) {
+    el.style.display = el.style.display === "none" ? "" : "none";
+  }
+  function toggleA(btn) {
+    btn.classList.toggle("open");
+    toggleVisible(document.getElementById("extra-a"));
+    btn.querySelector("span").textContent = btn.classList.contains("open") ? "Skjul de 4 ekstra" : "+ Vis 4 til";
+  }
+  function toggleB(btn) {
+    btn.classList.toggle("open");
+    toggleVisible(document.getElementById("extra-b"));
+    const isOpen = btn.classList.contains("open");
+    // First span = label, second span = count chip (kept either way)
+    btn.querySelector("span:first-child").textContent = isOpen ? "Skjul" : "Vis flere";
+    document.getElementById("bar-b-count").style.display = isOpen ? "none" : "";
+  }
+  function toggleC(btn) {
+    btn.classList.toggle("open");
+    toggleVisible(document.getElementById("extra-c"));
+  }
+  function toggleD(row) {
+    const peek = row.querySelector(".stack-peek");
+    peek.classList.toggle("opened");
+    toggleVisible(document.getElementById("extra-d"));
+  }
+  function toggleE(card) {
+    toggleVisible(document.getElementById("extra-e"));
+  }
+</script>
+</body>
+</html>
