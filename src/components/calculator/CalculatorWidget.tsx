@@ -74,7 +74,7 @@ export function CalculatorWidget() {
           style={{
             backdropFilter: "blur(14px) saturate(1.1)",
             WebkitBackdropFilter: "blur(14px) saturate(1.1)",
-            background: "rgba(15, 12, 36, 0.48)",
+            background: "rgba(8, 6, 22, 0.72)",
           }}
         />
       )}
