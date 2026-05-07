@@ -1,10 +1,54 @@
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { evaluate } from "mathjs";
 import { clsx } from "clsx";
 
 interface CalcEntry {
   expr: string;
   result: string;
+}
+
+const STORAGE_EXPR = "calc-widget-expr";
+const STORAGE_HISTORY = "calc-widget-history";
+
+function loadString(key: string): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return window.localStorage.getItem(key) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+function loadHistory(): CalcEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(STORAGE_HISTORY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (x): x is CalcEntry =>
+        x && typeof x.expr === "string" && typeof x.result === "string",
+    );
+  } catch {
+    return [];
+  }
+}
+
+function saveString(key: string, value: string) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // localStorage unavailable; fail silently.
+  }
+}
+
+function saveHistory(entries: CalcEntry[]) {
+  try {
+    window.localStorage.setItem(STORAGE_HISTORY, JSON.stringify(entries));
+  } catch {
+    // ignore quota / private mode errors
+  }
 }
 
 /**
@@ -51,9 +95,18 @@ const KEYS: Array<{ label: string; insert?: string; action?: "backspace" | "clea
 ];
 
 export function ScientificCalculator() {
-  const [expr, setExpr] = useState("");
-  const [history, setHistory] = useState<CalcEntry[]>([]);
+  const [expr, setExpr] = useState<string>(() => loadString(STORAGE_EXPR));
+  const [history, setHistory] = useState<CalcEntry[]>(() => loadHistory());
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Persist expression and history to localStorage so the calculator
+  // remembers state across closes and page navigations.
+  useEffect(() => {
+    saveString(STORAGE_EXPR, expr);
+  }, [expr]);
+  useEffect(() => {
+    saveHistory(history);
+  }, [history]);
 
   function tryEvaluate(input: string): { ok: true; value: string } | { ok: false; error: string } {
     if (!input.trim()) return { ok: true, value: "" };
@@ -136,15 +189,17 @@ export function ScientificCalculator() {
         />
       </div>
 
-      {/* Live result */}
-      <div className="mt-1.5 flex min-h-[44px] items-baseline gap-2.5 rounded-md border border-cyan-2/30 bg-cyan-soft/30 px-3 py-2.5">
-        <span className="font-mono text-[14px] font-bold text-cyan-deep/70">=</span>
+      {/* Live result. Fixed height + items-center keeps the row size
+          stable as content swaps between placeholder/error/value, so
+          the panel above doesn't shift when the user types. */}
+      <div className="mt-1.5 flex h-[44px] items-center gap-2.5 rounded-md border border-cyan-2/30 bg-cyan-soft/30 px-3">
+        <span className="font-mono text-[14px] font-bold leading-none text-cyan-deep/70">=</span>
         {errorMsg ? (
-          <span className="font-mono text-[12px] font-semibold text-warn">{errorMsg}</span>
+          <span className="font-mono text-[12px] font-semibold leading-none text-warn">{errorMsg}</span>
         ) : !expr.trim() ? (
-          <span className="font-mono text-[12px] italic text-ink-3">resultat vises her</span>
+          <span className="font-mono text-[12px] italic leading-none text-ink-3">resultat vises her</span>
         ) : (
-          <span className="break-all font-mono text-[18px] font-bold text-cyan-deep">{liveResult || "—"}</span>
+          <span className="break-all font-mono text-[18px] font-bold leading-none text-cyan-deep">{liveResult || "—"}</span>
         )}
       </div>
 
