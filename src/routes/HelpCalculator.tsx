@@ -163,7 +163,7 @@ function StylePicker() {
             onClick={() => setActiveId(id)}
             aria-pressed={selected}
             className={
-              "group relative flex w-[260px] flex-col gap-2.5 rounded-lg border bg-card p-2.5 text-left transition-all " +
+              "group relative flex w-[290px] flex-col gap-2.5 rounded-lg border bg-card p-2.5 text-left transition-all " +
               (selected
                 ? "border-primary-2 shadow-[0_0_0_3px_rgba(99,102,241,0.18)]"
                 : "border-line hover:border-primary-3/60 hover:shadow-sm")

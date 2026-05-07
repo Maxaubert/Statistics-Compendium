@@ -93,18 +93,17 @@ export const CALCULATOR_STYLES: Record<CalculatorStyleId, CalculatorStyleConfig>
     description:
       "macOS-style frostet akryl med backdrop-blur og en regnbue-aksent øverst på panelet.",
 
+    // Same monochrome dim+blur backdrop as the default skin — the
+    // acrylic look comes only from the panel itself.
     backdrop: {
-      // Indigo + amber gradient over a dimmed dark base so the
-      // panel's backdrop-filter has saturated colors to refract.
-      background:
-        "radial-gradient(ellipse at 25% 30%, rgba(99, 102, 241, 0.55) 0%, transparent 55%), radial-gradient(ellipse at 75% 70%, rgba(252, 211, 77, 0.30) 0%, transparent 50%), rgba(8, 8, 16, 0.85)",
-      backdropFilter: "blur(8px)",
-      WebkitBackdropFilter: "blur(8px)",
+      background: "rgba(0, 0, 0, 0.7)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
     },
     panel: {
-      background: "rgba(20, 20, 30, 0.40)",
-      backdropFilter: "blur(30px) saturate(200%)",
-      WebkitBackdropFilter: "blur(30px) saturate(200%)",
+      background: "rgba(20, 20, 30, 0.55)",
+      backdropFilter: "blur(30px) saturate(180%)",
+      WebkitBackdropFilter: "blur(30px) saturate(180%)",
       boxShadow:
         "0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06)",
     },
