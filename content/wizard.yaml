@@ -156,7 +156,7 @@ nodes:
   - id: n_regresjon
     question: "Hva er du på jakt etter?"
     options:
-      - label: "Estimere regresjonslinja (αˆ, βˆ) ut fra data"
+      - label: "Estimere regresjonslinja (α̂, β̂) ut fra data"
         leads_to:
           - { id: regresjon-estimat-alpha-beta, kind: entry }
       - label: "Korrelasjonskoeffisient r"
@@ -168,7 +168,7 @@ nodes:
       - label: "Prediksjonsintervall for ŷ ved gitt x"
         leads_to:
           - { id: regresjon-prediksjonsintervall, kind: entry }
-      - label: "Standardfeil for stigningstallet SE(βˆ)"
+      - label: "Standardfeil for stigningstallet SE(β̂)"
         leads_to:
           - { id: regresjon-standardfeil-stigningstall, kind: entry }
       - label: "Residualvarians S_E²"

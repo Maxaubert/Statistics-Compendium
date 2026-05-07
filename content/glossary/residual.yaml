@@ -9,7 +9,7 @@ filters:
 long_def: |
   Formel:
 
-      eᵢ = yᵢ − ŷᵢ        der    ŷᵢ = αˆ + βˆ·xᵢ
+      eᵢ = yᵢ − ŷᵢ        der    ŷᵢ = α̂ + β̂·xᵢ
 
   Summen av residualene er `0` ved minste kvadraters tilpasning.
   Variansen til residualene (`S_E²`) brukes til å lage KI og

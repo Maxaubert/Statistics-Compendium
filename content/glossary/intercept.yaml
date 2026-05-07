@@ -19,7 +19,7 @@ long_def: |
 
   er `α` intercept. Estimatet:
 
-      αˆ = ȳ − βˆ·x̄
+      α̂ = ȳ − β̂·x̄
 
   Tolkning som «verdien når `X = 0`» gir mening bare hvis `X = 0`
   ligger innenfor observerte data; ellers er det en matematisk konstant.

@@ -4,13 +4,13 @@ type: identity
 category: confidence_interval
 tagline: "`(1−α)·100 %` KI for sannsynlighet/andel `p` basert på `X` suksesser av `n` forsøk."
 
-formula_main: "pˆ ± z_(α/2) · √(pˆ·(1-pˆ)/n)"
+formula_main: "p̂ ± z_(α/2) · √(p̂·(1-p̂)/n)"
 formula_latex: "\\hat{p} \\pm z_{\\alpha/2} \\cdot \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}"
 
 what_it_does: |
   Gir et tilnærmet intervall som med `(1−α)·100 %` sikkerhet inneholder
-  den sanne andelen `p` i en populasjon, basert på `pˆ = X/n`. Forutsetter
-  at `n` er stort nok (`n·pˆ·(1−pˆ) ≥ 5`).
+  den sanne andelen `p` i en populasjon, basert på `p̂ = X/n`. Forutsetter
+  at `n` er stort nok (`n·p̂·(1−p̂) ≥ 5`).
 
 why_use: |
   Brukes når problemet handler om en binomisk situasjon (`n` forsøk,
@@ -25,11 +25,11 @@ recognition_cues:
 
 when_NOT_to_use:
   - "Du estimerer en rate (per tidsenhet) → bruk [KI for poissonrate](/entry/ki-poissonrate)"
-  - "`n·pˆ·(1−pˆ) < 5` → normalapproksimasjon for unøyaktig"
+  - "`n·p̂·(1−p̂) < 5` → normalapproksimasjon for unøyaktig"
   - "Du vil teste `p` mot en spesifisert verdi `p₀` (ikke estimere intervall) → bruk [z-test for andel](/entry/en-utvalg-z-test-andel) i stedet"
 
 symbols:
-  - { sym: "pˆ",        means: "punktestimat for andelen, `pˆ = X/n`" }
+  - { sym: "p̂",        means: "punktestimat for andelen, `p̂ = X/n`" }
   - { sym: "X",         means: "antall suksesser observert" }
   - { sym: "n",         means: "antall forsøk" }
   - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
@@ -44,15 +44,15 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
   - "Identifiser antall suksesser `X` og utvalgsstørrelsen `n`"
-  - "Beregn punktestimat `pˆ = X/n`"
-  - "Sjekk at `n·pˆ·(1−pˆ) ≥ 5` (normalapproksimasjon gyldig)"
+  - "Beregn punktestimat `p̂ = X/n`"
+  - "Sjekk at `n·p̂·(1−p̂) ≥ 5` (normalapproksimasjon gyldig)"
   - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
   - "Slå opp `z_(α/2)` i tabell E.4 (f.eks. `z_(0.05) = 1.645`)"
-  - "Beregn margin: `z_(α/2) · √(pˆ(1−pˆ)/n)`"
-  - "KI: `pˆ ± margin`"
+  - "Beregn margin: `z_(α/2) · √(p̂(1−p̂)/n)`"
+  - "KI: `p̂ ± margin`"
 
 common_traps: |
-  Standard error i KI bruker `pˆ` (estimert), MEN i [hypotesetest for andel](/entry/en-utvalg-z-test-andel)
+  Standard error i KI bruker `p̂` (estimert), MEN i [hypotesetest for andel](/entry/en-utvalg-z-test-andel)
   bruker man `p₀` (verdien fra `H₀`). Pass på! Husk å sjekke approksimasjons-
   betingelsen før du bruker normalapproksimasjon.
 
@@ -77,19 +77,19 @@ detailed_solution_variants:
               - { text: "n = 80, X = 23, konfidensnivå 90 % → α = 0.10" }
           - label: "Estimat"
             lines:
-              - { text: "`pˆ = X/n = 23/80 = 0.2875`" }
-              - { text: "Sjekk approksimasjon: `n·pˆ·(1-pˆ) = 80·0.2875·0.7125 ≈ 16.4 ≥ 5` ✓" }
+              - { text: "`p̂ = X/n = 23/80 = 0.2875`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 80·0.2875·0.7125 ≈ 16.4 ≥ 5` ✓" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.05} = 1.645" } }
           - label: "Standardfeil og marg"
             lines:
-              - { text: "`SE = √(pˆ(1-pˆ)/n) = √(0.2875·0.7125/80)`" }
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.2875·0.7125/80)`" }
               - { indent: "`= √0.002562 = 0.0506`" }
               - { text: "`marginal = z·SE = 1.645·0.0506 = 0.0832`" }
           - label: "Intervall"
             lines:
-              - { text: "`pˆ ± marginal = 0.2875 ± 0.0832`" }
+              - { text: "`p̂ ± marginal = 0.2875 ± 0.0832`" }
               - { indent: "`= (0.204, 0.371)`" }
           - label: "Tolkning"
             lines:
@@ -104,19 +104,19 @@ detailed_solution_variants:
               - { text: "n = 500, X = 200, konfidensnivå 95 % → α = 0.05" }
           - label: "Estimat"
             lines:
-              - { text: "`pˆ = X/n = 200/500 = 0.40`" }
-              - { text: "Sjekk approksimasjon: `n·pˆ·(1-pˆ) = 500·0.40·0.60 = 120 ≥ 5` ✓" }
+              - { text: "`p̂ = X/n = 200/500 = 0.40`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 500·0.40·0.60 = 120 ≥ 5` ✓" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.025} = 1.96" } }
           - label: "Standardfeil og marg"
             lines:
-              - { text: "`SE = √(pˆ(1-pˆ)/n) = √(0.40·0.60/500)`" }
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.40·0.60/500)`" }
               - { indent: "`= √0.00048 = 0.02191`" }
               - { text: "`marginal = z·SE = 1.96·0.02191 = 0.0429`" }
           - label: "Intervall"
             lines:
-              - { text: "`pˆ ± marginal = 0.40 ± 0.043`" }
+              - { text: "`p̂ ± marginal = 0.40 ± 0.043`" }
               - { indent: "`= (0.357, 0.443)`" }
           - label: "Tolkning"
             lines:
@@ -131,19 +131,19 @@ detailed_solution_variants:
               - { text: "n = 80, X = 12, konfidensnivå 99 % → α = 0.01" }
           - label: "Estimat"
             lines:
-              - { text: "`pˆ = X/n = 12/80 = 0.15`" }
-              - { text: "Sjekk approksimasjon: `n·pˆ·(1-pˆ) = 80·0.15·0.85 = 10.2 ≥ 5` ✓" }
+              - { text: "`p̂ = X/n = 12/80 = 0.15`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1-p̂) = 80·0.15·0.85 = 10.2 ≥ 5` ✓" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_{α/2} = z_{0.005} = 2.576" } }
           - label: "Standardfeil og marg"
             lines:
-              - { text: "`SE = √(pˆ(1-pˆ)/n) = √(0.15·0.85/80)`" }
+              - { text: "`SE = √(p̂(1-p̂)/n) = √(0.15·0.85/80)`" }
               - { indent: "`= √0.001594 = 0.0399`" }
               - { text: "`marginal = z·SE = 2.576·0.0399 = 0.1028`" }
           - label: "Intervall"
             lines:
-              - { text: "`pˆ ± marginal = 0.15 ± 0.103`" }
+              - { text: "`p̂ ± marginal = 0.15 ± 0.103`" }
               - { indent: "`= (0.047, 0.253)`" }
           - label: "Tolkning"
             lines:

@@ -10,7 +10,7 @@ aliases:
 long_def: |
   `θ` brukes som plassholder for «hvilken som helst parameter» — det kan
   være `μ`, `σ²`, `λ`, `p` eller noe annet, avhengig av modellen.
-  Estimatoren skrives ofte `θˆ` (theta-hatt).
+  Estimatoren skrives ofte `θ̂` (theta-hatt).
 
   Når en oppgave snakker om "forventningsrett estimator for `θ`" eller
   "KI for `θ`", betyr `θ` den parameteren oppgaven faktisk handler om.

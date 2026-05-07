@@ -1,6 +1,6 @@
 id: variansen-til-stigningstallet
-term_no: Variansen til stigningstallet (Var(βˆ))
-short_def: "Spredningen i regresjonsstigningen: `Var(βˆ) = S_E² / S_XX`, der `S_XX = Σ(xᵢ − x̄)²`."
+term_no: Variansen til stigningstallet (Var(β̂))
+short_def: "Spredningen i regresjonsstigningen: `Var(β̂) = S_E² / S_XX`, der `S_XX = Σ(xᵢ − x̄)²`."
 filters:
   random_variable: [slope_estimate]
   setup: [linear_relationship]
@@ -11,26 +11,26 @@ filters:
 long_def: |
   Formel:
 
-      Var(βˆ) = S_E² / S_XX        der    S_XX = Σ(xᵢ − x̄)²
+      Var(β̂) = S_E² / S_XX        der    S_XX = Σ(xᵢ − x̄)²
 
-  Hvor presist vi kjenner `βˆ` — variansen i estimatet av stigningstallet.
+  Hvor presist vi kjenner `β̂` — variansen i estimatet av stigningstallet.
 
   **Trenger rådata?** Indirekte: trenger `S_E²` (residualvariansen) og
   `S_XX`. Begge regnes fra rådataene `(xᵢ, yᵢ)`. Hvis disse størrelsene
   er oppgitt, trenger du ikke selve observasjonene.
 
-  - **Stor `S_XX`** (mye spredning i x) → liten `Var(βˆ)` → presis estimering.
+  - **Stor `S_XX`** (mye spredning i x) → liten `Var(β̂)` → presis estimering.
   - **Liten `S_XX`** (data klumpet på én x-verdi) → høy usikkerhet.
 
   Standardfeilen:
 
-      SE(βˆ) = √(S_E² / S_XX)
+      SE(β̂) = √(S_E² / S_XX)
 
   — brukes i hypotesetest og KI for `β`.
 aliases:
   - variansen til stigningstallet
   - varians til stigningstallet
-  - var(βˆ)
+  - var(β̂)
   - var(beta-hat)
 see_also:
   - { id: regresjon-standardfeil-stigningstall, kind: entry }

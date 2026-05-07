@@ -1357,11 +1357,11 @@ Forkast \`H₀\`: maskinen avviker signifikant fra 500 ml (her: overfylling, men
 Telleren \`X − n·p₀\` er avviket mellom observert antall suksesser og det \`H₀\` forventer. Nevneren \`√(n·p₀(1−p₀))\` er standardavviket til \`X\` under \`H₀\` (kvadratroten av binomialvariansen).
 
 
-## Hvorfor \`p₀\`, ikke \`pˆ\`, i nevneren
+## Hvorfor \`p₀\`, ikke \`p̂\`, i nevneren
 
-Dette er et viktig skille fra konfidensintervall for andel: i en hypotesetest antar vi at \`H₀\` er sann mens vi regner observatoren, så variansen i nevneren skal bruke \`p₀\`. I konfidensintervall bruker vi derimot \`pˆ\` siden vi ikke har noen \`H₀\` å plugge inn.
+Dette er et viktig skille fra konfidensintervall for andel: i en hypotesetest antar vi at \`H₀\` er sann mens vi regner observatoren, så variansen i nevneren skal bruke \`p₀\`. I konfidensintervall bruker vi derimot \`p̂\` siden vi ikke har noen \`H₀\` å plugge inn.
 
-> [!tip] Ekvivalent skrivemåte: \`Z = (pˆ − p₀) / √(p₀(1−p₀)/n)\` der \`pˆ = X/n\`. Du får samme tall, bare delt på \`n\` i teller og nevner.
+> [!tip] Ekvivalent skrivemåte: \`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)\` der \`p̂ = X/n\`. Du får samme tall, bare delt på \`n\` i teller og nevner.
 
 Forutsetning: normalapproksimasjonen er gyldig når \`n·p₀·(1−p₀) ≥ 5\`.
 
@@ -1577,16 +1577,16 @@ Det er to enkle sanity-sjekker for telleren \`C(K, k) · C(N − K, n − k)\`:
       id: "ki-andel",
       name: "Konfidensintervall for andel p",
       abbreviation: "Intervall",
-      formula: "pˆ ± z_(α/2) · √(pˆ(1−pˆ)/n)",
+      formula: "p̂ ± z_(α/2) · √(p̂(1−p̂)/n)",
       short: "Tilnærmet symmetrisk intervall for sannsynligheten p, basert på normalapproksimasjon av binomial.",
-      long: `Formelen gir et tilnærmet konfidensintervall for den ukjente andelen \`p\` i en binomisk situasjon med \`X\` suksesser av \`n\` forsøk. Den hviler på at \`pˆ = X/n\` er tilnærmet normalfordelt rundt \`p\` når \`n\` er stort nok.
+      long: `Formelen gir et tilnærmet konfidensintervall for den ukjente andelen \`p\` i en binomisk situasjon med \`X\` suksesser av \`n\` forsøk. Den hviler på at \`p̂ = X/n\` er tilnærmet normalfordelt rundt \`p\` når \`n\` er stort nok.
 
 
-## Hvorfor \`√(pˆ(1−pˆ)/n)\` som standardfeil?
+## Hvorfor \`√(p̂(1−p̂)/n)\` som standardfeil?
 
-For en binomisk variabel er \`Var(pˆ) = p(1−p)/n\`. Siden \`p\` er ukjent, plugger vi inn estimatet \`pˆ\` for å få en brukbar standardfeil. Det er denne tilnærmingen som krever stort \`n\`.
+For en binomisk variabel er \`Var(p̂) = p(1−p)/n\`. Siden \`p\` er ukjent, plugger vi inn estimatet \`p̂\` for å få en brukbar standardfeil. Det er denne tilnærmingen som krever stort \`n\`.
 
-> [!read] pˆ ± z_(α/2) · √(pˆ(1−pˆ)/n)
+> [!read] p̂ ± z_(α/2) · √(p̂(1−p̂)/n)
 > «Den observerte andelen pluss-minus en kvantil ganger den estimerte standardfeilen til andelen.»
 
 
@@ -1594,18 +1594,18 @@ For en binomisk variabel er \`Var(pˆ) = p(1−p)/n\`. Siden \`p\` er ukjent, pl
 
 Normalapproksimasjonen er først pålitelig når både forventet antall suksesser og forventet antall ikke-suksesser er stort nok. Vanlig regel:
 
-    n · pˆ · (1 − pˆ) ≥ 5
+    n · p̂ · (1 − p̂) ≥ 5
 
-Hvis denne svikter, blir intervallet upålitelig (særlig når \`pˆ\` ligger nær 0 eller 1).
+Hvis denne svikter, blir intervallet upålitelig (særlig når \`p̂\` ligger nær 0 eller 1).
 
-> [!tip] I hypotesetest for andel bruker du \`p₀\` (verdi fra \`H₀\`) i standardfeilen, ikke \`pˆ\`. I konfidensintervallet er det \`pˆ\` som gjelder, fordi der har vi ingen \`p₀\` å sammenligne med.
+> [!tip] I hypotesetest for andel bruker du \`p₀\` (verdi fra \`H₀\`) i standardfeilen, ikke \`p̂\`. I konfidensintervallet er det \`p̂\` som gjelder, fordi der har vi ingen \`p₀\` å sammenligne med.
 
 
 ## Eksempel: syke grantrær
 
 Av \`n = 80\` grantrær var \`X = 23\` syke. For 90 % KI:
 
-    pˆ = 23/80 = 0.2875
+    p̂ = 23/80 = 0.2875
     sjekk: 80 · 0.2875 · 0.7125 ≈ 16.4 ≥ 5 (ok)
     SE = √(0.2875 · 0.7125/80) ≈ 0.0506
     margin = 1.645 · 0.0506 ≈ 0.0832
@@ -1739,20 +1739,20 @@ Vi er 95 % sikre på at forventet testresultat ligger mellom 61.05 og 81.55.
       id: "ki-rate",
       name: "Konfidensintervall for poissonrate λ",
       abbreviation: "Intervall",
-      formula: "λˆ ± z_(α/2) · √(λˆ/t)",
+      formula: "λ̂ ± z_(α/2) · √(λ̂/t)",
       short: "Tilnærmet KI for raten λ i en poissonprosess, basert på Y hendelser i tidsvindu t.",
-      long: `Formelen gir et tilnærmet konfidensintervall for raten \`λ\` i en poissonprosess. Vi har observert \`Y\` hendelser i et vindu av lengde \`t\`, og estimerer \`λˆ = Y/t\`. Standardfeilen følger av at \`Var(Y) = λt\`, slik at \`Var(λˆ) = λ/t\`.
+      long: `Formelen gir et tilnærmet konfidensintervall for raten \`λ\` i en poissonprosess. Vi har observert \`Y\` hendelser i et vindu av lengde \`t\`, og estimerer \`λ̂ = Y/t\`. Standardfeilen følger av at \`Var(Y) = λt\`, slik at \`Var(λ̂) = λ/t\`.
 
 
 ## Utledning av standardfeilen
 
-For en poissonvariabel er variansen lik forventningen: \`Var(Y) = λt\`. Siden \`λˆ = Y/t\` blir
+For en poissonvariabel er variansen lik forventningen: \`Var(Y) = λt\`. Siden \`λ̂ = Y/t\` blir
 
-    Var(λˆ) = Var(Y)/t² = λt/t² = λ/t
+    Var(λ̂) = Var(Y)/t² = λt/t² = λ/t
 
-Vi bytter ut ukjente \`λ\` med estimatet \`λˆ\`, og tar kvadratroten for standardfeilen \`√(λˆ/t)\`. Ekvivalent uttrykk: \`√Y / t\`.
+Vi bytter ut ukjente \`λ\` med estimatet \`λ̂\`, og tar kvadratroten for standardfeilen \`√(λ̂/t)\`. Ekvivalent uttrykk: \`√Y / t\`.
 
-> [!read] λˆ ± z_(α/2) · √(λˆ/t)
+> [!read] λ̂ ± z_(α/2) · √(λ̂/t)
 > «Den estimerte raten pluss-minus en kvantil ganger standardfeilen til raten.»
 
 
@@ -1767,7 +1767,7 @@ Tommelfingerregel: \`λt > 10\`, dvs. \`Y > 10\`. For mindre \`Y\` blir poissonf
 
 Fellen står ute i \`t = 5\` uker = 840 timer, og fanger \`Y = 15\` sommerfugler. For 90 % KI:
 
-    λˆ = 15/840 ≈ 0.01786 pr. time
+    λ̂ = 15/840 ≈ 0.01786 pr. time
     Y = 15 > 10 (normalapproksimasjon ok)
     margin = 1.645 · √(0.01786/840) = 1.645 · 0.00461 ≈ 0.00758
     KI = 0.01786 ± 0.00758 = [0.0103, 0.0254]
@@ -3936,18 +3936,18 @@ Siden \`0.41 ≠ 0.36\`, er hendelsene IKKE uavhengige. Differansen \`0.41 − 0
   "regresjon-estimat-alpha-beta": [
     {
       id: "beta-hat",
-      name: "Stigningstallet βˆ",
-      abbreviation: "βˆ",
-      formula: "βˆ = S_XY / S_XX",
+      name: "Stigningstallet β̂",
+      abbreviation: "β̂",
+      formula: "β̂ = S_XY / S_XX",
       short: "Hvor mye y endres per enhet x. Minste-kvadraters-estimatet for stigningstallet.",
-      long: `\`βˆ\` er minste-kvadraters-estimatet for stigningstallet i den lineære modellen \`y = α + β·x + ε\`. Den forteller hvor mye \`y\` i gjennomsnitt endres når \`x\` øker med én enhet.
+      long: `\`β̂\` er minste-kvadraters-estimatet for stigningstallet i den lineære modellen \`y = α + β·x + ε\`. Den forteller hvor mye \`y\` i gjennomsnitt endres når \`x\` øker med én enhet.
 
 
 ## Hvor formelen kommer fra
 
-Minste-kvadraters-prinsippet velger den linjen som minimerer summen av kvadrerte residualer \`Σ(y_i − αˆ − βˆ·x_i)²\`. Setter du de partiellderiverte til null, faller formelen ut:
+Minste-kvadraters-prinsippet velger den linjen som minimerer summen av kvadrerte residualer \`Σ(y_i − α̂ − β̂·x_i)²\`. Setter du de partiellderiverte til null, faller formelen ut:
 
-> [!read] βˆ = Σ(x_i − x̄)(y_i − ȳ) / Σ(x_i − x̄)²
+> [!read] β̂ = Σ(x_i − x̄)(y_i − ȳ) / Σ(x_i − x̄)²
 > Krysssummen for \`(x, y)\` delt på sum av kvadrerte avvik for \`x\` alene.
 
 Telleren \`S_XY\` måler hvordan \`x\` og \`y\` varierer sammen. Nevneren \`S_XX\` måler hvor spredt \`x\`-verdiene er. Forholdet blir et stigningstall i samme enhet som \`y/x\`.
@@ -3960,12 +3960,12 @@ Hvis tabellen oppgir \`Σx_i\`, \`Σy_i\`, \`Σx_i²\` og \`Σx_i·y_i\` i stede
 - \`S_XX = Σx_i² − n·x̄²\`
 - \`S_XY = Σx_i·y_i − n·x̄·ȳ\`
 
-> [!tip] Skriv \`βˆ\` med samme antall siffer som du vil bruke senere. Avrunder du for tidlig, drar feilen seg gjennom \`αˆ\`, \`S_E²\` og hele inferensen.
+> [!tip] Skriv \`β̂\` med samme antall siffer som du vil bruke senere. Avrunder du for tidlig, drar feilen seg gjennom \`α̂\`, \`S_E²\` og hele inferensen.
 
 
 ## Eksempel
 
-Med \`S_XY = 103.4\` og \`S_XX = 15.6\` får vi \`βˆ = 103.4 / 15.6 ≈ 6.63\`. Tolkning: én ekstra time søvn øker forventet eksamensresultat med ca. 6.63 prosentpoeng.
+Med \`S_XY = 103.4\` og \`S_XX = 15.6\` får vi \`β̂ = 103.4 / 15.6 ≈ 6.63\`. Tolkning: én ekstra time søvn øker forventet eksamensresultat med ca. 6.63 prosentpoeng.
 `,
       see_also: [
         {
@@ -3984,33 +3984,33 @@ Med \`S_XY = 103.4\` og \`S_XX = 15.6\` får vi \`βˆ = 103.4 / 15.6 ≈ 6.63\`
     },
     {
       id: "alpha-hat",
-      name: "Skjæringspunktet αˆ",
-      abbreviation: "αˆ",
-      formula: "αˆ = ȳ − βˆ·x̄",
-      short: "Verdien av ŷ når x = 0. Plasserer regresjonslinjen vertikalt etter at βˆ er bestemt.",
-      long: `\`αˆ\` er minste-kvadraters-estimatet for skjæringspunktet (intercept) i \`ŷ = αˆ + βˆ·x\`. Geometrisk er det \`y\`-verdien der den estimerte linjen krysser \`y\`-aksen (\`x = 0\`).
+      name: "Skjæringspunktet α̂",
+      abbreviation: "α̂",
+      formula: "α̂ = ȳ − β̂·x̄",
+      short: "Verdien av ŷ når x = 0. Plasserer regresjonslinjen vertikalt etter at β̂ er bestemt.",
+      long: `\`α̂\` er minste-kvadraters-estimatet for skjæringspunktet (intercept) i \`ŷ = α̂ + β̂·x\`. Geometrisk er det \`y\`-verdien der den estimerte linjen krysser \`y\`-aksen (\`x = 0\`).
 
 
-## Hvorfor αˆ = ȳ − βˆ·x̄
+## Hvorfor α̂ = ȳ − β̂·x̄
 
-Minste-kvadraters-løsningen tvinger regresjonslinjen til å gå gjennom tyngdepunktet \`(x̄, ȳ)\`. Setter du \`x = x̄\` i \`ŷ = αˆ + βˆ·x\` og krever \`ŷ = ȳ\`, faller formelen ut:
+Minste-kvadraters-løsningen tvinger regresjonslinjen til å gå gjennom tyngdepunktet \`(x̄, ȳ)\`. Setter du \`x = x̄\` i \`ŷ = α̂ + β̂·x\` og krever \`ŷ = ȳ\`, faller formelen ut:
 
-> [!read] αˆ = ȳ − βˆ·x̄
-> Skjæringspunktet er det som gjenstår av ȳ etter at vi har trukket fra det βˆ·x̄ allerede forklarer.
+> [!read] α̂ = ȳ − β̂·x̄
+> Skjæringspunktet er det som gjenstår av ȳ etter at vi har trukket fra det β̂·x̄ allerede forklarer.
 
-Derfor må \`βˆ\` regnes ut FØR \`αˆ\`. Endrer du \`βˆ\` med ett siffer, endres \`αˆ\` automatisk via \`x̄\`.
+Derfor må \`β̂\` regnes ut FØR \`α̂\`. Endrer du \`β̂\` med ett siffer, endres \`α̂\` automatisk via \`x̄\`.
 
 
-## Når αˆ er meningsfull og når den ikke er det
+## Når α̂ er meningsfull og når den ikke er det
 
-\`αˆ\` er et reelt utsagn om virkeligheten bare hvis \`x = 0\` ligger innenfor (eller nær) det observerte \`x\`-spennet. Ekstrapolerer du langt utenfor data, blir \`αˆ\` matematisk veldefinert men fysisk meningsløs.
+\`α̂\` er et reelt utsagn om virkeligheten bare hvis \`x = 0\` ligger innenfor (eller nær) det observerte \`x\`-spennet. Ekstrapolerer du langt utenfor data, blir \`α̂\` matematisk veldefinert men fysisk meningsløs.
 
-> [!tip] Hvis \`x = 0\` ligger langt fra dataene, fokusér tolkningen på βˆ alene. αˆ er da bare en justeringskonstant som lar linjen treffe (x̄, ȳ).
+> [!tip] Hvis \`x = 0\` ligger langt fra dataene, fokusér tolkningen på β̂ alene. α̂ er da bare en justeringskonstant som lar linjen treffe (x̄, ȳ).
 
 
 ## Eksempel
 
-Med \`ȳ = 79.7\`, \`βˆ = 6.63\` og \`x̄ = 6.8\` får vi \`αˆ = 79.7 − 6.63·6.8 ≈ 34.62\`. Den estimerte regresjonslinjen blir \`ŷ = 34.62 + 6.63·x\`.
+Med \`ȳ = 79.7\`, \`β̂ = 6.63\` og \`x̄ = 6.8\` får vi \`α̂ = 79.7 − 6.63·6.8 ≈ 34.62\`. Den estimerte regresjonslinjen blir \`ŷ = 34.62 + 6.63·x\`.
 `,
       see_also: [
         {
@@ -4050,7 +4050,7 @@ Fordi \`S_XX\` og \`S_YY\` alltid er ikke-negative, bestemmes fortegnet til \`r\
 
 ## Sammenheng med stigningstallet og r²
 
-Stigningstallet og korrelasjonen er nært beslektet: \`βˆ = r · (s_y / s_x)\`, der \`s_x = √(S_XX/(n−1))\` og \`s_y = √(S_YY/(n−1))\`. Det betyr at \`βˆ\` og \`r\` alltid har samme fortegn.
+Stigningstallet og korrelasjonen er nært beslektet: \`β̂ = r · (s_y / s_x)\`, der \`s_x = √(S_XX/(n−1))\` og \`s_y = √(S_YY/(n−1))\`. Det betyr at \`β̂\` og \`r\` alltid har samme fortegn.
 
 Kvadratet \`r²\` (forklart variasjon) tolkes som andelen av variasjonen i \`y\` som forklares av lineær regresjon på \`x\`:
 
@@ -4099,10 +4099,10 @@ Tolkning: sterk positiv lineær sammenheng. \`r² ≈ 0.933\`, så ca. 93 % av v
 Variansen til prediksjonsfeilen \`Y − ŷ₀\` består av tre uavhengige ledd, som speiles direkte i formelen:
 
 > [!read] Var(Y − ŷ₀) = σ²·(1 + 1/n + (x₀ − x̄)²/S_XX)
-> Naturlig støy + usikkerhet i ȳ + usikkerhet i βˆ ved avstand fra x̄.
+> Naturlig støy + usikkerhet i ȳ + usikkerhet i β̂ ved avstand fra x̄.
 
 - \`1\`: naturlig spredning rundt regresjonslinjen, er DEN nye observasjonens egen feil.
-- \`1/n\`: usikkerhet i hvor selve linjen ligger vertikalt (bidraget fra \`αˆ\`).
+- \`1/n\`: usikkerhet i hvor selve linjen ligger vertikalt (bidraget fra \`α̂\`).
 - \`(x₀ − x̄)²/S_XX\`: usikkerhet i stigningstallet, vektet med hvor langt \`x₀\` er fra tyngdepunktet.
 
 Det er \`1\`-tallet som gjør PI bredere enn KI for \`E[Y|x₀]\`, uten det får du KI, ikke PI.
@@ -4117,17 +4117,17 @@ Bidraget \`(x₀ − x̄)²/S_XX\` vokser kvadratisk når \`x₀\` fjerner seg f
 
 ## Ekvivalente skrivemåter
 
-Når oppgaven gir \`SE(βˆ)\` i stedet for \`S_XX\`, er disse identiske fordi \`S_XX = (S_E / SE(βˆ))²\`:
+Når oppgaven gir \`SE(β̂)\` i stedet for \`S_XX\`, er disse identiske fordi \`S_XX = (S_E / SE(β̂))²\`:
 
 - \`S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)\`
-- \`S_E · √(1 + 1/n + ((x₀ − x̄) · SE(βˆ) / S_E)²)\`
+- \`S_E · √(1 + 1/n + ((x₀ − x̄) · SE(β̂) / S_E)²)\`
 
 Velg den formen der du har færrest mellomregninger.
 
 
 ## Eksempel
 
-Med \`αˆ = 34.6\`, \`βˆ = 6.63\`, \`S_E ≈ 2.468\`, \`S_XX ≈ 15.6\`, \`x̄ = 6.8\`, \`n = 10\`, \`x₀ = 5\`, \`1 − α = 0.95\`:
+Med \`α̂ = 34.6\`, \`β̂ = 6.63\`, \`S_E ≈ 2.468\`, \`S_XX ≈ 15.6\`, \`x̄ = 6.8\`, \`n = 10\`, \`x₀ = 5\`, \`1 − α = 0.95\`:
 
 - \`ŷ₀ = 34.6 + 6.63·5 = 67.75\`
 - \`SE_pred = 2.468 · √(1 + 0.1 + (−1.8)²/15.6) ≈ 2.468 · √1.308 ≈ 2.822\`
@@ -4159,12 +4159,12 @@ En ny student med \`5\` timers søvn vil med 95 % sannsynlighet score mellom ca.
       abbreviation: "S_E²",
       formula: "S_E² = SSE / (n − 2)",
       short: "Variansen til feilene rundt regresjonslinjen. Forventningsrett estimat med n − 2 frihetsgrader.",
-      long: `\`S_E²\` er det forventningsrette estimatet for variansen til residualene \`ε_i = y_i − αˆ − βˆ·x_i\` i en enkel lineær regresjon. Kvadratroten \`S_E = √S_E²\` er residualenes standardavvik og kalles ofte regresjonens "standard error of the estimate".
+      long: `\`S_E²\` er det forventningsrette estimatet for variansen til residualene \`ε_i = y_i − α̂ − β̂·x_i\` i en enkel lineær regresjon. Kvadratroten \`S_E = √S_E²\` er residualenes standardavvik og kalles ofte regresjonens "standard error of the estimate".
 
 
 ## Hvorfor n − 2 i nevneren?
 
-Variansen til en stokastisk variabel estimeres ved å snitte kvadrerte avvik fra gjennomsnittet. Her er "gjennomsnittet" selve regresjonslinjen, og to parametre (\`αˆ\`, \`βˆ\`) er estimert fra dataene. Hver estimert parameter koster én frihetsgrad:
+Variansen til en stokastisk variabel estimeres ved å snitte kvadrerte avvik fra gjennomsnittet. Her er "gjennomsnittet" selve regresjonslinjen, og to parametre (\`α̂\`, \`β̂\`) er estimert fra dataene. Hver estimert parameter koster én frihetsgrad:
 
 > [!read] S_E² = SSE / (n − 2)
 > Sum av kvadrerte residualer delt på antall frihetsgrader, der \`ν = n − 2\`.
@@ -4174,12 +4174,12 @@ Med \`n − 2\` blir estimatet forventningsrett: \`E[S_E²] = σ²\`. Bruker du 
 
 ## Praktisk beregning av SSE
 
-Direkte fra residualene: \`SSE = Σ(y_i − αˆ − βˆ·x_i)²\`. Når du har avvikssummene allerede regnet ut, finnes en mye raskere snarvei:
+Direkte fra residualene: \`SSE = Σ(y_i − α̂ − β̂·x_i)²\`. Når du har avvikssummene allerede regnet ut, finnes en mye raskere snarvei:
 
-- \`SSE = S_YY − βˆ · S_XY\`
+- \`SSE = S_YY − β̂ · S_XY\`
 - alternativt \`SSE = S_YY − S_XY² / S_XX\`
 
-De to er ekvivalente fordi \`βˆ = S_XY / S_XX\`.
+De to er ekvivalente fordi \`β̂ = S_XY / S_XX\`.
 
 > [!tip] SSE forveksles ofte med S_XX = Σ(x − x̄)². De er HELT forskjellige: SSE bruker residualer i y-retning, S_XX måler spredning i x.
 
@@ -4207,31 +4207,31 @@ Med \`SSE = 48.7437\` og \`n = 10\` blir \`S_E² = 48.7437 / 8 ≈ 6.093\`, så 
   "regresjon-standardfeil-stigningstall": [
     {
       id: "se-beta",
-      name: "Standardfeil til βˆ",
-      abbreviation: "SE(βˆ)",
-      formula: "SE(βˆ) = √(S_E² / S_XX)",
-      short: "Hvor mye βˆ varierer fra utvalg til utvalg. Inngår direkte i t-test og KI for β.",
-      long: `\`SE(βˆ)\` er det estimerte standardavviket til stigningstallet \`βˆ\`. Den kvantifiserer hvor mye \`βˆ\` ville variert hvis vi gjorde forsøket om igjen med nye \`y\`-verdier ved samme \`x\`-design.
+      name: "Standardfeil til β̂",
+      abbreviation: "SE(β̂)",
+      formula: "SE(β̂) = √(S_E² / S_XX)",
+      short: "Hvor mye β̂ varierer fra utvalg til utvalg. Inngår direkte i t-test og KI for β.",
+      long: `\`SE(β̂)\` er det estimerte standardavviket til stigningstallet \`β̂\`. Den kvantifiserer hvor mye \`β̂\` ville variert hvis vi gjorde forsøket om igjen med nye \`y\`-verdier ved samme \`x\`-design.
 
 
 ## Hvor formelen kommer fra
 
-Under standard-antakelsene (uavhengige feil, konstant varians \`σ²\`) gjelder eksakt: \`Var(βˆ) = σ² / S_XX\`. Vi kjenner ikke \`σ²\`, så vi setter inn estimatet \`S_E²\` og tar kvadratrot:
+Under standard-antakelsene (uavhengige feil, konstant varians \`σ²\`) gjelder eksakt: \`Var(β̂) = σ² / S_XX\`. Vi kjenner ikke \`σ²\`, så vi setter inn estimatet \`S_E²\` og tar kvadratrot:
 
-> [!read] SE(βˆ) = √(S_E² / S_XX)
+> [!read] SE(β̂) = √(S_E² / S_XX)
 > Residualenes standardavvik delt på kvadratroten av x-spredningen.
 
-Lagt på en kortere form: \`SE(βˆ) = S_E / √S_XX\`. De to skrivemåtene gir nøyaktig samme tall.
+Lagt på en kortere form: \`SE(β̂) = S_E / √S_XX\`. De to skrivemåtene gir nøyaktig samme tall.
 
 
-## Hva styrer størrelsen på SE(βˆ)?
+## Hva styrer størrelsen på SE(β̂)?
 
 To størrelser drar i hver sin retning:
 
-- Liten \`S_E²\` (god tilpasning, lite støy) gir liten \`SE(βˆ)\`.
-- Stor \`S_XX\` (godt spredte \`x\`-verdier) gir liten \`SE(βˆ)\`.
+- Liten \`S_E²\` (god tilpasning, lite støy) gir liten \`SE(β̂)\`.
+- Stor \`S_XX\` (godt spredte \`x\`-verdier) gir liten \`SE(β̂)\`.
 
-For å redusere usikkerheten i \`βˆ\` kan du altså enten samle inn flere/mer presise målinger ELLER spre \`x\`-verdiene mer.
+For å redusere usikkerheten i \`β̂\` kan du altså enten samle inn flere/mer presise målinger ELLER spre \`x\`-verdiene mer.
 
 > [!tip] Et eksperiment der alle x-verdiene ligger tett (S_XX liten) gir en upresis stigning selv om residualene er små. "Legg datapunktene langt fra hverandre" er en designregel når β er det interessante.
 
@@ -4240,9 +4240,9 @@ For å redusere usikkerheten i \`βˆ\` kan du altså enten samle inn flere/mer 
 
 Med \`S_E² = 6.093\` og \`S_XX = 15.6\`:
 
-\`SE(βˆ) = √(6.093 / 15.6) = √0.3906 ≈ 0.625\`.
+\`SE(β̂) = √(6.093 / 15.6) = √0.3906 ≈ 0.625\`.
 
-Denne verdien brukes direkte i \`T = βˆ / SE(βˆ)\` for hypotesetesten, og i KI-bredden \`βˆ ± t_(α/2, n−2) · SE(βˆ)\`.
+Denne verdien brukes direkte i \`T = β̂ / SE(β̂)\` for hypotesetesten, og i KI-bredden \`β̂ ± t_(α/2, n−2) · SE(β̂)\`.
 `,
       see_also: [
         {
@@ -4263,18 +4263,18 @@ Denne verdien brukes direkte i \`T = βˆ / SE(βˆ)\` for hypotesetesten, og i 
   "regresjon-test-stigningstall": [
     {
       id: "t-slope",
-      name: "Testobservator T = βˆ / SE(βˆ)",
+      name: "Testobservator T = β̂ / SE(β̂)",
       abbreviation: "Test β=0",
-      formula: "T = (βˆ − β₀) / SE(βˆ)",
+      formula: "T = (β̂ − β₀) / SE(β̂)",
       short: "T-fordelt under H₀ med n − 2 frihetsgrader. Sammenlignes med t_(α/2, n−2) i tabell E.5.",
       long: `\`T\` er testobservatoren for hypotesen \`H₀: β = β₀\` i en enkel lineær regresjon. Når \`β₀ = 0\` (det vanligste) tester den om det finnes en lineær sammenheng mellom \`x\` og \`y\` overhodet.
 
 
 ## Tolkning av telleren og nevneren
 
-Telleren \`βˆ − β₀\` måler hvor langt det observerte stigningstallet ligger fra null-hypotesen, i samme enhet som \`y/x\`. Nevneren \`SE(βˆ)\` er typisk "støy-skalaen" til \`βˆ\`. Forholdet er enhetsløst og forteller "hvor mange standardfeil unna H₀ ligger βˆ":
+Telleren \`β̂ − β₀\` måler hvor langt det observerte stigningstallet ligger fra null-hypotesen, i samme enhet som \`y/x\`. Nevneren \`SE(β̂)\` er typisk "støy-skalaen" til \`β̂\`. Forholdet er enhetsløst og forteller "hvor mange standardfeil unna H₀ ligger β̂":
 
-> [!read] T = (βˆ − β₀) / SE(βˆ)
+> [!read] T = (β̂ − β₀) / SE(β̂)
 > Antall standardfeil mellom det estimerte og det hypotetiske stigningstallet.
 
 Under \`H₀\` (og normalitet på feilene) er \`T\` t-fordelt med \`ν = n − 2\` frihetsgrader.
@@ -4295,7 +4295,7 @@ Ensidige tester (\`H₁: β > 0\` eller \`β < 0\`) bruker \`t_(α, n−2)\` og 
 
 ## Eksempel
 
-Med \`βˆ = 6.63\`, \`SE(βˆ) = 0.625\`, \`n = 10\` og \`α = 0.05\` (tosidig):
+Med \`β̂ = 6.63\`, \`SE(β̂) = 0.625\`, \`n = 10\` og \`α = 0.05\` (tosidig):
 
 \`T = 6.63 / 0.625 = 10.61\`. Kritisk verdi: \`t_(0.025, 8) = 2.306\`.
 

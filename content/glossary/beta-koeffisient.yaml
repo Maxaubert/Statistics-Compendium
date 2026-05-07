@@ -13,18 +13,18 @@ aliases:
   - beta-koeffisient
   - stigningstall
   - stigningstallet
-  - βˆ
+  - β̂
 long_def: |
   I modellen
 
       Y = α + β·X + ε
 
-  er `β` stigningstallet. `βˆ` estimeres fra data ved minste kvadraters
+  er `β` stigningstallet. `β̂` estimeres fra data ved minste kvadraters
   metode. Tester `β = 0` sjekker om `X` har lineær effekt på `Y`.
 
   **KI for β:**
 
-      βˆ ± t_(α/2, n−2) · SE(βˆ)
+      β̂ ± t_(α/2, n−2) · SE(β̂)
 see_also:
   - { id: regresjon-estimat-alpha-beta, kind: entry }
   - { id: regresjon-test-stigningstall, kind: entry }

@@ -1,6 +1,6 @@
 id: andel
-term_no: Andel (p, pˆ)
-short_def: "Brøkdelen av en populasjon (`p`) eller et utvalg (`pˆ = X/n`) som har en bestemt egenskap."
+term_no: Andel (p, p̂)
+short_def: "Brøkdelen av en populasjon (`p`) eller et utvalg (`p̂ = X/n`) som har en bestemt egenskap."
 filters:
   random_variable: [proportion]
   parameters_known: [success_p, alpha_significance]
@@ -9,18 +9,18 @@ filters:
   setup: [single_population]
   structural_cues: [success_probability_given]
 long_def: |
-  `p` er populasjonsandelen — det vi prøver å estimere. `pˆ` er
+  `p` er populasjonsandelen — det vi prøver å estimere. `p̂` er
   utvalgsandelen — antall «suksesser» delt på antall observasjoner:
 
-      pˆ = X / n
+      p̂ = X / n
 
-  **KI for andel** (krever `n·pˆ·(1−pˆ) ≥ 5`):
+  **KI for andel** (krever `n·p̂·(1−p̂) ≥ 5`):
 
-      pˆ ± z_(α/2) · √( pˆ(1−pˆ) / n )
+      p̂ ± z_(α/2) · √( p̂(1−p̂) / n )
 
   **Testobservator:**
 
-      Z = (pˆ − p₀) / √( p₀(1−p₀) / n )
+      Z = (p̂ − p₀) / √( p₀(1−p₀) / n )
 aliases:
   - andel
   - andelen

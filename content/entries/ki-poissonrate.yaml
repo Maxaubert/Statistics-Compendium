@@ -4,7 +4,7 @@ type: identity
 category: confidence_interval
 tagline: "`(1−α)·100 %` KI for raten `λ` basert på `Y` observerte hendelser i tid `t`."
 
-formula_main: "λˆ ± z_(α/2) · √(λˆ/t);  λˆ = Y/t"
+formula_main: "λ̂ ± z_(α/2) · √(λ̂/t);  λ̂ = Y/t"
 formula_latex: "\\hat{\\lambda} \\pm z_{\\alpha/2} \\cdot \\sqrt{\\frac{\\hat{\\lambda}}{t}}, \\quad \\hat{\\lambda} = \\frac{Y}{t}"
 
 what_it_does: |
@@ -28,7 +28,7 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "λ",        means: "raten (det vi vil estimere)" }
-  - { sym: "λˆ",        means: "punktestimat, `λˆ = Y/t`" }
+  - { sym: "λ̂",        means: "punktestimat, `λ̂ = Y/t`" }
   - { sym: "Y",         means: "antall hendelser observert i tidsperioden" }
   - { sym: "t",         means: "lengden på observasjonsperioden" }
   - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
@@ -44,16 +44,16 @@ filters:
 
 solution_template:
   - "Identifiser totalt antall observerte hendelser `Y` og total observasjonstid `t` (samme enhet som raten)"
-  - "Beregn punktestimat `λˆ = Y/t`"
-  - "Sjekk at `Y > 10` (≈ `λˆ·t > 10`) for at normalapproksimasjon er gyldig"
+  - "Beregn punktestimat `λ̂ = Y/t`"
+  - "Sjekk at `Y > 10` (≈ `λ̂·t > 10`) for at normalapproksimasjon er gyldig"
   - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
   - "Slå opp `z_(α/2)` i tabell E.4 (f.eks. `z_(0.05) = 1.645`)"
-  - "Beregn margin: `z_(α/2) · √(λˆ/t) = z_(α/2) · √Y / t`"
-  - "KI: `λˆ ± margin`"
+  - "Beregn margin: `z_(α/2) · √(λ̂/t) = z_(α/2) · √Y / t`"
+  - "KI: `λ̂ ± margin`"
 
 common_traps: |
   Sjekk at `t` er i samme enhet som raten (timer, dager, måneder, osv.).
-  Variansformelen i nevneren bruker `√(λˆ/t)`, ekvivalent med `√Y / t`.
+  Variansformelen i nevneren bruker `√(λ̂/t)`, ekvivalent med `√Y / t`.
   Hvis `Y` er liten, er normalapproksimasjon for unøyaktig – men i pensum
   forutsettes ofte at det er ok.
 
@@ -80,17 +80,17 @@ detailed_solution_variants:
               - { text: "Konfidensnivå 90 % → α = 0.10, α/2 = 0.05" }
           - label: "Estimat"
             lines:
-              - { text: "λˆ = Y/t = 15/840 = 0.01786 pr. time" }
+              - { text: "λ̂ = Y/t = 15/840 = 0.01786 pr. time" }
               - { comment: "Y = 15 > 10, så normalapproksimasjon er gyldig" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.05 = 1.645" } }
           - label: "Intervall"
             lines:
-              - { text: "Margin = z_(α/2) · √(λˆ/t) = 1.645 · √(0.01786 / 840)" }
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 1.645 · √(0.01786 / 840)" }
               - { indent: "= 1.645 · √(2.126·10⁻⁵)" }
               - { indent: "= 1.645 · 0.00461 = 0.00758" }
-              - { text: "KI = λˆ ± margin = 0.01786 ± 0.00758" }
+              - { text: "KI = λ̂ ± margin = 0.01786 ± 0.00758" }
           - label: "Tolkning"
             lines:
               - { text: "Vi er 90 % sikre på at raten λ ligger mellom 0.0103 og 0.0254 fangster pr. time." }
@@ -106,17 +106,17 @@ detailed_solution_variants:
               - { text: "Konfidensnivå 95 % → α = 0.05, α/2 = 0.025" }
           - label: "Estimat"
             lines:
-              - { text: "λˆ = Y/t = 12/60 = 0.20 utbrudd pr. år" }
+              - { text: "λ̂ = Y/t = 12/60 = 0.20 utbrudd pr. år" }
               - { comment: "Y = 12 > 10, normalapproksimasjon er ok" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.025 = 1.96" } }
           - label: "Intervall"
             lines:
-              - { text: "Margin = z_(α/2) · √(λˆ/t) = 1.96 · √(0.20 / 60)" }
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 1.96 · √(0.20 / 60)" }
               - { indent: "= 1.96 · √(0.003333)" }
               - { indent: "= 1.96 · 0.05774 = 0.1132" }
-              - { text: "KI = λˆ ± margin = 0.20 ± 0.113" }
+              - { text: "KI = λ̂ ± margin = 0.20 ± 0.113" }
           - label: "Tolkning"
             lines:
               - { text: "Vi er 95 % sikre på at den sanne raten λ ligger mellom 0.087 og 0.313 utbrudd pr. år." }
@@ -132,17 +132,17 @@ detailed_solution_variants:
               - { text: "Konfidensnivå 99 % → α = 0.01, α/2 = 0.005" }
           - label: "Estimat"
             lines:
-              - { text: "λˆ = Y/t = 25/1 = 25 anrop pr. time" }
+              - { text: "λ̂ = Y/t = 25/1 = 25 anrop pr. time" }
               - { comment: "Y = 25 > 10, normalapproksimasjon er trygg" }
           - label: "Tabelloppslag"
             lines:
               - { table_lookup: { ref: "E.4", text: "z_(α/2) = z_0.005 = 2.576" } }
           - label: "Intervall"
             lines:
-              - { text: "Margin = z_(α/2) · √(λˆ/t) = 2.576 · √(25 / 1)" }
+              - { text: "Margin = z_(α/2) · √(λ̂/t) = 2.576 · √(25 / 1)" }
               - { indent: "= 2.576 · √25" }
               - { indent: "= 2.576 · 5 = 12.88" }
-              - { text: "KI = λˆ ± margin = 25 ± 12.88" }
+              - { text: "KI = λ̂ ± margin = 25 ± 12.88" }
           - label: "Tolkning"
             lines:
               - { text: "Vi er 99 % sikre på at sentralens sanne ankomstrate λ ligger mellom 12.12 og 37.88 anrop pr. time." }

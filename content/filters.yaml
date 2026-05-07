@@ -83,7 +83,7 @@ dimensions:
       - { key: sample_size_large,           label_no: "Stort utvalg (n ≥ 30)" }
       - { key: rate_lambda,                 label_no: "Rate λ" }
       - { key: success_p,                   label_no: "Sannsynlighet p" }
-      - { key: slope_se,                    label_no: "SE(βˆ)" }
+      - { key: slope_se,                    label_no: "SE(β̂)" }
       - { key: residual_variance,           label_no: "Residualvarians S_E²" }
       - { key: sum_xx_sxy,                  label_no: "Σ(x−x̄)² og Σxy gitt" }
       - { key: alpha_significance,          label_no: "Signifikansnivå α gitt" }

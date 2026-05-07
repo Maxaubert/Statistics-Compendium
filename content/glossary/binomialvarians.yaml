@@ -17,9 +17,9 @@ long_def: |
       σ      = √(np(1 − p))
 
   Variansen er størst når `p = 0.5` (da blir `Var = n/4`) og går mot
-  `0` når `p` nærmer seg `0` eller `1`. For andelen `pˆ = X/n`:
+  `0` når `p` nærmer seg `0` eller `1`. For andelen `p̂ = X/n`:
 
-      Var(pˆ) = p(1 − p) / n
+      Var(p̂) = p(1 − p) / n
 
   Brukes som **kjennelig egenskap** for binomial og som grunnlag for
   normalapproksimasjon når:

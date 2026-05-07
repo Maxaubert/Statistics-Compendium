@@ -4,7 +4,7 @@ type: test
 category: hypothesis_test
 tagline: "Tester om det er en lineær sammenheng mellom `x` og `y`, dvs. om stigningstallet `β` er forskjellig fra null."
 
-formula_main: "T = (βˆ - β₀) / SE(βˆ);  SE(βˆ) = √(S_E² / Σ(x_i - x̄)²)"
+formula_main: "T = (β̂ - β₀) / SE(β̂);  SE(β̂) = √(S_E² / Σ(x_i - x̄)²)"
 formula_latex: "T = \\frac{\\hat{\\beta} - \\beta_0}{\\text{SE}(\\hat{\\beta})}, \\quad \\text{SE}(\\hat{\\beta}) = \\sqrt{\\frac{S_E^2}{\\sum (x_i - \\bar{x})^2}}"
 
 what_it_does: |
@@ -13,7 +13,7 @@ what_it_does: |
   Testobservatoren er t-fordelt med `ν = n − 2` frihetsgrader.
 
 why_use: |
-  Etter du har estimert en regresjonslinje `ŷ = αˆ + βˆ·x`, er det viktig å
+  Etter du har estimert en regresjonslinje `ŷ = α̂ + β̂·x`, er det viktig å
   vurdere om sammenhengen kan skyldes tilfeldigheter. Hvis vi ikke kan
   forkaste `H₀: β = 0`, har vi ikke statistisk grunnlag for å si at det
   faktisk er en lineær sammenheng.
@@ -21,7 +21,7 @@ why_use: |
 recognition_cues:
   - "Du har en regresjonslinje og vil teste om sammenhengen er signifikant"
   - "Spørsmålet er av type: 'kan sammenhengen skyldes tilfeldigheter?'"
-  - "Du har `βˆ` og `SE(βˆ)` gitt, eller du kan beregne dem"
+  - "Du har `β̂` og `SE(β̂)` gitt, eller du kan beregne dem"
   - "`n − 2` frihetsgrader nevnes (kjennetegn på regresjonstest)"
 
 when_NOT_to_use:
@@ -30,9 +30,9 @@ when_NOT_to_use:
   - "Du estimerer `Y` for en `x`-verdi (ikke selve sammenhengen) → [prediksjonsintervall](/entry/regresjon-prediksjonsintervall)"
 
 symbols:
-  - { sym: "βˆ",    means: "estimert stigningstall" }
+  - { sym: "β̂",    means: "estimert stigningstall" }
   - { sym: "β₀",    means: "verdien vi tester mot, ofte `0`" }
-  - { sym: "SE(βˆ)", means: "standardfeilen til `βˆ`" }
+  - { sym: "SE(β̂)", means: "standardfeilen til `β̂`" }
   - { sym: "S_E²",   means: "estimat for residualenes varians" }
   - { sym: "ν",     means: "frihetsgrader, `ν = n − 2`" }
   - { sym: "T",     means: "testobservator, t-fordelt under `H₀`" }
@@ -48,15 +48,15 @@ filters:
 
 solution_template:
   - "Formuler hypotesene `H₀: β = 0` vs `H₁: β ≠ 0` (typisk tosidig test)"
-  - "Beregn `SE(βˆ) = √(S_E² / Σ(x_i − x̄)²)` hvis ikke gitt"
-  - "Beregn testobservator `t = (βˆ − 0)/SE(βˆ)`"
+  - "Beregn `SE(β̂) = √(S_E² / Σ(x_i − x̄)²)` hvis ikke gitt"
+  - "Beregn testobservator `t = (β̂ − 0)/SE(β̂)`"
   - "Finn kvantil `t_(α/2, n−2)` i tabell E.5 (tosidig)"
   - "Forkast `H₀` hvis `|t| > t_(α/2, n−2)`"
   - "Konkluder om hvorvidt det er statistisk grunnlag for lineær sammenheng"
 
 common_traps: |
   Frihetsgrader i regresjon: `ν = n − 2` (ikke `n − 1`). Dette er fordi to
-  parametre er estimert (`αˆ` og `βˆ`). Glem ikke kvadratroten i `SE(βˆ)`.
+  parametre er estimert (`α̂` og `β̂`). Glem ikke kvadratroten i `SE(β̂)`.
 
 python_snippet: |
   import numpy as np
@@ -84,9 +84,9 @@ detailed_solution_variants:
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`βˆ = 6.63`, `SSE = 48.7437`, `Σ(x_i - x̄)² = 15.6`" }
+              - { text: "`β̂ = 6.63`, `SSE = 48.7437`, `Σ(x_i - x̄)² = 15.6`" }
               - { text: "`n = 10`, `α = 0.05`" }
-              - { comment: "SE(βˆ) må beregnes fra SSE og Σ(x-x̄)²" }
+              - { comment: "SE(β̂) må beregnes fra SSE og Σ(x-x̄)²" }
           - label: "Hypoteser"
             lines:
               - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
@@ -95,8 +95,8 @@ detailed_solution_variants:
           - label: "Testobservator"
             lines:
               - { text: "`S_E² = SSE / (n-2) = 48.7437 / 8 = 6.093`" }
-              - { text: "`SE(βˆ) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625`" }
-              - { text: "`T = βˆ / SE(βˆ) = 6.63 / 0.625 = 10.61`" }
+              - { text: "`SE(β̂) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625`" }
+              - { text: "`T = β̂ / SE(β̂) = 6.63 / 0.625 = 10.61`" }
           - label: "Tabelloppslag"
             lines:
               - { text: "`df = n - 2 = 10 - 2 = 8`" }
@@ -108,11 +108,11 @@ detailed_solution_variants:
         result: "Forkast `H₀` på `α = 0.05`. Det er statistisk signifikant lineær sammenheng mellom søvn og eksamensresultat."
 
       - source: "Praksis · klar sammenheng"
-        question: "Datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)` gir `βˆ = 1.5` og `SE(βˆ) = 0.1`. Test om det er en lineær sammenheng på `α = 0.05`."
+        question: "Datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)` gir `β̂ = 1.5` og `SE(β̂) = 0.1`. Test om det er en lineær sammenheng på `α = 0.05`."
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`βˆ = 1.5`, `SE(βˆ) = 0.1`" }
+              - { text: "`β̂ = 1.5`, `SE(β̂) = 0.1`" }
               - { text: "`n = 5`, `α = 0.05`" }
               - { comment: "begge størrelser er gitt direkte" }
           - label: "Hypoteser"
@@ -122,7 +122,7 @@ detailed_solution_variants:
               - { comment: "tosidig test" }
           - label: "Testobservator"
             lines:
-              - { text: "`T = βˆ / SE(βˆ) = 1.5 / 0.1 = 15.0`" }
+              - { text: "`T = β̂ / SE(β̂) = 1.5 / 0.1 = 15.0`" }
           - label: "Tabelloppslag"
             lines:
               - { text: "`df = n - 2 = 5 - 2 = 3`" }
@@ -134,13 +134,13 @@ detailed_solution_variants:
         result: "Forkast `H₀` på `α = 0.05`. Det er sterk statistisk signifikant lineær sammenheng mellom `x` og `y`."
 
       - source: "Praksis · svak sammenheng"
-        question: "I et datasett med `n = 12` observasjoner finner vi `βˆ = 0.35` og `SE(βˆ) = 0.28`. Test om det er en lineær sammenheng på `α = 0.05`."
+        question: "I et datasett med `n = 12` observasjoner finner vi `β̂ = 0.35` og `SE(β̂) = 0.28`. Test om det er en lineær sammenheng på `α = 0.05`."
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`βˆ = 0.35`, `SE(βˆ) = 0.28`" }
+              - { text: "`β̂ = 0.35`, `SE(β̂) = 0.28`" }
               - { text: "`n = 12`, `α = 0.05`" }
-              - { comment: "merk at SE er stor relativt til βˆ" }
+              - { comment: "merk at SE er stor relativt til β̂" }
           - label: "Hypoteser"
             lines:
               - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
@@ -148,7 +148,7 @@ detailed_solution_variants:
               - { comment: "tosidig test" }
           - label: "Testobservator"
             lines:
-              - { text: "`T = βˆ / SE(βˆ) = 0.35 / 0.28 = 1.25`" }
+              - { text: "`T = β̂ / SE(β̂) = 0.35 / 0.28 = 1.25`" }
           - label: "Tabelloppslag"
             lines:
               - { text: "`df = n - 2 = 12 - 2 = 10`" }

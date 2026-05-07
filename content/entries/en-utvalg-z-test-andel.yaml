@@ -11,7 +11,7 @@ what_it_does: |
   Tester nullhypotesen om sannsynligheten `p` (eller andelen) i en
   populasjon er lik `p₀`, basert på at vi har observert `X` suksesser i
   `n` forsøk. Bruker normalapproksimasjon for binomialfordelingen, som
-  er gyldig når `n·pˆ·(1−pˆ) ≥ 5`.
+  er gyldig når `n·p̂·(1−p̂) ≥ 5`.
 
 why_use: |
   Når problemet handler om en andel – andelen syke i en populasjon,
@@ -22,7 +22,7 @@ recognition_cues:
   - "Du har en BINOMISK situasjon: `n` forsøk med samme suksessannsynlighet"
   - "Du tester om `p` (andelen suksesser i populasjonen) er lik en gitt `p₀`"
   - "Du har observert `X` suksesser av `n` forsøk"
-  - "Antall forsøk er stort nok: `n·pˆ·(1−pˆ) ≥ 5`"
+  - "Antall forsøk er stort nok: `n·p̂·(1−p̂) ≥ 5`"
 
 when_NOT_to_use:
   - "`n` er liten og normalapproksimasjon ikke gyldig – bruk eksakt [binomial](/entry/binomial-fordeling)"
@@ -33,7 +33,7 @@ symbols:
   - { sym: "X",   means: "antall suksesser observert i utvalget" }
   - { sym: "n",   means: "totalt antall forsøk" }
   - { sym: "p₀",  means: "verdien for sannsynlighet vi tester mot" }
-  - { sym: "pˆ",   means: "estimert andel, `pˆ = X/n`" }
+  - { sym: "p̂",   means: "estimert andel, `p̂ = X/n`" }
   - { sym: "Z",   means: "testobservator, standardnormalfordelt under `H₀`" }
 
 filters:
@@ -46,15 +46,15 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
   - "Formuler hypotesene `H₀: p = p₀` vs `H₁` (én- eller tosidig)"
-  - "Bekreft normalapproksimasjon: `n·pˆ·(1−pˆ) ≥ 5`"
-  - "Beregn `pˆ = x/n`"
-  - "Beregn `z = (x − n·p₀) / √(n·p₀·(1−p₀))` – eller ekvivalent `z = (pˆ − p₀) / √(p₀(1−p₀)/n)`"
+  - "Bekreft normalapproksimasjon: `n·p̂·(1−p̂) ≥ 5`"
+  - "Beregn `p̂ = x/n`"
+  - "Beregn `z = (x − n·p₀) / √(n·p₀·(1−p₀))` – eller ekvivalent `z = (p̂ − p₀) / √(p₀(1−p₀)/n)`"
   - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i tabell E.4"
   - "Sammenlign og konkluder"
 
 common_traps: |
-  Variansen i nevneren bruker `p₀` (verdien fra `H₀`), IKKE `pˆ`. Dette er
-  forskjellig fra [konfidensintervall for andel](/entry/ki-andel-binomial), som bruker `pˆ`. Husk
+  Variansen i nevneren bruker `p₀` (verdien fra `H₀`), IKKE `p̂`. Dette er
+  forskjellig fra [konfidensintervall for andel](/entry/ki-andel-binomial), som bruker `p̂`. Husk
   rotuttrykket – vanlig feil å glemme kvadratroten.
 
 python_snippet: |
@@ -78,10 +78,10 @@ detailed_solution_variants:
           - label: "Forutsetninger"
             lines:
               - { text: "Sjekk normalapproksimasjon: `n·p₀·(1−p₀) = 100·0.5·0.5 = 25 ≥ 5` ✓" }
-              - { text: "`pˆ = 60/100 = 0.60`" }
+              - { text: "`p̂ = 60/100 = 0.60`" }
           - label: "Testobservator"
             lines:
-              - { text: "`Z = (pˆ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
               - { indent: "`= (0.60 − 0.50) / √(0.5·0.5/100)`" }
               - { indent: "`= 0.10 / 0.05 = 2.00`" }
           - label: "Konklusjon"
@@ -100,10 +100,10 @@ detailed_solution_variants:
           - label: "Forutsetninger"
             lines:
               - { text: "Normalapproksimasjon: `n·p₀·(1−p₀) = 80·0.20·0.80 = 12.8 ≥ 5` ✓" }
-              - { text: "`pˆ = 23/80 = 0.2875`" }
+              - { text: "`p̂ = 23/80 = 0.2875`" }
           - label: "Testobservator"
             lines:
-              - { text: "`Z = (pˆ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
               - { indent: "`= (0.2875 − 0.20) / √(0.20·0.80/80)`" }
               - { indent: "`= 0.0875 / 0.04472 ≈ 1.957`" }
           - label: "Konklusjon"

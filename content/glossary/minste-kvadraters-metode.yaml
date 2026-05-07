@@ -12,17 +12,17 @@ aliases:
   - minste kvadraters
   - OLS
 long_def: |
-  Metoden velger `αˆ` og `βˆ` slik at summen av kvadrerte avstander mellom
+  Metoden velger `α̂` og `β̂` slik at summen av kvadrerte avstander mellom
   observerte `yᵢ` og predikerte `ŷᵢ` blir minst mulig. Kvadratet straffer
   store avvik mer enn små og gjør matematikken pen (lukket løsning).
 
   **Stigningstall:**
 
-      βˆ = S_xy / S_xx
+      β̂ = S_xy / S_xx
 
   **Konstantledd:**
 
-      αˆ = ȳ − βˆ·x̄
+      α̂ = ȳ − β̂·x̄
 
   Sårbar for uteliggere fordi store avvik veier ekstra tungt.
 see_also:

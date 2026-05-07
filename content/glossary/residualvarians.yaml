@@ -20,9 +20,9 @@ long_def: |
   rådataene.
 
   **Hvorfor `n − 2`?** To frihetsgrader er «brukt opp» til å estimere
-  `αˆ` og `βˆ` fra de samme dataene.
+  `α̂` og `β̂` fra de samme dataene.
 
-  Inngår i: standardfeil til `βˆ`, hypotesetest for stigningstall,
+  Inngår i: standardfeil til `β̂`, hypotesetest for stigningstall,
   prediksjonsintervall.
 aliases:
   - residualvarians
