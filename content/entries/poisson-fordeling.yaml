@@ -84,6 +84,18 @@ solution_variants:
       - "Trekk tabellverdien fra 1 for å få svaret"
       - "Sjekk fornuft: `P(X ≥ k)` skal synke når `k` vokser; for `k = 1` skal verdien være nær `1 − e^(-μ)`"
 
+  - label: "P(a ≤ X ≤ b)"
+    steps:
+      - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `λ = 0.05` pr. natt, `t = 60` → `μ = 3`)"
+      - "Les av nedre grense `a` og øvre grense `b` fra oppgaven (formuleringer som 'mellom `a` og `b`', '`a` eller `b`', 'minst `a`, høyst `b`')"
+      - "Skriv intervallet via to kumulative oppslag: `P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)`"
+      - { text: "Tabellen skal slås opp på `a − 1`, IKKE på `a`. Bruker du `P(X ≤ a)` mister du bidraget fra `X = a` selv. F.eks. for `P(2 ≤ X ≤ 5)` slå opp `P(X ≤ 1)`, ikke `P(X ≤ 2)`.", conditional: true }
+      - { text: "Hvis `a = 1`: forenkles til `P(1 ≤ X ≤ b) = P(X ≤ b) − P(X = 0) = P(X ≤ b) − e^(-μ)`", conditional: true }
+      - "Slå opp begge verdiene i tabell E.2 (kolonne for `μ`, rader for `b` og `a − 1`)"
+      - "Trekk de to: `P(X ≤ b) − P(X ≤ a − 1)`"
+      - { text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte, `P(X = a) + P(X = a + 1) + ... + P(X = b)`", conditional: true }
+      - "Sjekk fornuft: svaret skal være mellom 0 og 1, og mindre enn både `P(X ≤ b)` og `P(X ≥ a)` hver for seg"
+
   - label: "P(X = 0)"
     steps:
       - "Gjenkjenn formuleringer som 'ingen hendelser', 'ikke finne noen', 'tom felle', 'null utbrudd' → dette er `P(X = 0)`"
@@ -258,6 +270,55 @@ detailed_solution_variants:
               - { table_lookup: { ref: "E.2", text: "μ = 4, k = 5 → P(X ≤ 5) = 0.785" } }
               - { text: "`P(X ≥ 6) = 1 − 0.785`" }
         result: "`P(X ≥ 6) ≈ 0.215`"
+
+  - label: "P(a ≤ X ≤ b)"
+    solutions:
+      - source: "Praksis · stjerneskudd over en sesong"
+        question: "En forsker observerer en sjelden type stjerneskudd som inntreffer med rate `λ = 0.05` pr. natt (poissonprosess). Finn sannsynligheten for at forskeren observerer ett eller to slike stjerneskudd i løpet av en sesong på 60 netter."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 0.05` pr. natt, `t = 60` netter" }
+              - { text: "`μ = λt = 0.05 · 60 = 3`" }
+              - { text: "Spørres om `P(1 ≤ X ≤ 2)` (ett eller to)" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(1 ≤ X ≤ 2) = P(X ≤ 2) − P(X ≤ 0)`" }
+              - { comment: "P(X ≤ 0) = P(X = 0) = e^(-μ)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 3, k = 2 → P(X ≤ 2) = 0.4232" } }
+              - { table_lookup: { ref: "E.2", text: "μ = 3, k = 0 → P(X ≤ 0) = 0.0498" } }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(1 ≤ X ≤ 2) = 0.4232 − 0.0498`" }
+              - { indent: "`= 0.3734`" }
+          - label: "Sjekk"
+            lines:
+              - { comment: "alternativ: P(X = 1) + P(X = 2) = 3·e^(-3) + 4.5·e^(-3) ≈ 0.1494 + 0.2240 = 0.3734 ✓" }
+        result: "`P(1 ≤ X ≤ 2) ≈ 0.373`"
+
+      - source: "Praksis · kundeanrop i intervall"
+        question: "Et kundesenter har rate `λ = 1.5` anrop pr. minutt. Finn sannsynligheten for mellom 3 og 5 anrop (begge inkludert) i løpet av 4 minutter."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 1.5` pr. minutt, `t = 4` min" }
+              - { text: "`μ = λt = 6`" }
+              - { text: "`a = 3`, `b = 5` → spørres om `P(3 ≤ X ≤ 5)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(3 ≤ X ≤ 5) = P(X ≤ 5) − P(X ≤ 2)`" }
+              - { comment: "Pass på: nedre grense slås opp på a − 1 = 2, ikke på a = 3" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 6, k = 5 → P(X ≤ 5) = 0.4457" } }
+              - { table_lookup: { ref: "E.2", text: "μ = 6, k = 2 → P(X ≤ 2) = 0.0620" } }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(3 ≤ X ≤ 5) = 0.4457 − 0.0620`" }
+              - { indent: "`= 0.3837`" }
+        result: "`P(3 ≤ X ≤ 5) ≈ 0.384`"
 
   - label: "P(X = 0)"
     solutions:
