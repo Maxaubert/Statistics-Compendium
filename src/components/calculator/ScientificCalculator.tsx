@@ -237,29 +237,24 @@ export function ScientificCalculator() {
         ))}
       </div>
 
-      {/* History */}
-      <div className="mt-3 flex flex-col">
-        {history.length === 0 ? (
-          <div className="rounded-md bg-paper-2/60 px-3 py-2 text-center font-serif text-[12px] italic text-ink-3">
-            Trykk Enter for å lagre resultatet i historikken.
+      {/* History (omitted entirely when empty) */}
+      {history.length > 0 && (
+        <div className="mt-3 flex flex-col">
+          <div className="mb-1 flex items-center justify-between px-1">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-3">
+              Historikk
+            </span>
+            <button
+              type="button"
+              onClick={clearHistory}
+              title="Slett all historikk"
+              className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3 transition-colors hover:text-warn"
+            >
+              Slett alle
+            </button>
           </div>
-        ) : (
-          <>
-            <div className="mb-1 flex items-center justify-between px-1">
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-3">
-                Historikk
-              </span>
-              <button
-                type="button"
-                onClick={clearHistory}
-                title="Slett all historikk"
-                className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3 transition-colors hover:text-warn"
-              >
-                Slett alle
-              </button>
-            </div>
-            <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto">
-              {history.map((h, i) => (
+          <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto">
+            {history.map((h, i) => (
                 <div
                   key={i}
                   className="group flex items-stretch gap-1"
@@ -287,13 +282,12 @@ export function ScientificCalculator() {
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                     </svg>
-                  </button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
