@@ -16,21 +16,24 @@ aliases:
   - poisson prosessen
   - poissonprosessen
 long_def: |
-  En modell for hendelser som «pirrer» tilfeldig over tid (eller rom)
-  med en gjennomsnittsrate som ikke endrer seg, og uten at hendelsene
-  påvirker hverandre.
+  En matematisk modell for hendelser som inntreffer tilfeldig spredt
+  utover tid (eller område), der det gjennomsnittlige antallet hendelser
+  per tidsenhet er konstant, og der én hendelse ikke påvirker når neste
+  kommer.
 
   **Konkret eksempel.** En kasse på Coop får i snitt `2` kunder per
   minutt. Det betyr ikke at kundene kommer som klokkeslett 0:30, 1:00,
-  1:30, … — de spres tilfeldig: noen ganger 3 kunder på 30 sekunder,
-  andre ganger ingen kunder på 2 minutter. Snittet er likevel 2 per
-  minutt over tid. Det er en poissonprosess med rate `λ = 2` per minutt.
+  1:30 og så videre. De spres tilfeldig: noen ganger 3 kunder på 30
+  sekunder, andre ganger ingen kunder på 2 minutter. Snittet er likevel
+  2 per minutt over tid. Dette er en poissonprosess med rate
+  `λ = 2` per minutt.
 
   **De to størrelsene som inngår:**
 
-  - `λ` (lambda) = raten — hvor mange hendelser i snitt per tidsenhet.
-    F.eks. `λ = 2` per minutt, `λ = 0.05` per time, `λ = 3` per måned.
-  - `t` = lengden på tidsvinduet du ser på, i samme tidsenhet som `λ`.
+  - `λ` (lambda) er raten, altså hvor mange hendelser i snitt per
+    tidsenhet. F.eks. `λ = 2` per minutt, `λ = 0.05` per time,
+    `λ = 3` per måned.
+  - `t` er lengden på tidsvinduet du ser på, i samme tidsenhet som `λ`.
     F.eks. hvis `λ` er per minutt og du ser på 5 minutter, er `t = 5`.
 
   Produktet `λ · t` er forventet antall hendelser i vinduet. Med
@@ -44,19 +47,21 @@ long_def: |
 
       X ~ Poisson(λt)
 
-  Lest høyt: «`X` følger en Poisson-fordeling med parameter `λt`». `X`
-  er antall hendelser i et vindu av lengde `t`. Du bruker dette til å
-  svare på *hvor mange* hendelser kommer (f.eks. `P(X = 5)`,
+  > [!read] X følger en Poisson-fordeling med parameter `λt`.
+
+  `X` er antall hendelser i et vindu av lengde `t`. Du bruker dette til
+  å svare på *hvor mange* hendelser kommer (f.eks. `P(X = 5)`,
   `P(X ≥ 3)`).
 
   **2. Ventetiden til neste hendelse er eksponentialfordelt.**
 
       T ~ Eksponential(λ)
 
-  Lest høyt: «`T` følger en eksponentialfordeling med rate `λ`». `T`
-  er hvor lenge du venter (i samme tidsenhet som `λ`) før neste
+  > [!read] T følger en eksponentialfordeling med rate `λ`.
+
+  `T` er hvor lenge du venter (i samme tidsenhet som `λ`) før neste
   hendelse inntreffer. Du bruker dette til å svare på *når* neste
-  hendelse kommer (f.eks. `P(T > 3 minutter)` = sannsynligheten for at
+  hendelse kommer (f.eks. `P(T > 3 minutter)` er sannsynligheten for at
   ingen kunde dukker opp på 3 minutter).
 
   Oppsummert: Poisson teller hendelser, eksponential måler ventetid.
@@ -64,13 +69,13 @@ long_def: |
 
   **3. Disjunkte vinduer er uavhengige.**
 
-  «Disjunkte vinduer» = tidsvinduer som ikke overlapper. Hva som
+  «Disjunkte vinduer» betyr tidsvinduer som ikke overlapper. Hva som
   skjedde i ett vindu, sier ingenting om hva som skjer i et annet,
   ikke-overlappende vindu.
 
   Eksempel: hvis du observerte 4 kunder mellom kl. 12:00 og 12:05, er
-  forventet antall kunder mellom kl. 12:05 og 12:10 fortsatt `λ · t`
-  — uavhengig av de 4 du så. Prosessen «husker ikke» fortiden. Dette
+  forventet antall kunder mellom kl. 12:05 og 12:10 fortsatt `λ · t`,
+  uavhengig av de 4 du så. Prosessen «husker ikke» fortiden. Dette
   kalles av og til at prosessen er *minneløs*.
 
   ## Typiske eksempler
