@@ -72,7 +72,7 @@ export function Modal({ ariaLabel, onClose, children, maxWidth = "640px" }: Prop
         aria-label="Lukk"
         onClick={requestClose}
         className={clsx(
-          "absolute inset-0 cursor-default bg-black/70 backdrop-blur-md transition-opacity duration-200 ease-out",
+          "absolute inset-0 cursor-default bg-black/85 backdrop-blur-lg transition-opacity duration-200 ease-out",
           open ? "opacity-100" : "opacity-0",
         )}
       />
