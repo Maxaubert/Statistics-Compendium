@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 export type InlineCodeTheme = "light" | "dark" | "warn";
 
 /**
- * Render a string with three flavors of inline markdown:
+ * Render a string with four flavors of inline markdown:
  *   - `backtick`-delimited spans → <code> pill
+ *   - **bold** → <strong>
  *   - [label](href) → router <Link> (only for `/entry/...`, `/table/...`
  *     internal paths; external/protocol-prefixed hrefs render as plain text)
+ *
+ * Bold spans are matched only within non-backtick text, so backtick code
+ * inside bold delimiters (e.g. `**foo `bar` baz**`) is NOT supported —
+ * use a heading or split the markup if you need that combination.
  *
  * Plain unicode is preserved as-is — KaTeX is not invoked here, the symbols
  * are already Unicode in the YAML.
@@ -22,8 +27,8 @@ export function renderInlineCode(
   text: string,
   theme: InlineCodeTheme = "light",
 ): ReactNode {
-  // Split on backticks first; for the non-code parts, pull out [label](href)
-  // links before emitting plain text.
+  // Split on backticks first; for the non-code parts, pull out **bold**
+  // and [label](href) before emitting plain text.
   const codeParts = text.split(/(`[^`]+`)/g);
   const out: ReactNode[] = [];
   let key = 0;
@@ -37,29 +42,40 @@ export function renderInlineCode(
       continue;
     }
     if (part.length === 0) continue;
-    // Walk for [label](href) tokens.
-    let cursor = 0;
-    LINK_RE.lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = LINK_RE.exec(part)) !== null) {
-      if (match.index > cursor) {
+    // Inside non-code, split out bold spans; within each non-bold piece,
+    // walk for links.
+    const boldParts = part.split(/(\*\*[^*]+\*\*)/g);
+    for (const bp of boldParts) {
+      if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
         out.push(
-          <Fragment key={key++}>{part.slice(cursor, match.index)}</Fragment>,
+          <strong key={key++}>{bp.slice(2, -2)}</strong>,
         );
+        continue;
       }
-      out.push(
-        <Link
-          key={key++}
-          to={match[2]}
-          className={LINK_CLASS[theme]}
-        >
-          {match[1]}
-        </Link>,
-      );
-      cursor = match.index + match[0].length;
-    }
-    if (cursor < part.length) {
-      out.push(<Fragment key={key++}>{part.slice(cursor)}</Fragment>);
+      if (bp.length === 0) continue;
+      let cursor = 0;
+      LINK_RE.lastIndex = 0;
+      let match: RegExpExecArray | null;
+      while ((match = LINK_RE.exec(bp)) !== null) {
+        if (match.index > cursor) {
+          out.push(
+            <Fragment key={key++}>{bp.slice(cursor, match.index)}</Fragment>,
+          );
+        }
+        out.push(
+          <Link
+            key={key++}
+            to={match[2]}
+            className={LINK_CLASS[theme]}
+          >
+            {match[1]}
+          </Link>,
+        );
+        cursor = match.index + match[0].length;
+      }
+      if (cursor < bp.length) {
+        out.push(<Fragment key={key++}>{bp.slice(cursor)}</Fragment>);
+      }
     }
   }
   return out;
