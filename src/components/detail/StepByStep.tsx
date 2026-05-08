@@ -96,15 +96,36 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
               </div>
               {formula && (
                 <div
-                  className="mt-3 rounded-md border border-line bg-card/70 px-4 py-2.5 font-mono text-[14px] text-ink"
-                  style={{ overflowX: "auto" }}
+                  className={clsx(
+                    "mt-3 rounded-md px-4 py-2.5 font-mono text-[14px] text-ink",
+                    conditional
+                      ? "border border-amber-400/40 bg-amber-100/50"
+                      : "border border-primary-2/20 bg-primary-soft",
+                  )}
+                  style={{
+                    overflowX: "auto",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
+                  }}
                 >
                   {renderInlineCode(formula, "light")}
                 </div>
               )}
               {cases && cases.length > 0 && (
-                <div className="mt-3 overflow-hidden rounded-md border border-line bg-card/70">
-                  <ul className="m-0 list-none divide-y divide-line p-0 font-serif text-[13.5px]">
+                <div
+                  className={clsx(
+                    "mt-3 overflow-hidden rounded-md",
+                    conditional
+                      ? "border border-amber-400/40 bg-amber-100/50"
+                      : "border border-primary-2/20 bg-primary-soft",
+                  )}
+                  style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)" }}
+                >
+                  <ul
+                    className={clsx(
+                      "m-0 list-none p-0 font-serif text-[13.5px] divide-y",
+                      conditional ? "divide-amber-400/30" : "divide-primary-2/15",
+                    )}
+                  >
                     {cases.map((c, ci) => (
                       <li
                         key={ci}
