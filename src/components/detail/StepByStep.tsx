@@ -2,20 +2,32 @@ import { clsx } from "clsx";
 import { AlertTriangle } from "lucide-react";
 import { renderInlineCode } from "./inline-code";
 
+export interface StepCase {
+  when: string;
+  then: string;
+}
+
 export type StepItem =
   | string
-  | { text: string; conditional?: boolean; formula?: string };
+  | {
+      text: string;
+      conditional?: boolean;
+      formula?: string;
+      cases?: StepCase[];
+    };
 
 function normalize(item: StepItem): {
   text: string;
   conditional: boolean;
   formula?: string;
+  cases?: StepCase[];
 } {
   if (typeof item === "string") return { text: item, conditional: false };
   return {
     text: item.text,
     conditional: !!item.conditional,
     formula: item.formula,
+    cases: item.cases,
   };
 }
 
@@ -35,7 +47,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         className="absolute left-[18px] top-4 bottom-4 w-[2px] bg-primary-2/30"
       />
       {steps.map((raw, i) => {
-        const { text, conditional, formula } = normalize(raw);
+        const { text, conditional, formula, cases } = normalize(raw);
         const stepNo = numbers[i];
         return (
           <li key={i} className="relative">
@@ -88,6 +100,26 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
                   style={{ overflowX: "auto" }}
                 >
                   {renderInlineCode(formula, "light")}
+                </div>
+              )}
+              {cases && cases.length > 0 && (
+                <div className="mt-3 overflow-hidden rounded-md border border-line bg-card/70">
+                  <ul className="m-0 list-none divide-y divide-line p-0 font-serif text-[13.5px]">
+                    {cases.map((c, ci) => (
+                      <li
+                        key={ci}
+                        className="flex flex-col gap-1 px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4"
+                      >
+                        <span className="flex-1 text-ink">
+                          {renderInlineCode(c.when, "light")}
+                        </span>
+                        <span className="hidden text-ink-3 sm:inline">→</span>
+                        <span className="flex-1 text-ink-2">
+                          {renderInlineCode(c.then, "light")}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>

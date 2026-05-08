@@ -70,13 +70,17 @@ export const DetailedSolutionSchema = z.object({
 /**
  * A single step in a step-by-step guide. Either:
  *  - a plain string (default — renders as a normal numbered step), or
- *  - an object `{ text, conditional, formula }` where:
+ *  - an object `{ text, conditional, formula, cases }` where:
  *    - `conditional: true` marks the step as only applying in a specific
  *      sub-case (negative z, threshold failed, etc.). The renderer
  *      surfaces these with a distinct accent border.
  *    - `formula` (optional) renders a math expression on its own line
  *      below the step text, in monospace, so the formula is visually
  *      separated from the procedural prose.
+ *    - `cases` (optional) renders as a small two-column decision matrix
+ *      below the text — `when` on the left, `then` (action/verdict)
+ *      on the right. Used for "when does this test apply?"-style
+ *      Pass-paa lookups that span multiple sub-cases.
  */
 export const StepItemSchema = z.union([
   z.string(),
@@ -84,6 +88,9 @@ export const StepItemSchema = z.union([
     text: z.string(),
     conditional: z.boolean().optional(),
     formula: z.string().optional(),
+    cases: z
+      .array(z.object({ when: z.string(), then: z.string() }))
+      .optional(),
   }),
 ]);
 
