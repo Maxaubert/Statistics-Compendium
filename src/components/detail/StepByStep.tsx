@@ -49,6 +49,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
       {steps.map((raw, i) => {
         const { text, conditional, formula, cases } = normalize(raw);
         const stepNo = numbers[i];
+        const codeTheme = conditional ? "warn" : "step";
         return (
           <li key={i} className="relative">
             <span
@@ -92,7 +93,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
                   conditional ? "text-ink-2" : "text-ink",
                 )}
               >
-                {renderInlineCode(text, "light")}
+                {renderInlineCode(text, codeTheme)}
               </div>
               {formula && (
                 <div
@@ -107,7 +108,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
                     boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
                   }}
                 >
-                  {renderInlineCode(formula, "light")}
+                  {renderInlineCode(formula, codeTheme)}
                 </div>
               )}
               {cases && cases.length > 0 && (
@@ -132,11 +133,11 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
                         className="flex flex-col gap-1 px-4 py-2.5 sm:flex-row sm:items-center sm:gap-4"
                       >
                         <span className="flex-1 text-ink">
-                          {renderInlineCode(c.when, "light")}
+                          {renderInlineCode(c.when, codeTheme)}
                         </span>
                         <span className="hidden text-ink-3 sm:inline">→</span>
                         <span className="flex-1 text-ink-2">
-                          {renderInlineCode(c.then, "light")}
+                          {renderInlineCode(c.then, codeTheme)}
                         </span>
                       </li>
                     ))}

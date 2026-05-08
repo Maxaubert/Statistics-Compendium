@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export type InlineCodeTheme = "light" | "dark" | "warn";
+export type InlineCodeTheme = "light" | "dark" | "warn" | "step";
 
 /**
  * Render a string with five flavors of inline markdown:
@@ -195,6 +195,11 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // pop visibly while staying in the same hue family.
   warn:
     "rounded border border-amber-500/30 bg-amber-700/10 px-1.5 py-[1px] font-mono text-[13px] text-amber-900",
+  // Step: indigo-tinted pill that lifts above the primary-soft step
+  // card AND the primary-soft formula inset. Uses a 10 % indigo tint
+  // so it stays visibly darker than either parent surface.
+  step:
+    "rounded border border-primary-2/30 bg-primary-2/[0.10] px-1.5 py-[1px] font-mono text-[13px] text-ink",
 };
 
 const LINK_CLASS: Record<InlineCodeTheme, string> = {
@@ -204,4 +209,6 @@ const LINK_CLASS: Record<InlineCodeTheme, string> = {
     "text-inherit underline decoration-white/50 underline-offset-[3px] transition-colors hover:text-white hover:decoration-white",
   warn:
     "text-amber-900 underline decoration-amber-700/60 underline-offset-[3px] transition-colors hover:decoration-amber-900",
+  step:
+    "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
 };
