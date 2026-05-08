@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 export type InlineCodeTheme = "light" | "dark" | "warn";
 
 /**
- * Render a string with four flavors of inline markdown:
+ * Render a string with five flavors of inline markdown:
  *   - `backtick`-delimited spans → <code> pill
- *   - **bold** → <strong>
- *   - [label](href) → router <Link> (only for `/entry/...`, `/table/...`
- *     internal paths; external/protocol-prefixed hrefs render as plain text)
+ *   - **bold** → <strong> (links and auto-links work inside bold)
+ *   - [label](href) → router <Link>
+ *   - tabell E.1 … E.6 → auto-linked to the corresponding /table/EX-... page
  *
  * Bold spans are matched only within non-backtick text, so backtick code
  * inside bold delimiters (e.g. `**foo `bar` baz**`) is NOT supported —
@@ -16,72 +16,134 @@ export type InlineCodeTheme = "light" | "dark" | "warn";
  *
  * Plain unicode is preserved as-is — KaTeX is not invoked here, the symbols
  * are already Unicode in the YAML.
- *
- * Themes:
- *  - `light` (default) — light-grey pill on white card.
- *  - `dark` — subtle white-tint, no border, used inside the dark calc-style
- *    DetailedSolution card.
- *  - `warn` — amber-tinted pill for warn-soft backgrounds.
  */
 export function renderInlineCode(
   text: string,
   theme: InlineCodeTheme = "light",
 ): ReactNode {
-  // Split on backticks first; for the non-code parts, pull out **bold**
-  // and [label](href) before emitting plain text.
   const codeParts = text.split(/(`[^`]+`)/g);
   const out: ReactNode[] = [];
-  let key = 0;
+  const ctx = { key: 0 };
   for (const part of codeParts) {
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
       out.push(
-        <code key={key++} className={CODE_CLASS[theme]}>
+        <code key={ctx.key++} className={CODE_CLASS[theme]}>
           {renderHats(part.slice(1, -1))}
         </code>,
       );
       continue;
     }
     if (part.length === 0) continue;
-    // Inside non-code, split out bold spans; within each non-bold piece,
-    // walk for links.
-    const boldParts = part.split(/(\*\*[^*]+\*\*)/g);
-    for (const bp of boldParts) {
-      if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
-        out.push(
-          <strong key={key++}>{bp.slice(2, -2)}</strong>,
-        );
-        continue;
-      }
-      if (bp.length === 0) continue;
-      let cursor = 0;
-      LINK_RE.lastIndex = 0;
-      let match: RegExpExecArray | null;
-      while ((match = LINK_RE.exec(bp)) !== null) {
-        if (match.index > cursor) {
-          out.push(
-            <Fragment key={key++}>{bp.slice(cursor, match.index)}</Fragment>,
-          );
-        }
-        out.push(
-          <Link
-            key={key++}
-            to={match[2]}
-            className={LINK_CLASS[theme]}
-          >
-            {match[1]}
-          </Link>,
-        );
-        cursor = match.index + match[0].length;
-      }
-      if (cursor < bp.length) {
-        out.push(<Fragment key={key++}>{bp.slice(cursor)}</Fragment>);
-      }
-    }
+    pushBoldAndLinks(part, theme, out, ctx);
   }
   return out;
 }
 
+/** Walk a non-code text segment for **bold** spans; inside each
+ *  bold span and around it, render explicit links and auto-link
+ *  `tabell E.X` references. */
+function pushBoldAndLinks(
+  text: string,
+  theme: InlineCodeTheme,
+  out: ReactNode[],
+  ctx: { key: number },
+) {
+  let cursor = 0;
+  BOLD_RE.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = BOLD_RE.exec(text)) !== null) {
+    if (m.index > cursor) {
+      pushLinksAndTableRefs(text.slice(cursor, m.index), theme, out, ctx);
+    }
+    out.push(
+      <strong key={ctx.key++}>
+        {renderLinksAndTableRefs(m[1], theme, ctx)}
+      </strong>,
+    );
+    cursor = m.index + m[0].length;
+  }
+  if (cursor < text.length) {
+    pushLinksAndTableRefs(text.slice(cursor), theme, out, ctx);
+  }
+}
+
+function pushLinksAndTableRefs(
+  text: string,
+  theme: InlineCodeTheme,
+  out: ReactNode[],
+  ctx: { key: number },
+) {
+  for (const node of renderLinksAndTableRefs(text, theme, ctx)) {
+    out.push(node);
+  }
+}
+
+/** Within a plain (non-bold, non-code) text fragment, emit explicit
+ *  `[label](href)` links and auto-link `tabell E.1` … `tabell E.6`
+ *  references to their respective /table/... routes. */
+function renderLinksAndTableRefs(
+  text: string,
+  theme: InlineCodeTheme,
+  ctx: { key: number },
+): ReactNode[] {
+  const out: ReactNode[] = [];
+  let cursor = 0;
+  COMBINED_RE.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = COMBINED_RE.exec(text)) !== null) {
+    if (m.index > cursor) {
+      out.push(
+        <Fragment key={ctx.key++}>{text.slice(cursor, m.index)}</Fragment>,
+      );
+    }
+    if (m[3]) {
+      // tabell E.X auto-link
+      const tableId = TABLE_ID_BY_NUM[m[3]];
+      out.push(
+        <Link
+          key={ctx.key++}
+          to={`/table/${tableId}`}
+          className={LINK_CLASS[theme]}
+        >
+          {m[0]}
+        </Link>,
+      );
+    } else if (m[1] && m[2]) {
+      // explicit [label](href) link
+      out.push(
+        <Link
+          key={ctx.key++}
+          to={m[2]}
+          className={LINK_CLASS[theme]}
+        >
+          {m[1]}
+        </Link>,
+      );
+    }
+    cursor = m.index + m[0].length;
+  }
+  if (cursor < text.length) {
+    out.push(<Fragment key={ctx.key++}>{text.slice(cursor)}</Fragment>);
+  }
+  return out;
+}
+
+const BOLD_RE = /\*\*([^*]+)\*\*/g;
 const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+// Combined: explicit link OR `tabell E.<digit>`
+const COMBINED_RE =
+  /\[([^\]]+)\]\(([^)\s]+)\)|tabell\s+E\.([1-6])\b/gi;
+
+const TABLE_ID_BY_NUM: Record<string, string> = {
+  "1": "E1-binomial-kumulativ",
+  "2": "E2-poisson-kumulativ",
+  "3": "E3-z-tabell",
+  "4": "E4-z-kvantiltabell",
+  "5": "E5-t-tabell",
+  "6": "E6-kjikvadrattabell",
+};
+
+void LINK_RE; // kept for grep continuity; logic now lives in COMBINED_RE
 
 /**
  * Greek letters with U+0302 COMBINING CIRCUMFLEX ACCENT (estimator
