@@ -198,8 +198,8 @@ describe("TableLookupWidget — input fields show liveVals on mount", () => {
   });
 });
 
-describe("TableLookupWidget — handleChange empty-input fix", () => {
-  it("calls setVals with the input's default when the field is cleared (poisson μ)", () => {
+describe("TableLookupWidget — clearing the field does NOT respawn a default", () => {
+  it("writes NaN for the cleared input (poisson μ)", () => {
     const setVals = vi.fn();
     render(
       <TableLookupWidget
@@ -210,18 +210,16 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
     );
 
     const μInput = screen.getAllByRole("spinbutton")[0];
-    // Field starts empty, so type a value first, then clear it.
     fireEvent.change(μInput, { target: { value: "3" } });
     setVals.mockClear();
     fireEvent.change(μInput, { target: { value: "" } });
 
     expect(setVals).toHaveBeenCalled();
     const lastCall = setVals.mock.calls.at(-1)![0];
-    // defaultValueFor('μ') = 1
-    expect(lastCall.μ).toBe(1);
+    expect(Number.isNaN(lastCall.μ)).toBe(true);
   });
 
-  it("calls setVals with the input's default when df is cleared (t-table)", () => {
+  it("writes NaN for the cleared input (t-table df)", () => {
     const setVals = vi.fn();
     render(
       <TableLookupWidget
@@ -230,7 +228,6 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
         setVals={setVals}
       />,
     );
-    // df is the first input (index 0). Field starts empty; type, then clear.
     const dfInput = screen.getAllByRole("spinbutton")[0];
     fireEvent.change(dfInput, { target: { value: "999" } });
     setVals.mockClear();
@@ -238,15 +235,12 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
 
     expect(setVals).toHaveBeenCalled();
     const lastCall = setVals.mock.calls.at(-1)![0];
-    // defaultValueFor('df') = 5
-    expect(lastCall.df).toBe(5);
+    expect(Number.isNaN(lastCall.df)).toBe(true);
   });
 
-  // Specific bug reproducer from the task spec: type 999 in df, then clear,
-  // then verify the printed table reflects the default df = 5 (not the
-  // stale 999). Uses a controlled host so the printed table re-renders
-  // with whatever `setVals` writes.
-  it("reproduces the spec scenario: typing 999 in df, then clearing, resets the printed t-table to df ≈ 5", () => {
+  // After clearing an input, the input element itself stays empty —
+  // the widget no longer auto-fills it with a default value.
+  it("leaves the input element empty after clearing (no auto-fill)", () => {
     function Host() {
       const [vals, setVals] = useState<Record<string, number>>({
         df: 5,
@@ -261,14 +255,13 @@ describe("TableLookupWidget — handleChange empty-input fix", () => {
     }
     render(<Host />);
 
-    const dfInput = screen.getAllByRole("spinbutton")[0];
+    const dfInput = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
 
     fireEvent.change(dfInput, { target: { value: "999" } });
-    expect(screen.getByText(/df = 999/)).toBeInTheDocument();
+    expect(dfInput.value).toBe("999");
 
     fireEvent.change(dfInput, { target: { value: "" } });
-    expect(screen.queryByText(/df = 999/)).not.toBeInTheDocument();
-    expect(screen.getByText(/df = 5/)).toBeInTheDocument();
+    expect(dfInput.value).toBe("");
   });
 });
 

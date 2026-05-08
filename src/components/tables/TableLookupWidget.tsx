@@ -62,10 +62,13 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
     Object.fromEntries(Object.entries(liveVals).map(([k, v]) => [k, String(v)])),
   );
   // Re-sync when liveVals reference changes (mode toggle, table swap).
+  // Only mirror real numbers — leave NaN entries untouched so an
+  // intentionally-cleared field stays empty in the UI.
   useEffect(() => {
     setText((prev) => {
       const next = { ...prev };
       for (const [k, v] of Object.entries(liveVals)) {
+        if (Number.isNaN(v)) continue;
         if (Number(prev[k]) !== v) next[k] = String(v);
       }
       // Drop keys that don't belong to the active mode's inputs.
@@ -78,15 +81,14 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 
   const handleChange = (name: string, raw: string) => {
     setText((prev) => ({ ...prev, [name]: raw }));
-    // Empty field → reset to the input's default so the printed table
-    // and result widget stop showing the previous value.
-    if (raw === "") {
-      writeVals({ ...liveVals, [name]: defaultValueFor(name) });
+    // Empty / intermediate input → write NaN so the lookup falls back
+    // to "—" and the printed table stops highlighting. We do NOT
+    // restore a default value here — the user just cleared it on
+    // purpose, and respawning a default was confusing.
+    if (raw === "" || raw === "-" || raw === "." || raw === "-.") {
+      writeVals({ ...liveVals, [name]: NaN });
       return;
     }
-    // Mid-typing intermediate states: don't push a number yet, but
-    // also don't clobber liveVals.
-    if (raw === "-" || raw === "." || raw === "-.") return;
     const num = Number(raw);
     if (!Number.isNaN(num)) {
       writeVals({ ...liveVals, [name]: num });
