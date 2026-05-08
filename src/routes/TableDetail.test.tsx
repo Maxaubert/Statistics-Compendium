@@ -60,11 +60,13 @@ describe("TableDetail", () => {
 
   it("does not crash when df is cleared on the t-tabell route", () => {
     renderRoute("E5-t-tabell");
-    const dfInput = screen.getAllByRole("spinbutton")[0];
+    const dfInput = screen.getAllByRole("spinbutton")[0] as HTMLInputElement;
     fireEvent.change(dfInput, { target: { value: "999" } });
     fireEvent.change(dfInput, { target: { value: "" } });
-    // After clearing, the printed t-table should reflect the default df = 5.
-    expect(screen.getByText(/df = 5/)).toBeInTheDocument();
+    // After clearing, the input stays empty (no auto-default respawn).
+    expect(dfInput.value).toBe("");
+    // The page should still render its main containers.
+    expect(screen.getByRole("heading", { name: "t-tabell" })).toBeInTheDocument();
   });
 
   it("does not crash when toggling forward/inverse mode on the Z-tabell", () => {

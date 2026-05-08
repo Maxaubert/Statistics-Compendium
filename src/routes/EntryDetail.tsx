@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
 import { Section } from "@/components/detail/Section";
+import { renderInlineCode } from "@/components/detail/inline-code";
 import { HeroFormula } from "@/components/detail/HeroFormula";
 import { DistributionThumbnail } from "@/components/detail/DistributionThumbnail";
 import { RecognitionCues } from "@/components/detail/RecognitionCues";
@@ -100,7 +101,7 @@ export function EntryDetail() {
                 {entry.name_no}
               </h1>
               <p className="mt-2 font-serif text-base italic text-ink-3">
-                {entry.tagline}
+                {renderInlineCode(entry.tagline, "light")}
               </p>
             </div>
             <div className="flex flex-wrap gap-1.5 pt-2">
