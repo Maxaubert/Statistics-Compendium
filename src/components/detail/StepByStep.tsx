@@ -90,7 +90,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         const labelText = example
           ? "Eksempel"
           : conditional
-          ? "Pass paa"
+          ? "Pass på"
           : `Steg ${stepNo}`;
 
         const textInkClass = example || conditional ? "text-ink-2" : "text-ink";
@@ -186,7 +186,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
   );
 }
 
-/** Step number per row, skipping conditional ("Pass paa") and example rows so they do not consume a count. */
+/** Step number per row, skipping conditional ("Pass på") and example rows so they do not consume a count. */
 function computeStepNumbers(steps: StepItem[]): (number | null)[] {
   let n = 0;
   return steps.map((s) => {
