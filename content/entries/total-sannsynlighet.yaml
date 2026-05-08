@@ -52,6 +52,7 @@ solution_variants:
         formula: "P(B) = Σ_i P(A_i)·P(B|A_i)"
       - text: "Eksempel:"
         formula: "P(T) = P(J)·P(T|J) + P(J̄)·P(T|J̄) = 0.52·0.23 + 0.48·0.34 = 0.2828"
+        example: true
   - label: "Bakover: finn ukjent betinget"
     steps:
       - "Bruk når `P(B)` ER GITT (ofte 'totalt sett'-tall) sammen med en av de betingede, og du skal finne den ANDRE betingede"
@@ -62,6 +63,7 @@ solution_variants:
         formula: "P(B|Ā) = (P(B) − P(A)·P(B|A)) / P(Ā)"
       - text: "Eksempel: P(spirer) = 0.8 totalt, P(ringblomstfrø) = 0.6, P(spirer|ringblomstfrø) = 0.9. Spiregraden for andre frø:"
         formula: "(0.8 − 0.6·0.9) / (1 − 0.6) = 0.26/0.4 = 0.65"
+        example: true
       - "Sjekk fornuft: svaret skal ligge i `[0, 1]` og være konsistent med marginalen"
 
 common_traps: |

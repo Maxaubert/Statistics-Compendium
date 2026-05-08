@@ -59,6 +59,7 @@ solution_variants:
         formula: "T = (x̄ − μ₀)/(s/√n)"
       - text: "Eksempel med `n = 12`, `ν = 11`, `x̄ = 4.6`, `s = 0.8`, `μ₀ = 5.0`:"
         formula: "T = (4.6 − 5.0)/(0.8/√12) ≈ −1.732"
+        example: true
       - { text: "Hvis `σ` er kjent, bruk z-test i stedet (mer presist for kjent `σ`)", conditional: true }
       - "Slå opp `t_(α, ν)` i **tabell E.5** (t-kvantiltabell) med `ν = n − 1` frihetsgrader (f.eks. `α = 0.05`, `ν = 11` → `t_(0.05, 11) ≈ 1.796`)"
       - text: "Forkastingsregel for venstresidig (kritisk verdi negativ):"
@@ -79,6 +80,7 @@ solution_variants:
         formula: "T = (x̄ − μ₀)/(s/√n)"
       - text: "Eksempel med `n = 12`, `ν = 11`, `x̄ = 5.4`, `s = 0.8`, `μ₀ = 5.0`:"
         formula: "T = (5.4 − 5.0)/(0.8/√12) ≈ 1.732"
+        example: true
       - { text: "Hvis `n` er stor (`≥ 30`), gir t- og z-test nær identiske svar", conditional: true }
       - "Slå opp `t_(α, ν)` i **tabell E.5** (t-kvantiltabell) med `ν = n − 1` frihetsgrader (f.eks. `α = 0.05`, `ν = 11` → `t_(0.05, 11) ≈ 1.796`)"
       - text: "Forkastingsregel for høyresidig (kritisk verdi positiv):"
@@ -99,6 +101,7 @@ solution_variants:
         formula: "T = (x̄ − μ₀)/(s/√n)"
       - text: "Eksempel med `n = 10`, `ν = 9`, `x̄ = 71.30`, `s = 14.33`, `μ₀ = 70`:"
         formula: "T = (71.30 − 70)/(14.33/√10) ≈ 0.287"
+        example: true
       - { text: "Hvis `σ` er kjent, bruk z-test i stedet (mer presist for kjent `σ`)", conditional: true }
       - "Slå opp `t_(α/2, ν)` i **tabell E.5** (t-kvantiltabell) med `ν = n − 1` frihetsgrader (merk: `α/2`, ikke `α`; f.eks. `α = 0.05`, `ν = 9` → `t_(0.025, 9) ≈ 2.262`)"
       - text: "Forkastingsregel for tosidig (kritisk verdi gjelder begge haler):"
