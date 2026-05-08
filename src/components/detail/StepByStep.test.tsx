@@ -1,51 +1,42 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { StepByStep } from "./StepByStep";
+import { MemoryRouter } from "react-router-dom";
+import { StepByStep, type StepItem } from "./StepByStep";
 
-describe("StepByStep", () => {
-  it("renders plain string steps in order", () => {
-    const { container } = render(
-      <StepByStep steps={["First", "Second", "Third"]} />,
-    );
-    const items = container.querySelectorAll("li");
-    expect(items[0]).toHaveTextContent("First");
-    expect(items[2]).toHaveTextContent("Third");
-  });
+function renderSteps(steps: StepItem[]) {
+  return render(
+    <MemoryRouter>
+      <StepByStep steps={steps} />
+    </MemoryRouter>,
+  );
+}
 
-  it("renders conditional step objects with the 'Pass på' affordance", () => {
-    render(
-      <StepByStep
-        steps={[
-          "Always-runs A",
-          { text: "Only when negative", conditional: true },
-          "Always-runs B",
-        ]}
-      />,
-    );
-    expect(screen.getByText("Always-runs A")).toBeInTheDocument();
-    expect(screen.getByText("Only when negative")).toBeInTheDocument();
-    expect(screen.getByText("Always-runs B")).toBeInTheDocument();
-    expect(screen.getAllByText("Pass på")).toHaveLength(1);
-  });
-
-  it("treats { text: ... } without `conditional` as a regular step (no Pass-på tag)", () => {
-    render(<StepByStep steps={[{ text: "still plain" }]} />);
-    expect(screen.queryByText("Pass på")).not.toBeInTheDocument();
-    expect(screen.getByText("still plain")).toBeInTheDocument();
-  });
-
-  it("numbers regular steps sequentially while skipping conditional ones", () => {
-    render(
-      <StepByStep
-        steps={[
-          "First regular",
-          { text: "Watch out", conditional: true },
-          "Second regular",
-        ]}
-      />,
-    );
+describe("StepByStep example rows", () => {
+  it("renders an Eksempel label and skips the step number for example rows", () => {
+    renderSteps([
+      { text: "Generell formel.", formula: "Z = (X - mu) / sigma" },
+      {
+        text: "Eksempel med tall.",
+        formula: "Z = (98 - 100) / 5 = -0.4",
+        example: true,
+      },
+      "Konkluder.",
+    ]);
+    // The example row carries the "Eksempel" label, not "Steg 2".
+    expect(screen.getByText("Eksempel")).toBeInTheDocument();
+    // Numbering skips the example row: the third item is "Steg 2", not "Steg 3".
     expect(screen.getByText("Steg 1")).toBeInTheDocument();
     expect(screen.getByText("Steg 2")).toBeInTheDocument();
     expect(screen.queryByText("Steg 3")).not.toBeInTheDocument();
+  });
+
+  it("indents example rows to the right (ml-8) so they hang off the rail", () => {
+    const { container } = renderSteps([
+      { text: "Eksempel.", example: true },
+    ]);
+    const card = container.querySelector(".glass-light-card");
+    expect(card).not.toBeNull();
+    expect(card!.className).toMatch(/\bml-8\b/);
+    expect(card!.className).toMatch(/sky-/);
   });
 });
