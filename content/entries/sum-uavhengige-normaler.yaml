@@ -44,10 +44,13 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
   - "Bekreft at `X_i` er uavhengige og normalfordelte `N(μ, σ)`"
-  - "Beregn forventningsverdi for summen: `μ_Y = n·μ`"
-  - "Beregn standardavvik for summen: `σ_Y = σ·√n` (variansen blir `n·σ²`, så standardavviket vokser med `√n`, ikke `n`)"
-  - "Konkluder: `Y ~ N(n·μ, σ·√n)`"
-  - "Bytt deretter til normalfordelingen-oppslaget med disse parametrene — bruk variant `P(X < x)`, `P(X > x)` eller `P(a < X < b)` etter hva oppgaven spør om"
+  - text: "Beregn forventningsverdi for summen:"
+    formula: "μ_Y = n · μ"
+  - text: "Beregn standardavvik for summen (variansen blir `n·σ²`, så standardavviket vokser med `√n`, ikke `n`):"
+    formula: "σ_Y = σ · √n"
+  - text: "Konkluder:"
+    formula: "Y ~ N(n·μ, σ·√n)"
+  - "Bytt deretter til normalfordelingen-oppslaget med disse parametrene — bruk variant `P(X < x)`, `P(X > x)` eller `P(a < X < b)` etter hva oppgaven spør om. Tabelloppslag i **tabell E.3** (Z-tabell) eller **tabell E.4** (Z-kvantil)."
 
 common_traps: |
   Variansen for sum: `Var(Y) = n·σ²`, altså `σ_Y = σ·√n` (IKKE `n·σ`).

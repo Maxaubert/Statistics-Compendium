@@ -55,62 +55,82 @@ solution_variants:
   - label: "P(X = k)"
     steps:
       - "Identifiser raten `λ` med enhet (f.eks. `λ = 0.0261` utbrudd/måned) og vinduets lengde `t` i samme enhet (f.eks. `t = 60` måneder)"
-      - "Regn ut forventet antall `μ = λt` (f.eks. `μ = 0.0261 · 60 = 1.5678`)"
+      - text: "Regn ut forventet antall (f.eks. `μ = 0.0261 · 60 = 1.5678`):"
+        formula: "μ = λt"
       - "Bekreft at `k` er et konkret heltall `≥ 0` (oppgaven sier 'nøyaktig `k`', 'ett', 'to', osv.)"
-      - "Sett inn i formelen `P(X = k) = e^(-μ) · μ^k / k!` direkte"
-      - { text: "Hvis `k = 0`: forenkle til `P(X = 0) = e^(-μ)` (fordi `μ^0 = 1` og `0! = 1`) — ikke gå via E.2", conditional: true }
+      - text: "Sett inn i formelen direkte:"
+        formula: "P(X = k) = e^(-μ) · μ^k / k!"
+      - text: "Hvis `k = 0`: forenkle (fordi `μ⁰ = 1` og `0! = 1`) — ikke gå via E.2:"
+        formula: "P(X = 0) = e^(-μ)"
+        conditional: true
       - { text: "Hvis spørsmålet ber om en sum (f.eks. 'ett eller to'): regn `P(X = 1) + P(X = 2)` separat og legg sammen", conditional: true }
       - "Regn ut `e^(-μ)` på kalkulator, deretter `μ^k / k!`, og multipliser"
       - "Avrund til 3–4 desimaler og dobbeltsjekk at resultatet er mellom 0 og 1"
 
   - label: "P(X ≤ k)"
     steps:
-      - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `λ = 0.84`/min, `t = 2` min → `μ = 1.68`)"
+      - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `λ = 0.84`/min, `t = 2` min → `μ = 1.68`):"
+        formula: "μ = λt"
       - "Les av `k` fra oppgaven (formuleringer som 'høyst `k`', 'ikke mer enn `k`', '`k` eller færre')"
-      - "Slå opp `P(X ≤ k)` direkte i tabell E.2: finn kolonnen for `μ` (eller nærmeste verdi) og raden for `k`"
-      - { text: "Hvis `μ` ikke står eksakt i tabellen, rund til nærmeste tabellverdi og noter avviket — eller regn manuelt med summen `Σ e^(-μ) μ^i / i!` for `i = 0..k`", conditional: true }
+      - "Slå opp `P(X ≤ k)` direkte i **tabell E.2** (Poisson kumulativ): finn kolonnen for `μ` (eller nærmeste verdi) og raden for `k`"
+      - text: "Hvis `μ` ikke står eksakt i tabellen, rund til nærmeste tabellverdi og noter avviket — eller regn manuelt summen for `i = 0..k`:"
+        formula: "P(X ≤ k) = Σ e^(-μ) · μ^i / i!"
+        conditional: true
       - { text: "Hvis `k` er stor og `μ` er liten (f.eks. `k ≥ 6`, `μ < 2`): `P(X ≤ k) ≈ 1`, du kan svare `≈ 1` uten oppslag", conditional: true }
       - "Skriv ned tabellverdien som svar; ingen videre regning trengs"
       - "Sjekk fornuft: for `k ≈ μ` skal verdien ligge rundt `0.5–0.6`; for `k ≫ μ` skal den være nær 1"
 
   - label: "P(X ≥ k)"
     steps:
-      - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `μ = 1.68`)"
-      - "Skriv om via komplement: `P(X ≥ k) = 1 − P(X ≤ k − 1)`"
+      - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `μ = 1.68`):"
+        formula: "μ = λt"
+      - text: "Skriv om via komplement:"
+        formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)"
       - { text: "Tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt.", conditional: true }
-      - "Slå opp `P(X ≤ k − 1)` i tabell E.2 med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
+      - "Slå opp `P(X ≤ k − 1)` i **tabell E.2** (Poisson kumulativ) med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
       - "Trekk tabellverdien fra 1 for å få svaret"
       - "Sjekk fornuft: `P(X ≥ k)` skal synke når `k` vokser; for `k = 1` skal verdien være nær `1 − e^(-μ)`"
 
   - label: "P(a ≤ X ≤ b)"
     steps:
-      - "Identifiser `λ` og `t`, og regn ut `μ = λt` (f.eks. `λ = 0.05` pr. natt, `t = 60` → `μ = 3`)"
+      - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `λ = 0.05` pr. natt, `t = 60` → `μ = 3`):"
+        formula: "μ = λt"
       - "Les av nedre grense `a` og øvre grense `b` fra oppgaven (formuleringer som «mellom `a` og `b`», «`a` eller `b`», «minst `a`, høyst `b`»)"
-      - "Skriv intervallet via to kumulative oppslag: `P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)`"
+      - text: "Skriv intervallet via to kumulative oppslag:"
+        formula: "P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)"
       - { text: "Tabellen skal slås opp på `a − 1`, IKKE på `a`. Bruker du `P(X ≤ a)` mister du bidraget fra `X = a` selv. F.eks. for `P(2 ≤ X ≤ 5)` slå opp `P(X ≤ 1)`, ikke `P(X ≤ 2)`.", conditional: true }
-      - "Slå opp begge verdiene i tabell E.2 (kolonne for `μ`, rader for `b` og `a − 1`)"
-      - "Trekk de to: `P(X ≤ b) − P(X ≤ a − 1)`"
-      - { text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte, `P(X = a) + P(X = a + 1) + ... + P(X = b)`", conditional: true }
+      - "Slå opp begge verdiene i **tabell E.2** (Poisson kumulativ) (kolonne for `μ`, rader for `b` og `a − 1`)"
+      - text: "Trekk de to:"
+        formula: "P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)"
+      - text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte:"
+        formula: "P(a ≤ X ≤ b) = P(X = a) + P(X = a + 1) + ... + P(X = b)"
+        conditional: true
       - "Sjekk fornuft: svaret skal være mellom 0 og 1, og mindre enn både `P(X ≤ b)` og `P(X ≥ a)` hver for seg"
 
   - label: "P(X = 0)"
     steps:
       - "Gjenkjenn formuleringer som 'ingen hendelser', 'ikke finne noen', 'tom felle', 'null utbrudd' → dette er `P(X = 0)`"
       - "Identifiser `λ` og `t` med riktig enhet (f.eks. `λ = 0.01`/time, `t = 168` timer for én uke)"
-      - "Regn ut `μ = λt` (f.eks. `μ = 0.01 · 168 = 1.68`)"
-      - "Bruk den forenklede formelen direkte: `P(X = 0) = e^(-μ)` (`μ^0 = 1`, `0! = 1`, så hele brøken kollapser)"
+      - text: "Regn ut `μ` (f.eks. `μ = 0.01 · 168 = 1.68`):"
+        formula: "μ = λt"
+      - text: "Bruk den forenklede formelen direkte (`μ⁰ = 1`, `0! = 1`, så hele brøken kollapser):"
+        formula: "P(X = 0) = e^(-μ)"
       - "Regn ut `e^(-μ)` på kalkulator (f.eks. `e^(-1.68) ≈ 0.1864`)"
-      - { text: "Hvis spørsmålet egentlig ber om 'minst én' (`P(X ≥ 1)`): svar `1 − e^(-μ)` i stedet — vanlig oppfølgingsoppgave", conditional: true }
+      - text: "Hvis spørsmålet egentlig ber om 'minst én' (`P(X ≥ 1)`): svar med komplementet i stedet — vanlig oppfølgingsoppgave:"
+        formula: "P(X ≥ 1) = 1 − e^(-μ)"
+        conditional: true
       - "Avrund til 3–4 desimaler; svaret skal alltid være mellom 0 og 1"
 
   - label: "Finn k for terskel"
     steps:
       - "Identifiser terskelen `p*` fra oppgaven (f.eks. 'finn minste `k` slik at `P(X ≥ k) ≥ 0.05`' eller 'høyst 1% sjanse')"
-      - "Regn ut `μ = λt` for det aktuelle vinduet"
+      - text: "Regn ut `μ` for det aktuelle vinduet:"
+        formula: "μ = λt"
       - "Avgjør retning: 'minste `k` slik at `P(X ≥ k) ≥ p*`' krever at du øker `k` til sannsynligheten faller under `p*`; 'høyst `k` slik at `P(X ≤ k) ≥ p*`' krever motsatt"
-      - "Bygg en liten tabell med `k = 0, 1, 2, ...` og slå opp `P(X ≤ k)` fra tabell E.2 for hver"
-      - "Regn `P(X ≥ k) = 1 − P(X ≤ k − 1)` for hver rad og sammenlign med `p*`"
+      - "Bygg en liten tabell med `k = 0, 1, 2, ...` og slå opp `P(X ≤ k)` fra **tabell E.2** (Poisson kumulativ) for hver"
+      - text: "Regn for hver rad og sammenlign med `p*`:"
+        formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)"
       - "Velg det minste (eller største) `k` som tilfredsstiller ulikheten — les nøye om kravet er strikt (`>`) eller ikke-strikt (`≥`)"
       - { text: "Hvis ingen `k` i tabellen tilfredsstiller terskelen: utvid tabellen manuelt med formelen, eller konkluder at hendelsen er praktisk umulig/sikker", conditional: true }
       - "Skriv svaret med ord ('minste `k` er ...') og oppgi den tilhørende sannsynligheten som dokumentasjon"

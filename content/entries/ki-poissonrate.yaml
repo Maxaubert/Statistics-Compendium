@@ -44,12 +44,15 @@ filters:
 
 solution_template:
   - "Identifiser totalt antall observerte hendelser `Y` og total observasjonstid `t` (samme enhet som raten)"
-  - "Beregn punktestimat `λ̂ = Y/t`"
+  - text: "Beregn punktestimat:"
+    formula: "λ̂ = Y/t"
   - "Sjekk at `Y > 10` (≈ `λ̂·t > 10`) for at normalapproksimasjon er gyldig"
   - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
-  - "Slå opp `z_(α/2)` i tabell E.4 (f.eks. `z_(0.05) = 1.645`)"
-  - "Beregn margin: `z_(α/2) · √(λ̂/t) = z_(α/2) · √Y / t`"
-  - "KI: `λ̂ ± margin`"
+  - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `z_(0.05) = 1.645`"
+  - text: "Beregn margin:"
+    formula: "margin = z_(α/2) · √(λ̂/t) = z_(α/2) · √Y / t"
+  - text: "Sett opp KI:"
+    formula: "λ̂ ± margin"
 
 common_traps: |
   Sjekk at `t` er i samme enhet som raten (timer, dager, måneder, osv.).

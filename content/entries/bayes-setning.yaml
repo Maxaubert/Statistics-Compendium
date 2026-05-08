@@ -52,8 +52,11 @@ solution_variants:
       - "Bruk når: én hypotese A vs. komplement Aᶜ. Du har `P(A)`, `P(B|A)` og enten `P(B)` eller `P(B|Aᶜ)`."
       - "Identifiser hendelsene A og B, og noter hvilken retning oppgaven gir (`P(B|A)`) og hvilken den ber om (`P(A|B)`)"
       - "Skriv ned marginalsannsynligheten `P(A)` og den betingede `P(B|A)` som er gitt"
-      - { text: "Hvis nevneren `P(B)` ikke er gitt eksplisitt, regn den ut med total sannsynlighet: `P(B) = P(A)·P(B|A) + P(Aᶜ)·P(B|Aᶜ)`", conditional: true }
-      - "Sett inn i Bayes: `P(A|B) = P(A)·P(B|A) / P(B)`"
+      - text: "Hvis nevneren `P(B)` ikke er gitt eksplisitt, regn den ut med total sannsynlighet:"
+        formula: "P(B) = P(A)·P(B|A) + P(Aᶜ)·P(B|Aᶜ)"
+        conditional: true
+      - text: "Sett inn i Bayes:"
+        formula: "P(A|B) = P(A)·P(B|A) / P(B)"
       - { text: "Hvis hendelsene IKKE er en partisjon (A og Aᶜ overlapper, eller dekker ikke alt), Bayes-formelen gjelder ikke direkte – sjekk forutsetningene", conditional: true }
       - "Sjekk: svaret skal ligge mellom 0 og 1, og være konsistent med størrelsesforhold (sjelden A + svak B-evidens → liten `P(A|B)`)"
 
@@ -63,8 +66,10 @@ solution_variants:
       - "Identifiser de tre tallene: prevalens (hvor vanlig sykdommen er), sensitivitet (sann positiv-rate) og spesifisitet (sann negativ-rate)"
       - "Sett opp komplementene: `P(frisk) = 1 − P(syk)`, falsk positiv-rate `= 1 − spesifisitet`, falsk negativ-rate `= 1 − sensitivitet`"
       - { text: "Hvis spørsmålet sier 'hvis testen er negativ', bruk komplementene i sensitivitet og spesifisitet (dvs. `P(negativ|syk) = 1 − sensitivitet` og `P(negativ|frisk) = spesifisitet`)", conditional: true }
-      - "Regn ut nevneren med total sannsynlighet, f.eks. `P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)`"
-      - "Bruk Bayes: `P(syk|positiv) = P(syk)·sensitivitet / P(positiv)`"
+      - text: "Regn ut nevneren med total sannsynlighet, f.eks.:"
+        formula: "P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)"
+      - text: "Bruk Bayes:"
+        formula: "P(syk|positiv) = P(syk)·sensitivitet / P(positiv)"
       - "Tolk svaret nøkternt (f.eks. 1 % prevalens, 99 % sensitivitet, 95 % spesifisitet → `P(syk|positiv) ≈ 16.7 %`, ikke 99 %) – lav prevalens gir mange falske positive"
       - { text: "Hvis oppgaven nevner gjentatt testing eller uavhengige tester, oppdater prevalensen til posterior fra forrige test før neste runde", conditional: true }
 
@@ -74,8 +79,10 @@ solution_variants:
       - "List opp alle hypoteser `A₁, …, Aₙ` og verifiser at de er gjensidig utelukkende og dekker alle muligheter (`ΣP(Aᵢ) = 1`)"
       - "Skriv ned priorene `P(Aᵢ)` og likelihooden `P(B|Aᵢ)` for hver `i`"
       - { text: "Hvis hendelsene IKKE er en partisjon (de overlapper eller mangler en restkategori), Bayes-formelen gjelder ikke direkte – legg til 'ingen av disse' eller omformuler", conditional: true }
-      - "Regn nevneren med total sannsynlighet: `P(B) = Σᵢ P(Aᵢ)·P(B|Aᵢ)`"
-      - "Bruk Bayes for hver `Aᵢ`: `P(Aᵢ|B) = P(Aᵢ)·P(B|Aᵢ) / P(B)`"
+      - text: "Regn nevneren med total sannsynlighet:"
+        formula: "P(B) = Σᵢ P(Aᵢ)·P(B|Aᵢ)"
+      - text: "Bruk Bayes for hver `Aᵢ`:"
+        formula: "P(Aᵢ|B) = P(Aᵢ)·P(B|Aᵢ) / P(B)"
       - "Sjekk normalisering: `Σᵢ P(Aᵢ|B) = 1` (god sanitetstest mot regnefeil)"
       - "Tolk: hvilken hypotese har størst posterior? Sammenlign med prior for å se hvor mye evidens B flyttet sannsynligheten"
 
@@ -85,9 +92,13 @@ solution_variants:
       - "Les hele oppgaven én gang uten å regne – bla rundt teksten for å finne alle prosentene og betingelsene før du tegner noe"
       - "Tegn første nivå i treet: hovedhendelsen (f.eks. syk vs. frisk) med priorene `P(A)` og `P(Aᶜ)` på greinene"
       - "Tegn andre nivå: utfallet (f.eks. positiv/negativ test) under hver gren med de betingede sannsynlighetene `P(B|A)` og `P(B|Aᶜ)`"
-      - "Multiplisér langs hver sti for å få fellessannsynlighetene `P(A ∩ B) = P(A)·P(B|A)` for hver endenode"
-      - { text: "Hvis nevneren ikke er gitt eksplisitt, regn den ut med total sannsynlighet ved å summere alle stier som ender i `B`: `P(B) = ΣP(Aᵢ ∩ B)`", conditional: true }
-      - "Bruk Bayes: `P(A|B) = P(A ∩ B) / P(B)` – altså den ene stien delt på summen av relevante stier"
+      - text: "Multiplisér langs hver sti for å få fellessannsynlighetene for hver endenode:"
+        formula: "P(A ∩ B) = P(A)·P(B|A)"
+      - text: "Hvis nevneren ikke er gitt eksplisitt, regn den ut med total sannsynlighet ved å summere alle stier som ender i `B`:"
+        formula: "P(B) = ΣP(Aᵢ ∩ B)"
+        conditional: true
+      - text: "Bruk Bayes – altså den ene stien delt på summen av relevante stier:"
+        formula: "P(A|B) = P(A ∩ B) / P(B)"
       - { text: "Hvis treet har mer enn to nivåer (f.eks. flere tester etter hverandre), behandle hvert nivå som ny betinging og fortsett å multiplisere langs stien", conditional: true }
       - "Verifiser: alle endenoder skal summere til 1, og hver delsum (gren) skal stemme med priorene"
 

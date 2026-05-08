@@ -53,11 +53,13 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:
-  - "Regn ut utvalgsgjennomsnittet: `x̄ = (Σ x_i) / n`"
+  - text: "Regn ut utvalgsgjennomsnittet:"
+    formula: "x̄ = (Σ x_i) / n"
   - "For hver observasjon: regn ut avviket `(x_i − x̄)`"
   - "Kvadrér hvert avvik: `(x_i − x̄)²`"
   - "Summér alle kvadratavvikene: `Σ (x_i − x̄)²`"
-  - "Del på `n − 1` (IKKE `n`): `s² = Σ (x_i − x̄)² / (n − 1)`"
+  - text: "Del på `n − 1` (IKKE `n`):"
+    formula: "s² = Σ (x_i − x̄)² / (n − 1)"
   - "Standardavvik: `s = √s²`"
 
 common_traps: |

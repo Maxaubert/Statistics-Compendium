@@ -46,11 +46,15 @@ filters:
 
 solution_template:
   - "Bekreft at du har `μ = E[X]` (regn det ut først hvis ikke gitt)"
-  - "Skriv ut alle leddene: `(x_1 − μ)²·P(X=x_1) + (x_2 − μ)²·P(X=x_2) + ...`"
+  - text: "Skriv ut alle leddene:"
+    formula: "(x_1 − μ)²·P(X=x_1) + (x_2 − μ)²·P(X=x_2) + ..."
   - "Regn hvert ledd: avvik først, så kvadrér, så multiplisér med sannsynligheten"
-  - "Summér: `Var(X) = Σ (x_i − μ)² · P(X = x_i)`"
-  - "Standardavviket: `σ = √Var(X)`"
-  - text: "Snarvei for uniform fordeling (alle P like): `Var(X) = E[X²] − μ²` der `E[X²] = Σ x_i²·P(X=x_i)`. Færre kvadreringer når sannsynlighetene er like."
+  - text: "Summér:"
+    formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)"
+  - text: "Standardavviket:"
+    formula: "σ = √Var(X)"
+  - text: "Snarvei for uniform fordeling (alle P like). Færre kvadreringer når sannsynlighetene er like:"
+    formula: "Var(X) = E[X²] − μ²,  der  E[X²] = Σ x_i²·P(X=x_i)"
     conditional: true
 
 common_traps: |

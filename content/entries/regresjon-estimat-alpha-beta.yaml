@@ -46,10 +46,14 @@ filters:
 
 solution_template:
   - "Beregn `x̄` og `ȳ`"
-  - "Beregn `S_XX = Σ(x_i − x̄)²` og `S_XY = Σ(x_i − x̄)(y_i − ȳ)`"
-  - "`β̂ = S_XY / S_XX`"
-  - "`α̂ = ȳ − β̂·x̄`"
-  - "Skriv regresjonslinjen `ŷ = α̂ + β̂·x`"
+  - text: "Beregn mellom-summene `S_XX` og `S_XY`."
+    formula: "S_XX = Σ(x_i − x̄)²     S_XY = Σ(x_i − x̄)(y_i − ȳ)"
+  - text: "Beregn stigningstallet."
+    formula: "β̂ = S_XY / S_XX"
+  - text: "Beregn skjæringspunktet."
+    formula: "α̂ = ȳ − β̂·x̄"
+  - text: "Skriv regresjonslinjen."
+    formula: "ŷ = α̂ + β̂·x"
 
 common_traps: |
   Pass på rekkefølgen i krysssummen: `Σ(x_i − x̄)(y_i − ȳ)` er IKKE det samme

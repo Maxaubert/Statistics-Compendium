@@ -36,8 +36,10 @@ filters:
   tooling: [calculator_sqrt]
 solution_template:
   - "Beregn `S_E²` først (residualvariansen)"
-  - "Beregn `S_XX = Σ(x_i − x̄)²`"
-  - "`SE(β̂) = √(S_E² / S_XX)`"
+  - text: "Beregn `S_XX`."
+    formula: "S_XX = Σ(x_i − x̄)²"
+  - text: "Beregn standardfeilen til stigningstallet."
+    formula: "SE(β̂) = √(S_E² / S_XX)"
 
 common_traps: |
   Husk at `SE(β̂) ≠ S_E`. `SE(β̂)` er `√(S_E²/S_XX)`, altså `S_E` delt på `√S_XX`.

@@ -43,9 +43,12 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:
-  - "Beregn `SSE = Σ(y_i − α̂ − β̂·x_i)²` (eller hent fra tabell)"
-  - "`S_E² = SSE / (n − 2)`"
-  - "`S_E = √S_E²` (standardavviket)"
+  - text: "Beregn SSE (eller hent fra tabell)."
+    formula: "SSE = Σ(y_i − α̂ − β̂·x_i)²"
+  - text: "Beregn residualvariansen med `n − 2` frihetsgrader."
+    formula: "S_E² = SSE / (n − 2)"
+  - text: "Beregn standardavviket."
+    formula: "S_E = √S_E²"
 
 common_traps: |
   Frihetsgrader er `n − 2` (ikke `n − 1`), fordi to parametre (`α̂`, `β̂`) er

@@ -42,7 +42,8 @@ filters:
 solution_template:
   - "List opp alle verdier `x_i` og `P(X = x_i)`"
   - "Multipliser hver `x_i` med `P(X = x_i)`"
-  - "Summer alle produktene"
+  - text: "Summer alle produktene:"
+    formula: "E[X] = Σ x_i · P(X = x_i)"
 
 common_traps: |
   For en simultanfordeling må du først finne marginalfordelingen `P(X=x)`

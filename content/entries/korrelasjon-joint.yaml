@@ -40,7 +40,8 @@ filters:
 solution_template:
   - "Beregn først μ_X, μ_Y, σ_X, σ_Y"
   - "Beregn Cov(X,Y)"
-  - "ρ = Cov(X,Y) / (σ_X · σ_Y)"
+  - text: "Sett inn i korrelasjonsformelen:"
+    formula: "ρ = Cov(X, Y) / (σ_X · σ_Y)"
 
 common_traps: |
   ρ er for FELLESFORDELING (teoretisk modell). For utvalg av (x,y)-par

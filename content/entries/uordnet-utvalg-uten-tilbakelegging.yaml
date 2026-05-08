@@ -51,7 +51,8 @@ solution_variants:
       - "Bruk når oppgaven kun ber om hvor mange måter / kombinasjoner / hender det finnes (ingen sannsynlighet ennå)"
       - "Identifiser `n` (totalt antall elementer) og `k` (antall som skal velges)"
       - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
-      - "Beregn `C(n, k) = n! / (k! · (n − k)!)` på kalkulator (typisk `nCr` eller `COMB`)"
+      - text: "Beregn binomialkoeffisienten på kalkulator (typisk `nCr` eller `COMB`):"
+        formula: "C(n, k) = n! / (k! · (n − k)!)"
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
   - label: "Sannsynlighet: alle k er av samme type"
@@ -60,8 +61,10 @@ solution_variants:
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
-      - "Sannsynligheten: `P(alle k er A) = C(K, k) / C(N, k)`"
-      - text: "Alternativt, hvis sekvensiell beregning er enklere: bruk produktregelen `(K/N)·((K−1)/(N−1))·…·((K−k+1)/(N−k+1))`. Begge metodene gir samme svar."
+      - text: "Sannsynligheten:"
+        formula: "P(alle k er A) = C(K, k) / C(N, k)"
+      - text: "Alternativt, hvis sekvensiell beregning er enklere — bruk produktregelen. Begge metodene gir samme svar."
+        formula: "P = (K/N) · ((K−1)/(N−1)) · … · ((K−k+1)/(N−k+1))"
         conditional: true
   - label: "Sannsynlighet: ingen av k er av en gitt type"
     steps:
@@ -70,7 +73,8 @@ solution_variants:
       - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
       - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
-      - "Sannsynligheten: `P(ingen av k er A) = C(N − K, k) / C(N, k)`"
+      - text: "Sannsynligheten:"
+        formula: "P(ingen av k er A) = C(N − K, k) / C(N, k)"
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
   - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
@@ -78,8 +82,10 @@ solution_variants:
       - "Bruk når oppgaven spør 'sannsynligheten for å få nøyaktig `k₁` av type A OG `k₂` av type B' (f.eks. '2 jenter og 2 gutter', '3 hjerter og 2 ruter')"
       - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
       - "Antall mulige utvalg av `k`: `C(N, k)`"
-      - "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen): `C(K_A, k₁) · C(K_B, k₂)`"
-      - "Sannsynligheten: `P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)`"
+      - text: "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen):"
+        formula: "C(K_A, k₁) · C(K_B, k₂)"
+      - text: "Sannsynligheten:"
+        formula: "P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)"
       - text: "Dette er hypergeometrisk sannsynlighet — det samme regnestykket som [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling), bare uttrykt direkte med binomialkoeffisienter. Pass på at `k₁ + k₂ = k` (totalt trukne)."
         conditional: true
 

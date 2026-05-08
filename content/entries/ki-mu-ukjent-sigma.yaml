@@ -43,10 +43,13 @@ filters:
   tooling: [t_quantile_table_E5, calculator_sqrt, normal_quantile_table_E4, standard_normal_table_E3]
 solution_template:
   - "Identifiser konfidensnivå `(1 − α)` og `α`"
-  - "Beregn `s² = (1/(n−1)) · Σ(x_i − x̄)²` (eller bruk gitt `s`)"
-  - "Slå opp `t_(α/2, n−1)` i tabell E.5 (kolonne for `α/2`, rad for `n−1` frihetsgrader)"
-  - "Beregn marginen `t_(α/2, n−1) · s/√n`"
-  - "Sett opp intervallet `x̄ ± margin`"
+  - text: "Beregn utvalgsvariansen (eller bruk gitt `s`):"
+    formula: "s² = (1/(n−1)) · Σ(x_i − x̄)²"
+  - "Slå opp `t_(α/2, n−1)` i **tabell E.5** (t-kvantiltabell): kolonne for `α/2`, rad for `n−1` frihetsgrader"
+  - text: "Beregn marginen:"
+    formula: "margin = t_(α/2, n−1) · s/√n"
+  - text: "Sett opp intervallet:"
+    formula: "x̄ ± margin"
 
 common_traps: |
   `ν = n − 1` for én-utvalgs KI (ikke `n − 2`). T-kvantiltabellen E.5 har

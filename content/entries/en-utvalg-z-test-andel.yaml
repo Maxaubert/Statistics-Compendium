@@ -45,11 +45,15 @@ filters:
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
-  - "Formuler hypotesene `H₀: p = p₀` vs `H₁` (én- eller tosidig)"
-  - "Bekreft normalapproksimasjon: `n·p̂·(1−p̂) ≥ 5`"
-  - "Beregn `p̂ = x/n`"
-  - "Beregn `z = (x − n·p₀) / √(n·p₀·(1−p₀))` – eller ekvivalent `z = (p̂ − p₀) / √(p₀(1−p₀)/n)`"
-  - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i tabell E.4"
+  - text: "Formuler hypotesene (én- eller tosidig):"
+    formula: "H₀: p = p₀     mot     H₁ (én- eller tosidig)"
+  - text: "Bekreft normalapproksimasjon:"
+    formula: "n·p̂·(1−p̂) ≥ 5"
+  - text: "Beregn punktestimatet:"
+    formula: "p̂ = x/n"
+  - text: "Beregn testobservatoren (eller den ekvivalente formen):"
+    formula: "z = (x − n·p₀) / √(n·p₀·(1−p₀)) = (p̂ − p₀) / √(p₀(1−p₀)/n)"
+  - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i **tabell E.4** (Z-kvantiltabell)"
   - "Sammenlign og konkluder"
 
 common_traps: |

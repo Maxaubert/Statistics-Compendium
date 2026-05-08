@@ -52,7 +52,8 @@ filters:
 solution_template:
   - "Identifiser `N` (totalt), `K` (vellykkede), `n` (trekninger), `k` (spørsmål)"
   - "Skriv `X ~ Hyp(N, K, n)`"
-  - "Sett inn i formelen: `g/m = C(K,k)·C(N-K,n-k) / C(N,n)`"
+  - text: "Sett inn i formelen (gunstige delt på mulige):"
+    formula: "P(X = k) = C(K,k) · C(N−K, n−k) / C(N, n)"
   - "Forenkle binomialkoeffisienten der mulig før du multipliserer"
 
 common_traps: |

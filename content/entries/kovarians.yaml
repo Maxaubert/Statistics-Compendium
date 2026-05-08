@@ -40,8 +40,10 @@ filters:
   tooling: [calculator_only]
 solution_template:
   - "Beregn μ_X og μ_Y fra marginalfordelingene"
-  - "Beregn E[XY] = Σ_i Σ_j x_i · y_j · P(X=x_i, Y=y_j) – kun celler med positiv sannsynlighet bidrar"
-  - "Cov(X,Y) = E[XY] - μ_X·μ_Y"
+  - text: "Beregn E[XY] – kun celler med positiv sannsynlighet bidrar:"
+    formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
+  - text: "Sett inn i kovariansformelen:"
+    formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
 
 common_traps: |
   Du kan dropp celler med x_i = 0 eller y_j = 0 (bidraget er null) og

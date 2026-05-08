@@ -65,41 +65,54 @@ solution_variants:
     steps:
       - "Noter `μ`, `σ` og terskelen `x` fra oppgaven (f.eks. `μ = 25`, `σ = 0.48`, `x = 24`)."
       - "Bekreft at `X ~ N(μ, σ)` — enten direkte oppgitt, eller via sentralgrenseteoremet når `n ≥ 30`."
-      - "Standardiser med `z = (x − μ)/σ` og rund til 2 desimaler (f.eks. `(24 − 25)/0.48 = −2.0833 ≈ −2.08`)."
-      - "Slå opp `G(z)` i tabell E.3 — arealet til VENSTRE for `z` (f.eks. `G(−2.08) ≈ 0.0188`)."
-      - "Svaret er `P(X < x) = G(z)`."
-      - { text: "Hvis tabellen din kun viser positive `z`, bruk symmetri: `G(−z) = 1 − G(z)`. (Vår E.3 dekker både fortegn, så dette er sjelden nødvendig.)", conditional: true }
+      - text: "Standardiser og rund til 2 desimaler (f.eks. `(24 − 25)/0.48 = −2.0833 ≈ −2.08`):"
+        formula: "z = (x − μ)/σ"
+      - "Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ) — arealet til VENSTRE for `z` (f.eks. `G(−2.08) ≈ 0.0188`)."
+      - text: "Svaret er:"
+        formula: "P(X < x) = G(z)"
+      - text: "Hvis tabellen din kun viser positive `z`, bruk symmetri (vår E.3 dekker både fortegn, så dette er sjelden nødvendig):"
+        formula: "G(−z) = 1 − G(z)"
+        conditional: true
 
   - label: "P(X > x)"
     steps:
       - "Noter `μ`, `σ` og terskelen `x` (f.eks. `μ = 302`, `σ = 5`, `x = 310`)."
-      - "Standardiser: `z = (x − μ)/σ` (f.eks. `(310 − 302)/5 = 1.6`)."
-      - "Slå opp `G(z)` i E.3 (f.eks. `G(1.6) ≈ 0.9452`)."
-      - "Bruk komplementet siden E.3 gir venstrearealet: `P(X > x) = 1 − G(z)` (f.eks. `1 − 0.9452 = 0.0548`)."
+      - text: "Standardiser (f.eks. `(310 − 302)/5 = 1.6`):"
+        formula: "z = (x − μ)/σ"
+      - "Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ) (f.eks. `G(1.6) ≈ 0.9452`)."
+      - text: "Bruk komplementet siden E.3 gir venstrearealet (f.eks. `1 − 0.9452 = 0.0548`):"
+        formula: "P(X > x) = 1 − G(z)"
       - "Fortegnssjekk: `x > μ ⇒ z > 0` (svar `< 0.5`); `x < μ ⇒ z < 0` (svar `> 0.5`)."
 
   - label: "P(a < X < b)"
     steps:
       - "Noter `μ`, `σ` og grensene `a < b` (f.eks. `μ = 302`, `σ = 5`, `a = 305`, `b = 310`)."
-      - "Standardiser begge: `z_a = (a − μ)/σ`, `z_b = (b − μ)/σ` (f.eks. `z_a = 0.6`, `z_b = 1.6`)."
-      - "Slå opp `G(z_a)` og `G(z_b)` i E.3 (f.eks. `G(0.6) ≈ 0.7257`, `G(1.6) ≈ 0.9452`)."
-      - "Trekk fra: `P(a < X < b) = G(z_b) − G(z_a)` (f.eks. `0.9452 − 0.7257 = 0.2195`)."
+      - text: "Standardiser begge (f.eks. `z_a = 0.6`, `z_b = 1.6`):"
+        formula: "z_a = (a − μ)/σ,   z_b = (b − μ)/σ"
+      - "Slå opp `G(z_a)` og `G(z_b)` i **tabell E.3** (Z-tabell, kumulativ) (f.eks. `G(0.6) ≈ 0.7257`, `G(1.6) ≈ 0.9452`)."
+      - text: "Trekk fra (f.eks. `0.9452 − 0.7257 = 0.2195`):"
+        formula: "P(a < X < b) = G(z_b) − G(z_a)"
       - "Sanity-sjekk: svaret skal ligge i `[0, 1]`. Negativt resultat betyr at du har byttet om `z_a` og `z_b`."
 
   - label: "Invers: finn x"
     steps:
       - "Les hva som er gitt: en sannsynlighet og hvilken side. Enten `P(X < x) = p`, eller `P(X > x) = α` (da er `p = 1 − α`)."
-      - "Slå opp `z` slik at `G(z) = p` i tabell E.4 (Z-kvantil). Eksempel: `p = 0.975 ⇒ z = 1.96`."
-      - { text: "Hvis `p < 0.5`: `z` er negativ. Bruk refleksjon `z = −z_{1−p}` (f.eks. `p = 0.001 ⇒ z = −z_{0.999} = −3.090`).", conditional: true }
-      - "Sett inn i `x = μ + σ · z` (f.eks. `μ = 300`, `σ = 5`, `z = −3.090 ⇒ x = 300 − 15.45 = 284.55`)."
+      - "Slå opp `z` slik at `G(z) = p` i **tabell E.4** (Z-kvantiltabell). Eksempel: `p = 0.975 ⇒ z = 1.96`."
+      - text: "Hvis `p < 0.5`: `z` er negativ. Bruk refleksjon (f.eks. `p = 0.001 ⇒ z = −z_{0.999} = −3.090`):"
+        formula: "z = −z_{1−p}"
+        conditional: true
+      - text: "Sett inn (f.eks. `μ = 300`, `σ = 5`, `z = −3.090 ⇒ x = 300 − 15.45 = 284.55`):"
+        formula: "x = μ + σ · z"
       - "Sanity-sjekk: `p < 0.5 ⇒ x < μ`; `p > 0.5 ⇒ x > μ`. Stemmer det ikke, har du glemt fortegnet på `z`."
 
   - label: "Invers: finn μ (eller σ)"
     steps:
       - "Identifiser det ukjente (`μ` eller `σ`) og hva som er gitt: typisk en grense `g` og en målsannsynlighet `p` (f.eks. `P(X < 300) = 0.001`, `σ = 5`)."
-      - "Sett opp likningen `G((g − μ)/σ) = p`."
-      - "Slå opp `z = G⁻¹(p)` i tabell E.4. Husk at `p < 0.5` gir negativ `z` (f.eks. `p = 0.001 ⇒ z = −3.090`)."
-      - "Løs for det ukjente: `μ = g − σ · z`, eller `σ = (g − μ)/z` hvis `σ` er ukjent (f.eks. `μ = 300 − 5·(−3.090) = 315.45`)."
+      - text: "Sett opp likningen:"
+        formula: "G((g − μ)/σ) = p"
+      - "Slå opp `z = G⁻¹(p)` i **tabell E.4** (Z-kvantiltabell). Husk at `p < 0.5` gir negativ `z` (f.eks. `p = 0.001 ⇒ z = −3.090`)."
+      - text: "Løs for det ukjente (f.eks. `μ = 300 − 5·(−3.090) = 315.45`):"
+        formula: "μ = g − σ · z     (eller   σ = (g − μ)/z)"
       - { text: "Retningssjekk for `μ`: hvis du vil at `P(X < g)` skal bli MINDRE, må `μ` flyttes OPP (lenger fra `g` på høyre side).", conditional: true }
       - { text: "Motsatt retning: hvis du vil at `P(X > g)` skal bli mindre, må `μ` flyttes NED (lenger fra `g` på venstre side).", conditional: true }
 
@@ -107,7 +120,8 @@ solution_variants:
 solution_template:
   - "Noter `μ`, `σ` og hva oppgaven spør om."
   - "Identifiser variant — se faner over: `P(X < x)`, `P(X > x)`, `P(a < X < b)`, eller invers."
-  - "Standardiser med `Z = (X − μ)/σ`, slå opp i E.3 (kumulativ) eller E.4 (kvantil)."
+  - text: "Standardiser, slå opp i **tabell E.3** (kumulativ) eller **tabell E.4** (kvantil):"
+    formula: "Z = (X − μ)/σ"
 
 common_traps: |
   - **Forveksle ikke `σ` (standardavvik) med `σ²` (varians).** Hvis oppgaven sier "varians 25", er `σ = 5`, ikke 25.

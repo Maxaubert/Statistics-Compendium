@@ -43,10 +43,13 @@ filters:
 solution_template:
   - "Bekreft at fordelingen er normalfordelt (eller antatt)"
   - "Identifiser `n` og `s²`"
-  - "Bestem `ν = n − 1`"
-  - "Slå opp `χ²_(α/2, ν)` og `χ²_(1−α/2, ν)` i tabell E.6"
-  - "Sett inn: nedre grense `= (n−1)s² / χ²_(α/2, ν)`"
-  - "Sett inn: øvre grense `= (n−1)s² / χ²_(1−α/2, ν)`"
+  - text: "Bestem frihetsgrader:"
+    formula: "ν = n − 1"
+  - "Slå opp `χ²_(α/2, ν)` og `χ²_(1−α/2, ν)` i **tabell E.6** (Kjikvadrat-kvantiltabell)"
+  - text: "Sett inn nedre grense:"
+    formula: "nedre = (n−1)s² / χ²_(α/2, ν)"
+  - text: "Sett inn øvre grense:"
+    formula: "øvre = (n−1)s² / χ²_(1−α/2, ν)"
   - "For KI for `σ`: ta kvadratroten av begge grensene"
 
 common_traps: |

@@ -44,12 +44,16 @@ filters:
 
 solution_template:
   - "Identifiser oppgitt: `α̂`, `β̂`, `S_E` (eller `S_E²`), `SE(β̂)`, antall observasjoner `n`, og `x`-verdien det skal predikeres for"
-  - "Hvis `x̄` ikke er gitt, regn det ut fra rådata: `x̄ = (Σx_i) / n`"
+  - text: "Hvis `x̄` ikke er gitt, regn det ut fra rådata."
+    formula: "x̄ = (Σx_i) / n"
   - "Finn `α` fra konfidensnivået (f.eks. 95 % gir `α = 0.05`, så `α/2 = 0.025`)"
-  - "Slå opp `t_(α/2, n−2)` i tabell E.5 (n−2 frihetsgrader)"
-  - "Beregn punktestimatet: `ŷ = α̂ + β̂·x`"
-  - "Beregn margin: `t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(β̂) / S_E)²)`"
-  - "Prediksjonsintervall: `ŷ ± margin`"
+  - "Slå opp `t_(α/2, n−2)` i **tabell E.5** (t-kvantiltabell, `n−2` frihetsgrader)"
+  - text: "Beregn punktestimatet."
+    formula: "ŷ = α̂ + β̂·x"
+  - text: "Beregn margin."
+    formula: "margin = t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(β̂) / S_E)²)"
+  - text: "Prediksjonsintervall."
+    formula: "ŷ ± margin"
   - "Sjekk svaret ved å sammenligne mot oppgavens spørsmål (f.eks. ligger en gitt verdi innenfor intervallet?)"
 
 common_traps: |

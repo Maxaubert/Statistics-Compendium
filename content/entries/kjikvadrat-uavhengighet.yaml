@@ -44,12 +44,16 @@ filters:
 solution_template:
   - "Skriv ned `H₀`: `X` og `Y` er uavhengige"
   - "Regn marginalsummene (rad-summer og kol-summer)"
-  - "Regn forventede antall `E_ij = (rad_i · kol_j) / n` for hver celle"
+  - text: "Regn forventede antall for hver celle:"
+    formula: "E_ij = (rad_i · kol_j) / n"
   - "Sjekk at alle `E_ij ≥ 5`"
-  - "Regn observatoren `χ² = Σ (O_ij − E_ij)² / E_ij` over alle celler"
-  - "Bestem frihetsgrader `ν = (r − 1)(c − 1)`"
-  - "Slå opp kritisk verdi `χ²_(α, ν)` i tabell E.6"
-  - "Forkast `H₀` (= konkluder at variablene er avhengige) hvis `χ² >` kritisk verdi"
+  - text: "Regn testobservatoren over alle celler:"
+    formula: "χ² = Σ (O_ij − E_ij)² / E_ij"
+  - text: "Bestem frihetsgrader:"
+    formula: "ν = (r − 1)(c − 1)"
+  - "Slå opp kritisk verdi `χ²_(α, ν)` i **tabell E.6** (kjikvadrat-kvantiltabell)"
+  - text: "Forkastningsregel (= konkluder at variablene er avhengige):"
+    formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
 
 common_traps: |
   Frihetsgradene er `(r−1)(c−1)`, ikke `r·c−1`. Pass også på at marginalsummene

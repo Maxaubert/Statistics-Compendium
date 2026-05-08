@@ -47,29 +47,37 @@ solution_variants:
     steps:
       - "Identifiser hendelsene `A` og `B`"
       - "Avgjør om hendelsene er sekvensielle (gjør det ene først, så det andre) eller om du har en betinget sannsynlighet `P(B|A)` gitt"
-      - "Hvis `A` og `B` er uavhengige: `P(A ∩ B) = P(A)·P(B)`"
-      - "Ellers (avhengige): `P(A ∩ B) = P(A) · P(B|A)`. Bruk gjerne den retningen oppgaven gir betingelsen i."
+      - text: "Hvis `A` og `B` er uavhengige:"
+        formula: "P(A ∩ B) = P(A)·P(B)"
+      - text: "Ellers (avhengige). Bruk gjerne den retningen oppgaven gir betingelsen i:"
+        formula: "P(A ∩ B) = P(A) · P(B|A)"
       - "Sjekk fornuft: svaret skal ligge i `[0, 1]` og være mindre enn både `P(A)` og `P(B)`"
   - label: "Betinget P(A | B) direkte"
     steps:
       - "Bruk når oppgaven spør 'gitt at B inntreffer, hva er sannsynligheten for A?' og du har `P(A ∩ B)` og `P(B)`"
-      - "Bruk definisjonen: `P(A | B) = P(A ∩ B) / P(B)`, forutsatt `P(B) > 0`"
+      - text: "Bruk definisjonen, forutsatt `P(B) > 0`:"
+        formula: "P(A | B) = P(A ∩ B) / P(B)"
       - "Hvis `P(A ∩ B)` ikke er gitt eksplisitt, regn det først ut (typisk via produktregel, total sannsynlighet, eller et venndiagram)"
-      - "Eksempel: `P(M ∩ F) = 0.41`, `P(F) = 0.45` → `P(M | F) = 0.41 / 0.45 ≈ 0.911`"
-      - text: "Hvis du i stedet kjenner `P(B|A)` (motsatt retning), bruk Bayes' setning: `P(A|B) = P(A)·P(B|A) / P(B)`"
+      - text: "Eksempel: `P(M ∩ F) = 0.41`, `P(F) = 0.45`:"
+        formula: "P(M | F) = 0.41 / 0.45 ≈ 0.911"
+      - text: "Hvis du i stedet kjenner `P(B|A)` (motsatt retning), bruk Bayes' setning:"
+        formula: "P(A|B) = P(A)·P(B|A) / P(B)"
         conditional: true
       - text: "Hvis du betinger på et komplement (f.eks. `P(A | B̄)`): regn ut `P(B̄) = 1 − P(B)` og `P(A ∩ B̄)` (ofte via venndiagram, eller via `P(A) − P(A ∩ B)`)"
         conditional: true
-      - text: "Hvis BÅDE A og B er negert (f.eks. `P(Ā | B̄)`): bruk De Morgan, `P(Ā ∩ B̄) = P(¬(A ∪ B)) = 1 − P(A ∪ B)`. Regn så `P(Ā | B̄) = (1 − P(A ∪ B)) / (1 − P(B))`."
+      - text: "Hvis BÅDE A og B er negert (f.eks. `P(Ā | B̄)`): bruk De Morgan, så regn videre:"
+        formula: "P(Ā ∩ B̄) = 1 − P(A ∪ B);  P(Ā | B̄) = (1 − P(A ∪ B)) / (1 − P(B))"
         conditional: true
   - label: "Test om A og B er uavhengige"
     steps:
       - "Bruk når oppgaven spør 'er A og B uavhengige?'"
-      - "Definisjonen: `A` og `B` er uavhengige hvis `P(A ∩ B) = P(A) · P(B)`"
+      - text: "Definisjonen: `A` og `B` er uavhengige hvis:"
+        formula: "P(A ∩ B) = P(A) · P(B)"
       - "Regn ut `P(A) · P(B)` fra de gitte marginalsannsynlighetene"
       - "Sammenlign med oppgitt eller utregnet `P(A ∩ B)`"
       - "Hvis de er like: hendelsene er uavhengige. Hvis ikke: de er avhengige (oppgi differansen som dokumentasjon)"
-      - "Eksempel: `P(F) = 0.45`, `P(M) = 0.80`, `P(F ∩ M) = 0.41`. Da er `P(F)·P(M) = 0.36 ≠ 0.41`, så `F` og `M` er IKKE uavhengige."
+      - text: "Eksempel: `P(F) = 0.45`, `P(M) = 0.80`, `P(F ∩ M) = 0.41`. Sammenlign:"
+        formula: "P(F)·P(M) = 0.36 ≠ 0.41  →  F og M er IKKE uavhengige"
       - text: "Ekvivalent test: `P(A|B) = P(A)` ⇔ uavhengighet. Bruk denne hvis det er enklere å beregne `P(A|B)`."
         conditional: true
 

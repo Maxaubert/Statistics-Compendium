@@ -45,7 +45,8 @@ filters:
 solution_template:
   - "Beregn `x̄`, `ȳ`"
   - "Beregn `S_XX`, `S_YY`, `S_XY` (eller hent fra datatabell)"
-  - "`r = S_XY / √(S_XX · S_YY)`"
+  - text: "Beregn korrelasjonskoeffisienten."
+    formula: "r = S_XY / √(S_XX · S_YY)"
   - "Tolk: nær `1` = sterk positiv, nær `−1` = sterk negativ, nær `0` = ingen lineær sammenheng"
 
 common_traps: |

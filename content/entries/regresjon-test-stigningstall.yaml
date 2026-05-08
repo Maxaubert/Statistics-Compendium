@@ -47,11 +47,15 @@ filters:
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_template:
-  - "Formuler hypotesene `H₀: β = 0` vs `H₁: β ≠ 0` (typisk tosidig test)"
-  - "Beregn `SE(β̂) = √(S_E² / Σ(x_i − x̄)²)` hvis ikke gitt"
-  - "Beregn testobservator `t = (β̂ − 0)/SE(β̂)`"
-  - "Finn kvantil `t_(α/2, n−2)` i tabell E.5 (tosidig)"
-  - "Forkast `H₀` hvis `|t| > t_(α/2, n−2)`"
+  - text: "Formuler hypotesene (typisk tosidig test)."
+    formula: "H₀: β = 0     mot     H₁: β ≠ 0"
+  - text: "Beregn `SE(β̂)` hvis ikke gitt."
+    formula: "SE(β̂) = √(S_E² / Σ(x_i − x̄)²)"
+  - text: "Beregn testobservatoren."
+    formula: "T = (β̂ − 0) / SE(β̂)"
+  - "Finn kvantil `t_(α/2, n−2)` i **tabell E.5** (t-kvantiltabell, tosidig)"
+  - text: "Forkastningsregel."
+    formula: "Forkast H₀ hvis |T| > t_(α/2, n−2)"
   - "Konkluder om hvorvidt det er statistisk grunnlag for lineær sammenheng"
 
 common_traps: |

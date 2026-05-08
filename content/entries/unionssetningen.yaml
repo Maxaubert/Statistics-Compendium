@@ -44,7 +44,8 @@ solution_template:
   - "Identifiser hendelsene `A` og `B`"
   - "Finn `P(A)`, `P(B)`, `P(A ∩ B)`"
   - "Hvis disjunkte: `P(A ∩ B) = 0`"
-  - "`P(A ∪ B) = P(A) + P(B) − P(A ∩ B)`"
+  - text: "Bruk unionssetningen:"
+    formula: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
 
 common_traps: |
   Glem ikke å trekke fra `P(A ∩ B)`. For tre hendelser: `P(A ∪ B ∪ C) =

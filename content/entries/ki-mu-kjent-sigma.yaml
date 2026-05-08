@@ -43,9 +43,11 @@ filters:
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 solution_template:
   - "Identifiser konfidensnivå `(1 − α)` og finn `α` (f.eks. 90 % gir `α = 0.10`)"
-  - "Slå opp `z_(α/2)` i tabell E.4 (f.eks. `α/2 = 0.05` gir `1.645`)"
-  - "Beregn marginen `z_(α/2) · σ/√n`"
-  - "Sett opp intervallet `x̄ ± margin`"
+  - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `α/2 = 0.05` gir `1.645`"
+  - text: "Beregn marginen:"
+    formula: "margin = z_(α/2) · σ/√n"
+  - text: "Sett opp intervallet:"
+    formula: "x̄ ± margin"
 
 common_traps: |
   Bruk `z_(α/2)`, ikke `z_α` (vi vil ha `α/2` i hver hale i et tosidig intervall).

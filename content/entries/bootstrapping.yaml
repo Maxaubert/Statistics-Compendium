@@ -21,7 +21,8 @@ solution_variants:
       - "Beregn statistikken (f.eks. gjennomsnitt) for dette resamplet og lagre verdien."
       - "Gjenta steg 2–3 mange ganger — typisk 999 eller 1000."
       - "Beregn standardfeilen som utvalgsstandardavviket av de 999 bootstrap-statistikkene: `SE` = std-av-bootstrap-snittene."
-      - "Lag KI: `x̄ ± z_(α/2) · SE`. Antar at bootstrap-fordelingen er tilnærmet normal."
+      - text: "Lag KI. Antar at bootstrap-fordelingen er tilnærmet normal. Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell)."
+        formula: "x̄ ± z_(α/2) · SE"
       - { text: "Sjekk bootstrap-fordelingen før du bruker normaltilnærmingen — er den skjev eller har tunge haler, bruk prosentilintervall i stedet.", conditional: true }
   - label: "Prosentilintervall"
     steps:

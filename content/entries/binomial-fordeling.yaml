@@ -57,50 +57,73 @@ solution_variants:
     steps:
       - "Identifiser `n` (antall forsøk) og `p` (suksessannsynlighet) fra oppgaveteksten"
       - "Skriv `X ~ Bin(n, p)` og noter ønsket verdi `k` (heltall, `0 ≤ k ≤ n`)"
-      - "Sett inn i formelen `P(X = k) = C(n,k)·p^k·(1−p)^(n−k)`"
-      - "Beregn binomialkoeffisienten `C(n,k) = n! / (k!·(n−k)!)` (f.eks. `C(10,4) = 210`)"
-      - "Multiplisér leddene sammen (f.eks. `n = 10, p = 0.30, k = 4 → 210·0.3⁴·0.7⁶ ≈ 0.200`)"
-      - { text: "Hvis `k = 0`, formelen forenkles til `(1−p)^n`", conditional: true }
-      - { text: "Hvis `k = n`, formelen forenkles til `p^n`", conditional: true }
+      - text: "Sett inn i formelen:"
+        formula: "P(X = k) = C(n,k) · p^k · (1−p)^(n−k)"
+      - text: "Beregn binomialkoeffisienten (f.eks. `C(10,4) = 210`):"
+        formula: "C(n,k) = n! / (k! · (n−k)!)"
+      - text: "Multiplisér leddene sammen. Eksempel `n = 10, p = 0.30, k = 4`:"
+        formula: "P(X = 4) = 210 · 0.3⁴ · 0.7⁶ ≈ 0.200"
+      - text: "Hvis `k = 0`, formelen forenkles:"
+        formula: "P(X = 0) = (1−p)^n"
+        conditional: true
+      - text: "Hvis `k = n`, formelen forenkles:"
+        formula: "P(X = n) = p^n"
+        conditional: true
   - label: "P(X ≤ k)"
     steps:
       - "Identifiser `n`, `p` og terskelen `k` fra oppgaven"
       - "Skriv `X ~ Bin(n, p)` og bekreft at vi ønsker den kumulative `P(X ≤ k)`"
-      - "Slå opp verdien direkte i tabell E.1 (Binomialtabell) for gitte `n`, `p`, `k` (f.eks. `n = 10, p = 0.20, k = 1 → 0.376`)"
+      - "Slå opp verdien direkte i **tabell E.1** (Binomialtabell) for gitte `n`, `p`, `k` (f.eks. `n = 10, p = 0.20, k = 1 → 0.376`)"
       - "Les av sannsynligheten og rund av til 3–4 desimaler"
-      - { text: "Hvis `k` eller `p` er utenfor tabell E.1 sitt område, summér pmf for hånd: `P(X ≤ k) = Σ_{i=0}^{k} C(n,i)·p^i·(1−p)^(n−i)`", conditional: true }
-      - { text: "Hvis `p > 0.5` og tabellen kun dekker `p ≤ 0.5`, snu spørsmålet: la `Y = n − X ~ Bin(n, 1−p)`, og bruk `P(X ≤ k) = P(Y ≥ n−k) = 1 − P(Y ≤ n−k−1)`", conditional: true }
+      - text: "Hvis `k` eller `p` er utenfor tabell E.1 sitt område, summér pmf for hånd:"
+        formula: "P(X ≤ k) = Σ_{i=0}^{k} C(n,i) · p^i · (1−p)^(n−i)"
+        conditional: true
+      - text: "Hvis `p > 0.5` og tabellen kun dekker `p ≤ 0.5`, snu spørsmålet: la `Y = n − X ~ Bin(n, 1−p)`, og bruk:"
+        formula: "P(X ≤ k) = P(Y ≥ n−k) = 1 − P(Y ≤ n−k−1)"
+        conditional: true
   - label: "P(X ≥ k)"
     steps:
       - "Identifiser `n`, `p` og nedre grense `k` (oppgaven sier 'minst k')"
       - "Skriv `X ~ Bin(n, p)` og noter at vi vil ha `P(X ≥ k)`"
-      - "Bruk komplementregelen: `P(X ≥ k) = 1 − P(X ≤ k−1)`"
-      - "Slå opp `P(X ≤ k−1)` i tabell E.1 (f.eks. `n = 10, p = 0.20, k = 2 → P(X ≤ 1) = 0.376`)"
+      - text: "Bruk komplementregelen:"
+        formula: "P(X ≥ k) = 1 − P(X ≤ k−1)"
+      - "Slå opp `P(X ≤ k−1)` i **tabell E.1** (f.eks. `n = 10, p = 0.20, k = 2 → P(X ≤ 1) = 0.376`)"
       - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
-      - { text: "Hvis `k = 1`, forenkles uttrykket til `P(X ≥ 1) = 1 − (1−p)^n` (ingen tabell nødvendig)", conditional: true }
+      - text: "Hvis `k = 1`, forenkles uttrykket (ingen tabell nødvendig):"
+        formula: "P(X ≥ 1) = 1 − (1−p)^n"
+        conditional: true
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
   - label: "Finn n / sjansen er mindre enn X"
     steps:
       - "Definer variabelen og noter kravet. F.eks. mynt-eksperiment: `X` = antall kron i `n` kast, `X ~ Bin(n, 0.5)`. Krav: `P(X = 0) < 0.01` (sannsynligheten for å aldri få kron skal være under 1 %)"
-      - "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`: `P(X = 0) = (1 − p)^n = 0.5^n`"
-      - "Sett inn i kravet: `0.5^n < 0.01`"
-      - "Ta naturlig logaritme på begge sider: `n · ln(0.5) < ln(0.01)`"
+      - text: "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`:"
+        formula: "P(X = 0) = (1 − p)^n = 0.5^n"
+      - text: "Sett inn i kravet:"
+        formula: "0.5^n < 0.01"
+      - text: "Ta naturlig logaritme på begge sider:"
+        formula: "n · ln(0.5) < ln(0.01)"
       - { text: "Vi deler på `ln(0.5)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
-      - "Løs for `n`: `n > ln(0.01) / ln(0.5) ≈ 6.64`"
+      - text: "Løs for `n`:"
+        formula: "n > ln(0.01) / ln(0.5) ≈ 6.64"
       - "Rund opp til nærmeste heltall: `n = 7`"
       - "Verifisér: `0.5^7 = 0.00781 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01` (så `n = 7` er minste verdi som tilfredsstiller kravet)"
   - label: "Finn n / sjansen overstiger X"
     steps:
       - "Definer variabelen og noter kravet. F.eks. lotto-eksempel: `X` = antall vinst på `n` lodd, `X ~ Bin(n, 0.05)`. Krav: `P(X ≥ 1) > 0.99` (sannsynligheten for minst én vinst skal overstige 99 %)"
-      - "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste): `P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)^n = 1 − 0.95^n`"
-      - "Sett inn i kravet: `1 − 0.95^n > 0.99`"
+      - text: "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste):"
+        formula: "P(X ≥ 1) = 1 − P(X = 0) = 1 − (1 − p)^n = 1 − 0.95^n"
+      - text: "Sett inn i kravet:"
+        formula: "1 − 0.95^n > 0.99"
       - { text: "Vi multipliserer med `−1` for å isolere `0.95^n` i neste steg: `>` flippes til `<`.", conditional: true }
-      - "Isoler `0.95^n`: `0.95^n < 1 − 0.99 = 0.01`"
-      - "Ta naturlig logaritme på begge sider: `n · ln(0.95) < ln(0.01)`"
+      - text: "Isoler `0.95^n`:"
+        formula: "0.95^n < 1 − 0.99 = 0.01"
+      - text: "Ta naturlig logaritme på begge sider:"
+        formula: "n · ln(0.95) < ln(0.01)"
       - { text: "Vi deler på `ln(0.95)` (negativt) i neste steg: `<` flippes til `>`.", conditional: true }
-      - "Løs for `n`: `n > ln(0.01) / ln(0.95) ≈ 89.78`"
+      - text: "Løs for `n`:"
+        formula: "n > ln(0.01) / ln(0.95) ≈ 89.78"
       - "Rund opp til nærmeste heltall: `n = 90`"
-      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i tabell E.1 til kravet er oppfylt.", conditional: true }
+      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i **tabell E.1** til kravet er oppfylt.", conditional: true }
 
 common_traps: |
   Vær sikker på at `p` er konstant fra forsøk til forsøk. Hvis du trekker

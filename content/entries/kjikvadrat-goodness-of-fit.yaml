@@ -45,10 +45,13 @@ solution_template:
   - "Skriv ned `H₀` (forventet fordeling) og `H₁` (avvik)"
   - "Regn forventede antall `E_i` under `H₀`"
   - "Sjekk at alle `E_i ≥ 5`"
-  - "Regn observatoren `χ² = Σ (O_i − E_i)² / E_i`"
-  - "Bestem frihetsgrader `ν = k − 1` (minus `m` hvis estimerte parametre)"
-  - "Slå opp kritisk verdi `χ²_(α, ν)` i tabell E.6"
-  - "Forkast `H₀` hvis `χ² >` kritisk verdi"
+  - text: "Regn testobservatoren:"
+    formula: "χ² = Σ (O_i − E_i)² / E_i"
+  - text: "Bestem frihetsgrader (minus `m` hvis estimerte parametre):"
+    formula: "ν = k − 1 − m"
+  - "Slå opp kritisk verdi `χ²_(α, ν)` i **tabell E.6** (kjikvadrat-kvantiltabell)"
+  - text: "Forkastningsregel:"
+    formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
 
 common_traps: |
   Frihetsgradene faller med 1 for hver parameter du har estimert fra
