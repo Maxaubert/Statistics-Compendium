@@ -70,16 +70,20 @@ export const DetailedSolutionSchema = z.object({
 /**
  * A single step in a step-by-step guide. Either:
  *  - a plain string (default — renders as a normal numbered step), or
- *  - an object `{ text, conditional }` where `conditional: true` marks the
- *    step as only applying in a specific sub-case (negative z, threshold
- *    failed, etc.). The renderer surfaces these with a distinct accent
- *    border so the eye picks them out.
+ *  - an object `{ text, conditional, formula }` where:
+ *    - `conditional: true` marks the step as only applying in a specific
+ *      sub-case (negative z, threshold failed, etc.). The renderer
+ *      surfaces these with a distinct accent border.
+ *    - `formula` (optional) renders a math expression on its own line
+ *      below the step text, in monospace, so the formula is visually
+ *      separated from the procedural prose.
  */
 export const StepItemSchema = z.union([
   z.string(),
   z.object({
     text: z.string(),
     conditional: z.boolean().optional(),
+    formula: z.string().optional(),
   }),
 ]);
 

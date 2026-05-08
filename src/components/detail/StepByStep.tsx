@@ -2,11 +2,21 @@ import { clsx } from "clsx";
 import { AlertTriangle } from "lucide-react";
 import { renderInlineCode } from "./inline-code";
 
-export type StepItem = string | { text: string; conditional?: boolean };
+export type StepItem =
+  | string
+  | { text: string; conditional?: boolean; formula?: string };
 
-function normalize(item: StepItem): { text: string; conditional: boolean } {
+function normalize(item: StepItem): {
+  text: string;
+  conditional: boolean;
+  formula?: string;
+} {
   if (typeof item === "string") return { text: item, conditional: false };
-  return { text: item.text, conditional: !!item.conditional };
+  return {
+    text: item.text,
+    conditional: !!item.conditional,
+    formula: item.formula,
+  };
 }
 
 /**
@@ -25,7 +35,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         className="absolute left-[18px] top-4 bottom-4 w-[2px] bg-primary-2/30"
       />
       {steps.map((raw, i) => {
-        const { text, conditional } = normalize(raw);
+        const { text, conditional, formula } = normalize(raw);
         const stepNo = numbers[i];
         return (
           <li key={i} className="relative">
@@ -72,6 +82,14 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
               >
                 {renderInlineCode(text, "light")}
               </div>
+              {formula && (
+                <div
+                  className="mt-3 rounded-md border border-line bg-card/70 px-4 py-2.5 font-mono text-[14px] text-ink"
+                  style={{ overflowX: "auto" }}
+                >
+                  {renderInlineCode(formula, "light")}
+                </div>
+              )}
             </div>
           </li>
         );
