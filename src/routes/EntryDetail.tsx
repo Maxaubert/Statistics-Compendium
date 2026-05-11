@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   Info, Search, AlertTriangle, Pi, BarChart3, ClipboardList,
@@ -28,6 +28,7 @@ import { Prose } from "@/components/detail/Prose";
 import { OversiktCardGrid } from "@/components/detail/OversiktCardGrid";
 import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { loadAllContent } from "@/data/loadContent";
+import { recallVariant, rememberVariant } from "@/data/variant-memory";
 
 export function EntryDetail() {
   const { id } = useParams();
@@ -82,6 +83,10 @@ export function EntryDetail() {
   // variant (if present). Labels are usually identical across the two
   // sections; when they aren't (e.g. detailed solutions only cover a subset
   // of the step variants) the unmatched click is a no-op for the other side.
+  //
+  // The active indices are also persisted to localStorage so coming back
+  // to a recently-viewed entry restores the variant the user was looking
+  // at instead of snapping back to index 0 (see data/variant-memory.ts).
   const stepLabels = useMemo(
     () => entry.solution_variants?.map((v) => v.label) ?? [],
     [entry.solution_variants],
@@ -90,17 +95,37 @@ export function EntryDetail() {
     () => entry.detailed_solution_variants?.map((v) => v.label) ?? [],
     [entry.detailed_solution_variants],
   );
-  const [activeStep, setActiveStep] = useState(0);
-  const [activeSolution, setActiveSolution] = useState(0);
+  const initialMemory = useMemo(
+    () => recallVariant(entry.id) ?? { step: 0, solution: 0 },
+    [entry.id],
+  );
+  const [activeStep, setActiveStep] = useState(initialMemory.step);
+  const [activeSolution, setActiveSolution] = useState(initialMemory.solution);
+
+  // Router reuses this component when only the :id param changes, so we
+  // can't rely on remount to reset state. Re-sync during render when the
+  // entry id changes — React handles this pattern safely (the immediate
+  // state updates trigger an extra render with the new values).
+  const lastIdRef = useRef(entry.id);
+  if (lastIdRef.current !== entry.id) {
+    lastIdRef.current = entry.id;
+    setActiveStep(initialMemory.step);
+    setActiveSolution(initialMemory.solution);
+  }
+
   const onStepSelect = (i: number) => {
-    setActiveStep(i);
     const match = solutionLabels.indexOf(stepLabels[i]);
-    if (match >= 0) setActiveSolution(match);
+    const nextSolution = match >= 0 ? match : activeSolution;
+    setActiveStep(i);
+    setActiveSolution(nextSolution);
+    rememberVariant(entry.id, { step: i, solution: nextSolution });
   };
   const onSolutionSelect = (i: number) => {
-    setActiveSolution(i);
     const match = stepLabels.indexOf(solutionLabels[i]);
-    if (match >= 0) setActiveStep(match);
+    const nextStep = match >= 0 ? match : activeStep;
+    setActiveSolution(i);
+    setActiveStep(nextStep);
+    rememberVariant(entry.id, { step: nextStep, solution: i });
   };
 
   return (
