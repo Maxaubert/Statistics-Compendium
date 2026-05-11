@@ -13,6 +13,10 @@ export interface DetailedSolutionVariant {
 
 interface Props {
   variants: DetailedSolutionVariant[];
+  /** Controlled active index. If omitted the component manages its own state. */
+  active?: number;
+  /** Called when the user clicks a tab. Required if `active` is provided. */
+  onSelect?: (i: number) => void;
 }
 
 /**
@@ -20,9 +24,22 @@ interface Props {
  * styling so the two sections (steg / detailed-solutions) read as
  * one paired widget on the entry detail page. Single-variant input
  * renders flat (no tabs).
+ *
+ * The active tab can be controlled by the parent (used by EntryDetail
+ * to keep this tab strip in sync with the step-by-step tabs); if no
+ * controlled props are passed it falls back to internal state.
  */
-export function DetailedSolutionVariantsTabs({ variants }: Props) {
-  const [active, setActive] = useState(0);
+export function DetailedSolutionVariantsTabs({
+  variants,
+  active: controlledActive,
+  onSelect: controlledOnSelect,
+}: Props) {
+  const [internalActive, setInternalActive] = useState(0);
+  const isControlled = controlledActive !== undefined;
+  const active = isControlled ? controlledActive : internalActive;
+  const onSelect = isControlled
+    ? (controlledOnSelect ?? (() => {}))
+    : setInternalActive;
   if (variants.length === 0) return null;
   if (variants.length === 1) {
     return (
@@ -39,7 +56,7 @@ export function DetailedSolutionVariantsTabs({ variants }: Props) {
       <VariantTabBar
         labels={variants.map((v) => v.label)}
         active={active}
-        onSelect={setActive}
+        onSelect={onSelect}
         ariaLabel="Oppgaveløsnings-varianter"
       />
 

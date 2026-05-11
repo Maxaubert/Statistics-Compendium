@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   Info, Search, AlertTriangle, Pi, BarChart3, ClipboardList,
@@ -75,6 +76,32 @@ export function EntryDetail() {
   // of the page (recognition cues, related-pills, common_traps, …) still
   // applies, so we just swap the lead-in section.
   const isProseEntry = entry.type === "overview" || entry.type === "method";
+
+  // Pair the "Steg for steg" and "Detaljerte oppgaveløsninger" tab strips:
+  // clicking a variant in either side jumps the other to the same labelled
+  // variant (if present). Labels are usually identical across the two
+  // sections; when they aren't (e.g. detailed solutions only cover a subset
+  // of the step variants) the unmatched click is a no-op for the other side.
+  const stepLabels = useMemo(
+    () => entry.solution_variants?.map((v) => v.label) ?? [],
+    [entry.solution_variants],
+  );
+  const solutionLabels = useMemo(
+    () => entry.detailed_solution_variants?.map((v) => v.label) ?? [],
+    [entry.detailed_solution_variants],
+  );
+  const [activeStep, setActiveStep] = useState(0);
+  const [activeSolution, setActiveSolution] = useState(0);
+  const onStepSelect = (i: number) => {
+    setActiveStep(i);
+    const match = solutionLabels.indexOf(stepLabels[i]);
+    if (match >= 0) setActiveSolution(match);
+  };
+  const onSolutionSelect = (i: number) => {
+    setActiveSolution(i);
+    const match = stepLabels.indexOf(solutionLabels[i]);
+    if (match >= 0) setActiveStep(match);
+  };
 
   return (
     <GlossaryPopupProvider glossary={data.glossary}>
@@ -178,7 +205,11 @@ export function EntryDetail() {
 
         {(entry.solution_variants?.length ?? 0) > 0 ? (
           <Section title="Steg for steg" icon={ClipboardList}>
-            <StepByStepTabs variants={entry.solution_variants!} />
+            <StepByStepTabs
+              variants={entry.solution_variants!}
+              active={activeStep}
+              onSelect={onStepSelect}
+            />
           </Section>
         ) : entry.solution_template ? (
           <Section title="Steg for steg" icon={ClipboardList}>
@@ -190,6 +221,8 @@ export function EntryDetail() {
           <Section title="Detaljerte oppgaveløsninger" icon={FileText}>
             <DetailedSolutionVariantsTabs
               variants={entry.detailed_solution_variants!}
+              active={activeSolution}
+              onSelect={onSolutionSelect}
             />
           </Section>
         ) : entry.detailed_solutions ? (

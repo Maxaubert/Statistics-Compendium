@@ -10,6 +10,10 @@ export interface StepVariant {
 
 interface StepByStepTabsProps {
   variants: StepVariant[];
+  /** Controlled active index. If omitted the component manages its own state. */
+  active?: number;
+  /** Called when the user clicks a tab. Required if `active` is provided. */
+  onSelect?: (i: number) => void;
 }
 
 /**
@@ -20,9 +24,23 @@ interface StepByStepTabsProps {
  *
  * Falls back to plain `StepByStep` rendering for the active variant
  * — same styling as the existing single-list version.
+ *
+ * The active tab can be controlled by the parent (used by EntryDetail
+ * to keep this tab strip in sync with the detailed-solution tabs);
+ * if no controlled props are passed it falls back to internal state.
  */
-export function StepByStepTabs({ variants }: StepByStepTabsProps) {
-  const [active, setActive] = useState(0);
+export function StepByStepTabs({
+  variants,
+  active: controlledActive,
+  onSelect: controlledOnSelect,
+}: StepByStepTabsProps) {
+  const [internalActive, setInternalActive] = useState(0);
+  const isControlled = controlledActive !== undefined;
+  const active = isControlled ? controlledActive : internalActive;
+  const onSelect = isControlled
+    ? (controlledOnSelect ?? (() => {}))
+    : setInternalActive;
+
   if (variants.length === 0) return null;
   if (variants.length === 1) {
     return <StepByStep steps={variants[0].steps} />;
@@ -33,7 +51,7 @@ export function StepByStepTabs({ variants }: StepByStepTabsProps) {
       <VariantTabBar
         labels={variants.map((v) => v.label)}
         active={active}
-        onSelect={setActive}
+        onSelect={onSelect}
         ariaLabel="Steg-for-steg-varianter"
       />
       <StepByStep steps={variants[active].steps} />
