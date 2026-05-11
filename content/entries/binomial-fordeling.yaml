@@ -63,6 +63,7 @@ solution_variants:
         formula: "C(n,k) = n! / (k! · (n−k)!)"
       - text: "Multiplisér leddene sammen. Eksempel `n = 10, p = 0.30, k = 4`:"
         formula: "P(X = 4) = 210 · 0.3⁴ · 0.7⁶ ≈ 0.200"
+        example: true
       - text: "Hvis `k = 0`, formelen forenkles:"
         formula: "P(X = 0) = (1−p)^n"
         conditional: true

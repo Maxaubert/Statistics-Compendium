@@ -71,6 +71,7 @@ solution_variants:
         formula: "Z = (X̄ − μ₀) / (σ/√n)"
       - text: "Eksempel med `n = 36`, `σ = 5`, `X̄ = 98`, `μ₀ = 100`. For venstresidig forventes Z negativ."
         formula: "Z = (98 − 100) / (5/√36) = −2 / 0.833 ≈ −2.40"
+        example: true
       - text: "Slå opp kritisk verdi `z_α` i **tabell E.4** (Z-kvantiltabell). For `α = 0.05` er `z_0.05 = 1.645`. Forkastningsregel for venstresidig:"
         formula: "Forkast H₀ hvis Z < −z_α"
       - "Sammenlign og konkluder. F.eks. `−2.40 < −1.645` ✓ → forkast H₀. Skriv konklusjonen i kontekst: «Tallene tyder på at μ er lavere enn μ₀.»"
@@ -100,6 +101,7 @@ solution_variants:
         formula: "Z = (X̄ − μ₀) / (σ/√n)"
       - text: "Eksempel med `n = 36`, `σ = 5`, `X̄ = 102`, `μ₀ = 100`. For høyresidig forventes Z positiv."
         formula: "Z = (102 − 100) / (5/√36) = 2 / 0.833 ≈ 2.40"
+        example: true
       - text: "Slå opp kritisk verdi `z_α` i **tabell E.4** (Z-kvantiltabell). For `α = 0.05` er `z_0.05 = 1.645`. Forkastningsregel for høyresidig:"
         formula: "Forkast H₀ hvis Z > +z_α"
       - "Sammenlign og konkluder. F.eks. `2.40 > 1.645` ✓ → forkast H₀. Skriv konklusjonen i kontekst: «Tallene tyder på at μ er høyere enn μ₀.»"
@@ -129,6 +131,7 @@ solution_variants:
         formula: "Z = (X̄ − μ₀) / (σ/√n)"
       - text: "Eksempel med `n = 36`, `σ = 5`, `X̄ = 102`, `μ₀ = 100`."
         formula: "Z = (102 − 100) / (5/√36) ≈ 2.40"
+        example: true
       - text: "Slå opp kritisk verdi `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). Del α på TO siden α fordeles på to haler. For `α = 0.05` er `z_0.025 = 1.96` (IKKE `z_0.05 = 1.645`)."
         formula: "Forkast H₀ hvis |Z| > z_(α/2)"
       - "Sammenlign og konkluder. F.eks. `|2.40| = 2.40 > 1.96` ✓ → forkast H₀. Skriv konklusjonen i kontekst: «Tallene tyder på at μ avviker fra μ₀.»"

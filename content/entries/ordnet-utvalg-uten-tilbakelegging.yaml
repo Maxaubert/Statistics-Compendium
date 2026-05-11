@@ -56,8 +56,10 @@ solution_variants:
         formula: "P(n, k) = n · (n − 1) · ... · (n − k + 1) = n! / (n − k)!"
       - text: "Eksempel — gull/sølv/bronse fra 10 deltakere:"
         formula: "P(10, 3) = 10 · 9 · 8 = 720"
+        example: true
       - text: "Eksempel — 5 personer på 3 stoler (i bestemt rekkefølge):"
         formula: "P(5, 3) = 5 · 4 · 3 = 60"
+        example: true
       - text: "Pass på: hvis rekkefølgen IKKE teller (f.eks. 'velg ut 3 personer til en komité') skal du bruke `C(n, k) = P(n, k) / k!` i stedet."
         conditional: true
   - label: "Hele permutasjoner (k = n)"
@@ -81,8 +83,10 @@ solution_variants:
         formula: "P = (1/n) · (1/(n−1)) · ... · (1/(n−k+1))"
       - text: "Eksempel — trekk 3 spesifikke kort i bestemt rekkefølge fra 52-korts stokk:"
         formula: "P = 1 / (52 · 51 · 50) = 1 / 132 600 ≈ 7.54 · 10⁻⁶"
+        example: true
       - text: "Eksempel — 3 spesifikke personer i bestemt rekkefølge ut av 10:"
         formula: "P = 1 / (10 · 9 · 8) = 1 / 720"
+        example: true
       - text: "Pass på: hvis du spør om en hvilken som helst rekkefølge av 3 spesifikke kort, må du multiplisere med `3! = 6` (gunstige rekkefølger)."
         conditional: true
 

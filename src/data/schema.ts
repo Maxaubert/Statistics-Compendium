@@ -77,6 +77,9 @@ export const DetailedSolutionSchema = z.object({
  *    - `formula` (optional) renders a math expression on its own line
  *      below the step text, in monospace, so the formula is visually
  *      separated from the procedural prose.
+ *    - `example: true` marks the step as a worked numeric instance of the
+ *      *previous* step's general formula. Renderer indents it like
+ *      "Pass paa", uses an emerald accent, and skips the step number.
  *    - `cases` (optional) renders as a small two-column decision matrix
  *      below the text — `when` on the left, `then` (action/verdict)
  *      on the right. Used for "when does this test apply?"-style
@@ -87,6 +90,7 @@ export const StepItemSchema = z.union([
   z.object({
     text: z.string(),
     conditional: z.boolean().optional(),
+    example: z.boolean().optional(),
     formula: z.string().optional(),
     cases: z
       .array(z.object({ when: z.string(), then: z.string() }))

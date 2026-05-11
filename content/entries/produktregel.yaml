@@ -60,6 +60,7 @@ solution_variants:
       - "Hvis `P(A ∩ B)` ikke er gitt eksplisitt, regn det først ut (typisk via produktregel, total sannsynlighet, eller et venndiagram)"
       - text: "Eksempel: `P(M ∩ F) = 0.41`, `P(F) = 0.45`:"
         formula: "P(M | F) = 0.41 / 0.45 ≈ 0.911"
+        example: true
       - text: "Hvis du i stedet kjenner `P(B|A)` (motsatt retning), bruk Bayes' setning:"
         formula: "P(A|B) = P(A)·P(B|A) / P(B)"
         conditional: true
@@ -78,6 +79,7 @@ solution_variants:
       - "Hvis de er like: hendelsene er uavhengige. Hvis ikke: de er avhengige (oppgi differansen som dokumentasjon)"
       - text: "Eksempel: `P(F) = 0.45`, `P(M) = 0.80`, `P(F ∩ M) = 0.41`. Sammenlign:"
         formula: "P(F)·P(M) = 0.36 ≠ 0.41  →  F og M er IKKE uavhengige"
+        example: true
       - text: "Ekvivalent test: `P(A|B) = P(A)` ⇔ uavhengighet. Bruk denne hvis det er enklere å beregne `P(A|B)`."
         conditional: true
 

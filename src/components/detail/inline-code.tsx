@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export type InlineCodeTheme = "light" | "dark" | "warn" | "step";
+export type InlineCodeTheme = "light" | "dark" | "warn" | "step" | "example";
 
 /**
  * Render a string with five flavors of inline markdown:
@@ -210,6 +210,12 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // so it stays visibly darker than either parent surface.
   step:
     "rounded border border-primary-2/30 bg-primary-2/[0.10] px-1.5 py-[1px] font-mono text-[13px] text-ink",
+  // Example: emerald-tinted pill that lifts above the emerald-50 example-step
+  // card and the emerald-100 formula inset. Emerald reads as "computed /
+  // worked numeric instance" and sits far from both indigo (primary) and
+  // amber (warning), giving the three step categories maximum separation.
+  example:
+    "rounded border border-emerald-500/30 bg-emerald-100/60 px-1.5 py-[1px] font-mono text-[13px] text-emerald-900",
 };
 
 const LINK_CLASS: Record<InlineCodeTheme, string> = {
@@ -221,4 +227,6 @@ const LINK_CLASS: Record<InlineCodeTheme, string> = {
     "text-amber-900 underline decoration-amber-700/60 underline-offset-[3px] transition-colors hover:decoration-amber-900",
   step:
     "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
+  example:
+    "text-inherit underline decoration-emerald-600/70 underline-offset-[3px] transition-colors hover:text-emerald-800 hover:decoration-emerald-800",
 };
