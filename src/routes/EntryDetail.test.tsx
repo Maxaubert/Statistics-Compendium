@@ -24,7 +24,11 @@ describe("EntryDetail", () => {
     expect(screen.getByText("IKKE bruk når")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Symboler" })).toBeInTheDocument();
     expect(screen.getByText("Egenskaper")).toBeInTheDocument();
-    expect(screen.getByText("Steg for steg")).toBeInTheDocument();
+    // QuickNav rail also renders "Steg for steg" as a jump link, so we
+    // target the section's h2 heading specifically.
+    expect(
+      screen.getByRole("heading", { name: "Steg for steg" }),
+    ).toBeInTheDocument();
     // The undetailed "Eksempler fra obliger og eksamener" section was removed —
     // detailed_solutions (or detailed_solution_variants) is the only example surface now.
     expect(

@@ -27,6 +27,7 @@ import { Pager } from "@/components/detail/Pager";
 import { Prose } from "@/components/detail/Prose";
 import { OversiktCardGrid } from "@/components/detail/OversiktCardGrid";
 import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
+import { QuickNav, type QuickNavItem } from "@/components/detail/QuickNav";
 import { loadAllContent } from "@/data/loadContent";
 import { recallVariant, rememberVariant } from "@/data/variant-memory";
 
@@ -128,10 +129,27 @@ export function EntryDetail() {
     rememberVariant(entry.id, { step: nextStep, solution: i });
   };
 
+  // Right-rail QuickNav items — only include anchors that actually
+  // exist on this entry, so the rail doesn't show dead links.
+  const hasSteps =
+    (entry.solution_variants?.length ?? 0) > 0 || !!entry.solution_template;
+  const hasSolutions =
+    (entry.detailed_solution_variants?.length ?? 0) > 0 ||
+    !!entry.detailed_solutions;
+  const quickNavItems: QuickNavItem[] = [
+    { id: "nav-formel", label: "Formel" },
+    ...(hasSteps ? [{ id: "nav-steg", label: "Steg for steg" }] : []),
+    ...(hasSolutions
+      ? [{ id: "nav-losninger", label: "Løsninger" }]
+      : []),
+    ...(entry.tools ? [{ id: "nav-tabeller", label: "Tabeller" }] : []),
+  ];
+
   return (
     <GlossaryPopupProvider glossary={data.glossary}>
     <div data-testid="entry-detail" className="min-h-screen bg-paper">
       <Banner />
+      {!isProseEntry && <QuickNav items={quickNavItems} />}
       <article className={`mx-auto bg-card px-14 py-8 pb-12 ${isProseEntry ? "max-w-[1200px]" : "max-w-[920px]"}`}>
         <div className="mb-6 flex items-center justify-between">
           <button
@@ -146,7 +164,7 @@ export function EntryDetail() {
           </div>
         </div>
 
-        <header className="mb-7 border-b-2 border-paper-2 pb-5">
+        <header id="nav-formel" className="mb-7 scroll-mt-6 border-b-2 border-paper-2 pb-5">
           <div className="flex items-start justify-between gap-5">
             <div>
               <h1 className="m-0 font-serif text-[38px] font-semibold leading-tight tracking-tight text-ink">
@@ -229,7 +247,7 @@ export function EntryDetail() {
         )}
 
         {(entry.solution_variants?.length ?? 0) > 0 ? (
-          <Section title="Steg for steg" icon={ClipboardList}>
+          <Section id="nav-steg" title="Steg for steg" icon={ClipboardList}>
             <StepByStepTabs
               variants={entry.solution_variants!}
               active={activeStep}
@@ -237,13 +255,17 @@ export function EntryDetail() {
             />
           </Section>
         ) : entry.solution_template ? (
-          <Section title="Steg for steg" icon={ClipboardList}>
+          <Section id="nav-steg" title="Steg for steg" icon={ClipboardList}>
             <StepByStep steps={entry.solution_template} />
           </Section>
         ) : null}
 
         {(entry.detailed_solution_variants?.length ?? 0) > 0 ? (
-          <Section title="Detaljerte oppgaveløsninger" icon={FileText}>
+          <Section
+            id="nav-losninger"
+            title="Detaljerte oppgaveløsninger"
+            icon={FileText}
+          >
             <DetailedSolutionVariantsTabs
               variants={entry.detailed_solution_variants!}
               active={activeSolution}
@@ -251,7 +273,11 @@ export function EntryDetail() {
             />
           </Section>
         ) : entry.detailed_solutions ? (
-          <Section title="Detaljerte oppgaveløsninger" icon={FileText}>
+          <Section
+            id="nav-losninger"
+            title="Detaljerte oppgaveløsninger"
+            icon={FileText}
+          >
             {entry.detailed_solutions.map((s, i) => (
               <DetailedSolution key={i} solution={s} />
             ))}
@@ -271,7 +297,7 @@ export function EntryDetail() {
         )}
 
         {entry.tools && (
-          <Section title="Verktøy / tabeller" icon={Table2}>
+          <Section id="nav-tabeller" title="Verktøy / tabeller" icon={Table2}>
             <ToolCards tools={entry.tools} tables={data.tables} />
           </Section>
         )}
