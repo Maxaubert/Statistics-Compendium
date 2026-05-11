@@ -210,11 +210,12 @@ const CODE_CLASS: Record<InlineCodeTheme, string> = {
   // so it stays visibly darker than either parent surface.
   step:
     "rounded border border-primary-2/30 bg-primary-2/[0.10] px-1.5 py-[1px] font-mono text-[13px] text-ink",
-  // Example: sky-tinted pill that lifts above the sky-50 example-step card
-  // and the sky-100 formula inset. Sky-100 fill with sky-900 ink reads as
-  // "worked numeric instance" without competing with the indigo primary.
+  // Example: emerald-tinted pill that lifts above the emerald-50 example-step
+  // card and the emerald-100 formula inset. Emerald reads as "computed /
+  // worked numeric instance" and sits far from both indigo (primary) and
+  // amber (warning), giving the three step categories maximum separation.
   example:
-    "rounded border border-sky-400/30 bg-sky-100/60 px-1.5 py-[1px] font-mono text-[13px] text-sky-900",
+    "rounded border border-emerald-500/30 bg-emerald-100/60 px-1.5 py-[1px] font-mono text-[13px] text-emerald-900",
 };
 
 const LINK_CLASS: Record<InlineCodeTheme, string> = {
@@ -227,5 +228,5 @@ const LINK_CLASS: Record<InlineCodeTheme, string> = {
   step:
     "text-inherit underline decoration-primary-3/70 underline-offset-[3px] transition-colors hover:text-primary hover:decoration-primary",
   example:
-    "text-inherit underline decoration-sky-500/70 underline-offset-[3px] transition-colors hover:text-sky-700 hover:decoration-sky-700",
+    "text-inherit underline decoration-emerald-600/70 underline-offset-[3px] transition-colors hover:text-emerald-800 hover:decoration-emerald-800",
 };

@@ -56,7 +56,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         const codeTheme = conditional ? "warn" : example ? "example" : "step";
 
         const badgeClasses = example
-          ? "bg-sky-100 text-sky-700"
+          ? "bg-emerald-100 text-emerald-700"
           : conditional
           ? "bg-amber-100 text-amber-700"
           : "bg-primary-2 text-white";
@@ -70,19 +70,19 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         );
 
         const connectorClasses = example
-          ? "-left-[20px] w-[52px] border-dashed border-sky-500/70"
+          ? "-left-[20px] w-[52px] border-dashed border-emerald-500/70"
           : conditional
           ? "-left-[20px] w-[52px] border-dashed border-amber-500/70"
           : "-left-[20px] w-8 border-primary-2/30";
 
         const cardClasses = example
-          ? "ml-8 border border-sky-300/70 bg-sky-50/70"
+          ? "ml-8 border border-emerald-300/70 bg-emerald-50/70"
           : conditional
           ? "ml-8 border border-amber-300/70 bg-amber-50/70"
           : "border border-line bg-primary-soft/50";
 
         const labelClasses = example
-          ? "text-sky-700"
+          ? "text-emerald-700"
           : conditional
           ? "text-amber-700"
           : "text-primary-2/80";
@@ -96,13 +96,13 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         const textInkClass = example || conditional ? "text-ink-2" : "text-ink";
 
         const insetBoxClasses = example
-          ? "border border-sky-400/40 bg-sky-100/50"
+          ? "border border-emerald-400/40 bg-emerald-100/50"
           : conditional
           ? "border border-amber-400/40 bg-amber-100/50"
           : "border border-primary-2/20 bg-primary-soft";
 
         const casesDividerClass = example
-          ? "divide-sky-400/30"
+          ? "divide-emerald-400/30"
           : conditional
           ? "divide-amber-400/30"
           : "divide-primary-2/15";

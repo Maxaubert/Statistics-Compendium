@@ -79,7 +79,7 @@ export const DetailedSolutionSchema = z.object({
  *      separated from the procedural prose.
  *    - `example: true` marks the step as a worked numeric instance of the
  *      *previous* step's general formula. Renderer indents it like
- *      "Pass paa", uses a sky-blue accent, and skips the step number.
+ *      "Pass paa", uses an emerald accent, and skips the step number.
  *    - `cases` (optional) renders as a small two-column decision matrix
  *      below the text — `when` on the left, `then` (action/verdict)
  *      on the right. Used for "when does this test apply?"-style

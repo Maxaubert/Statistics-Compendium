@@ -37,6 +37,6 @@ describe("StepByStep example rows", () => {
     const card = container.querySelector(".glass-light-card");
     expect(card).not.toBeNull();
     expect(card!.className).toMatch(/\bml-8\b/);
-    expect(card!.className).toMatch(/sky-/);
+    expect(card!.className).toMatch(/emerald-/);
   });
 });
