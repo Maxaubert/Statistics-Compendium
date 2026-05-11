@@ -52,6 +52,9 @@ solution_template:
     formula: "β̂ = S_XY / S_XX"
   - text: "Beregn skjæringspunktet."
     formula: "α̂ = ȳ − β̂·x̄"
+  - text: "Eksempel: `S_XX = 15.6`, `S_XY = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`:"
+    formula: "β̂ = 103.4/15.6 ≈ 6.63;  α̂ = 79.7 − 6.63·6.8 ≈ 34.62"
+    example: true
   - text: "Skriv regresjonslinjen."
     formula: "ŷ = α̂ + β̂·x"
 

@@ -74,7 +74,10 @@ solution_variants:
     steps:
       - "Identifiser `n`, `p` og terskelen `k` fra oppgaven"
       - "Skriv `X ~ Bin(n, p)` og bekreft at vi ønsker den kumulative `P(X ≤ k)`"
-      - "Slå opp verdien direkte i **tabell E.1** (Binomialtabell) for gitte `n`, `p`, `k` (f.eks. `n = 10, p = 0.20, k = 1 → 0.376`)"
+      - "Slå opp verdien direkte i **tabell E.1** (Binomialtabell) for gitte `n`, `p`, `k`"
+      - text: "Eksempel: `n = 10`, `p = 0.20`, `k = 1`:"
+        formula: "P(X ≤ 1) = 0.376"
+        example: true
       - text: "Hvis `k` eller `p` er utenfor tabell E.1 sitt område, summér pmf for hånd:"
         formula: "P(X ≤ k) = Σ_{i=0}^{k} C(n,i) · p^i · (1−p)^(n−i)"
         conditional: true
@@ -87,8 +90,11 @@ solution_variants:
       - "Skriv `X ~ Bin(n, p)` og noter at vi vil ha `P(X ≥ k)`"
       - text: "Bruk komplementregelen:"
         formula: "P(X ≥ k) = 1 − P(X ≤ k−1)"
-      - "Slå opp `P(X ≤ k−1)` i **tabell E.1** (f.eks. `n = 10, p = 0.20, k = 2 → P(X ≤ 1) = 0.376`)"
-      - "Regn ut komplementet (f.eks. `1 − 0.376 = 0.624`)"
+      - "Slå opp `P(X ≤ k−1)` i **tabell E.1**"
+      - "Regn ut komplementet"
+      - text: "Eksempel: `n = 10`, `p = 0.20`, `k = 2`. Tabell E.1 gir `P(X ≤ 1) = 0.376`:"
+        formula: "P(X ≥ 2) = 1 − 0.376 = 0.624"
+        example: true
       - text: "Hvis `k = 1`, forenkles uttrykket (ingen tabell nødvendig):"
         formula: "P(X ≥ 1) = 1 − (1−p)^n"
         conditional: true

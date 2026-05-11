@@ -57,24 +57,28 @@ solution_variants:
         conditional: true
       - text: "Sett inn i Bayes:"
         formula: "P(A|B) = P(A)·P(B|A) / P(B)"
+      - text: "Eksempel: defekt produksjonsdel `P(D) = 0.02`, `P(M|D) = 0.95`, `P(M) = 0.0484`:"
+        formula: "P(D|M) = 0.02 · 0.95 / 0.0484 ≈ 0.393"
+        example: true
       - { text: "Hvis hendelsene IKKE er en partisjon (A og Aᶜ overlapper, eller dekker ikke alt), Bayes-formelen gjelder ikke direkte – sjekk forutsetningene", conditional: true }
 
   - label: "Diagnose-/test-mønster"
     steps:
-      - "Bruk når: sykdom + test. Inputs er prevalens `P(syk)`, sensitivitet `= P(positiv|syk)`, spesifisitet `= P(negativ|frisk)`. Spør `P(syk|positiv)` eller `P(frisk|negativ)`."
-      - "Identifiser de tre tallene: prevalens (hvor vanlig sykdommen er), sensitivitet (sann positiv-rate) og spesifisitet (sann negativ-rate)"
+      - "Identifiser de tre tallene: prevalens `P(syk)` (hvor vanlig sykdommen er), sensitivitet `P(positiv|syk)` og spesifisitet `P(negativ|frisk)`"
       - "Sett opp komplementene: `P(frisk) = 1 − P(syk)`, falsk positiv-rate `= 1 − spesifisitet`, falsk negativ-rate `= 1 − sensitivitet`"
       - { text: "Hvis spørsmålet sier 'hvis testen er negativ', bruk komplementene i sensitivitet og spesifisitet (dvs. `P(negativ|syk) = 1 − sensitivitet` og `P(negativ|frisk) = spesifisitet`)", conditional: true }
       - text: "Regn ut nevneren med total sannsynlighet, f.eks.:"
         formula: "P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)"
       - text: "Bruk Bayes:"
         formula: "P(syk|positiv) = P(syk)·sensitivitet / P(positiv)"
+      - text: "Eksempel: prevalens 1 %, sensitivitet 99 %, spesifisitet 95 % gir `P(positiv) = 0.0594`:"
+        formula: "P(syk|positiv) = 0.01 · 0.99 / 0.0594 ≈ 0.167"
+        example: true
       - "Tolk svaret nøkternt (f.eks. 1 % prevalens, 99 % sensitivitet, 95 % spesifisitet → `P(syk|positiv) ≈ 16.7 %`, ikke 99 %) – lav prevalens gir mange falske positive"
       - { text: "Hvis oppgaven nevner gjentatt testing eller uavhengige tester, oppdater prevalensen til posterior fra forrige test før neste runde", conditional: true }
 
   - label: "Multi-hypotese (3+ partisjoner)"
     steps:
-      - "Bruk når: flere mulige årsaker `A₁, A₂, A₃, …` som danner en partisjon (gjensidig utelukkende, dekker hele utfallsrommet)."
       - "List opp alle hypoteser `A₁, …, Aₙ` og verifiser at de er gjensidig utelukkende og dekker alle muligheter (`ΣP(Aᵢ) = 1`)"
       - "Skriv ned priorene `P(Aᵢ)` og likelihooden `P(B|Aᵢ)` for hver `i`"
       - { text: "Hvis hendelsene IKKE er en partisjon (de overlapper eller mangler en restkategori), Bayes-formelen gjelder ikke direkte – legg til 'ingen av disse' eller omformuler", conditional: true }
@@ -82,11 +86,13 @@ solution_variants:
         formula: "P(B) = Σᵢ P(Aᵢ)·P(B|Aᵢ)"
       - text: "Bruk Bayes for hver `Aᵢ`:"
         formula: "P(Aᵢ|B) = P(Aᵢ)·P(B|Aᵢ) / P(B)"
+      - text: "Eksempel — tre maskiner A/B/C med defektrater 1 %/2 %/5 % og andeler 0.50/0.30/0.20 gir `P(D) = 0.021`. Posterior for C:"
+        formula: "P(C|D) = 0.20 · 0.05 / 0.021 ≈ 0.476"
+        example: true
       - "Tolk: hvilken hypotese har størst posterior? Sammenlign med prior for å se hvor mye evidens B flyttet sannsynligheten"
 
   - label: "Tre-diagram-arbeidsflyt"
     steps:
-      - "Bruk når: oppgaven er ordrik eller har flere steg. Tre-diagram er en visuell måte å organisere informasjonen før du regner."
       - "Les hele oppgaven én gang uten å regne – bla rundt teksten for å finne alle prosentene og betingelsene før du tegner noe"
       - "Tegn første nivå i treet: hovedhendelsen (f.eks. syk vs. frisk) med priorene `P(A)` og `P(Aᶜ)` på greinene"
       - "Tegn andre nivå: utfallet (f.eks. positiv/negativ test) under hver gren med de betingede sannsynlighetene `P(B|A)` og `P(B|Aᶜ)`"
@@ -97,6 +103,9 @@ solution_variants:
         conditional: true
       - text: "Bruk Bayes – altså den ene stien delt på summen av relevante stier:"
         formula: "P(A|B) = P(A ∩ B) / P(B)"
+      - text: "Eksempel — forsikringskrav: `P(U ∩ K) = 0.090`, `P(K) = 0.110`:"
+        formula: "P(U|K) = 0.090 / 0.110 ≈ 0.818"
+        example: true
       - { text: "Hvis treet har mer enn to nivåer (f.eks. flere tester etter hverandre), behandle hvert nivå som ny betinging og fortsett å multiplisere langs stien", conditional: true }
       - "Verifiser: alle endenoder skal summere til 1, og hver delsum (gren) skal stemme med priorene"
 

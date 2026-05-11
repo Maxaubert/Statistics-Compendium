@@ -53,16 +53,22 @@ solution_variants:
       - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
       - text: "Beregn binomialkoeffisienten på kalkulator (typisk `nCr` eller `COMB`):"
         formula: "C(n, k) = n! / (k! · (n − k)!)"
+      - text: "Eksempel — Lotto-kupong (`n = 34`, `k = 7`):"
+        formula: "C(34, 7) = 34!/(7!·27!) = 5 379 616"
+        example: true
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
   - label: "Sannsynlighet: alle k er av samme type"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for at alle de `k` uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter', 'alle 3 plukkede er røde')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
-      - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
+      - "Antall mulige utvalg: `C(N, k)`"
       - text: "Sannsynligheten:"
         formula: "P(alle k er A) = C(K, k) / C(N, k)"
+      - text: "Eksempel — 5 hjerter fra 52-korts stokk (`K = 13`, `N = 52`, `k = 5`):"
+        formula: "P = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
+        example: true
       - text: "Alternativt, hvis sekvensiell beregning er enklere — bruk produktregelen. Begge metodene gir samme svar."
         formula: "P = (K/N) · ((K−1)/(N−1)) · … · ((K−k+1)/(N−k+1))"
         conditional: true
@@ -71,21 +77,27 @@ solution_variants:
       - "Bruk når oppgaven spør 'sannsynligheten for at ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter', 'ingen jenter')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
-      - "Antall mulige utvalg: `C(N, k)`"
       - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
+      - "Antall mulige utvalg: `C(N, k)`"
       - text: "Sannsynligheten:"
         formula: "P(ingen av k er A) = C(N − K, k) / C(N, k)"
+      - text: "Eksempel — ingen hjerter blant 5 kort (`N = 52`, `K = 13`, `k = 5`):"
+        formula: "P = C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.222"
+        example: true
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
   - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for å få nøyaktig `k₁` av type A OG `k₂` av type B' (f.eks. '2 jenter og 2 gutter', '3 hjerter og 2 ruter')"
       - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
-      - "Antall mulige utvalg av `k`: `C(N, k)`"
       - text: "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen):"
         formula: "C(K_A, k₁) · C(K_B, k₂)"
+      - "Antall mulige utvalg av `k`: `C(N, k)`"
       - text: "Sannsynligheten:"
         formula: "P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)"
+      - text: "Eksempel — komité med 2 jenter og 2 gutter fra klasse 10 J + 15 G:"
+        formula: "P = C(10,2)·C(15,2) / C(25,4) = 45·105 / 12 650 ≈ 0.374"
+        example: true
       - text: "Dette er hypergeometrisk sannsynlighet — det samme regnestykket som [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling), bare uttrykt direkte med binomialkoeffisienter. Pass på at `k₁ + k₂ = k` (totalt trukne)."
         conditional: true
 

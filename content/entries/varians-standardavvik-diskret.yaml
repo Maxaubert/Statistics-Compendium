@@ -51,6 +51,9 @@ solution_template:
   - "Regn hvert ledd: avvik først, så kvadrér, så multiplisér med sannsynligheten"
   - text: "Summér:"
     formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)"
+  - text: "Eksempel: `X ∈ {0, 1, 2, 3}` med `P = {0.1, 0.3, 0.4, 0.2}`, `μ = 1.7`:"
+    formula: "Var(X) = 2.89·0.1 + 0.49·0.3 + 0.09·0.4 + 1.69·0.2 = 0.81"
+    example: true
   - text: "Standardavviket:"
     formula: "σ = √Var(X)"
   - text: "Snarvei for uniform fordeling (alle P like). Færre kvadreringer når sannsynlighetene er like:"

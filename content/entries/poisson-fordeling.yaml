@@ -60,6 +60,9 @@ solution_variants:
       - "Bekreft at `k` er et konkret heltall `≥ 0` (oppgaven sier 'nøyaktig `k`', 'ett', 'to', osv.)"
       - text: "Sett inn i formelen direkte:"
         formula: "P(X = k) = e^(-μ) · μ^k / k!"
+      - text: "Eksempel: kundeanrop `λ = 3` per time, `t = 1` time (`μ = 3`), `k = 4`:"
+        formula: "P(X = 4) = e^(−3)·3⁴ / 24 ≈ 0.168"
+        example: true
       - text: "Hvis `k = 0`: forenkle (fordi `μ⁰ = 1` og `0! = 1`) — ikke gå via E.2:"
         formula: "P(X = 0) = e^(-μ)"
         conditional: true
@@ -83,6 +86,9 @@ solution_variants:
         formula: "μ = λt"
       - text: "Skriv om via komplement:"
         formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)"
+      - text: "Eksempel: `μ = 4` anrop, `P(X ≥ 6)` med tabelloppslag `P(X ≤ 5) ≈ 0.785`:"
+        formula: "P(X ≥ 6) = 1 − 0.785 = 0.215"
+        example: true
       - { text: "Tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt.", conditional: true }
       - "Slå opp `P(X ≤ k − 1)` i **tabell E.2** (Poisson kumulativ) med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
@@ -98,6 +104,9 @@ solution_variants:
       - "Slå opp begge verdiene i **tabell E.2** (Poisson kumulativ) (kolonne for `μ`, rader for `b` og `a − 1`)"
       - text: "Trekk de to:"
         formula: "P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a − 1)"
+      - text: "Eksempel: stjerneskudd `μ = 3`, `P(1 ≤ X ≤ 2)` med `P(X ≤ 2) = 0.423`, `P(X ≤ 0) = 0.0498`:"
+        formula: "P(1 ≤ X ≤ 2) = 0.423 − 0.0498 ≈ 0.373"
+        example: true
       - text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte:"
         formula: "P(a ≤ X ≤ b) = P(X = a) + P(X = a + 1) + ... + P(X = b)"
         conditional: true
@@ -110,6 +119,9 @@ solution_variants:
         formula: "μ = λt"
       - text: "Bruk den forenklede formelen direkte (`μ⁰ = 1`, `0! = 1`, så hele brøken kollapser):"
         formula: "P(X = 0) = e^(-μ)"
+      - text: "Eksempel: stille kundesenter, `λ = 2` anrop/time over `t = 1` time (`μ = 2`):"
+        formula: "P(X = 0) = e^(−2) ≈ 0.135"
+        example: true
       - text: "Hvis spørsmålet egentlig ber om 'minst én' (`P(X ≥ 1)`): svar med komplementet i stedet — vanlig oppfølgingsoppgave:"
         formula: "P(X ≥ 1) = 1 − e^(-μ)"
         conditional: true

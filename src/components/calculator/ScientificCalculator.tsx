@@ -26,6 +26,7 @@ function saveString(key: string, value: string) {
  * the user can type or paste √, π, ÷, ×, − directly. Also rewrites
  * textbook shorthand mathjs doesn't know natively:
  *   `C(n, k)`  →  `combinations(n, k)`
+ *   `P(n, k)`  →  `permutations(n, k)`
  *   `ln(x)`    →  `log(x)`     (mathjs `log` defaults to natural log)
  */
 function normalizeExpression(input: string): string {
@@ -38,6 +39,10 @@ function normalizeExpression(input: string): string {
     // variable. Word boundary keeps things like `aC(` from being
     // hijacked.
     .replace(/\bC\s*\(/g, "combinations(")
+    // Same shorthand for permutations: `P(n, k)` = n!/(n-k)!. Note
+    // that this also rewrites `P(x) = ...` assignments — users who
+    // want a variable named P should pick a non-conflicting name.
+    .replace(/\bP\s*\(/g, "permutations(")
     // ln is not a mathjs function; map it to the single-argument
     // `log(...)` form which IS the natural logarithm in mathjs.
     .replace(/\bln\s*\(/g, "log(");

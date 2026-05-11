@@ -54,6 +54,9 @@ solution_template:
   - "Skriv `X ~ Hyp(N, K, n)`"
   - text: "Sett inn i formelen (gunstige delt på mulige):"
     formula: "P(X = k) = C(K,k) · C(N−K, n−k) / C(N, n)"
+  - text: "Eksempel — trekk 5 kort fra 52, finn `P(2 hjerter)` (`N = 52, K = 13, n = 5, k = 2`):"
+    formula: "P(X = 2) = C(13,2)·C(39,3) / C(52,5) = 78·9139 / 2 598 960 ≈ 0.274"
+    example: true
   - "Forenkle binomialkoeffisienten der mulig før du multipliserer"
 
 common_traps: |

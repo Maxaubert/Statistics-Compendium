@@ -54,6 +54,9 @@ solution_template:
     formula: "margin = t_(α/2, n−2) · S_E · √(1 + 1/n + ((x − x̄) · SE(β̂) / S_E)²)"
   - text: "Prediksjonsintervall."
     formula: "ŷ ± margin"
+  - text: "Eksempel: `ŷ = 67.75` (`α̂ = 34.6`, `β̂ = 6.63`, `x = 5`), margin ≈ 6.51 ved 95 % og `n = 10`:"
+    formula: "PI = 67.75 ± 6.51 ≈ [61.24, 74.26]"
+    example: true
   - "Sjekk svaret ved å sammenligne mot oppgavens spørsmål (f.eks. ligger en gitt verdi innenfor intervallet?)"
 
 common_traps: |

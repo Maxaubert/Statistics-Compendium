@@ -50,6 +50,9 @@ solution_template:
     formula: "nedre = (n−1)s² / χ²_(α/2, ν)"
   - text: "Sett inn øvre grense:"
     formula: "øvre = (n−1)s² / χ²_(1−α/2, ν)"
+  - text: "Eksempel: maskinpresisjon `n = 15`, `s² = 4.5`, 95 % KI (`χ²_(0.025, 14) = 26.12`, `χ²_(0.975, 14) = 5.63`):"
+    formula: "KI(σ²) = [14·4.5/26.12, 14·4.5/5.63] ≈ [2.41, 11.19]"
+    example: true
   - "For KI for `σ`: ta kvadratroten av begge grensene"
 
 common_traps: |

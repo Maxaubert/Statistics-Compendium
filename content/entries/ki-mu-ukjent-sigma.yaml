@@ -50,6 +50,9 @@ solution_template:
     formula: "margin = t_(α/2, n−1) · s/√n"
   - text: "Sett opp intervallet:"
     formula: "x̄ ± margin"
+  - text: "Eksempel: testresultater `n = 10`, `x̄ = 71.30`, `s = 14.33`, 95 % KI (`t_(0.025, 9) = 2.262`):"
+    formula: "71.30 ± 2.262·14.33/√10 ≈ 71.30 ± 10.25 = [61.05, 81.55]"
+    example: true
 
 common_traps: |
   `ν = n − 1` for én-utvalgs KI (ikke `n − 2`). T-kvantiltabellen E.5 har

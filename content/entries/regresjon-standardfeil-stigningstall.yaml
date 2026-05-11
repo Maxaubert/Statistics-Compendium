@@ -40,6 +40,9 @@ solution_template:
     formula: "S_XX = Σ(x_i − x̄)²"
   - text: "Beregn standardfeilen til stigningstallet."
     formula: "SE(β̂) = √(S_E² / S_XX)"
+  - text: "Eksempel: `S_E² = 6.093`, `S_XX = 15.6`:"
+    formula: "SE(β̂) = √(6.093/15.6) = √0.391 ≈ 0.625"
+    example: true
 
 common_traps: |
   Husk at `SE(β̂) ≠ S_E`. `SE(β̂)` er `√(S_E²/S_XX)`, altså `S_E` delt på `√S_XX`.

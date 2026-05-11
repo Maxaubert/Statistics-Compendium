@@ -20,7 +20,7 @@ why_use: |
   utregning.
 
 recognition_cues:
-  - "Spørsmålet inneholder ord som 'minst én', 'minst `k`', 'ingen', 'høyst `k`', 'ikke alle'"
+  - "Spørsmålet inneholder ord som 'minst én', 'minst `k`', 'færre enn `k`', 'ingen', 'høyst `k`', 'ikke alle'"
   - "Direkte beregning av det som spørres etter ville kreve sum over mange utfall"
   - "Negasjonen (det motsatte) er enklere å beskrive enn det spørsmålet ber om"
   - "Du har en kumulativ tabell (E.1, E.2, E.3) som gir `P(X ≤ k)`, men spørsmålet er om `P(X ≥ k)`"
@@ -49,13 +49,46 @@ solution_variants:
       - "Identifiser hendelsen: 'minst k hendelser inntreffer', altså `P(X ≥ k)`"
       - text: "Skriv om via komplement (NB: `k − 1`, ikke `k`):"
         formula: "P(X ≥ k) = 1 − P(X ≤ k − 1)"
-      - "Slå opp `P(X ≤ k − 1)` i kumulativ tabell (E.1 binomial, E.2 poisson) eller regn ut direkte"
-      - text: "Trekk fra 1 og les av svaret. Eksempel:"
-        formula: "P(X ≥ 3) = 1 − P(X ≤ 2)"
+      - "Slå opp `P(X ≤ k − 1)` i **tabell E.1** (binomial) eller **tabell E.2** (Poisson), eller regn ut direkte"
+      - text: "Eksempel — terningkast (4 terninger, `p = 1/6`, vi vil ha `P(X ≥ 1)`). Komplementet er 'ingen seksere', ingen tabell nødvendig:"
+        formula: "P(X ≥ 1) = 1 − (5/6)⁴ ≈ 1 − 0.482 = 0.518"
+        example: true
+      - text: "Eksempel — binomial med tabelloppslag (`n = 10`, `p = 0.20`, `P(X ≥ 3)`). Slå opp `P(X ≤ 2) ≈ 0.6778` i **tabell E.1**:"
+        formula: "P(X ≥ 3) = 1 − 0.6778 = 0.3222"
+        example: true
+      - text: "Eksempel — Poisson (`μ = λt = 2`, `P(X ≥ 4)`). Slå opp `P(X ≤ 3) ≈ 0.857` i **tabell E.2**:"
+        formula: "P(X ≥ 4) = 1 − 0.857 = 0.143"
+        example: true
       - { text: "Hvis indeksen i 'minst k' tolkes feil, du ender med `P(X ≤ k)` — ikke `P(X ≤ k−1)` — så svaret er for stort", conditional: true }
       - text: "Hvis 'minst en' er spørsmålet, det er bare `1 − P(ingen)` — ingen tabelloppslag nødvendig (f.eks. binomial):"
         formula: "P(minst en) = 1 − (1 − p)^n"
         conditional: true
+
+  - label: "Ikke minst k / færre enn k"
+    steps:
+      - "Identifiser hendelsen: 'færre enn k', 'mindre enn k', 'under k', 'ikke minst k' — alt sammen `P(X < k)`"
+      - text: "Sjekk spesialtilfellene FØR du går til tabell — disse har lukket form, ingen tabelloppslag:"
+        formula: "Binomial:  k = 1 → P(X < 1) = (1 − p)^n;   k = n → P(X < n) = 1 − p^n"
+      - text: "Tilsvarende for Poisson (har ingen øvre grense, så bare `k = 1`):"
+        formula: "Poisson:  k = 1 → P(X < 1) = e^(−μ)"
+      - "For mellomliggende `k` (`1 < k < n` for binomial, `k ≥ 2` for Poisson): bruk tabellen"
+      - text: "Skriv om til kumulativt oppslag (NB: `k − 1`):"
+        formula: "P(X < k) = P(X ≤ k − 1)"
+      - "Slå opp `P(X ≤ k − 1)` direkte i **tabell E.1** (binomial) eller **tabell E.2** (Poisson) — ingen subtraksjon fra 1"
+      - text: "Eksempel — spesialtilfelle `k = 1` ('ingen skjer'). Ingen tabell:"
+        formula:
+          - "Binomial (`n = 8`, `p = 0.05`):  P(X < 1) = 0.95⁸ ≈ 0.6634"
+          - "Poisson (`μ = 3`):  P(X < 1) = e^(−3) ≈ 0.0498"
+        example: true
+      - text: "Eksempel — spesialtilfelle `k = n` (kun binomial, 'minst én ikke'). Ingen tabell:"
+        formula: "Binomial (`n = 6` busser, `p = 0.04` forsinket):  P(X < 6) = 1 − 0.04⁶ ≈ 1"
+        example: true
+      - text: "Eksempel — mellomliggende `k` (tabelloppslag):"
+        formula:
+          - "Binomial (`n = 10`, `p = 0.20`, `P(X < 3)`):  slå opp i **tabell E.1** → P(X ≤ 2) ≈ 0.6778"
+          - "Poisson (`μ = 2`, `P(X < 4)`):  slå opp i **tabell E.2** → P(X ≤ 3) ≈ 0.857"
+        example: true
+      - { text: "Hvis fordelingen er kontinuerlig (normal, eksponential), faller `<` og `≤` sammen — bruk `P(X ≤ k)` direkte fra **tabell E.3** uten indeksjustering", conditional: true }
 
   - label: "Ingen / null"
     steps:
@@ -65,8 +98,12 @@ solution_variants:
       - text: "Sett inn parametrene direkte. Eksempel: Poisson med `λ = 2`, `t = 1.5`:"
         formula: "P(X = 0) = e^(−3) ≈ 0.0498"
         example: true
-      - text: "Hvis spørsmålet egentlig er om 'minst én', bruk komplementet:"
-        formula: "P(X ≥ 1) = 1 − P(X = 0)"
+      - text: "Eksempel — binomial (`n = 8` lyspærer, hver defekt med `p = 0.05`). 'Ingen defekte' direkte fra pmf:"
+        formula: "P(X = 0) = 0.95⁸ ≈ 0.6634"
+        example: true
+      - text: "Eksempel — tabelloppslag for Poisson (`μ = 3`). I **tabell E.2** finner du `P(X ≤ 0)`-raden:"
+        formula: "P(X = 0) = e^(−3) ≈ 0.0498"
+        example: true
       - { text: "Hvis hendelsene IKKE er uavhengige, `(1 − p)^n` gjelder ikke — bruk hypergeometrisk eller direkte telling i stedet", conditional: true }
 
   - label: "Ikke alle"
@@ -75,8 +112,14 @@ solution_variants:
       - text: "Komplementet til 'alle' er 'minst én er IKKE':"
         formula: "P(ikke alle) = 1 − P(alle) = 1 − p^n"
       - "Pass på: 'ikke alle' ≠ 'ingen'. 'Ingen' er `(1 − p)^n`, 'ikke alle' er `1 − p^n`"
-      - text: "Beregn og les av. Eksempel: `P(alle 5 hjerter) = 0.000495`:"
+      - text: "Eksempel — 5 kort fra en kortstokk (uten tilbakelegging). `P(alle 5 hjerter) = (13·12·11·10·9)/(52·51·50·49·48) ≈ 0.000495`:"
         formula: "P(ikke alle hjerter) = 1 − 0.000495 = 0.999505"
+        example: true
+      - text: "Eksempel — 5 komponenter i serie (uavhengige, `p = 0.95` fungerer). 'Ikke alle fungerer' = 'minst én feiler':"
+        formula: "P(minst én feiler) = 1 − 0.95⁵ ≈ 1 − 0.7738 = 0.2262"
+        example: true
+      - text: "Eksempel — 10 ja/nei-spørsmål gjettet tilfeldig (`p = 0.5`). 'Ikke alle riktige':"
+        formula: "P(ikke alle riktige) = 1 − 0.5¹⁰ = 1 − 1/1024 ≈ 0.9990"
         example: true
       - { text: "Hvis hendelsene IKKE er uavhengige (f.eks. trekk uten tilbakelegging), bruk hypergeometrisk for `P(alle)` før du tar komplementet", conditional: true }
 
@@ -88,8 +131,14 @@ solution_variants:
         formula: "(1 − p)^n ≤ 1 − T"
       - text: "Ta logaritme på begge sider — husk at `ln(1 − p) < 0`, så ulikheten snur:"
         formula: "n ≥ ln(1 − T) / ln(1 − p)"
-      - text: "Rund OPP til nærmeste heltall (f.eks. `p = 0.05`, `T = 0.99`):"
+      - text: "Eksempel — sjeldent eksperiment (`p = 0.05`, terskel `T = 0.99`). Rund OPP til nærmeste heltall:"
         formula: "n ≥ ln(0.01)/ln(0.95) ≈ 89.78  →  n = 90"
+        example: true
+      - text: "Eksempel — myntkast (`p = 0.5`, terskel `T = 0.99`):"
+        formula: "n ≥ ln(0.01)/ln(0.5) ≈ 6.64  →  n = 7"
+        example: true
+      - text: "Eksempel — meget sjelden suksess (`p = 0.02`, terskel `T = 0.95`):"
+        formula: "n ≥ ln(0.05)/ln(0.98) ≈ 148.3  →  n = 149"
         example: true
       - text: "Verifiser ved innsetting:"
         formula: "1 − 0.95^90 ≈ 0.9906 ≥ 0.99  (OK)"

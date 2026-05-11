@@ -53,6 +53,9 @@ solution_template:
     formula: "margin = z_(α/2) · √(λ̂/t) = z_(α/2) · √Y / t"
   - text: "Sett opp KI:"
     formula: "λ̂ ± margin"
+  - text: "Eksempel: fugletelling `Y = 15` fangster på `t = 840` timer, 90 % KI (`z_(0.05) = 1.645`):"
+    formula: "0.01786 ± 1.645·√(0.01786/840) ≈ 0.01786 ± 0.00758 = [0.0103, 0.0254]"
+    example: true
 
 common_traps: |
   Sjekk at `t` er i samme enhet som raten (timer, dager, måneder, osv.).

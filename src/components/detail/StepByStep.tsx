@@ -13,7 +13,7 @@ export type StepItem =
       text: string;
       conditional?: boolean;
       example?: boolean;
-      formula?: string;
+      formula?: string | string[];
       cases?: StepCase[];
     };
 
@@ -21,16 +21,23 @@ function normalize(item: StepItem): {
   text: string;
   conditional: boolean;
   example: boolean;
-  formula?: string;
+  formulas: string[];
   cases?: StepCase[];
 } {
   if (typeof item === "string")
-    return { text: item, conditional: false, example: false };
+    return { text: item, conditional: false, example: false, formulas: [] };
+  const rawFormula = item.formula;
+  const formulas =
+    rawFormula === undefined
+      ? []
+      : Array.isArray(rawFormula)
+        ? rawFormula
+        : [rawFormula];
   return {
     text: item.text,
     conditional: !!item.conditional,
     example: !!item.example,
-    formula: item.formula,
+    formulas,
     cases: item.cases,
   };
 }
@@ -51,7 +58,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         className="absolute left-[18px] top-4 bottom-4 w-[2px] bg-primary-2/30"
       />
       {steps.map((raw, i) => {
-        const { text, conditional, example, formula, cases } = normalize(raw);
+        const { text, conditional, example, formulas, cases } = normalize(raw);
         const stepNo = numbers[i];
         const codeTheme = conditional ? "warn" : example ? "example" : "step";
 
@@ -133,10 +140,11 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
               <div className={clsx("font-serif text-[14.5px] leading-relaxed", textInkClass)}>
                 {renderInlineCode(text, codeTheme)}
               </div>
-              {formula && (
+              {formulas.map((f, fi) => (
                 <div
+                  key={fi}
                   className={clsx(
-                    "mt-3 rounded-md px-4 py-2.5 font-mono text-[14px] text-ink",
+                    "mt-3 whitespace-pre-line rounded-md px-4 py-2.5 font-mono text-[14px] leading-relaxed text-ink",
                     insetBoxClasses,
                   )}
                   style={{
@@ -144,9 +152,9 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
                     boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
                   }}
                 >
-                  {renderInlineCode(formula, codeTheme)}
+                  {renderInlineCode(f, codeTheme)}
                 </div>
-              )}
+              ))}
               {cases && cases.length > 0 && (
                 <div
                   className={clsx(

@@ -44,6 +44,9 @@ solution_template:
     formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
   - text: "Sett inn i kovariansformelen:"
     formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
+  - text: "Eksempel: `E[XY] = 0.30`, `μ_X = 0.60`, `μ_Y = 0.70`:"
+    formula: "Cov(X, Y) = 0.30 − 0.60·0.70 = −0.12"
+    example: true
 
 common_traps: |
   Du kan dropp celler med x_i = 0 eller y_j = 0 (bidraget er null) og

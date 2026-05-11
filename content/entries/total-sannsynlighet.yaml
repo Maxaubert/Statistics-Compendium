@@ -47,12 +47,35 @@ solution_variants:
     steps:
       - "Identifiser partisjonen (typisk `A` og `Ā`, eller flere disjunkte hendelser som dekker hele utfallsrommet)"
       - "Skriv ned marginalsannsynlighetene `P(A)`, `P(Ā)` og de betingede `P(B|A)`, `P(B|Ā)`"
+      - { text: "Pass på lesemåten: '1 % AV gruppe A er defekt' er BETINGET `P(D|A) = 0.01`. '1 % ER fra A og defekt' er JOINT `P(A ∩ D) = 0.01` — bruk joint-varianten under hvis det er joint.", conditional: true }
       - "Sjekk at `P(A) + P(Ā) = 1` (eller at alle marginalsannsynlighetene summeres til 1 ved flere hypoteser)"
       - text: "Sett inn i formelen:"
         formula: "P(B) = Σ_i P(A_i)·P(B|A_i)"
-      - text: "Eksempel:"
+      - text: "Eksempel — 2 grupper (jenter/gutter, drikker tran):"
         formula: "P(T) = P(J)·P(T|J) + P(J̄)·P(T|J̄) = 0.52·0.23 + 0.48·0.34 = 0.2828"
         example: true
+      - text: "Eksempel — 3 grupper (maskin A, B, C med ulike defektrater):"
+        formula: |-
+          P(D) = P(A)·P(D|A) + P(B)·P(D|B) + P(C)·P(D|C)
+               = 0.50·0.01 + 0.30·0.02 + 0.20·0.05 = 0.021
+        example: true
+
+  - label: "Joint-form: når du har P(A ∩ B) i stedet for P(B|A)"
+    steps:
+      - "Bruk når oppgaven gir deg sannsynligheten for at `B` OG `A_i` skjer samtidig — ikke 'gitt A_i'. Da trenger du ikke multiplisere med `P(A_i)` — det er allerede gjort."
+      - "Gjenkjenn ordlyden: 'X % er fra A_i og B' (joint) vs. 'X % AV A_i er B' (betinget)"
+      - text: "Bruk den enklere summen — disjunkte måter B kan inntreffe på:"
+        formula: "P(B) = P(A ∩ B) + P(Ā ∩ B)"
+      - text: "Generelt for flere grupper:"
+        formula: "P(B) = Σ_i P(A_i ∩ B)"
+      - text: "Eksempel — 'av alle studenter er 12 % jenter som består og 14 % gutter som består':"
+        formula: "P(består) = P(J ∩ består) + P(J̄ ∩ består) = 0.12 + 0.14 = 0.26"
+        example: true
+      - text: "Eksempel — produksjonslinje, joint-tall direkte: 0.5 % A&defekt, 0.6 % B&defekt, 1.0 % C&defekt:"
+        formula: "P(D) = 0.005 + 0.006 + 0.010 = 0.021"
+        example: true
+      - { text: "Hvis du har en blanding av betingede og joint: konvertér før du summerer. `P(A_i ∩ B) = P(A_i)·P(B|A_i)`.", conditional: true }
+
   - label: "Bakover: finn ukjent betinget"
     steps:
       - "Bruk når `P(B)` ER GITT (ofte 'totalt sett'-tall) sammen med en av de betingede, og du skal finne den ANDRE betingede"

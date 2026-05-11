@@ -50,6 +50,9 @@ solution_template:
     formula: "σ_Y = σ · √n"
   - text: "Konkluder:"
     formula: "Y ~ N(n·μ, σ·√n)"
+  - text: "Eksempel: 5 trykk kaffeautomat, hver `X ~ N(25, 0.48)` cl:"
+    formula: "Y ~ N(5·25, 0.48·√5) = N(125, 1.073)"
+    example: true
   - "Bytt deretter til normalfordelingen-oppslaget med disse parametrene — bruk variant `P(X < x)`, `P(X > x)` eller `P(a < X < b)` etter hva oppgaven spør om. Tabelloppslag i **tabell E.3** (Z-tabell) eller **tabell E.4** (Z-kvantil)."
 
 common_traps: |

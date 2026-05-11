@@ -44,6 +44,9 @@ solution_template:
   - "Multipliser hver `x_i` med `P(X = x_i)`"
   - text: "Summer alle produktene:"
     formula: "E[X] = Σ x_i · P(X = x_i)"
+  - text: "Eksempel: `X ∈ {0, 1, 2, 3}` med `P = {0.1, 0.3, 0.4, 0.2}`:"
+    formula: "E[X] = 0·0.1 + 1·0.3 + 2·0.4 + 3·0.2 = 1.70"
+    example: true
 
 common_traps: |
   For en simultanfordeling må du først finne marginalfordelingen `P(X=x)`

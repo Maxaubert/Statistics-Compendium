@@ -53,6 +53,9 @@ solution_template:
     formula: "SE(β̂) = √(S_E² / Σ(x_i − x̄)²)"
   - text: "Beregn testobservatoren."
     formula: "T = (β̂ − 0) / SE(β̂)"
+  - text: "Eksempel: `β̂ = 6.63`, `SE(β̂) = 0.625`:"
+    formula: "T = 6.63 / 0.625 ≈ 10.61"
+    example: true
   - "Finn kvantil `t_(α/2, n−2)` i **tabell E.5** (t-kvantiltabell, tosidig)"
   - text: "Forkastningsregel."
     formula: "Forkast H₀ hvis |T| > t_(α/2, n−2)"

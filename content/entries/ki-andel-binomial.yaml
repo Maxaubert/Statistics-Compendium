@@ -54,6 +54,9 @@ solution_template:
     formula: "margin = z_(α/2) · √(p̂(1−p̂)/n)"
   - text: "Sett opp KI:"
     formula: "p̂ ± margin"
+  - text: "Eksempel: meningsmåling med `X = 200`, `n = 500`, 95 % KI (`z_(0.025) = 1.96`):"
+    formula: "0.40 ± 1.96·√(0.4·0.6/500) ≈ 0.40 ± 0.0429 = (0.357, 0.443)"
+    example: true
 
 common_traps: |
   Standard error i KI bruker `p̂` (estimert), MEN i [hypotesetest for andel](/entry/en-utvalg-z-test-andel)

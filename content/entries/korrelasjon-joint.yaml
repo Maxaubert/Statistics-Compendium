@@ -42,6 +42,9 @@ solution_template:
   - "Beregn Cov(X,Y)"
   - text: "Sett inn i korrelasjonsformelen:"
     formula: "ρ = Cov(X, Y) / (σ_X · σ_Y)"
+  - text: "Eksempel: `Cov(X, Y) = −0.12`, `σ_X = 0.490`, `σ_Y = 0.781`:"
+    formula: "ρ = −0.12 / (0.490·0.781) ≈ −0.314"
+    example: true
 
 common_traps: |
   ρ er for FELLESFORDELING (teoretisk modell). For utvalg av (x,y)-par

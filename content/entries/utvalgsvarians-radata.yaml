@@ -60,6 +60,9 @@ solution_template:
   - "Summér alle kvadratavvikene: `Σ (x_i − x̄)²`"
   - text: "Del på `n − 1` (IKKE `n`):"
     formula: "s² = Σ (x_i − x̄)² / (n − 1)"
+  - text: "Eksempel — såpebeholdere `n = 6`, `Σ(x_i − x̄)² ≈ 83.34`:"
+    formula: "s² = 83.34 / 5 ≈ 16.67;  s ≈ 4.08 ml"
+    example: true
   - "Standardavvik: `s = √s²`"
 
 common_traps: |

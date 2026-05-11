@@ -47,6 +47,9 @@ solution_template:
   - "Beregn `S_XX`, `S_YY`, `S_XY` (eller hent fra datatabell)"
   - text: "Beregn korrelasjonskoeffisienten."
     formula: "r = S_XY / √(S_XX · S_YY)"
+  - text: "Eksempel: `S_XX = 15.6`, `S_YY = 734.1`, `S_XY = 103.4`:"
+    formula: "r = 103.4 / √(15.6·734.1) ≈ 103.4 / 107.0 ≈ 0.966"
+    example: true
   - "Tolk: nær `1` = sterk positiv, nær `−1` = sterk negativ, nær `0` = ingen lineær sammenheng"
 
 common_traps: |

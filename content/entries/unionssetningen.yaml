@@ -40,19 +40,59 @@ filters:
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-solution_template:
-  - "Identifiser hendelsene `A` og `B`"
-  - "Finn `P(A)`, `P(B)`, `P(A ∩ B)`"
-  - "Hvis disjunkte: `P(A ∩ B) = 0`"
-  - text: "Bruk unionssetningen:"
-    formula: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+solution_variants:
+  - label: "P(A ∪ B) — minst én"
+    steps:
+      - "Identifiser hendelsene `A` og `B`"
+      - "Finn `P(A)`, `P(B)`, `P(A ∩ B)`"
+      - text: "Hvis `P(A ∩ B)` ikke er oppgitt direkte, finn den fra konteksten:"
+        formula:
+          - "Disjunkte hendelser:  P(A ∩ B) = 0"
+          - "Uavhengige hendelser:  P(A ∩ B) = P(A) · P(B)"
+          - "Betinget gitt:  P(A ∩ B) = P(A) · P(B|A)  (produktregelen)"
+          - "Fra venndiagram eller rådata:  les av direkte"
+      - text: "Bruk unionssetningen:"
+        formula: "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+      - text: "Eksempel: studenter med matte- (60 %) og fysikk-kurs (40 %), 25 % har begge:"
+        formula: "P(M ∪ F) = 0.60 + 0.40 − 0.25 = 0.75"
+        example: true
+
+  - label: "Ingen av delene — P(Ā ∩ B̄)"
+    steps:
+      - "Identifiser hendelsene `A` og `B`. 'Ingen av delene' / 'verken A eller B' betyr `Ā ∩ B̄`"
+      - text: "Bruk De Morgan: komplementet av union er snitt av komplementer:"
+        formula: "P(Ā ∩ B̄) = 1 − P(A ∪ B)"
+      - "Regn først `P(A ∪ B)` med unionssetningen, deretter trekk fra 1"
+      - text: "Eksempel — borettslag: `P(B) = 0.45` (balkong), `P(T) = 0.60` (terrasse), `P(B ∩ T) = 0.25`. Først unionen:"
+        formula: "P(B ∪ T) = 0.45 + 0.60 − 0.25 = 0.80"
+        example: true
+      - text: "Deretter komplementet — ingen av delene:"
+        formula: "P(B̄ ∩ T̄) = 1 − 0.80 = 0.20"
+        example: true
+      - { text: "For disjunkte hendelser (`P(A ∩ B) = 0`) blir det fortsatt `1 − (P(A) + P(B))`. Eneste forenkling er at overlappet faller bort.", conditional: true }
+
+  - label: "Bare A, ikke B — P(A ∩ B̄)"
+    steps:
+      - "Identifiser hendelsene `A` og `B`. 'Bare A, ikke B' / 'A men ikke B' betyr `A ∩ B̄`"
+      - "Finn `P(A)` og `P(A ∩ B)`"
+      - text: "Bruk set-differanse — A minus overlappet med B:"
+        formula: "P(A ∩ B̄) = P(A) − P(A ∩ B)"
+      - text: "Symmetrisk for 'bare B, ikke A':"
+        formula: "P(Ā ∩ B) = P(B) − P(A ∩ B)"
+      - text: "Eksempel — borettslag: `P(B) = 0.45` (balkong), `P(T) = 0.60` (terrasse), `P(B ∩ T) = 0.25`. Bare balkong, ikke terrasse:"
+        formula: "P(B ∩ T̄) = 0.45 − 0.25 = 0.20"
+        example: true
+      - text: "Samme oppgave — bare terrasse, ikke balkong:"
+        formula: "P(B̄ ∩ T) = 0.60 − 0.25 = 0.35"
+        example: true
+      - { text: "Sjekk: `P(bare A) + P(bare B) + P(begge) + P(ingen) = 1` — venn-diagrammets fire områder summerer alltid til 1", conditional: true }
 
 common_traps: |
   Glem ikke å trekke fra `P(A ∩ B)`. For tre hendelser: `P(A ∪ B ∪ C) =
   P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C)`.
 
 detailed_solution_variants:
-  - label: "Unionssetningen"
+  - label: "P(A ∪ B) — minst én"
     solutions:
       - source: "Eksamen jan26 · oppgave 3a"
         question: "P(A) = 0.30, P(B) = 0.25, P(A ∩ B) = 0.15. Finn P(A ∪ B)."
@@ -116,6 +156,120 @@ detailed_solution_variants:
               - { text: "Summerer:" }
               - { indent: "`P(A ∪ B) = 2/52 + 2/52 = 4/52 = 1/13 ≈ 0.0769`" }
         result: "`P(A ∪ B) = 4/52 = 1/13 ≈ 0.0769`"
+
+  - label: "Ingen av delene — P(Ā ∩ B̄)"
+    solutions:
+      - source: "Praksis · borettslag"
+        question: "I et borettslag har 45 % av leilighetene balkong, 60 % har terrasse, og 25 % har begge deler. Hva er sannsynligheten for at en tilfeldig leilighet har ingen av delene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `B` = «leiligheten har balkong» og `T` = «leiligheten har terrasse»." }
+              - { text: "`P(B) = 0.45`, `P(T) = 0.60`, `P(B ∩ T) = 0.25`." }
+              - { text: "«Ingen av delene» = `B̄ ∩ T̄` (verken balkong eller terrasse)." }
+          - label: "De Morgan"
+            lines:
+              - { text: "Komplement av union:" }
+              - { indent: "`P(B̄ ∩ T̄) = 1 − P(B ∪ T)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Først unionen via unionssetningen:" }
+              - { indent: "`P(B ∪ T) = 0.45 + 0.60 − 0.25 = 0.80`" }
+              - { text: "Deretter komplementet:" }
+              - { indent: "`P(B̄ ∩ T̄) = 1 − 0.80 = 0.20`" }
+        result: "`P(verken balkong eller terrasse) = 0.20` (20 %)"
+
+      - source: "Praksis · fritidsaktiviteter"
+        question: "Ved en skole er 35 % av elevene med på fotball, 20 % er med på korps, og 8 % er med på begge. Finn sannsynligheten for at en tilfeldig elev verken er med på fotball eller korps."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `F` = «eleven spiller fotball» og `K` = «eleven er med i korps»." }
+              - { text: "`P(F) = 0.35`, `P(K) = 0.20`, `P(F ∩ K) = 0.08`." }
+              - { text: "Vi vil ha `P(F̄ ∩ K̄)` — verken fotball eller korps." }
+          - label: "De Morgan"
+            lines:
+              - { text: "`P(F̄ ∩ K̄) = 1 − P(F ∪ K)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Unionen først:" }
+              - { indent: "`P(F ∪ K) = 0.35 + 0.20 − 0.08 = 0.47`" }
+              - { text: "Komplement:" }
+              - { indent: "`P(F̄ ∩ K̄) = 1 − 0.47 = 0.53`" }
+        result: "`P(verken fotball eller korps) = 0.53` (53 %)"
+
+      - source: "Praksis · helsescreening (disjunkt)"
+        question: "Ved en screening avdekkes diabetes hos 6 % og hypertensjon hos 9 % av de undersøkte. Disse to diagnosene gis aldri samtidig i denne studien (disjunkte). Hva er sannsynligheten for at en tilfeldig person har ingen av diagnosene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `D` = «diabetes» og `H` = «hypertensjon»." }
+              - { text: "`P(D) = 0.06`, `P(H) = 0.09`, og `P(D ∩ H) = 0` (disjunkte)." }
+              - { text: "Vi vil ha `P(D̄ ∩ H̄)`." }
+          - label: "De Morgan"
+            lines:
+              - { text: "`P(D̄ ∩ H̄) = 1 − P(D ∪ H)`" }
+              - { text: "For disjunkte hendelser forenkles `P(D ∪ H)` til ren sum:" }
+              - { indent: "`P(D ∪ H) = P(D) + P(H) = 0.06 + 0.09 = 0.15`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Komplementet:" }
+              - { indent: "`P(D̄ ∩ H̄) = 1 − 0.15 = 0.85`" }
+        result: "`P(verken diabetes eller hypertensjon) = 0.85` (85 %)"
+
+  - label: "Bare A, ikke B — P(A ∩ B̄)"
+    solutions:
+      - source: "Praksis · borettslag"
+        question: "I et borettslag har 45 % av leilighetene balkong, 60 % har terrasse, og 25 % har begge deler. Hva er sannsynligheten for at en tilfeldig leilighet har balkong, men ikke terrasse?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `B` = «balkong» og `T` = «terrasse»." }
+              - { text: "`P(B) = 0.45`, `P(T) = 0.60`, `P(B ∩ T) = 0.25`." }
+              - { text: "'Balkong men ikke terrasse' = `B ∩ T̄`." }
+          - label: "Set-differanse"
+            lines:
+              - { text: "Området 'bare B' i venndiagrammet er hele B minus overlappet:" }
+              - { indent: "`P(B ∩ T̄) = P(B) − P(B ∩ T)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Sett inn tallene:" }
+              - { indent: "`P(B ∩ T̄) = 0.45 − 0.25 = 0.20`" }
+              - { comment: "Sjekk: bare B (0.20) + bare T (0.35) + begge (0.25) + ingen (0.20) = 1 ✓" }
+        result: "`P(balkong, men ikke terrasse) = 0.20` (20 %)"
+
+      - source: "Praksis · studentkurs"
+        question: "Blant studenter har 60 % matte-kurs, 40 % fysikk-kurs, og 25 % har begge. Hva er sannsynligheten for at en tilfeldig student har matte men ikke fysikk?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `M` = «matte-kurs» og `F` = «fysikk-kurs»." }
+              - { text: "`P(M) = 0.60`, `P(F) = 0.40`, `P(M ∩ F) = 0.25`." }
+              - { text: "'Matte men ikke fysikk' = `M ∩ F̄`." }
+          - label: "Set-differanse"
+            lines:
+              - { text: "`P(M ∩ F̄) = P(M) − P(M ∩ F)`" }
+          - label: "Innsatt"
+            lines:
+              - { indent: "`P(M ∩ F̄) = 0.60 − 0.25 = 0.35`" }
+        result: "`P(matte men ikke fysikk) = 0.35` (35 %)"
+
+      - source: "Praksis · kantineabonnement"
+        question: "Ved en bedrift har 70 % av de ansatte kantineabonnement, 50 % har treningskort, og 30 % har begge. Hva er sannsynligheten for at en tilfeldig ansatt har treningskort men ikke kantineabonnement?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `K` = «kantineabonnement» og `T` = «treningskort»." }
+              - { text: "`P(K) = 0.70`, `P(T) = 0.50`, `P(K ∩ T) = 0.30`." }
+              - { text: "'Treningskort, men ikke kantine' = `K̄ ∩ T`." }
+          - label: "Set-differanse"
+            lines:
+              - { text: "Den symmetriske formelen — `T` minus overlappet med `K`:" }
+              - { indent: "`P(K̄ ∩ T) = P(T) − P(K ∩ T)`" }
+          - label: "Innsatt"
+            lines:
+              - { indent: "`P(K̄ ∩ T) = 0.50 − 0.30 = 0.20`" }
+        result: "`P(bare treningskort) = 0.20` (20 %)"
 
 related:
   - { id: "komplementregelen",  kind: "entry" }

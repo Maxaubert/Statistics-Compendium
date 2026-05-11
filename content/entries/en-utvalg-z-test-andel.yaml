@@ -53,6 +53,9 @@ solution_template:
     formula: "p̂ = x/n"
   - text: "Beregn testobservatoren (eller den ekvivalente formen):"
     formula: "z = (x − n·p₀) / √(n·p₀·(1−p₀)) = (p̂ − p₀) / √(p₀(1−p₀)/n)"
+  - text: "Eksempel: mynt med `n = 100`, `x = 60`, `p₀ = 0.5` (tester rettferdighet):"
+    formula: "Z = (60 − 50) / √(100·0.5·0.5) = 10 / 5 = 2.00"
+    example: true
   - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i **tabell E.4** (Z-kvantiltabell)"
   - "Sammenlign og konkluder"
 

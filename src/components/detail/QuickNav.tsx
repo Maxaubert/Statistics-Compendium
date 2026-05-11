@@ -29,6 +29,12 @@ export function QuickNav({ items }: Props) {
   // Track which section is the "current" one by observing each target.
   // We pick whichever one has its top closest-to-but-above the upper
   // third of the viewport — close to how users naturally read.
+  //
+  // Edge case: the last section often sits near the bottom of the page
+  // and there's no room to scroll it into the trigger band, so the
+  // observer never reports it active. We layer a scroll listener that
+  // detects "near page bottom" and forces the last item active in
+  // that case.
   useEffect(() => {
     if (items.length === 0) return;
     if (typeof IntersectionObserver === "undefined") return;
@@ -37,10 +43,21 @@ export function QuickNav({ items }: Props) {
       .filter((el): el is HTMLElement => el !== null);
     if (targets.length === 0) return;
 
+    let atBottom = false;
+    const checkBottom = () => {
+      const remaining =
+        document.documentElement.scrollHeight -
+        window.scrollY -
+        window.innerHeight;
+      atBottom = remaining < 24;
+      if (atBottom) setActiveId(items[items.length - 1].id);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
-        // Of the targets currently intersecting the trigger band,
-        // pick the one nearest the top.
+        // When the page is bottomed out, the bottom-detection above
+        // owns the active state — don't let the observer fight it.
+        if (atBottom) return;
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
@@ -53,7 +70,12 @@ export function QuickNav({ items }: Props) {
       { rootMargin: "0px 0px -60% 0px", threshold: 0 },
     );
     targets.forEach((t) => observer.observe(t));
-    return () => observer.disconnect();
+    window.addEventListener("scroll", checkBottom, { passive: true });
+    checkBottom();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", checkBottom);
+    };
   }, [items]);
 
   if (items.length === 0) return null;
@@ -61,13 +83,16 @@ export function QuickNav({ items }: Props) {
   return (
     <aside
       aria-label="Hurtignavigasjon"
-      className="pointer-events-none fixed top-24 z-10 hidden xl:block"
+      className="pointer-events-none fixed top-1/2 z-10 hidden -translate-y-1/2 xl:block"
       style={{ left: "calc(50% + 480px)" }}
     >
-      <nav className="pointer-events-auto flex w-44 flex-col gap-0.5 border-l border-line pl-3">
-        <div className="mb-2 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-3">
-          På denne siden
-        </div>
+      <nav className="pointer-events-auto relative flex flex-col gap-12 pl-5">
+        {/* Connecting vertical bar that runs from the centre of the first
+            pill to the centre of the last, threading through the column. */}
+        <div
+          aria-hidden
+          className="absolute left-[7px] top-3 bottom-3 w-px bg-line"
+        />
         {items.map((it) => {
           const isActive = it.id === activeId;
           return (
@@ -76,15 +101,25 @@ export function QuickNav({ items }: Props) {
               type="button"
               onClick={() => {
                 const el = document.getElementById(it.id);
-                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                if (el)
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className={clsx(
-                "rounded px-2 py-1 text-left font-serif text-[13px] transition-colors",
+                "relative rounded-full px-3.5 py-1.5 text-left font-serif text-[13px] transition-colors",
                 isActive
-                  ? "bg-primary-soft font-semibold text-primary-2"
-                  : "text-ink-3 hover:text-primary-2",
+                  ? "bg-primary-2 text-white"
+                  : "text-ink-3 hover:text-ink",
               )}
             >
+              {/* Node dot that sits on the connecting bar, aligned to the
+                  vertical centre of the pill. */}
+              <span
+                aria-hidden
+                className={clsx(
+                  "absolute left-[-19px] top-1/2 h-2 w-2 -translate-y-1/2 rounded-full ring-2 ring-paper transition-colors",
+                  isActive ? "bg-primary-2" : "bg-line",
+                )}
+              />
               {it.label}
             </button>
           );

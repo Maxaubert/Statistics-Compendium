@@ -91,7 +91,9 @@ export const StepItemSchema = z.union([
     text: z.string(),
     conditional: z.boolean().optional(),
     example: z.boolean().optional(),
-    formula: z.string().optional(),
+    // Either a single formula string (one code block) or an array of
+    // formula strings (one code block per entry, stacked vertically).
+    formula: z.union([z.string(), z.array(z.string())]).optional(),
     cases: z
       .array(z.object({ when: z.string(), then: z.string() }))
       .optional(),

@@ -23,6 +23,9 @@ solution_variants:
       - "Beregn standardfeilen som utvalgsstandardavviket av de 999 bootstrap-statistikkene: `SE` = std-av-bootstrap-snittene."
       - text: "Lag KI. Antar at bootstrap-fordelingen er tilnærmet normal. Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell)."
         formula: "x̄ ± z_(α/2) · SE"
+      - text: "Eksempel: ventetider på legekontor, `x̄ = 14.3` min, bootstrap-`SE = 1.8`, 95 % KI (`z_(0.025) = 1.96`):"
+        formula: "14.3 ± 1.96 · 1.8 = [10.77, 17.83]"
+        example: true
       - { text: "Sjekk bootstrap-fordelingen før du bruker normaltilnærmingen — er den skjev eller har tunge haler, bruk prosentilintervall i stedet.", conditional: true }
   - label: "Prosentilintervall"
     steps:

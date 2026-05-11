@@ -51,6 +51,9 @@ solution_variants:
         formula: "P(A ∩ B) = P(A)·P(B)"
       - text: "Ellers (avhengige). Bruk gjerne den retningen oppgaven gir betingelsen i:"
         formula: "P(A ∩ B) = P(A) · P(B|A)"
+      - text: "Eksempel: trekk 2 kort uten tilbakelegging, `P(første ess) = 4/52`, `P(andre ess|første ess) = 3/51`:"
+        formula: "P(begge ess) = (4/52)·(3/51) = 1/221 ≈ 0.0045"
+        example: true
   - label: "Betinget P(A | B) direkte"
     steps:
       - "Bruk når oppgaven spør 'gitt at B inntreffer, hva er sannsynligheten for A?' og du har `P(A ∩ B)` og `P(B)`"
@@ -63,11 +66,45 @@ solution_variants:
       - text: "Hvis du i stedet kjenner `P(B|A)` (motsatt retning), bruk Bayes' setning:"
         formula: "P(A|B) = P(A)·P(B|A) / P(B)"
         conditional: true
-      - text: "Hvis du betinger på et komplement (f.eks. `P(A | B̄)`): regn ut `P(B̄) = 1 − P(B)` og `P(A ∩ B̄)` (ofte via venndiagram, eller via `P(A) − P(A ∩ B)`)"
+      - text: "Hvis du betinger på et komplement (`P(A | B̄)`) eller begge negert (`P(Ā | B̄)`), se egne fane(r) under."
         conditional: true
-      - text: "Hvis BÅDE A og B er negert (f.eks. `P(Ā | B̄)`): bruk De Morgan, så regn videre:"
-        formula: "P(Ā ∩ B̄) = 1 − P(A ∪ B);  P(Ā | B̄) = (1 − P(A ∪ B)) / (1 − P(B))"
-        conditional: true
+
+  - label: "Betinget på komplement P(A | B̄)"
+    steps:
+      - "Bruk når oppgaven spør 'gitt at B IKKE inntreffer, hva er sannsynligheten for A?'"
+      - text: "Definisjonen — samme som vanlig betinget, men nevneren er `P(B̄)`:"
+        formula: "P(A | B̄) = P(A ∩ B̄) / P(B̄)"
+      - text: "Nevneren er rett frem:"
+        formula: "P(B̄) = 1 − P(B)"
+      - text: "For `P(A ∩ B̄)` (telleren) avhenger det av relasjonen mellom A og B:"
+        formula:
+          - "A og B disjunkte:  P(A ∩ B̄) = P(A)   (siden A ⊆ B̄)"
+          - "A og B uavhengige:  P(A ∩ B̄) = P(A) · (1 − P(B))"
+          - "Generelt (venndiagram):  P(A ∩ B̄) = P(A) − P(A ∩ B)"
+      - text: "Eksempel — disjunkt (ansettelse: `P(Anna) = 0.50`, `P(Bjørn) = 0.30`, disjunkte). Gitt at Bjørn IKKE blir ansatt, sjansen for Anna:"
+        formula: "P(Anna | ¬Bjørn) = 0.50 / (1 − 0.30) = 0.50 / 0.70 ≈ 0.714"
+        example: true
+      - text: "Eksempel — generelt (`P(A) = 0.60`, `P(B) = 0.40`, `P(A ∩ B) = 0.25`):"
+        formula: "P(A | B̄) = (0.60 − 0.25) / (1 − 0.40) = 0.35 / 0.60 ≈ 0.583"
+        example: true
+      - { text: "Hvis A og B er disjunkte, forenkles uttrykket til `P(A | B̄) = P(A) / (1 − P(B))` — telleren er bare `P(A)` fordi `A ⊆ B̄` automatisk", conditional: true }
+
+  - label: "Begge negert P(Ā | B̄)"
+    steps:
+      - "Bruk når både hendelsen og betingelsen er negert: 'gitt at B IKKE inntreffer, sjansen for at A heller IKKE inntreffer'"
+      - text: "Definisjonen, samme oppskrift:"
+        formula: "P(Ā | B̄) = P(Ā ∩ B̄) / P(B̄)"
+      - text: "Bruk De Morgan på telleren — komplementet av union:"
+        formula: "P(Ā ∩ B̄) = 1 − P(A ∪ B)"
+      - text: "Regn `P(A ∪ B)` via unionssetningen, så sett alt sammen:"
+        formula: "P(Ā | B̄) = (1 − P(A ∪ B)) / (1 − P(B))"
+      - text: "Eksempel: `P(A) = 0.30`, `P(B) = 0.40`, `P(A ∩ B) = 0.10`. Først unionen:"
+        formula: "P(A ∪ B) = 0.30 + 0.40 − 0.10 = 0.60"
+        example: true
+      - text: "Sett sammen:"
+        formula: "P(Ā | B̄) = (1 − 0.60) / (1 − 0.40) = 0.40 / 0.60 ≈ 0.667"
+        example: true
+
   - label: "Test om A og B er uavhengige"
     steps:
       - "Bruk når oppgaven spør 'er A og B uavhengige?'"
@@ -160,6 +197,67 @@ detailed_solution_variants:
               - { indent: "`= 1/12`" }
               - { indent: "`≈ 0.0833`" }
         result: "`P(krone ∩ sekser) = 1/12 ≈ 0.083`"
+
+  - label: "Betinget på komplement P(A | B̄)"
+    solutions:
+      - source: "Praksis · ansettelse (disjunkt)"
+        question: "En bedrift skal ansette én ny person blant tre kandidater: Anna, Bjørn og Camilla. Sannsynlighetene er P(Anna) = 0.50, P(Bjørn) = 0.30, P(Camilla) = 0.20 (kun én blir ansatt — disjunkte). Gitt at Bjørn IKKE blir ansatt, hva er sannsynligheten for at Anna blir det?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `A` = «Anna blir ansatt» og `B` = «Bjørn blir ansatt»." }
+              - { text: "Hendelsene er DISJUNKTE — kun én person ansettes." }
+              - { text: "Vi vil ha `P(A | B̄)` — sjansen for Anna gitt at Bjørn ikke ansettes." }
+          - label: "Formel"
+            lines:
+              - { text: "Betinget sannsynlighet:" }
+              - { indent: "`P(A | B̄) = P(A ∩ B̄) / P(B̄)`" }
+              - { text: "Siden A og B er disjunkte er `A ⊆ B̄`, så `A ∩ B̄ = A`:" }
+              - { indent: "`P(A ∩ B̄) = P(A) = 0.50`" }
+              - { text: "Nevneren:" }
+              - { indent: "`P(B̄) = 1 − P(B) = 1 − 0.30 = 0.70`" }
+          - label: "Innsatt"
+            lines:
+              - { indent: "`P(A | B̄) = 0.50 / 0.70 ≈ 0.714`" }
+              - { comment: "Intuisjon: når Bjørn faller bort fordeles sannsynligheten på de to gjenværende kandidatene proporsjonalt." }
+        result: "`P(Anna | ¬Bjørn) ≈ 0.714` (71.4 %)"
+
+      - source: "Praksis · venndiagram (generelt)"
+        question: "I en befolkning har 60 % bestått matte, 40 % har bestått fysikk, og 25 % har bestått begge. Gitt at en tilfeldig person IKKE har bestått fysikk, hva er sannsynligheten for at hen har bestått matte?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `M` = «bestått matte» og `F` = «bestått fysikk»." }
+              - { text: "`P(M) = 0.60`, `P(F) = 0.40`, `P(M ∩ F) = 0.25`." }
+              - { text: "Hendelsene overlapper — ikke disjunkte." }
+              - { text: "Vi vil ha `P(M | F̄)`." }
+          - label: "Formel"
+            lines:
+              - { text: "Betinget på komplement:" }
+              - { indent: "`P(M | F̄) = P(M ∩ F̄) / P(F̄)`" }
+              - { text: "Telleren via set-differanse (venndiagram):" }
+              - { indent: "`P(M ∩ F̄) = P(M) − P(M ∩ F) = 0.60 − 0.25 = 0.35`" }
+              - { text: "Nevneren:" }
+              - { indent: "`P(F̄) = 1 − 0.40 = 0.60`" }
+          - label: "Innsatt"
+            lines:
+              - { indent: "`P(M | F̄) = 0.35 / 0.60 ≈ 0.583`" }
+        result: "`P(matte | ikke fysikk) ≈ 0.583` (58.3 %)"
+
+      - source: "Praksis · uavhengighet"
+        question: "En produsent har to maskiner som svikter uavhengig: maskin A med sannsynlighet 0.10 og maskin B med 0.20 per dag. Gitt at maskin B IKKE svikter en gitt dag, hva er sannsynligheten for at maskin A svikter samme dag?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "La `A` = «maskin A svikter» og `B` = «maskin B svikter»." }
+              - { text: "Hendelsene er UAVHENGIGE." }
+              - { text: "Vi vil ha `P(A | B̄)`." }
+          - label: "Snarvei (uavhengighet)"
+            lines:
+              - { text: "For uavhengige hendelser er også `A` og `B̄` uavhengige, så betingelsen endrer ingenting:" }
+              - { indent: "`P(A | B̄) = P(A) = 0.10`" }
+              - { comment: "Sjekk via vanlig oppskrift: `P(A ∩ B̄) = P(A)·(1 − P(B)) = 0.10·0.80 = 0.08`, og `P(A | B̄) = 0.08 / 0.80 = 0.10`. Samme svar." }
+        result: "`P(A | B̄) = 0.10` — uendret av betingelsen siden hendelsene er uavhengige"
 
 related:
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }

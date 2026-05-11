@@ -48,18 +48,20 @@ filters:
   tooling: [calculator_only]
 
 solution_variants:
-  - label: "Antall mulige sekvenser"
+  - label: "Tell antall mulige sekvenser"
     steps:
       - "Identifiser `n` (antall mulige verdier per posisjon) og `k` (antall posisjoner / forsøk)"
       - "Bekreft at samme verdi kan gjentas (tilbakelegging) og at rekkefølgen teller"
       - "Antall mulige sekvenser = `n^k`"
       - text: "Eksempel — 4-sifret PIN-kode: `n = 10`, `k = 4`."
         formula: "10^4 = 10 000 mulige koder"
+        example: true
       - text: "Eksempel — kast en terning 6 ganger: `n = 6`, `k = 6`."
         formula: "6^6 = 46 656 mulige sekvenser"
+        example: true
       - text: "Pass på: dette teller sekvenser, ikke utfall. (1, 2, 3) og (3, 2, 1) regnes som to ulike sekvenser."
         conditional: true
-  - label: "Sannsynlighet for spesifikk sekvens"
+  - label: "Sannsynlighet: spesifikk sekvens"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for en bestemt sekvens / mønster i k uavhengige forsøk'"
       - "Tell antall gunstige sekvenser (de som matcher mønsteret)"
@@ -76,7 +78,37 @@ solution_variants:
         formula: "P = (1/6)³ · 1³ = 1/216"
       - text: "Pass på: 'spesifikk sekvens' betyr at rekkefølgen er gitt. Hvis spørsmålet er 'tre seksere et eller annet sted i seks kast', er det binomial — ikke n^k direkte."
         conditional: true
-  - label: "Sannsynlighet 'minst én' (komplement)"
+
+  - label: "Sannsynlighet: alle k er av samme type"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for at alle k forsøkene gir type A' (f.eks. 'alle 5 kortene trekkes med tilbakelegging er hjerter', 'alle 4 PIN-sifre er 0')"
+      - "Identifiser `N` (mulige verdier per posisjon), `K` (antall i kategori A), og `k` (antall forsøk)"
+      - text: "La `p = K/N` være sannsynligheten for A på ett forsøk. Siden forsøkene er uavhengige (tilbakelegging), bruk produktregelen:"
+        formula: "P(alle k er A) = p^k = (K/N)^k"
+      - text: "Eksempel — terningkast 4 ganger, alle sekser (`p = 1/6`, `k = 4`):"
+        formula: "P = (1/6)⁴ = 1/1296 ≈ 7.72·10⁻⁴"
+        example: true
+      - text: "Eksempel — trekk 5 kort med tilbakelegging, alle hjerter (`p = 13/52 = 1/4`, `k = 5`):"
+        formula: "P = (1/4)⁵ = 1/1024 ≈ 9.77·10⁻⁴"
+        example: true
+      - text: "Pass på: dette gjelder MED tilbakelegging (uavhengige forsøk, konstant p). Uten tilbakelegging må du bruke [hypergeometrisk](/entry/uordnet-utvalg-uten-tilbakelegging) — der endres `p` mellom forsøk."
+        conditional: true
+
+  - label: "Sannsynlighet: ingen er av en gitt type"
+    steps:
+      - "Bruk når oppgaven spør 'sannsynligheten for at ingen av k forsøkene gir type A' (f.eks. 'ingen kron i 10 myntkast', 'ingen 6-er i 8 terningkast')"
+      - "Identifiser `p = K/N` (sannsynlighet for A på ett forsøk), og `k` (antall forsøk)"
+      - text: "Komplementet av A har sannsynlighet `1 − p`. Bruk produktregelen på k uavhengige forsøk:"
+        formula: "P(ingen er A) = (1 − p)^k"
+      - text: "Eksempel — kast en mynt 10 ganger, ingen kron (`p = 0.5`, `k = 10`):"
+        formula: "P = 0.5¹⁰ = 1/1024 ≈ 9.77·10⁻⁴"
+        example: true
+      - text: "Eksempel — kast en terning 8 ganger, ingen 6-er (`p = 1/6`, `k = 8`):"
+        formula: "P = (5/6)⁸ ≈ 0.233"
+        example: true
+      - { text: "Komplementet av 'ingen er A' er 'minst én er A' — se fanen «Sannsynlighet: minst én (komplement)» for den direkte formelen `1 − (1 − p)^k`", conditional: true }
+
+  - label: "Sannsynlighet: minst én (komplement)"
     steps:
       - "Bruk når oppgaven spør 'sannsynligheten for minst én X i k forsøk'"
       - "Identifiser `p` (sannsynligheten for X på ett forsøk)"
@@ -87,8 +119,10 @@ solution_variants:
       - "  p = 1/6, k = 6"
       - text: "Sannsynlighet for ingen sekser:"
         formula: "P(ingen sekser) = (5/6)⁶ ≈ 0.3349"
+        example: true
       - text: "Sannsynlighet for minst én sekser:"
         formula: "P(minst én sekser) = 1 − (5/6)⁶ ≈ 0.6651"
+        example: true
       - text: "Pass på: dette krever uavhengige forsøk med konstant p — altså med tilbakelegging. Uten tilbakelegging (endelig populasjon) må du bruke hypergeometrisk eller direkte kombinatorisk telling."
         conditional: true
 
@@ -100,7 +134,7 @@ common_traps: |
     P(nøyaktig 1) + P(nøyaktig 2) + ... (det blir tungvint og feilbenektende).
 
 detailed_solution_variants:
-  - label: "Antall mulige sekvenser"
+  - label: "Tell antall mulige sekvenser"
     solutions:
       - source: "Praksiseksempel · PIN-kode"
         question: "Hvor mange mulige 4-sifret PIN-koder finnes (sifre 0–9, gjentakelse tillatt)?"
@@ -136,7 +170,7 @@ detailed_solution_variants:
               - { text: "`6^6 = 46 656`" }
         result: "46 656 mulige sekvenser"
 
-  - label: "Sannsynlighet for spesifikk sekvens"
+  - label: "Sannsynlighet: spesifikk sekvens"
     solutions:
       - source: "Praksiseksempel · Terningkast"
         question: "Vi kaster en terning 6 ganger. Hva er sannsynligheten for at de tre første kastene gir sekser?"
@@ -177,7 +211,7 @@ detailed_solution_variants:
               - { text: "`P = 1 / 10 000 = 0.0001`" }
         result: "`P(PIN = 1234) = 1/10 000`"
 
-  - label: "Sannsynlighet 'minst én' (komplement)"
+  - label: "Sannsynlighet: minst én (komplement)"
     solutions:
       - source: "Praksiseksempel · Terningkast"
         question: "Vi kaster en terning 6 ganger. Hva er sannsynligheten for å få minst én sekser?"

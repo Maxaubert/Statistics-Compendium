@@ -47,6 +47,9 @@ solution_template:
     formula: "SSE = Σ(y_i − α̂ − β̂·x_i)²"
   - text: "Beregn residualvariansen med `n − 2` frihetsgrader."
     formula: "S_E² = SSE / (n − 2)"
+  - text: "Eksempel: `n = 10`, `SSE = 48.74`:"
+    formula: "S_E² = 48.74 / 8 ≈ 6.09;  S_E ≈ 2.47"
+    example: true
   - text: "Beregn standardavviket."
     formula: "S_E = √S_E²"
 

@@ -48,6 +48,9 @@ solution_template:
     formula: "margin = z_(α/2) · σ/√n"
   - text: "Sett opp intervallet:"
     formula: "x̄ ± margin"
+  - text: "Eksempel: kaffeautomat `n = 100`, `x̄ = 25.05` cl, `σ = 0.48`, 90 % KI (`z_(0.05) = 1.645`):"
+    formula: "25.05 ± 1.645·0.48/√100 ≈ 25.05 ± 0.079 = [24.97, 25.13]"
+    example: true
 
 common_traps: |
   Bruk `z_(α/2)`, ikke `z_α` (vi vil ha `α/2` i hver hale i et tosidig intervall).

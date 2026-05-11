@@ -52,7 +52,6 @@ filters:
 solution_variants:
   - label: "P(T > t) — ingen hendelse innen t"
     steps:
-      - "Bekreft at problemet handler om tid til første hendelse i en poissonprosess, og at spørsmålet er på formen «ingen hendelse innen t» eller «T større enn t»"
       - "Identifiser raten `λ` og noter enheten (per minutt, per time, per år, ...)"
       - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først slik at `λ` og `t` har samme tidsenhet", conditional: true }
       - text: "Bruk overlevelsesformelen direkte:"
@@ -63,9 +62,7 @@ solution_variants:
 
   - label: "P(T < t) — hendelse innen t"
     steps:
-      - "Bekreft at spørsmålet er «minst én hendelse innen t», «hendelsen skjer før t», eller «ventetiden er kortere enn t»"
-      - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet"
-      - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først", conditional: true }
+      - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet (konvertér først om nødvendig)"
       - text: "Bruk kumulativ fordelingsfunksjon:"
         formula: "F(t) = P(T < t) = 1 − e^(−λt)"
       - text: "Sett inn tall og regn ut (f.eks. `λ = 0.01` per time, `t = 48`):"
@@ -77,9 +74,7 @@ solution_variants:
 
   - label: "P(a < T < b) — intervall"
     steps:
-      - "Bekreft at spørsmålet ber om sannsynligheten for at ventetiden faller i et intervall `(a, b)`"
       - "Identifiser `λ`, `a` og `b`, alle med samme tidsenhet"
-      - { text: "Hvis intervallets endepunkter er i en annen enhet enn raten, konvertér først", conditional: true }
       - text: "Bruk differansen av to kumulative:"
         formula: "P(a < T < b) = F(b) − F(a) = e^(−λa) − e^(−λb)"
       - text: "Sett inn og regn ut (f.eks. `λ = 1/10` per min, `a = 5`, `b = 15`):"

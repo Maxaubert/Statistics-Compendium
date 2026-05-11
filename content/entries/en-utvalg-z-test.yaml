@@ -78,7 +78,7 @@ solution_variants:
       - text: "Alternativt: regn p-verdi. Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ). For venstresidig:"
         formula: "p = P(Z < z) = G(z)"
         conditional: true
-      - { text: "F.eks. `Z = −2.40 → p = G(−2.40) ≈ 0.0082`. Forkast hvis `p < α`.", conditional: true }
+      - { text: "Forkast hvis `p < α`.", conditional: true }
 
   - label: "H₁: μ > μ₀ (høyre)"
     description: "Ensidig høyresidig test. Forkast hvis Z > +z_α."
@@ -108,7 +108,7 @@ solution_variants:
       - text: "Alternativt: regn p-verdi. Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ). For høyresidig:"
         formula: "p = P(Z > z) = 1 − G(z)"
         conditional: true
-      - { text: "F.eks. `Z = 2.40 → p = 1 − G(2.40) ≈ 0.0082`. Forkast hvis `p < α`.", conditional: true }
+      - { text: "Forkast hvis `p < α`.", conditional: true }
 
   - label: "H₁: μ ≠ μ₀ (tosidig)"
     description: "Tosidig test. Forkast hvis |Z| > z_(α/2)."
@@ -138,7 +138,7 @@ solution_variants:
       - text: "Alternativt: regn p-verdi. Slå opp `G(|z|)` i **tabell E.3** (Z-tabell, kumulativ). For tosidig:"
         formula: "p = 2 · P(Z > |z|) = 2 · (1 − G(|z|))"
         conditional: true
-      - { text: "F.eks. `Z = 2.40 → p = 2·(1 − G(2.40)) ≈ 0.0164`. Forkast hvis `p < α`.", conditional: true }
+      - { text: "Forkast hvis `p < α`.", conditional: true }
 
 common_traps: |
   - **Ensidig vs. tosidig**: Hvis `H₁` er "mindre enn" eller "større enn", er testen ensidig (bruk `z_α`). Hvis `H₁` er "forskjellig fra", er den tosidig (bruk `z_(α/2)`).

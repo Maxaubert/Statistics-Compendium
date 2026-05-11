@@ -49,6 +49,9 @@ solution_template:
   - "Sjekk at alle `E_ij ≥ 5`"
   - text: "Regn testobservatoren over alle celler:"
     formula: "χ² = Σ (O_ij − E_ij)² / E_ij"
+  - text: "Eksempel — kjønn × trandrikking, `O = [[20, 30], [25, 25]]`, alle `E = [[22.5, 27.5], [22.5, 27.5]]`:"
+    formula: "χ² = 0.278 + 0.227 + 0.278 + 0.227 ≈ 1.01"
+    example: true
   - text: "Bestem frihetsgrader:"
     formula: "ν = (r − 1)(c − 1)"
   - "Slå opp kritisk verdi `χ²_(α, ν)` i **tabell E.6** (kjikvadrat-kvantiltabell)"
