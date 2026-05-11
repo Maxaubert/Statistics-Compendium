@@ -46,3 +46,9 @@ coverage/
 
 # Local exam-prep notes pulled in from Downloads — not part of the compendium
 statistikk-eksamen/
+
+# Development artifacts — not part of the published webpage
+screenshots/
+audit-findings/
+docs/
+WORKING_NOTES.md
