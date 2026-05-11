@@ -76,7 +76,6 @@ solution_variants:
         conditional: true
       - { text: "Hvis `k` er stor og `μ` er liten (f.eks. `k ≥ 6`, `μ < 2`): `P(X ≤ k) ≈ 1`, du kan svare `≈ 1` uten oppslag", conditional: true }
       - "Skriv ned tabellverdien som svar; ingen videre regning trengs"
-      - "Sjekk fornuft: for `k ≈ μ` skal verdien ligge rundt `0.5–0.6`; for `k ≫ μ` skal den være nær 1"
 
   - label: "P(X ≥ k)"
     steps:
@@ -87,8 +86,6 @@ solution_variants:
       - { text: "Tabellen skal slås opp på `k − 1`, IKKE på `k`. F.eks. for `P(X ≥ 3)` slå opp `P(X ≤ 2)`. Bruker du `P(X ≤ 3)` i stedet, mister du bidraget fra `X = 3` selv og svaret blir for lavt.", conditional: true }
       - "Slå opp `P(X ≤ k − 1)` i **tabell E.2** (Poisson kumulativ) med kolonne for `μ` og rad for `k − 1` (f.eks. `k = 3` → slå opp rad 2)"
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
-      - "Trekk tabellverdien fra 1 for å få svaret"
-      - "Sjekk fornuft: `P(X ≥ k)` skal synke når `k` vokser; for `k = 1` skal verdien være nær `1 − e^(-μ)`"
 
   - label: "P(a ≤ X ≤ b)"
     steps:
@@ -104,7 +101,6 @@ solution_variants:
       - text: "Alternativt for små intervaller: summer punktsannsynlighetene direkte:"
         formula: "P(a ≤ X ≤ b) = P(X = a) + P(X = a + 1) + ... + P(X = b)"
         conditional: true
-      - "Sjekk fornuft: svaret skal være mellom 0 og 1, og mindre enn både `P(X ≤ b)` og `P(X ≥ a)` hver for seg"
 
   - label: "P(X = 0)"
     steps:
@@ -114,11 +110,9 @@ solution_variants:
         formula: "μ = λt"
       - text: "Bruk den forenklede formelen direkte (`μ⁰ = 1`, `0! = 1`, så hele brøken kollapser):"
         formula: "P(X = 0) = e^(-μ)"
-      - "Regn ut `e^(-μ)` på kalkulator (f.eks. `e^(-1.68) ≈ 0.1864`)"
       - text: "Hvis spørsmålet egentlig ber om 'minst én' (`P(X ≥ 1)`): svar med komplementet i stedet — vanlig oppfølgingsoppgave:"
         formula: "P(X ≥ 1) = 1 − e^(-μ)"
         conditional: true
-      - "Avrund til 3–4 desimaler; svaret skal alltid være mellom 0 og 1"
 
   - label: "Finn k for terskel"
     steps:

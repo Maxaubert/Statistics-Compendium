@@ -64,7 +64,6 @@ solution_variants:
       - text: "Eksempel: P(spirer) = 0.8 totalt, P(ringblomstfrø) = 0.6, P(spirer|ringblomstfrø) = 0.9. Spiregraden for andre frø:"
         formula: "(0.8 − 0.6·0.9) / (1 − 0.6) = 0.26/0.4 = 0.65"
         example: true
-      - "Sjekk fornuft: svaret skal ligge i `[0, 1]` og være konsistent med marginalen"
 
 common_traps: |
   Pass på at `A` og `Ā` er DISJUNKTE og dekker hele utfallsrommet. For mer enn

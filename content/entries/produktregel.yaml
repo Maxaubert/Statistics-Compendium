@@ -51,7 +51,6 @@ solution_variants:
         formula: "P(A ∩ B) = P(A)·P(B)"
       - text: "Ellers (avhengige). Bruk gjerne den retningen oppgaven gir betingelsen i:"
         formula: "P(A ∩ B) = P(A) · P(B|A)"
-      - "Sjekk fornuft: svaret skal ligge i `[0, 1]` og være mindre enn både `P(A)` og `P(B)`"
   - label: "Betinget P(A | B) direkte"
     steps:
       - "Bruk når oppgaven spør 'gitt at B inntreffer, hva er sannsynligheten for A?' og du har `P(A ∩ B)` og `P(B)`"

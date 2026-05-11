@@ -60,7 +60,6 @@ solution_variants:
       - text: "Sett inn tall og regn ut (f.eks. `λ = 1/15` per min, `t = 30`):"
         formula: "P(T > 30) = e^(−2) ≈ 0.135"
         example: true
-      - "Sjekk at svaret er mellom 0 og 1, og at det går mot 0 når `t` blir stort"
 
   - label: "P(T < t) — hendelse innen t"
     steps:
@@ -75,7 +74,6 @@ solution_variants:
       - text: "Alternativt: regn først overlevelsen og bruk komplementregelen. Nyttig hvis du allerede har `P(T > t)`:"
         formula: "P(T < t) = 1 − P(T > t) = 1 − e^(−λt)"
         conditional: true
-      - "Sjekk at svaret er mellom 0 og 1, og at det går mot 1 når `t` blir stort"
 
   - label: "P(a < T < b) — intervall"
     steps:
@@ -87,7 +85,6 @@ solution_variants:
       - text: "Sett inn og regn ut (f.eks. `λ = 1/10` per min, `a = 5`, `b = 15`):"
         formula: "P(5 < T < 15) = e^(−0.5) − e^(−1.5) ≈ 0.607 − 0.223 = 0.384"
         example: true
-      - "Sjekk at `b > a` og at svaret er positivt og mindre enn både `P(T > a)` og `P(T < b)`"
 
   - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
     steps:

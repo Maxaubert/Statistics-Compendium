@@ -58,7 +58,6 @@ solution_variants:
       - text: "Sett inn i Bayes:"
         formula: "P(A|B) = P(A)·P(B|A) / P(B)"
       - { text: "Hvis hendelsene IKKE er en partisjon (A og Aᶜ overlapper, eller dekker ikke alt), Bayes-formelen gjelder ikke direkte – sjekk forutsetningene", conditional: true }
-      - "Sjekk: svaret skal ligge mellom 0 og 1, og være konsistent med størrelsesforhold (sjelden A + svak B-evidens → liten `P(A|B)`)"
 
   - label: "Diagnose-/test-mønster"
     steps:
@@ -83,7 +82,6 @@ solution_variants:
         formula: "P(B) = Σᵢ P(Aᵢ)·P(B|Aᵢ)"
       - text: "Bruk Bayes for hver `Aᵢ`:"
         formula: "P(Aᵢ|B) = P(Aᵢ)·P(B|Aᵢ) / P(B)"
-      - "Sjekk normalisering: `Σᵢ P(Aᵢ|B) = 1` (god sanitetstest mot regnefeil)"
       - "Tolk: hvilken hypotese har størst posterior? Sammenlign med prior for å se hvor mye evidens B flyttet sannsynligheten"
 
   - label: "Tre-diagram-arbeidsflyt"

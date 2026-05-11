@@ -92,7 +92,6 @@ solution_variants:
       - "Slå opp `G(z_a)` og `G(z_b)` i **tabell E.3** (Z-tabell, kumulativ) (f.eks. `G(0.6) ≈ 0.7257`, `G(1.6) ≈ 0.9452`)."
       - text: "Trekk fra (f.eks. `0.9452 − 0.7257 = 0.2195`):"
         formula: "P(a < X < b) = G(z_b) − G(z_a)"
-      - "Sanity-sjekk: svaret skal ligge i `[0, 1]`. Negativt resultat betyr at du har byttet om `z_a` og `z_b`."
 
   - label: "Invers: finn x"
     steps:
@@ -103,7 +102,6 @@ solution_variants:
         conditional: true
       - text: "Sett inn (f.eks. `μ = 300`, `σ = 5`, `z = −3.090 ⇒ x = 300 − 15.45 = 284.55`):"
         formula: "x = μ + σ · z"
-      - "Sanity-sjekk: `p < 0.5 ⇒ x < μ`; `p > 0.5 ⇒ x > μ`. Stemmer det ikke, har du glemt fortegnet på `z`."
 
   - label: "Invers: finn μ (eller σ)"
     steps:
