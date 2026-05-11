@@ -64,8 +64,6 @@ solution_variants:
         formula: "P(X = 0) = e^(-μ)"
         conditional: true
       - { text: "Hvis spørsmålet ber om en sum (f.eks. 'ett eller to'): regn `P(X = 1) + P(X = 2)` separat og legg sammen", conditional: true }
-      - "Regn ut `e^(-μ)` på kalkulator, deretter `μ^k / k!`, og multipliser"
-      - "Avrund til 3–4 desimaler og dobbeltsjekk at resultatet er mellom 0 og 1"
 
   - label: "P(X ≤ k)"
     steps:
