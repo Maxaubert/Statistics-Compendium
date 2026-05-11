@@ -14,6 +14,7 @@ import {
 import { GlossaryPopupProvider, useGlossaryPopup } from "@/components/detail/GlossaryPopup";
 import { useFilteredContent } from "@/hooks/useFilteredContent";
 import { applyFilters } from "@/data/filtering";
+import { renderCombiningMarks } from "@/components/detail/inline-code";
 
 const CROSS_HIT_CAP = 8;
 const VALID_TABS = new Set(["formler", "tabeller"]);
@@ -210,7 +211,7 @@ function OverviewSection({ entries }: { entries: OverviewEntry[] }) {
                 {e.name_no}
               </div>
               <div className="truncate text-[12.5px] italic text-ink-3">
-                {e.tagline}
+                {renderCombiningMarks(e.tagline)}
               </div>
             </Link>
           </li>

@@ -9,6 +9,7 @@ import {
 } from "@/data/glossary-link";
 import type { GlossaryTerm } from "@/data/schema";
 import { useGlossaryPopup } from "./GlossaryPopup";
+import { renderCombiningMarks } from "./inline-code";
 
 export type ProseTheme = "light" | "dark";
 
@@ -467,7 +468,7 @@ function renderInline(
     if (tok.kind === "code") {
       return (
         <code key={i} className={CODE_CLASS[theme]}>
-          {tok.value}
+          {renderCombiningMarks(tok.value)}
         </code>
       );
     }
@@ -625,10 +626,11 @@ function renderTextWithLinks(
   openTerm: ((id: string) => void) | undefined,
   theme: ProseTheme,
 ): ReactNode {
-  if (!aliases || !openTerm) return text;
+  if (!aliases || !openTerm) return renderCombiningMarks(text);
   const segs = preferLongest(findGlossaryLinks(text, aliases));
   return segs.map((s, i) => {
-    if (s.kind === "text") return <Fragment key={i}>{s.value}</Fragment>;
+    if (s.kind === "text")
+      return <Fragment key={i}>{renderCombiningMarks(s.value)}</Fragment>;
     return (
       <button
         key={i}
@@ -636,7 +638,7 @@ function renderTextWithLinks(
         onClick={() => openTerm(s.termId)}
         className={LINK_CLASS[theme]}
       >
-        {s.value}
+        {renderCombiningMarks(s.value)}
       </button>
     );
   });

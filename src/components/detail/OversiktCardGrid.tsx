@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { OversiktForm } from "@/data/schema";
 import { useGlossaryPopup } from "./GlossaryPopup";
+import { renderCombiningMarks } from "./inline-code";
 
 export interface OversiktCardGridProps {
   forms: OversiktForm[];
@@ -66,12 +67,12 @@ function OversiktCard({ form }: { form: OversiktForm }) {
       </div>
 
       <pre className="mb-3.5 overflow-x-auto rounded-lg border border-calc-border bg-calc-bg px-[18px] py-4 font-mono text-[14.5px] leading-snug text-calc-text">
-        {form.formula}
+        {renderCombiningMarks(form.formula)}
       </pre>
 
       {form.description && (
         <p className="m-0 mb-3 font-serif text-[14.5px] leading-relaxed text-ink-2">
-          {form.description}
+          {renderCombiningMarks(form.description)}
         </p>
       )}
 

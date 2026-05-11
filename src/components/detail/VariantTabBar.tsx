@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { deriveTabMeta } from "./tab-category";
+import { renderCombiningMarks } from "./inline-code";
 
 interface Props {
   /** Original raw labels — used as the React key, the accessible name, and the meta-derivation source. */
@@ -60,7 +61,7 @@ export function VariantTabBar({ labels, active, onSelect, ariaLabel }: Props) {
                 isActive && "font-semibold",
               )}
             >
-              {meta.short}
+              {renderCombiningMarks(meta.short)}
             </span>
             {anyFormula && (
               <span
@@ -70,7 +71,7 @@ export function VariantTabBar({ labels, active, onSelect, ariaLabel }: Props) {
                   isActive ? "opacity-100" : "opacity-0",
                 )}
               >
-                {meta.formula ?? " "}
+                {meta.formula ? renderCombiningMarks(meta.formula) : " "}
               </span>
             )}
             <span
