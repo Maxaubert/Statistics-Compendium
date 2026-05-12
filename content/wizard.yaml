@@ -15,6 +15,8 @@ nodes:
         next: n_regresjon
       - label: "Hypotesetest eller konfidensintervall"
         next: n_inferens
+      - label: "Beskrivende statistikk fra rådata (s², bootstrap, resampling)"
+        next: n_beskrivende
 
   - id: n_regler
     question: "Hva er du på jakt etter?"
@@ -72,6 +74,9 @@ nodes:
         leads_to:
           - { id: forventningsverdi-diskret, kind: entry }
           - { id: varians-standardavvik-diskret, kind: entry }
+      - label: "Spørsmålet sier 'minst én', 'ingen', 'ikke alle' eller 'færre enn k'"
+        leads_to:
+          - { id: komplementregelen, kind: entry }
 
   - id: n_diskret_fast_n
     question: "Med tilbakelegging?"
@@ -112,12 +117,33 @@ nodes:
       - label: "Konfidensintervall for μ – σ ukjent"
         leads_to:
           - { id: ki-mu-ukjent-sigma, kind: entry }
+          - { id: utvalgsvarians-radata, kind: entry }
       - label: "Hypotesetest om μ – σ kjent"
+        next: n_sidedness_z_mu
+      - label: "Hypotesetest om μ – σ ukjent"
+        next: n_sidedness_t_mu
+
+  - id: n_sidedness_z_mu
+    question: "Tosidig eller ensidig test?"
+    options:
+      - label: "Tosidig (H₁: μ ≠ μ₀)"
         leads_to:
           - { id: en-utvalg-z-test, kind: entry }
-      - label: "Hypotesetest om μ – σ ukjent"
+      - label: "Ensidig (H₁: μ < μ₀ eller H₁: μ > μ₀)"
+        leads_to:
+          - { id: en-utvalg-z-test, kind: entry }
+
+  - id: n_sidedness_t_mu
+    question: "Tosidig eller ensidig test? (σ må først estimeres via s² – se utvalgsvarians)"
+    options:
+      - label: "Tosidig (H₁: μ ≠ μ₀)"
         leads_to:
           - { id: en-utvalg-t-test, kind: entry }
+          - { id: utvalgsvarians-radata, kind: entry }
+      - label: "Ensidig (H₁: μ < μ₀ eller H₁: μ > μ₀)"
+        leads_to:
+          - { id: en-utvalg-t-test, kind: entry }
+          - { id: utvalgsvarians-radata, kind: entry }
 
   - id: n_joint
     question: "Hva spørres det om fra simultanfordelingstabellen?"
@@ -138,9 +164,9 @@ nodes:
       - label: "Korrelasjon ρ(X, Y)"
         leads_to:
           - { id: korrelasjon-joint, kind: entry }
-      - label: "Er X og Y uavhengige?"
+      - label: "Er X og Y uavhengige? (sjekk om P(X=x, Y=y) = P(X=x)·P(Y=y) for alle celler)"
         leads_to:
-          - { id: kjikvadrat-uavhengighet, kind: entry }
+          - { id: marginalfordeling, kind: entry }
           - { id: uavhengighet-glos, kind: glossary }
 
   - id: n_telling
@@ -149,6 +175,12 @@ nodes:
       - label: "Trekker k objekter fra n uten tilbakelegging (uordnet, kortstokk-stil)"
         leads_to:
           - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
+      - label: "Antall ordnede sekvenser med tilbakelegging (passord, PIN)"
+        leads_to:
+          - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
+      - label: "Antall ordnede sekvenser uten tilbakelegging (nPk)"
+        leads_to:
+          - { id: ordnet-utvalg-uten-tilbakelegging, kind: entry }
       - label: "Beregne P som gunstige/mulige (uniform sannsynlighet)"
         leads_to:
           - { id: gunstige-pa-mulige, kind: entry }
@@ -163,8 +195,7 @@ nodes:
         leads_to:
           - { id: regresjon-korrelasjonskoeffisient, kind: entry }
       - label: "Test om β = 0 (er det signifikant lineær sammenheng?)"
-        leads_to:
-          - { id: regresjon-test-stigningstall, kind: entry }
+        next: n_sidedness_regresjon
       - label: "Prediksjonsintervall for ŷ ved gitt x"
         leads_to:
           - { id: regresjon-prediksjonsintervall, kind: entry }
@@ -177,6 +208,16 @@ nodes:
       - label: "Spredningsplott / visualisere data"
         leads_to:
           - { id: spredningsplott, kind: glossary }
+
+  - id: n_sidedness_regresjon
+    question: "Tosidig eller ensidig test for β?"
+    options:
+      - label: "Tosidig (H₁: β ≠ 0) – standard 'finnes det noen sammenheng?'"
+        leads_to:
+          - { id: regresjon-test-stigningstall, kind: entry }
+      - label: "Ensidig (H₁: β < 0 eller H₁: β > 0) – retning oppgitt"
+        leads_to:
+          - { id: regresjon-test-stigningstall, kind: entry }
 
   - id: n_inferens
     question: "Hva slags inferens?"
@@ -192,17 +233,25 @@ nodes:
         leads_to:
           - { id: ki-varians, kind: entry }
       - label: "Test om to grupper har samme μ (to-utvalgs t-test)"
-        leads_to:
-          - { id: to-utvalgs-t-test, kind: entry }
+        next: n_sidedness_to_utvalg
       - label: "Goodness-of-fit (passer dataene en gitt fordeling?)"
         leads_to:
           - { id: kjikvadrat-goodness-of-fit, kind: entry }
-      - label: "Test for sammenheng/uavhengighet av kategorier (kontingenstabell)"
+      - label: "Kontingenstabell med observerte tall i kategorier – test for uavhengighet/sammenheng"
         leads_to:
           - { id: kjikvadrat-uavhengighet, kind: entry }
       - label: "Hypotesetest om regresjons-stigningstall β = 0"
+        next: n_sidedness_regresjon
+
+  - id: n_sidedness_to_utvalg
+    question: "Tosidig eller ensidig to-utvalgs t-test?"
+    options:
+      - label: "Tosidig (H₁: μ₁ ≠ μ₂)"
         leads_to:
-          - { id: regresjon-test-stigningstall, kind: entry }
+          - { id: to-utvalgs-t-test, kind: entry }
+      - label: "Ensidig (H₁: μ₁ < μ₂ eller H₁: μ₁ > μ₂)"
+        leads_to:
+          - { id: to-utvalgs-t-test, kind: entry }
 
   - id: n_andel
     question: "Hva spørres det om for andelen p?"
@@ -211,5 +260,24 @@ nodes:
         leads_to:
           - { id: ki-andel-binomial, kind: entry }
       - label: "Test om p = p₀"
+        next: n_sidedness_z_andel
+
+  - id: n_sidedness_z_andel
+    question: "Tosidig eller ensidig test for andel?"
+    options:
+      - label: "Tosidig (H₁: p ≠ p₀)"
         leads_to:
           - { id: en-utvalg-z-test-andel, kind: entry }
+      - label: "Ensidig (H₁: p < p₀ eller H₁: p > p₀)"
+        leads_to:
+          - { id: en-utvalg-z-test-andel, kind: entry }
+
+  - id: n_beskrivende
+    question: "Hva trenger du fra rådataene?"
+    options:
+      - label: "Utvalgsvarians s² eller utvalgsstandardavvik s fra en datarad"
+        leads_to:
+          - { id: utvalgsvarians-radata, kind: entry }
+      - label: "Bootstrap / resampling – estimere usikkerhet uten fordelingsantakelse"
+        leads_to:
+          - { id: bootstrapping, kind: entry }

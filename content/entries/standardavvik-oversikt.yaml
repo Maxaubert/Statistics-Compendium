@@ -96,12 +96,16 @@ forms:
       - { id: en-utvalg-z-test-andel, label: "Z-test for andel p" }
       - { id: ki-andel-binomial, label: "KI for andel p" }
 recognition_cues:
-  - "Oppgaven nevner spredning, standardavvik, eller standardfeil"
+  - "Oppgaven nevner spredning, standardavvik, eller standardfeil, og du er usikker på hvilken form"
   - "Du må velge mellom `σ` (kjent), `s` (estimat fra rådata), og `σ/√n` (spredning til `X̄`)"
-  - "Du har et estimat og skal kvantifisere usikkerheten i det"
+  - "Du har et estimat (`X̄`, `p̂`, `β̂`) og skal kvantifisere usikkerheten i det"
+
+when_NOT_to_use:
+  - "Du vet allerede hvilken form (rådata, PMF, residual, SE(β̂)) → gå direkte til den spesifikke entryen"
+  - "Du trenger variansen `σ²` (kvadratenheten) i en KI-formel → bruk [varians (oversikt)](/entry/varians-oversikt)"
 
 filters:
-  computes: [std_dev]
+  computes: [std_dev, variance]
   random_variable: [discrete_count, continuous, mean_of_samples, sum_of_samples, proportion]
   setup: [single_population]
   structural_cues: [data_as_list, summary_stats_given, mean_and_sd_given]

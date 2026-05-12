@@ -19,16 +19,20 @@ why_use: |
   ved at r er et ESTIMAT basert på utvalg, og brukes i regresjonsanalyse.
 
 recognition_cues:
-  - "Du har `n` par av observasjoner `(x_i, y_i)`"
-  - "Spørsmålet ber om 'korrelasjonskoeffisient' eller 'styrken av sammenhengen'"
+  - "Du har `n` par av observasjoner `(x_i, y_i)` (rådata-tabell)"
+  - "Spørsmålet ber om 'korrelasjonskoeffisient `r`' eller 'styrken på den lineære sammenhengen'"
   - "Datatabell viser `S_XX`, `S_YY`, `S_XY` eller summer som lar deg regne dem ut"
+  - "Mellomsteg i regresjonsoppgave (`r²` brukes som forklaringsgrad)"
 
 when_NOT_to_use:
   - "Du jobber med en simultanfordeling (felles teoretisk fordeling) → bruk [ρ for fellesfordeling](/entry/korrelasjon-joint)"
-  - "Du forventer en ikke-lineær sammenheng → `r` kan være misvisende"
+  - "Du forventer en ikke-lineær sammenheng → `r` kan være misvisende, plot dataene først"
+  - "Du vil estimere selve regresjonslinjen → bruk [estimater for α og β](/entry/regresjon-estimat-alpha-beta)"
 
 symbols:
   - { sym: "r",       means: "korrelasjonskoeffisient (utvalgsestimat)" }
+  - { sym: "x_i, y_i", means: "de `n` observasjonsparene" }
+  - { sym: "x̄, ȳ",    means: "gjennomsnitt av `x`- og `y`-verdiene" }
   - { sym: "S_XX",    means: "`Σ(x_i − x̄)²`" }
   - { sym: "S_YY",    means: "`Σ(y_i − ȳ)²`" }
   - { sym: "S_XY",    means: "`Σ(x_i − x̄)(y_i − ȳ)`" }
@@ -153,6 +157,9 @@ related:
   - { id: "korrelasjon-joint",             kind: "entry" }
   - { id: "spredningsplott",               kind: "glossary" }
   - { id: "regresjon-test-stigningstall",  kind: "entry" }
+  - { id: "pearson-korrelasjon",           kind: "glossary" }
+  - { id: "korrelasjon-glos",              kind: "glossary" }
+  - { id: "r-kvadrat",                     kind: "glossary" }
 
 tools:
   - "Kalkulator: kvadratrot, divisjon"

@@ -5,7 +5,7 @@ filters:
   distribution_assumption: [exponential]
   random_variable: [time_until_event, continuous]
   parameters_known: [rate_lambda]
-  computes: [std_dev, expected_value]
+  computes: [std_dev, expected_value, variance]
   structural_cues: [poisson_process_mentioned, rate_given, process_over_time, time_until_first]
 long_def: |
   For en `Eksponential(λ)`-fordelt ventetid `T`:

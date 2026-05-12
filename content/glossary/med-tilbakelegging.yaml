@@ -15,6 +15,11 @@ long_def: |
   - **Uten tilbakelegging:** hypergeometrisk fordeling
 
   Sjekk derfor alltid om oppgaven sier "med" eller "uten" tilbakelegging.
+aliases:
+  - med tilbakelegging
+  - tilbakelegging
+  - tilbakeleggingen
+  - tilbakeleggingene
 see_also:
   - { id: binomial-fordeling, kind: entry }
   - { id: uten-tilbakelegging-glos, kind: glossary }

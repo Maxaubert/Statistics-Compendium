@@ -97,6 +97,17 @@ export const StepItemSchema = z.union([
     cases: z
       .array(z.object({ when: z.string(), then: z.string() }))
       .optional(),
+    // Optional inline table — used in example steps that reference a
+    // simultantabell or similar grid. Same shape as the table block
+    // in detailed solutions.
+    table: z
+      .object({
+        headers: z.array(z.string()),
+        rows: z.array(z.array(z.string())),
+        margin_col: z.boolean().optional(),
+        margin_row: z.boolean().optional(),
+      })
+      .optional(),
   }),
 ]);
 

@@ -65,7 +65,12 @@ function normalizeExpression(input: string): string {
  * The expression is persisted to localStorage so it survives close-
  * and-reopen and page navigation.
  */
-export function ScientificCalculator() {
+interface Props {
+  rounded: boolean;
+  decimals: number;
+}
+
+export function ScientificCalculator({ rounded, decimals }: Props) {
   const [, , style] = useCalculatorStyle();
   const [expr, setExpr] = useState<string>(() => loadString(STORAGE_EXPR));
   const inputRef = useRef<HTMLInputElement>(null);
@@ -74,12 +79,24 @@ export function ScientificCalculator() {
     saveString(STORAGE_EXPR, expr);
   }, [expr]);
 
-  function tryEvaluate(input: string): { ok: true; value: string } | { ok: false; error: string } {
-    if (!input.trim()) return { ok: true, value: "" };
+  function tryEvaluate(
+    input: string,
+  ):
+    | { ok: true; value: string; approx: boolean }
+    | { ok: false; error: string } {
+    if (!input.trim()) return { ok: true, value: "", approx: false };
     try {
-      const result = evaluate(normalizeExpression(input));
-      const out = typeof result === "function" ? "(funksjon)" : String(result);
-      return { ok: true, value: out };
+      const normalized = normalizeExpression(input);
+      const raw = evaluate(normalized);
+      if (typeof raw === "function") {
+        return { ok: true, value: "(funksjon)", approx: false };
+      }
+      if (rounded && typeof raw === "number" && Number.isFinite(raw)) {
+        const roundedRaw = evaluate(`round(${normalized}, ${decimals})`);
+        const approx = roundedRaw !== raw;
+        return { ok: true, value: String(roundedRaw), approx };
+      }
+      return { ok: true, value: String(raw), approx: false };
     } catch (err) {
       return { ok: false, error: err instanceof Error ? err.message : "Feil i uttrykket" };
     }
@@ -87,6 +104,7 @@ export function ScientificCalculator() {
 
   const evaluation = tryEvaluate(expr);
   const liveResult = evaluation.ok ? evaluation.value : null;
+  const isApprox = evaluation.ok ? evaluation.approx : false;
   const errorMsg = !evaluation.ok ? evaluation.error : null;
 
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -128,8 +146,9 @@ export function ScientificCalculator() {
         <span
           className="font-mono text-[15px] font-bold leading-none"
           style={{ color: style.resultEq }}
+          aria-label={isApprox ? "tilnærmet lik" : "lik"}
         >
-          =
+          {isApprox ? "≈" : "="}
         </span>
         {errorMsg ? (
           <span className="font-mono text-[12px] font-semibold leading-none" style={{ color: "#f87171" }}>

@@ -18,12 +18,11 @@ why_use: |
   vulkanutbrudd, sommerfugler i felle, kunder som kommer til en kasse.
 
 recognition_cues:
-  - "Oppgaven nevner eksplisitt 'Poissonprosess' eller 'rate `λ` pr. [tidsenhet]'"
-  - "Du teller hendelser i et fast tidsvindu eller område"
-  - "Hendelser inntreffer uavhengig og kontinuerlig over tid eller rom"
-  - "Spørsmålet ber om 'nøyaktig `k`', 'minst `k`', 'ingen', eller 'høyst `k`'"
-  - "Ikke fast antall forsøk: hendelser kommer som de kommer"
-  - "Total tid eller område er gitt (timer, uker, måneder, m², osv.)"
+  - "Oppgaven nevner eksplisitt 'Poissonprosess' eller gir rate `λ` per tidsenhet/areal"
+  - "Du skal telle hendelser i et fast tidsvindu eller område (telefoner per time, ulykker per måned, defekter per m²)"
+  - "Spørsmålet ber om 'nøyaktig `k`', 'minst `k`', 'ingen', eller 'høyst `k`' hendelser"
+  - "Det er IKKE et fast antall forsøk — hendelser kommer som de kommer"
+  - "Spørsmål av typen 'hvor mange timer/m² må vi observere for at `P(X ≥ k) > ...`' (terskel på vindusstørrelse)"
 
 when_NOT_to_use:
   - "Fast antall `n` forsøk er gitt → bruk [binomialfordeling](/entry/binomial-fordeling) i stedet"
@@ -31,12 +30,15 @@ when_NOT_to_use:
   - "Trekker uten tilbakelegging fra endelig pott → bruk [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling)"
 
 symbols:
+  - { sym: "X",  means: "antall hendelser i vinduet, `X ~ Poisson(λt)`" }
   - { sym: "λ",  means: "rate (gjennomsnittlig antall hendelser pr. tidsenhet eller pr. arealenhet)" }
   - { sym: "t",  means: "lengden på vinduet (samme enhet som raten)" }
   - { sym: "λt", means: "forventet antall hendelser i vinduet (skrives ofte som `μ`)" }
+  - { sym: "μ",  means: "forventet antall hendelser i vinduet, `μ = λt`" }
   - { sym: "k",  means: "antallet det spørres om (heltall `≥ 0`)" }
   - { sym: "e",  means: "Eulers tall `≈ 2.71828`" }
   - { sym: "k!", means: "`k`-fakultet, `k · (k-1) · (k-2) · ... · 1`" }
+  - { sym: "σ",  means: "standardavviket, `σ = √(λt)`" }
 
 properties:
   expected_value: "E[X] = λt"
@@ -47,7 +49,7 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, expected_value, find_n_for_threshold]
   random_variable: [discrete_count]
   setup: [single_population, events_in_window]
-  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, counting_events, complement_pattern]
+  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, counting_events, complement_pattern, no_occurrences, at_least_one, probability_threshold]
   parameters_known: [rate_lambda]
   distribution_assumption: [poisson]
   tooling: [cumulative_poisson_table_E2, calculator_exp, calculator_factorial]
@@ -63,7 +65,7 @@ solution_variants:
       - text: "Eksempel: kundeanrop `λ = 3` per time, `t = 1` time (`μ = 3`), `k = 4`:"
         formula: "P(X = 4) = e^(−3)·3⁴ / 24 ≈ 0.168"
         example: true
-      - text: "Hvis `k = 0`: forenkle (fordi `μ⁰ = 1` og `0! = 1`) — ikke gå via E.2:"
+      - text: "Hvis `k = 0`: forenkle (fordi `μ⁰ = 1` og `0! = 1`) — ikke gå via tabell E.2:"
         formula: "P(X = 0) = e^(-μ)"
         conditional: true
       - { text: "Hvis spørsmålet ber om en sum (f.eks. 'ett eller to'): regn `P(X = 1) + P(X = 2)` separat og legg sammen", conditional: true }
@@ -263,7 +265,7 @@ detailed_solution_variants:
           - label: "Identifisering"
             lines:
               - { text: "`μ = 1.5`, `k = 2`" }
-              - { text: "Bruk komplement fordi `P(X ≥ k)` ikke står direkte i E.2" }
+              - { text: "Bruk komplement fordi `P(X ≥ k)` ikke står direkte i tabell E.2" }
           - label: "Formel"
             lines:
               - { text: "`P(X ≥ 2) = 1 − P(X ≤ 1)`" }
@@ -427,6 +429,8 @@ related:
   - { id: "komplementregelen",    kind: "entry" }
   - { id: "ki-poissonrate",       kind: "entry" }
   - { id: "poissonvarians",       kind: "glossary" }
+  - { id: "lambda",               kind: "glossary" }
+  - { id: "normalapproksimasjon", kind: "glossary" }
   - { id: "E2-poisson-kumulativ", kind: "table" }
 
 tools:

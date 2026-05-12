@@ -31,12 +31,13 @@ symbols:
   - { sym: "P(B)",       means: "sannsynlighet for hendelse `B`" }
   - { sym: "P(A ∩ B)",   means: "sannsynlighet for at begge inntreffer" }
   - { sym: "P(A ∪ B)",   means: "sannsynlighet for at minst én inntreffer" }
+  - { sym: "Ā, B̄",      means: "komplementene til `A` og `B`" }
 
 filters:
   computes: [exact_probability, union_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [disjoint_events, independent_events, complement_pattern]
+  structural_cues: [disjoint_events, independent_events, complement_pattern, at_least_one, no_occurrences]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
@@ -88,8 +89,20 @@ solution_variants:
       - { text: "Sjekk: `P(bare A) + P(bare B) + P(begge) + P(ingen) = 1` — venn-diagrammets fire områder summerer alltid til 1", conditional: true }
 
 common_traps: |
-  Glem ikke å trekke fra `P(A ∩ B)`. For tre hendelser: `P(A ∪ B ∪ C) =
-  P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C)`.
+  - **Glem ikke å trekke fra `P(A ∩ B)`** — å bare addere `P(A) + P(B)`
+    dobbelttreller overlappet. Dette er DEN klassiske feilen.
+  - **Disjunkt ≠ uavhengig**: hvis `A` og `B` er disjunkte, er `P(A ∩ B) = 0`
+    og `P(A ∪ B) = P(A) + P(B)`. Hvis de er UAVHENGIGE er `P(A ∩ B) = P(A)·P(B)`,
+    typisk `> 0`. Sjekk hvilken antagelse oppgaven gir.
+  - **Tre hendelser, inklusjon-eksklusjon**:
+    `P(A ∪ B ∪ C) = P(A) + P(B) + P(C) − P(A ∩ B) − P(A ∩ C) − P(B ∩ C) + P(A ∩ B ∩ C)`.
+    Pass på fortegnene — par-snitt trekkes fra, trippel-snitt legges til.
+  - **"Eller" på norsk er inklusivt**: `A ∪ B` inkluderer at BEGGE inntreffer.
+    "Enten `A` eller `B`, men ikke begge" (eksklusiv eller) er
+    `P(A) + P(B) − 2·P(A ∩ B)` — sjelden, men forekommer.
+  - **Komplement-vei**: for "minst én av flere" er det ofte raskere å regne
+    `1 − P(ingen)` enn å bruke unionsformelen for mange hendelser, særlig
+    ved uavhengighet: `P(ingen) = ∏(1 − P(A_i))`.
 
 detailed_solution_variants:
   - label: "P(A ∪ B) — minst én"
@@ -276,6 +289,7 @@ related:
   - { id: "produktregel",       kind: "entry" }
   - { id: "disjunkte-hendelser-glos", kind: "glossary" }
   - { id: "de-morgans-lov",     kind: "glossary" }
+  - { id: "hendelse",           kind: "glossary" }
 
 tools:
   - "Kalkulator: addisjon"

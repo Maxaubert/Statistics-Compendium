@@ -1,8 +1,8 @@
 id: marginalfordeling
-name_no: "Marginalfordeling fra simultanfordeling"
+name_no: "Simultanfordeling: marginal, E/Var og ρ"
 type: identity
 category: distribution_property
-tagline: "P(X = x) = Σ_y P(X = x, Y = y) – summer raden eller kolonnen i simultanfordelingen."
+tagline: "Fra simultanfordelingen: finn marginalene, `E[X]`, `Var(X)`, `σ` og korrelasjonen `ρ(X, Y)`."
 
 formula_main: "P(X = x) = Σ_y P(X = x, Y = y);  P(Y = y) = Σ_x P(X = x, Y = y)"
 formula_latex: "P(X = x) = \\sum_y P(X = x, Y = y), \\quad P(Y = y) = \\sum_x P(X = x, Y = y)"
@@ -18,13 +18,17 @@ why_use: |
   og kovariansen.
 
 recognition_cues:
-  - "Du har en simultanfordeling i tabellform"
-  - "Spørsmålet ber om P(X = x) eller P(Y = y) for individuelle verdier"
-  - "Du trenger marginalsannsynligheter som mellomberegning til E, σ, Cov"
+  - "Du har en simultantabell `P(X = x, Y = y)` og spørsmålet handler om én av variablene alene"
+  - "Spørsmålet ber om `P(X = x)` eller `P(Y = y)` for individuelle verdier"
+  - "Du trenger marginalsannsynligheter som mellomberegning til `E[X]`, `Var(X)` eller `σ`"
+  - "Spørsmålet ber om `E[X]`, `Var(X)` eller `σ_X` direkte ut fra simultantabellen"
+  - "Spørsmålet ber om korrelasjonen `ρ(X, Y)` fra simultantabellen (krever marginalene først)"
 
 when_NOT_to_use:
   - "(X, Y) er kontinuerlige → marginal `f_X(x) = ∫ f(x, y) dy` (integrér ut den andre)"
   - "Du har bare delsummer, ikke hele simultantabellen → ikke nok informasjon til å regne ut marginalene"
+  - "Du har bare `E[X]`, `E[Y]`, `Var(X)`, `Var(Y)`, `Cov` (ingen tabell) → bruk [korrelasjon ρ(X,Y)](/entry/korrelasjon-joint) direkte"
+  - "Du har rådata-par `(x_i, y_i)` i stedet for sannsynlighetsfordeling → bruk [Pearsons r](/entry/regresjon-korrelasjonskoeffisient)"
 
 common_traps: |
   Marginalsummene MÅ summere til 1. Hvis ikke, har du sannsynligvis
@@ -38,17 +42,93 @@ symbols:
   - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
 
 filters:
-  computes: [marginal_probability, exact_probability, test_independence]
+  computes: [marginal_probability, exact_probability, expected_value, variance, std_dev, covariance, correlation, test_independence]
   random_variable: [discrete_count]
   setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given]
-  parameters_known: []
+  structural_cues: [joint_table_present, summary_stats_given, linear_relationship_suspected, independent_events]
+  parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
-  tooling: [calculator_only]
-solution_template:
-  - "For P(X=x): summer langs raden i simultantabellen"
-  - "For P(Y=y): summer langs kolonnen"
-  - "Sjekk at marginalsummene tilsammen blir 1"
+  tooling: [calculator_only, calculator_sqrt]
+solution_variants:
+  - label: "Marginalfordeling fra simultantabell"
+    steps:
+      - "For `P(X=x)`: summer langs raden i simultantabellen"
+      - "For `P(Y=y)`: summer langs kolonnen"
+      - "Sjekk at marginalsummene tilsammen blir 1"
+      - text: "Eksempel — finn marginalene fra denne simultantabellen:"
+        table:
+          headers: ["", "Y = 0", "Y = 1", "Y = 2"]
+          rows:
+            - ["X = 0", "0.10", "0.20", "0.10"]
+            - ["X = 1", "0.40", "0.10", "0.10"]
+        formula:
+          - "P(X=0) = 0.10 + 0.20 + 0.10 = 0.40"
+          - "P(X=1) = 0.40 + 0.10 + 0.10 = 0.60"
+          - "P(Y=0) = 0.50,  P(Y=1) = 0.30,  P(Y=2) = 0.20"
+        example: true
+
+  - label: "Forventning, varians og σ fra marginal"
+    steps:
+      - "Når marginalfordelingen er funnet, kan du regne `E`, `Var` og `σ` for hver variabel separat — samme oppskrift som [forventningsverdi (diskret)](/entry/forventningsverdi-diskret) og [varians/standardavvik (diskret)](/entry/varians-standardavvik-diskret)."
+      - { text: "Pass på: `Var(X)` og `σ_X` her er spredningen i `X` ALENE (beregnet fra marginalfordelingen). De er ikke det samme som [kovarians `Cov(X, Y)`](/entry/kovarians), som måler hvordan `X` og `Y` varierer SAMMEN. For Cov og korrelasjon trenger du den fulle simultantabellen.", conditional: true }
+      - text: "Forventningsverdi:"
+        formula: "E[X] = Σ_x x · P(X = x)"
+      - text: "For varians, bruk regnesnarveien — beregn først `E[X²]`:"
+        formula: "E[X²] = Σ_x x² · P(X = x)"
+      - text: "Varians:"
+        formula: "Var(X) = E[X²] − μ_X²"
+      - text: "Standardavvik:"
+        formula: "σ_X = √Var(X)"
+      - text: "Eksempel — `X ∈ {0, 1, 2}` med `P(X) = (0.4, 0.3, 0.3)`:"
+        formula:
+          - "μ_X = 0·0.4 + 1·0.3 + 2·0.3 = 0.9"
+          - "E[X²] = 0²·0.4 + 1²·0.3 + 2²·0.3 = 1.5"
+          - "Var(X) = 1.5 − 0.9² = 1.5 − 0.81 = 0.69"
+          - "σ_X = √0.69 ≈ 0.831"
+        example: true
+      - text: "Eksempel — `Y ∈ {0, 5, 10}` med `P(Y) = (0.5, 0.1, 0.4)`:"
+        formula:
+          - "μ_Y = 0·0.5 + 5·0.1 + 10·0.4 = 4.5"
+          - "E[Y²] = 0²·0.5 + 5²·0.1 + 10²·0.4 = 42.5"
+          - "Var(Y) = 42.5 − 4.5² = 42.5 − 20.25 = 22.25"
+          - "σ_Y = √22.25 ≈ 4.717"
+        example: true
+      - { text: "For å regne kovarians eller korrelasjon mellom `X` og `Y` trenger du den fulle simultantabellen, ikke bare marginalene — se [kovarians](/entry/kovarians) og [korrelasjon (joint)](/entry/korrelasjon-joint).", conditional: true }
+
+  - label: "Korrelasjon ρ(X, Y) fra simultantabell"
+    steps:
+      - "Krever den FULLE simultantabellen — ikke bare marginalene. Vi bygger korrelasjonen ved å kombinere det vi har fra forrige fane (`σ_X`, `σ_Y`) med kovariansen `Cov(X, Y)`."
+      - "Hent `μ_X`, `μ_Y`, `σ_X`, `σ_Y` fra marginalene (se forrige fane)."
+      - text: "Beregn `E[XY]` ved å gå over alle celler i simultantabellen:"
+        formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
+      - { text: "Pass på: bruk JOINT-sannsynligheten `P(X = x_i, Y = y_j)` for hver celle — IKKE produktet `P(X = x_i) · P(Y = y_j)` (det ville antatt uavhengighet). Celler med `x_i = 0` eller `y_j = 0` bidrar med null.", conditional: true }
+      - text: "Kovariansen:"
+        formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
+      - text: "Korrelasjonen — normalisert kovarians, alltid i `[−1, 1]`:"
+        formula: "ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)"
+      - { text: "`ρ` er populasjonsversjonen av **Pearsons r** (`r` fra rådata-par, `ρ` fra simultanfordelingen). Tolkning: `ρ = ±1` perfekt lineær, `ρ = 0` ingen lineær sammenheng (kan likevel ha ikke-lineær).", conditional: true }
+      - text: "Eksempel — simultantabellen under, med kjente marginaler `μ_X = 0.60, μ_Y = 0.70, σ_X ≈ 0.49, σ_Y ≈ 0.78`. Bare cellene `(1,1)` og `(1,2)` bidrar til `E[XY]`:"
+        table:
+          headers: ["", "Y = 0", "Y = 1", "Y = 2"]
+          rows:
+            - ["X = 0", "0.10", "0.20", "0.10"]
+            - ["X = 1", "0.40", "0.10", "0.10"]
+        formula:
+          - "E[XY] = 1·1·0.10 + 1·2·0.10 = 0.30"
+          - "Cov(X, Y) = 0.30 − 0.60·0.70 = −0.12"
+          - "ρ(X, Y) = −0.12 / (0.49 · 0.78) ≈ −0.314"
+        example: true
+      - text: "Eksempel — 2×2-tabell med kjente marginaler `μ_X = 0.5, μ_Y = 0.4, σ_X = 0.5, σ_Y ≈ 0.490`. Bare `(1,1)` bidrar:"
+        table:
+          headers: ["", "Y = 0", "Y = 1"]
+          rows:
+            - ["X = 0", "0.4", "0.1"]
+            - ["X = 1", "0.2", "0.3"]
+        formula:
+          - "E[XY] = 1·1·0.3 = 0.30"
+          - "Cov(X, Y) = 0.30 − 0.5·0.4 = 0.10"
+          - "ρ(X, Y) = 0.10 / (0.5 · 0.490) ≈ 0.408"
+        example: true
 
 detailed_solution_variants:
   - label: "Marginalfordeling fra simultantabell"
@@ -92,13 +172,19 @@ detailed_solution_variants:
       - source: "Praksiseksempel · 3×2-tabell"
         question: "Gitt simultanfordelingen `P(X = x, Y = y)` for `X ∈ {1, 2, 3}` og `Y ∈ {0, 1}`. Finn marginalfordelingene."
         sections:
-          - label: "Identifisering"
+          - label: "Steg"
             lines:
-              - { text: "Simultantabellen er:" }
-              - { text: "`         Y=0    Y=1  `" }
-              - { text: "`X=1      0.10   0.20 `" }
-              - { text: "`X=2      0.15   0.25 `" }
-              - { text: "`X=3      0.05   0.25 `" }
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal" }
+          - label: "Simultantabellen"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1"]
+                  rows:
+                    - ["X = 1", "0.10", "0.20"]
+                    - ["X = 2", "0.15", "0.25"]
+                    - ["X = 3", "0.05", "0.25"]
               - { text: "For marginal av `X` summerer vi langs hver rad; for marginal av `Y` langs hver kolonne." }
           - label: "Marginal av X"
             lines:
@@ -119,19 +205,32 @@ detailed_solution_variants:
       - source: "Praksiseksempel · forventningsverdier fra marginalene"
         question: "Bruk marginalfordelingene fra forrige oppgave (`X ∈ {1, 2, 3}`, `Y ∈ {0, 1}`) til å regne ut `E[X]` og `E[Y]`."
         sections:
-          - label: "Identifisering"
+          - label: "Steg"
             lines:
-              - { text: "Fra forrige eksempel har vi marginalfordelingene:" }
-              - { text: "`P(X = 1) = 0.30`, `P(X = 2) = 0.40`, `P(X = 3) = 0.30`." }
-              - { text: "`P(Y = 0) = 0.30`, `P(Y = 1) = 0.70`." }
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · E[X], E[Y]" }
+          - label: "Marginalfordelingene fra forrige oppgave"
+            lines:
+              - { text: "Marginal for `X`:" }
+              - table:
+                  headers: ["x", "1", "2", "3"]
+                  rows:
+                    - ["P(X = x)", "0.30", "0.40", "0.30"]
+              - { text: "Marginal for `Y`:" }
+              - table:
+                  headers: ["y", "0", "1"]
+                  rows:
+                    - ["P(Y = y)", "0.30", "0.70"]
               - { text: "Forventningsverdi for diskret variabel: `E[X] = Σ_x x · P(X = x)`." }
-          - label: "Marginal av X"
+          - label: "E[X]"
             lines:
               - { text: "Innsetting i `E[X] = Σ_x x · P(X = x)`:" }
               - { text: "`E[X] = 1 · 0.30 + 2 · 0.40 + 3 · 0.30`" }
               - { text: "`     = 0.30 + 0.80 + 0.90`" }
               - { text: "`     = 2.00`" }
-          - label: "Marginal av Y"
+          - label: "E[Y]"
             lines:
               - { text: "Innsetting i `E[Y] = Σ_y y · P(Y = y)`:" }
               - { text: "`E[Y] = 0 · 0.30 + 1 · 0.70`" }
@@ -144,11 +243,225 @@ detailed_solution_variants:
               - { text: "`E[Y] = 0.70` ligger i `[0, 1]` ✓." }
         result: "E[X] = 2.00, E[Y] = 0.70"
 
+  - label: "Forventning, varians og σ fra marginal"
+    solutions:
+      - source: "Praksis · X ∈ {0,1,2}, Y ∈ {0,5,10}"
+        question: "Marginalfordelingene er gitt: `P(X=0)=0.4, P(X=1)=0.3, P(X=2)=0.3`; `P(Y=0)=0.5, P(Y=5)=0.1, P(Y=10)=0.4`. Finn forventningsverdier og standardavvik."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ" }
+          - label: "Marginalfordelingene"
+            lines:
+              - { text: "Marginal for `X`:" }
+              - table:
+                  headers: ["x", "0", "1", "2"]
+                  rows:
+                    - ["P(X = x)", "0.4", "0.3", "0.3"]
+              - { text: "Marginal for `Y`:" }
+              - table:
+                  headers: ["y", "0", "5", "10"]
+                  rows:
+                    - ["P(Y = y)", "0.5", "0.1", "0.4"]
+          - label: "Forventningsverdier"
+            lines:
+              - { text: "`μ_X = 0·0.4 + 1·0.3 + 2·0.3 = 0.9`" }
+              - { text: "`μ_Y = 0·0.5 + 5·0.1 + 10·0.4 = 4.5`" }
+          - label: "E[X²] og E[Y²]"
+            lines:
+              - { text: "`E[X²] = 0²·0.4 + 1²·0.3 + 2²·0.3 = 1.5`" }
+              - { text: "`E[Y²] = 0²·0.5 + 5²·0.1 + 10²·0.4 = 42.5`" }
+          - label: "Varians og standardavvik"
+            lines:
+              - { text: "`Var(X) = 1.5 − 0.9² = 0.69` ⇒ `σ_X = √0.69 ≈ 0.831`" }
+              - { text: "`Var(Y) = 42.5 − 4.5² = 22.25` ⇒ `σ_Y = √22.25 ≈ 4.717`" }
+        result: "`μ_X = 0.9, σ_X ≈ 0.831`; `μ_Y = 4.5, σ_Y ≈ 4.717`"
+
+      - source: "Eksamen mai25 · oppgave 1b"
+        question: "Fra marginalfordelingene `P(X=0)=0.40, P(X=1)=0.60` og `P(Y=0)=0.50, P(Y=1)=0.30, P(Y=2)=0.20`, finn `μ_X, μ_Y, σ_X, σ_Y`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ" }
+          - label: "Marginalfordelingene"
+            lines:
+              - { text: "Marginal for `X`:" }
+              - table:
+                  headers: ["x", "0", "1"]
+                  rows:
+                    - ["P(X = x)", "0.40", "0.60"]
+              - { text: "Marginal for `Y`:" }
+              - table:
+                  headers: ["y", "0", "1", "2"]
+                  rows:
+                    - ["P(Y = y)", "0.50", "0.30", "0.20"]
+          - label: "Forventningsverdier"
+            lines:
+              - { text: "`μ_X = 0·0.40 + 1·0.60 = 0.60`" }
+              - { text: "`μ_Y = 0·0.50 + 1·0.30 + 2·0.20 = 0.70`" }
+          - label: "E[X²] og E[Y²]"
+            lines:
+              - { text: "`E[X²] = 0²·0.40 + 1²·0.60 = 0.60`" }
+              - { text: "`E[Y²] = 0²·0.50 + 1²·0.30 + 2²·0.20 = 1.10`" }
+          - label: "Varians og standardavvik"
+            lines:
+              - { text: "`Var(X) = 0.60 − 0.60² = 0.24` ⇒ `σ_X = √0.24 ≈ 0.490`" }
+              - { text: "`Var(Y) = 1.10 − 0.70² = 0.61` ⇒ `σ_Y = √0.61 ≈ 0.781`" }
+        result: "`σ_X ≈ 0.490, σ_Y ≈ 0.781`"
+
+      - source: "Praksis · 3×2-marginal"
+        question: "Med marginal `P(X=1)=0.30, P(X=2)=0.40, P(X=3)=0.30` og `P(Y=0)=0.30, P(Y=1)=0.70`, finn `σ_X` og `σ_Y`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ" }
+          - label: "Marginalfordelingene"
+            lines:
+              - { text: "Marginal for `X`:" }
+              - table:
+                  headers: ["x", "1", "2", "3"]
+                  rows:
+                    - ["P(X = x)", "0.30", "0.40", "0.30"]
+              - { text: "Marginal for `Y`:" }
+              - table:
+                  headers: ["y", "0", "1"]
+                  rows:
+                    - ["P(Y = y)", "0.30", "0.70"]
+          - label: "Forventningsverdier"
+            lines:
+              - { text: "`μ_X = 1·0.30 + 2·0.40 + 3·0.30 = 2.00`" }
+              - { text: "`μ_Y = 0·0.30 + 1·0.70 = 0.70`" }
+          - label: "E[X²] og E[Y²]"
+            lines:
+              - { text: "`E[X²] = 1²·0.30 + 2²·0.40 + 3²·0.30 = 0.30 + 1.60 + 2.70 = 4.60`" }
+              - { text: "`E[Y²] = 0²·0.30 + 1²·0.70 = 0.70`" }
+          - label: "Varians og standardavvik"
+            lines:
+              - { text: "`Var(X) = 4.60 − 2.00² = 0.60` ⇒ `σ_X = √0.60 ≈ 0.775`" }
+              - { text: "`Var(Y) = 0.70 − 0.70² = 0.21` ⇒ `σ_Y = √0.21 ≈ 0.458`" }
+        result: "`σ_X ≈ 0.775, σ_Y ≈ 0.458`"
+
+  - label: "Korrelasjon ρ(X, Y) fra simultantabell"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 1d"
+        question: "Med samme simultantabell som tidligere (`X ∈ {0,1}, Y ∈ {0,1,2}`, celler `0.10, 0.20, 0.10, 0.40, 0.10, 0.10`) og kjente `μ_X = 0.60, μ_Y = 0.70, σ_X ≈ 0.490, σ_Y ≈ 0.781`, finn `ρ(X, Y)`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ", done: true }
+                    - { label: "3 · E[XY]" }
+                    - { label: "4 · Cov" }
+                    - { label: "5 · ρ" }
+          - label: "Simultantabellen"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2"]
+                  rows:
+                    - ["X = 0", "0.10", "0.20", "0.10"]
+                    - ["X = 1", "0.40", "0.10", "0.10"]
+          - label: "E[XY]"
+            lines:
+              - { text: "Bare celler med `x·y > 0` bidrar:" }
+              - { indent: "`(1, 1): 1·1·0.10 = 0.10`" }
+              - { indent: "`(1, 2): 1·2·0.10 = 0.20`" }
+              - { indent: "`E[XY] = 0.10 + 0.20 = 0.30`" }
+          - label: "Kovarians"
+            lines:
+              - { text: "`Cov(X, Y) = E[XY] − μ_X · μ_Y = 0.30 − 0.60·0.70 = −0.12`" }
+          - label: "Korrelasjon"
+            lines:
+              - { text: "`ρ(X, Y) = Cov / (σ_X · σ_Y) = −0.12 / (0.490 · 0.781) ≈ −0.314`" }
+              - { comment: "Negativ ρ → høy X opptrer typisk sammen med lav Y." }
+        result: "`ρ(X, Y) ≈ −0.314`"
+
+      - source: "Praksis · 2×2-simultantabell"
+        question: "La `X, Y ∈ {0, 1}` med `P(0,0)=0.4, P(0,1)=0.1, P(1,0)=0.2, P(1,1)=0.3`. Marginalt: `μ_X = 0.5, μ_Y = 0.4, σ_X = 0.5, σ_Y ≈ 0.490`. Finn `ρ(X, Y)`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ", done: true }
+                    - { label: "3 · E[XY]" }
+                    - { label: "4 · Cov" }
+                    - { label: "5 · ρ" }
+          - label: "Simultantabellen"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1"]
+                  rows:
+                    - ["X = 0", "0.4", "0.1"]
+                    - ["X = 1", "0.2", "0.3"]
+          - label: "E[XY]"
+            lines:
+              - { text: "Eneste celle med `x·y > 0`:" }
+              - { indent: "`(1, 1): 1·1·0.3 = 0.30`" }
+              - { indent: "`E[XY] = 0.30`" }
+          - label: "Kovarians"
+            lines:
+              - { text: "`Cov(X, Y) = 0.30 − 0.5 · 0.4 = 0.10`" }
+          - label: "Korrelasjon"
+            lines:
+              - { text: "`ρ(X, Y) = 0.10 / (0.5 · 0.490) ≈ 0.408`" }
+              - { comment: "Moderat positiv lineær sammenheng." }
+        result: "`ρ(X, Y) ≈ 0.408`"
+
+      - source: "Praksis · uavhengighet (ρ = 0)"
+        question: "La `X, Y ∈ {0, 1}` med `P(0,0)=0.25, P(0,1)=0.25, P(1,0)=0.25, P(1,1)=0.25` (uniform). Vis at `ρ(X, Y) = 0`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal", done: true }
+                    - { label: "2 · μ, σ", done: true }
+                    - { label: "3 · E[XY]" }
+                    - { label: "4 · Cov" }
+                    - { label: "5 · ρ" }
+          - label: "Simultantabellen"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1"]
+                  rows:
+                    - ["X = 0", "0.25", "0.25"]
+                    - ["X = 1", "0.25", "0.25"]
+          - label: "Marginaler og σ"
+            lines:
+              - { text: "`P(X=0) = 0.50, P(X=1) = 0.50`, samme for Y. Begge er Bernoulli(0.5)." }
+              - { text: "`μ_X = μ_Y = 0.5`,  `Var = 0.5·0.5 = 0.25`,  `σ_X = σ_Y = 0.5`." }
+          - label: "E[XY]"
+            lines:
+              - { text: "`E[XY] = 1·1·0.25 = 0.25` (bare cellen (1,1) bidrar)." }
+          - label: "Kovarians"
+            lines:
+              - { text: "`Cov(X, Y) = 0.25 − 0.5·0.5 = 0`." }
+          - label: "Korrelasjon"
+            lines:
+              - { text: "`ρ(X, Y) = 0 / (0.5 · 0.5) = 0`." }
+              - { comment: "Cellen P(x,y) = P(x)·P(y) = 0.25 for alle (x,y) ⇒ X og Y er uavhengige. Uavhengighet medfører ρ = 0." }
+        result: "`ρ(X, Y) = 0` (uavhengig)"
+
 related:
   - { id: "forventningsverdi-diskret",    kind: "entry" }
   - { id: "varians-standardavvik-diskret", kind: "entry" }
   - { id: "kovarians",                    kind: "entry" }
   - { id: "simultanfordeling",            kind: "glossary" }
+  - { id: "marginalfordeling-term",       kind: "glossary" }
+  - { id: "korrelasjon-joint",            kind: "entry" }
+  - { id: "uavhengighet-glos",            kind: "glossary" }
 
 tools:
   - "Kalkulator: addisjon"

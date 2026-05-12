@@ -17,8 +17,10 @@ why_use: |
   og vanskelig å tolke; korrelasjonen er normalisert.
 
 recognition_cues:
-  - "Du har en simultanfordeling og spørsmålet ber om korrelasjon"
-  - "Du har allerede beregnet Cov(X,Y), σ_X, σ_Y"
+  - "Du har en simultanfordeling og spørsmålet ber om korrelasjonen `ρ(X, Y)`"
+  - "Du har allerede beregnet `Cov(X, Y)`, `σ_X`, `σ_Y` og må sette sammen til `ρ`"
+  - "Spørsmålet sier 'avgjør om `X` og `Y` er ukorrelerte' eller 'finn graden av lineær sammenheng'"
+  - "Mellomsteg når oppgaven ber om `Var(X + Y)` eller `Var(aX + bY)` og du trenger ρ"
 
 when_NOT_to_use:
   - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk [Pearsons korrelasjon r](/entry/regresjon-korrelasjonskoeffisient) fra utvalget i stedet"
@@ -47,9 +49,19 @@ solution_template:
     example: true
 
 common_traps: |
-  ρ er for FELLESFORDELING (teoretisk modell). For utvalg av (x,y)-par
-  i regresjon er det utvalgs-korrelasjonskoeffisient r som brukes – disse
-  er konseptuelt forskjellige selv om formelen ligner.
+  - **`ρ` vs. `r`**: `ρ` gjelder en FELLESFORDELING (teoretisk modell, vekter
+    med `P(X = x, Y = y)`). `r` er utvalgs-korrelasjonskoeffisient fra rådata
+    `(x_i, y_i)`. Formelen ligner, men kildedataene er forskjellige — bruk
+    [Pearsons `r`](/entry/regresjon-korrelasjonskoeffisient) for utvalg.
+  - **`−1 ≤ ρ ≤ 1`**: får du `ρ = 1.4` eller `−2.3`, er det regnefeil. Vanligste
+    årsak: brukt `Var` i stedet for `σ` i nevneren (glemt kvadratrot), eller
+    blandet `σ²_X · σ²_Y` med `σ_X · σ_Y`.
+  - **Nevner er PRODUKTET, ikke summen**: `σ_X · σ_Y`, ikke `σ_X + σ_Y`.
+  - **`ρ = 0` betyr ikke uavhengighet**: bare at det ikke er LINEÆR sammenheng.
+    Kvadratiske eller andre ikke-lineære avhengigheter kan gi `ρ ≈ 0` selv om
+    `X` og `Y` er sterkt avhengige.
+  - **Fortegnet kommer fra `Cov`**: `σ_X, σ_Y > 0` alltid, så fortegnet til
+    `ρ` er det samme som fortegnet til `Cov(X, Y)`.
 
 detailed_solution_variants:
   - label: "Korrelasjon ρ fra simultantabell"
@@ -171,6 +183,9 @@ related:
   - { id: "varians-standardavvik-diskret",   kind: "entry" }
   - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }
   - { id: "simultanfordeling",               kind: "glossary" }
+  - { id: "korrelasjon-glos",                kind: "glossary" }
+  - { id: "kovarians-glos",                  kind: "glossary" }
+  - { id: "marginalfordeling",               kind: "entry" }
 
 tools:
   - "Kalkulator: divisjon"

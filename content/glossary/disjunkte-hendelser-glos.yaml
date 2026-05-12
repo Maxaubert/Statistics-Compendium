@@ -43,6 +43,13 @@ long_def: |
   Disjunkthet gir `A ⊆ B̄`, slik at
 
       P(A | B̄) = P(A) / (1 − P(B))
+aliases:
+  - disjunkt
+  - disjunkte
+  - disjunkthet
+  - disjunktheten
+  - disjunkte hendelser
+  - gjensidig utelukkende
 see_also:
   - { id: hendelse, kind: glossary }
   - { id: unionssetningen, kind: entry }

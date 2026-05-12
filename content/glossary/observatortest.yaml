@@ -6,7 +6,7 @@ filters:
   distribution_assumption: [normal, t_distribution, chi_squared]
   random_variable: [mean_of_samples]
   setup: [single_population]
-  structural_cues: [more_than_two_categories]
+  structural_cues: [more_than_two_categories, one_sided_alternative, two_sided_alternative]
   parameters_known: [sample_size_small_lt30, population_variance_unknown, population_variance_known]
 long_def: |
   Testobservatoren standardiserer dataene under `H₀` slik at du kan slå opp

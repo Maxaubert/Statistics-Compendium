@@ -35,14 +35,18 @@ when_NOT_to_use:
   - "Du vil bare beregne `P(Aᶜ)` fra `P(A)` → bruk [komplementregelen](/entry/komplementregelen)"
 
 symbols:
-  - { sym: "P(A | B)",  means: "betinget sannsynlighet for `A` gitt `B`" }
-  - { sym: "P(B | A)",  means: "betinget sannsynlighet for `B` gitt `A`" }
+  - { sym: "P(A | B)",  means: "betinget sannsynlighet for `A` gitt `B` (posterior — det vi søker)" }
+  - { sym: "P(B | A)",  means: "betinget sannsynlighet for `B` gitt `A` (likelihood — det oppgaven gir)" }
+  - { sym: "P(A)",      means: "marginal sannsynlighet for `A` (prior)" }
+  - { sym: "P(B)",      means: "marginal sannsynlighet for `B` (normaliseringsledd, ofte regnet via total sannsynlighet)" }
+  - { sym: "Aᶜ",        means: "komplementet av `A` (alt som ikke er `A`)" }
+  - { sym: "P(A ∩ B)",  means: "fellessannsynligheten for at både `A` og `B` inntreffer" }
 
 filters:
   computes: [conditional_probability, exact_probability, marginal_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories, independent_events]
+  structural_cues: [conditional_given, more_than_two_categories, independent_events, conditioning_on_complement]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
@@ -375,6 +379,7 @@ related:
   - { id: "total-sannsynlighet",  kind: "entry" }
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
   - { id: "disjunkte-hendelser-glos", kind: "glossary" }
+  - { id: "partisjon",            kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, divisjon"

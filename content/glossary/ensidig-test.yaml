@@ -7,6 +7,7 @@ filters:
   random_variable: [proportion]
   distribution_assumption: [normal, t_distribution]
   tooling: [t_quantile_table_E5, normal_quantile_table_E4]
+  structural_cues: [one_sided_alternative]
 long_def: |
   En ensidig test forkaster bare hvis observatoren ligger langt nok ut i
   én hale. Hele `α` legges i den ene halen — halverer ikke `α` slik
@@ -21,6 +22,15 @@ long_def: |
       p = P(observator ≤ observert | H₀)
 
   Bruk når oppgaven sier «større enn», «mindre enn», «minst», eller «høyst».
+aliases:
+  - ensidig test
+  - ensidige tester
+  - én-sidig test
+  - en-sidig test
+  - ensidig
+  - én-sidig
+  - høyresidig
+  - venstresidig
 see_also:
   - { id: tosidig-test, kind: glossary }
   - { id: alternativhypotese, kind: glossary }

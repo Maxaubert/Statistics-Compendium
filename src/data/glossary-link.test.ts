@@ -7,7 +7,7 @@ import {
 import type { GlossaryTerm } from "./schema";
 
 function term(id: string, term_no: string, aliases?: string[]): GlossaryTerm {
-  return { id, term_no, short_def: "x", aliases };
+  return { id, filters: {}, term_no, short_def: "x", aliases };
 }
 
 describe("buildAliasIndex", () => {

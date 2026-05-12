@@ -5,6 +5,7 @@ filters:
   computes: [hypothesis_test, find_n_for_threshold]
   parameters_known: [alpha_significance]
   distribution_assumption: [normal]
+  structural_cues: [probability_threshold]
 long_def: |
   Sannsynligheten for type-II-feil kalles `β`. **Teststyrke** = `1 − β`
   er sjansen for å oppdage en effekt som finnes.

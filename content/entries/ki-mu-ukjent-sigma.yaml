@@ -17,9 +17,10 @@ why_use: |
   for små `n`, og tar dermed hensyn til usikkerheten i estimatet av `σ`.
 
 recognition_cues:
-  - "Spørsmålet ber om et konfidensintervall for `μ`"
-  - "`σ` er IKKE oppgitt; kun `s` eller `s²` fra utvalg er tilgjengelig"
-  - "Konfidensnivå er gitt"
+  - "Oppgaven ber om '95 % konfidensintervall for `μ`' og standardavviket er estimert fra dataene"
+  - "Du har rådata `x_1, ..., x_n` eller utvalgs-`s` / `s²`, men ingen kjent `σ`"
+  - "Oppgaven nevner `t`-fordeling eller `n − 1` frihetsgrader"
+  - "Lite til moderat utvalg (`n < 30`) der normalapproksimasjon ikke er trygg"
 
 when_NOT_to_use:
   - "`σ` er kjent → bruk [z-basert KI](/entry/ki-mu-kjent-sigma) i stedet"
@@ -28,9 +29,11 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "x̄",          means: "utvalgsgjennomsnittet" }
+  - { sym: "μ",           means: "den ukjente forventningsverdien (det vi estimerer)" }
   - { sym: "s",           means: "utvalgs-standardavvik (estimat for `σ`)" }
   - { sym: "n",           means: "antall observasjoner" }
   - { sym: "ν",           means: "frihetsgrader, `ν = n − 1`" }
+  - { sym: "α",           means: "signifikansnivå; `1 − α` er konfidensnivået" }
   - { sym: "t_(α/2, n-1)", means: "kvantil i t-fordelingen" }
 
 filters:
@@ -124,6 +127,9 @@ related:
   - { id: "ki-mu-kjent-sigma",     kind: "entry" }
   - { id: "en-utvalg-t-test",      kind: "entry" }
   - { id: "frihetsgrader-glos",    kind: "glossary" }
+  - { id: "t-fordeling",           kind: "glossary" }
+  - { id: "konfidensintervall",    kind: "glossary" }
+  - { id: "utvalgsstandardavvik",  kind: "glossary" }
   - { id: "E5-t-tabell",           kind: "table" }
 
 tools:

@@ -22,6 +22,7 @@ dimensions:
       - { key: find_n_for_threshold,    label_no: "Finn n (terskel)" }
       - { key: find_mu_for_threshold,   label_no: "Finn μ (terskel)" }
       - { key: find_x_for_threshold,    label_no: "Finn x (invers / terskel)" }
+      - { key: variance,                label_no: "Varians (σ²)" }
 
   - key: random_variable
     label_no: "Tilfeldig variabel"
@@ -72,6 +73,14 @@ dimensions:
       - { key: time_until_first,            label_no: "Tid til første hendelse" }
       - { key: complement_pattern,          label_no: "«Minst én» / «ingen» / «ikke alle»" }
       - { key: total_observations_n,        label_no: "n er gitt" }
+      - { key: probability_threshold,       label_no: "«Sannsynligheten overstiger / under terskel»" }
+      - { key: at_least_one,                label_no: "«Minst én»" }
+      - { key: no_occurrences,              label_no: "«Ingen forekomster» / P(X = 0)" }
+      - { key: all_same_type,               label_no: "«Alle av samme type» / matchende" }
+      - { key: mixed_categories,            label_no: "Blanding av kategorier (k₁ + k₂)" }
+      - { key: conditioning_on_complement,  label_no: "Betinget på komplement (B̄)" }
+      - { key: two_sided_alternative,       label_no: "Tosidig alternativ (H₁: ≠)" }
+      - { key: one_sided_alternative,       label_no: "Ensidig alternativ (H₁: < eller >)" }
 
   - key: parameters_known
     label_no: "Parametre gitt"

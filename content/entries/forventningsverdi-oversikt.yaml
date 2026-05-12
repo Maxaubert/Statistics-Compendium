@@ -49,6 +49,10 @@ recognition_cues:
   - "Oppgaven gir simultanfordeling og spør om `E[X · Y]` eller `E[X + Y]`"
   - "Du har rådata og trenger gjennomsnittet `x̄`"
 
+when_NOT_to_use:
+  - "Du vet hvilken konkret form du trenger (PMF, rådata, simultantabell) → gå direkte til den spesifikke entryen"
+  - "Spørsmålet handler om spredning, ikke senter → bruk [varians (oversikt)](/entry/varians-oversikt) i stedet"
+
 filters:
   computes: [expected_value]
   random_variable: [discrete_count, continuous]
@@ -63,3 +67,6 @@ related:
   - { id: "kovarians",                  kind: "entry" }
   - { id: "varians-oversikt",           kind: "entry" }
   - { id: "simultanfordeling",          kind: "glossary" }
+  - { id: "forventningsverdi",          kind: "glossary" }
+  - { id: "gjennomsnitt",               kind: "glossary" }
+  - { id: "mu",                         kind: "glossary" }

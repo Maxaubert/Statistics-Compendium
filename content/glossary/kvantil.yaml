@@ -6,6 +6,7 @@ filters:
   computes: [confidence_interval, hypothesis_test, find_x_for_threshold]
   parameters_known: [alpha_significance, confidence_level, population_variance_unknown]
   distribution_assumption: [normal, t_distribution]
+  structural_cues: [probability_threshold]
 long_def: |
   `α`-kvantilen i øvre hale er definert ved:
 

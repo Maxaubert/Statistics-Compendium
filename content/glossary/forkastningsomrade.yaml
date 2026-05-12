@@ -6,6 +6,7 @@ filters:
   parameters_known: [alpha_significance]
   distribution_assumption: [normal, chi_squared, t_distribution]
   tooling: [t_quantile_table_E5, normal_quantile_table_E4, chi_square_quantile_table_E6]
+  structural_cues: [one_sided_alternative, two_sided_alternative]
 long_def: |
   Forkastningsområdet ligger i halene av fordelingen til testobservatoren
   under `H₀`:

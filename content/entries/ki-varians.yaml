@@ -17,9 +17,10 @@ why_use: |
   for eksempel for å vurdere om `σ²` ligger over en kritisk grenseverdi.
 
 recognition_cues:
-  - "Du har `s²` (utvalgsvarians) og `n`, og oppgaven ber om KI for `σ²` eller `σ`"
-  - "Normalfordeling antatt"
-  - "Konfidensnivå `(1 − α)` er gitt"
+  - "Oppgaven ber om '95 % konfidensintervall for `σ²`' eller for `σ` (spredningen)"
+  - "Du har `s²` (utvalgsvarians) og `n`, og dataene er antatt normalfordelte"
+  - "Oppgaven nevner `χ²`-fordeling eller `χ²`-kvantiler (tabell E.6)"
+  - "Spørsmål om presisjon, toleranse, eller kvalitetskontroll på spredningen"
 
 when_NOT_to_use:
   - "Du har ikke `s²` eller den er ikke regnet enda → regn `s²` først via [utvalgsvarians fra rådata](/entry/utvalgsvarians-radata)"
@@ -27,13 +28,15 @@ when_NOT_to_use:
   - "Spørsmålet gjelder `μ`, ikke `σ` → bruk [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma) eller [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma)"
 
 symbols:
+  - { sym: "σ²",       means: "den ukjente populasjonsvariansen (det vi estimerer)" }
   - { sym: "s²",       means: "utvalgsvarians (estimat for `σ²`)" }
   - { sym: "n",        means: "antall observasjoner" }
+  - { sym: "α",        means: "signifikansnivå; `1 − α` er konfidensnivået" }
   - { sym: "χ²_(α, ν)", means: "kritisk verdi (kvantil) for `χ²` med `ν` frihetsgrader" }
   - { sym: "ν",        means: "frihetsgrader `= n − 1`" }
 
 filters:
-  computes: [confidence_interval, std_dev, parameter_estimate, hypothesis_test]
+  computes: [confidence_interval, std_dev, parameter_estimate, hypothesis_test, variance]
   random_variable: [continuous]
   setup: [single_population]
   structural_cues: [normal_assumed, summary_stats_given, data_as_list, total_observations_n]
@@ -97,6 +100,9 @@ detailed_solution_variants:
 related:
   - { id: frihetsgrader-glos, kind: glossary }
   - { id: ki-mu-ukjent-sigma, kind: entry }
+  - { id: utvalgsvarians-radata, kind: entry }
+  - { id: chi, kind: glossary }
+  - { id: konfidensintervall, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:

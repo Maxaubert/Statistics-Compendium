@@ -99,12 +99,16 @@ forms:
       - { id: korrelasjon-joint, label: "ρ(X,Y)" }
 
 recognition_cues:
-  - "Oppgaven nevner spredning, varians, eller standardavvik"
-  - "Du må velge mellom flere variansformer (rådata vs. fordeling vs. residual)"
+  - "Oppgaven nevner spredning, varians, eller standardavvik, og du er usikker på hvilken form"
+  - "Du må velge mellom flere variansformer (rådata vs. fordeling vs. residual vs. pooled)"
   - "Du trenger et estimat for `σ²` for å gå videre i en t-test eller KI"
 
+when_NOT_to_use:
+  - "Du vet allerede hvilken form (rådata, PMF, residual) → gå direkte til den spesifikke entryen"
+  - "Spørsmålet handler om senter, ikke spredning → bruk [forventningsverdi (oversikt)](/entry/forventningsverdi-oversikt)"
+
 filters:
-  computes: [std_dev]
+  computes: [std_dev, variance]
   random_variable: [discrete_count, continuous]
   setup: [single_population, two_independent_samples, linear_relationship]
   structural_cues: [data_as_list, joint_table_present, summary_stats_given]

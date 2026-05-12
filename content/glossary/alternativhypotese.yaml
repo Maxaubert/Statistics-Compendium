@@ -6,6 +6,7 @@ filters:
   random_variable: [proportion, slope_estimate]
   setup: [linear_relationship]
   parameters_known: [alpha_significance, success_p]
+  structural_cues: [one_sided_alternative, two_sided_alternative]
 aliases:
   - alternativhypotese
   - alternativhypotesen

@@ -5,7 +5,7 @@ filters:
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4]
   computes: [exact_probability, range_probability, find_x_for_threshold, hypothesis_test]
-  structural_cues: [normal_assumed, mean_and_sd_given]
+  structural_cues: [normal_assumed, mean_and_sd_given, probability_threshold]
   parameters_known: [mean_known, population_variance_known]
 aliases:
   - standardnormalisering

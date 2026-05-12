@@ -4,7 +4,7 @@ short_def: "Variansen til residualene i regresjon: `S_E² = Σ(yᵢ − ŷᵢ)²
 filters:
   setup: [linear_relationship]
   parameters_known: [residual_variance, sum_xx_sxy, slope_se]
-  computes: [std_dev]
+  computes: [std_dev, variance]
   random_variable: [slope_estimate]
   structural_cues: [linear_relationship_suspected, data_as_list]
 long_def: |

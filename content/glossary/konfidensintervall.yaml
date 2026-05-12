@@ -7,6 +7,7 @@ filters:
   random_variable: [proportion]
   distribution_assumption: [binomial, normal, t_distribution]
   tooling: [normal_quantile_table_E4, t_quantile_table_E5]
+  structural_cues: [probability_threshold]
 aliases:
   - konfidensintervall
   - konfidensintervallet

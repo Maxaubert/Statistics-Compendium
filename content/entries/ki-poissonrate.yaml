@@ -17,20 +17,23 @@ why_use: |
   tidsperiode og spør etter et intervallestimat for raten.
 
 recognition_cues:
+  - "Oppgaven ber om '95 % konfidensintervall for raten `λ`'"
   - "Du har observert `Y` hendelser i en kjent tidsperiode `t` (eller område)"
-  - "Du vil estimere raten `λ` med usikkerhetsmål"
-  - "Konfidensnivå er gitt"
   - "Det er etablert at hendelsene følger en poissonprosess"
+  - "Frasering 'estimer raten `λ` med usikkerhetsangivelse'"
+  - "`λt > 10` slik at normalapproksimasjon er gyldig"
 
 when_NOT_to_use:
   - "Du estimerer en andel/sannsynlighet (av `n` forsøk) → bruk [KI for andel](/entry/ki-andel-binomial) i stedet"
-  - "`λt < 10` – normalapproksimasjon for unøyaktig"
+  - "`λt < 10` — normalapproksimasjon er upålitelig, bruk eksakt χ²-basert KI"
+  - "Spørsmålet handler om ventetid mellom hendelser, ikke raten → bruk [eksponentialfordeling](/entry/eksponential-fordeling)"
 
 symbols:
   - { sym: "λ",        means: "raten (det vi vil estimere)" }
   - { sym: "λ̂",        means: "punktestimat, `λ̂ = Y/t`" }
   - { sym: "Y",         means: "antall hendelser observert i tidsperioden" }
   - { sym: "t",         means: "lengden på observasjonsperioden" }
+  - { sym: "α",         means: "signifikansnivå; `1 − α` er konfidensnivået" }
   - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
 
 filters:
@@ -159,6 +162,9 @@ related:
   - { id: "poisson-fordeling",       kind: "entry" }
   - { id: "poisson-prosess",         kind: "glossary" }
   - { id: "ki-andel-binomial",       kind: "entry" }
+  - { id: "lambda",                  kind: "glossary" }
+  - { id: "konfidensintervall",      kind: "glossary" }
+  - { id: "normalapproksimasjon",    kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

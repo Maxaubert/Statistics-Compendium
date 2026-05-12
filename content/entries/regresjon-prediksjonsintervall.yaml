@@ -18,19 +18,24 @@ why_use: |
   inneholder både usikkerhet i regresjonslinjen og naturlig spredning.
 
 recognition_cues:
-  - "Spørsmålet ber om prediksjonsintervall for en enkel ny `y`-verdi gitt `x`"
-  - "Spørsmålet er typisk 'er det sannsynlig at `y > 75 %` når `x = 5`?'"
-  - "Du har `α̂`, `β̂`, `S_E` (eller `S_E²`), og `SE(β̂)`"
+  - "Oppgaven ber om prediksjonsintervall for en NY enkelt `y`-verdi gitt en bestemt `x`"
+  - "Frasering 'estimer `y` med usikkerhet når `x = ...`' eller 'mellom hvilke verdier vil `y` ligge?'"
+  - "Du har `α̂`, `β̂`, `S_E` (eller `S_E²`), og `SE(β̂)` fra tidligere deloppgaver"
+  - "Oppgaven sier 'er det sannsynlig at `y > 75 %` når `x = 5`?'"
 
 when_NOT_to_use:
-  - "Du vil ha intervall for forventningsverdien `E[Y|x]` → bruk KI for `E[Y|x]`"
+  - "Du vil ha intervall for forventningsverdien `E[Y|x]` (snittet, ikke en enkelt observasjon) → bruk KI for `E[Y|x]`"
   - "Du vil teste om `β = 0` → bruk [hypotesetest for stigningstallet](/entry/regresjon-test-stigningstall)"
+  - "Du har ikke regnet `α̂, β̂` enda → start med [estimater for α og β](/entry/regresjon-estimat-alpha-beta)"
 
 symbols:
   - { sym: "α̂, β̂",         means: "estimerte regresjonskoeffisienter" }
+  - { sym: "x",               means: "den `x`-verdien vi predikerer `y` ved" }
   - { sym: "x̄",              means: "gjennomsnitt av `x`-observasjonene" }
+  - { sym: "n",               means: "antall observasjonspar i dataene" }
   - { sym: "S_E",             means: "estimat for residualenes standardavvik" }
   - { sym: "SE(β̂)",          means: "standardfeil til stigningstallet" }
+  - { sym: "α",               means: "signifikansnivå; `1 − α` er prediksjonsnivået" }
   - { sym: "t_(α/2, n-2)",    means: "kvantil i t-fordelingen med `n−2` frihetsgrader" }
 
 filters:
@@ -194,6 +199,8 @@ related:
   - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
   - { id: "regresjon-test-stigningstall",   kind: "entry" }
   - { id: "frihetsgrader-glos",             kind: "glossary" }
+  - { id: "prediksjonsintervall-glos",      kind: "glossary" }
+  - { id: "t-fordeling",                    kind: "glossary" }
   - { id: "E5-t-tabell",                    kind: "table" }
 
 tools:

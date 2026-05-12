@@ -5,6 +5,7 @@ filters:
   computes: [exact_probability, at_least_k, range_probability]
   tooling: [cumulative_binomial_table_E1, cumulative_poisson_table_E2, standard_normal_table_E3]
   distribution_assumption: [binomial, normal, poisson]
+  structural_cues: [at_least_one, no_occurrences]
 long_def: |
   Standardnormaltabellen E.3 gir:
 
@@ -17,6 +18,13 @@ long_def: |
 
   Pass på om tabellen er kumulativ eller halekumulativ — de fleste i
   pensum er `P(X ≤ x)`.
+aliases:
+  - kumulativ
+  - kumulative
+  - kumulativ fordeling
+  - kumulativ sannsynlighet
+  - kumulativ fordelingsfunksjon
+  - kumulativt
 see_also:
   - { id: E1-binomial-kumulativ, kind: table }
   - { id: E2-poisson-kumulativ, kind: table }

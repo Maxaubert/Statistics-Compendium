@@ -8,6 +8,7 @@ filters:
   computes: [hypothesis_test, confidence_interval]
   random_variable: [mean_of_samples]
   setup: [single_population]
+  structural_cues: [one_sided_alternative, two_sided_alternative]
 long_def: |
   T-fordelingen brukes når vi standardiserer et utvalgsgjennomsnitt med
   utvalgsstandardavviket `s` i stedet for det kjente `σ`. Da følger

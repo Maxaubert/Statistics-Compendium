@@ -45,7 +45,7 @@ symbols:
   - { sym: "s",     means: "utvalgsstandardavviket, `s = √s²`" }
 
 filters:
-  computes: [std_dev, parameter_estimate]
+  computes: [std_dev, parameter_estimate, variance]
   random_variable: [discrete_count, continuous, mean_of_samples]
   setup: [single_population]
   structural_cues: [data_as_list, summary_stats_given, total_observations_n]
@@ -145,6 +145,9 @@ related:
   - { id: "to-utvalgs-t-test",             kind: "entry" }
   - { id: "varians-oversikt",              kind: "entry" }
   - { id: "frihetsgrader-glos",            kind: "glossary" }
+  - { id: "utvalgsvarians",                kind: "glossary" }
+  - { id: "utvalgsstandardavvik",          kind: "glossary" }
+  - { id: "gjennomsnitt",                  kind: "glossary" }
 
 tools:
   - "Kalkulator: kvadrering, sum, kvadratrot"

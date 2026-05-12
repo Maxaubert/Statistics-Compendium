@@ -8,12 +8,14 @@ import type { GlossaryTerm } from "@/data/schema";
 const glossary: GlossaryTerm[] = [
   {
     id: "sv",
+    filters: {},
     term_no: "Stokastisk variabel",
     short_def: "En tallverdi-variabel.",
     aliases: ["stokastisk variabel", "stokastisk", "stokastiske"],
   },
   {
     id: "varians",
+    filters: {},
     term_no: "Varians",
     short_def: "Spredning kvadrert.",
   },
@@ -167,9 +169,10 @@ describe("Prose", () => {
   });
 
   it("dedupes same-term links in one paragraph and keeps the longest form", () => {
-    const dfGlossary = [
+    const dfGlossary: GlossaryTerm[] = [
       {
         id: "frihetsgrader-glos",
+        filters: {},
         term_no: "Frihetsgrader (df, ν)",
         short_def: "x",
         aliases: ["frihetsgrader", "ν"],

@@ -12,6 +12,10 @@ long_def: |
 
   - **Eksakt:** antall suksesser i `n` trekninger uten tilbakelegging fra en endelig populasjon følger hypergeometrisk fordeling
   - **Tilnærming:** når `n` er liten i forhold til populasjonen, kan binomial brukes
+aliases:
+  - uten tilbakelegging
+  - uten tilbakelegging fra
+  - ikke-tilbakelegging
 see_also:
   - { id: hypergeometrisk-fordeling, kind: entry }
   - { id: med-tilbakelegging, kind: glossary }

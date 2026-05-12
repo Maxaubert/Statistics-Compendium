@@ -18,12 +18,21 @@ why_use: |
 
 recognition_cues:
   - "Du jobber med regresjon og skal teste eller lage KI for `β`"
-  - "Spørsmålet ber om `SE(β̂)` eller standardfeil til stigningstallet"
+  - "Spørsmålet ber eksplisitt om `SE(β̂)` eller standardfeil til stigningstallet"
   - "Du har `S_E²` (residualvariansen) og `S_XX = Σ(x − x̄)²`"
+  - "Mellomsteg når oppgaven sier 'test om stigningstallet er forskjellig fra 0'"
+
+when_NOT_to_use:
+  - "Du vil teste `β = 0` med ferdig `SE(β̂)` → bruk [hypotesetest for stigningstallet](/entry/regresjon-test-stigningstall)"
+  - "Du mangler `S_E²` → regn den først via [residualvarians S_E²](/entry/regresjon-residualvarians)"
+  - "Du vil ha standardfeil for `α̂` eller for selve `ŷ` → annen formel"
 
 symbols:
   - { sym: "SE(β̂)",  means: "standardfeilen til `β̂`" }
+  - { sym: "β̂",      means: "estimert stigningstall (slope) i regresjonen" }
   - { sym: "S_E²",    means: "estimat for residualenes varians" }
+  - { sym: "x_i",     means: "`x`-verdiene i de `n` observasjonsparene" }
+  - { sym: "x̄",      means: "gjennomsnitt av `x`-verdiene" }
   - { sym: "S_XX",    means: "`Σ(x_i − x̄)²` (sum av kvadrerte avvik for `x`)" }
 
 filters:
@@ -143,6 +152,9 @@ related:
   - { id: "regresjon-test-stigningstall", kind: "entry" }
   - { id: "regresjon-prediksjonsintervall", kind: "entry" }
   - { id: "frihetsgrader-glos",           kind: "glossary" }
+  - { id: "standardfeil-til-stigningstallet", kind: "glossary" }
+  - { id: "variansen-til-stigningstallet",   kind: "glossary" }
+  - { id: "beta-koeffisient",             kind: "glossary" }
 
 tools:
   - "Kalkulator: kvadratrot"

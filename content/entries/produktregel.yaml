@@ -2,7 +2,7 @@ id: produktregel
 name_no: "Produktregelen og betinget sannsynlighet"
 type: rule
 category: probability_rule
-tagline: "`P(A ∩ B) = P(A) · P(B|A)` – sannsynlighet for at to hendelser begge inntreffer."
+tagline: "Snitt `P(A ∩ B)`, betinget `P(A|B)`, varianter med komplement, og test for uavhengighet — alt fra samme produktregel."
 
 formula_main: "P(A ∩ B) = P(A) · P(B | A);  P(B | A) = P(A ∩ B) / P(A)"
 formula_latex: "P(A \\cap B) = P(A) \\cdot P(B|A), \\quad P(B|A) = \\frac{P(A \\cap B)}{P(A)}"
@@ -21,8 +21,10 @@ why_use: |
 recognition_cues:
   - "Sekvensielle hendelser, der den andre avhenger av den første"
   - "Spørsmålet involverer 'gitt at `A` inntreffer' eller 'først, så'"
-  - "Du har `P(A)` og `P(B|A)`, eller du vil finne `P(B|A)`"
+  - "Du har `P(A)` og `P(B|A)`, eller du vil finne `P(B|A)` fra `P(A ∩ B)`"
   - "Trekning uten tilbakelegging der `p` endrer seg etter første trekning"
+  - "Spørsmålet ber deg sjekke om `A` og `B` er uavhengige (sammenlign `P(A ∩ B)` med `P(A)·P(B)`)"
+  - "Frasering med komplement: 'sannsynligheten for at `A` ikke inntreffer gitt at `B` ikke inntreffer'"
 
 when_NOT_to_use:
   - "Hendelsene er uavhengige → spesialtilfellet `P(A ∩ B) = P(A)·P(B)` er enklere"
@@ -30,14 +32,19 @@ when_NOT_to_use:
   - "Du har en partisjon av utfallsrommet og vil regne `P(B)` totalt → bruk [total sannsynlighet](/entry/total-sannsynlighet)"
 
 symbols:
+  - { sym: "P(A)",       means: "sannsynlighet for hendelse `A`" }
+  - { sym: "P(B)",       means: "sannsynlighet for hendelse `B`" }
   - { sym: "P(A ∩ B)",   means: "sannsynlighet for at både `A` og `B` inntreffer" }
   - { sym: "P(B | A)",    means: "betinget sannsynlighet for `B`, gitt at `A` inntreffer" }
+  - { sym: "P(A | B)",    means: "betinget sannsynlighet for `A`, gitt at `B` inntreffer" }
+  - { sym: "Ā, B̄",       means: "komplementene til `A` og `B` (inntreffer hvis hendelsen ikke gjør det)" }
+  - { sym: "P(A ∪ B)",   means: "sannsynlighet for at minst én av `A` eller `B` inntreffer" }
 
 filters:
   computes: [exact_probability, conditional_probability, joint_probability, test_independence]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, with_replacement, finite_pool]
-  structural_cues: [conditional_given, independent_events]
+  structural_cues: [conditional_given, independent_events, conditioning_on_complement]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
@@ -120,9 +127,21 @@ solution_variants:
         conditional: true
 
 common_traps: |
-  `P(B|A)` er IKKE det samme som `P(A|B)` generelt – bytte rekkefølge gir
-  feil svar (med mindre `A` og `B` er uavhengige). For å konvertere mellom
-  dem, bruk Bayes' setning.
+  - **`P(B|A) ≠ P(A|B)`** generelt — å bytte rekkefølge gir feil svar
+    (likhet gjelder bare hvis `P(A) = P(B)`). For å konvertere mellom dem,
+    bruk [Bayes' setning](/entry/bayes-setning).
+  - **Uavhengig ≠ disjunkt**: hvis `A` og `B` er disjunkte (utelukker
+    hverandre), så er `P(A ∩ B) = 0`, IKKE `P(A)·P(B)`. Uavhengighet
+    krever `P(A ∩ B) = P(A)·P(B)`, og disjunkte hendelser med `P > 0` er
+    aldri uavhengige.
+  - **Uten tilbakelegging**: etter første trekning endrer populasjonen seg —
+    `P(andre ess | første ess) = 3/51`, ikke `4/52`. Klassisk feil å bruke
+    samme `p` for begge trekninger.
+  - **Betingelsen sitter på det som "allerede har skjedd"**: i `P(B|A)` er det
+    `A` som er gitt. Ordlyden "gitt at `A`" og "vitende at `A`" peker på `A`
+    som betingelse — skriv riktig retning før du regner.
+  - **`P(A ∩ B)` er symmetrisk**: `P(A)·P(B|A) = P(B)·P(A|B)`. Bruk den
+    rekkefølgen der både `P(·)` og det betingede er gitt eller lettest å finne.
 
 detailed_solution_variants:
   - label: "Produktregel for snitt"
@@ -264,6 +283,9 @@ related:
   - { id: "uavhengighet-glos", kind: "glossary" }
   - { id: "bayes-setning",          kind: "entry" }
   - { id: "total-sannsynlighet",    kind: "entry" }
+  - { id: "unionssetningen",        kind: "entry" }
+  - { id: "komplementregelen",      kind: "entry" }
+  - { id: "hendelse",               kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon"

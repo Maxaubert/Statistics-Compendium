@@ -28,10 +28,13 @@ when_NOT_to_use:
   - "Forventede antall `E_i < 5` i flere celler → testen er ikke pålitelig"
 
 symbols:
+  - { sym: "χ²",  means: "testobservatoren, kjikvadrat-fordelt med `ν` frihetsgrader under `H₀`" }
   - { sym: "O_i", means: "observert antall i kategori `i`" }
   - { sym: "E_i", means: "forventet antall i kategori `i` under `H₀`" }
   - { sym: "k",   means: "antall kategorier" }
   - { sym: "ν",   means: "frihetsgrader `= k − 1` (eller `k − 1 − m` hvis `m` parametre er estimert)" }
+  - { sym: "H₀",  means: "nullhypotesen som angir de forventede andelene / fordelingen" }
+  - { sym: "α",   means: "signifikansnivå (typisk `0.05`)" }
 
 filters:
   computes: [hypothesis_test]
@@ -100,6 +103,9 @@ detailed_solution_variants:
 related:
   - { id: frihetsgrader-glos, kind: glossary }
   - { id: signifikansniva-glos, kind: glossary }
+  - { id: kjikvadrat-uavhengighet, kind: entry }
+  - { id: goodness-of-fit, kind: glossary }
+  - { id: chi, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:

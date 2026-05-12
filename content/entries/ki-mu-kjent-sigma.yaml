@@ -17,9 +17,10 @@ why_use: |
   observasjoner eller stort utvalg (`n ≥ 30`).
 
 recognition_cues:
-  - "Spørsmålet ber om et konfidensintervall for `μ` (eller en gjennomsnittlig verdi)"
-  - "Standardavviket `σ` er gitt eksplisitt"
-  - "Konfidensnivå er gitt (90 %, 95 %, 99 %, osv.)"
+  - "Oppgaven ber om '95 % (eller 90/99 %) konfidensintervall for `μ`'"
+  - "Standardavviket `σ` er oppgitt som kjent (f.eks. 'σ er kjent og lik 5')"
+  - "Utvalgsstørrelse `n` og gjennomsnitt `x̄` er gitt"
+  - "Frasering 'estimer forventningsverdien `μ` med usikkerhetsangivelse'"
 
 when_NOT_to_use:
   - "`σ` er ukjent → bruk [t-basert KI for μ](/entry/ki-mu-ukjent-sigma) i stedet"
@@ -37,7 +38,7 @@ filters:
   computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
-  structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, data_as_list, total_observations_n]
+  structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, data_as_list, total_observations_n, probability_threshold]
   parameters_known: [population_variance_known, sample_size_large, confidence_level, sample_size_small_lt30]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
@@ -53,8 +54,19 @@ solution_template:
     example: true
 
 common_traps: |
-  Bruk `z_(α/2)`, ikke `z_α` (vi vil ha `α/2` i hver hale i et tosidig intervall).
-  Konfidensnivå 90 % betyr `α = 0.10`, så `z_(α/2) = z_0.05 = 1.645`.
+  - **`z_(α/2)`, ikke `z_α`**: vi vil ha `α/2` i hver hale i et tosidig intervall.
+    Konfidensnivå 90 % betyr `α = 0.10`, så `z_(α/2) = z_0.05 = 1.645`. Bruker
+    du `z_α` blir intervallet for smalt — bare 80 % dekning, ikke 90 %.
+  - **`σ/√n`, ikke `σ`**: standardfeilen til `x̄` er `σ/√n`. Lett å glemme `√n`
+    når man har det travelt — intervallet blir da `√n` ganger for bredt.
+  - **`σ` vs. `s`**: hvis bare utvalgsstandardavviket `s` er kjent (regnet fra
+    dataene), er det t-baserte [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma)
+    du skal bruke, ikke z-basert. Z er for når `σ` er gitt eksternt.
+  - **Konfidensnivå vs. `α`**: 95 % konfidens er `α = 0.05`, ikke `α = 0.95`.
+    Klassisk forvirring: `1 − α` er konfidensnivået.
+  - **Tolkningen**: intervallet inneholder `μ` med 95 % sannsynlighet FØR
+    dataene er samlet inn. Etter at intervallet er regnet ut, ligger `μ`
+    enten i det eller ikke — det er prosessen som har 95 % treffrate.
 
 python_snippet: |
   from scipy.stats import norm
@@ -115,6 +127,8 @@ related:
   - { id: "ki-mu-ukjent-sigma",      kind: "entry" }
   - { id: "signifikansniva-glos",    kind: "glossary" }
   - { id: "tosidig-test",            kind: "glossary" }
+  - { id: "konfidensintervall",      kind: "glossary" }
+  - { id: "standardfeil",            kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

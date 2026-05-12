@@ -2,7 +2,7 @@ id: forventningsrett
 term_no: Forventningsrett (unbiased)
 short_def: "En estimator `θ̂` er forventningsrett hvis `E[θ̂] = θ` — den treffer riktig i snitt."
 filters:
-  computes: [parameter_estimate, std_dev, expected_value]
+  computes: [parameter_estimate, std_dev, expected_value, variance]
   random_variable: [mean_of_samples]
   parameters_known: [population_variance_unknown]
 long_def: |
@@ -13,6 +13,12 @@ long_def: |
   - `S²` (med `n − 1` i nevneren) er forventningsrett for `σ²`; bruker du `n` i stedet, får du en forventningsskjev (biased) estimator
 
   Forventningsrett er ikke alt — estimatoren bør også ha lav varians.
+aliases:
+  - forventningsrett
+  - forventningsrette
+  - forventningsretthet
+  - forventningsrettheten
+  - unbiased
 see_also:
   - { id: estimator, kind: glossary }
   - { id: bias, kind: glossary }

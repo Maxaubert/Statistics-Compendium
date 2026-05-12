@@ -14,7 +14,7 @@ what_it_does: |
   rundt midtverdien μ, med spredning angitt av σ.
 
   Sannsynligheter under normalfordelingen regnes ikke direkte ut, men slås
-  opp i en tabell (E.3 – Z-tabell) etter at variabelen er "standardisert"
+  opp i en tabell (tabell E.3 – Z-tabell) etter at variabelen er "standardisert"
   med transformasjonen Z = (X - μ)/σ. Z-verdien forteller hvor mange
   standardavvik over eller under gjennomsnittet observasjonen ligger.
 
@@ -31,7 +31,7 @@ recognition_cues:
   - "Spørsmålet er på formen `P(X < x)`, `P(X > x)` eller `P(a < X < b)` for kontinuerlig `X`"
   - "Stort antall observasjoner (`n ≥ 30`) der man ser på gjennomsnittet – sentralgrenseteoremet gir tilnærmet normalfordeling"
   - "Spørsmålet ber om 'sannsynligheten for at en tilfeldig valgt `X` overstiger / underskrider en verdi'"
-  - "Skjult variant: 'finn `x` slik at `P(X < x) = p`' (invers normal – bruk z-kvantiltabellen E.4)"
+  - "Skjult variant: 'finn `x` slik at `P(X < x) = p`' (invers normal – bruk z-kvantiltabellen, tabell E.4)"
 
 when_NOT_to_use:
   - "Variabelen er diskret (heltall) → bruk [binomial](/entry/binomial-fordeling), [Poisson](/entry/poisson-fordeling), eller [hypergeometrisk](/entry/hypergeometrisk-fordeling)"
@@ -39,6 +39,7 @@ when_NOT_to_use:
   - "Variabelen er bare positiv tid mellom hendelser → bruk [eksponentialfordeling](/entry/eksponential-fordeling)"
 
 symbols:
+  - { sym: "X",     means: "den normalfordelte stokastiske variabelen, `X ~ N(μ, σ)`" }
   - { sym: "μ",     means: "forventningsverdien (sentrum av klokken)" }
   - { sym: "σ",     means: "standardavviket (spredning)" }
   - { sym: "σ²",    means: "variansen" }
@@ -55,7 +56,7 @@ filters:
   computes: [exact_probability, range_probability, find_mu_for_threshold, find_x_for_threshold, find_n_for_threshold]
   random_variable: [continuous, mean_of_samples]
   setup: [single_population]
-  structural_cues: [normal_assumed, mean_and_sd_given, complement_pattern]
+  structural_cues: [normal_assumed, mean_and_sd_given, complement_pattern, probability_threshold]
   parameters_known: [population_variance_known, mean_known, sample_size_large]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
@@ -70,7 +71,7 @@ solution_variants:
       - "Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ) — arealet til VENSTRE for `z` (f.eks. `G(−2.08) ≈ 0.0188`)."
       - text: "Svaret er:"
         formula: "P(X < x) = G(z)"
-      - text: "Hvis tabellen din kun viser positive `z`, bruk symmetri (vår E.3 dekker både fortegn, så dette er sjelden nødvendig):"
+      - text: "Hvis tabellen din kun viser positive `z`, bruk symmetri (vår tabell E.3 dekker både fortegn, så dette er sjelden nødvendig):"
         formula: "G(−z) = 1 − G(z)"
         conditional: true
 
@@ -80,7 +81,7 @@ solution_variants:
       - text: "Standardiser (f.eks. `(310 − 302)/5 = 1.6`):"
         formula: "z = (x − μ)/σ"
       - "Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ) (f.eks. `G(1.6) ≈ 0.9452`)."
-      - text: "Bruk komplementet siden E.3 gir venstrearealet (f.eks. `1 − 0.9452 = 0.0548`):"
+      - text: "Bruk komplementet siden tabell E.3 gir venstrearealet (f.eks. `1 − 0.9452 = 0.0548`):"
         formula: "P(X > x) = 1 − G(z)"
       - "Fortegnssjekk: `x > μ ⇒ z > 0` (svar `< 0.5`); `x < μ ⇒ z < 0` (svar `> 0.5`)."
 
@@ -333,7 +334,7 @@ detailed_solution_variants:
               - { text: "`μ = 170`, `σ = 6`, mål `p = 0.10`. Siden `p < 0.5` blir `z` negativ." }
           - label: "Tabelloppslag"
             lines:
-              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.10`: `z = −1.282` (bruk symmetri eller E.4 i `p`-modus)." } }
+              - { table_lookup: { ref: "E.4", text: "Kvantilet for `P(Z ≤ z) = 0.10`: `z = −1.282` (bruk symmetri eller tabell E.4 i `p`-modus)." } }
           - label: "Innsetting"
             lines:
               - { text: "`x = 170 + 6 · (−1.282)`" }
@@ -397,6 +398,9 @@ related:
   - { id: "sum-uavhengige-normaler", kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "z-score",                 kind: "glossary" }
+  - { id: "mu",                      kind: "glossary" }
+  - { id: "sigma",                   kind: "glossary" }
   - { id: "E3-z-tabell",             kind: "table" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 

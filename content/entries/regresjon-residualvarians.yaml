@@ -31,11 +31,13 @@ symbols:
   - { sym: "SSE",     means: "Sum of Squared Errors, `Σ(y_i − α̂ − β̂·x_i)²`" }
   - { sym: "S_E²",    means: "estimat for residualenes varians" }
   - { sym: "S_E",     means: "estimat for residualenes standardavvik" }
+  - { sym: "x_i, y_i", means: "de `n` observasjonsparene" }
+  - { sym: "α̂, β̂",  means: "estimerte regresjonskoeffisienter (skjæring og stigningstall)" }
   - { sym: "n",       means: "antall observasjonspar" }
   - { sym: "ν",       means: "frihetsgrader, `n − 2`" }
 
 filters:
-  computes: [parameter_estimate, std_dev]
+  computes: [parameter_estimate, std_dev, variance]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
   structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, total_observations_n]
@@ -54,9 +56,20 @@ solution_template:
     formula: "S_E = √S_E²"
 
 common_traps: |
-  Frihetsgrader er `n − 2` (ikke `n − 1`), fordi to parametre (`α̂`, `β̂`) er
-  estimert. `SSE` forveksles ofte med `S_XX = Σ(x − x̄)²` – disse er HELT
-  forskjellige.
+  - **`n − 2`, ikke `n − 1`**: i regresjon estimeres to parametre (`α̂` og `β̂`),
+    så frihetsgradene blir `n − 2`. Bruker du `n − 1` (som ved utvalgsvarians
+    av rådata), får du et `S_E²` som er litt for lite.
+  - **`SSE` vs. `S_XX`**: `SSE = Σ(y_i − ŷ_i)²` (residualenes kvadratsum),
+    `S_XX = Σ(x_i − x̄)²` (kvadratavvik for `x`). Helt forskjellige tall som
+    ofte står ved siden av hverandre i oppgaver — ikke forveksle.
+  - **`S_E` vs. `S_E²`**: oppgaven kan spørre om enten variansen eller
+    standardavviket. Husk å ta kvadratrot for `S_E` til slutt, og oppgi
+    riktig størrelse.
+  - **Residualer ut fra ESTIMERT linje**: `y_i − α̂ − β̂·x_i`, ikke `y_i − ȳ`.
+    `Σ(y_i − ȳ)² = SST` er total kvadratsum, ikke residual-kvadratsum.
+    Sammenhengen: `SST = SSE + SSR`.
+  - **`S_E` har samme enhet som `y`**: nyttig sanity-sjekk. Hvis `y` er i kg,
+    er `S_E` i kg og `S_E²` i kg².
 
 python_snippet: |
   import numpy as np
@@ -167,6 +180,9 @@ related:
   - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
   - { id: "regresjon-prediksjonsintervall",     kind: "entry" }
   - { id: "frihetsgrader-glos",                 kind: "glossary" }
+  - { id: "residual",                           kind: "glossary" }
+  - { id: "residualvarians",                    kind: "glossary" }
+  - { id: "residualstandardavvik",              kind: "glossary" }
 
 tools:
   - "Kalkulator: kvadratrot, summer"

@@ -31,17 +31,21 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "β̂",    means: "estimert stigningstall" }
+  - { sym: "β",     means: "den ukjente populasjonsstigningen (det vi tester)" }
   - { sym: "β₀",    means: "verdien vi tester mot, ofte `0`" }
   - { sym: "SE(β̂)", means: "standardfeilen til `β̂`" }
   - { sym: "S_E²",   means: "estimat for residualenes varians" }
+  - { sym: "n",     means: "antall observasjonspar" }
   - { sym: "ν",     means: "frihetsgrader, `ν = n − 2`" }
   - { sym: "T",     means: "testobservator, t-fordelt under `H₀`" }
+  - { sym: "H₀",    means: "nullhypotesen, typisk `β = β₀` (ofte `β = 0`)" }
+  - { sym: "α",     means: "signifikansnivå (typisk `0.05`)" }
 
 filters:
   computes: [hypothesis_test, test_independence]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, total_observations_n]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, total_observations_n, two_sided_alternative, one_sided_alternative]
   parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy, population_variance_unknown]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
@@ -62,8 +66,21 @@ solution_template:
   - "Konkluder om hvorvidt det er statistisk grunnlag for lineær sammenheng"
 
 common_traps: |
-  Frihetsgrader i regresjon: `ν = n − 2` (ikke `n − 1`). Dette er fordi to
-  parametre er estimert (`α̂` og `β̂`). Glem ikke kvadratroten i `SE(β̂)`.
+  - **`ν = n − 2` i regresjon** (ikke `n − 1`), fordi to parametre (`α̂`, `β̂`)
+    er estimert. Bruker du `n − 1` får du for liten kritisk verdi og forkaster
+    `H₀` for ofte.
+  - **`SE(β̂) ≠ S_E`**: `SE(β̂) = √(S_E²/S_XX) = S_E/√S_XX`. Disse blandes
+    konstant — `S_E` er residualstandardavvik, `SE(β̂)` er standardfeilen
+    til selve `β̂`-estimatet.
+  - **Tosidig vs. ensidig**: `H₁: β ≠ 0` (tosidig, bruk `t_(α/2, n−2)`) vs.
+    `H₁: β > 0` (høyresidig, bruk `t_(α, n−2)`). "Er det positiv sammenheng?"
+    er ofte ensidig, "er det noen sammenheng?" er tosidig.
+  - **`β₀ = 0` er ikke alltid testen**: noen oppgaver tester `H₀: β = β₀` for
+    annen `β₀` (f.eks. om stigningstallet er minst en gitt verdi).
+    Telleren er da `β̂ − β₀`, ikke bare `β̂`.
+  - **Ikke-forkast ≠ bevis for null sammenheng**: liten `n` eller mye støy
+    kan gi `|T| < t_kritisk` selv om det egentlig finnes en sammenheng.
+    Konklusjon: "ingen statistisk grunnlag for å hevde sammenheng".
 
 python_snippet: |
   import numpy as np
@@ -172,6 +189,9 @@ related:
   - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
   - { id: "regresjon-prediksjonsintervall",    kind: "entry" }
   - { id: "frihetsgrader-glos",                kind: "glossary" }
+  - { id: "nullhypotese",                      kind: "glossary" }
+  - { id: "p-verdi-glos",                      kind: "glossary" }
+  - { id: "beta-koeffisient",                  kind: "glossary" }
   - { id: "E5-t-tabell",                       kind: "table" }
 
 tools:

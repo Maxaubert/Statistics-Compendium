@@ -3,7 +3,7 @@ term_no: Stokastisk variabel (X, tilfeldig variabel)
 short_def: "En variabel hvis verdi er bestemt av et tilfeldig forsøk — kan være diskret eller kontinuerlig."
 filters:
   random_variable: [discrete_count, continuous]
-  computes: [std_dev, expected_value, exact_probability]
+  computes: [std_dev, expected_value, exact_probability, variance]
 long_def: |
   En stokastisk variabel `X` tilordner et tall til hvert utfall av et tilfeldig forsøk.
 

@@ -26,11 +26,15 @@ when_NOT_to_use:
   - "`n` liten og noen `E_ij < 5` → testen er ikke pålitelig"
 
 symbols:
+  - { sym: "χ²",   means: "testobservatoren, kjikvadrat-fordelt med `ν` frihetsgrader under `H₀`" }
   - { sym: "O_ij", means: "observert antall i celle (rad `i`, kolonne `j`)" }
   - { sym: "E_ij", means: "forventet antall `= (rad-sum_i × kol-sum_j) / n`" }
+  - { sym: "n",    means: "totalt antall observasjoner i tabellen" }
   - { sym: "r",    means: "antall rader" }
   - { sym: "c",    means: "antall kolonner" }
   - { sym: "ν",    means: "frihetsgrader `= (r − 1)(c − 1)`" }
+  - { sym: "H₀",   means: "nullhypotesen om at de to variablene er uavhengige" }
+  - { sym: "α",    means: "signifikansnivå (typisk `0.05`)" }
 
 filters:
   computes: [hypothesis_test, test_independence]
@@ -108,6 +112,9 @@ detailed_solution_variants:
 related:
   - { id: frihetsgrader-glos, kind: glossary }
   - { id: marginalfordeling, kind: entry }
+  - { id: kjikvadrat-goodness-of-fit, kind: entry }
+  - { id: kontingenstabell, kind: glossary }
+  - { id: uavhengighet-glos, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
 
 tools:

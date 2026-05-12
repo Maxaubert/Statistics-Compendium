@@ -5,7 +5,7 @@ filters:
   random_variable: [slope_estimate]
   setup: [linear_relationship]
   parameters_known: [slope_se, residual_variance, sum_xx_sxy]
-  computes: [std_dev, hypothesis_test]
+  computes: [std_dev, hypothesis_test, variance]
   structural_cues: [linear_relationship_suspected]
   distribution_assumption: [t_distribution]
 long_def: |

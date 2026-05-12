@@ -3,7 +3,7 @@ term_no: Kjikvadrat-fordeling (χ², chi)
 short_def: "Skjev fordeling brukt for KI for `σ²`, goodness-of-fit og uavhengighetstest. Eneste parameter er frihetsgrader."
 filters:
   distribution_assumption: [chi_squared]
-  computes: [hypothesis_test, confidence_interval, test_independence, std_dev]
+  computes: [hypothesis_test, confidence_interval, test_independence, std_dev, variance]
   tooling: [chi_square_quantile_table_E6]
   setup: [joint_table_given]
   structural_cues: [joint_table_present, more_than_two_categories]

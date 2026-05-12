@@ -40,7 +40,7 @@ filters:
   computes: [hypothesis_test, find_n_for_threshold]
   random_variable: [proportion, discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given, two_sided_alternative, one_sided_alternative]
   parameters_known: [success_p, sample_size_large, alpha_significance]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
@@ -127,6 +127,8 @@ related:
   - { id: "signifikansniva-glos",    kind: "glossary" }
   - { id: "ensidig-test",            kind: "glossary" }
   - { id: "tosidig-test",            kind: "glossary" }
+  - { id: "andel",                   kind: "glossary" }
+  - { id: "normalapproksimasjon",    kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

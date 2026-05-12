@@ -13,6 +13,13 @@ long_def: |
   Null kovarians betyr ingen lineær sammenheng (men kan ha annen
   sammenheng). Skalaavhengig: bytter du enhet, endres tallet.
   Korrelasjon er kovarians normalisert til `[−1, 1]`.
+aliases:
+  - kovarians
+  - kovariansen
+  - kovarianser
+  - kovariansene
+  - samvariasjon
+  - samvariasjonen
 see_also:
   - { id: kovarians, kind: entry }
   - { id: korrelasjon-joint, kind: entry }

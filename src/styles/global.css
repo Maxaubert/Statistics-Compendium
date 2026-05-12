@@ -78,4 +78,16 @@ body {
     0 1px 1px rgba(28, 25, 23, 0.04);
 }
 
+/* Hide native number-input spinners on the calculator round-decimals
+   field — we provide our own stacked chevron stepper instead. */
+.calc-no-spin::-webkit-outer-spin-button,
+.calc-no-spin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.calc-no-spin {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 @import "./print.css";

@@ -19,6 +19,15 @@ long_def: |
 
   Du kan ikke se parameteren direkte — du estimerer den. En statistikk
   beregnet fra utvalget er en estimator for parameteren.
+aliases:
+  - parameter
+  - parameteren
+  - parametere
+  - parameterne
+  - parametre
+  - parametrene
+  - populasjonsparameter
+  - populasjonsparameteren
 see_also:
   - { id: estimator, kind: glossary }
   - { id: punktestimat, kind: glossary }

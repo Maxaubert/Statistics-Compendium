@@ -6,7 +6,7 @@ filters:
   random_variable: [difference_of_means]
   parameters_known: [population_variance_unknown, confidence_level]
   distribution_assumption: [t_distribution]
-  computes: [hypothesis_test, std_dev, confidence_interval]
+  computes: [hypothesis_test, std_dev, confidence_interval, variance]
   structural_cues: [summary_stats_given]
   tooling: [t_quantile_table_E5]
 long_def: |

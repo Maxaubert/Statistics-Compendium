@@ -7,6 +7,7 @@ filters:
   setup: [two_independent_samples, joint_table_given]
   parameters_known: [alpha_significance, success_p]
   distribution_assumption: [chi_squared, normal, binomial, t_distribution]
+  structural_cues: [one_sided_alternative, two_sided_alternative]
 aliases:
   - nullhypotese
   - nullhypotesen

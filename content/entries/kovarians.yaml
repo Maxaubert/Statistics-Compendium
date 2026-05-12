@@ -17,8 +17,10 @@ why_use: |
   Var(X+Y) = Var(X) + Var(Y) + 2·Cov(X,Y).
 
 recognition_cues:
-  - "Du har en simultanfordeling for X og Y"
-  - "Spørsmålet ber om Cov(X,Y) eller du trenger den til ρ"
+  - "Du har en simultanfordeling for `X` og `Y` (tabell med `P(X = x_i, Y = y_j)`)"
+  - "Spørsmålet ber eksplisitt om `Cov(X, Y)`, eller du trenger den som mellomsteg til `ρ`"
+  - "Spørsmålet ber deg sjekke om `X` og `Y` er ukorrelerte (`Cov = 0`)"
+  - "Du skal regne ut `Var(X + Y)` eller `Var(aX + bY)` der `Cov` inngår"
 
 when_NOT_to_use:
   - "(X, Y) er kontinuerlige → bruk dobbeltintegralet `E[XY] = ∫∫ x·y · f(x, y) dx dy`"
@@ -28,7 +30,9 @@ when_NOT_to_use:
 symbols:
   - { sym: "Cov(X,Y)", means: "kovariansen" }
   - { sym: "E[XY]",     means: "Σ x_i·y_j·P(X=x_i, Y=y_j) over hele simultantabellen" }
-  - { sym: "μ_X, μ_Y",  means: "forventningsverdiene" }
+  - { sym: "μ_X, μ_Y",  means: "forventningsverdiene til `X` og `Y`" }
+  - { sym: "x_i, y_j",  means: "verdiene `X` og `Y` kan ta i simultantabellen" }
+  - { sym: "P(X=x_i, Y=y_j)", means: "simultansannsynligheten for cellen `(x_i, y_j)`" }
 
 filters:
   computes: [covariance, expected_value, std_dev, test_independence]
@@ -40,6 +44,11 @@ filters:
   tooling: [calculator_only]
 solution_template:
   - "Beregn μ_X og μ_Y fra marginalfordelingene"
+  - text: "Eksempel — `P(X = 0) = 0.40`, `P(X = 1) = 0.60`; `P(Y = 0) = 0.50`, `P(Y = 1) = 0.30`, `P(Y = 2) = 0.20`:"
+    formula:
+      - "μ_X = 0 · 0.40 + 1 · 0.60 = 0.60"
+      - "μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0.70"
+    example: true
   - text: "Beregn E[XY] – kun celler med positiv sannsynlighet bidrar:"
     formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
   - text: "Sett inn i kovariansformelen:"
@@ -49,8 +58,18 @@ solution_template:
     example: true
 
 common_traps: |
-  Du kan dropp celler med x_i = 0 eller y_j = 0 (bidraget er null) og
-  celler med p = 0. Pass på fortegn – kovarians kan være negativ.
+  - **Trekk fra `μ_X · μ_Y`, ikke `μ_X + μ_Y`**: formelen er
+    `Cov = E[XY] − μ_X·μ_Y`. Lett å skrive `− μ_X − μ_Y` på automat.
+  - **`E[XY] ≠ E[X]·E[Y]`** generelt — likhet gjelder KUN ved uavhengighet.
+    Hele poenget med kovariansen er å måle dette avviket. Sett du
+    `E[XY] = μ_X·μ_Y` direkte, antar du implisitt uavhengighet og får alltid `0`.
+  - **Fortegn er informasjon**: negativ kovarians betyr at `X` og `Y` beveger
+    seg motsatt — ikke en regnefeil. Positiv = samme retning, null = ingen
+    lineær sammenheng (men kan fortsatt være avhengige!).
+  - **Celler med `p = 0`, `x = 0` eller `y = 0`**: bidrar `0` til `E[XY]` og kan
+    droppes for å spare regning, men husk de TELLER fortsatt i marginalene.
+  - **Cov(X, X) = Var(X)**: nyttig som sanity-sjekk og dukker opp i
+    `Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)`.
 
 detailed_solution_variants:
   - label: "Kovarians fra simultantabell"
@@ -158,6 +177,9 @@ related:
   - { id: "korrelasjon-joint",           kind: "entry" }
   - { id: "marginalfordeling",           kind: "entry" }
   - { id: "simultanfordeling",           kind: "glossary" }
+  - { id: "kovarians-glos",              kind: "glossary" }
+  - { id: "varians-standardavvik-diskret", kind: "entry" }
+  - { id: "joint",                       kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon"

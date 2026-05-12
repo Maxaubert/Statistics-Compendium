@@ -19,22 +19,25 @@ why_use: |
   `Poisson(λt)`, så er ventetiden eksponentialfordelt med parameter `λ`.
 
 recognition_cues:
-  - "Spørsmålet handler om tid til første hendelse, eller mellom to hendelser"
-  - "`T` er en kontinuerlig stokastisk variabel (positivt reelt tall)"
-  - "Det er allerede etablert i oppgaven at hendelsene er en poissonprosess"
+  - "Oppgaven gir rate `λ` (eller forventet levetid `1/λ`) og spør om TID til hendelse"
+  - "Det er etablert at hendelsene følger en poissonprosess"
   - "Spørsmålet er på formen `P(T > t)`, `P(T < t)` eller `P(a < T < b)`"
-  - "Rate `λ` er gitt"
+  - "Levetidsoppgaver: 'sannsynligheten for at en lyspære varer i mer enn `t` timer'"
+  - "Frasering 'gitt at det ikke har skjedd noe i `s` minutter, hva er sannsynligheten for å vente `t` til' (memoryless)"
 
 when_NOT_to_use:
   - "Spørsmålet teller hendelser i et fast vindu → bruk [Poissonfordeling](/entry/poisson-fordeling) i stedet"
-  - "Tiden er ikke knyttet til en poissonprosess → annen kontinuerlig fordeling"
+  - "Levetiden er klart ikke memoryless (slitasje, aldring) → annen kontinuerlig fordeling (Weibull, lognormal, ...)"
+  - "Du vil estimere `λ` med usikkerhetsintervall → bruk [KI for poissonrate](/entry/ki-poissonrate)"
 
 symbols:
+  - { sym: "T",  means: "ventetiden (kontinuerlig stokastisk variabel), `T ~ Exp(λ)`" }
   - { sym: "λ",  means: "rate (samme `λ` som i den underliggende poissonprosessen)" }
   - { sym: "t",  means: "ventetiden (alltid `> 0`)" }
   - { sym: "f(t)", means: "sannsynlighetstettheten – areal under = sannsynlighet" }
   - { sym: "F(t)", means: "kumulativ fordelingsfunksjon, `P(T ≤ t)`" }
   - { sym: "e",  means: "Eulers tall `≈ 2.71828`" }
+  - { sym: "σ",  means: "standardavviket, `σ = 1/λ` (samme som forventet ventetid)" }
 
 properties:
   expected_value: "E[T] = 1/λ"
@@ -45,7 +48,7 @@ filters:
   computes: [exact_probability, range_probability, expected_value, find_x_for_threshold, conditional_probability]
   random_variable: [continuous, time_until_event]
   setup: [single_population, events_in_window]
-  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, time_until_first, complement_pattern]
+  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, time_until_first, complement_pattern, no_occurrences, probability_threshold]
   parameters_known: [rate_lambda]
   distribution_assumption: [exponential]
   tooling: [calculator_exp]
@@ -312,6 +315,8 @@ related:
   - { id: "normalfordeling",    kind: "entry" }
   - { id: "komplementregelen",  kind: "entry" }
   - { id: "eksponentialvarians", kind: "glossary" }
+  - { id: "lambda",             kind: "glossary" }
+  - { id: "kumulativ",          kind: "glossary" }
 
 tools:
   - "Kalkulator: e^x"

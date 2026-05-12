@@ -34,17 +34,21 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "X̄, Ȳ",    means: "gjennomsnittene i de to utvalgene" }
+  - { sym: "μ_X, μ_Y", means: "de ukjente populasjonsmidlene (det vi sammenligner)" }
   - { sym: "S_X², S_Y²", means: "variansene i de to utvalgene (estimert fra dataene)" }
   - { sym: "n_X, n_Y", means: "antall observasjoner i hver gruppe" }
+  - { sym: "S_P",      means: "interpolert (pooled) standardavvik, `S_P = √S_P²`" }
   - { sym: "S_P²",     means: "interpolert (pooled) varians, vektet snitt av `S_X²` og `S_Y²`" }
   - { sym: "ν",        means: "frihetsgrader, `ν = n_X + n_Y − 2`" }
   - { sym: "T",        means: "testobservatoren, t-fordelt under `H₀`" }
+  - { sym: "H₀",       means: "nullhypotesen, vanligvis `μ_X = μ_Y`" }
+  - { sym: "α",        means: "signifikansnivå (typisk `0.05`)" }
 
 filters:
   computes: [hypothesis_test]
   random_variable: [difference_of_means, mean_of_samples, continuous]
   setup: [two_independent_samples]
-  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n, two_sided_alternative, one_sided_alternative]
   parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, alpha_significance]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
@@ -326,6 +330,8 @@ related:
   - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "ensidig-test",            kind: "glossary" }
   - { id: "tosidig-test",            kind: "glossary" }
+  - { id: "t-fordeling",             kind: "glossary" }
+  - { id: "paret-test",              kind: "glossary" }
   - { id: "E5-t-tabell",             kind: "table" }
 
 tools:

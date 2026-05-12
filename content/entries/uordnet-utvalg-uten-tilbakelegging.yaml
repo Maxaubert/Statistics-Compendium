@@ -1,8 +1,8 @@
 id: uordnet-utvalg-uten-tilbakelegging
-name_no: "Uordnet utvalg uten tilbakelegging (binomialkoeffisient)"
+name_no: "Uordnet utvalg uten tilbakelegging (telling + P)"
 type: combinatorics
 category: combinatorics
-tagline: "Antall måter å velge `k` elementer blant `n`, der rekkefølge ikke teller."
+tagline: "Tell uordnede utvalg (`C(n, k)`) og regn sannsynligheter for alle like, ingen, eller blanding fra to kategorier."
 
 formula_main: "C(n, k) = n! / (k! · (n - k)!)"
 formula_latex: "\\binom{n}{k} = \\frac{n!}{k! (n-k)!}"
@@ -40,7 +40,7 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n, complement_pattern]
+  structural_cues: [total_observations_n, complement_pattern, all_same_type, mixed_categories, no_occurrences]
   parameters_known: []
   distribution_assumption: [none_assumed, hypergeometric]
   tooling: [calculator_binomial_coef, calculator_factorial]
@@ -66,6 +66,9 @@ solution_variants:
       - "Antall mulige utvalg: `C(N, k)`"
       - text: "Sannsynligheten:"
         formula: "P(alle k er A) = C(K, k) / C(N, k)"
+      - text: "Pass på: hvis oppgaven har FLERE likeverdige kategorier (f.eks. 5 par sko, og 'matchende par' kan være hvilket som helst av dem), bruk formelen per kategori og summer. Med `m` like kategorier av størrelse `K`:"
+        formula: "P(alle k fra én av kategoriene) = m · C(K, k) / C(N, k)"
+        conditional: true
       - text: "Eksempel — 5 hjerter fra 52-korts stokk (`K = 13`, `N = 52`, `k = 5`):"
         formula: "P = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
         example: true
@@ -102,8 +105,20 @@ solution_variants:
         conditional: true
 
 common_traps: |
-  C(n,k) er ikke det samme som n^k. Pass på at n og k er heltall og 0 ≤ k ≤ n.
-  Symmetrien C(n,k) = C(n, n-k) er nyttig for å forenkle beregninger.
+  - **`C(n, k) ≠ n^k` og `C(n, k) ≠ P(n, k)`**: `n^k` er ordnet MED tilbakelegging,
+    `P(n, k) = n!/(n−k)!` er ordnet UTEN tilbakelegging, og `C(n, k)` er uordnet
+    uten tilbakelegging. Forholdet `P(n, k) = C(n, k)·k!`.
+  - **Gyldig område**: `0 ≤ k ≤ n`, og både `n` og `k` må være heltall.
+    Ber oppgaven om `C(5, 7)` (`k > n`), er det `0` — eller en feillesning.
+  - **Trekk uten tilbakelegging fra to kategorier**: bruk produktet
+    `C(K, k)·C(N − K, n − k)` for "nøyaktig `k` av type A blant `n` trukne",
+    delt på `C(N, n)`. Dette er hypergeometrisk sannsynlighet.
+  - **"Minst én"**: regn komplementet `1 − C(N − K, n)/C(N, n)` ("ingen
+    av type A"), ikke summer `P(1) + P(2) + …`. Vesentlig raskere.
+  - **Symmetri**: `C(n, k) = C(n, n − k)`. Praktisk når `k` er nær `n` —
+    f.eks. `C(20, 18) = C(20, 2) = 190`, slipper du å regne `20!/(18!·2!)` ut.
+  - **Ikke bruk binomial**: når trekningen er uten tilbakelegging endrer `p`
+    seg underveis. Bruk hypergeometrisk/C-formel, ikke `(K/N)^k·(1−K/N)^(n−k)`.
 
 detailed_solution_variants:
   - label: "Tell antall mulige utvalg"
@@ -148,25 +163,30 @@ detailed_solution_variants:
 
   - label: "Sannsynlighet: alle k er av samme type"
     solutions:
-      - source: "Eksamen jan25 · oppgave 1"
-        question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for å få 5 hjerter?"
+      - source: "Praksis · sko i mørket"
+        question: "I en mørk garderobe ligger det fem par sko i en haug. Du plukker tilfeldig opp to sko. Hva er sannsynligheten for at skoene du har plukket opp hører sammen (utgjør et par)?"
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`N = 52` kort, `K = 13` hjerter (kategori A), `k = 5` trukne kort." }
-              - { text: "«Alle 5 er hjerter» betyr at alle uttrukne kommer fra de `K = 13` hjertene." }
+              - { text: "Totalt `N = 10` sko (5 par à 2). Vi plukker `k = 2`." }
+              - { text: "Hvert par utgjør en «kategori» med `K = 2` likeverdige sko. Det finnes 5 slike kategorier (parene)." }
+              - { text: "«Skoene hører sammen» = begge fra SAMME par. Per par gjelder den vanlige formelen, og vi summerer over alle 5 parene." }
           - label: "Formel"
             lines:
-              - { text: "`P(alle k er A) = C(K, k) / C(N, k)`" }
+              - { text: "For ETT bestemt par X:" }
+              - { indent: "`P(begge fra par X) = C(2, 2) / C(10, 2)`" }
+              - { text: "Det er 5 par som hver gir et matchende utfall — summer:" }
+              - { indent: "`P(par) = 5 · C(2, 2) / C(10, 2)`" }
           - label: "Innsatt"
             lines:
-              - { text: "Antall gunstige (5 hjerter blant 13):" }
-              - { indent: "`C(13, 5) = 13! / (5! · 8!) = 1 287`" }
-              - { text: "Antall mulige (5 kort blant 52):" }
-              - { indent: "`C(52, 5) = 2 598 960`" }
+              - { text: "Mulige (hvilke som helst 2 sko av 10):" }
+              - { indent: "`C(10, 2) = 45`" }
+              - { text: "Gunstige (5 matchende par, hvert med `C(2, 2) = 1` måte):" }
+              - { indent: "`5 · 1 = 5`" }
               - { text: "Sannsynligheten:" }
-              - { indent: "`P = 1 287 / 2 598 960 ≈ 4.95 · 10⁻⁴`" }
-        result: "`P(5 hjerter) ≈ 4.95 · 10⁻⁴`"
+              - { indent: "`P = 5 / 45 = 1/9 ≈ 0.111`" }
+              - { comment: "Alternativt: plukk én sko (uansett), så er sjansen for matchende andre 1/9. Samme svar." }
+        result: "`P(matchende par) = 1/9 ≈ 0.111` (11.1 %)"
 
   - label: "Sannsynlighet: ingen av k er av en gitt type"
     solutions:

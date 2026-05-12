@@ -7,6 +7,7 @@ filters:
   random_variable: [mean_of_samples]
   distribution_assumption: [t_distribution, normal]
   tooling: [normal_quantile_table_E4, t_quantile_table_E5, standard_normal_table_E3]
+  structural_cues: [two_sided_alternative]
 long_def: |
   En tosidig test forkaster hvis observatoren er langt unna i begge
   retninger. `α` deles likt i to haler (`α/2` i hver).
@@ -21,6 +22,13 @@ long_def: |
 
   Standard når oppgaven bare spør om det er «forskjell» eller «endring»
   uten å spesifisere retning.
+aliases:
+  - tosidig test
+  - tosidige tester
+  - to-sidig test
+  - to-sidige tester
+  - tosidig
+  - to-sidig
 see_also:
   - { id: ensidig-test, kind: glossary }
   - { id: alternativhypotese, kind: glossary }

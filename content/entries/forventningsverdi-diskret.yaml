@@ -49,8 +49,19 @@ solution_template:
     example: true
 
 common_traps: |
-  For en simultanfordeling må du først finne marginalfordelingen `P(X=x)`
-  ved å summere over `y`. Ikke vekt med rad-summer i stedet for marginalsumane.
+  - **Simultanfordeling**: regn først marginalfordelingen `P(X = x)` ved å
+    summere over `y`. Ikke vekt med joint-sannsynlighetene direkte uten å
+    marginalisere først.
+  - **`Σ P = 1` må gjelde**: sjekk at sannsynlighetene summerer til 1 før du
+    regner videre. Ellers er fordelingen feil eller ufullstendig, og `E[X]`
+    blir meningsløs.
+  - **Ikke samme som `(Σx_i)/n`**: forventningsverdi vekter med sannsynligheter,
+    ikke `1/n`. Det enkle gjennomsnittet av verdiene `x_i` er feil med mindre
+    alle `P(X = x_i)` er like.
+  - **Lineæritet**: `E[aX + b] = a·E[X] + b`, men `E[X²] ≠ (E[X])²` — det er
+    nettopp forskjellen som gir [variansen `Var(X) = E[X²] − μ²`](/entry/varians-standardavvik-diskret).
+  - **Negative `x_i` er lov**: forventningsverdien kan godt være negativ
+    (eller `0`). Et negativt svar er ikke automatisk regnefeil.
 
 detailed_solution_variants:
   - label: "Forventningsverdi (diskret)"
@@ -68,7 +79,7 @@ detailed_solution_variants:
               - { indent: "`E[X] = Σ x_i · P(X = x_i)`" }
           - label: "Innsatt"
             lines:
-              - { table_lookup: { ref: "tabell over X", text: "Les av `x_i` og `P(X = x_i)` fra fordelingstabellen." } }
+              - { text: "Les av `x_i` og `P(X = x_i)` fra fordelingstabellen for `X`." }
               - { text: "Multipliser hver verdi med sin sannsynlighet og summer:" }
               - { indent: "`E[X] = (-2)·0.3 + (-1)·0.2 + 0·0.2 + 1·0.1 + 2·0.2`" }
               - { indent: "`     = -0.6 - 0.2 + 0 + 0.1 + 0.4`" }
@@ -129,6 +140,9 @@ related:
   - { id: "marginalfordeling",             kind: "entry" }
   - { id: "kovarians",                     kind: "entry" }
   - { id: "forventningsverdi-oversikt",    kind: "entry" }
+  - { id: "forventningsverdi",             kind: "glossary" }
+  - { id: "stokastisk-variabel",           kind: "glossary" }
+  - { id: "sannsynlighetsfordeling",       kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, addisjon"

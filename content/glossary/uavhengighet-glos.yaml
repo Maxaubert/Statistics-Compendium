@@ -26,6 +26,8 @@ aliases:
   - uavhengige
   - uavhengighet
   - uavhengigheten
+  - uavhengighetene
+  - uavhengigheter
 see_also:
   - { id: disjunkte-hendelser-glos, kind: glossary }
   - { id: produktregel, kind: entry }

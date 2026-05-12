@@ -30,14 +30,17 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "A, A̅",    means: "to disjunkte hendelser som dekker hele utfallsrommet" }
+  - { sym: "A_i",     means: "hendelsene i en partisjon — gjensidig utelukkende og dekker alt (`ΣP(A_i) = 1`)" }
+  - { sym: "P(A)",    means: "marginal sannsynlighet for `A` (priorvekt)" }
   - { sym: "P(B|A)",  means: "sannsynlighet for `B` gitt `A`" }
   - { sym: "P(B)",    means: "den marginale (totale) sannsynligheten for `B`" }
+  - { sym: "P(A ∩ B)", means: "fellessannsynlighet, `= P(A)·P(B|A)`" }
 
 filters:
   computes: [exact_probability, marginal_probability, conditional_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories, disjoint_events]
+  structural_cues: [conditional_given, more_than_two_categories, disjoint_events, conditioning_on_complement]
   parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
@@ -156,6 +159,9 @@ related:
   - { id: "produktregel",          kind: "entry" }
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
   - { id: "bayes-setning",         kind: "entry" }
+  - { id: "partisjon",             kind: "glossary" }
+  - { id: "disjunkte-hendelser-glos", kind: "glossary" }
+  - { id: "total-sannsynlighet-glos", kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, addisjon"

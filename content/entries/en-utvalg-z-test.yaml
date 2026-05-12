@@ -36,16 +36,22 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "X̄", means: "utvalgsgjennomsnittet" }
+  - { sym: "μ",  means: "den ukjente forventningsverdien i populasjonen" }
   - { sym: "μ₀", means: "verdien vi tester mot (fra nullhypotesen)" }
   - { sym: "σ",  means: "populasjonens standardavvik (kjent)" }
   - { sym: "n",  means: "antall observasjoner" }
   - { sym: "Z",  means: "testobservatoren, standardnormalfordelt under `H₀`" }
+  - { sym: "H₀", means: "nullhypotesen (vanligvis `μ = μ₀` eller en ulikhet)" }
+  - { sym: "H₁", means: "alternativhypotesen (`μ < μ₀`, `μ > μ₀` eller `μ ≠ μ₀`)" }
+  - { sym: "α",  means: "signifikansnivå (sannsynlighet for å forkaste `H₀` når den er sann)" }
+  - { sym: "z_α", means: "kritisk z-verdi slik at `P(Z > z_α) = α`, slått opp i tabell E.4" }
+  - { sym: "G(z)", means: "kumulativ standardnormalfordeling, `P(Z ≤ z)`" }
 
 filters:
   computes: [hypothesis_test, find_x_for_threshold, find_n_for_threshold]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
-  structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, total_observations_n]
+  structural_cues: [normal_assumed, mean_and_sd_given, summary_stats_given, total_observations_n, two_sided_alternative, one_sided_alternative, probability_threshold]
   parameters_known: [population_variance_known, sample_size_large, mean_known, alpha_significance]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
@@ -348,6 +354,8 @@ related:
   - { id: "ensidig-test",            kind: "glossary" }
   - { id: "tosidig-test",            kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "nullhypotese",            kind: "glossary" }
+  - { id: "z-score",                 kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

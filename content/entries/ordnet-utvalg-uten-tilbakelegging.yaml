@@ -2,7 +2,7 @@ id: ordnet-utvalg-uten-tilbakelegging
 name_no: "Ordnet utvalg uten tilbakelegging (permutasjoner, P(n,k))"
 type: combinatorics
 category: combinatorics
-tagline: "Antall ordnede utvalg av `k` elementer fra `n`, der rekkefølgen teller og hvert element kan velges maksimalt én gang."
+tagline: "Tell ordnede utvalg uten tilbakelegging (`n!/(n−k)!`) og regn sannsynligheter for en spesifikk ordnet sekvens."
 
 formula_main: "P(n, k) = n! / (n − k)! = n · (n − 1) · ... · (n − k + 1)"
 formula_latex: "P(n,k) = \\frac{n!}{(n-k)!} = n \\cdot (n-1) \\cdots (n-k+1)"

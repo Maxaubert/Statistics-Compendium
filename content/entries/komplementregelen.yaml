@@ -23,7 +23,7 @@ recognition_cues:
   - "Spørsmålet inneholder ord som 'minst én', 'minst `k`', 'færre enn `k`', 'ingen', 'høyst `k`', 'ikke alle'"
   - "Direkte beregning av det som spørres etter ville kreve sum over mange utfall"
   - "Negasjonen (det motsatte) er enklere å beskrive enn det spørsmålet ber om"
-  - "Du har en kumulativ tabell (E.1, E.2, E.3) som gir `P(X ≤ k)`, men spørsmålet er om `P(X ≥ k)`"
+  - "Du har en kumulativ tabell (tabell E.1, tabell E.2, tabell E.3) som gir `P(X ≤ k)`, men spørsmålet er om `P(X ≥ k)`"
   - "Spørsmål som starter med 'finn `n` slik at sannsynligheten for ... overstiger ...' (terskelproblem)"
 
 when_NOT_to_use:
@@ -39,7 +39,7 @@ filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
   random_variable: [discrete_count, continuous, time_until_event]
   setup: [single_population]
-  structural_cues: [complement_pattern, independent_events, time_until_first]
+  structural_cues: [complement_pattern, independent_events, time_until_first, at_least_one, no_occurrences, probability_threshold, all_same_type]
   parameters_known: []
   distribution_assumption: [none_assumed, binomial, poisson, normal, exponential]
   tooling: [calculator_only]
@@ -353,6 +353,9 @@ related:
   - { id: "unionssetningen",   kind: "entry" }
   - { id: "binomial-fordeling", kind: "entry" }
   - { id: "poisson-fordeling", kind: "entry" }
+  - { id: "komplement",        kind: "glossary" }
+  - { id: "de-morgans-lov",    kind: "glossary" }
+  - { id: "hendelse",          kind: "glossary" }
 
 tools:
   - "Tabell E.1 – Kumulativ binomisk sannsynlighet (slå opp P(X ≤ k) for binomial)"

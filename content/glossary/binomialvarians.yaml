@@ -4,7 +4,7 @@ short_def: "Spesielt for `Binomial(n, p)`: `E[X] = np`, `Var(X) = np(1 − p)`, 
 filters:
   distribution_assumption: [binomial, normal]
   random_variable: [discrete_count, proportion]
-  computes: [std_dev, expected_value]
+  computes: [std_dev, expected_value, variance]
   parameters_known: [success_p]
   setup: [fixed_n_trials]
   structural_cues: [success_probability_given]

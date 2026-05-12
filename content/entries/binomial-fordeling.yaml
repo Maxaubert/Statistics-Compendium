@@ -19,12 +19,11 @@ why_use: |
   med sykdom i et utplukk.
 
 recognition_cues:
-  - "Fast antall `n` forsøk er oppgitt eller kan bestemmes"
-  - "Hvert forsøk har bare to utfall: suksess eller fiasko"
-  - "Suksessannsynligheten `p` er konstant over forsøkene"
-  - "Forsøkene er uavhengige av hverandre"
-  - "Spørsmålet handler om antall suksesser, ikke tid eller rate"
-  - "Med tilbakelegging eller fra populasjon der `p` er konstant"
+  - "Oppgaven oppgir fast antall `n` forsøk og en andel/sannsynlighet `p` (f.eks. 'vi sjekker 10 trær, hver er syk med 20 % sannsynlighet')"
+  - "Hvert forsøk har bare to utfall: suksess/fiasko, defekt/OK, syk/frisk"
+  - "Spørsmålet ber om 'nøyaktig `k`', 'minst `k`', 'høyst `k`' suksesser"
+  - "Med tilbakelegging — eller `p` antas konstant fordi populasjonen er stor i forhold til `n`"
+  - "Spørsmål av typen 'hvor mange `n` må vi ha for at `P(X ≥ 1) > 0.95`' (terskelproblem)"
 
 when_NOT_to_use:
   - "Trekker uten tilbakelegging fra endelig pott → bruk [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling) i stedet"
@@ -32,11 +31,15 @@ when_NOT_to_use:
   - "Spørsmålet handler om antall hendelser pr. tidsenhet → bruk [Poissonfordeling](/entry/poisson-fordeling)"
 
 symbols:
+  - { sym: "X",      means: "antall suksesser av `n` forsøk, `X ~ Bin(n, p)`" }
   - { sym: "n",      means: "antall forsøk (heltall)" }
   - { sym: "p",      means: "suksessannsynlighet i hvert forsøk" }
   - { sym: "1 - p",  means: "fiaskoannsynlighet i hvert forsøk" }
   - { sym: "k",      means: "antall suksesser det spørres om (heltall, `0 ≤ k ≤ n`)" }
   - { sym: "C(n,k)", means: "binomialkoeffisient `n` over `k`, antall måter å plukke `k` blant `n`" }
+  - { sym: "E[X]",   means: "forventet antall suksesser, `np`" }
+  - { sym: "Var[X]", means: "variansen til `X`, `np(1−p)`" }
+  - { sym: "σ",      means: "standardavviket, `√(np(1−p))`" }
 
 properties:
   expected_value: "E[X] = np"
@@ -47,7 +50,7 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, find_n_for_threshold, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n, counting_events]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n, counting_events, probability_threshold, at_least_one, no_occurrences, all_same_type]
   parameters_known: [success_p]
   distribution_assumption: [binomial]
   tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
@@ -435,6 +438,8 @@ related:
   - { id: "en-utvalg-z-test-andel", kind: "entry" }
   - { id: "binomialvarians",        kind: "glossary" }
   - { id: "bernoulli-forsoek",      kind: "glossary" }
+  - { id: "uavhengighet-glos",      kind: "glossary" }
+  - { id: "med-tilbakelegging",     kind: "glossary" }
   - { id: "E1-binomial-kumulativ",  kind: "table" }
 
 tools:

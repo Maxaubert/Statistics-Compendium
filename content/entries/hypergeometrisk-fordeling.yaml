@@ -30,11 +30,13 @@ when_NOT_to_use:
   - "`n/N` er liten (`< 5%`) – da er [binomial](/entry/binomial-fordeling) en god tilnærming"
 
 symbols:
+  - { sym: "X",  means: "antall vellykkede i de `n` trekningene, `X ~ Hyp(N, K, n)`" }
   - { sym: "N",  means: "total antall i populasjonen" }
   - { sym: "K",  means: "antall 'vellykkede' i populasjonen" }
   - { sym: "n",  means: "antall trekninger" }
   - { sym: "k",  means: "antall vellykkede blant de `n` trukne (det vi spør om)" }
   - { sym: "C(a,b)", means: "binomialkoeffisient `a` over `b`" }
+  - { sym: "σ",  means: "standardavviket, `σ = √Var[X]`" }
 
 properties:
   expected_value: "E[X] = n · K/N"
@@ -45,7 +47,7 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, combinatorial_count, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool, fixed_n_trials]
-  structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events]
+  structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events, mixed_categories, no_occurrences, at_least_one]
   parameters_known: [success_p]
   distribution_assumption: [hypergeometric]
   tooling: [calculator_binomial_coef]
@@ -147,6 +149,8 @@ related:
   - { id: "gunstige-pa-mulige",     kind: "entry" }
   - { id: "uten-tilbakelegging-glos", kind: "glossary" }
   - { id: "hypergeometrisk-varians", kind: "glossary" }
+  - { id: "populasjon",             kind: "glossary" }
+  - { id: "utvalg",                 kind: "glossary" }
 
 tools:
   - "Kalkulator: binomialkoeffisient C(n,k) (også skrevet som nCk eller komb.)"

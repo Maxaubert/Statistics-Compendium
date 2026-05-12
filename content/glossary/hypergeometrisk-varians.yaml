@@ -5,7 +5,7 @@ filters:
   distribution_assumption: [hypergeometric]
   random_variable: [discrete_count]
   setup: [without_replacement, finite_pool, fixed_n_trials]
-  computes: [std_dev, expected_value]
+  computes: [std_dev, expected_value, variance]
 long_def: |
   For en `Hypergeometrisk(N, K, n)`-fordelt variabel `X` (antall
   «vellykkede» i `n` trekninger uten tilbakelegging fra en pott på

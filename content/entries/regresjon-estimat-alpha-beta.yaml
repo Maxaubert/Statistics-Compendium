@@ -24,8 +24,10 @@ recognition_cues:
   - "Datatabell med `Σ(x−x̄)²`, `Σ(x−x̄)(y−ȳ)` er typisk gitt"
 
 when_NOT_to_use:
-  - "Sammenhengen er åpenbart ikke-lineær (kurvet, eksponentiell, osv.)"
-  - "Du har bare ett datapunkt (umulig å estimere)"
+  - "Sammenhengen er åpenbart ikke-lineær (kurvet, eksponentiell, osv.) — vurder transformasjon eller polynomregresjon"
+  - "Du vil teste om sammenhengen er signifikant → bruk [hypotesetest for β](/entry/regresjon-test-stigningstall) etter du har `β̂`"
+  - "Du vil bare måle styrken på sammenhengen → bruk [korrelasjonskoeffisient r](/entry/regresjon-korrelasjonskoeffisient)"
+  - "Du vil predikere en enkelt `y`-verdi → først `α̂, β̂`, så [prediksjonsintervall](/entry/regresjon-prediksjonsintervall)"
 
 symbols:
   - { sym: "x_i, y_i",      means: "observasjonsparene" }
@@ -59,9 +61,20 @@ solution_template:
     formula: "ŷ = α̂ + β̂·x"
 
 common_traps: |
-  Pass på rekkefølgen i krysssummen: `Σ(x_i − x̄)(y_i − ȳ)` er IKKE det samme
-  som `Σx_i·y_i`. Hvis bare `Σx_i·y_i` er gitt, må krysssummen omformes:
-  `Σ(x_i − x̄)(y_i − ȳ) = Σx_i·y_i − n·x̄·ȳ`.
+  - **Krysssum vs. produktsum**: `S_XY = Σ(x_i − x̄)(y_i − ȳ)` er IKKE det samme
+    som `Σx_i·y_i`. Hvis bare `Σx_i·y_i` er gitt, omform:
+    `Σ(x_i − x̄)(y_i − ȳ) = Σx_i·y_i − n·x̄·ȳ`. Tilsvarende:
+    `S_XX = Σx_i² − n·x̄²`.
+  - **Bytt ikke om `x` og `y`**: `β̂_(y|x) = S_XY/S_XX` er hva som forklarer `y`
+    fra `x`. Bytter du roller, får du en annen linje (`β̂_(x|y) = S_XY/S_YY`),
+    ikke bare den inverse helningen.
+  - **Linjen går gjennom `(x̄, ȳ)`**: bruk dette som sanity-sjekk. Hvis
+    `ŷ(x̄) ≠ ȳ`, har du regnet `α̂` feil.
+  - **Ekstrapolering**: regresjonslinjen gjelder kun innenfor det `x`-intervallet
+    dataene dekker. Predikere langt utenfor (negativ `x`, eller `x` 10x større
+    enn maks) er statistisk uforsvarlig selv om formelen gir et tall.
+  - **Enheter**: `β̂` har enhet `(enhet av y)/(enhet av x)`. Sjekk dette mot
+    konteksten — det avslører ofte regnefeil med faktor 10.
 
 python_snippet: |
   import numpy as np
@@ -170,6 +183,9 @@ related:
   - { id: "regresjon-test-stigningstall",      kind: "entry" }
   - { id: "regresjon-prediksjonsintervall",    kind: "entry" }
   - { id: "spredningsplott",                   kind: "glossary" }
+  - { id: "minste-kvadraters-metode",          kind: "glossary" }
+  - { id: "beta-koeffisient",                  kind: "glossary" }
+  - { id: "intercept",                         kind: "glossary" }
 
 tools:
   - "Kalkulator: summer, gjennomsnitt"

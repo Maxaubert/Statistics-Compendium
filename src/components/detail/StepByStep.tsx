@@ -7,6 +7,13 @@ export interface StepCase {
   then: string;
 }
 
+export interface StepTable {
+  headers: string[];
+  rows: string[][];
+  margin_col?: boolean;
+  margin_row?: boolean;
+}
+
 export type StepItem =
   | string
   | {
@@ -15,6 +22,7 @@ export type StepItem =
       example?: boolean;
       formula?: string | string[];
       cases?: StepCase[];
+      table?: StepTable;
     };
 
 function normalize(item: StepItem): {
@@ -23,6 +31,7 @@ function normalize(item: StepItem): {
   example: boolean;
   formulas: string[];
   cases?: StepCase[];
+  table?: StepTable;
 } {
   if (typeof item === "string")
     return { text: item, conditional: false, example: false, formulas: [] };
@@ -39,6 +48,7 @@ function normalize(item: StepItem): {
     example: !!item.example,
     formulas,
     cases: item.cases,
+    table: item.table,
   };
 }
 
@@ -58,7 +68,7 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
         className="absolute left-[18px] top-4 bottom-4 w-[2px] bg-primary-2/30"
       />
       {steps.map((raw, i) => {
-        const { text, conditional, example, formulas, cases } = normalize(raw);
+        const { text, conditional, example, formulas, cases, table } = normalize(raw);
         const stepNo = numbers[i];
         const codeTheme = conditional ? "warn" : example ? "example" : "step";
 
@@ -140,6 +150,9 @@ export function StepByStep({ steps }: { steps: StepItem[] }) {
               <div className={clsx("font-serif text-[14.5px] leading-relaxed", textInkClass)}>
                 {renderInlineCode(text, codeTheme)}
               </div>
+              {table && (
+                <StepTableView table={table} example={example} conditional={conditional} />
+              )}
               {formulas.map((f, fi) => (
                 <div
                   key={fi}
@@ -201,4 +214,102 @@ function computeStepNumbers(steps: StepItem[]): (number | null)[] {
     const norm = normalize(s);
     return norm.conditional || norm.example ? null : ++n;
   });
+}
+
+/**
+ * Lightweight table renderer for step-cards. Uses the surrounding step
+ * theme (emerald for example, amber for conditional, indigo otherwise)
+ * so the table reads as part of the step rather than a foreign block.
+ */
+function StepTableView({
+  table,
+  example,
+  conditional,
+}: {
+  table: StepTable;
+  example: boolean;
+  conditional: boolean;
+}) {
+  const lastCol = table.headers.length - 1;
+  const lastRow = table.rows.length - 1;
+  const headerBg = example
+    ? "bg-emerald-200/50 text-emerald-900"
+    : conditional
+      ? "bg-amber-200/50 text-amber-900"
+      : "bg-primary-2/15 text-primary-2";
+  const marginCellTint = example
+    ? "bg-emerald-300/40 text-emerald-900"
+    : conditional
+      ? "bg-amber-300/40 text-amber-900"
+      : "bg-primary-2/20 text-primary-2";
+  const firstColTint = example
+    ? "bg-emerald-200/30 text-emerald-900"
+    : conditional
+      ? "bg-amber-200/30 text-amber-900"
+      : "bg-primary-2/10 text-primary-2";
+  const borderColor = example
+    ? "border-emerald-400/40"
+    : conditional
+      ? "border-amber-400/40"
+      : "border-primary-2/20";
+  return (
+    <div className={clsx("mt-3 overflow-x-auto rounded-md border", borderColor)}>
+      <table className="w-full border-collapse font-mono text-[13px]">
+        <thead>
+          <tr>
+            {table.headers.map((h, hi) => {
+              const isMarg = !!table.margin_col && hi === lastCol;
+              return (
+                <th
+                  key={hi}
+                  className={clsx(
+                    "px-3.5 py-1.5 text-center text-[11px] font-semibold uppercase tracking-wide",
+                    "border-b",
+                    hi !== lastCol && "border-r",
+                    borderColor,
+                    isMarg ? marginCellTint : headerBg,
+                  )}
+                >
+                  {h}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, ri) => {
+            const isMargRow = !!table.margin_row && ri === lastRow;
+            return (
+              <tr key={ri}>
+                {row.map((cell, ci) => {
+                  const isFirst = ci === 0;
+                  const isMargCol = !!table.margin_col && ci === lastCol;
+                  const tint = isMargRow || isMargCol;
+                  const Cell = isFirst ? "th" : "td";
+                  return (
+                    <Cell
+                      key={ci}
+                      className={clsx(
+                        "px-3.5 py-1.5 text-center",
+                        ri !== lastRow && "border-b",
+                        ci !== lastCol && "border-r",
+                        borderColor,
+                        tint
+                          ? clsx(marginCellTint, "font-semibold")
+                          : isFirst
+                            ? clsx(firstColTint, "font-semibold text-[11px] uppercase tracking-wide")
+                            : "bg-card text-ink",
+                      )}
+                    >
+                      {cell}
+                    </Cell>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
 }

@@ -78,11 +78,13 @@ describe("buildGlossarySearchIndex", () => {
   const terms: GlossaryTerm[] = [
     {
       id: "p-verdi-glos",
+      filters: {},
       term_no: "P-verdi",
       short_def: "Sannsynligheten for ekstreme data gitt H₀.",
     },
     {
       id: "frihetsgrader-glos",
+      filters: {},
       term_no: "Frihetsgrader (df, ν)",
       short_def: "Antall uavhengige biter informasjon.",
       aliases: ["frihetsgrader", "df", "ν"],

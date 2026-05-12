@@ -18,10 +18,11 @@ why_use: |
   sannsynligheten `p` med usikkerhetsmål.
 
 recognition_cues:
-  - "Spørsmålet ber om KI for en andel/sannsynlighet"
-  - "Du har observert `X` suksesser i `n` forsøk"
-  - "Konfidensnivå er gitt"
+  - "Oppgaven ber om '95 % konfidensintervall for andelen `p`'"
+  - "Du har observert `X` suksesser i `n` forsøk (f.eks. 'av 200 spurte svarte 142 ja')"
+  - "Frasering 'estimer andelen som ... med usikkerhet'"
   - "Du har en binomisk situasjon (samme `p` i hvert forsøk, uavhengige)"
+  - "Utvalget er stort nok (`n · p̂ · (1 − p̂) ≥ 5`) til normalapproksimasjon"
 
 when_NOT_to_use:
   - "Du estimerer en rate (per tidsenhet) → bruk [KI for poissonrate](/entry/ki-poissonrate)"
@@ -29,16 +30,18 @@ when_NOT_to_use:
   - "Du vil teste `p` mot en spesifisert verdi `p₀` (ikke estimere intervall) → bruk [z-test for andel](/entry/en-utvalg-z-test-andel) i stedet"
 
 symbols:
+  - { sym: "p",         means: "den ukjente andelen i populasjonen (det vi estimerer)" }
   - { sym: "p̂",        means: "punktestimat for andelen, `p̂ = X/n`" }
   - { sym: "X",         means: "antall suksesser observert" }
   - { sym: "n",         means: "antall forsøk" }
+  - { sym: "α",         means: "signifikansnivå; `1 − α` er konfidensnivået" }
   - { sym: "z_(α/2)",   means: "kvantil i standardnormalfordelingen" }
 
 filters:
   computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
   random_variable: [proportion, discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given]
+  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given, probability_threshold]
   parameters_known: [success_p, sample_size_large, confidence_level]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
@@ -161,6 +164,9 @@ related:
   - { id: "binomial-fordeling",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel",  kind: "entry" }
   - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "konfidensintervall",      kind: "glossary" }
+  - { id: "andel",                   kind: "glossary" }
+  - { id: "standardfeil-til-andel",  kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
 
 tools:

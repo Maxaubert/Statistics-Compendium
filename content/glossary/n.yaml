@@ -2,7 +2,7 @@ id: n
 term_no: n (utvalgsstørrelse)
 short_def: "Antall observasjoner i utvalget."
 filters:
-  structural_cues: [total_observations_n, data_as_list]
+  structural_cues: [total_observations_n, data_as_list, probability_threshold]
   parameters_known: [sample_size_small_lt30, sample_size_large, population_variance_unknown]
   computes: [find_n_for_threshold, std_dev, expected_value, confidence_interval]
   random_variable: [mean_of_samples]

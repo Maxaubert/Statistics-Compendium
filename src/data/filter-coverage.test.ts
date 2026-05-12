@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { applyFilters } from "./filtering";
+import { applyFilters, type FilterSelection } from "./filtering";
 import { loadAllContent } from "./loadContent";
 
 const data = loadAllContent();
@@ -62,7 +62,7 @@ describe("Multi-filter robustness", () => {
   // Realistic exam-style multi-filter scenarios. Each combines 3-5 filters
   // across dimensions and asserts a known entry surfaces.
 
-  const scenarios = [
+  const scenarios: { name: string; selection: FilterSelection; mustInclude: string }[] = [
     {
       name: "binomial probability with table",
       selection: {

@@ -3,7 +3,7 @@ term_no: Setningen om total sannsynlighet
 short_def: "`P(B) = Σ P(Aᵢ)·P(B|Aᵢ)` over en partisjon `{Aᵢ}` — bryter `P(B)` opp i bidrag fra hvert tilfelle."
 filters:
   computes: [conditional_probability, exact_probability]
-  structural_cues: [conditional_given, disjoint_events]
+  structural_cues: [conditional_given, disjoint_events, conditioning_on_complement]
 long_def: |
   Når `B` kan inntreffe på flere disjunkte måter (gjennom `A` eller `A̅`,
   eller en partisjon `A₁, A₂, …, A_k`), summeres de betingede

@@ -8,6 +8,7 @@ filters:
   computes: [hypothesis_test]
   random_variable: [mean_of_samples, slope_estimate]
   setup: [linear_relationship, single_population]
+  structural_cues: [one_sided_alternative, two_sided_alternative]
 aliases:
   - t-verdi
   - t-observator

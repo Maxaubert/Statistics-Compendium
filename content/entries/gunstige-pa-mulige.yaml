@@ -40,6 +40,22 @@ filters:
   distribution_assumption: [none_assumed]
   tooling: [calculator_only, calculator_binomial_coef]
 
+common_traps: |
+  - **Forutsetningen om like sannsynlige utfall**: formelen `|A|/|Ω|` gjelder
+    KUN når alle elementære utfall er like sannsynlige. Hvis trekningen er
+    skjev (vektet terning, ulikt fordelte kuler), må du regne med faktiske
+    sannsynligheter — telling holder ikke.
+  - **Ordnet vs. uordnet i teller og nevner**: pass på at "gunstige" og "mulige"
+    telles på SAMME måte. Hvis nevneren er `C(N, k)` (uordnet), må telleren også
+    være uordnet. Blander du `n!/(n−k)!` og `C(n,k)`, blir svaret feil.
+  - **"Minst én"-spørsmål**: tell heller komplementet ("ingen") og bruk
+    `P(minst én) = 1 − P(ingen)` — det er nesten alltid raskere enn å summere
+    `P(nøyaktig 1) + P(nøyaktig 2) + …`.
+  - **Dobbelttelling**: hvis du teller "alle hjerter" som `C(13,5)` OG "alle
+    ruter" som `C(13,5)`, må du IKKE telle utvalg som inneholder begge to
+    ganger — disjunkte tilfeller summeres, overlappende krever
+    [unionssetningen](/entry/unionssetningen).
+
 related:
   - { id: "uordnet-utvalg-uten-tilbakelegging",  kind: "entry" }
   - { id: "ordnet-utvalg-med-tilbakelegging",    kind: "entry" }

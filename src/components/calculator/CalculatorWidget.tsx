@@ -1,10 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
-import { Calculator as CalcIcon, X } from "lucide-react";
+import { Calculator as CalcIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { ScientificCalculator } from "./ScientificCalculator";
 import { useCalculatorStyle } from "./calculator-style";
 
 const STORAGE_OPEN = "calc-widget-open";
+const STORAGE_ROUND = "calc-widget-round";
+const STORAGE_DECIMALS = "calc-widget-decimals";
+
+function loadStr(key: string): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return window.localStorage.getItem(key) ?? "";
+  } catch {
+    return "";
+  }
+}
+function saveStr(key: string, value: string) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // ignore
+  }
+}
 
 const PANEL_WIDTH = 460;
 const BUTTON_RIGHT = 20;
@@ -42,6 +60,24 @@ export function CalculatorWidget() {
   const [mounted, setMounted] = useState<boolean>(open);
   const [closing, setClosing] = useState<boolean>(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Round-output controls live in the header; the result is wrapped in
+  // `round(expr, decimals)` when the toggle is on. State persisted so
+  // it survives reload and reopen.
+  const [rounded, setRounded] = useState<boolean>(
+    () => loadStr(STORAGE_ROUND) === "1",
+  );
+  const [decimals, setDecimals] = useState<number>(() => {
+    const raw = loadStr(STORAGE_DECIMALS);
+    const n = raw ? Number(raw) : 2;
+    return Number.isInteger(n) && n >= 0 && n <= 15 ? n : 2;
+  });
+  useEffect(() => {
+    saveStr(STORAGE_ROUND, rounded ? "1" : "0");
+  }, [rounded]);
+  useEffect(() => {
+    saveStr(STORAGE_DECIMALS, String(decimals));
+  }, [decimals]);
 
   useEffect(() => {
     if (open) {
@@ -161,26 +197,16 @@ export function CalculatorWidget() {
                 Kalkulator
               </span>
             </div>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Lukk kalkulator"
-              className="flex h-7 w-7 items-center justify-center rounded-md transition-colors"
-              style={{ color: style.closeRest }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = style.closeHoverBg;
-                e.currentTarget.style.color = style.closeHoverInk;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = style.closeRest;
-              }}
-            >
-              <X size={16} />
-            </button>
+            <RoundPill
+              rounded={rounded}
+              decimals={decimals}
+              onToggle={() => setRounded((v) => !v)}
+              onChangeDecimals={setDecimals}
+              ink={style.headerInk}
+            />
           </header>
           <div className="px-5 pb-5 pt-4">
-            <ScientificCalculator />
+            <ScientificCalculator rounded={rounded} decimals={decimals} />
           </div>
         </div>
         </div>
@@ -223,5 +249,132 @@ export function CalculatorWidget() {
         </button>
       )}
     </>
+  );
+}
+
+/**
+ * Round-output control for the calculator header.
+ *
+ * Layout: iOS-style toggle switch + "Avrund" label + a number cell
+ * with stacked chevron-up/chevron-down stepper buttons on the right
+ * for adjusting the decimal count. The native number-input arrows
+ * are hidden via CSS; the chevrons live above/below a flush number
+ * input so the row stays compact.
+ */
+function RoundPill({
+  rounded,
+  decimals,
+  onToggle,
+  onChangeDecimals,
+  ink,
+}: {
+  rounded: boolean;
+  decimals: number;
+  onToggle: () => void;
+  onChangeDecimals: (n: number) => void;
+  ink: string;
+}) {
+  const clamp = (n: number) => Math.max(0, Math.min(15, Math.floor(n)));
+  return (
+    <div className="flex items-center gap-2">
+      {/* Toggle switch */}
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-pressed={rounded}
+        aria-label={rounded ? "Skru av avrunding" : "Skru på avrunding"}
+        className="relative inline-flex h-[18px] w-[32px] items-center rounded-full transition-colors"
+        style={{
+          background: rounded ? "rgb(34, 211, 238)" : "rgba(255,255,255,0.15)",
+        }}
+      >
+        <span
+          aria-hidden
+          className="inline-block h-[14px] w-[14px] rounded-full bg-white transition-transform"
+          style={{
+            transform: rounded ? "translateX(16px)" : "translateX(2px)",
+            boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+          }}
+        />
+      </button>
+      {/* Label */}
+      <span
+        className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em]"
+        style={{ color: ink, opacity: rounded ? 1 : 0.55 }}
+      >
+        Avrund
+      </span>
+      {/* Number + custom stepper */}
+      <div
+        className="flex h-7 items-stretch rounded-md border"
+        style={{
+          borderColor: rounded ? "rgba(34, 211, 238, 0.45)" : "rgba(255,255,255,0.15)",
+          background: rounded ? "rgba(34, 211, 238, 0.08)" : "transparent",
+          opacity: rounded ? 1 : 0.5,
+          transition: "background 140ms, border-color 140ms, opacity 140ms",
+        }}
+      >
+        <input
+          type="number"
+          min={0}
+          max={15}
+          step={1}
+          value={decimals}
+          disabled={!rounded}
+          onChange={(e) => onChangeDecimals(clamp(Number(e.target.value) || 0))}
+          className="calc-no-spin w-7 bg-transparent px-1 text-center font-mono text-[13px] font-bold outline-none disabled:cursor-not-allowed"
+          style={{ color: ink }}
+          aria-label="Antall desimaler"
+        />
+        <div
+          className="flex flex-col"
+          style={{
+            borderLeft: rounded
+              ? "1px solid rgba(34, 211, 238, 0.25)"
+              : "1px solid rgba(255,255,255,0.10)",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => rounded && onChangeDecimals(clamp(decimals + 1))}
+            disabled={!rounded || decimals >= 15}
+            aria-label="Øk desimaler"
+            className="flex h-[14px] w-5 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-30"
+            style={{ color: ink }}
+            onMouseEnter={(e) => {
+              if (rounded && decimals < 15)
+                e.currentTarget.style.background = "rgba(34, 211, 238, 0.15)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            <ChevronUp size={11} strokeWidth={3} />
+          </button>
+          <button
+            type="button"
+            onClick={() => rounded && onChangeDecimals(clamp(decimals - 1))}
+            disabled={!rounded || decimals <= 0}
+            aria-label="Reduser desimaler"
+            className="flex h-[14px] w-5 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-30"
+            style={{
+              color: ink,
+              borderTop: rounded
+                ? "1px solid rgba(34, 211, 238, 0.25)"
+                : "1px solid rgba(255,255,255,0.10)",
+            }}
+            onMouseEnter={(e) => {
+              if (rounded && decimals > 0)
+                e.currentTarget.style.background = "rgba(34, 211, 238, 0.15)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            <ChevronDown size={11} strokeWidth={3} />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -31,17 +31,23 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "X̄",   means: "utvalgsgjennomsnittet" }
+  - { sym: "μ",    means: "den ukjente forventningsverdien i populasjonen" }
   - { sym: "μ₀",   means: "verdien vi tester mot (fra nullhypotesen)" }
   - { sym: "S",    means: "utvalgs-standardavviket (estimat for `σ`)" }
+  - { sym: "s²",   means: "utvalgsvariansen, `s² = (1/(n−1))·Σ(xᵢ − x̄)²`" }
   - { sym: "n",    means: "antall observasjoner" }
   - { sym: "ν",    means: "frihetsgrader, `ν = n − 1`" }
   - { sym: "T",    means: "testobservatoren, t-fordelt under `H₀`" }
+  - { sym: "H₀",   means: "nullhypotesen (vanligvis `μ = μ₀`)" }
+  - { sym: "H₁",   means: "alternativhypotesen (`μ < μ₀`, `μ > μ₀` eller `μ ≠ μ₀`)" }
+  - { sym: "α",    means: "signifikansnivå (sannsynlighet for å forkaste `H₀` når den er sann)" }
+  - { sym: "t_(α, ν)", means: "kritisk verdi (kvantil) i t-fordelingen, slått opp i tabell E.5" }
 
 filters:
   computes: [hypothesis_test]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
-  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n, two_sided_alternative, one_sided_alternative]
   parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, sample_size_large, alpha_significance]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
@@ -337,6 +343,8 @@ related:
   - { id: "ensidig-test",          kind: "glossary" }
   - { id: "tosidig-test",          kind: "glossary" }
   - { id: "ki-mu-ukjent-sigma",    kind: "entry" }
+  - { id: "t-fordeling",           kind: "glossary" }
+  - { id: "utvalgsvarians-radata", kind: "entry" }
   - { id: "E5-t-tabell",           kind: "table" }
 
 tools:

@@ -54,9 +54,16 @@ python_snippet: |
   ki_lo, ki_hi = np.percentile(resamples, [2.5, 97.5])
 
 recognition_cues:
-  - "Få observasjoner og fordelingen ser ikke normalfordelt ut (qq-plott avviker)"
-  - "Spørsmål om bootstrap-konfidensintervall"
-  - "Python-bruk av numpy.random.choice(replace=True)"
+  - "Oppgaven sier eksplisitt 'bruk bootstrap' eller 'bootstrap-konfidensintervall'"
+  - "Lite utvalg (`n < 30`) og qq-plott eller histogram viser tydelig skjevhet"
+  - "Du har rådata, men ingen normalfordelingsantakelse er rimelig"
+  - "Python/R-kodebit med `np.random.choice(..., replace=True)` eller `sample(..., replace=TRUE)` er gitt"
+  - "Oppgaven spør om standardfeil eller KI for en statistikk uten kjent fordeling (f.eks. median, kvartil)"
+
+when_NOT_to_use:
+  - "Dataene ser normalfordelte ut og `σ` er kjent → bruk [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma) i stedet"
+  - "Dataene ser normalfordelte ut men `σ` er ukjent → bruk [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma)"
+  - "Du har en andel `X/n` med stort `n` → bruk [KI for andel](/entry/ki-andel-binomial)"
 
 filters:
   computes: [confidence_interval, parameter_estimate, std_dev]
@@ -71,3 +78,9 @@ related:
   - { id: "prosentilintervall",         kind: "glossary" }
   - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
   - { id: "ki-mu-kjent-sigma",          kind: "entry" }
+  - { id: "ki-mu-ukjent-sigma",         kind: "entry" }
+  - { id: "med-tilbakelegging",         kind: "glossary" }
+  - { id: "konfidensintervall",         kind: "glossary" }
+
+tools:
+  - "Tabell E.4 – Z-kvantiltabell"

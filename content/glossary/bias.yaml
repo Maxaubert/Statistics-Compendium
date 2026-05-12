@@ -17,6 +17,13 @@ long_def: |
   ofte med:
 
       MSE = bias² + varians
+aliases:
+  - bias
+  - biased
+  - forventningsskjev
+  - forventningsskjeve
+  - forventningsskjevhet
+  - forventningsskjevheten
 see_also:
   - { id: forventningsrett, kind: glossary }
   - { id: estimator, kind: glossary }

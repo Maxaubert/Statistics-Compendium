@@ -1,8 +1,8 @@
 id: ordnet-utvalg-med-tilbakelegging
-name_no: "Ordnet utvalg med tilbakelegging (n^k)"
+name_no: "Ordnet utvalg med tilbakelegging (telling + P)"
 type: combinatorics
 category: combinatorics
-tagline: "Antall ordnede sekvenser når samme verdi kan gjentas — `n` velg `k` med tilbakelegging og rekkefølge."
+tagline: "Tell ordnede sekvenser (`n^k`) og regn sannsynligheter for spesifikk sekvens, alle like, ingen eller minst én."
 
 formula_main: "Antall sekvenser = n^k"
 formula_latex: "n^{k}"
@@ -42,7 +42,7 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: [discrete_count]
   setup: [with_replacement, fixed_n_trials]
-  structural_cues: [total_observations_n, complement_pattern, independent_events]
+  structural_cues: [total_observations_n, complement_pattern, independent_events, at_least_one, no_occurrences, all_same_type]
   parameters_known: [success_p]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]

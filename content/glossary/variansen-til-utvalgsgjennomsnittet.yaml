@@ -3,10 +3,11 @@ term_no: Variansen til utvalgsgjennomsnittet (Var(X̄))
 short_def: "`Var(X̄) = σ²/n` — spredningen i selve gjennomsnittet, ikke i dataene. Standardfeilen er `SE(X̄) = σ/√n`."
 filters:
   random_variable: [mean_of_samples]
-  computes: [std_dev, confidence_interval, hypothesis_test, find_n_for_threshold]
+  computes: [std_dev, confidence_interval, hypothesis_test, find_n_for_threshold, variance]
   parameters_known: [population_variance_known, population_variance_unknown, confidence_level]
   setup: [single_population]
   distribution_assumption: [normal]
+  structural_cues: [probability_threshold]
 long_def: |
   Når du regner ut `X̄` fra `n` uavhengige observasjoner med samme
   varians `σ²`, er variansen til selve gjennomsnittet:
