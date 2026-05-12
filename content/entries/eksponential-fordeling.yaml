@@ -98,6 +98,17 @@ solution_variants:
         example: true
       - "Tolk: ventetidsfordelingen «starter på nytt» hvert øyeblikk uten hendelse — typisk for poissonprosesser"
 
+  - label: "Hvilken fordeling har T? — identifiser navn og parameter"
+    steps:
+      - "Sjekk at hendelsene følger en **poissonprosess** (gitt direkte i oppgaven, eller rimelig å anta)"
+      - "Identifiser raten `λ` med enhet (f.eks. `λ = 0.01` pr. time)"
+      - text: "Konkludér: ventetiden `T` til neste/første hendelse er eksponentialfordelt med **samme `λ`** som poissonprosessen:"
+        formula: "T ~ Eksponential(λ)"
+      - text: "Eksempel: poissonprosess med `λ = 0.01` pr. time → `T ~ Eksponential(λ = 0.01)` pr. time"
+        example: true
+      - { text: "Husk å oppgi **enheten** på `λ` (pr. time, pr. minutt, pr. år ...) — uten enhet er parameteren ikke fullstendig spesifisert", conditional: true }
+      - { text: "Hvis oppgaven gir forventet ventetid (`E[T] = m`) i stedet for raten, regn `λ = 1/m` med tilhørende enhet", conditional: true }
+
 common_traps: |
   Eksponentialfordeling og Poissonfordeling deler samme `λ` men måler ulike
   ting: Poisson teller hendelser, eksponential måler ventetid. Dobbelsjekk
@@ -308,6 +319,63 @@ detailed_solution_variants:
               - { comment: "pæren «husker ikke» de 500 timene den allerede har brent" }
               - { comment: "i praksis er ikke pærer memoryless — slitasje gjør at modellen er en idealisering" }
         result: "`P(T > 1500 | T > 500) = e^(−1.5) ≈ 0.2231`"
+
+  - label: "Hvilken fordeling har T? — identifiser navn og parameter"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 4c"
+        question: "Vi antar at klippeblåvinger fanges i en felle som en poissonprosess med rate `λ = 0.01` sommerfugler pr. time. La `T` være tiden, målt i timer, til den første klippeblåvingen blir fanget. Hvilken fordeling har `T`? Angi navnet til fordelingen og verdien til den eller de parametre som inngår."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hendelsene er gitt som en **poissonprosess** med rate `λ = 0.01` pr. time" }
+              - { text: "`T` = tid til første hendelse (første klippeblåvinge fanget)" }
+              - { comment: "spørsmålet er hvilken fordeling T har + hvilke parametre — ingen utregning" }
+          - label: "Resonnement"
+            lines:
+              - { text: "Når hendelser følger en poissonprosess med rate `λ`, er ventetiden til neste hendelse eksponentialfordelt med **samme** `λ`" }
+              - { text: "Dette gjelder også for tiden til den første hendelsen i prosessen" }
+          - label: "Svar"
+            lines:
+              - { text: "`T` er **eksponentialfordelt** med parameter `λ = 0.01` pr. time" }
+              - { text: "Skrivemåte: `T ~ Eksponential(λ = 0.01 pr. time)`" }
+              - { comment: "enheten på λ er en del av svaret — uten den er parameteren ikke fullstendig spesifisert" }
+        result: "`T ~ Eksponential(λ = 0.01 pr. time)`"
+
+      - source: "Praksis · tid mellom to anrop"
+        question: "Et anropssenter mottar anrop som en poissonprosess med rate `λ = 0.5` pr. minutt. La `T` være tiden mellom to påfølgende anrop. Hvilken fordeling har `T`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hendelsene følger en poissonprosess med `λ = 0.5` pr. minutt" }
+              - { text: "`T` = tid **mellom** to påfølgende hendelser (ikke nødvendigvis fra t=0)" }
+          - label: "Resonnement"
+            lines:
+              - { text: "I en poissonprosess er ventetiden til neste hendelse — uansett hvor i prosessen man er — eksponentialfordelt med samme `λ`" }
+              - { text: "Det samme gjelder altså mellom to vilkårlige påfølgende hendelser" }
+          - label: "Svar"
+            lines:
+              - { text: "`T ~ Eksponential(λ = 0.5 pr. minutt)`" }
+        result: "`T ~ Eksponential(λ = 0.5 pr. minutt)`"
+
+      - source: "Praksis · forventet levetid gir parameter"
+        question: "En komponent har forventet levetid 5 år, og vi antar memoryless slitasje. La `T` være levetiden. Hvilken fordeling har `T`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`T` = levetid (kontinuerlig positiv tid)" }
+              - { text: "Forventet levetid `E[T] = 5` år" }
+              - { comment: "memoryless levetid ⇒ eksponentialfordeling" }
+          - label: "Resonnement"
+            lines:
+              - { text: "Memoryless er karakteristisk for eksponentialfordeling: `T ~ Eksponential(λ)`" }
+              - { text: "For eksponential gjelder `E[T] = 1/λ`, så `λ = 1/E[T]` med invers tidsenhet" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`λ = 1 / 5 = 0.2` pr. år" }
+          - label: "Svar"
+            lines:
+              - { text: "`T ~ Eksponential(λ = 0.2 pr. år)`" }
+        result: "`T ~ Eksponential(λ = 0.2 pr. år)`"
 
 related:
   - { id: "poisson-fordeling",  kind: "entry" }
