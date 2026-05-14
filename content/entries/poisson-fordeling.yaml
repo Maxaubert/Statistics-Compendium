@@ -280,6 +280,24 @@ detailed_solution_variants:
               - { text: "`P(X ≥ 2) = 1 − 0.5578`" }
         result: "`P(X ≥ 2) ≈ 0.442`"
 
+      - source: "Eksamen jan22 · oppgave 2a (kunder i butikk)"
+        question: "Antall kunder som ankommer en butikk er poissonfordelt med rate `λ = 0.15` kunder pr. minutt. La `X` være antall kunder som ankommer i løpet av én time. Finn sannsynligheten for at det ankommer minst 8 kunder."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ = 0.15` pr. minutt, `t = 60` minutter (én time)" }
+              - { text: "`μ = λt = 0.15 · 60 = 9`" }
+              - { text: "Spørres om `P(X ≥ 8)`" }
+          - label: "Komplementregelen"
+            lines:
+              - { text: "`P(X ≥ 8) = 1 − P(X ≤ 7)`" }
+              - { comment: "tabellen leses på k − 1 = 7, IKKE på 8" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.2", text: "μ = 9, k = 7 → P(X ≤ 7) = 0.324" } }
+              - { text: "`P(X ≥ 8) = 1 − 0.324`" }
+        result: "`P(X ≥ 8) ≈ 0.676` (om lag 68 % sjanse for at det kommer minst 8 kunder i løpet av én time)."
+
       - source: "Praksis · kundeanrop (E.2)"
         question: "Et kundesenter har `μ = 4` anrop i et gitt tidsvindu. Finn `P(X ≥ 6)`."
         sections:

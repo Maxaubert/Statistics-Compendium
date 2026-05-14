@@ -234,6 +234,25 @@ detailed_solution_variants:
 
   - label: "P(a < T < b) — intervall"
     solutions:
+      - source: "Eksamen jan22 · oppgave 2b (første kunde i butikk)"
+        question: "Antall kunder følger en poissonprosess med rate `λ = 0.15` pr. minutt. Hva er sannsynligheten for at den første kunden ankommer når det har gått mellom 4 og 6 minutter?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`T` = tid til første kunde (i minutter)" }
+              - { text: "Tid mellom hendelser i en poissonprosess er eksponentialfordelt: `T ~ Eksponential(λ = 0.15)`" }
+              - { comment: "samme `λ` som poissonprosessen — ingen omregning av enhet" }
+              - { text: "Spørres om `P(4 < T < 6)`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a < T < b) = F(b) − F(a) = e^(−λa) − e^(−λb)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(4 < T < 6) = e^(−0.15 · 4) − e^(−0.15 · 6)`" }
+              - { indent: "`= e^(−0.6) − e^(−0.9)`" }
+              - { indent: "`≈ 0.5488 − 0.4066`" }
+        result: "`P(4 < T < 6) ≈ 0.142` (om lag 14 % sjanse for at første kunde dukker opp i tidsrommet 4–6 minutter)."
+
       - source: "Praksis · Bussintervall"
         question: "Busser ankommer holdeplassen som en poissonprosess med rate 6 per time. Hva er sannsynligheten for at neste buss kommer mellom 10 og 30 minutter fra nå?"
         sections:

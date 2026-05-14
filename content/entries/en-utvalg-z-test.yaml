@@ -198,6 +198,37 @@ detailed_solution_variants:
               - { text: "Tolkning: Tallene gir grunn til å hevde at ny julelys har lavere forventet energiforbruk enn standardmodellen på 50 W." }
         result: "Forkast H₀. Ny julelys bruker signifikant mindre energi enn 50 W."
 
+      - source: "Eksamen jan22 · oppgave 5a+5b (bensinpumpe, p-verdi)"
+        question: "Justervesenet sjekker en bensinpumpe. 10 prøver tappes når telleverket viser 5.00 liter: 4.97, 4.94, 4.96, 4.95, 4.92, 5.00, 5.01, 4.98, 4.99, 5.02. Volumet `X` antas normalfordelt med ukjent `μ` og kjent `σ = 0.04` liter. **a)** Foreta en hypotesetest på `α = 0.05` for å sjekke om forventningsverdien til `X` er mindre enn 5.00. **b)** Finn p-verdien, og avgjør om H₀ ville blitt forkastet ved `α = 0.01`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `n = 10`, `σ = 0.04` (kjent), `μ₀ = 5.00`, `α = 0.05`." }
+              - { text: "Z-test fordi `σ` er oppgitt kjent. Normalantakelse er eksplisitt — `n < 30` er ikke et problem siden `X` er antatt normalfordelt." }
+              - { text: "Snittet av målingene: `x̄ = (4.97+4.94+4.96+4.95+4.92+5.00+5.01+4.98+4.99+5.02)/10 = 49.74/10 = 4.974`" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "H₀: μ ≥ 5.00 (pumpa tapper minst 5.00 i snitt — ok)" }
+              - { text: "H₁: μ < 5.00 (pumpa tapper for lite — venstresidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `Z = (x̄ − μ₀) / (σ/√n)`" }
+              - { text: "Innsatt: `z = (4.974 − 5.00) / (0.04/√10)`" }
+              - { indent: "= `−0.026 / 0.01265`" }
+              - { indent: "= `−2.055 ≈ −2.06`" }
+          - label: "a) Konklusjon ved α = 0.05"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "z_{0.05} = 1.645 → kritisk grense `−1.645`. Forkast H₀ hvis `z < −1.645`." } }
+              - { text: "`z = −2.06 < −1.645` ✓ → Forkast H₀ på `α = 0.05`." }
+              - { text: "Konklusjon: Det er grunn til å tro at forventet tappet volum er mindre enn 5.00 liter." }
+          - label: "b) p-verdien"
+            lines:
+              - { text: "Venstresidig p-verdi: `p = P(Z < −2.06) = G(−2.06)`" }
+              - { table_lookup: { ref: "E.3", text: "G(−2.06) ≈ 0.0197 (alternativt 1 − G(2.06) = 1 − 0.9803)" } }
+              - { text: "Sammenlign med α = 0.01: `p ≈ 0.020 > 0.01` → IKKE forkast H₀ ved `α = 0.01`." }
+              - { comment: "regel: forkast H₀ hvis p ≤ α. Her er p akkurat over 0.01, så ved et strengere nivå holder vi på nullhypotesen." }
+        result: "a) Forkast H₀ på `α = 0.05`. b) `p ≈ 0.020`; ved `α = 0.01` ville H₀ IKKE blitt forkastet."
+
       - source: "Praksis · produsentpåstand om snittvekt"
         question: "En produsent påstår at gjennomsnittsvekten på sjokoladeplater er `μ₀ = 250 g`, og populasjonens standardavvik er `σ = 5 g` (kjent). En kunde mistenker at platene veier mindre. Et utvalg på `n = 25` plater gir `x̄ = 248 g`. Test H₀: μ ≥ 250 mot H₁: μ < 250 på `α = 0.05`."
         sections:

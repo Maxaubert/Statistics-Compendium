@@ -56,8 +56,8 @@ solution_variants:
   - label: "H₁: μ < μ₀ (venstre)"
     description: "Ensidig venstresidig test. Forkast H₀ hvis `T < −t_(α, ν)`."
     steps:
-      - text: "Formuler hypotesene (venstresidig):"
-        formula: "H₀: μ = μ₀     mot     H₁: μ < μ₀"
+      - text: "Formuler hypotesene (venstresidig). `H₀: μ ≥ μ₀` er den strenge formen siden null og alternativ skal dekke hele tallinjen; mange pensumbøker forenkler til `H₀: μ = μ₀` — testmekanikken er identisk fordi grenseverdien er 'verste fall' for nullen:"
+        formula: "H₀: μ ≥ μ₀     mot     H₁: μ < μ₀"
       - "Begrunn t-test: `σ` er ukjent, og enten er observasjonene normalfordelte eller `n` er stor nok"
       - text: "Beregn `x̄` og `s` fra dataene:"
         formula: "s² = (1/(n−1))·Σ(xᵢ − x̄)²"
@@ -77,8 +77,8 @@ solution_variants:
   - label: "H₁: μ > μ₀ (høyre)"
     description: "Ensidig høyresidig test. Forkast H₀ hvis `T > +t_(α, ν)`."
     steps:
-      - text: "Formuler hypotesene (høyresidig):"
-        formula: "H₀: μ = μ₀     mot     H₁: μ > μ₀"
+      - text: "Formuler hypotesene (høyresidig). Strengt: `H₀: μ ≤ μ₀` (null og alternativ dekker hele tallinjen); forenklet form `H₀: μ = μ₀` gir identisk test:"
+        formula: "H₀: μ ≤ μ₀     mot     H₁: μ > μ₀"
       - "Begrunn t-test: `σ` er ukjent, og enten er observasjonene normalfordelte eller `n` er stor nok"
       - text: "Beregn `x̄` og `s` fra dataene:"
         formula: "s² = (1/(n−1))·Σ(xᵢ − x̄)²"
@@ -130,7 +130,7 @@ detailed_solution_variants:
               - { text: "`σ` er ukjent og estimeres av `s` ⇒ én-utvalgs t-test." }
           - label: "Hypoteser"
             lines:
-              - { text: "`H₀: μ = 1000`" }
+              - { text: "`H₀: μ ≥ 1000`" }
               - { text: "`H₁: μ < 1000` (venstresidig)" }
           - label: "Testobservator"
             lines:
@@ -147,6 +147,40 @@ detailed_solution_variants:
               - { text: "Forkast `H₀`." }
               - { text: "Det er signifikant evidens på 5 %-nivå for at gjennomsnittlig levetid er kortere enn 1000 timer." }
         result: "`T ≈ −2.598 < −1.796` ⇒ forkast `H₀`. `μ < 1000` h."
+      - source: "Eksamen jan22 · oppgave 5c (bensinpumpe, ukjent σ, n=4)"
+        question: "En ny type bensinpumpe har ukjent `σ`. Fire prøver gir 4.98, 4.99, 4.97, 4.95 liter når telleverket viser 5.00. Foreta en hypotesetest på `α = 0.10` for å sjekke om forventningsverdien til volumet er mindre enn 5.00."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 4`, `μ₀ = 5.00`, `α = 0.10`. Ukjent `σ` ⇒ t-test." }
+              - { text: "Frihetsgrader: `ν = n − 1 = 3`." }
+              - { comment: "X antas normalfordelt — kritisk for t-test ved så lite n" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ ≥ 5.00` (pumpa tapper minst 5.00 — kalibrert eller for mye)" }
+              - { text: "`H₁: μ < 5.00` (pumpa tapper for lite — venstresidig)" }
+          - label: "Gjennomsnitt og s"
+            lines:
+              - { text: "`x̄ = (4.98 + 4.99 + 4.97 + 4.95)/4 = 19.89/4 = 4.9725`" }
+              - { text: "Avvik fra `x̄`: `0.0075, 0.0175, −0.0025, −0.0225`" }
+              - { text: "Sum av kvadrater: `0.0075² + 0.0175² + 0.0025² + 0.0225² = 0.000875`" }
+              - { text: "`s² = 0.000875 / 3 ≈ 0.0002917`" }
+              - { text: "`s ≈ 0.01708`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (x̄ − μ₀)/(s/√n)`." }
+              - { text: "`s/√n = 0.01708/√4 = 0.00854`" }
+              - { text: "`T = (4.9725 − 5.00)/0.00854 = −0.0275/0.00854 ≈ −3.22`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.10, 3) ≈ 1.638` ⇒ venstresidig kritisk grense `−1.638`. Forkast H₀ hvis `T < −1.638`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ −3.22 < −1.638` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.10`." }
+              - { text: "Også med så få målinger som `n = 4` er evidensen tydelig — det er grunn til å tro at forventet tappet volum er under 5.00 liter." }
+        result: "`T ≈ −3.22 < −1.638` ⇒ forkast `H₀`. Den nye pumpa tapper signifikant mindre enn 5.00 liter."
+
       - source: "Praksis · Prosessgjennomsnitt under mål"
         question: "En produksjonsprosess skal gi et gjennomsnitt på `μ₀ = 50`. Et utvalg på `n = 8` enheter gir `x̄ = 46` og `s = 6`. Test på `α = 0.05` om prosessens gjennomsnitt er lavere enn målet."
         sections:
@@ -157,7 +191,7 @@ detailed_solution_variants:
               - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
           - label: "Hypoteser"
             lines:
-              - { text: "`H₀: μ = 50`" }
+              - { text: "`H₀: μ ≥ 50`" }
               - { text: "`H₁: μ < 50` (venstresidig)" }
           - label: "Testobservator"
             lines:
@@ -216,7 +250,7 @@ detailed_solution_variants:
               - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
           - label: "Hypoteser"
             lines:
-              - { text: "`H₀: μ = 50`" }
+              - { text: "`H₀: μ ≤ 50`" }
               - { text: "`H₁: μ > 50` (høyresidig)" }
           - label: "Testobservator"
             lines:
@@ -243,7 +277,7 @@ detailed_solution_variants:
               - { text: "`σ` ukjent ⇒ én-utvalgs t-test." }
           - label: "Hypoteser"
             lines:
-              - { text: "`H₀: μ = 200`" }
+              - { text: "`H₀: μ ≤ 200`" }
               - { text: "`H₁: μ > 200` (høyresidig)" }
           - label: "Testobservator"
             lines:

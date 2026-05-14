@@ -169,6 +169,53 @@ detailed_solution_variants:
                   margin_row: true
         result: "P(X=0) = 0.40, P(X=1) = 0.60 · P(Y=0) = 0.50, P(Y=1) = 0.30, P(Y=2) = 0.20"
 
+      - source: "Eksamen jan22 · oppgave 3b (ferge med personbiler og lastebiler)"
+        question: "En ferge frakter `X` personbiler og `Y` lastebiler/busser. Simultanfordelingen er gitt i tabellen under (`X ∈ {0,1,2,3}`, `Y ∈ {0,1,2}`). Finn marginalfordelingene for `X` og `Y`."
+        sections:
+          - label: "Steg"
+            lines:
+              - step_trail:
+                  steps:
+                    - { label: "1 · Marginal" }
+          - label: "Simultantabellen"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2"]
+                  rows:
+                    - ["X = 0", "0.02", "0.04", "0.07"]
+                    - ["X = 1", "0.05", "0.07", "0.09"]
+                    - ["X = 2", "0.08", "0.12", "0.10"]
+                    - ["X = 3", "0.20", "0.10", "0.06"]
+              - { text: "Marginal for `X` = sum av hver rad; marginal for `Y` = sum av hver kolonne." }
+          - label: "Marginal av X (rad-summer)"
+            lines:
+              - { text: "`P(X = 0) = 0.02 + 0.04 + 0.07 = 0.13`" }
+              - { text: "`P(X = 1) = 0.05 + 0.07 + 0.09 = 0.21`" }
+              - { text: "`P(X = 2) = 0.08 + 0.12 + 0.10 = 0.30`" }
+              - { text: "`P(X = 3) = 0.20 + 0.10 + 0.06 = 0.36`" }
+          - label: "Marginal av Y (kolonne-summer)"
+            lines:
+              - { text: "`P(Y = 0) = 0.02 + 0.05 + 0.08 + 0.20 = 0.35`" }
+              - { text: "`P(Y = 1) = 0.04 + 0.07 + 0.12 + 0.10 = 0.33`" }
+              - { text: "`P(Y = 2) = 0.07 + 0.09 + 0.10 + 0.06 = 0.32`" }
+          - label: "Tabellen med marginaler"
+            lines:
+              - table:
+                  headers: ["", "Y = 0", "Y = 1", "Y = 2", "P(X)"]
+                  rows:
+                    - ["X = 0", "0.02", "0.04", "0.07", "0.13"]
+                    - ["X = 1", "0.05", "0.07", "0.09", "0.21"]
+                    - ["X = 2", "0.08", "0.12", "0.10", "0.30"]
+                    - ["X = 3", "0.20", "0.10", "0.06", "0.36"]
+                    - ["P(Y)", "0.35", "0.33", "0.32", "1.00"]
+                  margin_col: true
+                  margin_row: true
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sum av marginal for `X`: `0.13 + 0.21 + 0.30 + 0.36 = 1.00` ✓" }
+              - { text: "Sum av marginal for `Y`: `0.35 + 0.33 + 0.32 = 1.00` ✓" }
+        result: "P(X): (0.13, 0.21, 0.30, 0.36) · P(Y): (0.35, 0.33, 0.32)"
+
       - source: "Praksiseksempel · 3×2-tabell"
         question: "Gitt simultanfordelingen `P(X = x, Y = y)` for `X ∈ {1, 2, 3}` og `Y ∈ {0, 1}`. Finn marginalfordelingene."
         sections:

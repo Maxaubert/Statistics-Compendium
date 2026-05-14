@@ -132,7 +132,23 @@ solution_variants:
       - text: "Løs for `n`:"
         formula: "n > ln(0.01) / ln(0.95) ≈ 89.78"
       - "Rund opp til nærmeste heltall: `n = 90`"
-      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i **tabell E.1** til kravet er oppfylt.", conditional: true }
+      - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i **tabell E.1** til kravet er oppfylt — se variant 'Finn n / sjansen for minst k (k ≥ 2)'.", conditional: true }
+
+  - label: "Finn n / sjansen for minst k (k ≥ 2)"
+    steps:
+      - "Definer variabelen og noter kravet. F.eks. avokado-eksempel: `X` = antall spiselige av `n`, `X ~ Bin(n, 0.6)`. Krav: `P(X ≥ 4) ≥ 0.90` (minst 4 spiselige med minst 90 % sjanse)."
+      - text: "**Hvorfor virker ikke log-snarveien?** For `k = 1` blir `P(X ≥ 1) = 1 − (1 − p)^n` — bare én potens i `n`, så logaritmen isolerer `n` direkte. For `k ≥ 2` er `P(X ≥ k) = 1 − Σ_{i=0}^{k−1} C(n,i)·p^i·(1−p)^(n−i)` — en sum av flere ledd der `n` opptrer både i `C(n,i)` og i eksponenten. Ingen lukket formel — du må slå opp i **tabell E.1** for økende `n`."
+        conditional: true
+      - text: "Skriv om via komplement (tabellen gir `P(X ≤ k−1)`, ikke `P(X ≥ k)`):"
+        formula: "P(X ≥ k) ≥ p*   ⇔   P(X ≤ k − 1) ≤ 1 − p*"
+      - "Velg startverdi for `n`. Minste mulige er `n = k` (du må jo ha plass til `k` suksesser). Som første tipp kan forventningsverdien gi grov pekepinn: `n ≈ k / p` (avokado: `4 / 0.6 ≈ 7`)."
+      - "Søk i tabellen: for hver `n`, slå opp `P(X ≤ k − 1)` i **tabell E.1** med riktig `p`. Øk `n` med 1 om gangen til verdien faller under `1 − p*`."
+      - text: "Eksempel (`p = 0.6`, krav `P(X ≤ 3) ≤ 0.10`): `n = 7 → 0.290`, `n = 8 → 0.174`, `n = 9 → 0.099 ✓`. Minste `n` er 9:"
+        formula: "P(X ≥ 4) = 1 − 0.099 = 0.901 ≥ 0.90"
+        example: true
+      - "Verifisér at `n − 1` IKKE tilfredsstiller kravet — ellers er svaret ditt ikke 'minste `n`'. (For `n = 8`: `P(X ≥ 4) = 1 − 0.174 = 0.826 < 0.90`, så `n = 9` er korrekt minste.)"
+      - { text: "**Motsatt retning** (`P(X ≥ k) ≤ p*`, dvs. sannsynligheten skal være MINDRE enn terskel): ekvivalent med `P(X ≤ k − 1) ≥ 1 − p*`. Da reduserer du `n` til tabellverdien overstiger `1 − p*`, og svaret er da STØRSTE `n` som holder.", conditional: true }
+      - { text: "Hvis `p` ikke står i tabell E.1, eller `n` blir for stort: summer pmf for hånd, eller bruk Python — `1 - binom.cdf(k-1, n, p)`.", conditional: true }
 
 common_traps: |
   Vær sikker på at `p` er konstant fra forsøk til forsøk. Hvis du trekker
@@ -276,6 +292,25 @@ detailed_solution_variants:
             lines:
               - { text: "`P(X ≥ 2) = 1 − 0.376`" }
         result: "`P(X ≥ 2) ≈ 0.624`"
+      - source: "Eksamen jan22 · oppgave 4b (avokado fra fru Petrell)"
+        question: "Andelen spiselige avokadoer i butikken er `p = 0.6`. Fru Petrell plukker tilfeldig 4 avokadoer. Hva er sannsynligheten for at minst 3 av disse er spiselige?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall spiselige avokadoer av 4" }
+              - { text: "`X ~ Bin(4, 0.6)`" }
+              - { comment: "vi vil ha `P(X ≥ 3)`" }
+          - label: "Komplementregelen"
+            lines:
+              - { text: "`P(X ≥ 3) = 1 − P(X ≤ 2)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.1", text: "Slå opp `P(X ≤ 2)` for `n = 4`, `p = 0.6` → 0.525" } }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X ≥ 3) = 1 − 0.525`" }
+        result: "`P(X ≥ 3) ≈ 0.475` (knappe 48 % sjanse for at minst 3 av 4 avokadoer er spiselige)."
+
       - source: "Praksis · lottokuponger"
         question: "Et lodd har vinnersannsynlighet `p = 0.05`. Vi kjøper `n = 20` lodd. Hva er sannsynligheten for å vinne minst én gang?"
         sections:
@@ -385,6 +420,30 @@ detailed_solution_variants:
               - { text: "Rund opp: `n = 9`" }
               - { comment: "verifiser: `1 − 0.7^9 ≈ 0.960 > 0.95` ✓" }
         result: "a) `P(X ≥ 1) ≈ 0.657`     b) `n = 9` doser"
+      - source: "Eksamen jan22 · oppgave 4c (avokado, terskel på P(X ≥ 4))"
+        question: "Andelen spiselige avokadoer er `p = 0.6`. Hvor mange avokadoer må fru Petrell ta med seg dersom hun skal være minst 90 % sikker på at hun får minst 4 avokadoer som er spiselige?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall spiselige avokadoer av `n`" }
+              - { text: "`X ~ Bin(n, 0.6)`" }
+              - { comment: "krav: `P(X ≥ 4) ≥ 0.90`. Her er terskelen IKKE `X ≥ 1` (da virker log-formelen), så vi må gjennom tabell E.1 for flere `n`." }
+          - label: "Omskrivning"
+            lines:
+              - { text: "`P(X ≥ 4) = 1 − P(X ≤ 3)`, og kravet `P(X ≥ 4) ≥ 0.90` blir ekvivalent med `P(X ≤ 3) ≤ 0.10`" }
+              - { comment: "vi øker `n` til tabellverdien `P(X ≤ 3)` faller under 0.10" }
+          - label: "Tabellsøk"
+            lines:
+              - { table_lookup: { ref: "E.1", text: "n = 7, p = 0.6: P(X ≤ 3) = 0.290 → P(X ≥ 4) = 0.710 (for lav)" } }
+              - { table_lookup: { ref: "E.1", text: "n = 8, p = 0.6: P(X ≤ 3) = 0.174 → P(X ≥ 4) = 0.826 (for lav)" } }
+              - { table_lookup: { ref: "E.1", text: "n = 9, p = 0.6: P(X ≤ 3) = 0.099 → P(X ≥ 4) = 0.901 ✓" } }
+              - { table_lookup: { ref: "E.1", text: "n = 10, p = 0.6: P(X ≤ 3) = 0.055 → P(X ≥ 4) = 0.945" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Minste `n` der `P(X ≥ 4) ≥ 0.90` er `n = 9` (sannsynlighet 0.901)." }
+              - { comment: "med `n = 8` er sannsynligheten kun 0.826, så 8 holder ikke." }
+        result: "`n = 9` avokadoer (`P(X ≥ 4) ≈ 0.901 ≥ 0.90`)."
+
       - source: "Praksis · minst én dose virker"
         question: "En medisinsk dose virker uavhengig på hver pasient med sannsynlighet `p = 0.4`. Hvor mange doser `n` trengs for at sannsynligheten for at minst én virker overstiger 0.95?"
         sections:

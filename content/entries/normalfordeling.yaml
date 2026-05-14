@@ -228,7 +228,7 @@ detailed_solution_variants:
               - { text: "`= 1 − 0.9525`" }
         result: "`P(X > 180) ≈ 0.0475` (knappe 5 % er over 180 cm)."
 
-      - source: "Praksis · ferge med simultanfordeling (CLT på sum, kjent σ)"
+      - source: "Eksamen jan22 · oppgave 3f (ferge, CLT på sum med kjent σ)"
         question: "En ferge frakter personbiler (`X`) og lastebiler/busser (`Y`). Simultanfordelingen `P(X = x, Y = y)` er gitt som en tabell (se Identifisering). La `W` være totalt antall lastebiler/busser i løpet av `n = 120` uavhengige turer. Begrunn at `W` er tilnærmet normalfordelt og finn `P(W > 115)`."
         sections:
           - label: "Identifisering"
