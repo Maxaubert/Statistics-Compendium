@@ -42,8 +42,8 @@ filters:
   computes: [prediction_interval, find_x_for_threshold]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, summary_stats_given, normal_assumed, total_observations_n]
-  parameters_known: [slope_se, residual_variance, confidence_level, sum_xx_sxy, population_variance_unknown]
+  structural_cues: [linear_relationship_suspected, regression_line_given, predict_y_at_x, summary_stats_given, normal_assumed, total_observations_n]
+  parameters_known: [slope_se, residual_variance, confidence_level, sum_xx_sxy, population_variance_unknown, regression_line_estimate]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 

@@ -81,6 +81,8 @@ dimensions:
       - { key: conditioning_on_complement,  label_no: "Betinget på komplement (B̄)" }
       - { key: two_sided_alternative,       label_no: "Tosidig alternativ (H₁: ≠)" }
       - { key: one_sided_alternative,       label_no: "Ensidig alternativ (H₁: < eller >)" }
+      - { key: regression_line_given,       label_no: "Regresjonslinje (ŷ = α̂ + β̂x) gitt" }
+      - { key: predict_y_at_x,              label_no: "Predikere ŷ for gitt x" }
 
   - key: parameters_known
     label_no: "Parametre gitt"
@@ -97,6 +99,7 @@ dimensions:
       - { key: sum_xx_sxy,                  label_no: "Σ(x−x̄)² og Σxy gitt" }
       - { key: alpha_significance,          label_no: "Signifikansnivå α gitt" }
       - { key: confidence_level,            label_no: "Konfidensnivå gitt" }
+      - { key: regression_line_estimate,    label_no: "Regresjonslinje (α̂, β̂) gitt" }
 
   - key: distribution_assumption
     label_no: "Fordeling antatt"

@@ -39,8 +39,8 @@ filters:
   computes: [parameter_estimate, std_dev, confidence_interval]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, summary_stats_given]
-  parameters_known: [residual_variance, sum_xx_sxy, slope_se]
+  structural_cues: [linear_relationship_suspected, regression_line_given, summary_stats_given]
+  parameters_known: [residual_variance, sum_xx_sxy, slope_se, regression_line_estimate]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:

@@ -40,8 +40,8 @@ filters:
   computes: [parameter_estimate, std_dev, variance]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, total_observations_n]
-  parameters_known: [residual_variance, population_variance_unknown]
+  structural_cues: [linear_relationship_suspected, regression_line_given, data_as_list, summary_stats_given, total_observations_n]
+  parameters_known: [residual_variance, population_variance_unknown, regression_line_estimate]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 solution_template:

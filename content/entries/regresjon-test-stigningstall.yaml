@@ -45,8 +45,8 @@ filters:
   computes: [hypothesis_test, test_independence]
   random_variable: [slope_estimate, continuous]
   setup: [single_population, linear_relationship]
-  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, total_observations_n, two_sided_alternative, one_sided_alternative]
-  parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy, population_variance_unknown]
+  structural_cues: [linear_relationship_suspected, regression_line_given, data_as_list, summary_stats_given, normal_assumed, total_observations_n, two_sided_alternative, one_sided_alternative]
+  parameters_known: [slope_se, residual_variance, alpha_significance, sum_xx_sxy, population_variance_unknown, regression_line_estimate]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 

@@ -47,7 +47,7 @@ filters:
 solution_template:
   - "Identifiser konfidensnivå `(1 − α)` og `α`"
   - text: "Beregn utvalgsvariansen (eller bruk gitt `s`):"
-    formula: "s² = (1/(n−1)) · Σ(x_i − x̄)²"
+    formula: "s² = Σ(x_i − x̄)² / (n−1)"
   - "Slå opp `t_(α/2, n−1)` i **tabell E.5** (t-kvantiltabell): kolonne for `α/2`, rad for `n−1` frihetsgrader"
   - text: "Beregn marginen:"
     formula: "margin = t_(α/2, n−1) · s/√n"

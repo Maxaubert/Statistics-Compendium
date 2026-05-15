@@ -90,4 +90,15 @@ body {
   appearance: textfield;
 }
 
+/* Hide horizontal scrollbars on any container that wraps a KaTeX
+   formula — borderline-wide formulas otherwise show an ugly scrollbar
+   under the formula box. Scroll/swipe still works. */
+:where(*:has(> .katex), *:has(> .katex-display)) {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+:where(*:has(> .katex), *:has(> .katex-display))::-webkit-scrollbar {
+  display: none;
+}
+
 @import "./print.css";

@@ -53,30 +53,96 @@ filters:
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
-solution_template:
-  - text: "Formuler hypotesene (ensidig eller tosidig):"
-    formula: "H₀: μ_X = μ_Y     mot     H₁ (avhengig av retning)"
-  - "Begrunn uparet t-test (to uavhengige grupper, ukjent σ, normalfordelte)"
-  - "Beregn `x̄`, `ȳ`, `s_X²`, `s_Y²` fra dataene"
-  - text: "Beregn pooled varians:"
-    formula: "s_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
-  - text: "Beregn testobservatoren:"
-    formula: "T = (x̄ − ȳ) / (s_P · √(1/n_X + 1/n_Y))"
-  - text: "Eksempel: blodtrykksbehandling A vs. B, `n_X = 10`, `n_Y = 12`, `x̄ = 25`, `ȳ = 28`, `s_P ≈ 3.585`:"
-    formula: "T = (25 − 28) / (3.585·√(1/10 + 1/12)) ≈ −1.954"
-    example: true
-  - "Finn kvantil `t_(α, ν)` (ensidig) eller `t_(α/2, ν)` (tosidig) i **tabell E.5** (t-kvantiltabell) med `ν = n_X + n_Y − 2` frihetsgrader"
-  - "Sammenlign og konkluder"
-  - text: "Alternativ: Welch t-test krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
-    formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
-    conditional: true
+solution_variants:
+  - label: "H₁: μ_X < μ_Y (venstre)"
+    description: "Ensidig venstresidig test på `X − Y`. Forkast H₀ hvis `T < −t_(α, ν)`."
+    steps:
+      - text: "Formuler hypotesene (venstresidig på `X − Y`):"
+        formula: "H₀: μ_X ≥ μ_Y     mot     H₁: μ_X < μ_Y"
+      - "Begrunn uparet pooled t-test: to uavhengige grupper, ukjent felles `σ`, normalfordelte (eller `n_X + n_Y` stor nok)"
+      - text: "Beregn utvalgsstatistikkene fra dataene:"
+        formula: "x̄, ȳ, s_X², s_Y² (med `s² = Σ(xᵢ − x̄)²/(n − 1)`)"
+      - text: "Beregn pooled VARIANS `s_P²` (vektet snitt av `s_X²` og `s_Y²`):"
+        formula: "s_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
+      - text: "Trekk kvadratrot for å få pooled STANDARDAVVIK `s_P`. Du må ha `s_P` (ikke `s_P²`) før du går videre — formelen for `T` bruker `s_P` i nevneren:"
+        formula: "s_P = √(s_P²)"
+      - text: "Beregn testobservatoren med `s_P` (NB: standardavviket, ikke variansen):"
+        formula: "T = (x̄ − ȳ) / (s_P · √(1/n_X + 1/n_Y))"
+      - text: "Eksempel: behandling A vs. B, `n_X = 10`, `n_Y = 12`, `x̄ = 25`, `ȳ = 28`, `s_P² = 12.85`, `s_P = √12.85 ≈ 3.585`:"
+        formula: "T = (25 − 28) / (3.585·√(1/10 + 1/12)) ≈ −1.954"
+        example: true
+      - "Frihetsgrader: `ν = n_X + n_Y − 2`. Slå opp `t_(α, ν)` i **tabell E.5** (t-kvantiltabell)"
+      - text: "Forkastingsregel for venstresidig (kritisk verdi negativ):"
+        formula: "Forkast H₀ hvis T < −t_(α, ν)"
+      - "Sammenlign og konkluder i kontekst: hvis `T < −t_(α, ν)`, er det signifikant evidens for at `μ_X < μ_Y`"
+      - text: "Alternativ: Welch t-test krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
+        formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
+        conditional: true
+
+  - label: "H₁: μ_X > μ_Y (høyre)"
+    description: "Ensidig høyresidig test på `X − Y`. Forkast H₀ hvis `T > +t_(α, ν)`."
+    steps:
+      - text: "Formuler hypotesene (høyresidig på `X − Y`):"
+        formula: "H₀: μ_X ≤ μ_Y     mot     H₁: μ_X > μ_Y"
+      - "Begrunn uparet pooled t-test: to uavhengige grupper, ukjent felles `σ`, normalfordelte (eller `n_X + n_Y` stor nok)"
+      - text: "Beregn utvalgsstatistikkene fra dataene:"
+        formula: "x̄, ȳ, s_X², s_Y² (med `s² = Σ(xᵢ − x̄)²/(n − 1)`)"
+      - text: "Beregn pooled VARIANS `s_P²` (vektet snitt av `s_X²` og `s_Y²`):"
+        formula: "s_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
+      - text: "Trekk kvadratrot for å få pooled STANDARDAVVIK `s_P`. Du må ha `s_P` (ikke `s_P²`) før du går videre — formelen for `T` bruker `s_P` i nevneren:"
+        formula: "s_P = √(s_P²)"
+      - text: "Beregn testobservatoren med `s_P` (NB: standardavviket, ikke variansen):"
+        formula: "T = (x̄ − ȳ) / (s_P · √(1/n_X + 1/n_Y))"
+      - text: "Eksempel: nytt fôr X vs. kontroll Y, `n_X = n_Y = 8`, `x̄ = 5.4`, `ȳ = 4.9`, `s_P² ≈ 0.305`, `s_P = √0.305 ≈ 0.5523`:"
+        formula: "T = (5.4 − 4.9) / (0.5523·√(1/8 + 1/8)) ≈ 1.810"
+        example: true
+      - "Frihetsgrader: `ν = n_X + n_Y − 2`. Slå opp `t_(α, ν)` i **tabell E.5** (t-kvantiltabell)"
+      - text: "Forkastingsregel for høyresidig (kritisk verdi positiv):"
+        formula: "Forkast H₀ hvis T > +t_(α, ν)"
+      - "Sammenlign og konkluder i kontekst: hvis `T > +t_(α, ν)`, er det signifikant evidens for at `μ_X > μ_Y`"
+      - text: "Alternativ: Welch t-test krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
+        formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
+        conditional: true
+
+  - label: "H₁: μ_X ≠ μ_Y (tosidig)"
+    description: "Tosidig test. Forkast H₀ hvis `|T| > t_(α/2, ν)`."
+    steps:
+      - text: "Formuler hypotesene (tosidig):"
+        formula: "H₀: μ_X = μ_Y     mot     H₁: μ_X ≠ μ_Y"
+      - "Begrunn uparet pooled t-test: to uavhengige grupper, ukjent felles `σ`, normalfordelte (eller `n_X + n_Y` stor nok)"
+      - text: "Beregn utvalgsstatistikkene fra dataene:"
+        formula: "x̄, ȳ, s_X², s_Y² (med `s² = Σ(xᵢ − x̄)²/(n − 1)`)"
+      - text: "Beregn pooled VARIANS `s_P²` (vektet snitt av `s_X²` og `s_Y²`):"
+        formula: "s_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
+      - text: "Trekk kvadratrot for å få pooled STANDARDAVVIK `s_P`. Du må ha `s_P` (ikke `s_P²`) før du går videre — formelen for `T` bruker `s_P` i nevneren:"
+        formula: "s_P = √(s_P²)"
+      - text: "Beregn testobservatoren med `s_P`. For tosidig spiller fortegnet på `T` ingen rolle — vi bruker `|T|`:"
+        formula: "T = (x̄ − ȳ) / (s_P · √(1/n_X + 1/n_Y))"
+      - text: "Eksempel: belastning på to maskiner, `n_X = 15`, `n_Y = 18`, `x̄ = 12.5`, `ȳ = 11.2`, `s_P² ≈ 5.150`, `s_P = √5.150 ≈ 2.269`:"
+        formula: "T = (12.5 − 11.2) / (2.269·√(1/15 + 1/18)) ≈ 1.638"
+        example: true
+      - "Frihetsgrader: `ν = n_X + n_Y − 2`. Slå opp `t_(α/2, ν)` i **tabell E.5** — del `α` på 2 siden den fordeles på to haler (f.eks. `α = 0.05` ⇒ `t_(0.025, ν)`, IKKE `t_(0.05, ν)`)"
+      - text: "Forkastingsregel for tosidig (gjelder begge haler):"
+        formula: "Forkast H₀ hvis |T| > t_(α/2, ν)"
+      - "Sammenlign og konkluder i kontekst: hvis `|T| > t_(α/2, ν)`, er det signifikant evidens for at `μ_X ≠ μ_Y`"
+      - text: "Alternativ: Welch t-test krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
+        formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
+        conditional: true
 
 common_traps: |
-  Tegnet på testobservatoren avhenger av rekkefølgen `X − Y` vs `Y − X`. Hvis
-  `H₁` sier `μ_Y > μ_X` (ny er bedre), så vil `T = (X̄ − Ȳ)` være negativ, og
-  forkastningsregelen blir `t < −t_α` (venstresidig på `X − Y`), eller du kan
-  reformulere som `T = (Ȳ − X̄)` og bruke høyresidig regel. Hold styr på
-  retningen.
+  - **`s_P` vs. `s_P²`**: Den vanligste regnefeilen er å glemme kvadratroten.
+    Pooled-formelen gir VARIANSEN `s_P²`, men `T`-formelen bruker
+    STANDARDAVVIKET `s_P` i nevneren. Trekk alltid `√` etter du har regnet
+    `s_P²`. Ekvivalent form: `T = (x̄ − ȳ) / √(s_P²·(1/n_X + 1/n_Y))` — her
+    står `s_P²` UNDER en kvadratrot, så det går likevel opp.
+  - **Fortegn og retning**: Tegnet på `T` avhenger av rekkefølgen `X − Y` vs
+    `Y − X`. Hvis `H₁` sier `μ_Y > μ_X` (ny er bedre), så vil `T = (X̄ − Ȳ)`
+    være negativ, og forkastningsregelen blir `t < −t_α` (venstresidig på
+    `X − Y`). Alternativt reformulér som `T = (Ȳ − X̄)` og bruk høyresidig
+    regel. Hold styr på retningen.
+  - **Frihetsgrader**: `ν = n_X + n_Y − 2` (IKKE `n − 1` som i én-utvalg).
+  - **Tosidig deler `α`**: For `H₁: μ_X ≠ μ_Y` er kritisk verdi `t_(α/2, ν)`,
+    ikke `t_(α, ν)`. Forkast hvis `|T| > t_(α/2, ν)`.
 
 python_snippet: |
   from scipy.stats import t
@@ -109,7 +175,7 @@ detailed_solution_variants:
               - { text: "α = 0.01, ensidig (venstre på X-Y)" }
           - label: "Hypoteser"
             lines:
-              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₀: μ_X ≥ μ_Y" }
               - { text: "H₁: μ_X < μ_Y (ny metode er bedre)" }
               - { comment: "Forkast H₀ hvis t = (X̄-Ȳ)/SE er tilstrekkelig negativ" }
           - label: "Pooled varians"
@@ -147,7 +213,7 @@ detailed_solution_variants:
               - { text: "α = 0.05, ensidig (venstre)" }
           - label: "Hypoteser"
             lines:
-              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₀: μ_X ≥ μ_Y" }
               - { text: "H₁: μ_X < μ_Y (B reduserer mer enn A)" }
           - label: "Pooled varians"
             lines:
@@ -185,7 +251,7 @@ detailed_solution_variants:
               - { text: "α = 0.05, ensidig (høyre)" }
           - label: "Hypoteser"
             lines:
-              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₀: μ_X ≤ μ_Y" }
               - { text: "H₁: μ_X > μ_Y (nytt fôr er bedre)" }
           - label: "Pooled varians"
             lines:
@@ -222,7 +288,7 @@ detailed_solution_variants:
               - { text: "α = 0.05, ensidig (høyre)" }
           - label: "Hypoteser"
             lines:
-              - { text: "H₀: μ_X = μ_Y" }
+              - { text: "H₀: μ_X ≤ μ_Y" }
               - { text: "H₁: μ_X > μ_Y (ekstra-kurs gir høyere skåre)" }
           - label: "Pooled varians"
             lines:
