@@ -1,0 +1,32 @@
+id: u-observator
+term_no: "U (Mann-Whitney testobservator)"
+short_def: "Testobservatoren i Mann-Whitney-Wilcoxon-testen: `U = W − n₁(n₁+1)/2`, der `W` er rangsummen og `n₁` antallet observasjoner som ligger til grunn for `W`."
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples]
+  structural_cues: [nonparametric_required]
+  distribution_assumption: [none_assumed]
+  tooling: [mann_whitney_table_E7]
+long_def: |
+  **U-observatoren** måler hvor mye rangtall en gruppe har sammenlignet med
+  forventet under nullhypotesen. Defineres som
+
+      U = W − n₁(n₁+1)/2
+
+  der `W` er rangsummen for gruppe 1 og `n₁` er antall observasjoner i den
+  gruppa. Den andre U-en kan regnes som `U₂ = n₁·n₂ − U₁`, og sammen
+  oppfyller de kontroll-regelen `U₁ + U₂ = n₁·n₂`.
+
+  - Liten `U` for en gruppe = den gruppa har systematisk lave rangtall
+    (små verdier).
+  - Forkast `H₀` når test-statistikken er **liten** (`≤ U_(α, n₁, n₂)`),
+    ikke når den er stor som i t-test.
+  - Tosidig: bruk `min(U₁, U₂)`. Ensidig: bruk `U` for den gruppa som ifølge
+    `H₁` skal ha lave verdier.
+aliases:
+  - U
+  - U-test
+  - testobservator U
+see_also:
+  - { id: mann-whitney-wilcoxon, kind: entry }
+  - { id: rangsum,               kind: glossary }

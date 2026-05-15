@@ -1,6 +1,6 @@
 id: sentralgrenseteoremet-glos
 term_no: Sentralgrenseteoremet (CLT)
-short_def: "Gjennomsnittet av mange uavhengige variabler er tilnærmet normalfordelt — uansett original fordeling."
+short_def: "Gjennomsnittet av mange uavhengige, identisk fordelte variabler er tilnærmet normalfordelt, uansett opprinnelig fordeling."
 filters:
   distribution_assumption: [normal]
   random_variable: [mean_of_samples, sum_of_samples]
@@ -10,18 +10,72 @@ aliases:
   - sentralgrenseteoremet
   - sentralgrenseteorem
   - CLT
+  - sentralgrense
 long_def: |
-  Hvis `X_1, …, X_n` er uavhengige og identisk fordelte med forventning
-  `μ` og standardavvik `σ`, så er
+  ## Hva teoremet sier
 
-      X̄ ≈ N(μ, σ/√n)        for stor n
+  Hvis `X_1, X_2, …, X_n` er uavhengige og identisk fordelte med forventning
+  `μ` og endelig standardavvik `σ`, så er utvalgsgjennomsnittet tilnærmet
+  normalfordelt for stor `n`:
 
-  **Tommelfingerregel:** `n ≥ 30` holder ofte.
+      X̄ ≈ N(μ, σ/√n)
 
-  Forklarer hvorfor z- og t-tester fungerer for ikke-normale data.
+  Tilsvarende for summen:
 
-  Hvis `n` er for liten og fordelingen ikke kan antas normal: bruk
-  bootstrapping i stedet.
+      S_n = X_1 + … + X_n ≈ N(n·μ, σ·√n)
+
+  Det viktige er at konklusjonen IKKE krever at de enkelte `X_i` er
+  normalfordelte. Selv om underliggende fordeling er skjev, diskret eller
+  noe helt annet, blir snittet glattet ut mot normalfordelingen når man
+  legger nok av dem sammen.
+
+  ## Krav som må være oppfylt
+
+  CLT krever tre ting:
+
+  - **Uavhengighet.** Utfallet av én `X_i` påvirker ikke de andre. Brytes
+    typisk ved trekninger uten tilbakelegging fra en liten populasjon, eller
+    ved tidsseriedata med autokorrelasjon.
+  - **Identisk fordeling.** Alle `X_i` skal komme fra samme fordeling. For
+    binomial/Bernoulli betyr dette at suksessannsynligheten `p` er FAST fra
+    forsøk til forsøk. (Dette er det samme kravet du sannsynligvis tenker
+    på som «lik sannsynlighet for hver hendelse».)
+  - **Endelig varians.** `σ² < ∞`. Fordelinger med veldig tunge haler
+    (f.eks. Cauchy) tilfredsstiller ikke dette og CLT gjelder ikke.
+
+  ## Tommelfingerregler for «stor `n`»
+
+  - **`n ≥ 30`** er den klassiske grensen og holder for fordelinger som ikke
+    er ekstremt skjeve. Symmetriske fordelinger gir god tilnærming allerede
+    fra `n ≈ 10–15`.
+  - **For binomial (normalapproksimasjon):** kravet `n ≥ 30` er ikke
+    tilstrekkelig alene. Du trenger også at `n·p ≥ 5` OG `n·(1−p) ≥ 5`
+    (noen lærebøker bruker `≥ 10`). Det sikrer at fordelingen ikke er klemt
+    mot 0 eller `n`. Det er DETTE kravet du tenker på når `p` er liten:
+    selv om `n` er stor, kreves det at forventet antall suksesser og
+    fiaskoer begge er minst 5.
+  - **For poisson (normalapproksimasjon):** krev `λ ≥ 10` (eller `λ ≥ 15`
+    for finere tilnærming).
+
+  ## Hvorfor CLT betyr noe i praksis
+
+  Forklarer hvorfor z- og t-tester «bare fungerer» for utvalgsgjennomsnitt
+  selv når dataene ikke er normalfordelte. Det er CLT som gjør at man kan
+  bruke normalbaserte konfidensintervaller for `μ` så snart `n` er stor nok.
+
+  ## Når CLT IKKE redder deg
+
+  - `n` er liten og fordelingen er klart ikke-normal: bruk
+    [bootstrapping](/entry/bootstrapping) eller ikke-parametriske tester
+    som [Mann-Whitney-Wilcoxon](/entry/mann-whitney-wilcoxon).
+  - `n·p < 5` for binomial: bruk eksakt binomialtabell (E.1), ikke
+    normalapproksimasjon.
+  - Variansen er uendelig: CLT gjelder ikke. Sjelden i praksis, men
+    forekommer for enkelte tunghale-fordelinger.
 see_also:
-  - { id: en-utvalg-z-test, kind: entry }
-  - { id: bootstrapping, kind: entry }
+  - { id: en-utvalg-z-test,                  kind: entry }
+  - { id: bootstrapping,                     kind: entry }
+  - { id: normalfordeling,                   kind: entry }
+  - { id: normalapproksimasjon,              kind: glossary }
+  - { id: sannsynlighetsfordelinger-oversikt, kind: glossary }
+  - { id: mann-whitney-wilcoxon,             kind: entry }

@@ -1,0 +1,14 @@
+id: E7-mann-whitney-u-tabell
+name_no: "Mann-Whitney U-tabell"
+formal_name_no: "Kritiske U-verdier for Mann-Whitney-Wilcoxon-testen"
+code: "E.7"
+description: "Kritiske U-verdier for ulike `α` og utvalgsstørrelser `n₁, n₂`. Forkast `H₀` hvis testobservatoren `U ≤ U_(α, n₁, n₂)`."
+input_hint: "α som skrives her er den ENSIDIGE sannsynligheten (kolonneverdien i tabellen). For tosidig test: del problemets α på 2 først. F.eks. tosidig α = 0.05  ⇒  skriv 0.025 her."
+inputs:
+  - { name: "n₁", type: integer, min: 2,   max: 15,   step: 1 }
+  - { name: "n₂", type: integer, min: 2,   max: 15,   step: 1 }
+  - { name: "α",  type: number,  min: 0.025, max: 0.05, step: any }
+output: "U_(α, n₁, n₂)"
+distribution: mann_whitney_quantile
+related_entries:
+  - mann-whitney-wilcoxon

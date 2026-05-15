@@ -133,6 +133,35 @@ detailed_solution_variants:
               - { text: "Vi er 95 % sikre på at den sanne andelen som støtter forslaget ligger mellom 35.7 % og 44.3 %." }
         result: "`p ∈ (0.357, 0.443)`"
 
+      - source: "Eksamen · Kirsebærdalen (sjelden sykdom, lite p̂, stort n)"
+        question: "I løpet av to år registreres 24 nyfødte med sykdommen tengilis sinistra av totalt 4231 nyfødte i Kirsebærdalen. Finn et tilnærmet 95 % konfidensintervall for andelen p av nyfødte med sykdommen."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 4231`, `X = 24`, konfidensnivå 95 % → `α = 0.05`." }
+              - { comment: "Eksempel på sjelden hendelse: p̂ vil bli veldig liten" }
+          - label: "Estimat"
+            lines:
+              - { text: "`p̂ = X/n = 24/4231 ≈ 0.00567 = 5.67·10⁻³`" }
+              - { text: "Sjekk approksimasjon: `n·p̂·(1−p̂) = 4231·0.00567·(1−0.00567) ≈ 23.9 ≥ 5` ✓" }
+              - { comment: "Selv om p̂ er liten, redder den store n approksimasjonen" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(α/2) = z_(0.025) = 1.960`" } }
+          - label: "Standardfeil og marg"
+            lines:
+              - { text: "`SE = √(p̂(1−p̂)/n) = √(0.00567·0.99433/4231)`" }
+              - { indent: "`= √(1.332·10⁻⁶) ≈ 0.001154`" }
+              - { text: "`marginal = z·SE = 1.960·0.001154 ≈ 0.00226 = 2.26·10⁻³`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`p̂ ± marginal = 0.00567 ± 0.00226`" }
+              - { indent: "`= (0.00341, 0.00793)`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Vi er 95 % sikre på at den sanne andelen nyfødte med sykdommen ligger mellom ca. 0.34 % og 0.79 %." }
+        result: "`p ∈ (0.00341, 0.00793)`"
+
       - source: "Praksis · produkttest"
         question: "I en kvalitetstest viser det seg at 12 av 80 deler er defekte. Lag et 99 % konfidensintervall for den sanne defekt-raten p."
         sections:

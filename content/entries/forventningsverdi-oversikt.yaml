@@ -35,7 +35,14 @@ forms:
   - title: "Sum av variabler"
     symbol: "X+Y"
     formula: "E[X + Y] = E[X] + E[Y]"
-    description: "Forventningen til en sum er summen av forventningene — krever IKKE uavhengighet. For n iid kopier: E[X₁ + … + Xₙ] = n·μ."
+    description: "Forventningen til en sum er summen av forventningene. Krever IKKE uavhengighet."
+  - title: "Sum av n iid variabler"
+    symbol: "Σ Xᵢ"
+    formula: "E[Y] = E[X₁ + … + Xₙ] = n · E[X] = n · μ"
+    description: "Direkte formel når Y er en sum av n uavhengige og identisk fordelte variabler. Krever bare at hver Xᵢ har samme forventning μ. Eksempel: Y = X₁+…+X₁₃₀ med E[Xᵢ] = 65 gir E[Y] = 130·65 = 8450."
+    entry_links:
+      - { id: sum-uavhengige-normaler, label: "Sum av uavhengige normaler" }
+      - { id: sentralgrenseteoremet-glos, label: "Sentralgrenseteoremet" }
   - title: "Produkt under uavhengighet"
     symbol: "X·Y"
     formula: "E[X · Y] = E[X] · E[Y]        (kun hvis X ⊥ Y)"

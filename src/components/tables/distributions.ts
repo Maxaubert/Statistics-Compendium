@@ -1,4 +1,5 @@
 import { jStat } from "jstat";
+import { lookupMwwCritical, snapMwwAlpha } from "./mann-whitney-table";
 
 export type DistributionKey =
   | "binomial"
@@ -6,7 +7,8 @@ export type DistributionKey =
   | "normal_cumulative"
   | "normal_quantile"
   | "t_quantile"
-  | "chi_squared_quantile";
+  | "chi_squared_quantile"
+  | "mann_whitney_quantile";
 
 export interface LookupRequest {
   distribution: DistributionKey;
@@ -27,6 +29,8 @@ export function lookupCumulative({ distribution, inputs }: LookupRequest): numbe
       return jStat.studentt.inv(1 - inputs.α, inputs.df);
     case "chi_squared_quantile":
       return jStat.chisquare.inv(1 - inputs.α, inputs.df);
+    case "mann_whitney_quantile":
+      return lookupMwwCritical(inputs["n₁"], inputs["n₂"], inputs.α);
   }
 }
 
@@ -88,6 +92,25 @@ export function computeInverseBonus({ distribution, inputs }: LookupRequest): Bo
 }
 
 export function computeBonus({ distribution, inputs }: LookupRequest): BonusValue[] {
+  if (distribution === "mann_whitney_quantile") {
+    const key = snapMwwAlpha(inputs.α);
+    const oneSided = Number(key);
+    const twoSided = 2 * oneSided;
+    return [
+      {
+        label: "Tilsvarende tosidig α",
+        value: `${twoSided}`,
+      },
+      {
+        label: "Forkastingsregel (ensidig)",
+        value: "Forkast H₀ hvis U ≤ U_crit",
+      },
+      {
+        label: "Forkastingsregel (tosidig)",
+        value: "Forkast H₀ hvis min(U₁, U₂) ≤ U_crit",
+      },
+    ];
+  }
   if (distribution === "poisson") {
     const cdf = jStat.poisson.cdf(inputs.k, inputs.μ);
     const pmf = jStat.poisson.pdf(inputs.k, inputs.μ);

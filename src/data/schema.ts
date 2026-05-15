@@ -245,6 +245,7 @@ export const TableSchema = z.object({
     "normal_quantile",
     "t_quantile",
     "chi_squared_quantile",
+    "mann_whitney_quantile",
   ]),
   related_entries: z.array(z.string()).optional(),
   /** Optional caption rendered under the active mode's inputs — used to head off

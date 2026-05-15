@@ -3,6 +3,14 @@ import { jStat } from "jstat";
 import { clsx } from "clsx";
 import { Maximize2, Minimize2 } from "lucide-react";
 import type { Table } from "@/data/schema";
+import {
+  MWW_TABLES,
+  MWW_ALPHA_KEYS,
+  MWW_N_MIN,
+  MWW_N_MAX,
+  snapMwwAlpha,
+  type MwwAlphaKey,
+} from "./mann-whitney-table";
 
 type DistributionKey = Table["distribution"];
 
@@ -25,6 +33,8 @@ export function PrintedTable({ distribution, inputs }: Props) {
       return <ChiSquaredPrintedTable inputs={inputs} />;
     case "binomial":
       return <BinomialPrintedTable inputs={inputs} />;
+    case "mann_whitney_quantile":
+      return <MannWhitneyPrintedTable inputs={inputs} />;
     default:
       return (
         <p className="px-4 py-3 italic text-ink-3">
@@ -33,6 +43,123 @@ export function PrintedTable({ distribution, inputs }: Props) {
       );
   }
 }
+
+// ===================== Mann-Whitney U-tabell =====================
+function MannWhitneyPrintedTable({ inputs }: { inputs: Record<string, number> }) {
+  const rawN1 = inputs["n₁"];
+  const rawN2 = inputs["n₂"];
+  const rawα = inputs.α;
+
+  const selN1 = Number.isFinite(rawN1)
+    ? Math.max(MWW_N_MIN, Math.min(MWW_N_MAX, Math.round(rawN1)))
+    : null;
+  const selN2 = Number.isFinite(rawN2)
+    ? Math.max(MWW_N_MIN, Math.min(MWW_N_MAX, Math.round(rawN2)))
+    : null;
+  const activeKey: MwwAlphaKey = Number.isFinite(rawα)
+    ? snapMwwAlpha(rawα)
+    : "0.025";
+
+  const table = MWW_TABLES[activeKey];
+  const ns = Array.from(
+    { length: MWW_N_MAX - MWW_N_MIN + 1 },
+    (_, i) => i + MWW_N_MIN,
+  );
+
+  return (
+    <div className="overflow-hidden rounded-lg border border-line bg-card">
+      <div className="flex items-center justify-between gap-3 border-b border-line bg-paper-2 px-5 py-3 text-[12px] text-ink-3">
+        <span>
+          Forkast H₀ hvis `U ≤ U_(α, n₁, n₂)`. «−» = ikke signifikans mulig.
+        </span>
+        <div className="font-serif italic text-primary">
+          Markert: n₁ = {selN1 ?? "—"}, n₂ = {selN2 ?? "—"}, α = {activeKey}
+        </div>
+      </div>
+      <div className="overflow-auto">
+        <div className="px-5 pt-3 font-serif text-[13px] italic text-ink-3">
+          {table.label}
+        </div>
+        <table className="w-full border-collapse font-mono text-[12.5px] text-ink-2">
+          <thead className="bg-paper-2">
+            <tr>
+              <th className="px-2.5 py-1.5 text-center text-[11px] font-semibold text-ink-3">
+                n₁ ↓ &nbsp; n₂ →
+              </th>
+              {ns.map((n2) => {
+                const isCol = n2 === selN2;
+                return (
+                  <th
+                    key={n2}
+                    className={clsx(
+                      "px-2.5 py-1.5 text-center text-[11px] font-semibold",
+                      isCol
+                        ? "bg-primary text-white"
+                        : "bg-primary-soft text-primary",
+                    )}
+                  >
+                    {n2}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, i) => {
+              const n1 = ns[i];
+              const isRow = n1 === selN1;
+              return (
+                <tr
+                  key={n1}
+                  className={clsx(
+                    "border-b border-line",
+                    isRow && "bg-primary-2/[0.04]",
+                  )}
+                >
+                  <td
+                    className={clsx(
+                      "bg-paper-2 px-2.5 py-1.5 text-center font-medium text-ink-3",
+                      isRow && "bg-primary-soft font-bold text-primary",
+                    )}
+                  >
+                    {n1}
+                  </td>
+                  {row.map((val, j) => {
+                    const n2 = ns[j];
+                    const isCol = n2 === selN2;
+                    const isCell = isRow && isCol;
+                    return (
+                      <td
+                        key={j}
+                        className={clsx(
+                          "px-2.5 py-1.5 text-center",
+                          isCell
+                            ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                            : isCol
+                              ? "bg-primary-2/[0.04]"
+                              : "",
+                        )}
+                      >
+                        {val === null ? (
+                          <span className="text-ink-3">−</span>
+                        ) : (
+                          val
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// Silence unused-import warning for re-exports kept available to consumers.
+void MWW_ALPHA_KEYS;
 
 // ===================== Shared expand footer =====================
 function ExpandFooter({

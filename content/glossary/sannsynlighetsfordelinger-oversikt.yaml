@@ -1,0 +1,58 @@
+id: sannsynlighetsfordelinger-oversikt
+term_no: "Hvilken sannsynlighetsfordeling? — oversikt"
+short_def: "Cheat-sheet for «hvilken navngitt fordeling beskriver dette?». Strukturen i situasjonen avgjør, ikke navnet."
+filters:
+  random_variable: [discrete_count, continuous, time_until_event, sum_of_samples, mean_of_samples]
+  distribution_assumption: [binomial, poisson, hypergeometric, normal, exponential, t_distribution, chi_squared]
+  setup: [single_population, fixed_n_trials, trials_until_event, events_in_window, with_replacement, without_replacement, finite_pool]
+  structural_cues: [counting_events, time_until_first, rate_given, success_probability_given, normal_assumed]
+aliases:
+  - hvilken sannsynlighetsfordeling
+  - hvilken fordeling
+  - navngitte fordelinger
+  - fordelingsoversikt
+  - hvilken fordeling beskriver
+  - hvilken sannsynlighetsfordeling beskriver
+long_def: |
+  Oppgaver av typen «hvilken fordeling beskriver dette?» løses ved å lese
+  strukturen i problemet — ikke ved å gjette navn. Sjekklisten:
+
+  ## Diskrete (telle-)variabler
+
+  - **[Bernoulli](/glossary/bernoulli-forsoek):** ett enkelt forsøk med to utfall (suksess/fiasko), sannsynlighet `p`. Byggekloss for binomial.
+  - **[Binomial](/entry/binomial-fordeling):** antall suksesser i `n` UAVHENGIGE forsøk med fast `p` (med tilbakelegging). Cue: «`n` forsøk», «sannsynlighet `p`», «hvor mange klarer …».
+  - **[Hypergeometrisk](/entry/hypergeometrisk-fordeling):** antall suksesser i `n` trekninger UTEN tilbakelegging fra endelig populasjon `N` med `K` suksesser. Cue: «trekker uten å legge tilbake», «av de `K` av `N` får jeg …».
+  - **[Poisson](/entry/poisson-fordeling):** antall hendelser i et fast tids-/areal-/volumintervall, rate `λ` gitt. Cue: «i gjennomsnitt `λ` per …», «antall kunder per time», «antall feil per meter».
+
+  ## Kontinuerlige (måle-)variabler
+
+  - **[Normalfordeling](/entry/normalfordeling):** symmetrisk klokkeform. Cue: «`N(μ, σ)`», «normalfordelt med …», eller indirekte via [sentralgrenseteoremet](/glossary/sentralgrenseteoremet-glos) når man ser på gjennomsnitt/sum av mange uavhengige.
+  - **[Eksponential](/entry/eksponential-fordeling):** ventetid TIL første hendelse i en poissonprosess med rate `λ`. Cue: «tid til neste», «levetid», «hvor lenge går det før …».
+  - **[t-fordeling](/glossary/t-fordeling):** standardisert gjennomsnitt når `σ` IKKE er kjent og må estimeres med utvalgs-`s`. Cue: hypotesetest eller KI for `μ`, og `σ` er ukjent. Parameteren er frihetsgrader `ν = n − 1`.
+  - **Kjikvadrat (`χ²`):** sum av kvadrerte standardnormale. Brukes i [goodness-of-fit](/entry/kjikvadrat-goodness-of-fit), [uavhengighetstest](/entry/kjikvadrat-uavhengighet) og [KI for varians](/entry/ki-varians).
+
+  ## Beslutningssekvens
+
+  1. Er variabelen **diskret (heltall)** eller **kontinuerlig (måling)**?
+  2. Diskret: teller jeg «antall i `n` forsøk» (binomial/hypergeom.) eller «antall hendelser per tid» (poisson)?
+  3. Kontinuerlig: er det «tid til hendelse» (eksponential) eller en målbar størrelse (normal, t, χ²)?
+  4. Skal jeg gjøre inferens om `μ`? Sjekk om `σ` er KJENT (`z`) eller ESTIMERT med `s` (`t`).
+
+  ## Sammenhenger mellom fordelinger
+
+  - Sum av uavhengige normaler er normal.
+  - Gjennomsnitt av `n` uavhengige variabler er tilnærmet normalt for stor `n` ifølge [sentralgrenseteoremet](/glossary/sentralgrenseteoremet-glos) (CLT) — uansett opprinnelig fordeling.
+  - Når `σ` er ukjent og estimert med `s`, går normalfordelingen over til [t-fordeling](/glossary/t-fordeling) med `ν = n − 1` frihetsgrader.
+  - Hypergeometrisk ≈ binomial når populasjonen er stor (utvalg mye mindre enn populasjon).
+  - Binomial ≈ poisson når `n` er stor og `p` liten (med `λ = n·p`).
+  - Binomial ≈ normal når `n·p` og `n(1−p)` begge er store nok (normalapproksimasjon, typisk `n·p ≥ 5` og `n(1−p) ≥ 5`).
+see_also:
+  - { id: binomial-fordeling,         kind: entry }
+  - { id: poisson-fordeling,          kind: entry }
+  - { id: hypergeometrisk-fordeling,  kind: entry }
+  - { id: normalfordeling,            kind: entry }
+  - { id: eksponential-fordeling,     kind: entry }
+  - { id: t-fordeling,                kind: glossary }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }
+  - { id: sannsynlighetsfordeling,    kind: glossary }
+  - { id: stokastisk-variabel,        kind: glossary }

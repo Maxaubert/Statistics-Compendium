@@ -56,6 +56,7 @@ solution_variants:
   - label: "P(T > t) — ingen hendelse innen t"
     steps:
       - "Identifiser raten `λ` og noter enheten (per minutt, per time, per år, ...)"
+      - { text: "Hvis oppgaven gir forventet ventetid `E[T]` (f.eks. «forventet levetid 26 døgn») i stedet for raten direkte, bruk `λ = 1/E[T]`. F.eks. `E[T] = 26` ⇒ `λ = 1/26 ≈ 0.0385` per døgn.", conditional: true }
       - { text: "Hvis raten er gitt per time men spørsmålet er per minutt (eller motsatt), konvertér først slik at `λ` og `t` har samme tidsenhet", conditional: true }
       - text: "Bruk overlevelsesformelen direkte:"
         formula: "P(T > t) = e^(−λt)"
@@ -66,6 +67,7 @@ solution_variants:
   - label: "P(T < t) — hendelse innen t"
     steps:
       - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet (konvertér først om nødvendig)"
+      - { text: "Hvis oppgaven gir forventet ventetid `E[T]` i stedet for raten, bruk `λ = 1/E[T]`.", conditional: true }
       - text: "Bruk kumulativ fordelingsfunksjon:"
         formula: "F(t) = P(T < t) = 1 − e^(−λt)"
       - text: "Sett inn tall og regn ut (f.eks. `λ = 0.01` per time, `t = 48`):"
@@ -78,6 +80,7 @@ solution_variants:
   - label: "P(a < T < b) — intervall"
     steps:
       - "Identifiser `λ`, `a` og `b`, alle med samme tidsenhet"
+      - { text: "Hvis oppgaven gir forventet ventetid `E[T]` i stedet for raten, bruk `λ = 1/E[T]`.", conditional: true }
       - text: "Bruk differansen av to kumulative:"
         formula: "P(a < T < b) = F(b) − F(a) = e^(−λa) − e^(−λb)"
       - text: "Sett inn og regn ut (f.eks. `λ = 1/10` per min, `a = 5`, `b = 15`):"
