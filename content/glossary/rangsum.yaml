@@ -1,0 +1,33 @@
+id: rangsum
+term_no: Rangsum
+short_def: "Sum av rangtall (rekkefølgetall) for observasjonene i en gruppe, brukt i ikke-parametriske tester som MWW og Wilcoxon."
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples, single_population, paired_samples]
+  structural_cues: [nonparametric_required, rank_based_data]
+  distribution_assumption: [none_assumed]
+long_def: |
+  En **rangsum** `W` er summen av rangtall (rekkefølgetall i den samlede sorterte
+  lista) for observasjonene i én gruppe. Brukes som byggekloss i rang-baserte
+  tester der man IKKE antar normalfordeling:
+
+  - **Mann-Whitney-Wilcoxon** (uparet, to grupper): rangerer alle `n_X + n_Y`
+    observasjoner samlet og summerer rangene for én gruppe. Testobservatoren
+    `U = W − n₁(n₁+1)/2`.
+  - **Wilcoxon tegn-rang** (én-utvalg / paret): rangerer `|d_i|` og summerer
+    rangene for de positive (`T⁺`) og negative (`T⁻`) differansene hver for seg.
+
+  Likheter (ties) behandles ved at man gir gjennomsnittsrangen — f.eks. to
+  observasjoner som ville fått rang 4 og 5 får begge `4.5`.
+
+  Kontroll-regelen `W_X + W_Y = n(n+1)/2` (MWW) eller `T⁺ + T⁻ = n(n+1)/2`
+  (Wilcoxon) er en grei sanity-check etter rangtildelingen.
+aliases:
+  - rangsummen
+  - rangtall
+  - rangering
+  - rekkefølgesum
+see_also:
+  - { id: mann-whitney-wilcoxon, kind: entry }
+  - { id: wilcoxon-tegn-rang,    kind: entry }
+  - { id: ikke-parametrisk,      kind: glossary }

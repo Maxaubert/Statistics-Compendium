@@ -122,6 +122,10 @@ nodes:
         next: n_sidedness_z_mu
       - label: "Hypotesetest om μ – σ ukjent"
         next: n_sidedness_t_mu
+      - label: "Hypotesetest om median (ikke-parametrisk / ingen normalfordeling)"
+        leads_to:
+          - { id: wilcoxon-tegn-rang, kind: entry }
+          - { id: ikke-parametrisk, kind: glossary }
 
   - id: n_sidedness_z_mu
     question: "Tosidig eller ensidig test?"
@@ -234,6 +238,10 @@ nodes:
           - { id: ki-varians, kind: entry }
       - label: "Test om to grupper har samme μ (to-utvalgs t-test)"
         next: n_sidedness_to_utvalg
+      - label: "Test om to grupper er like — IKKE-parametrisk (ingen normalfordeling antatt)"
+        leads_to:
+          - { id: mann-whitney-wilcoxon, kind: entry }
+          - { id: ikke-parametrisk, kind: glossary }
       - label: "Goodness-of-fit (passer dataene en gitt fordeling?)"
         leads_to:
           - { id: kjikvadrat-goodness-of-fit, kind: entry }

@@ -31,6 +31,7 @@ when_NOT_to_use:
   - "Observasjonene er paret (samme individ målt to ganger) → bruk paret t-test"
   - "Variansene er klart forskjellige → vurder Welch (uten pooling)"
   - "Andelen testes, ikke gjennomsnitt → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
+  - "Normalfordeling kan IKKE antas (lite utvalg, asymmetrisk fordeling, oppgaven krever ikke-parametrisk) → bruk [Mann-Whitney-Wilcoxon](/entry/mann-whitney-wilcoxon)"
 
 symbols:
   - { sym: "X̄, Ȳ",    means: "gjennomsnittene i de to utvalgene" }
@@ -391,6 +392,7 @@ detailed_solution_variants:
 related:
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "mann-whitney-wilcoxon",   kind: "entry" }
   - { id: "pooled-varians",          kind: "glossary" }
   - { id: "frihetsgrader-glos",      kind: "glossary" }
   - { id: "p-verdi-glos",            kind: "glossary" }
@@ -398,6 +400,7 @@ related:
   - { id: "tosidig-test",            kind: "glossary" }
   - { id: "t-fordeling",             kind: "glossary" }
   - { id: "paret-test",              kind: "glossary" }
+  - { id: "ikke-parametrisk",        kind: "glossary" }
   - { id: "E5-t-tabell",             kind: "table" }
 
 tools:

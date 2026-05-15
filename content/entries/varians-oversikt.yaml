@@ -82,6 +82,13 @@ forms:
     entry_links:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
       - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+  - title: "Variansen til en sum av n iid variabler"
+    symbol: "Var(Σ Xᵢ)"
+    formula: "Var(Y) = Var(X₁ + … + Xₙ) = n · Var(X) = n · σ²          σ_Y = σ·√n"
+    description: "Direkte formel når Y er en sum av n UAVHENGIGE, identisk fordelte variabler. Eksempel: Y = X₁+…+X₁₃₀ med Var(Xᵢ) = 900 gir Var(Y) = 130·900 = 117 000, σ_Y = √117 000 ≈ 342.05."
+    entry_links:
+      - { id: sum-uavhengige-normaler, label: "Sum av uavhengige normaler" }
+      - { id: sentralgrenseteoremet-glos, label: "Sentralgrenseteoremet" }
   - title: "Variansen til stigningstallet"
     symbol: "Var(β̂)"
     glossary_id: variansen-til-stigningstallet

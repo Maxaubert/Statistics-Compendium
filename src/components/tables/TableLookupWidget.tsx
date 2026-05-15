@@ -16,6 +16,15 @@ interface Props {
 
 type Mode = "forward" | "inverse";
 
+function formatResult(value: number, distribution: Table["distribution"]): string {
+  if (!Number.isFinite(value)) return "—";
+  if (distribution === "mann_whitney_quantile") {
+    // U-verdier er heltall; ingen titalls-tilnærming
+    return String(Math.round(value));
+  }
+  return value.toFixed(4);
+}
+
 const MODE_RESULT_PREFIX: Record<Mode, (t: Table) => string> = {
   forward: (t) => t.output,
   inverse: (t) => t.inverse?.output ?? "",
@@ -165,6 +174,19 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
         )}
       </div>
 
+      {(mode === "inverse" ? table.inverse?.input_hint : table.input_hint) && (
+        <div
+          className="mb-3 rounded-md border-l-2 px-3 py-2 text-[11.5px] leading-snug"
+          style={{
+            background: "rgba(255, 255, 255, 0.04)",
+            borderColor: "#a78bfa",
+            color: "var(--color-calc-label)",
+          }}
+        >
+          {mode === "inverse" ? table.inverse?.input_hint : table.input_hint}
+        </div>
+      )}
+
       <div className="mb-5 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
         {activeInputs.map((inp) => (
           <label key={inp.name} className="flex flex-col gap-1.5">
@@ -202,8 +224,9 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
         className="break-words font-mono text-[15px] font-semibold"
         style={{ color: "var(--color-calc-text)" }}
       >
-        {MODE_RESULT_PREFIX[mode](table)} ≈{" "}
-        {Number.isFinite(result) ? result.toFixed(4) : "—"}
+        {MODE_RESULT_PREFIX[mode](table)}{" "}
+        {table.distribution === "mann_whitney_quantile" ? "=" : "≈"}{" "}
+        {formatResult(result, table.distribution)}
       </div>
 
       {bonuses.length > 0 && (

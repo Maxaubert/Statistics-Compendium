@@ -28,6 +28,7 @@ when_NOT_to_use:
   - "`σ` er kjent (oppgitt eksplisitt) → bruk [én-utvalg z-test](/entry/en-utvalg-z-test) i stedet"
   - "Du sammenligner to grupper → bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
   - "Du tester en andel → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
+  - "Normalfordeling kan IKKE antas og `n` er lite → bruk ikke-parametrisk [Wilcoxon tegn-rangtest](/entry/wilcoxon-tegn-rang)"
 
 symbols:
   - { sym: "X̄",   means: "utvalgsgjennomsnittet" }
@@ -372,12 +373,14 @@ related:
   - { id: "normalfordeling",       kind: "entry" }
   - { id: "en-utvalg-z-test",      kind: "entry" }
   - { id: "to-utvalgs-t-test",     kind: "entry" }
+  - { id: "wilcoxon-tegn-rang",    kind: "entry" }
   - { id: "frihetsgrader-glos",    kind: "glossary" }
   - { id: "p-verdi-glos",          kind: "glossary" }
   - { id: "ensidig-test",          kind: "glossary" }
   - { id: "tosidig-test",          kind: "glossary" }
   - { id: "ki-mu-ukjent-sigma",    kind: "entry" }
   - { id: "t-fordeling",           kind: "glossary" }
+  - { id: "ikke-parametrisk",      kind: "glossary" }
   - { id: "utvalgsvarians-radata", kind: "entry" }
   - { id: "E5-t-tabell",           kind: "table" }
 

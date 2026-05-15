@@ -1,20 +1,41 @@
 id: punktestimat
 term_no: Punktestimat
-short_def: "Ett tall som er beste gjet av en parameter, regnet ut fra dataene."
+short_def: "Ett enkelttall som er beste gjet av en ukjent parameter, regnet ut fra dataene."
 filters:
   computes: [parameter_estimate]
   random_variable: [mean_of_samples, proportion]
   setup: [single_population]
   structural_cues: [data_as_list]
-  parameters_known: [success_p, rate_lambda]
-  distribution_assumption: [poisson, binomial]
+  parameters_known: [success_p, rate_lambda, mean_known]
+  distribution_assumption: [poisson, binomial, normal]
+aliases:
+  - punktestimat
+  - punktestimater
+  - punkt-estimat
+  - punktestimering
+  - beste estimat
+  - estimat for andelen
 long_def: |
-  Når du har data fra et utvalg, regner du ut et "best guess" for en
-  ukjent parameter (`μ`, `p`, `σ`, `β`…). Dette ene tallet kalles et
-  punktestimat.
+  Når du har data fra et utvalg, regner du ut et «best guess» for en
+  ukjent parameter. Dette ene tallet kalles et punktestimat. Punktestimater
+  alene sier ingenting om usikkerheten — for det trenger du et
+  [konfidensintervall](/glossary/konfidensintervall).
 
-  Punktestimater alene sier ingenting om usikkerheten — for det trenger
-  du et konfidensintervall.
+  ## Standardformler
+
+  - **Andel** (`p`): `p̂ = X / n` (antall suksesser delt på antall forsøk). Eksempel: `K = 24` av `N = 4231` ⇒ `p̂ = 24/4231 ≈ 0.00567`. Se også [andel](/glossary/andel).
+  - **Forventningsverdi** (`μ`): `μ̂ = x̄ = (1/n) · Σ xᵢ` (utvalgsgjennomsnittet).
+  - **Varians** (`σ²`): `σ̂² = s² = (1/(n−1)) · Σ (xᵢ − x̄)²` (utvalgsvariansen).
+  - **Poissonrate** (`λ`): `λ̂ = X / t` (antall hendelser delt på observasjonsvinduet).
+  - **Regresjonsstigningstall** (`β`): `β̂ = S_XY / S_XX`.
+
+  Punktestimat brukes som «midtpunkt» i et konfidensintervall: `estimat ± feilmargin`.
 see_also:
-  - { id: ki-mu-kjent-sigma, kind: entry }
-  - { id: ki-mu-ukjent-sigma, kind: entry }
+  - { id: andel,                kind: glossary }
+  - { id: estimator,            kind: glossary }
+  - { id: forventningsrett,     kind: glossary }
+  - { id: utvalgsvarians,       kind: glossary }
+  - { id: ki-andel-binomial,    kind: entry }
+  - { id: ki-mu-kjent-sigma,    kind: entry }
+  - { id: ki-mu-ukjent-sigma,   kind: entry }
+  - { id: ki-poissonrate,       kind: entry }

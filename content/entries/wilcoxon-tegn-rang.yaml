@@ -1,0 +1,263 @@
+id: wilcoxon-tegn-rang
+name_no: "Wilcoxon tegn-rangtest (én-utvalg / paret, ikke-parametrisk)"
+type: test
+category: hypothesis_test
+tagline: "Ikke-parametrisk alternativ til én-utvalg t-test og paret t-test. Tester at medianen er lik en gitt verdi (eller at parede differanser har median 0)."
+
+formula_main: "T = min(T⁺, T⁻);  T⁺ = Σ R_i for d_i > 0"
+formula_latex: "T = \\min(T^+, T^-), \\quad T^+ = \\sum_{d_i > 0} R(|d_i|)"
+
+what_it_does: |
+  Tester om medianen i en populasjon er lik en gitt verdi `m₀` (eller om
+  medianen til parede differanser er 0) uten å anta normalfordeling. Man
+  beregner differansene `d_i = x_i − m₀` (eller `d_i = X_i − Y_i` for parede
+  data), forkaster nuller, og rangerer **de absolutte differansene**.
+  Rangtallene splittes deretter etter fortegn på `d_i`, og rangsummene
+  `T⁺` (positive) og `T⁻` (negative) sammenlignes mot en kritisk verdi.
+
+why_use: |
+  Brukes når man har en gruppe (én-utvalg) eller parede observasjoner og
+  IKKE vil anta normalfordeling — typisk små utvalg, asymmetriske fordelinger,
+  eller når oppgaven krever ikke-parametrisk test. Mer informativ enn ren
+  tegn-test fordi den bruker både retning OG størrelse på avvikene.
+
+recognition_cues:
+  - "Oppgaven sier 'ikke-parametrisk', 'fordelingsfri' eller 'Wilcoxon'"
+  - "Ett utvalg testes mot en hypotetisk median `m₀`, og normalfordeling kan IKKE antas"
+  - "Parede data (samme individ målt to ganger), ikke-normalfordelt differanse"
+  - "Det er gitt en T-tabell (eller W-tabell) for tegn-rangtest i vedlegget"
+
+when_NOT_to_use:
+  - "Normalfordeling kan antas (eller `n` er stor) → bruk [én-utvalg t-test](/entry/en-utvalg-t-test) (mer effektiv)"
+  - "To uavhengige grupper (ikke paret) → bruk [Mann-Whitney-Wilcoxon](/entry/mann-whitney-wilcoxon)"
+  - "Fordelingen er kraftig asymmetrisk og du tester strengt om median = m₀ → vurder tegn-test"
+
+symbols:
+  - { sym: "m₀",       means: "verdien medianen testes mot (én-utvalg) eller 0 (paret)" }
+  - { sym: "d_i",      means: "differansen, `d_i = x_i − m₀` (én-utvalg) eller `d_i = X_i − Y_i` (paret)" }
+  - { sym: "n",        means: "antall ikke-null differanser (kast ut `d_i = 0`)" }
+  - { sym: "R(|d_i|)", means: "rangtallet til `|d_i|` i den sorterte listen av absoluttverdier (1 = minst). Likheter får gjennomsnittsrang." }
+  - { sym: "T⁺",       means: "sum av rangtall der `d_i > 0`" }
+  - { sym: "T⁻",       means: "sum av rangtall der `d_i < 0`" }
+  - { sym: "T",        means: "testobservator: `T = min(T⁺, T⁻)` (tosidig)" }
+  - { sym: "T_(α, n)", means: "kritisk verdi fra T-tabell for Wilcoxon tegn-rang." }
+  - { sym: "H₀",       means: "nullhypotesen, vanligvis `median = m₀`" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [continuous, mean_of_samples]
+  setup: [single_population, paired_samples]
+  structural_cues: [data_as_list, total_observations_n, two_sided_alternative, one_sided_alternative, nonparametric_required, rank_based_data]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only]
+
+tags:
+  - "ikke-parametrisk"
+  - "fordelingsfri"
+  - "rangsum"
+  - "rangtest"
+  - "Wilcoxon"
+  - "tegn-rang"
+
+solution_variants:
+  - label: "H₁: median ≠ m₀ (tosidig)"
+    steps:
+      - text: "Formuler hypotesene (tosidig):"
+        formula: "H₀: median = m₀     mot     H₁: median ≠ m₀"
+      - "Begrunn Wilcoxon tegn-rang: én gruppe (eller parede data), ingen normalfordelingsantakelse"
+      - text: "Beregn differanser `d_i = x_i − m₀` (én-utvalg) eller `d_i = X_i − Y_i` (paret). Kast ut `d_i = 0`."
+      - "Sorter `|d_i|` fra minst til størst og tildel rangtall 1 til `n`. Likheter: gjennomsnittsrang."
+      - text: "Beregn rangsummene:"
+        formula: "T⁺ = Σ R(|d_i|) for d_i > 0;     T⁻ = Σ R(|d_i|) for d_i < 0"
+      - text: "Verifiser med kontroll-regelen `T⁺ + T⁻ = n(n+1)/2`."
+      - text: "Beregn testobservatoren:"
+        formula: "T = min(T⁺, T⁻)"
+      - "Slå opp `T_(α/2, n)` i T-tabellen (tosidig kolonne)"
+      - text: "Forkastingsregel (tosidig):"
+        formula: "Forkast H₀ hvis T ≤ T_(α/2, n)"
+      - "Konkluder i kontekst"
+  - label: "H₁: median > m₀ (høyresidig)"
+    steps:
+      - text: "Hypoteser:"
+        formula: "H₀: median ≤ m₀     mot     H₁: median > m₀"
+      - "Begrunn Wilcoxon tegn-rang"
+      - "Beregn `d_i`, sorter `|d_i|`, tildel rang. Behandle likheter med gjennomsnittsrang."
+      - text: "Beregn `T⁻` — rangsummen for `d_i < 0`. Hvis medianen er stor (H₁), er det få og små negative differanser, så `T⁻` skal være liten:"
+        formula: "T⁻ = Σ R(|d_i|) for d_i < 0"
+      - "Slå opp `T_(α, n)` i ensidig kolonne"
+      - text: "Forkastingsregel (høyresidig):"
+        formula: "Forkast H₀ hvis T⁻ ≤ T_(α, n)"
+      - "Konkluder i kontekst"
+  - label: "H₁: median < m₀ (venstresidig)"
+    steps:
+      - text: "Hypoteser:"
+        formula: "H₀: median ≥ m₀     mot     H₁: median < m₀"
+      - "Begrunn Wilcoxon tegn-rang"
+      - "Beregn `d_i`, sorter `|d_i|`, tildel rang. Behandle likheter med gjennomsnittsrang."
+      - text: "Beregn `T⁺` — rangsummen for `d_i > 0`. Med H₁: median liten, er `T⁺` det vi forventer skal være liten:"
+        formula: "T⁺ = Σ R(|d_i|) for d_i > 0"
+      - "Slå opp `T_(α, n)` i ensidig kolonne"
+      - text: "Forkastingsregel (venstresidig):"
+        formula: "Forkast H₀ hvis T⁺ ≤ T_(α, n)"
+      - "Konkluder i kontekst"
+
+common_traps: |
+  Husk: rangen tildeles BASE på `|d_i|` (absoluttverdien), ikke på `d_i` med
+  fortegn. Først etter rangtildelingen splitter du etter fortegnet. Som i
+  MWW: T skal være LITEN for å gi forkastning, ikke stor. Hvis du har data
+  med mange likheter, sjekk om læreboka anbefaler tie-korreksjon via
+  normalapproksimasjon.
+
+python_snippet: |
+  from scipy.stats import wilcoxon
+  # Én-utvalg: test om median(x) == m0
+  x = [6.1, 7, 8, 4, 9, 6.4, 5.2, 7.5, 8.2, 5.8]
+  m0 = 5
+  d = [xi - m0 for xi in x]
+  res = wilcoxon(d, alternative='greater')      # H1: median > m0
+  print(f"T- = {res.statistic}, p = {res.pvalue:.4f}")
+  # alternative: 'two-sided' / 'less' / 'greater'
+
+detailed_solution_variants:
+  - label: "H₁: median ≠ m₀ (tosidig)"
+    solutions:
+      - source: "Praksis · påfyllingsmaskin (ikke-parametrisk)"
+        question: "En påfyllingsmaskin skal gi median `m₀ = 500` ml. Ti flasker måles: 502, 498, 505, 510, 497, 503, 499, 511, 506, 508. Test med Wilcoxon tegn-rang om medianen avviker fra 500 (tosidig) på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 10`, `m₀ = 500`, `α = 0.05`, tosidig." }
+              - { text: "Ingen normalantakelse ⇒ Wilcoxon tegn-rang." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: median = 500`" }
+              - { text: "`H₁: median ≠ 500`" }
+          - label: "Differanser og rang av |d|"
+            lines:
+              - { text: "`d_i = x_i − 500`: 2, −2, 5, 10, −3, 3, −1, 11, 6, 8." }
+              - { text: "`|d_i|`: 2, 2, 5, 10, 3, 3, 1, 11, 6, 8." }
+              - { table: { headers: ["Rang", "|d|", "d (fortegn)"], rows: [
+                    ["1",   "1",  "−1"],
+                    ["2.5", "2",  "+2"],
+                    ["2.5", "2",  "−2"],
+                    ["4.5", "3",  "−3"],
+                    ["4.5", "3",  "+3"],
+                    ["6",   "5",  "+5"],
+                    ["7",   "6",  "+6"],
+                    ["8",   "8",  "+8"],
+                    ["9",   "10", "+10"],
+                    ["10",  "11", "+11"]
+                  ] } }
+              - { comment: "Likheter på |d|=2 (ranger 2,3 → snitt 2.5) og |d|=3 (ranger 4,5 → snitt 4.5)" }
+          - label: "Rangsummer"
+            lines:
+              - { text: "`T⁺ = 2.5 + 4.5 + 6 + 7 + 8 + 9 + 10 = 47`" }
+              - { text: "`T⁻ = 1 + 2.5 + 4.5 = 8`" }
+              - { text: "Kontroll: `T⁺ + T⁻ = 55 = 10·11/2` ✓" }
+              - { text: "`T = min(T⁺, T⁻) = 8`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "Wilcoxon T-tabell, `n = 10`, tosidig `α = 0.05` ⇒ `T_(0.025, 10) = 8`." }
+              - { text: "Forkast `H₀` hvis `T ≤ 8`." }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`T = 8 ≤ 8` ⇒ forkast `H₀` (på grensen)." }
+        result: "`T = 8 ≤ 8` ⇒ forkast `H₀` på α = 0.05. Det er (såvidt) statistisk grunnlag for å hevde at medianen avviker fra 500 ml."
+
+  - label: "H₁: median > m₀ (høyresidig)"
+    solutions:
+      - source: "Praksis · leveringstid"
+        question: "En nettbutikk lover at median leveringstid er 5 dager eller mindre. Et utvalg av 10 ordre gir: 6.1, 7, 8, 4, 9, 6.4, 5.2, 7.5, 8.2, 5.8 dager. Test med Wilcoxon tegn-rang om medianen er større enn 5 (H₁: median > 5) på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 10`, `m₀ = 5`, `α = 0.05`, ensidig (høyre)." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: median ≤ 5`" }
+              - { text: "`H₁: median > 5`" }
+          - label: "Differanser og rang"
+            lines:
+              - { text: "`d_i = x_i − 5`: 1.1, 2, 3, −1, 4, 1.4, 0.2, 2.5, 3.2, 0.8." }
+              - { table: { headers: ["Rang", "|d|", "d"], rows: [
+                    ["1",  "0.2", "+0.2"],
+                    ["2",  "0.8", "+0.8"],
+                    ["3",  "1",   "−1"],
+                    ["4",  "1.1", "+1.1"],
+                    ["5",  "1.4", "+1.4"],
+                    ["6",  "2",   "+2"],
+                    ["7",  "2.5", "+2.5"],
+                    ["8",  "3",   "+3"],
+                    ["9",  "3.2", "+3.2"],
+                    ["10", "4",   "+4"]
+                  ] } }
+          - label: "Rangsummer"
+            lines:
+              - { text: "`T⁺ = 1+2+4+5+6+7+8+9+10 = 52`" }
+              - { text: "`T⁻ = 3`" }
+              - { text: "Kontroll: `52 + 3 = 55` ✓" }
+              - { comment: "Høyresidig: testobservator er T⁻ (forventes liten når medianen er stor)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "Wilcoxon T-tabell, `n = 10`, ensidig `α = 0.05` ⇒ `T_(0.05, 10) = 10`." }
+              - { text: "Forkast `H₀` hvis `T⁻ ≤ 10`." }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`T⁻ = 3 ≤ 10` ⇒ forkast `H₀`." }
+        result: "`T⁻ = 3 ≤ 10` ⇒ forkast `H₀` på α = 0.05. Det er signifikant evidens for at median leveringstid er over 5 dager."
+
+  - label: "H₁: median < m₀ (venstresidig)"
+    solutions:
+      - source: "Praksis · komponentens levetid"
+        question: "Produsenten hevder at median levetid er minst `m₀ = 1000` timer. Åtte komponenter testes: 985, 1010, 975, 990, 970, 995, 980, 988 timer. Test med Wilcoxon tegn-rang om medianen er lavere enn 1000 (H₁: median < 1000) på α = 0.05."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 8`, `m₀ = 1000`, `α = 0.05`, ensidig (venstre)." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: median ≥ 1000`" }
+              - { text: "`H₁: median < 1000`" }
+          - label: "Differanser"
+            lines:
+              - { text: "`d_i = x_i − 1000`: −15, 10, −25, −10, −30, −5, −20, −12." }
+              - { text: "`|d_i|`: 15, 10, 25, 10, 30, 5, 20, 12." }
+              - { table: { headers: ["Rang", "|d|", "d"], rows: [
+                    ["1",   "5",  "−5"],
+                    ["2.5", "10", "+10"],
+                    ["2.5", "10", "−10"],
+                    ["4",   "12", "−12"],
+                    ["5",   "15", "−15"],
+                    ["6",   "20", "−20"],
+                    ["7",   "25", "−25"],
+                    ["8",   "30", "−30"]
+                  ] } }
+              - { comment: "Likhet på |d|=10 (ranger 2,3 → snitt 2.5)" }
+          - label: "Rangsummer"
+            lines:
+              - { text: "`T⁺ = 2.5` (kun ett positivt d)" }
+              - { text: "`T⁻ = 1 + 2.5 + 4 + 5 + 6 + 7 + 8 = 33.5`" }
+              - { text: "Kontroll: `2.5 + 33.5 = 36 = 8·9/2` ✓" }
+              - { comment: "Venstresidig: testobservator er T⁺ (forventes liten når medianen er liten)" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "Wilcoxon T-tabell, `n = 8`, ensidig `α = 0.05` ⇒ `T_(0.05, 8) = 5`." }
+              - { text: "Forkast `H₀` hvis `T⁺ ≤ 5`." }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`T⁺ = 2.5 ≤ 5` ⇒ forkast `H₀`." }
+        result: "`T⁺ = 2.5 ≤ 5` ⇒ forkast `H₀` på α = 0.05. Komponentene har signifikant kortere levetid enn produsenten hevder."
+
+related:
+  - { id: "en-utvalg-t-test",     kind: "entry" }
+  - { id: "to-utvalgs-t-test",    kind: "entry" }
+  - { id: "mann-whitney-wilcoxon", kind: "entry" }
+  - { id: "paret-test",           kind: "glossary" }
+  - { id: "rangsum",              kind: "glossary" }
+  - { id: "ikke-parametrisk",     kind: "glossary" }
+  - { id: "ensidig-test",         kind: "glossary" }
+  - { id: "tosidig-test",         kind: "glossary" }
+
+tools:
+  - "Wilcoxon T-tabell for kritiske verdier `T_(α, n)`"

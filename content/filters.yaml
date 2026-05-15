@@ -83,6 +83,8 @@ dimensions:
       - { key: one_sided_alternative,       label_no: "Ensidig alternativ (H₁: < eller >)" }
       - { key: regression_line_given,       label_no: "Regresjonslinje (ŷ = α̂ + β̂x) gitt" }
       - { key: predict_y_at_x,              label_no: "Predikere ŷ for gitt x" }
+      - { key: nonparametric_required,      label_no: "«Ikke-parametrisk» / «fordelingsfri» nevnt" }
+      - { key: rank_based_data,             label_no: "Rang / rangering / ordinalskala" }
 
   - key: parameters_known
     label_no: "Parametre gitt"
@@ -122,6 +124,7 @@ dimensions:
       - { key: normal_quantile_table_E4,     label_no: "Z-kvantiltabell (E.4)" }
       - { key: t_quantile_table_E5,          label_no: "t-tabell (E.5)" }
       - { key: chi_square_quantile_table_E6, label_no: "Kjikvadrattabell (E.6)" }
+      - { key: mann_whitney_table_E7,        label_no: "Mann-Whitney U-tabell (E.7)" }
       - { key: calculator_only,              label_no: "Kun kalkulator (ingen tabell)" }
       - { key: calculator_exp,               label_no: "Kalkulator: e^x" }
       - { key: calculator_factorial,         label_no: "Kalkulator: k!" }

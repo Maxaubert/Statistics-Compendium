@@ -1,0 +1,42 @@
+id: ikke-parametrisk
+term_no: "Ikke-parametrisk test"
+short_def: "Hypotesetest som ikke krever at dataene følger en bestemt fordeling (typisk normalfordeling). Bygger som regel på rangtall."
+filters:
+  computes: [hypothesis_test]
+  structural_cues: [nonparametric_required, rank_based_data]
+  distribution_assumption: [none_assumed]
+long_def: |
+  En **ikke-parametrisk test** (også kalt *fordelingsfri test*) gjør færre
+  antagelser om dataenes fordeling enn en *parametrisk* test gjør. Typisk
+  krever de bare at observasjonene kan rangeres.
+
+  Brukes typisk når:
+
+  - Utvalget er lite (`n < 30`) OG normalfordeling kan ikke antas
+  - Data er asymmetriske eller har tunge haler
+  - Data er ordinale (rangerte, ikke målte på en kontinuerlig skala)
+  - Oppgaveteksten eksplisitt krever det
+
+  **Pris å betale:** Ikke-parametriske tester har lavere *power* (sjansen til
+  å oppdage en reell effekt) enn parametriske tester når antakelsene for de
+  parametriske faktisk holder. Bruk parametrisk når du kan, ikke-parametrisk
+  når du må.
+
+  Vanlige ikke-parametriske motstykker:
+
+  | Parametrisk | Ikke-parametrisk |
+  |---|---|
+  | én-utvalg t-test | Wilcoxon tegn-rang |
+  | paret t-test | Wilcoxon tegn-rang (paret) |
+  | uparet to-utvalgs t-test | Mann-Whitney-Wilcoxon |
+aliases:
+  - ikke-parametriske tester
+  - fordelingsfri
+  - fordelingsfrie tester
+  - rang-test
+  - rangtest
+  - rang-baserte tester
+see_also:
+  - { id: mann-whitney-wilcoxon, kind: entry }
+  - { id: wilcoxon-tegn-rang,    kind: entry }
+  - { id: rangsum,               kind: glossary }
