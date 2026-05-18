@@ -1,0 +1,38 @@
+id: geometrisk-fordeling-glos
+term_no: Geometrisk fordeling
+short_def: "Antall forsøk til (og med) første suksess i en sekvens av iid Bernoulli-forsøk med suksessannsynlighet `p`. `E(X) = 1/p`, `Var(X) = (1−p)/p²`."
+filters:
+  distribution_assumption: [geometric]
+  computes: [exact_probability, expected_value]
+  random_variable: [discrete_count]
+  parameters_known: [success_p]
+aliases:
+  - geometrisk fordeling
+  - geometrisk
+  - geom
+  - første suksess
+long_def: |
+  En diskret sannsynlighetsfordeling for **antall forsøk til første suksess**:
+
+      P(X = k) = p · (1−p)^(k−1),   k = 1, 2, 3, ...
+
+  **Egenskaper:**
+
+  - `E(X) = 1/p`
+  - `Var(X) = (1−p)/p²`
+  - `P(X ≤ k) = 1 − (1−p)^k`
+  - `P(X > k) = (1−p)^k`
+  - **Hukommelsesløs:** `P(X > s+t | X > s) = P(X > t)`
+
+  **Kjennetegn:** identiske, uavhengige forsøk; spørsmål om når
+  første suksess inntreffer (ikke fast antall forsøk).
+
+  **Eksempler:** terningkast til første sekser (`p = 1/6`), antall
+  kunder til første reklamasjon, antall scan til radar oppdager
+  målet. Se hovedoppføringen for full prosedyre og varianter.
+see_also:
+  - { id: geometrisk-fordeling, kind: entry }
+  - { id: binomial-fordeling, kind: entry }
+  - { id: eksponential-fordeling, kind: entry }
+  - { id: bernoulli-forsoek, kind: glossary }
+  - { id: hukommelsesloshet, kind: glossary }

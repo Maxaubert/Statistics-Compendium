@@ -24,26 +24,24 @@
 
 |        |                                                       |
 |-------:|-------------------------------------------------------|
-| **34** | formulas: distributions, tests, intervals             |
-| **17** | concepts: kovarians, p-verdi, Poisson-prosess, ...    |
-|  **6** | tables: E.1 through E.6 with interactive lookup       |
+| **38** | formulas and concepts: distributions, tests, intervals, overviews |
+|  **8** | tables: E.1 through E.8 with interactive lookup       |
 | **28** | symbols, each linked to where they appear             |
-| **60** | glossary terms in Norwegian                           |
 
 ## Screenshots
 
 <table>
 <tr>
 <td width="50%"><img src="screenshots/02-entry-normalfordeling.png" alt="Normalfordeling"><br><sub><b>Formula entry</b> with a KaTeX hero formula and cited sources.</sub></td>
-<td width="50%"><img src="screenshots/04-concept-p-verdi.png" alt="P-verdi"><br><sub><b>Concept page</b> for cross-cutting ideas like p-verdi.</sub></td>
+<td width="50%"><img src="screenshots/04-entry-forventningsverdi.png" alt="Forventningsverdi"><br><sub><b>Overview entry</b> that gathers every form of a cross-cutting idea.</sub></td>
 </tr>
 <tr>
 <td><img src="screenshots/08-veiviser.png" alt="Veiviser"><br><sub><b>Wizard</b> that helps you pick the right test or distribution.</sub></td>
 <td><img src="screenshots/09-veiviser-anbefaling.png" alt="Veiviser anbefaling"><br><sub><b>Wizard recommendation</b> after answering the survey questions.</sub></td>
 </tr>
 <tr>
-<td><img src="screenshots/05-table-z.png" alt="Z-tabell"><br><sub><b>Interactive table</b> for E.1 through E.6, with live lookup.</sub></td>
-<td><img src="screenshots/07-ordliste.png" alt="Ordliste"><br><sub><b>Glossary</b> of Norwegian statistics terms.</sub></td>
+<td><img src="screenshots/05-table-z.png" alt="Z-tabell"><br><sub><b>Interactive table</b> for E.1 through E.8, with live lookup.</sub></td>
+<td><img src="screenshots/10-hjelp.png" alt="Hjelp"><br><sub><b>Help</b> with the floating calculator and a curated list of tricky exam tasks.</sub></td>
 </tr>
 </table>
 
@@ -55,11 +53,9 @@ React 18, TypeScript, Vite, Tailwind, KaTeX, Fuse.js, Zod. Content is one YAML f
 
 ```
 content/
-  entries/      formulas, one YAML per file
-  concepts/     cross-cutting ideas
-  tables/       E.1 through E.6 lookup configs
+  entries/      formulas and concepts, one YAML per file
+  tables/       E.1 through E.8 lookup configs
   symbols/      symbol definitions
-  glossary/     Norwegian terms
 src/            React app
-screenshots/    captured via capture.sh
+screenshots/    captured via scripts/capture.mjs
 ```

@@ -1,0 +1,38 @@
+id: hukommelsesloshet
+term_no: Hukommelsesløshet (memoryless)
+short_def: "Egenskapen `P(X > s + t | X > s) = P(X > t)` — fortid teller ikke; gjelder bare geometrisk og eksponentialfordeling."
+filters:
+  distribution_assumption: [geometric, exponential]
+  computes: [range_probability, exact_probability]
+aliases:
+  - hukommelsesløshet
+  - hukommelsesløs
+  - memoryless
+  - minneløshet
+  - minneløs
+long_def: |
+  En sannsynlighetsfordeling er **hukommelsesløs** hvis betinget
+  sannsynlighet for at variabelen overstiger `s + t` gitt at den har
+  oversteget `s`, ikke avhenger av `s`:
+
+      P(X > s + t | X > s) = P(X > t)
+
+  **De eneste fordelingene** med denne egenskapen er:
+
+  - [Geometrisk fordeling](/entry/geometrisk-fordeling) (diskret)
+  - [Eksponentialfordeling](/entry/eksponential-fordeling) (kontinuerlig)
+
+  **Intuisjon:** etter `s` forsøk uten suksess (eller `s` minutter uten
+  hendelse), starter eksperimentet «på nytt» — sannsynligheten for å
+  vente videre er identisk med å starte fra null. Det er INGEN
+  «overtid»-effekt.
+
+  **Bevis (geometrisk):**
+
+      P(X > s+t | X > s) = P(X > s+t) / P(X > s)
+                        = (1−p)^(s+t) / (1−p)^s
+                        = (1−p)^t = P(X > t)
+see_also:
+  - { id: geometrisk-fordeling, kind: entry }
+  - { id: eksponential-fordeling, kind: entry }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }

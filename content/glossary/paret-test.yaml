@@ -32,6 +32,8 @@ long_def: |
   Fordelen er at variasjon mellom personer fjernes — testen blir kraftigere.
   Kjennetegn: «før/etter», «parvis», «samme person».
 see_also:
+  - { id: paret-t-test, kind: entry }
   - { id: en-utvalg-t-test, kind: entry }
   - { id: to-utvalgs-t-test, kind: entry }
+  - { id: wilcoxon-tegn-rang, kind: entry }
   - { id: t-test-mu, kind: pattern }

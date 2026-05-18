@@ -1,0 +1,477 @@
+id: geometrisk-fordeling
+name_no: "Geometrisk fordeling"
+type: distribution
+category: discrete_distribution
+tagline: "Antall forsøk til (og med) første suksess i en sekvens av uavhengige Bernoulli-forsøk."
+
+formula_main: "P(X = x) = p·(1−p)^(x−1),   x = 1, 2, 3, ..."
+formula_latex: "P(X = x) = p(1-p)^{x-1}, \\quad x = 1, 2, 3, \\ldots"
+
+what_it_does: |
+  Modellerer hvor mange forsøk som trengs for å oppnå første suksess i en
+  sekvens av uavhengige Bernoulli-forsøk med samme suksessannsynlighet `p`.
+  Variabelen `X` er antall forsøk inntil OG MED den første suksessen — `X = 1`
+  hvis du lykkes på første forsøk, `X = 2` hvis du lykkes på andre, osv.
+
+  Fordelingen har én parameter (`p`), forventning `E(X) = 1/p` og er
+  hukommelsesløs: gitt at du allerede har feilet `s` ganger, er fordelingen
+  av antall gjenstående forsøk identisk med den opprinnelige.
+
+why_use: |
+  Naturlig valg når oppgaven spør «hvor mange forsøk til første suksess?»,
+  «hvor mange trekninger må vi gjøre for å få første treff?» eller
+  «sannsynligheten for at vi må prøve mer enn `k` ganger». Brukes også som
+  byggekloss for ventetid i diskret tid (terningkast, kortrunder).
+
+recognition_cues:
+  - "Oppgaven spør «hvor mange forsøk til første suksess/treff/feil/sekser?»"
+  - "Du har en sekvens av identiske, uavhengige forsøk med konstant `p` per forsøk"
+  - "Variabelen telles fra `1` (ikke `0`) — «første forsøk», «andre forsøk», osv."
+  - "Spørsmål om `P(X = k)`, `P(X ≤ k)`, `P(X > k)`, eller `E(X)`"
+  - "Antall forsøk er IKKE forhåndsbestemt — du fortsetter til du lykkes"
+  - "Formuleringer som «hvor mange ruller til», «første gang han trekker ess», «hvilket forsøk treffer han først»"
+
+when_NOT_to_use:
+  - "Fast antall forsøk `n`, telle suksesser → bruk [binomialfordeling](/entry/binomial-fordeling)"
+  - "Hendelser per tidsenhet/areal → bruk [Poissonfordeling](/entry/poisson-fordeling)"
+  - "Ventetid målt kontinuerlig (sekunder, minutter) → bruk [eksponentialfordeling](/entry/eksponential-fordeling) — den kontinuerlige analogen"
+  - "Antall forsøk til den `r`-te suksessen (`r > 1`) → bruk negativ binomial / Pascal-fordeling"
+  - "Trekker uten tilbakelegging fra liten pott → [hypergeometrisk](/entry/hypergeometrisk-fordeling)"
+
+symbols:
+  - { sym: "X",     means: "antall forsøk inntil og med første suksess, `X ~ Geom(p)`" }
+  - { sym: "p",     means: "suksessannsynlighet i hvert forsøk (konstant)" }
+  - { sym: "1 − p", means: "fiaskoannsynlighet i hvert forsøk" }
+  - { sym: "x, k",  means: "antallet det spørres om / terskelverdi, heltall `≥ 1`" }
+  - { sym: "F(x)",  means: "kumulativ fordeling, `P(X ≤ x) = 1 − (1−p)^x`" }
+  - { sym: "E(X)",  means: "forventet antall forsøk, `1/p`" }
+  - { sym: "Var(X)", means: "variansen, `(1−p)/p²`" }
+  - { sym: "σ",    means: "standardavviket, `√((1−p)/p²)`" }
+
+properties:
+  expected_value: "E(X) = 1/p"
+  variance: "Var(X) = (1−p)/p²"
+  std_dev: "σ = √((1−p)/p²)"
+
+filters:
+  computes: [exact_probability, at_least_k, range_probability, expected_value, std_dev, find_n_for_threshold]
+  random_variable: [discrete_count, time_until_event]
+  setup: [single_population, trials_until_event, with_replacement]
+  structural_cues: [independent_events, two_outcomes_per_trial, complement_pattern, probability_threshold, time_until_first, no_occurrences]
+  parameters_known: [success_p]
+  distribution_assumption: [geometric]
+  tooling: [calculator_only]
+
+solution_variants:
+  - label: "P(X = k)"
+    recognition: "«Sannsynligheten for at første suksess kommer på forsøk nr. `k`», «hva er sjansen for at vi trenger nøyaktig 4 kast?»."
+    steps:
+      - "Identifiser `p` (suksessannsynlighet) fra oppgaven. F.eks. terning, første sekser: `p = 1/6 ≈ 0.1667`."
+      - "Bekreft at oppgaven spør om EKSAKT verdi `k` (heltall `≥ 1`)."
+      - text: "Sett inn i formelen — `k − 1` fiasker etterfulgt av én suksess:"
+        formula: "P(X = k) = p · (1−p)^(k−1)"
+      - text: "Eksempel `p = 1/6`, `k = 3`:"
+        formula: "P(X = 3) = (1/6)·(5/6)² ≈ 0.116"
+        example: true
+      - { text: "Hvis `k = 1`: forenkles direkte til `P(X = 1) = p`.", conditional: true }
+      - { text: "Punktene faller geometrisk: `P(X = k+1)/P(X = k) = 1 − p`. Bruk dette som rask sjekk.", conditional: true }
+
+  - label: "P(X ≤ k)"
+    recognition: "«Sannsynligheten for første suksess INNEN `k` forsøk», «kommer treffet i løpet av de første 5 kastene?». Kumulativ — bruk lukket formel."
+    steps:
+      - "Identifiser `p` og terskelen `k` (heltall `≥ 1`)."
+      - text: "Bruk komplement av «ingen suksess på `k` første forsøk»:"
+        formula: "P(X ≤ k) = 1 − (1−p)^k"
+      - text: "Eksempel `p = 0.1`, `k = 10`:"
+        formula: "P(X ≤ 10) = 1 − 0.9^10 = 1 − 0.3487 ≈ 0.6513"
+        example: true
+      - { text: "Formelen kommer fra at `X > k` betyr nøyaktig `k` fiasker på rad: `P(X > k) = (1−p)^k`. Da blir `P(X ≤ k) = 1 − (1−p)^k`.", conditional: true }
+      - { text: "Hvis du heller vil summere pmf for hånd:", conditional: true, formula: "P(X ≤ k) = Σ p·(1−p)^(i−1) for i = 1..k" }
+
+  - label: "P(X > k)"
+    recognition: "«Sannsynligheten for at vi må prøve MER enn `k` forsøk», «ingen suksess på de første `k`», «det går minst `k+1` runder før det skjer noe»."
+    steps:
+      - "Identifiser `p` og `k`. Pass på om oppgaven sier «mer enn `k`» (= `X > k`) eller «minst `k`» (= `X ≥ k`)."
+      - text: "Direkte lukket form — `k` fiasker på rad:"
+        formula: "P(X > k) = (1−p)^k"
+      - text: "Eksempel `p = 1/6`, `k = 5`:"
+        formula: "P(X > 5) = (5/6)^5 ≈ 0.4019"
+        example: true
+      - { text: "**`X ≥ k` vs `X > k`**: `P(X ≥ k) = P(X > k−1) = (1−p)^(k−1)`. Ikke samme formel — sjekk hvilken ulikhet oppgaven bruker.", conditional: true }
+      - text: "Komplementet er kumulativ-fanen:"
+        formula: "P(X ≤ k) = 1 − P(X > k) = 1 − (1−p)^k"
+        conditional: true
+
+  - label: "P(a ≤ X ≤ b)"
+    recognition: "«Sannsynligheten for at første suksess kommer mellom forsøk `a` og `b`», «første treff i runde 3–7»."
+    steps:
+      - "Identifiser `p`, nedre grense `a` og øvre grense `b` (heltall, `1 ≤ a ≤ b`)."
+      - text: "Bruk to kumulative oppslag (differanse):"
+        formula: "P(a ≤ X ≤ b) = P(X ≤ b) − P(X ≤ a−1) = (1−p)^(a−1) − (1−p)^b"
+      - text: "Eksempel `p = 0.2`, `a = 3`, `b = 5`:"
+        formula: "P(3 ≤ X ≤ 5) = 0.8² − 0.8⁵ = 0.64 − 0.3277 ≈ 0.3123"
+        example: true
+      - { text: "Alternativt summer pmf direkte for små intervaller:", conditional: true, formula: "P(a ≤ X ≤ b) = Σ p·(1−p)^(i−1) for i = a..b" }
+
+  - label: "E(X), Var(X), σ"
+    recognition: "«Forventet antall forsøk til første suksess», «hva er gjennomsnittlig ventetid?», «regn ut spredningen»."
+    steps:
+      - "Identifiser `p`."
+      - text: "Forventning — antall forsøk i snitt for å oppnå én suksess:"
+        formula: "E(X) = 1/p"
+      - text: "Varians:"
+        formula: "Var(X) = (1−p)/p²"
+      - text: "Standardavvik:"
+        formula: "σ = √((1−p)/p²) = √(1−p)/p"
+      - text: "Eksempel terning, `p = 1/6`:"
+        formula:
+          - "E(X) = 6"
+          - "Var(X) = (5/6)/(1/36) = 30"
+          - "σ = √30 ≈ 5.477"
+        example: true
+      - { text: "Merk: `σ ≈ E(X)` for små `p` — fordelingen er svært skjev med lang høyrehale, og spredningen er nesten like stor som forventningen.", conditional: true }
+
+  - label: "Finn k for terskel"
+    recognition: "«Hvor mange forsøk må vi ha for at `P(X ≤ k) ≥ 0.95`?», «hvor lenge må vi prøve for å være 99 % sikker på å lykkes minst én gang?»."
+    steps:
+      - "Identifiser `p` og terskel `p*` (f.eks. `0.95`)."
+      - text: "Skriv kravet via komplement:"
+        formula: "P(X ≤ k) ≥ p*   ⇔   (1−p)^k ≤ 1 − p*"
+      - text: "Ta naturlig logaritme — `ln(1−p) < 0` snur ulikhetstegnet:"
+        formula: "k ≥ ln(1 − p*) / ln(1 − p)"
+      - text: "Eksempel `p = 0.1`, `p* = 0.95`:"
+        formula: "k ≥ ln(0.05) / ln(0.9) = −2.996/−0.1054 ≈ 28.43 ⇒ k = 29"
+        example: true
+      - "Rund alltid OPP til nærmeste heltall (du må holde ulikheten)."
+      - { text: "Verifiser: `(1−p)^k ≤ 1 − p*` og `(1−p)^(k−1) > 1 − p*` ⇒ `k` er minste verdi som tilfredsstiller kravet.", conditional: true }
+
+  - label: "Hukommelsesløshet"
+    recognition: "«Gitt at vi allerede har feilet `s` ganger, hva er sannsynligheten for å trenge mer enn `t` til?»."
+    steps:
+      - text: "Den geometriske fordelingen er **hukommelsesløs** — fortid teller ikke:"
+        formula: "P(X > s + t | X > s) = P(X > t) = (1−p)^t"
+      - "Tolkning: vet du allerede at de første `s` forsøkene feilet, oppfører resten seg som en helt ny geometrisk variabel med samme `p`."
+      - text: "Eksempel `p = 0.2`, gitt 4 mislykkede, sannsynlighet for mer enn 3 nye forsøk:"
+        formula: "P(X > 7 | X > 4) = P(X > 3) = 0.8³ = 0.512"
+        example: true
+      - { text: "Bevis i én linje: `P(X > s + t | X > s) = P(X > s+t)/P(X > s) = (1−p)^(s+t)/(1−p)^s = (1−p)^t`.", conditional: true }
+      - { text: "**Eneste diskrete fordeling med hukommelsesløshet** — eksponentialfordelingen er den kontinuerlige analogen.", conditional: true }
+
+solution_template:
+  - "Identifiser `p` og hva oppgaven spør om — eksakt verdi, terskel, forventning?"
+  - "Velg variant — se faner over: `P(X = k)`, `P(X ≤ k)`, `P(X > k)`, intervall, eller `E(X)`."
+  - text: "Bruk lukket formel direkte (ingen tabell trengs):"
+    formula:
+      - "P(X = k) = p·(1−p)^(k−1)"
+      - "P(X ≤ k) = 1 − (1−p)^k"
+      - "P(X > k) = (1−p)^k"
+      - "E(X) = 1/p,   Var(X) = (1−p)/p²"
+
+common_traps: |
+  - **Telling fra `1`, ikke `0`**: I denne (norske pensum-)varianten er `X` antall forsøk inntil og med første suksess, så `X ≥ 1`. En annen vanlig konvensjon teller antall FIASKOER før første suksess (`Y = X − 1`), `Y ≥ 0`. Sjekk hvilken som brukes i kilden din — formlene skifter med ±1.
+  - **`P(X > k) = (1−p)^k`, ikke `(1−p)^(k+1)` eller `(1−p)^(k−1)`**. Hendelsen `X > k` betyr nøyaktig `k` fiasker på rad, etterfulgt av hva som helst.
+  - **`X ≥ k` vs `X > k`**: `P(X ≥ k) = (1−p)^(k−1)` (du trenger minst `k−1` fiasker først). `P(X > k) = (1−p)^k`. Ulike potenser — sjekk om oppgaven bruker `≥` eller `>`.
+  - **`E(X) = 1/p`, ikke `p`**. Med `p = 1/6` er forventet antall kast `6`, ikke `1/6`.
+  - **`Var(X) = (1−p)/p²`**, IKKE `p(1−p)` (det er Bernoulli-variansen).
+  - **Hukommelsesløshet er kontraintuitiv** — hvis du har bommet 100 ganger, er sannsynligheten for å bomme én gang til fortsatt `1 − p`. Det er ingen «overtid» som gjør neste suksess mer sannsynlig.
+  - **Krav om konstant `p` og uavhengige forsøk**: trekker du uten tilbakelegging fra en liten pott (f.eks. 10 baller hvorav 3 røde, finn første rød), endrer `p` seg per trekning og du må bruke en annen modell.
+  - **Ikke forveksle med binomial**: binomial spør «hvor mange suksesser blant `n` forsøk» (fast `n`); geometrisk spør «hvor mange forsøk til første suksess» (variabel `n`, fast antall suksesser = 1).
+
+python_snippet: |
+  from scipy.stats import geom
+  import math
+
+  p = 1/6
+
+  # P(X = k) — eksakt verdi
+  geom.pmf(3, p)                  # 0.1157
+
+  # P(X ≤ k) — kumulativ
+  geom.cdf(5, p)                  # 0.5981
+
+  # P(X > k) = (1−p)^k
+  (1 - p) ** 5                    # 0.4019
+  # eller: geom.sf(5, p)
+
+  # Forventning og varians
+  geom.mean(p)                    # 6.0
+  geom.var(p)                     # 30.0
+
+  # Finn minste k slik at P(X ≤ k) ≥ 0.95
+  k = math.ceil(math.log(1 - 0.95) / math.log(1 - p))
+  # eller direkte: geom.ppf(0.95, p)
+
+detailed_solution_variants:
+  - label: "P(X = k)"
+    solutions:
+      - source: "Øving 3 · oppgave 5b (terning, første sekser)"
+        question: "En vanlig terning kastes inntil første sekser dukker opp. La `X` være antall kast. Finn `P(X = 3)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hvert kast: suksess = sekser, `p = 1/6 ≈ 0.1667`. Fiaskoannsynlighet `1 − p = 5/6`." }
+              - { text: "`X ~ Geom(1/6)`. Spørres om eksakt `k = 3` (sekser på tredje kast)." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = k) = p · (1 − p)^(k−1)` — to bom etterfulgt av suksess på kast nr. 3." }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 3) = (1/6) · (5/6)²`" }
+              - { indent: "`= 0.1667 · 0.6944`" }
+        result: "`P(X = 3) ≈ 0.1157`"
+
+      - source: "Praksis · kortspill"
+        question: "Et kortspill trekker med tilbakelegging fra en stokk på 52 kort. La `X` være antall trekninger til første ess. Finn sannsynligheten for at første ess dukker opp på trekning nr. 4."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "4 ess i stokken ⇒ `p = 4/52 = 1/13 ≈ 0.0769`." }
+              - { text: "Med tilbakelegging ⇒ uavhengighet og konstant `p`. `X ~ Geom(1/13)`, `k = 4`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X = k) = p · (1 − p)^(k−1)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X = 4) = (1/13) · (12/13)³`" }
+              - { indent: "`= 0.0769 · 0.7864`" }
+        result: "`P(X = 4) ≈ 0.0605`"
+
+  - label: "P(X ≤ k)"
+    solutions:
+      - source: "Praksis · lykkehjul"
+        question: "Et lykkehjul gir gevinst med sannsynlighet `p = 0.10` per spinn. Hva er sannsynligheten for å vinne minst én gang i løpet av de første 10 spinnene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`p = 0.10`, `1 − p = 0.90`." }
+              - { text: "«Minst én gang innen 10 spinn» = `P(X ≤ 10)` der `X` = antall spinn til første gevinst." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ k) = 1 − (1 − p)^k`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X ≤ 10) = 1 − 0.9^10`" }
+              - { indent: "`= 1 − 0.3487`" }
+        result: "`P(X ≤ 10) ≈ 0.6513`"
+
+      - source: "Praksis · radarsystem"
+        question: "Et radarsystem oppdager mål i hver scan med sannsynlighet `p = 0.30`. Hva er sannsynligheten for at målet oppdages innen de fire første scannene?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`p = 0.30`, `1 − p = 0.70`, `k = 4`." }
+              - { text: "«Innen 4 scan» = `P(X ≤ 4)`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ k) = 1 − (1 − p)^k`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X ≤ 4) = 1 − 0.7^4`" }
+              - { indent: "`= 1 − 0.2401`" }
+        result: "`P(X ≤ 4) ≈ 0.7599`"
+
+  - label: "P(X > k)"
+    solutions:
+      - source: "Øving 3 · oppgave 5d (terning, mer enn 5 kast)"
+        question: "Terning kastes til første sekser, `p = 1/6`. Finn `P(X > 5)` — sannsynligheten for at det trengs MER enn 5 kast."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Hendelsen `X > 5` betyr: ingen sekser på de første 5 kastene." }
+              - { text: "`p = 1/6`, `1 − p = 5/6`, `k = 5`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X > k) = (1 − p)^k`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X > 5) = (5/6)^5`" }
+              - { indent: "`≈ 0.4019`" }
+        result: "`P(X > 5) ≈ 0.4019` (knappe 40 % sjanse for at det trengs mer enn 5 kast)."
+
+      - source: "Praksis · sjeldne defekter"
+        question: "En kvalitetstest detekterer defekter med sannsynlighet `p = 0.02` per inspeksjon. Finn sannsynligheten for at det går mer enn 50 inspeksjoner uten en eneste detektert defekt."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall inspeksjoner til første detektert defekt. `p = 0.02`, `1 − p = 0.98`, `k = 50`." }
+              - { text: "«Mer enn 50 inspeksjoner uten detektert» = `P(X > 50)`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X > k) = (1 − p)^k`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X > 50) = 0.98^50`" }
+              - { indent: "`≈ 0.3642`" }
+        result: "`P(X > 50) ≈ 0.3642` (omtrent 36 % sjanse — overraskende stor)."
+
+  - label: "P(a ≤ X ≤ b)"
+    solutions:
+      - source: "Praksis · markedsundersøkelse"
+        question: "En spørreundersøkelse stoppes etter første «svært fornøyd». Sannsynligheten per respondent er `p = 0.20`. Finn sannsynligheten for at den første «svært fornøyde» kommer mellom respondent nr. 3 og 5 (begge inkludert)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`p = 0.20`, `a = 3`, `b = 5`." }
+              - { text: "`X ~ Geom(0.20)`. Vi vil ha `P(3 ≤ X ≤ 5)`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a ≤ X ≤ b) = (1−p)^(a−1) − (1−p)^b`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(3 ≤ X ≤ 5) = 0.8^2 − 0.8^5`" }
+              - { indent: "`= 0.64 − 0.32768`" }
+              - { indent: "`≈ 0.3123`" }
+          - label: "Sjekk via pmf-sum"
+            lines:
+              - { text: "`P(X = 3) = 0.2 · 0.8² = 0.128`" }
+              - { text: "`P(X = 4) = 0.2 · 0.8³ = 0.1024`" }
+              - { text: "`P(X = 5) = 0.2 · 0.8⁴ = 0.0819`" }
+              - { text: "Sum: `0.128 + 0.1024 + 0.0819 ≈ 0.3123` ✓" }
+        result: "`P(3 ≤ X ≤ 5) ≈ 0.3123`"
+
+  - label: "E(X), Var(X), σ"
+    solutions:
+      - source: "Øving 3 · oppgave 5a (terning, forventning og varians)"
+        question: "Terning kastes til første sekser. La `X` være antall kast. Finn `E(X)`, `Var(X)` og `σ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X ~ Geom(p)` med `p = 1/6`, `1 − p = 5/6`." }
+          - label: "Forventning"
+            lines:
+              - { text: "`E(X) = 1/p = 1/(1/6) = 6`" }
+              - { comment: "i snitt 6 kast for å få en sekser" }
+          - label: "Varians"
+            lines:
+              - { text: "`Var(X) = (1 − p)/p² = (5/6)/(1/6)²`" }
+              - { indent: "`= (5/6)/(1/36)`" }
+              - { indent: "`= (5/6) · 36`" }
+              - { indent: "`= 30`" }
+          - label: "Standardavvik"
+            lines:
+              - { text: "`σ = √30 ≈ 5.477`" }
+        result: "`E(X) = 6`, `Var(X) = 30`, `σ ≈ 5.48`"
+
+      - source: "Praksis · sjeldent fenomen"
+        question: "En type meteor observeres i snitt 1 av 200 netter (`p = 1/200 = 0.005`). Forventet ventetid (i netter) til neste observasjon? Hva er standardavviket?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall netter til første observasjon. `p = 0.005`, `1 − p = 0.995`." }
+          - label: "Forventning"
+            lines:
+              - { text: "`E(X) = 1/0.005 = 200` netter" }
+          - label: "Varians og σ"
+            lines:
+              - { text: "`Var(X) = 0.995/0.005² = 0.995/0.000025 = 39 800`" }
+              - { text: "`σ = √39 800 ≈ 199.5` netter" }
+              - { comment: "σ ≈ E(X) for små p — fordelingen er ekstremt skjev" }
+        result: "`E(X) = 200` netter, `σ ≈ 199.5` netter (nesten like stor som forventningen — stor usikkerhet)."
+
+  - label: "Finn k for terskel"
+    solutions:
+      - source: "Praksis · garantert oppdaget"
+        question: "Et alarmsystem oppdager innbruddsforsøk med `p = 0.10` per minutt. Hvor mange minutter må vi vente for at sannsynligheten for å ha oppdaget forsøket er minst 95 %?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall minutter til første deteksjon, `X ~ Geom(0.10)`." }
+              - { text: "Krav: `P(X ≤ k) ≥ 0.95`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ k) = 1 − (1−p)^k ≥ 0.95`" }
+              - { indent: "`(1−p)^k ≤ 0.05`" }
+              - { indent: "`0.9^k ≤ 0.05`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`k · ln(0.9) ≤ ln(0.05)`" }
+              - { comment: "ln(0.9) ≈ −0.1054 er negativt → snu ulikhetstegnet" }
+              - { text: "`k ≥ ln(0.05)/ln(0.9)`" }
+              - { indent: "`= −2.9957 / −0.1054`" }
+              - { indent: "`≈ 28.43`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp: `k = 29` minutter." }
+              - { comment: "verifiser: `1 − 0.9^29 ≈ 0.9525 ≥ 0.95` ✓ og `1 − 0.9^28 ≈ 0.9472 < 0.95`" }
+        result: "`k = 29` minutter (`P(X ≤ 29) ≈ 0.9525`)."
+
+      - source: "Praksis · loddtrekning"
+        question: "Et lodd har vinnersannsynlighet `p = 0.05`. Hvor mange lodd må vi være forberedt på å trekke for å være 99 % sikker på å ha trukket minst ett vinnerlodd?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall lodd til første vinst, `X ~ Geom(0.05)`. Krav: `P(X ≤ k) ≥ 0.99`." }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X ≤ k) = 1 − (1 − 0.05)^k ≥ 0.99`" }
+              - { indent: "`0.95^k ≤ 0.01`" }
+          - label: "Logaritme"
+            lines:
+              - { text: "`k · ln(0.95) ≤ ln(0.01)`" }
+              - { text: "`k ≥ ln(0.01)/ln(0.95) = −4.6052/−0.05129 ≈ 89.78`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund opp: `k = 90` lodd." }
+        result: "`k = 90` lodd (`P(X ≤ 90) ≈ 0.9906`)."
+
+  - label: "Hukommelsesløshet"
+    solutions:
+      - source: "Praksis · maskinrelé (gitt at det ikke har feilet)"
+        question: "Et relé feiler hver dag uavhengig med sannsynlighet `p = 0.02`. Gitt at det har gått `s = 50` dager uten feil, hva er sannsynligheten for at det går mer enn `t = 20` dager TIL før første feil?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall dager til første feil, `X ~ Geom(0.02)`. Gitt `X > 50`, finn `P(X > 50 + 20 | X > 50)`." }
+          - label: "Hukommelsesløshet"
+            lines:
+              - { text: "`P(X > s + t | X > s) = P(X > t)` for geometrisk fordeling." }
+              - { text: "`P(X > 20) = (1 − p)^20 = 0.98^20`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`0.98^20 ≈ 0.6676`" }
+              - { comment: "fortiden uten feil teller ikke — neste 20 dager er som et frisk nytt eksperiment" }
+        result: "`P(X > 70 | X > 50) = P(X > 20) ≈ 0.6676`"
+
+      - source: "Praksis · dart-spiller"
+        question: "En spiller har bommet på 4 dart-kast etter hverandre. Hvert kast har treff-sannsynlighet `p = 0.25`, uavhengig av tidligere kast. Hva er sannsynligheten for å bomme på de neste 3 også?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall kast til første treff, `X ~ Geom(0.25)`. Spurt: `P(X > 4 + 3 | X > 4) = P(X > 7 | X > 4)`." }
+          - label: "Hukommelsesløshet"
+            lines:
+              - { text: "`P(X > 7 | X > 4) = P(X > 3) = (1 − p)^3 = 0.75³`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`0.75³ = 0.4219`" }
+              - { comment: "tidligere bom påvirker ikke fremtidige sjanser — `p = 0.25` per kast uavhengig" }
+        result: "`P(X > 7 | X > 4) = P(X > 3) ≈ 0.4219`"
+
+related:
+  - { id: "binomial-fordeling",    kind: "entry" }
+  - { id: "poisson-fordeling",     kind: "entry" }
+  - { id: "eksponential-fordeling", kind: "entry" }
+  - { id: "hypergeometrisk-fordeling", kind: "entry" }
+  - { id: "komplementregelen",     kind: "entry" }
+  - { id: "bernoulli-forsoek",     kind: "glossary" }
+  - { id: "sannsynlighetsfordeling", kind: "glossary" }
+  - { id: "uavhengighet-glos",     kind: "glossary" }
+  - { id: "med-tilbakelegging",    kind: "glossary" }
+  - { id: "forventningsverdi",     kind: "glossary" }
+  - { id: "varians",               kind: "glossary" }
+
+tools:
+  - "Ingen tabell nødvendig — bruk lukket formel direkte."
+  - "Kalkulator: potens `^`, naturlig logaritme `ln`"
+
+tags:
+  - geometrisk fordeling
+  - geom
+  - første suksess
+  - antall forsøk
+  - ventetid diskret
+  - hukommelsesløshet
+  - memoryless
+  - Bernoulli-sekvens
+  - terningkast
+  - første treff

@@ -1,0 +1,496 @@
+id: hypotesefeil-og-styrke
+name_no: "Hypotesefeil og styrke (Type I, Type II, γ(θ))"
+type: identity
+category: hypothesis_test
+tagline: "Type I-feil (`α`), Type II-feil (`β(θ)`), og styrkefunksjon `γ(θ) = 1 − β(θ)` — hvor god er testen til å oppdage en avvikende sannhet?"
+
+formula_main: "α = P(forkast H₀ | H₀ sann);   β(θ) = P(behold H₀ | μ = θ);   γ(θ) = 1 − β(θ)"
+formula_latex: "\\alpha = P(\\text{forkast } H_0 \\mid H_0),\\quad \\beta(\\theta) = P(\\text{behold } H_0 \\mid \\mu = \\theta),\\quad \\gamma(\\theta) = 1 - \\beta(\\theta)"
+
+what_it_does: |
+  Beskriver de to feiltypene en hypotesetest kan gjøre, og hvordan vi måler
+  hvor «god» testen er til å oppdage avvik fra `H₀`:
+
+  - **Type I-feil**: forkaste `H₀` når den er sann. Sannsynligheten er
+    nøyaktig `α` (signifikansnivået du selv setter).
+  - **Type II-feil**: beholde `H₀` når `H₁` faktisk er sann. Sannsynligheten
+    `β(θ)` avhenger av hvor langt den sanne verdien `θ` ligger fra
+    grenseverdien i `H₀`.
+  - **Styrke `γ(θ) = 1 − β(θ)`**: sannsynligheten for å forkaste `H₀` når
+    sannheten er `θ`. Plottes som funksjon av `θ` — styrkefunksjonen.
+
+  Tabene under viser hvordan du regner `β` og `γ` for konkrete `θ` i en
+  én-utvalg z-test, og hvordan du drøfter valget av `α` ut fra
+  feilkostnadene.
+
+why_use: |
+  Når oppgaven spør «hva er sannsynligheten for å oppdage en avvikende
+  sannhet?» eller «hvilken `α` bør vi velge?», er det styrke og feiltyper
+  som svarer. Også sentralt for å begrunne utvalgsstørrelse: økt `n` gir
+  smalere fordeling, lavere `β`, høyere styrke.
+
+recognition_cues:
+  - "«Hva er sannsynligheten for type I-feil?» (svaret er nesten alltid `α`)"
+  - "«Hva er sannsynligheten for type II-feil hvis sann `μ` er 15?»"
+  - "«Hva er styrken til testen ved `μ = 16`?» — du skal regne `γ(16)`"
+  - "«Skisser styrkefunksjonen γ(θ)» eller «regn γ for flere θ»"
+  - "«Hvilken `α` bør vi velge?» — drøftingsoppgave om feilkostnad og trade-off"
+  - "Setningen «testen har styrke 0.8 for å oppdage μ = ...» (typisk fra utvalgsplanlegging)"
+
+when_NOT_to_use:
+  - "Du bare skal regne p-verdi og konkludere → bruk [én-utvalg z-test](/entry/en-utvalg-z-test) eller [én-utvalg t-test](/entry/en-utvalg-t-test) direkte"
+  - "Du estimerer `μ` med usikkerhet → bruk [KI for μ](/entry/ki-mu-og-varians)"
+  - "Du sammenligner to grupper og bare vil ha resultatet → [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Diskret testobservator (binomial, hypergeometrisk) — samme prinsipp gjelder, men kritisk grense er heltall og `α` blir sjelden eksakt"
+
+symbols:
+  - { sym: "H₀",    means: "nullhypotese (status quo)" }
+  - { sym: "H₁",    means: "alternativhypotese (det vi vil bevise)" }
+  - { sym: "α",     means: "Type I-feilrate = signifikansnivå (sett av oss)" }
+  - { sym: "β(θ)",  means: "Type II-feilrate ved sann verdi `θ`" }
+  - { sym: "γ(θ)",  means: "styrkefunksjon, `γ(θ) = 1 − β(θ)`" }
+  - { sym: "θ",     means: "den faktiske parameterverdien (`μ`, `p`, `λ`...) — argument til `γ`" }
+  - { sym: "k",     means: "kritisk grense for testobservatoren (gitt av `α`)" }
+  - { sym: "μ₀",    means: "grenseverdi i `H₀` (typisk `H₀: μ ≤ μ₀`)" }
+  - { sym: "X̄",   means: "utvalgsgjennomsnittet (testobservatorens grunnlag)" }
+  - { sym: "σ",     means: "kjent populasjons-standardavvik" }
+  - { sym: "n",     means: "utvalgsstørrelse" }
+  - { sym: "G(z)",  means: "kumulativ standardnormalfordeling, slått opp i tabell E.3" }
+
+filters:
+  computes: [hypothesis_test, find_n_for_threshold]
+  random_variable: [mean_of_samples, continuous]
+  setup: [single_population]
+  structural_cues: [normal_assumed, probability_threshold, one_sided_alternative, two_sided_alternative]
+  parameters_known: [population_variance_known, alpha_significance, mean_known, sample_size_large]
+  distribution_assumption: [normal]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+
+solution_variants:
+  - label: "Definisjoner og oversikt"
+    recognition: "«Forklar Type I/Type II/styrke», «hva er forskjellen på α og β?». Konseptuell fane som setter rammen."
+    steps:
+      - text: "**Type I-feil** — forkaste `H₀` når den faktisk er sann:"
+        formula: "α = P(forkast H₀ | H₀ sann)"
+      - "`α` er signifikansnivået og settes på forhånd (typisk `0.05` eller `0.01`). Du kontrollerer den eksakt — den er et designvalg."
+      - text: "**Type II-feil** — beholde `H₀` når `H₁` faktisk er sann:"
+        formula: "β(θ) = P(behold H₀ | sann verdi = θ),   θ ∈ H₁-området"
+      - "`β` er IKKE et enkelt tall — det er en funksjon av `θ`. Jo lengre `θ` ligger fra `μ₀`, jo mindre `β`."
+      - text: "**Styrke** — komplement av Type II:"
+        formula: "γ(θ) = 1 − β(θ) = P(forkast H₀ | sann verdi = θ)"
+      - "På grenseverdien `θ = μ₀` (vippepunktet mellom `H₀` og `H₁`) er `γ(μ₀) = α` — testen forkaster med nettopp signifikansnivåets rate når sannheten er på grensen."
+      - text: "**Beslutningstabell** — to riktige og to gale utfall:"
+        cases:
+          - when: "`H₀` sann, vi BEHOLDER `H₀`"
+            then: "✓ riktig (sannsynlighet `1 − α` på grenseverdien)"
+          - when: "`H₀` sann, vi FORKASTER `H₀`"
+            then: "✗ Type I-feil (sannsynlighet `α`)"
+          - when: "`H₁` sann, vi BEHOLDER `H₀`"
+            then: "✗ Type II-feil (sannsynlighet `β(θ)`)"
+          - when: "`H₁` sann, vi FORKASTER `H₀`"
+            then: "✓ riktig (sannsynlighet `γ(θ) = 1 − β(θ)`)"
+      - { text: "Avveiing: å senke `α` (mindre Type I) flytter kritisk grense bort fra `μ₀`, noe som ØKER `β(θ)` (mer Type II). Større `n` reduserer begge — det er den eneste «gratis» forbedringen.", conditional: true }
+
+  - label: "Beregn β(θ) (z-test)"
+    recognition: "«Hva er sannsynligheten for type II-feil hvis sann μ er θ?». Konkret z-test med kjent `σ`, oppgitt sann `θ`."
+    steps:
+      - "Definer testen først. F.eks. høyresidig én-utvalg z-test: `H₀: μ ≤ μ₀` mot `H₁: μ > μ₀`, kjent `σ`, utvalgsstørrelse `n`, signifikansnivå `α`."
+      - text: "Finn kritisk grense `k` for `X̄` (verdien som akkurat fører til forkasting). For høyresidig:"
+        formula: "k = μ₀ + z_α · σ/√n"
+      - text: "Eksempel kjøttdeig: `μ₀ = 14`, `σ = 3`, `n = 9`, `α = 0.05`. Da er `z_α = 1.645`:"
+        formula: "k = 14 + 1.645·3/√9 = 14 + 1.645 = 15.645"
+        example: true
+      - text: "Type II-feil = sannsynligheten for at `X̄ < k` GITT at sannheten er `θ`:"
+        formula: "β(θ) = P(X̄ < k | μ = θ) = G((k − θ)/(σ/√n))"
+      - text: "Eksempel `θ = 15`:"
+        formula: "β(15) = G((15.645 − 15)/(3/√9)) = G(0.645) ≈ 0.741"
+        example: true
+      - "Slå opp `G(z)` i **tabell E.3** (Z-tabell, kumulativ)."
+      - text: "For venstresidig test (`H₁: μ < μ₀`, kritisk grense `k = μ₀ − z_α·σ/√n`):"
+        formula: "β(θ) = P(X̄ > k | μ = θ) = 1 − G((k − θ)/(σ/√n))"
+        conditional: true
+      - text: "For tosidig test (`|X̄ − μ₀| > z_(α/2)·σ/√n`, kritiske grenser `k_1 = μ₀ − z_(α/2)·σ/√n`, `k_2 = μ₀ + z_(α/2)·σ/√n`):"
+        formula: "β(θ) = G((k_2 − θ)/(σ/√n)) − G((k_1 − θ)/(σ/√n))"
+        conditional: true
+      - { text: "Sanitetsjekk: `β(μ₀) = 1 − α` (på grenseverdien er det `1 − α` sjanse for å BEHOLDE `H₀`). Hvis du regner ut og får noe annet på `θ = μ₀`, har du en regnefeil.", conditional: true }
+
+  - label: "Styrkefunksjon γ(θ)"
+    recognition: "«Regn γ(θ) for flere θ», «skisser styrkefunksjonen», «hvor god er testen til å oppdage μ = ...?»."
+    steps:
+      - "Sett opp testen som over (kjent `σ`, `n`, `α`, retning på `H₁`). Finn kritisk grense `k`."
+      - text: "Styrkefunksjonen for høyresidig én-utvalg z-test:"
+        formula: "γ(θ) = P(forkast H₀ | μ = θ) = 1 − G((k − θ)/(σ/√n))"
+      - text: "Ekvivalent formulering med `z_α` direkte:"
+        formula: "γ(θ) = 1 − G(z_α − (θ − μ₀)·√n/σ)"
+      - "Tabuler `γ` for flere `θ` — typisk `θ = μ₀`, `μ₀ + 0.5`, `μ₀ + 1`, `μ₀ + 1.5`, `μ₀ + 2` osv."
+      - text: "Eksempel kjøttdeig (`μ₀ = 14`, `σ = 3`, `n = 9`, `α = 0.05`, `k = 15.645`):"
+        formula:
+          - "γ(14)  = 1 − G((15.645 − 14)/1)  = 1 − G(1.645) = 0.050"
+          - "γ(15)  = 1 − G((15.645 − 15)/1)  = 1 − G(0.645) ≈ 0.259"
+          - "γ(16)  = 1 − G((15.645 − 16)/1)  = 1 − G(−0.355) ≈ 0.639"
+          - "γ(17)  = 1 − G((15.645 − 17)/1)  = 1 − G(−1.355) ≈ 0.912"
+        example: true
+      - "Egenskaper å huske: `γ` er voksende i `θ` (for høyresidig); `γ(μ₀) = α`; `γ(∞) = 1`. Kurven er S-formet (logistisk-lignende)."
+      - text: "Sammenheng med Type II:"
+        formula: "β(θ) = 1 − γ(θ)"
+      - { text: "For å øke styrken ved et gitt `θ`: øk `n` (smalere fordeling), øk `α` (flytt `k` nærmere `μ₀`), eller reduser `σ` (bedre måleinstrument). Effektstørrelsen `θ − μ₀` selv er ikke noe du kan kontrollere.", conditional: true }
+      - { text: "For tosidig test er kurven U-formet (`γ` er stor for `θ` langt fra `μ₀` i begge retninger, minst (= `α`) ved `θ = μ₀`).", conditional: true }
+
+  - label: "Drøft valg av α"
+    recognition: "«Hvilket signifikansnivå er passende?», «når bør vi velge α = 0.01 i stedet for 0.05?». Konseptuell drøfting med kontekstbasert begrunnelse."
+    steps:
+      - "Start med kostnadsbildet: hvilken type feil er DYRERE?"
+      - text: "**Type I-feilkostnad er høy**: legemiddelgodkjenning, dømme uskyldig, kassere god produksjon. Velg liten `α` (`0.01` eller `0.001`)."
+        formula: "Liten α ⇒ lav P(Type I), MEN høyere P(Type II)"
+      - text: "**Type II-feilkostnad er høy**: overse en alvorlig diagnose, slippe ut farlig produkt, ikke oppdage cyber-angrep. Velg større `α` (`0.05` eller `0.10`) — du aksepterer flere falske alarmer for å fange opp alle ekte tilfeller."
+        formula: "Stor α ⇒ høy γ(θ), MEN flere falske forkastninger"
+      - "Husk at `α + β ≠ 1` generelt — det er en TRADE-OFF, ikke et nullsumspill. Du kan redusere begge ved å øke `n`."
+      - { text: "Konvensjon i naturfag og medisin: `α = 0.05`. I høyrisiko-felt (genomikk, partikkelfysikk) brukes `α = 0.001` eller strengere etter Bonferroni-korreksjon for multiple tester.", conditional: true }
+      - text: "Eksempel kjøttdeig fra pensum: `H₀: μ ≤ 14` mot `H₁: μ > 14`. Type I-feil = kassere ufarlig kjøttdeig (økonomisk tap). Type II-feil = godta usunn kjøttdeig (helse-/omdømmerisiko). Hvis Type II-feil veier mest, øk `α` eller `n`."
+      - { text: "Praktisk huskeregel: «`α` velger vi, `β` får vi» — `β` styres av sannheten, ikke av oss. Vi kan kun påvirke `β` indirekte via `n`, `σ` eller valget av `α`.", conditional: true }
+
+  - label: "Finn n for ønsket styrke"
+    recognition: "«Hvor stor `n` må til for at γ(θ) = 0.8 ved θ = ...?». Designspørsmål: planlegg utvalg slik at testen er kraftig nok."
+    steps:
+      - "Spesifiser testen: kjent `σ`, signifikansnivå `α`, retning på `H₁`, sann verdi `θ` (effektstørrelsen vi vil oppdage), og ønsket styrke `γ* = 1 − β*`."
+      - text: "For høyresidig én-utvalg z-test sett opp kravet `γ(θ) ≥ γ*`:"
+        formula: "1 − G(z_α − (θ − μ₀)·√n/σ) ≥ γ*"
+      - text: "Skriv om — siden `1 − G(z) ≥ γ* ⇔ z ≤ −z_{β*}` (med `β* = 1 − γ*`):"
+        formula: "z_α − (θ − μ₀)·√n/σ ≤ −z_{β*}"
+      - text: "Løs for `n`:"
+        formula: "√n ≥ (z_α + z_{β*})·σ/(θ − μ₀)   ⇒   n ≥ ((z_α + z_{β*})·σ/(θ − μ₀))²"
+      - text: "Eksempel: `μ₀ = 14`, `σ = 3`, `θ = 15`, `α = 0.05` (`z_α = 1.645`), `γ* = 0.80` (`β* = 0.20` ⇒ `z_{0.20} = 0.842`):"
+        formula:
+          - "n ≥ ((1.645 + 0.842)·3/(15 − 14))² = (7.461)² ≈ 55.66"
+          - "n = 56"
+        example: true
+      - "Rund alltid OPP. Verifiser ved å regne `γ(θ)` med det valgte `n` — den skal være `≥ γ*`."
+      - { text: "Tosidig test: bytt `z_α` med `z_(α/2)` i formelen. Liten korreksjon i `n`.", conditional: true }
+      - { text: "Innsikt: `n` skalerer som `1/(θ − μ₀)²` — for å oppdage halvparten så store effekter, trenger du fire ganger så stort utvalg.", conditional: true }
+
+solution_template:
+  - "Hold definisjonene rene: `α` er sannsynlighet for å forkaste sann `H₀`; `β(θ)` er sannsynlighet for å beholde gal `H₀` ved sann verdi `θ`; `γ(θ) = 1 − β(θ)`."
+  - "For konkret beregning: finn kritisk grense `k = μ₀ ± z_α·σ/√n` (avhengig av retning), så regn `β(θ) = P(X̄ < k | μ = θ)` med standardnormaltabellen."
+  - "For drøftingsoppgaver: knytt valg av `α` til kostnaden ved hver feiltype. Sanity-sjekk: `γ(μ₀) = α`."
+
+common_traps: |
+  - **`α` er ikke `β`**: `α` styrer Type I (settes av oss), `β` styrer Type II (avhenger av sann `θ` og utvalgsstørrelse). De er IKKE komplementære — `α + β ≠ 1` generelt.
+  - **`β` er en FUNKSJON av `θ`, ikke et enkelt tall**. Spørsmål om «hva er β?» uten å spesifisere `θ` er meningsløst (med mindre `θ` er underforstått).
+  - **Styrken på grenseverdien er `α`**, ikke `1 − α` og ikke `0`. På `θ = μ₀` (vippepunktet mellom `H₀` og `H₁`) forkastes nullen med sannsynlighet `α` per definisjon. Sanity-sjekk for `γ`-utregninger.
+  - **Riktig kritisk grense for retning**: høyresidig bruker `+z_α`, venstresidig `−z_α`, tosidig `±z_(α/2)`. Feil retning gir feil `β`.
+  - **`β` skal regnes i FORDELINGEN under `μ = θ`**, ikke under `μ = μ₀`. Standardiser med `(k − θ)/(σ/√n)`, ikke `(k − μ₀)/(σ/√n)`.
+  - **Større `α` gir høyere styrke**, ikke lavere. Senker du `α` for å redusere Type I, flytter du kritisk grense lenger fra `μ₀`, noe som ØKER `β`. Trade-offen er reell.
+  - **`n` er den eneste «gratis lunsj»** — øker `n`, så blir både `α` (fastholdt) og `β(θ)` (alle `θ`) bedre/lavere. Effektstørrelsen `θ − μ₀` og målestøyen `σ` er gitt av virkeligheten.
+  - **Tosidig styrkefunksjon er U-formet**, ikke S-formet — den er stor for `θ` langt fra `μ₀` i BEGGE retninger.
+  - **«Forkast `H₀`» betyr ikke «`H₁` er sann»**. Hvis du ikke forkaster, betyr det heller ikke at `H₀` er sann — bare at evidensen ikke var sterk nok ved valgt `α`.
+
+python_snippet: |
+  from scipy.stats import norm
+  import math
+
+  # Kjøttdeig-eksemplet: H0: μ ≤ 14 vs H1: μ > 14
+  mu0, sigma, n, alpha = 14, 3, 9, 0.05
+
+  z_alpha = norm.ppf(1 - alpha)              # 1.645
+  k = mu0 + z_alpha * sigma / math.sqrt(n)   # 15.645
+
+  def gamma(theta):
+      """Styrkefunksjon for høyresidig én-utvalg z-test."""
+      return 1 - norm.cdf((k - theta) / (sigma / math.sqrt(n)))
+
+  def beta(theta):
+      return 1 - gamma(theta)
+
+  for theta in [14, 15, 16, 17]:
+      print(f"γ({theta}) = {gamma(theta):.3f},  β({theta}) = {beta(theta):.3f}")
+  # γ(14) = 0.050, γ(15) = 0.259, γ(16) = 0.639, γ(17) = 0.912
+
+  # Finn n for ønsket styrke γ* = 0.80 ved θ = 15
+  gamma_star = 0.80
+  z_beta = norm.ppf(gamma_star)              # 0.842
+  theta = 15
+  n_needed = math.ceil(((z_alpha + z_beta) * sigma / (theta - mu0)) ** 2)
+  # n_needed = 56
+
+detailed_solution_variants:
+  - label: "Definisjoner og oversikt"
+    solutions:
+      - source: "Praksis · juridisk analog"
+        question: "Forklar Type I-feil, Type II-feil og styrke med utgangspunkt i strafferettsanalogen «uskyldig til det motsatte er bevist». Hva svarer α og β(θ) til?"
+        sections:
+          - label: "Oppsett"
+            lines:
+              - { text: "`H₀`: tiltalt er uskyldig (status quo)." }
+              - { text: "`H₁`: tiltalt er skyldig." }
+              - { text: "«Forkast H₀» = domfellelse. «Behold H₀» = frifinnelse." }
+          - label: "Type I-feil"
+            lines:
+              - { text: "Type I = forkaste H₀ når den er sann = **dømme en uskyldig**." }
+              - { text: "Sannsynlighet `α`. I rettssystemet velges denne lav («heller la ti skyldige gå fri enn å dømme én uskyldig»)." }
+          - label: "Type II-feil"
+            lines:
+              - { text: "Type II = beholde H₀ når H₁ er sann = **frikjenne en skyldig**." }
+              - { text: "Sannsynlighet `β(θ)` der `θ` måler grad av skyld/bevismengde. Stor `β` ⇒ mange skyldige slipper unna." }
+          - label: "Styrke"
+            lines:
+              - { text: "`γ(θ) = 1 − β(θ)` = sannsynlighet for å dømme en faktisk skyldig." }
+              - { text: "Et godt rettssystem har lav `α` og høy `γ(θ)` for store `θ` (klare bevis fanges opp)." }
+        result: "α = sjanse for å dømme uskyldig (settes lav); β(θ) = sjanse for å frikjenne skyldig (avhenger av bevisbyrde); γ(θ) = 1 − β(θ) = sjanse for å fange den skyldige."
+
+  - label: "Beregn β(θ) (z-test)"
+    solutions:
+      - source: "Pensum s. 48 · kjøttdeig (β ved μ = 15, høyresidig)"
+        question: "Forventet fettinnhold i kjøttdeig testes med `H₀: μ ≤ 14 %` mot `H₁: μ > 14 %`. Vi har kjent `σ = 3 %`, utvalg `n = 9`, og signifikansnivå `α = 0.05`. Finn sannsynligheten for Type II-feil hvis det sanne fettinnholdet er `μ = 15 %`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Høyresidig z-test. `μ₀ = 14`, `σ = 3`, `n = 9`, `α = 0.05`." }
+              - { text: "Sann verdi (under `H₁`): `θ = 15`." }
+              - { text: "Vi vil finne `β(15) = P(behold H₀ | μ = 15)`." }
+          - label: "Kritisk grense"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645`." } }
+              - { text: "`k = μ₀ + z_α · σ/√n = 14 + 1.645 · 3/√9`" }
+              - { indent: "`= 14 + 1.645 · 1`" }
+              - { indent: "`= 15.645`" }
+              - { text: "Forkast `H₀` hvis `X̄ > 15.645`; behold ellers." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`β(15) = P(X̄ < 15.645 | μ = 15)`" }
+              - { text: "Under `μ = 15`: `X̄ ~ N(15, 1²)` (siden `σ/√n = 1`)." }
+              - { text: "`β(15) = G((15.645 − 15)/1) = G(0.645) ≈ G(0.65)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "`G(0.65) ≈ 0.7422`" } }
+          - label: "Styrke"
+            lines:
+              - { text: "`γ(15) = 1 − β(15) ≈ 1 − 0.742 = 0.258`" }
+              - { comment: "Testen har bare 26 % sjanse for å oppdage et avvik på 1 %-poeng — svak styrke ved θ = 15" }
+        result: "`β(15) ≈ 0.742`, `γ(15) ≈ 0.258` (testen er svak for å oppdage μ = 15 med n = 9)."
+
+      - source: "Praksis · tosidig z-test (maskinfylling)"
+        question: "En maskin skal fylle `μ₀ = 500` ml med kjent `σ = 4`. Vi har `n = 16`, tosidig test på `α = 0.05`. Finn sannsynligheten for Type II-feil hvis sann `μ` er 502."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Tosidig: `H₀: μ = 500` mot `H₁: μ ≠ 500`. `σ/√n = 4/4 = 1`." }
+              - { text: "Kritiske grenser: `k_(1,2) = 500 ± z_(α/2) · 1 = 500 ± 1.96` ⇒ `k_1 = 498.04`, `k_2 = 501.96`." }
+          - label: "β(502)"
+            lines:
+              - { text: "`β(502) = P(498.04 ≤ X̄ ≤ 501.96 | μ = 502)`" }
+              - { text: "`= G((501.96 − 502)/1) − G((498.04 − 502)/1)`" }
+              - { text: "`= G(−0.04) − G(−3.96)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(−0.04) ≈ 0.4840, G(−3.96) ≈ 0.0000`" } }
+              - { text: "`β(502) ≈ 0.4840 − 0.0000 ≈ 0.484`" }
+          - label: "Styrke"
+            lines:
+              - { text: "`γ(502) = 1 − 0.484 ≈ 0.516`" }
+        result: "`β(502) ≈ 0.484`, `γ(502) ≈ 0.516`. Drøyt 50 % sjanse for å oppdage avviket på 2 ml."
+
+      - source: "Praksis · venstresidig z-test (produktvekt)"
+        question: "En produsent påstår at gjennomsnittlig vekt er `μ₀ = 250 g` (`H₀: μ ≥ 250`, `H₁: μ < 250`). Kjent `σ = 5`, `n = 25`, `α = 0.05`. Hva er `β` hvis den sanne vekten er `μ = 247`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Venstresidig z-test. `μ₀ = 250`, `σ = 5`, `n = 25`, `α = 0.05`." }
+              - { text: "Sann verdi `θ = 247`. `σ/√n = 5/√25 = 1`." }
+          - label: "Kritisk grense"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645`." } }
+              - { text: "`k = μ₀ − z_α · σ/√n = 250 − 1.645 · 1 = 248.355`" }
+              - { text: "Forkast hvis `X̄ < 248.355`; behold ellers." }
+          - label: "Standardisering"
+            lines:
+              - { text: "`β(247) = P(X̄ > 248.355 | μ = 247)`" }
+              - { indent: "`= 1 − G((248.355 − 247)/1) = 1 − G(1.355) ≈ 1 − G(1.36)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "`G(1.36) ≈ 0.9131`" } }
+              - { text: "`β(247) ≈ 1 − 0.9131 = 0.0869`" }
+          - label: "Styrke"
+            lines:
+              - { text: "`γ(247) = 1 − β(247) ≈ 0.913` — god styrke for 3-grams avvik." }
+        result: "`β(247) ≈ 0.087`, `γ(247) ≈ 0.913`."
+
+  - label: "Styrkefunksjon γ(θ)"
+    solutions:
+      - source: "Pensum s. 48 · kjøttdeig (γ-tabell)"
+        question: "Samme oppsett som over (`μ₀ = 14`, `σ = 3`, `n = 9`, `α = 0.05`, `k = 15.645`). Regn `γ(θ)` for `θ = 14, 15, 16, 17` og skisser styrkefunksjonen."
+        sections:
+          - label: "Formel"
+            lines:
+              - { text: "`γ(θ) = P(X̄ > k | μ = θ) = 1 − G((k − θ)/(σ/√n))`" }
+              - { text: "Med `σ/√n = 1` og `k = 15.645`: `γ(θ) = 1 − G(15.645 − θ)`." }
+          - label: "θ = 14 (på grenseverdien)"
+            lines:
+              - { text: "`γ(14) = 1 − G(15.645 − 14) = 1 − G(1.645)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(1.645) ≈ 0.9500`" } }
+              - { text: "`γ(14) ≈ 0.050` ✓ (= `α`, som forventet)" }
+          - label: "θ = 15"
+            lines:
+              - { text: "`γ(15) = 1 − G(15.645 − 15) = 1 − G(0.645)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(0.65) ≈ 0.7422`" } }
+              - { text: "`γ(15) ≈ 0.258`" }
+          - label: "θ = 16"
+            lines:
+              - { text: "`γ(16) = 1 − G(15.645 − 16) = 1 − G(−0.355)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(−0.36) ≈ 0.3594`" } }
+              - { text: "`γ(16) ≈ 0.641`" }
+          - label: "θ = 17"
+            lines:
+              - { text: "`γ(17) = 1 − G(15.645 − 17) = 1 − G(−1.355)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(−1.36) ≈ 0.0869`" } }
+              - { text: "`γ(17) ≈ 0.913`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Tabell: `γ(14) = 0.050`, `γ(15) = 0.258`, `γ(16) = 0.641`, `γ(17) = 0.913`." }
+              - { text: "Kurven starter i `α = 0.05` på grenseverdien, vokser monotont og nærmer seg 1 for store `θ`. S-formet." }
+        result: "γ-funksjonen vokser fra 0.050 (på grenseverdien) til 0.913 (ved θ = 17). Testen er svak nær μ₀ og sterk for store avvik."
+
+      - source: "Praksis · effekt av økt n på styrken"
+        question: "Samme test som kjøttdeig-eksemplet (`μ₀ = 14`, `σ = 3`, `α = 0.05`), men nå med `n = 36` i stedet for 9. Sammenlign `γ(15)` for de to utvalgsstørrelsene."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`σ/√n = 3/√36 = 0.5` (mot 1 ved `n = 9`)." }
+              - { text: "Smalere fordeling ⇒ testen blir mer presis." }
+          - label: "Ny kritisk grense"
+            lines:
+              - { text: "`k = 14 + 1.645·0.5 = 14.8225`" }
+          - label: "Styrke ved θ = 15"
+            lines:
+              - { text: "`γ(15) = 1 − G((14.8225 − 15)/0.5)`" }
+              - { indent: "`= 1 − G(−0.355) ≈ 1 − G(−0.36)`" }
+              - { table_lookup: { ref: "E.3", text: "`G(−0.36) ≈ 0.3594`" } }
+              - { text: "`γ(15) ≈ 0.641`" }
+          - label: "Sammenligning"
+            lines:
+              - { text: "Med `n = 9`: `γ(15) ≈ 0.258`." }
+              - { text: "Med `n = 36`: `γ(15) ≈ 0.641`." }
+              - { comment: "Firedobling av n gir mer enn dobling av styrken ved samme θ." }
+        result: "Med `n = 36` blir `γ(15) ≈ 0.641` (mot 0.258 ved n = 9). Større utvalg ⇒ kraftigere test."
+
+  - label: "Drøft valg av α"
+    solutions:
+      - source: "Praksis · brannvarsler vs legemiddel"
+        question: "Drøft hvordan valg av α bør gjøres for: (a) en brannvarsler som tester om det er røyk, (b) godkjenning av et nytt legemiddel. Hva er Type I- og Type II-feilkostnadene i hvert tilfelle, og hvilken α er passende?"
+        sections:
+          - label: "(a) Brannvarsler"
+            lines:
+              - { text: "`H₀`: ingen brann. `H₁`: brann." }
+              - { text: "Type I-feil = falsk alarm (kostnad: irritasjon, redusert tillit)." }
+              - { text: "Type II-feil = ikke detektere ekte brann (kostnad: tap av liv og eiendom — katastrofal)." }
+              - { text: "Type II er mye dyrere enn Type I ⇒ velg STOR `α` (f.eks. 0.10 eller høyere). Falske alarmer aksepteres for å maksimere `γ(θ)` ved alle relevante `θ`." }
+          - label: "(b) Legemiddel"
+            lines:
+              - { text: "`H₀`: medikamentet er IKKE bedre enn placebo. `H₁`: medikamentet virker." }
+              - { text: "Type I-feil = godkjenne et virkningsløst (kanskje skadelig) medikament (kostnad: pasientskade, økonomisk svindel — alvorlig)." }
+              - { text: "Type II-feil = la et lovende medikament falle (kostnad: tapt potensial, men kan testes på nytt)." }
+              - { text: "Type I er dyrere ⇒ velg LITEN `α` (FDA krever typisk `0.025` på hver hale, eller `0.001` med multiple tester). Lav styrke kompenseres med større `n`." }
+          - label: "Generell regel"
+            lines:
+              - { text: "Spør alltid: hvilken feil er dyrest, og hvor mye er du villig til å øke `n` for å beholde styrken når `α` skrenkes?" }
+        result: "(a) Stor α (Type II er katastrofal); (b) liten α (Type I er dyrere) kompensert med stor n."
+
+      - source: "Praksis · justervesenet på bensinpumpe"
+        question: "Justervesenet tester bensinpumper med `H₀: pumpa er kalibrert` mot `H₁: pumpa tapper for lite`. Drøft hvilken `α` som passer."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "**Type I-feil:** kalibrert pumpe blir feilaktig stoppet. Konsekvens: økonomisk tap for bensinstasjonen, forsinkelse for kundene, ressurssløsing for justervesenet." }
+              - { text: "**Type II-feil:** dårlig pumpe blir godkjent. Konsekvens: kundene betaler for mer enn de får — over tid summeres dette opp, men hver enkelt feil er liten." }
+          - label: "Vurdering"
+            lines:
+              - { text: "Type I-feil rammer en spesifikk virksomhet hardt; Type II-feil rammer mange kunder litt. Avveiningen er ikke åpenbar." }
+              - { text: "Standardvalget i regulatorisk sammenheng er `α = 0.05` — strenghet mot falske anklager, men ikke ekstrem." }
+          - label: "Anbefaling"
+            lines:
+              - { text: "Bruk `α = 0.05`. Hvis testen feiler, gjenta måling med flere prøver (større `n`) før endelig sanksjon — det forsterker beslutningen uten å endre `α`." }
+        result: "`α = 0.05` med oppfølgingsmåling ved tvil — standard regulatorisk praksis."
+
+  - label: "Finn n for ønsket styrke"
+    solutions:
+      - source: "Praksis · kjøttdeig (designe utvalg for γ = 0.80)"
+        question: "Test `H₀: μ ≤ 14` mot `H₁: μ > 14` med kjent `σ = 3`, `α = 0.05`. Hvor stort må `n` være for at testen har styrke `γ(15) ≥ 0.80`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Høyresidig z-test, `μ₀ = 14`, `σ = 3`, `α = 0.05`, `θ = 15`, `γ* = 0.80`." }
+              - { text: "Effektstørrelse `θ − μ₀ = 1`." }
+          - label: "Kvantiler"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(α) = z_(0.05) = 1.645`" } }
+              - { table_lookup: { ref: "E.4", text: "`z_(β*) = z_(0.20) = 0.842`" } }
+              - { comment: "med β* = 1 − γ* = 0.20" }
+          - label: "Formel"
+            lines:
+              - { text: "`n ≥ ((z_α + z_(β*)) · σ / (θ − μ₀))²`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ ((1.645 + 0.842) · 3 / 1)²`" }
+              - { indent: "`= (2.487 · 3)²`" }
+              - { indent: "`= 7.461²`" }
+              - { indent: "`≈ 55.66`" }
+          - label: "Avrunding og verifikasjon"
+            lines:
+              - { text: "Rund opp: `n = 56`." }
+              - { text: "Verifiser: `k = 14 + 1.645·3/√56 = 14 + 0.6594 = 14.6594`" }
+              - { text: "`γ(15) = 1 − G((14.6594 − 15)/(3/√56)) = 1 − G(−0.848) ≈ 1 − 0.198 = 0.802` ≥ 0.80 ✓" }
+        result: "`n = 56` gir styrke ≈ 0.802 ved θ = 15 (med n = 55 blir styrken så vidt under 0.80)."
+
+      - source: "Praksis · liten effektstørrelse koster dyrt"
+        question: "Samme oppsett som over (`μ₀ = 14`, `σ = 3`, `α = 0.05`, `γ* = 0.80`), men nå vil vi oppdage `θ = 14.5` (halvering av effektstørrelsen til 0.5). Hvor stor `n` trengs?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Effektstørrelse: `θ − μ₀ = 0.5` (halvparten av forrige eksempel)." }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ ((1.645 + 0.842) · 3 / 0.5)²`" }
+              - { indent: "`= (2.487 · 6)²`" }
+              - { indent: "`= 14.922²`" }
+              - { indent: "`≈ 222.7`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "`n = 223`." }
+              - { comment: "Firedoblet `n` (56 → 223) for å oppdage halve effekten — konsekvent med `n ∝ 1/(θ − μ₀)²`." }
+        result: "`n = 223` (mot 56 for dobbelt så stor effekt — kvadratisk skalering)."
+
+related:
+  - { id: "en-utvalg-z-test",       kind: "entry" }
+  - { id: "en-utvalg-t-test",       kind: "entry" }
+  - { id: "paret-t-test",           kind: "entry" }
+  - { id: "to-utvalgs-t-test",      kind: "entry" }
+  - { id: "ki-mu-og-varians",       kind: "entry" }
+  - { id: "normalfordeling",        kind: "entry" }
+  - { id: "type-1-feil",            kind: "glossary" }
+  - { id: "type-2-feil",            kind: "glossary" }
+  - { id: "alpha",                  kind: "glossary" }
+  - { id: "beta",                   kind: "glossary" }
+  - { id: "signifikansniva-glos",   kind: "glossary" }
+  - { id: "nullhypotese",           kind: "glossary" }
+  - { id: "alternativhypotese",     kind: "glossary" }
+  - { id: "forkastningsomrade",     kind: "glossary" }
+  - { id: "kritisk-verdi",          kind: "glossary" }
+  - { id: "E4-z-kvantiltabell",     kind: "table" }
+
+tools:
+  - "Tabell E.3 – Kumulativ standardnormalfordeling"
+  - "Tabell E.4 – Standardnormalfordelingens kvantiltabell"
+  - "Kalkulator: kvadratrot"
+
+tags:
+  - hypotesefeil
+  - Type I-feil
+  - Type II-feil
+  - α
+  - β
+  - β(θ)
+  - styrke
+  - styrkefunksjon
+  - γ(θ)
+  - power function
+  - signifikansnivå
+  - utvalgsstørrelse
+  - n for styrke
+  - kjøttdeig-eksempel

@@ -1,0 +1,506 @@
+id: paret-t-test
+name_no: "Paret t-test"
+type: test
+category: hypothesis_test
+tagline: "Test forventet differanse `μ_D` når samme enhet måles to ganger (før/etter, matched pairs). Reduseres til én-utvalg t-test på differansene `D_i = X_i − Y_i`."
+
+formula_main: "T = D̄ / (S_D/√n) ~ t_(n−1),   D_i = X_i − Y_i"
+formula_latex: "T = \\frac{\\overline{D}}{S_D/\\sqrt{n}} \\sim t_{n-1}, \\quad D_i = X_i - Y_i"
+
+what_it_does: |
+  Tester om forventet differanse `μ_D` i et parvis oppsett er lik (eller
+  mindre/større enn) en gitt verdi `Δ₀` (vanligvis `0`). Hver enhet bidrar
+  med to målinger `X_i` og `Y_i`; vi danner differansene `D_i = X_i − Y_i`
+  og kjører en én-utvalg t-test på dem.
+
+  Testobservatoren `T = D̄/(S_D/√n)` er t-fordelt med `ν = n − 1` frihetsgrader
+  under `H₀`. Designet fjerner variasjon mellom enheter og gjør testen
+  kraftigere enn en to-utvalgs t-test så lenge `X_i` og `Y_i` er positivt
+  korrelert.
+
+why_use: |
+  Naturlig valg når oppgaven beskriver «før vs etter»-måling på samme person,
+  matched pairs, eller to instrumenter brukt på samme prøve. Reduserer
+  støy fra individuell variasjon — du tester på differansene, ikke på
+  rådata. Se også [paret-test](/glossary/paret-test).
+
+recognition_cues:
+  - "Hver rad i datasettet har `X_i` og `Y_i` som hører sammen parvis (samme person, samme dag, samme prøve)"
+  - "Formuleringer som «før behandling vs etter behandling», «venstre arm vs høyre arm», «metode A vs metode B på samme prøve»"
+  - "Oppgaven oppgir to kolonner med tall pluss en kolonne med differanser, eller ber deg regne `D_i = X_i − Y_i` selv"
+  - "Antall målinger i de to «gruppene» er nødvendigvis like (`n_X = n_Y = n`) — alle observasjoner er paret"
+  - "Hypotesen formuleres på differansen: `H₀: μ_D = 0` mot `H₁: μ_D ≠ 0` (eller ensidig)"
+  - "`σ_D` er ikke oppgitt — kun `s_D` estimert fra differansene"
+
+when_NOT_to_use:
+  - "To uavhengige grupper (forskjellige individer i hver gruppe) → bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Bare én måling per enhet, test mot en kjent verdi `μ₀` → bruk [én-utvalg t-test](/entry/en-utvalg-t-test)"
+  - "`σ_D` er oppgitt kjent (sjelden) → bruk [én-utvalg z-test](/entry/en-utvalg-z-test) på differansene"
+  - "Differansene er klart ikke-normalfordelte og `n` er lite → bruk [Wilcoxon tegn-rangtest](/entry/wilcoxon-tegn-rang)"
+  - "Du vil estimere `μ_D` med usikkerhetsmargin (ikke teste) → bruk [KI for μ](/entry/ki-mu-og-varians) på differansene"
+
+symbols:
+  - { sym: "X_i",   means: "første måling på par `i` (f.eks. før behandling)" }
+  - { sym: "Y_i",   means: "andre måling på par `i` (f.eks. etter behandling)" }
+  - { sym: "D_i",   means: "differansen for par `i`, `D_i = X_i − Y_i`" }
+  - { sym: "n",     means: "antall par (ikke antall totale målinger)" }
+  - { sym: "D̄",    means: "gjennomsnittet av differansene, `D̄ = Σ D_i / n`" }
+  - { sym: "S_D",   means: "utvalgs-standardavviket til differansene" }
+  - { sym: "S_D²",  means: "utvalgsvariansen, `S_D² = Σ(D_i − D̄)² / (n−1)`" }
+  - { sym: "μ_D",   means: "forventet differanse i populasjonen (det vi tester)" }
+  - { sym: "Δ₀",    means: "verdien `μ_D` testes mot — nesten alltid `0`" }
+  - { sym: "ν",     means: "frihetsgrader, `ν = n − 1`" }
+  - { sym: "T",     means: "testobservatoren, t-fordelt under `H₀`" }
+  - { sym: "α",     means: "signifikansnivå" }
+
+filters:
+  computes: [hypothesis_test, confidence_interval]
+  random_variable: [mean_of_samples, continuous]
+  setup: [paired_samples]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, two_sided_alternative, one_sided_alternative]
+  parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, sample_size_large, alpha_significance]
+  distribution_assumption: [t_distribution, normal]
+  tooling: [t_quantile_table_E5, calculator_sqrt]
+
+solution_variants:
+  - label: "H₁: μ_D < 0 (venstre)"
+    recognition: "«Er Y i snitt STØRRE enn X?» eller «sank verdien etter behandling?». Forventet differanse `μ_D = E(X − Y)` er negativ ⇒ venstresidig."
+    description: "Ensidig venstresidig test på differansene. Forkast `H₀` hvis `T < −t_(α, ν)`."
+    steps:
+      - text: "Formuler hypotesene på differansen `D = X − Y`. Streng form `H₀: μ_D ≥ 0`; forenklet `H₀: μ_D = 0` gir samme test:"
+        formula: "H₀: μ_D ≥ 0     mot     H₁: μ_D < 0"
+      - "Bekreft at oppsettet er paret: hvert `X_i` hører entydig sammen med ett `Y_i` (samme enhet/person/prøve)."
+      - "Begrunn t-test: `σ_D` er ukjent, og enten er differansene normalfordelte eller `n` er stor nok."
+      - text: "Regn differansene par for par:"
+        formula: "D_i = X_i − Y_i"
+      - text: "Beregn `D̄` og `S_D²` fra differansene (eksakt som én-utvalg t-test):"
+        formula:
+          - "D̄ = Σ D_i / n"
+          - "S_D² = Σ(D_i − D̄)² / (n−1)"
+      - text: "Beregn testobservatoren:"
+        formula: "T = D̄ / (S_D/√n)"
+      - text: "Eksempel `n = 8`, `D̄ = −1.2`, `S_D = 1.5`:"
+        formula: "T = −1.2 / (1.5/√8) ≈ −2.263"
+        example: true
+      - { text: "Hvis `σ_D` er kjent (sjelden), bruk z-test på differansene i stedet.", conditional: true }
+      - "Slå opp `t_(α, ν)` i **tabell E.5** med `ν = n − 1` (f.eks. `α = 0.05`, `ν = 7` → `t_(0.05, 7) ≈ 1.895`)."
+      - text: "Forkastingsregel (kritisk verdi negativ):"
+        formula: "Forkast H₀ hvis T < −t_(α, ν)"
+      - text: "Hvis du oppgir p-verdi: venstresidig; forkast hvis `p < α`."
+        formula: "p = P(T_(ν) < t_obs)"
+        conditional: true
+      - "Konkluder i kontekst: hvis `T < −t_(α, ν)`, er det signifikant evidens for at `Y` i snitt er større enn `X`."
+
+  - label: "H₁: μ_D > 0 (høyre)"
+    recognition: "«Er X i snitt STØRRE enn Y?» eller «steg verdien etter behandling?». Forventet differanse er positiv ⇒ høyresidig."
+    description: "Ensidig høyresidig test på differansene. Forkast `H₀` hvis `T > +t_(α, ν)`."
+    steps:
+      - text: "Formuler hypotesene. Streng form `H₀: μ_D ≤ 0`; forenklet `H₀: μ_D = 0` gir identisk test:"
+        formula: "H₀: μ_D ≤ 0     mot     H₁: μ_D > 0"
+      - "Bekreft paret oppsett (hver `X_i` parret med ett `Y_i`)."
+      - "Begrunn t-test: `σ_D` er ukjent."
+      - text: "Regn differansene:"
+        formula: "D_i = X_i − Y_i"
+      - text: "Regn `D̄` og `S_D` fra differansene:"
+        formula:
+          - "D̄ = Σ D_i / n"
+          - "S_D² = Σ(D_i − D̄)² / (n−1)"
+      - text: "Beregn testobservatoren:"
+        formula: "T = D̄ / (S_D/√n)"
+      - text: "Eksempel `n = 10`, `D̄ = 2.5`, `S_D = 3.0`:"
+        formula: "T = 2.5 / (3.0/√10) ≈ 2.635"
+        example: true
+      - { text: "**Pass på fortegnet** når du definerer `D_i`: konsekvent valg av rekkefølge (`før − etter` eller `etter − før`) bestemmer om alternativet er `> 0` eller `< 0`.", conditional: true }
+      - "Slå opp `t_(α, ν)` i **tabell E.5** med `ν = n − 1` (f.eks. `α = 0.05`, `ν = 9` → `t_(0.05, 9) ≈ 1.833`)."
+      - text: "Forkastingsregel:"
+        formula: "Forkast H₀ hvis T > +t_(α, ν)"
+      - text: "Hvis du oppgir p-verdi: høyresidig; forkast hvis `p < α`."
+        formula: "p = P(T_(ν) > t_obs)"
+        conditional: true
+      - "Konkluder: hvis `T > +t_(α, ν)`, er det evidens for at `X > Y` i snitt."
+
+  - label: "H₁: μ_D ≠ 0 (tosidig)"
+    recognition: "«Er det noen forskjell før vs etter?», «avviker de to metodene fra hverandre?». Ingen retning oppgitt ⇒ tosidig."
+    description: "Tosidig test. Forkast `H₀` hvis `|T| > t_(α/2, ν)`."
+    steps:
+      - text: "Formuler hypotesene (tosidig):"
+        formula: "H₀: μ_D = 0     mot     H₁: μ_D ≠ 0"
+      - "Bekreft paret oppsett."
+      - "Begrunn t-test (ukjent `σ_D`)."
+      - text: "Regn differansene par for par:"
+        formula: "D_i = X_i − Y_i"
+      - text: "Regn `D̄` og `S_D²` fra differansene:"
+        formula:
+          - "D̄ = Σ D_i / n"
+          - "S_D² = Σ(D_i − D̄)² / (n−1)"
+      - text: "Beregn testobservatoren:"
+        formula: "T = D̄ / (S_D/√n)"
+      - text: "Eksempel `n = 9`, `D̄ = 0.5`, `S_D = 1.2`:"
+        formula: "T = 0.5 / (1.2/√9) = 1.25"
+        example: true
+      - { text: "Hvis du allerede har `S_D²` (varians, ikke standardavvik), husk å ta `√` før du deler på `√n`.", conditional: true }
+      - "Slå opp `t_(α/2, ν)` i **tabell E.5** med `ν = n − 1` (merk `α/2`; f.eks. `α = 0.05`, `ν = 8` → `t_(0.025, 8) ≈ 2.306`)."
+      - text: "Forkastingsregel (tosidig):"
+        formula: "Forkast H₀ hvis |T| > t_(α/2, ν)"
+      - text: "Hvis du oppgir p-verdi: tosidig; forkast hvis `p < α`."
+        formula: "p = 2·P(T_(ν) > |t_obs|)"
+        conditional: true
+      - "Konkluder i kontekst: signifikant forskjell mellom `X` og `Y`, eller ikke."
+
+  - label: "Test mot Δ₀ ≠ 0"
+    recognition: "«Er differansen STØRRE/MINDRE/forskjellig fra en bestemt verdi `Δ₀`?». Brukes når oppgaven setter en ikke-null referansedifferanse (f.eks. «sank vekta med MER enn 2 kg?»)."
+    description: "Generalisert paret t-test der nullen sammenlignes med `Δ₀`, ikke med 0."
+    steps:
+      - text: "Formuler hypotesen mot `Δ₀`. Velg retning ut fra oppgaven:"
+        formula:
+          - "tosidig:    H₀: μ_D = Δ₀     mot     H₁: μ_D ≠ Δ₀"
+          - "høyresidig: H₀: μ_D ≤ Δ₀    mot     H₁: μ_D > Δ₀"
+          - "venstre:    H₀: μ_D ≥ Δ₀    mot     H₁: μ_D < Δ₀"
+      - text: "Regn differanser og `D̄`, `S_D` som vanlig:"
+        formula:
+          - "D_i = X_i − Y_i"
+          - "D̄ = Σ D_i / n"
+          - "S_D² = Σ(D_i − D̄)² / (n−1)"
+      - text: "Testobservatoren bruker `Δ₀` i telleren:"
+        formula: "T = (D̄ − Δ₀) / (S_D/√n)"
+      - text: "Eksempel: krav om minst `Δ₀ = 2` kg vektnedgang (`X = før`, `Y = etter`), `n = 9`, `D̄ = 3.2`, `S_D = 1.7`:"
+        formula: "T = (3.2 − 2)/(1.7/√9) ≈ 2.118"
+        example: true
+      - "Slå opp riktig kvantil i **tabell E.5**: `t_(α, ν)` for ensidig eller `t_(α/2, ν)` for tosidig."
+      - "Anvend forkastingsregelen som tilsvarer den valgte retningen (venstre / høyre / tosidig)."
+      - { text: "**Vanlig fallgruve:** glemmer du `−Δ₀` i telleren, tester du i praksis mot 0 og kan trekke feil konklusjon.", conditional: true }
+      - "Konkluder i kontekst: «differansen avviker fra `Δ₀`» / «differansen er større enn `Δ₀`»."
+
+  - label: "KI for μ_D (sidefane)"
+    recognition: "«Lag et 95 % konfidensintervall for forventet differanse `μ_D`». Brukes når oppgaven spør om estimat med usikkerhet, ikke hypotesetest. Samme `D̄`, `S_D` og `ν`."
+    description: "Konfidensintervall basert på den parede t-fordelingen. Tett relatert til den tosidige testen."
+    steps:
+      - "Identifiser konfidensnivå `(1 − α)` (f.eks. 95 % gir `α = 0.05`)."
+      - text: "Beregn differanser, gjennomsnitt og standardavvik som i hypotesetesten:"
+        formula:
+          - "D_i = X_i − Y_i"
+          - "D̄ = Σ D_i / n"
+          - "S_D² = Σ(D_i − D̄)² / (n−1)"
+      - "Slå opp `t_(α/2, n−1)` i **tabell E.5**."
+      - text: "Sett opp intervallet:"
+        formula: "D̄ ± t_(α/2, n−1) · S_D/√n"
+      - text: "Eksempel: `n = 10`, `D̄ = 1.5`, `S_D = 2.0`, 95 % KI (`t_(0.025, 9) = 2.262`):"
+        formula: "1.5 ± 2.262·2.0/√10 ≈ 1.5 ± 1.431 = [0.069, 2.931]"
+        example: true
+      - text: "**Sammenheng med tosidig test:** dersom `0` ligger UTENFOR KI, vil tosidig test forkaste `H₀: μ_D = 0` på samme signifikansnivå."
+        conditional: true
+      - "Konkluder: «vi er `(1 − α)·100 %` sikre på at sann gjennomsnittlig differanse ligger i `[nedre, øvre]`»."
+
+solution_template:
+  - "Bekreft paret oppsett — `X_i` og `Y_i` hører sammen parvis."
+  - text: "Reduser til ett-utvalg på differansene:"
+    formula: "D_i = X_i − Y_i"
+  - text: "Regn `D̄` og `S_D`, sett opp testobservatoren:"
+    formula: "T = (D̄ − Δ₀) / (S_D/√n)"
+  - "Velg variant (venstre/høyre/tosidig/`Δ₀ ≠ 0`/KI), slå opp kritisk verdi i **tabell E.5** med `ν = n − 1` og konkluder."
+
+common_traps: |
+  - **Bland aldri sammen paret og uavhengig**: hvis observasjonene er paret men du kjører to-utvalgs t-test, kaster du bort all paringsstyrken (større `s²`, mindre `T`). Motsatt: hvis du regner paret t-test på faktisk uavhengige grupper, er `D_i` ikke veldefinert.
+  - **Fortegnskonvensjon**: bestem deg for `D_i = før − etter` (eller motsatt) og hold på det. Bytter du underveis bytter `H₁` retning.
+  - **`ν = n − 1`, ikke `2n − 2`**. Frihetsgradene er antall par minus 1, ikke totalt antall målinger minus 2 (det er to-utvalg).
+  - **`n` er antall par**, ikke antall målinger. Har du 8 personer som måles to ganger, er `n = 8`, ikke `16`.
+  - **`S_D` regnes fra differansene**, ikke fra `X`-ene eller `Y`-ene. `S_D² ≠ S_X² + S_Y²` — det er kun lik hvis `X` og `Y` er ukorrelerte, som de aldri er i et paret oppsett.
+  - **Normalitetsantakelsen** gjelder differansene `D_i`, ikke `X_i` eller `Y_i` hver for seg. `X` og `Y` kan være skjeve, men `D = X − Y` kan likevel være tilnærmet normal.
+  - **Tosidig bruker `t_(α/2, ν)`, ensidig bruker `t_(α, ν)`**. Vanlig feil å bruke `t_(α, ν)` på tosidig — da blir testen for liberal (`2α`-test, ikke `α`).
+  - **Δ₀-versjonen:** glem ikke `−Δ₀` i telleren. Tester du «vekta sank med mer enn 2 kg» mot `Δ₀ = 0` får du feil konklusjon.
+
+python_snippet: |
+  from scipy.stats import t, ttest_rel
+  import numpy as np
+
+  # Rådata: par av målinger
+  X = np.array([148, 152, 155, 160, 145, 158, 162, 150])  # før
+  Y = np.array([142, 148, 150, 154, 140, 153, 155, 146])  # etter
+
+  D = X - Y
+  n = len(D)
+  D_bar = D.mean()
+  S_D = D.std(ddof=1)                              # ddof=1 ⇒ utvalgsvarians
+  T = D_bar / (S_D / np.sqrt(n))                   # testobservator
+
+  # Tosidig kritisk verdi og p-verdi
+  alpha = 0.05
+  t_crit = t.ppf(1 - alpha/2, df=n-1)
+  p_value = 2 * (1 - t.cdf(abs(T), df=n-1))
+  reject = abs(T) > t_crit
+
+  # Eller direkte med scipy:
+  ttest_rel(X, Y)                                  # samme T og p
+
+  # KI for μ_D
+  margin = t_crit * S_D / np.sqrt(n)
+  ki = (D_bar - margin, D_bar + margin)
+
+detailed_solution_variants:
+  - label: "H₁: μ_D < 0 (venstre)"
+    solutions:
+      - source: "Praksis · søvnmedisin (timer søvn ETTER − FØR)"
+        question: "Åtte personer rapporterer søvntimer før og etter en ny medisin. Differansene `D_i = før − etter` (i timer) er: `−0.5, −1.2, −0.8, −1.5, −0.3, −1.0, −0.7, −1.2`. Test om medisinen øker søvntiden (dvs. `μ_D < 0`) på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret oppsett: hver person måles før og etter. `n = 8`, `ν = n − 1 = 7`." }
+              - { text: "`D_i = før − etter` er allerede oppgitt; vi tester `H₁: μ_D < 0` (mer søvn etter ⇒ negativ differanse)." }
+              - { text: "`σ_D` ukjent ⇒ paret t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D ≥ 0`" }
+              - { text: "`H₁: μ_D < 0` (venstresidig — medisinen gir mer søvn)" }
+          - label: "D̄ og S_D"
+            lines:
+              - { text: "`D̄ = (−0.5 − 1.2 − 0.8 − 1.5 − 0.3 − 1.0 − 0.7 − 1.2)/8 = −7.2/8 = −0.9`" }
+              - { text: "Avvik `D_i − D̄`: `0.4, −0.3, 0.1, −0.6, 0.6, −0.1, 0.2, −0.3`" }
+              - { text: "Sum av kvadrater: `0.16 + 0.09 + 0.01 + 0.36 + 0.36 + 0.01 + 0.04 + 0.09 = 1.12`" }
+              - { text: "`S_D² = 1.12/7 = 0.160`" }
+              - { text: "`S_D = √0.160 ≈ 0.4`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = D̄ / (S_D/√n) = −0.9 / (0.4/√8)`" }
+              - { indent: "`= −0.9 / 0.1414 ≈ −6.36`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 7) ≈ 1.895` ⇒ venstresidig kritisk grense `−1.895`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ −6.36 < −1.895` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.05`." }
+              - { text: "Det er meget sterk evidens for at medisinen øker forventet søvntid." }
+        result: "`T ≈ −6.36 < −1.895` ⇒ forkast `H₀`. Medisinen øker søvntiden signifikant."
+
+      - source: "Praksis · blodtrykk (etter − før, treningsprogram)"
+        question: "Tolv pasienter måler systolisk blodtrykk før og etter et 12-ukers treningsprogram. `D_i = etter − før` har `D̄ = −4.2 mmHg` og `S_D = 6.0 mmHg` (`n = 12`). Test om treningen senker blodtrykket på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret: samme pasient før og etter. `n = 12`, `ν = 11`." }
+              - { text: "`D_i = etter − før`. Senking ⇒ negativ differanse ⇒ venstresidig på `μ_D`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D ≥ 0`" }
+              - { text: "`H₁: μ_D < 0` (treningen senker trykket)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = D̄ / (S_D/√n) = −4.2 / (6.0/√12)`" }
+              - { indent: "`= −4.2 / 1.7321 ≈ −2.425`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 11) ≈ 1.796` ⇒ venstresidig kritisk grense `−1.796`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ −2.425 < −1.796` ✓" }
+              - { text: "Forkast `H₀`. Treningen senker forventet blodtrykk signifikant." }
+        result: "`T ≈ −2.425 < −1.796` ⇒ forkast `H₀`. Trening senker blodtrykket."
+
+  - label: "H₁: μ_D > 0 (høyre)"
+    solutions:
+      - source: "Eksamen mai22 · oppgave 4 (blodsukker etter lurium)"
+        question: "Ti pasienter målte blodsukker før (`X_i`) og to timer etter (`Y_i`) inntak av lurium. Differansene `D_i = X_i − Y_i` (før minus etter, mmol/L): `0.4, 0.7, 0.2, 0.9, 0.5, 0.3, 0.6, 0.8, 0.4, 0.5`. Test på `α = 0.05` om lurium senker blodsukker (dvs. `μ_D > 0`)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret oppsett: hver pasient målt to ganger. `n = 10`, `ν = 9`." }
+              - { text: "`D_i = før − etter`. Senking av blodsukker ⇒ `før > etter` ⇒ `μ_D > 0` ⇒ høyresidig." }
+              - { text: "`σ_D` ukjent ⇒ paret t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D ≤ 0` (lurium gjør ingen effekt eller hever blodsukker)" }
+              - { text: "`H₁: μ_D > 0` (lurium senker blodsukker — høyresidig)" }
+          - label: "D̄ og S_D"
+            lines:
+              - { text: "`D̄ = (0.4 + 0.7 + 0.2 + 0.9 + 0.5 + 0.3 + 0.6 + 0.8 + 0.4 + 0.5)/10 = 5.3/10 = 0.53`" }
+              - { text: "Avvik fra `D̄`: `−0.13, 0.17, −0.33, 0.37, −0.03, −0.23, 0.07, 0.27, −0.13, −0.03`" }
+              - { text: "Sum av kvadrater: `0.0169 + 0.0289 + 0.1089 + 0.1369 + 0.0009 + 0.0529 + 0.0049 + 0.0729 + 0.0169 + 0.0009 = 0.4410`" }
+              - { text: "`S_D² = 0.4410/9 ≈ 0.0490`" }
+              - { text: "`S_D ≈ 0.2214`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = D̄ / (S_D/√n) = 0.53 / (0.2214/√10)`" }
+              - { indent: "`= 0.53 / 0.07 ≈ 7.57`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 9) ≈ 1.833` (høyresidig kritisk verdi)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ 7.57 > 1.833` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.05`." }
+              - { text: "Det er meget sterk evidens for at lurium senker forventet blodsukker." }
+        result: "`T ≈ 7.57 > 1.833` ⇒ forkast `H₀`. Lurium senker blodsukkernivået signifikant."
+
+      - source: "Praksis · ny lærebok (poeng ETTER − FØR)"
+        question: "Femten elever testes før og etter et kurs basert på en ny lærebok. Differansene `D_i = etter − før` (poeng) gir `D̄ = 3.4` og `S_D = 5.2` (`n = 15`). Test om kurset gir høyere poeng på `α = 0.01`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret: samme elev før og etter. `n = 15`, `ν = 14`." }
+              - { text: "`D_i = etter − før`. Forbedring ⇒ `μ_D > 0` ⇒ høyresidig." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D ≤ 0`" }
+              - { text: "`H₁: μ_D > 0`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = 3.4 / (5.2/√15) = 3.4 / 1.3426 ≈ 2.532`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.01, 14) ≈ 2.624` (høyresidig kritisk verdi)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `T ≈ 2.532 < 2.624`." }
+              - { text: "Behold `H₀` på `α = 0.01` (resultatet er på grensen — ved `α = 0.05` ville `H₀` blitt forkastet)." }
+        result: "`T ≈ 2.532 < 2.624` ⇒ behold `H₀` på 1 %-nivå."
+
+  - label: "H₁: μ_D ≠ 0 (tosidig)"
+    solutions:
+      - source: "Praksis · to vekter mot samme prøve"
+        question: "Ti standardlodd veies på vekt `A` og vekt `B`. `D_i = A_i − B_i` (gram) gir `D̄ = 0.12` og `S_D = 0.15` (`n = 10`). Test om vektene gir systematisk forskjellige målinger (`α = 0.05`)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret: samme lodd veies på begge vekter. `n = 10`, `ν = 9`." }
+              - { text: "Tosidig fordi ingen retning er antydet." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D = 0` (vektene gir samme måling i snitt)" }
+              - { text: "`H₁: μ_D ≠ 0`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = D̄ / (S_D/√n) = 0.12 / (0.15/√10)`" }
+              - { indent: "`= 0.12 / 0.04743 ≈ 2.530`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "Tosidig: `t_(α/2, ν) = t_(0.025, 9) ≈ 2.262`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `|T| ≈ 2.530 > 2.262` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.05`." }
+              - { text: "Vektene gir systematisk forskjellig måling; én bør rekalibreres." }
+        result: "`|T| ≈ 2.530 > 2.262` ⇒ forkast `H₀`. Vektene avviker fra hverandre."
+
+      - source: "Praksis · høyre vs venstre hånd (gripestyrke)"
+        question: "Ni testpersoner måler gripestyrke i begge hender. `D_i = høyre − venstre` (kg): `2, 1, 3, 0, 2, −1, 4, 2, 1`. Test om det er en forskjell mellom høyre og venstre hånd på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret: samme person måler høyre OG venstre. `n = 9`, `ν = 8`." }
+              - { text: "Tosidig — ingen forhåndsoppgitt retning." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D = 0`" }
+              - { text: "`H₁: μ_D ≠ 0`" }
+          - label: "D̄ og S_D"
+            lines:
+              - { text: "`D̄ = (2 + 1 + 3 + 0 + 2 − 1 + 4 + 2 + 1)/9 = 14/9 ≈ 1.556`" }
+              - { text: "Avvik: `0.444, −0.556, 1.444, −1.556, 0.444, −2.556, 2.444, 0.444, −0.556`" }
+              - { text: "Sum av kvadrater: `0.197 + 0.309 + 2.085 + 2.420 + 0.197 + 6.532 + 5.974 + 0.197 + 0.309 ≈ 18.222`" }
+              - { text: "`S_D² = 18.222/8 ≈ 2.278`" }
+              - { text: "`S_D ≈ 1.509`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = 1.556 / (1.509/√9) = 1.556 / 0.503 ≈ 3.094`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "Tosidig: `t_(0.025, 8) ≈ 2.306`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `|T| ≈ 3.094 > 2.306` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.05`. Høyre og venstre hånd har systematisk forskjellig gripestyrke i snitt." }
+        result: "`|T| ≈ 3.094 > 2.306` ⇒ forkast `H₀`. Hendene har ulik gripestyrke."
+
+  - label: "Test mot Δ₀ ≠ 0"
+    solutions:
+      - source: "Praksis · krav om minst 2 kg vektnedgang"
+        question: "Et slankeprogram lover at deltakerne taper minst 2 kg på 6 uker. Ni deltakere måles før og etter. Differansene `D_i = før − etter` (kg) er: `3.5, 1.8, 4.2, 2.6, 3.0, 1.2, 2.8, 3.4, 2.0`. Test på `α = 0.05` om gjennomsnittlig vektnedgang er STØRRE enn 2 kg."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 9` par, `Δ₀ = 2` kg, høyresidig (vil bevise `μ_D > 2`)." }
+              - { text: "Frihetsgrader: `ν = 8`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_D ≤ 2`" }
+              - { text: "`H₁: μ_D > 2`" }
+          - label: "D̄ og S_D"
+            lines:
+              - { text: "Sum: `3.5+1.8+4.2+2.6+3.0+1.2+2.8+3.4+2.0 = 24.5`" }
+              - { text: "`D̄ = 24.5/9 ≈ 2.722`" }
+              - { text: "Avvik fra 2.722: `0.778, −0.922, 1.478, −0.122, 0.278, −1.522, 0.078, 0.678, −0.722`" }
+              - { text: "Sum av kvadrater: `0.605 + 0.850 + 2.184 + 0.015 + 0.077 + 2.317 + 0.006 + 0.460 + 0.522 ≈ 7.036`" }
+              - { text: "`S_D² = 7.036/8 ≈ 0.880`" }
+              - { text: "`S_D ≈ 0.938`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "Formel: `T = (D̄ − Δ₀)/(S_D/√n)`" }
+              - { text: "`S_D/√n = 0.938/√9 ≈ 0.313`" }
+              - { text: "`T = (2.722 − 2)/0.313 ≈ 0.722/0.313 ≈ 2.31`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 8) ≈ 1.860`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`T ≈ 2.31 > 1.860` ✓ ⇒ forkast `H₀`." }
+              - { text: "Gjennomsnittlig vektnedgang er signifikant større enn 2 kg på 5 %-nivå. Slankeprogrammets påstand støttes." }
+        result: "`T ≈ 2.31 > 1.860` ⇒ forkast `H₀`. `μ_D > 2` kg."
+
+  - label: "KI for μ_D (sidefane)"
+    solutions:
+      - source: "Praksis · KI for forventet differanse (vekteksempel)"
+        question: "Bruk dataene fra eksempelet «to vekter mot samme prøve» i tosidig-fanen: `n = 10`, `D̄ = 0.12` g, `S_D = 0.15`. Finn et 95 % konfidensintervall for `μ_D`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Paret KI, `(1 − α) = 0.95`, `α = 0.05`, `ν = n − 1 = 9`." }
+          - label: "Kvantil"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 9) ≈ 2.262`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = t_(α/2, ν) · S_D/√n`" }
+              - { indent: "`= 2.262 · 0.15/√10`" }
+              - { indent: "`= 2.262 · 0.04743`" }
+              - { indent: "`≈ 0.1073`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = D̄ ± margin = 0.12 ± 0.1073`" }
+              - { indent: "`= [0.013, 0.227]`" }
+              - { text: "**Merk:** 0 ligger UTENFOR intervallet ⇒ konsistent med at tosidig test forkaster `H₀` på samme `α`." }
+        result: "`95 % KI for μ_D: [0.013, 0.227] g` (0 ligger utenfor — signifikant forskjell)."
+
+related:
+  - { id: "en-utvalg-t-test",       kind: "entry" }
+  - { id: "en-utvalg-z-test",       kind: "entry" }
+  - { id: "to-utvalgs-t-test",      kind: "entry" }
+  - { id: "wilcoxon-tegn-rang",     kind: "entry" }
+  - { id: "ki-mu-og-varians",       kind: "entry" }
+  - { id: "hypotesefeil-og-styrke", kind: "entry" }
+  - { id: "utvalgsvarians-radata",  kind: "entry" }
+  - { id: "paret-test",             kind: "glossary" }
+  - { id: "t-fordeling",            kind: "glossary" }
+  - { id: "frihetsgrader-glos",     kind: "glossary" }
+  - { id: "nullhypotese",           kind: "glossary" }
+  - { id: "alternativhypotese",     kind: "glossary" }
+  - { id: "forkastningsomrade",     kind: "glossary" }
+  - { id: "ensidig-test",           kind: "glossary" }
+  - { id: "tosidig-test",           kind: "glossary" }
+  - { id: "E5-t-tabell",            kind: "table" }
+
+tools:
+  - "Tabell E.5 – t-fordelingens kvantiltabell"
+  - "Kalkulator: kvadratrot, sum av kvadrater"
+
+tags:
+  - paret t-test
+  - parvis
+  - matched pairs
+  - før etter
+  - differanser
+  - μ_D
+  - mu_D
+  - paired t-test
+  - t-test
+  - hypotesetest
+  - ett utvalg på differanser

@@ -101,6 +101,7 @@ dimensions:
       - { key: hypergeometric,   label_no: "Hypergeometrisk" }
       - { key: normal,           label_no: "Normal" }
       - { key: exponential,      label_no: "Eksponential" }
+      - { key: geometric,        label_no: "Geometrisk" }
       - { key: t_distribution,   label_no: "t-fordeling" }
       - { key: chi_squared,      label_no: "Kjikvadrat" }
       - { key: f_distribution,   label_no: "F-fordeling" }

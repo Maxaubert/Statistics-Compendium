@@ -1,0 +1,38 @@
+id: styrkefunksjon
+term_no: Styrkefunksjon γ(θ)
+short_def: "Sannsynligheten for å forkaste `H₀` som funksjon av den sanne parameterverdien `θ`, `γ(θ) = 1 − β(θ)`."
+filters:
+  computes: [hypothesis_test, find_n_for_threshold]
+  parameters_known: [alpha_significance, population_variance_known]
+  distribution_assumption: [normal]
+aliases:
+  - styrkefunksjon
+  - teststyrke
+  - power function
+  - γ(θ)
+  - gamma av theta
+long_def: |
+  **Styrken** til en hypotesetest er sannsynligheten for å forkaste `H₀`
+  når den faktisk er gal. Styrken avhenger av den sanne (ukjente)
+  parameterverdien `θ`, så vi behandler den som en funksjon:
+
+      γ(θ) = P(forkast H₀ | sann verdi = θ) = 1 − β(θ)
+
+  **Sjekkpunkter på kurven:**
+
+  - `γ(μ₀) = α` (på grenseverdien er styrken nettopp signifikansnivået)
+  - `γ(θ) → 1` for `θ` langt inne i `H₁`-området
+  - `γ(θ) ≤ α` for `θ` i `H₀`-området (testen er konservativ der den skal være)
+
+  Ensidig test gir S-formet kurve; tosidig gir U-formet (stor `γ` for `θ`
+  i begge retninger fra `μ₀`).
+
+  **Brukes til** å vurdere hvor god testen er på å oppdage avvik, og til å
+  designe utvalgsstørrelse: krever vi `γ(θ) ≥ 0.80` for et gitt `θ`,
+  bestemmer det `n`.
+see_also:
+  - { id: hypotesefeil-og-styrke, kind: entry }
+  - { id: type-1-feil, kind: glossary }
+  - { id: type-2-feil, kind: glossary }
+  - { id: alpha, kind: glossary }
+  - { id: beta, kind: glossary }
