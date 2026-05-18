@@ -116,6 +116,9 @@ solution_variants:
     steps:
       - text: "Definisjonen: `A` og `B` er uavhengige hvis:"
         formula: "P(A ∩ B) = P(A) · P(B)"
+      - text: "Hvis `P(A ∩ B)` ikke er oppgitt, men du har `P(A ∪ B)`, finn det fra unionssetningen:"
+        formula: "P(A ∩ B) = P(A) + P(B) − P(A ∪ B)"
+        conditional: true
       - "Regn ut `P(A) · P(B)` fra de gitte marginalsannsynlighetene"
       - "Sammenlign med oppgitt eller utregnet `P(A ∩ B)`"
       - "Hvis de er like: hendelsene er uavhengige. Hvis ikke: de er avhengige (oppgi differansen som dokumentasjon)"

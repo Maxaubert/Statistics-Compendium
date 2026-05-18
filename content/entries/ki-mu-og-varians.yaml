@@ -90,6 +90,8 @@ solution_variants:
   - label: "KI for μ (σ kjent)"
     recognition: "«Lag et 95 % konfidensintervall for `μ` når `σ` er kjent». Populasjonsstandardavviket er gitt eksplisitt (ikke estimert fra data)."
     steps:
+      - text: "Dersom `s` er kjent, så er ikke dette det samme som at `σ` er kjent."
+        conditional: true
       - "Identifiser konfidensnivå `(1 − α)` og finn `α` (f.eks. 90 % gir `α = 0.10`)"
       - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `α/2 = 0.05` gir `1.645`"
       - text: "Beregn marginen:"
@@ -105,6 +107,8 @@ solution_variants:
   - label: "KI for μ (σ ukjent)"
     recognition: "«Lag et 95 % konfidensintervall for `μ`», «estimer `μ` med usikkerhet». Du har utvalgsdata eller `s` er gitt — `σ` er IKKE kjent (typisk eksamensoppgave)."
     steps:
+      - text: "Dersom `s` er kjent, så er ikke dette det samme som at `σ` er kjent."
+        conditional: true
       - "Identifiser konfidensnivå `(1 − α)` og `α`"
       - text: "Beregn utvalgsvariansen (eller bruk gitt `s`):"
         formula: "s² = Σ(x_i − x̄)² / (n−1)"

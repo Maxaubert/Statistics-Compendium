@@ -1,0 +1,1170 @@
+         Komplett oppslagsverk i statistikk
+
+              Statistikk og statistisk programmering -- HiØ
+
+              Teori, tabelloppslag og Python-koding for eksamen
+
+                                   Clanker union
+
+                                    18. mai 2026
+
+                                                    Sammendrag
+
+Dette dokumentet er et oppslagsverk basert på løsningsforslag fra ni eksamener i emnet Sta-
+tistikk og statistisk programmering ved HiØ. Hvert tema har egen hovedoverskrift, og hvert
+undertema har en underoverskrift slik at man enkelt kan finne fremgangsmåten man trenger.
+Bruk innholdsfortegnelsen (klikkbar) for raskt å navigere til riktig oppgavetype.
+
+Innhold
+
+Notasjon og symboler                                                                         4
+
+1 Sannsynlighetsregning                                                                      5
+
+1.1 Uniform sannsynlighetsmodell (gunstige/mulige) . . . . . . . . . . . . . . . . . . . 5
+
+1.2 Disjunkte hendelser . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+1.3 Uavhengige hendelser . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+1.4 Union og snitt . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+1.5 Komplementhendelse . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+1.6 Betinget sannsynlighet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+1.7 Setningen om total sannsynlighet . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+1.8 Bayes' setning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+1.9 Kombinatorikk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+2 Stokastiske variabler                                                                      10
+
+2.1 Forventningsverdi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+2.2 Varians og standardavvik . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+2.3 Lineære transformasjoner av stokastiske variabler . . . . . . . . . . . . . . . . . . . 11
+
+2.4 Simultanfordeling og marginale fordelinger . . . . . . . . . . . . . . . . . . . . . . . 12
+
+2.5 Kovarians . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+2.6 Korrelasjon . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+2.7 Sum av uavhengige stokastiske variabler . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+3 Diskrete fordelinger                                                                       15
+
+3.1 Binomisk fordeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+3.2 Hypergeometrisk fordeling ­ tilnærmes med binomisk . . . . . . . . . . . . . . . . . 16
+
+3.3 Poissonfordeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.4 Normaltilnærming for poissonfordeling . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+4 Kontinuerlige fordelinger                                                                  18
+
+4.1 Normalfordeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+4.2 Eksponentialfordeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+4.3 Eksponentialfordelingens minneløshet . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+4.4 Sentralgrenseteoremet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+                             1
+5 Estimering og konfidensintervall                       21
+
+5.1 Punktestimater . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+5.2 Konfidensintervall for µ med kjent  . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+5.3 Konfidensintervall for µ med ukjent  . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+5.4 Konfidensintervall for andel p . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+5.5 Konfidensintervall for poissonraten  . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+5.6 Konfidensintervall for standardavvik  . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+5.7 Antall observasjoner for ønsket konfidensintervall-lengde . . . . . . . . . . . . . . . 24
+
+6 Hypotesetesting                                        24
+
+6.1 Generell oppskrift . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+6.2 En- og tosidige tester / forkastingsregler . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+6.3 Z-test for forventningsverdi (kjent ) . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+
+6.4 T-test for forventningsverdi (ukjent ) . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+6.5 Paret t-test . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+6.6 Uparet t-test (to grupper) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+6.7 Test for andel p . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+6.8 p-verdi (signifikanssannsynlighet) . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+7 Ikke-parametriske tester                               32
+
+7.1 Når brukes ikke-parametriske tester? . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+7.2 Mann-Whitney-Wilcoxon (uparet) . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+7.3 Wilcoxon paret test . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+8 Variansanalyse (ANOVA)                                 33
+
+8.1 Enveis variansanalyse . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+8.2 Sums-of-squares og testobservator . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+9 Lineær regresjon                                       34
+
+9.1 Empirisk korrelasjonskoeffisient . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+9.2 Estimering av regresjonslinjen y^ = ^ + ^x . . . . . . . . . . . . . . . . . . . . . . . 35
+
+9.3 Variansestimat og standardfeil . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+9.4 Hypotesetest for stigningstall ( = 0) . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+
+9.5 Konfidensintervall for forventningsverdien E(Y ) ved gitt x . . . . . . . . . . . . . . 36
+
+9.6 Prediksjonsintervall for ny y ved gitt x . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+9.7 Multippel lineær regresjon . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+10 Hurtigreferanse: Hvilken test/metode skal jeg bruke?  38
+
+10.1 Sannsynlighet av hendelser . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+10.2 Hvilken fordeling? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+10.3 Hvilken hypotesetest? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+10.4 Hvilket konfidensintervall? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+11 Oversikt over eksamensoppgaver                        39
+
+12 Tabeller og kvantiler ­ viktige verdier               39
+
+12.1 Standardnormalfordelingens kvantiler z . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+12.2 Sammenheng signifikansnivå og konfidensnivå . . . . . . . . . . . . . . . . . . . . . 39
+
+13 Tips for eksamensoppgaver                             39
+
+14 Type I- og Type II-feil                               40
+
+                                            2
+15 Statistisk programmering (Python)          40
+
+15.1 Standard-imports . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+15.2 Lese inn data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+15.3 Deskriptiv statistikk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+15.4 Sannsynlighetsfunksjoner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+15.5 Hypotesetester . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+15.6 Korrelasjon og regresjon . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+15.7 Konfidensintervall . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+15.8 Plotting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+16 Tillegg: ekstra pensumpunkter lagt til     45
+
+16.1 Verdimengde, punktsannsynlighet og fordelingsfunksjon . . . . . . . . . . . . . . . 45
+
+16.2 Diskret sannsynlighetshistogram og kumulativ fordeling . . . . . . . . . . . . . . . 45
+
+16.3 Geometrisk fordeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+
+16.4 Normaltilnærming for binomisk fordeling med heltallskorreksjon . . . . . . . . . . . 47
+
+16.5 Styrkefunksjon og Type II-feil . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+16.6 Python: punktsannsynlighet og fordelingsfunksjon i samme plott . . . . . . . . . . 48
+
+                                           3
+Notasjon og symboler
+
+Symbol          Betydning
+
+P (A)           Sannsynligheten for hendelsen A
+A¯              Komplementet til A, altså at A ikke skjer
+AB              Snitt: både A og B skjer
+AB              Union: A eller B eller begge skjer
+P (A | B)       Sannsynligheten for A gitt at B har skjedd
+X, Y            Stokastiske variabler
+x, y            Mulige observerte verdier av X og Y
+E(X) eller µ    Forventningsverdi/gjennomsnitt i populasjonen
+Var(X) eller 2  Varians i populasjonen
+                Standardavvik i populasjonen
+X¯ eller x¯     Utvalgsgjennomsnitt
+S2 eller s2     Utvalgsvarians
+S eller s       Utvalgsstandardavvik
+n               Antall observasjoner eller delforsøk
+p               Sannsynlighet for suksess / andel i populasjonen
+p^              Estimert andel fra et utvalg
+                Rate, for eksempel hendelser per tidsenhet
+t               Tid eller testobservator, avhengig av kontekst
+Z               Standardnormalfordelt variabel, Z  N (0, 1)
+G(z)            Fordelingsfunksjonen til standardnormalfordelingen: G(z) = P (Z  z)
+z               Høyresidekvantil: P (Z > z) = 
+t,              Høyresidekvantil i t-fordelingen med  frihetsgrader
+2 ,             Høyresidekvantil i kjikvadratfordelingen med  frihetsgrader
+F,1,2           Høyresidekvantil i F-fordelingen
+                Signifikansnivå / sannsynlighet for Type I-feil
+                Type II-feil i hypotesetesting; regresjonskoeffisient i regresjon
+                Korrelasjon i populasjonen
+r               Empirisk korrelasjon i et utvalg
+Cov(X, Y )      Kovarians mellom X og Y
+
+Tips
+
+Noen symboler brukes i flere sammenhenger. For eksempel kan t bety tid i en poissonprosess,
+men også en t-testobservator. Tilsvarende kan  bety Type II-feil i hypotesetesting, men
+regresjonskoeffisient i regresjon. Se alltid på konteksten.
+
+                           4
+1 Sannsynlighetsregning
+
+1.1 Uniform sannsynlighetsmodell (gunstige/mulige)
+
+Brukes når alle utfall er like sannsynlige.
+
+Formel
+
+                                   antall gunstige utfall
+                        P (A) = antall mulige utfall
+
+Eksempel
+
+Kilde: jan 2022, oppgave 1a
+
+Definisjoner: La H være hendelsen at en tilfeldig valgt person har betydelig hørselssvek-
+kelse.
+Oppgitt: Det er totalt 4965 personer, og 3774 av dem har hørselssvekkelse.
+Vi skal finne: Sannsynligheten P (H) for at en tilfeldig valgt person har hørselssvekkelse.
+4965 personer i en gruppe, 3774 har hørselssvekkelse:
+
+                         P (H) =  3774  = 0,760.
+
+                                  4965
+
+(jan 2022, oppgave 1a)
+
+1.2 Disjunkte hendelser
+
+To hendelser A og B er disjunkte dersom A  B =  (de kan ikke inntreffe samtidig). Man sier også
+at de er gjensidig utelukkende.
+
+    Formel
+
+                   A, B disjunkte  P (A  B) = 0  P (A  B) = P (A) + P (B)
+
+    Eksempel
+
+    Kilde: mai 2022, oppgave 1a
+
+    Definisjoner: La A være hendelsen at kortet er hjerter, og la B være hendelsen at kortet
+    er spar.
+    Vi skal avgjøre: Om hendelsene A og B er disjunkte, altså om de kan skje samtidig.
+    Vi trekker ett kort fra en kortstokk. La A: "kortet er hjerter" og B: "kortet er spar". Et kort
+    kan ikke være både hjerter og spar samtidig, så A  B = . Hendelsene er disjunkte.
+    I det andre eksempelet lar vi A være hendelsen at kortet er hjerter, og B være hendelsen at
+    kortet er konge. Et annet eksempel: A: "kortet er hjerter", B: "kortet er konge". Hjerterkonge
+    er både hjerter og konge, så AB = . Hendelsene er ikke disjunkte. (mai 2022, oppgave
+    1a)
+
+1.3 Uavhengige hendelser
+
+At to hendelser er uavhengige, innebærer at informasjon om at den ene hendelsen inntreffer (eller
+har inntruffet), ikke påvirker sannsynligheten for at den andre hendelsen inntreffer.
+
+                                  5
+Formel
+            A, B uavhengige  P (A  B) = P (A) · P (B)  P (A | B) = P (A)
+
+Merk: Disjunkte hendelser er aldri uavhengige (med mindre minst én har sannsynlighet 0).
+
+Eksempel
+
+Kilder: mai 2021, oppgave 1a; jan 2022, oppgave 1c
+
+Definisjoner: I pumpeeksempelet lar vi A være hendelsen at pumpe A virker, og B være
+hendelsen at pumpe B virker. I demenseksempelet lar vi D være hendelsen at en person viser
+tegn på demens, og H være hendelsen at personen har betydelig hørselssvekkelse.
+Vi skal avgjøre: Om hendelsene i hvert eksempel er uavhengige.
+Sjekke uavhengighet med tall: For pumpene A og B i et kjernekraftverk er P (A) =
+P (B) = 0,99 og P (A | B) = 0,995. For at hendelsene skal være uavhengige må P (A | B) =
+P (A). Her er 0,995 = 0,99, så hendelsene er ikke uavhengige. (mai 2021, oppgave 1a)
+Sjekke uavhengighet med snitt: I undersøkelsen av demens og hørselssvekkelse er
+
+          P (D   H)     =  646   =  0,130,  P (D) · P (H) = 0,150 · 0,760 = 0,114.
+                           4965
+
+Siden P (D  H) = P (D) · P (H) er hendelsene ikke uavhengige. (jan 2022, oppgave 1c)
+
+1.4 Union og snitt
+
+    Formel
+
+                           P (A  B) = P (A) + P (B) - P (A  B)
+
+De Morgans lover:
+
+                           A  B = A¯  B¯, A  B = A¯  B¯
+
+Eksempel
+
+Kilde: mai 2021, oppgave 1b
+
+Definisjoner: La A være hendelsen at pumpe A virker, og la B være hendelsen at pumpe
+B virker.
+Vi skal finne: Sannsynligheten for at minst én pumpe virker. Dette er unionen A  B.
+For to pumper er P (A) = P (B) = 0,99 og P (A | B) = 0,995. Vi finner først snittet ved
+produktsetningen:
+
+                   P (A  B) = P (B) · P (A | B) = 0,99 · 0,995 = 0,98505.
+
+Sannsynligheten for at minst én pumpe virker (kjøling fungerer):
+
+P (A  B) = P (A) + P (B) - P (A  B) = 0,99 + 0,99 - 0,98505 = 0,99495.
+
+(mai 2021, oppgave 1b)
+
+                                            6
+1.5 Komplementhendelse
+
+    Formel
+
+                            P (A¯) = 1 - P (A)
+
+Brukes ofte sammen med "minst" og "høyst"-formuleringer:
+
+                                          P (X  1) = 1 - P (X = 0).
+
+Eksempel
+
+Kilde: jan 2025, oppgave 1b
+Definisjoner: La A være hendelsen at alle de fem kortene er hjerter.
+Oppgitt: P (A) = 0,000495.
+Vi skal finne: Sannsynligheten for at ikke alle fem kortene er hjerter, altså P (A¯).
+Sannsynligheten for å trekke 5 hjerter er P = 0,000495. Sannsynligheten for at ikke alle de
+fem kortene er hjerter, er den komplementære hendelsen:
+
+                             P (ikke alle hjerter) = 1 - 0,000495 = 0,999505.
+
+(jan 2025, oppgave 1b)
+
+1.6 Betinget sannsynlighet
+
+Sannsynligheten for A gitt at B har inntruffet:
+
+Formel
+
+                   P (A | B) =  P (A  B)            ,  P (B) > 0
+
+                                P (B)
+
+Produktsetningen:
+
+                   P (A  B) = P (B) · P (A | B) = P (A) · P (B | A)
+
+Eksempel
+
+Kilde: jan 2022, oppgave 1d
+
+Definisjoner: La H være hendelsen at en person har betydelig hørselssvekkelse, og la D
+være hendelsen at personen viser tegn på demens.
+Oppgitt:
+
+                     P (H) = 0,760, P (D) = 0,150, P (D  H) = 0,130.
+
+Vi skal finne: Både P (H | D) og P (D | H).
+Demens og hørselssvekkelse: P (H) = 0,760, P (D) = 0,150 og P (D  H) = 0,130.
+Sannsynligheten for å ha betydelig hørselssvekkelse gitt at man viser tegn på demens:
+
+                                P (H  D) 0,130         = 0,867.
+                   P (H | D) =                      =
+                                P (D) 0,150
+
+Sannsynligheten for å vise tegn på demens gitt at man har hørselssvekkelse:
+
+                   P (D | H) =  P (D  H) 0,130         = 0,171.
+                                                    =
+                                P (H) 0,760
+
+                                                 7
+    Legg merke til at P (H | D) = P (D | H) ­ rekkefølgen i betingelsen er viktig. (jan 2022,
+    oppgave 1d)
+
+1.7 Setningen om total sannsynlighet
+
+La B1, B2, . . . , Bn partisjonere utfallsrommet (disjunkte og dekkende ­ dvs. alle utfall havner i
+nøyaktig én Bi). Da gjelder:
+
+    Formel
+
+                                                                              n
+
+                                             P (A) = P (Bi) · P (A | Bi)
+
+                                                                             i=1
+
+    Når brukes den? Når du har den betingede sannsynligheten for A i hver av flere disjunkte
+"kategorier", men ikke P (A) direkte.
+
+    Eksempel
+
+    Kilder: mai 2021, oppgave 2a; mai 2022, oppgave 2a
+    Definisjoner: I kollisjonseksempelet lar vi B være hendelsen at sjåføren er beruset, og K
+    være hendelsen at turen ender i kollisjon. I regioneksempelet lar vi N, S, O, V være hendelsene
+    at en tilfeldig valgt person kommer fra henholdsvis Nord, Sør, Øst og Vest, og R være
+    hendelsen at personen har rotte som kjæledyr.
+    Med to kategorier: 2,5 % av norske bilførere er beruset; 11 % av berusede sjåførers turer
+    ender i kollisjon, 0,2 % av edru. Hva er P (kollisjon)?
+    Definer: B = beruset sjåfør, K = kollisjon. Oppgitt: P (B) = 0,025, P (K | B) = 0,11,
+    P (K | B¯) = 0,002. Da er P (B¯) = 1 - 0,025 = 0,975.
+
+    P (K) = P (B)·P (K | B)+P (B¯)·P (K | B¯) = 0,025·0,11+0,975·0,002 = 0,00275+0,00195 = 0,0047.
+
+    (mai 2021, oppgave 2a)
+    Med fire kategorier: I Nangijala er befolkningen fordelt på regionene N, S, O, V med
+    andeler 0,21, 0,34, 0,27, 0,18, og andelen som har rotte som kjæledyr i hver region er
+    0,52, 0,79, 0,34, 0,41.
+
+                    P (R) = 0,21 · 0,52 + 0,34 · 0,79 + 0,27 · 0,34 + 0,18 · 0,41 = 0,5434.
+
+    Regionene partisjonerer utfallsrommet ­ alle innbyggere tilhører nøyaktig én region. (mai
+    2022, oppgave 2a)
+
+1.8 Bayes' setning
+
+"Snur" betingelsen: gir oss P (B | A) når vi har P (A | B).
+
+    Formel
+
+                                                             P (B) · P (A | B)
+                                             P (B | A) =
+
+                                                                     P (A)
+
+    P (A) regnes ofte ved hjelp av total sannsynlighet.
+    Strukturen i en typisk Bayes-oppgave:
+
+                                                               8
+1. Definer hendelsene.
+
+2. Skriv opp alle gitte sannsynligheter.
+
+3. Finn P (A) ­ ofte via total sannsynlighet.
+
+4. Sett inn i Bayes' formel.
+Eksempel
+
+Kilder: mai 2024, oppgave 1a; mai 2022, oppgave 2b; mai 2021, oppgave 2b
+
+Definisjoner: I dysleksieksempelet lar vi D være hendelsen at et barn har dysleksi, og A
+være hendelsen at barnet har ADHD. I Nangijala-eksempelet betyr S at personen er fra Sør,
+og R at personen har rotte som kjæledyr. I kollisjonseksempelet betyr B beruset sjåfør og
+K kollisjon.
+Enkel Bayes: 5 % av barn har dysleksi, 4 % har ADHD, og 30 % av de med dysleksi har
+også ADHD. Sannsynligheten for dysleksi gitt ADHD:
+
+                   P (D | A) =  P (D) · P (A | D) 0,05 · 0,30
+                                               =                = 0,375.
+                                P (A)             0,04
+
+(mai 2024, oppgave 1a)
+Bayes etter total sannsynlighet: Med tallene fra Nangijala over ­ gitt at en person har
+rotte som kjæledyr, hva er sannsynligheten for at vedkommende er fra Sør?
+
+                                P (S) · P (R | S) 0,34 · 0,79
+                   P (S | R) =                 =               = 0,4943.
+                                P (R)             0,5434
+
+Merk: Vi måtte først finne P (R) = 0,5434 ved total sannsynlighet (forrige eksempel). (mai
+
+2022, oppgave 2b)
+
+Bayes i kollisjonseksempelet: En bil har nettopp kollidert. Sannsynligheten for at føreren
+
+er beruset:                     P (B) · P (K | B) 0,025 · 0,11
+
+                   P (B | K) =  P (K)          =  0,0047        = 0,585.
+
+Tolkning: Selv om bare 2,5 % av sjåfører er beruset, er 58,5 % av kollisjonene gjort av
+berusede ­ fordi de er mye mer kollisjons-tilbøyelige. (mai 2021, oppgave 2b)
+
+1.9 Kombinatorikk
+
+Antall måter å velge k elementer fra n avhenger av om rekkefølgen teller og om vi legger tilbake
+mellom hver trekning.
+
+    Formel
+        · Uordnet uten tilbakelegging ("nCr"): n = n!
+                                                                    k k!(n - k)!
+        · Ordnet uten tilbakelegging (permutasjoner): n! = n · (n - 1) · · · (n - k + 1)
+                                                                             (n - k)!
+        · Ordnet med tilbakelegging: nk
+        · Uordnet med tilbakelegging: n + k - 1
+                                                               k
+
+    Bruk i sannsynlighet: Med uniform fordeling er P = g/m der g er antall gunstige utvalg og
+m er antall mulige.
+
+                                                               9
+Tips
+
+Hvordan velge formel?
+    · Bryr du deg om rekkefølgen kortene/personene kommer i?  ordnet.
+    · Kan samme element brukes to ganger?  med tilbakelegging.
+
+For statistikk-eksamen er det uordnet uten tilbakelegging (binomialkoeffisienten) som oftest
+dukker opp.
+
+Eksempel
+
+Kilde: jan 2025, oppgave 1
+
+Definisjoner: La X være antall hjerter blant de 5 kortene som trekkes. En vanlig kortstokk
+har 52 kort, hvorav 13 er hjerter og 39 ikke er hjerter.
+Vi skal finne: Sannsynligheten for 5 hjerter, sannsynligheten for ingen hjerter, samt noen
+eksempler på opptellingsregler.
+Uordnet uten tilbakelegging: 5 kort fra 52. 13 hjerter i kortstokken. Alle hjerter:
+
+          P (5 hjerter) =                  13        = 1287 = 4,95 · 10-4.
+                                           5            2 598 960
+                                           52
+
+                                               5
+
+Ingen hjerter: 39 ikke-hjerter:
+
+          P (0 hjerter) =                         39     =   575 757     = 0,2215.
+                                                  5
+                                                  52         2 598 960
+
+                                                  5
+
+Sekvensiell utregning (alternativ): Sannsynlighet for 5 hjerter etter hverandre:
+
+          13                     ·  12  ·  11  ·  10  ·  9   =  4,95  ·  10-4.
+          52                        51     50     49     48
+
+Samme svar ­ bare en annen tankegang. (jan 2025, oppgave 1)
+Ordnet med tilbakelegging: Antall mulige PIN-koder med 4 siffer:
+
+                                           104 = 10 000.
+
+Permutasjon: Antall måter 3 personer kan settes på en rangert podiumsplass fra en gruppe
+
+på 8:
+
+                                       8!
+                                               = 8 · 7 · 6 = 336.
+
+                                    (8 - 3)!
+
+2 Stokastiske variabler
+
+2.1 Forventningsverdi
+
+For en diskret stokastisk variabel:
+    Formel
+
+                                           µ = E(X) = xi · P (X = xi)
+
+                                                                                      i
+
+                                                      10
+    Eksempel
+    Kilde: jan 2025, oppgave 2b
+    Definisjoner: La X være en diskret stokastisk variabel som kan få verdiene -2, -1, 0, 1, 2.
+    Oppgitt:
+    P (X = -2) = 0,3, P (X = -1) = 0,2, P (X = 0) = 0,2, P (X = 1) = 0,1, P (X = 2) = 0,2.
+    Vi skal finne: Forventningsverdien µ = E(X).
+    Gitt fordelingen for X med verdier -2, -1, 0, 1, 2 og sannsynligheter 0,3, 0,2, 0,2, 0,1, 0,2:
+
+                        µ = (-2)(0,3) + (-1)(0,2) + 0(0,2) + 1(0,1) + 2(0,2) = -0,3.
+    (jan 2025, oppgave 2b)
+
+2.2 Varians og standardavvik
+
+    Formel
+                            2 = Var(X) = E(X2) - µ2 = xi2 · P (X = xi) - µ2
+
+                                                                                                 i
+
+                                                                
+                                                           = 2
+
+    Eksempel
+    Kilde: jan 2025, oppgave 2c
+    Definisjoner: Vi bruker samme stokastiske variabel X som i forrige eksempel.
+    Oppgitt: Forventningsverdien er allerede funnet: µ = E(X) = -0,3.
+    Vi skal finne: Variansen Var(X) og standardavviket .
+    Med samme fordeling som over og µ = -0,3:
+
+          Var(X) = 4(0,3) + 1(0,2) + 0(0,2) + 1(0,1) + 4(0,2) - (-0,3)2 = 2,3 - 0,09 = 2,21.
+                                    
+
+    Standardavviket er  = 2,21 = 1,487. (jan 2025, oppgave 2c)
+
+2.3 Lineære transformasjoner av stokastiske variabler
+
+For konstanter a, b, c og stokastiske variabler X, Y :
+    Formel
+
+                                      E(aX + bY + c) = aE(X) + bE(Y ) + c
+                         Var(aX + bY + c) = a2Var(X) + b2Var(Y ) + 2ab Cov(X, Y )
+
+    Hvis X og Y er uavhengige er Cov(X, Y ) = 0.
+    Eksempel
+    Kilde: mai 2024, oppgave 2
+    Definisjoner: La X og Y være to stokastiske variabler.
+
+                                                               11
+Oppgitt:
+
+           E(X) = 20, Var(X) = 9, E(Y ) = 15, Var(Y ) = 7, Cov(X, Y ) = 5.
+
+Vi skal finne:
+
+                      E(3X - 2Y + 20), Var(3X - 2Y + 20), E(XY ).
+
+La E(X) = 20, Var(X) = 9, E(Y ) = 15, Var(Y ) = 7, Cov(X, Y ) = 5.
+
+                E(3X - 2Y + 20) = 3 · 20 - 2 · 15 + 20 = 50
+             Var(3X - 2Y + 20) = 9 · 9 + 4 · 7 + 2 · 3 · (-2) · 5 = 81 + 28 - 60 = 49
+
+                             E(XY ) = Cov(X, Y ) + E(X) · E(Y ) = 5 + 20 · 15 = 305
+Tips: For å finne E(XY ) bruker vi definisjonen av kovarians: Cov(X, Y ) = E(XY ) -
+E(X)E(Y ). (mai 2024, oppgave 2)
+
+2.4 Simultanfordeling og marginale fordelinger
+
+Marginalfordelingen finnes ved å summere over den andre variabelen:
+    Formel
+
+P (X = x) = P (X = x, Y = y),                       P (Y = y) = P (X = x, Y = y)
+
+                         y                                                   x
+
+Eksempel
+
+Kilde: jan 2022, oppgave 3b
+Definisjoner: La X være antall personbiler, og la Y være antall lastebiler/busser.
+Vi skal finne: Marginalfordelingen til X, altså sannsynlighetene P (X = 0), P (X =
+1), P (X = 2) og P (X = 3).
+For en simultanfordeling der X  {0, 1, 2, 3} er antall personbiler og Y  {0, 1, 2} er antall
+lastebiler/busser, finner vi marginalfordelingen for X ved å summere radvis:
+
+                                   P (X = 0) = 0,02 + 0,04 + 0,07 = 0,13
+                                   P (X = 1) = 0,05 + 0,07 + 0,09 = 0,21
+                                   P (X = 2) = 0,08 + 0,12 + 0,10 = 0,30
+                                   P (X = 3) = 0,20 + 0,10 + 0,06 = 0,36
+
+Marginalfordelingen til Y finnes ved å summere kolonnevis. (jan 2022, oppgave 3b)
+
+2.5 Kovarians                                       E(XY ) =         xiyj p(xi, yj)
+
+    Formel
+                 Cov(X, Y ) = E(XY ) - E(X) E(Y ),
+
+                                                              ij
+
+                               12
+Tips
+
+Ved beregning av E(XY ) kan man droppe alle ledd der xi = 0, yj = 0 eller p(xi, yj) = 0,
+siden disse bidrar med 0.
+
+Tolkning:
+· Cov(X, Y ) > 0: X og Y har en tendens til å variere i samme retning (når X er stor, er Y
+
+   ofte stor).
+
+· Cov(X, Y ) < 0: X og Y varierer i motsatt retning.
+
+· Cov(X, Y ) = 0: ingen lineær samvariasjon. Hvis X og Y er uavhengige er kovariansen 0, men
+   det motsatte gjelder ikke generelt.
+
+Nyttige regler:
+
+Cov(X, X) = Var(X), Cov(X, Y ) = Cov(Y, X), Cov(aX + b, cY + d) = ac Cov(X, Y ).
+
+Eksempel
+
+Kilde: mai 2021, oppgave 3
+
+Definisjoner: La X og Y være to diskrete stokastiske variabler med simultanfordelingen i
+tabellen.
+Vi skal finne: Kovariansen Cov(X, Y ).
+Plan: Først finner vi marginalfordelingene, deretter E(X), E(Y ) og E(XY ), før vi bruker
+
+          Cov(X, Y ) = E(XY ) - E(X)E(Y ).
+
+Steg-for-steg kovariansberegning. Gitt simultanfordelingen:
+
+                             x=0  y=0       y=1   y=2
+                             x=1   0,2       0,3   0,1
+                                   0,1       0,2   0,1
+
+Steg 1 ­ marginale fordelinger:
+
+          P (X = 0) = 0,2 + 0,3 + 0,1 = 0,6
+          P (X = 1) = 0,1 + 0,2 + 0,1 = 0,4
+          P (Y = 0) = 0,2 + 0,1 = 0,3
+          P (Y = 1) = 0,3 + 0,2 = 0,5
+          P (Y = 2) = 0,1 + 0,1 = 0,2
+
+Steg 2 ­ forventningsverdier:
+
+          E(X) = 0 · 0,6 + 1 · 0,4 = 0,4
+          E(Y ) = 0 · 0,3 + 1 · 0,5 + 2 · 0,2 = 0,9
+
+Steg 3 ­ E(XY ). Vi summerer xi · yj · p(xi, yj) over alle celler. Alle ledd der xi = 0 eller
+yj = 0 blir 0. Det er kun to celler igjen som bidrar:
+
+          E(XY ) = 1 · 1 · 0,2 + 1 · 2 · 0,1
+                    = 0,2 + 0,2 = 0,4
+
+Steg 4 ­ selve kovariansen:
+
+Cov(X, Y ) = E(XY ) - E(X) · E(Y ) = 0,4 - 0,4 · 0,9 = 0,4 - 0,36 = 0,04.
+
+Tolkning: Liten positiv kovarians ­ når X vokser, har Y en svak tendens til også å vokse.
+(mai 2021, oppgave 3)
+
+                                        13
+Eksempel
+Kilde: jan 2026, oppgave 2c
+Definisjoner: La X og Y være to stokastiske variabler.
+Oppgitt: E(XY ) = 4, E(X) = 0,9 og E(Y ) = 4,5.
+Vi skal finne: Kovariansen Cov(X, Y ).
+Negativ kovarians. Gitt en simultanfordeling med E(XY ) = 4, E(X) = 0,9, E(Y ) = 4,5:
+
+                              Cov(X, Y ) = 4 - 0,9 · 4,5 = 4 - 4,05 = -0,05.
+
+Negativ verdi  små negativ samvariasjon. (jan 2026, oppgave 2c)
+
+Tips
+Husk rekkefølgen:
+
+   1. Finn marginalfordelingene (rad- og kolonne-summer).
+   2. Regn ut E(X) og E(Y ) fra marginalfordelingene.
+   3. Regn ut E(XY ) fra hele simultantabellen (drop nuller).
+   4. Sett inn i Cov(X, Y ) = E(XY ) - E(X)E(Y ).
+Skal du videre til korrelasjonen , trenger du også X og Y .
+
+2.6 Korrelasjon
+
+    Formel
+
+                 (X, Y ) =  Cov(X, Y )  ,                          -1    1
+
+                            X · Y
+
+Eksempel
+
+Kilde: mai 2025, oppgave 1c
+
+Definisjoner: La X og Y være to stokastiske variabler. Korrelasjonen (X, Y ) måler lineær
+samvariasjon mellom dem.
+Oppgitt:
+
+          E(XY ) = 0,3, µX = 0,6, µY = 0,7, X = 0,8, Y = 0,781.
+
+Vi skal finne: Kovariansen Cov(X, Y ) og korrelasjonen (X, Y ).
+For en simultanfordeling med E(XY ) = 0,3, µX = 0,6, µY = 0,7, X = 0,8, Y = 0,781:
+
+                 Cov(X, Y ) = 0,3 - 0,6 · 0,7 = -0,12,
+
+                 (X, Y ) =  -0,12          = -0,192.
+
+                            0,8 · 0,781
+
+Tolkning: liten negativ samvariasjon. (mai 2025, oppgave 1c)
+
+2.7 Sum av uavhengige stokastiske variabler
+
+For n uavhengige Xi med samme fordeling:
+
+                                                               14
+Formel                              Var(X1 + · · · + Xn) = n2,             
+          E(X1 + · · · + Xn) = nµ,                              SD(·) = n 
+
+Eksempel
+
+Kilde: jan 2022, oppgave 3f
+
+Definisjoner: La Xi være verdien for én tur, og la Y = X1 + · · · + X120 være summen over
+120 uavhengige turer.
+Oppgitt: E(X) = 0,97 og Var(X) = 0,6691.
+Vi skal finne: Forventningsverdi og standardavvik for summen Y .
+Y = X1 + · · · + X120 der E(X) = 0,97 og Var(X) = 0,6691:
+
+                    µY = 120 · 0,97 = 116,40, Y = 120 · 0,6691 = 8,9606.
+
+(jan 2022, oppgave 3f)
+
+3 Diskrete fordelinger
+
+    Tips
+    Valg og begrunnelse av modell. Eksamen spør ofte: "Begrunn hvorfor X kan antas å
+    være. . . ". Da bør du sjekke disse kjennetegnene:
+
+        · Binomisk: Fast antall delforsøk n, to mulige utfall pr. delforsøk, uavhengige delforsøk,
+           konstant suksess-sannsynlighet p.
+
+        · Hypergeometrisk: Trekking uten tilbakelegging fra populasjon. Kan tilnærmes med
+           binomisk hvis utvalget er  10 % av populasjonen.
+
+        · Poisson: Antall hendelser i tidsrom (eller område) med konstant rate , hendelsene
+           uavhengige, ikke to samtidig.
+
+        · Eksponential: Ventetid mellom hendelser i en poissonprosess.
+        · Normalfordeling: Kontinuerlige måledata, eller tilnærming for sum/gjennomsnitt av
+
+           mange uavhengige variable (sentralgrenseteoremet).
+
+3.1 Binomisk fordeling
+
+X  bin(n, p): antall "suksesser" i n uavhengige delforsøk, der hver delforsøk har suksess-sannsynlighet
+p.
+
+    Formel
+
+                                P (X = x) = n px(1 - p)n-x, x = 0, 1, . . . , n
+                                                    x
+
+                                µ = np, 2 = np(1 - p),  = np(1 - p)
+
+    Kjennetegn: fast antall delforsøk n, hvert delforsøk er uavhengig, og samme suksess-sannsynlighet
+p hver gang. "Antall vellykkede av n".
+
+                                    15
+Eksempel
+
+Kilder: sept 2022, oppgave 2a-c; mai 2024, oppgave 1d; jan 2026, oppgave 1c
+
+Definisjoner: I vannpistoleksempelet lar vi X være antall vannpistoler uten feil blant de 10
+som trekkes. I dysleksieksempelet lar vi X være antall barn med dysleksi blant 20 skolebarn.
+I myntkasteksempelet lar vi X være antall kron i løpet av n myntkast.
+Punktsannsynlighet: 10 vannpistoler trekkes, p = 0,9 er sannsynlighet for at en pistol er
+uten feil. Sannsynlighet for at alle 10 er i orden:
+
+                        P (X = 10) = 10 · 0,910 · 0,10 = 1 · 0,349 · 1 = 0,349.
+                                            10
+
+Sannsynlighet for at nøyaktig 9 er i orden:
+
+                       P (X = 9) = 10 · 0,99 · 0,11 = 10 · 0,387 · 0,1 = 0,387.
+                                           9
+
+Sannsynlighet for minst 9 i orden:
+
+          P (X  9) = P (X = 9) + P (X = 10) = 0,387 + 0,349 = 0,736.
+
+(sept 2022, oppgave 2a-c)
+Tabelloppslag: 20 skolebarn, p = 0,05 (dysleksi). Sannsynlighet for nøyaktig 2:
+
+          P (X = 2) = 20 · 0,052 · 0,9518 = 190 · 0,0025 · 0,3972 = 0,189.
+                              2
+
+(mai 2024, oppgave 1d)
+Finne n: Hvor mange myntkast trengs for at P (minst én kron) > 0,99? Med p = 0,5 er
+
+                   P (X  1) = 1 - P (X = 0) = 1 - 0,5n > 0,99  0,5n < 0,01.
+
+Tar logaritmen (snu ulikheten siden ln 0,5 < 0):
+
+                        n>  ln 0,01   6,6  n  7.
+
+                            ln 0,5
+
+(jan 2026, oppgave 1c)
+
+3.2 Hypergeometrisk fordeling ­ tilnærmes med binomisk
+
+Trekking uten tilbakelegging fra liten populasjon. Hvis utvalget er  10 % av populasjonen kan vi
+tilnærme med binomisk fordeling.
+
+    Eksempel
+
+    Kilde: jan 2022, oppgave 4
+
+    Definisjoner: La X være antall spiselige avokadoer blant de n avokadoene Fru Petrell
+    plukker.
+    Modell: Egentlig er X hypergeometrisk fordelt, fordi avokadoene trekkes uten tilbakeleg-
+    ging. Siden butikken har mange avokadoer sammenlignet med antallet som trekkes, bruker
+    vi binomisk tilnærming: X  Bin(n, 0,6).
+    Vi skal finne: For n = 4 skal vi finne sannsynligheten for at minst tre avokadoer er spiselige,
+    altså P (X  3).
+
+                                     16
+Fru Petrell plukker n avokadoer der 60 % er spiselige. Trekkingen er uten tilbakelegging, så
+X er strengt tatt hypergeometrisk fordelt. Men siden antall avokadoer i butikken er stort
+sammenlignet med utvalget, endrer ikke sannsynligheten seg særlig fra trekning til trekning,
+og vi kan tilnærme med en binomisk fordeling: X  bin(n, 0,6).
+Vi plukker n = 4 avokadoer. Sannsynligheten for at minst tre er spiselige:
+
+                            P (X  3) = 1 - P (X  2) = 1 - 0,525 = 0,475.
+
+(jan 2022, oppgave 4)
+
+3.3 Poissonfordeling
+
+X  Poisson(t): antall hendelser i tidsrom t med konstant rate .
+
+Formel
+
+        P (X = x) =  (t)x e-t  , x = 0, 1, 2, . . .
+
+                     x!
+
+                     µ = 2 = t
+
+    Kjennetegn: "antall hendelser i et tidsrom (eller område) med konstant rate". Hendelsene må
+være uavhengige.
+
+    Tips
+
+    Pass på enhetene! Hvis  er pr. minutt og spørsmålet gjelder en time, må du multiplisere:
+    µ = t = 0,15 · 60 = 9.
+
+Eksempel
+
+Kilder: jan 2022, oppgave 2a; jan 2025, oppgave 4a; jan 2026, oppgave 4b
+
+Definisjoner: I butikkeksempelet lar vi X være antall kunder som kommer innom butikken
+i løpet av én time. I vulkaneksempelet lar vi X være antall utbrudd i løpet av 5 år. I
+sommerfugleksempelet lar vi X være antall klippeblåvinger på en uke.
+Tabelloppslag: Butikk med  = 0,15 kunder/minutt. På én time er µ = t = 9. Sannsyn-
+lighet for minst 8 kunder:
+
+                            P (X  8) = 1 - P (X  7) = 1 - 0,324 = 0,676.
+
+(jan 2022, oppgave 2a)
+Direkte utregning fra formel: Vulkanen Mauna Loa har  = 0,0261 utbrudd/måned. På
+5 år (t = 60 måneder) er t = 1,5678.
+
+                       P (X = 1) = 1,56781 · e-1,5678 = 1,5678 · 0,2085 = 0,327,
+                                            1!
+
+                                  P (X = 2) = 1,56782 · e-1,5678 = 0,256,
+                                                       2!
+
+                                P (X = 1 eller 2) = 0,327 + 0,256 = 0,583.
+(jan 2025, oppgave 4a)
+Komplement-triks: Sannsynlighet for minst 3 klippeblåvinger på en uke (t = 1,68):
+
+P (X  3) = 1-P (X  2) = 1-(P (X = 0)+P (X = 1)+P (X = 2)) = 1-0,7625 = 0,2375.
+
+(jan 2026, oppgave 4b)
+
+                     17
+3.4 Normaltilnærming for poissonfordeling
+
+Når t  10 kan vi bruke normaltilnærming med heltallskorreksjon:
+
+Formel
+
+                                    x + 0,5 - µ                  
+
+                 P (X  x)  G                      , µ = t,  = t
+
+Eksempel
+
+Kilde: sept 2022, oppgave 3b
+
+Definisjoner: La X være antall bøter i løpet av en periode på 5 dager.
+
+Oppgitt: Det gis i gjennomsnitt  = 17 bøter per dag. For 5 dager blir µ = 17 · 5 = 85 og
+ = 85.
+
+Vi skal finne: Sannsynligheten P (82  X  101).                
+
+ = 17 bøter pr. dag, periode på 5 dager  µ = t = 85,  = 85.
+
+          P (82  X  101) = P (81 < X  101)
+
+                            G 101+0,5-85 - G 81+0,5-85
+                                    85                    85
+
+                           = G(1,79) - G(-0,38) = 0,9633 - 0,3520 = 0,611.
+
+Heltallskorreksjonen (+0,5) er viktig fordi vi tilnærmer en diskret fordeling med en kon-
+tinuerlig. (sept 2022, oppgave 3b)
+
+4 Kontinuerlige fordelinger
+
+4.1 Normalfordeling
+
+X  N (µ, ). Standardiseres ved Z-transformasjon:
+
+Formel
+
+                               Z=   X -µ       N (0, 1)
+
+                                        
+
+                                                     x-µ
+                               P (X  x) = G
+
+                                                       
+
+Tre nyttige formler:
+
+·  P (X  x) = G  x-µ
+                   
+
+·  P (X > x) = 1 - G  x-µ
+                        
+
+· P (a  X  b) = G     b-µ  -G  a-µ
+                                 
+
+Bruk symmetri: G(-z) = 1 - G(z).
+
+Eksempel
+
+Kilder: jan 2025, oppgave 5a; mai 2021, oppgave 5a; mai 2021, oppgave 5b; mai
+2025, oppgave 4d
+
+Definisjoner: I kaffeeksempelet lar vi X være mengden kaffe i én kopp. I IQ-eksemplene lar
+
+                                          18
+vi W være IQ-skåren til en tilfeldig valgt person. I såpeeksempelet lar vi X være fyllmengden
+i en beholder.
+Sannsynlighet i én hale: X  N (25, 0,48). Sannsynlighet for at X < 24:
+
+                        P (X  24) = G     24 - 25   = G(-2,08) = 0,0188.
+
+                                          0,48
+
+(jan 2025, oppgave 5a)
+Sannsynlighet i øvre hale: W  N (100, 15) (IQ). Sannsynlighet over 120:
+
+        P (W > 120) = 1 - G      120 - 100      = 1 - G(1,33) = 1 - 0,9082 = 0,0918.
+
+                                      15
+
+(mai 2021, oppgave 5a)
+Sannsynlighet i et intervall: W  N (100, 15). Sannsynlighet for 95  W < 110:
+
+   G    110-100   -G     95-100  = G(0,67) - G(-0,33) = 0,7486 - 0,3707 = 0,3779.
+            15              15
+
+(mai 2021, oppgave 5b)
+Bakveien ­ finn µ:  = 5, vi vil at P (X < 300) < 0,001.
+
+G       300-µ  =  0,001    300-µ  =   -z0,001  =   -3,090    µ  =  300  +  3,090  ·  5  =  315,45.
+           5                  5
+
+Produsenten må stille inn µ  315,45 ml. (mai 2025, oppgave 4d)
+
+    Sum av normalfordelte: Hvis X  N (µ, ) og Y = nX er summen av n uavhengige slike, så
+                                                                    
+
+                                                    Y  N (nµ, n ).
+                                                                       
+
+Eksempel: 5 trykk på kaffeknappen gir Y  N (125, 5 · 0,48) = N (125, 1,0733), og
+
+                 P (Y > 127) = 1 - G      127-125   = 1 - G(1,86) = 0,0314.
+                                           1,0733
+
+(jan 2025, oppgave 5b)
+
+4.2 Eksponentialfordeling
+
+Modellerer ventetid i en poissonprosess med rate . Med andre ord: hvis hendelser skjer med rate
+, så er tiden T til neste hendelse eksponentialfordelt.
+
+Formel
+
+                        f (t) = e-t,   F (t) = 1 - e-t,          1      t0
+                                                           µ= ,
+                                                                
+
+Nyttige uttrykk:
+            P (T  t) = 1 - e-t, P (T > t) = e-t, P (a  T  b) = e-a - e-b.
+
+Eksempel
+
+Kilder: jan 2022, oppgave 2b; jan 2025, oppgave 4b; mai 2024, oppgave 3d
+Definisjoner: La T være ventetiden til første hendelse. I butikkeksempelet måles T i mi-
+nutter til første kunde kommer. I vulkaneksempelet måles T i måneder til første utbrudd.
+Ventetid mellom a og b: Butikk med  = 0,15 kunder/minutt. Sannsynlighet for at den
+
+                                                19
+første kunden kommer mellom 4 og 6 minutter:
+
+                   P (4  T < 6) = e-0,15·4 - e-0,15·6 = 0,5488 - 0,4066 = 0,142.
+
+(jan 2022, oppgave 2b)
+Minimum-ett-tilfelle via F : Vulkan,  = 0,0261/måned, periode på 60 måneder. Sann-
+synlighet for minst ett utbrudd:
+
+           P (T  60) = F (60) = 1 - e-0,0261·60 = 1 - e-1,5678 = 1 - 0,2085 = 0,792.
+
+Merk: Dette er samme svar som 1 - P (X = 0) i Poisson-fordelingen ­ "minst ett utbrudd i
+tidsrommet" = "første utbrudd kommer før tidsrommet er omme". (jan 2025, oppgave 4b)
+Direkte fra µ: Hannmygg har forventet levetid 17 døgn   = 1/17. Sannsynlighet for
+første hendelse innen 0,5 døgn med  = 0,8 (annet scenario):
+
+                             P (T  0,5) = 1 - e-0,8·0,5 = 1 - e-0,4 = 0,330.
+
+(mai 2024, oppgave 3d)
+
+4.3 Eksponentialfordelingens minneløshet
+
+    Formel
+
+                                          P (T > s + t | T > s) = P (T > t)
+
+    Sannsynligheten for å vente t ekstra avhenger ikke av hvor lenge man allerede har ventet.
+
+    Eksempel
+
+    Kilde: mai 2023, oppgave 5b
+    Definisjoner: La T være gjenværende levetid for en hunnmygg, målt i døgn.
+    Oppgitt: Forventet levetid er 26 døgn, så  = 1/26.
+    Vi skal finne: Sannsynligheten for å leve minst 20 døgn til.
+    For en hunnmygg med forventet levetid 26 døgn ( = 1/26) er sannsynligheten for å leve i
+    minst 20 døgn til (gitt at den fortsatt lever) ganske enkelt:
+
+                                             P (T > 20) = e-20/26 = 0,463.
+
+    Vi behøver ikke å betinge på at den allerede har levd 10 døgn ­ minneløsheten gjør at det
+    blir samme svar uansett. (mai 2023, oppgave 5b)
+
+4.4 Sentralgrenseteoremet
+
+For sum Y = X1 +· · ·+Xn av uavhengige variable med samme fordeling (uansett hva Xi's fordeling
+er):
+
+Formel
+
+                        
+        Y  N (nµ, n ) når n er stor
+
+    Når brukes det? Når du har en sum (eller gjennomsnitt) av mange uavhengige variable og
+vil regne en sannsynlighet ­ da kan du bruke normaltilnærming uavhengig av den underliggende
+fordelingen.
+
+        20
+

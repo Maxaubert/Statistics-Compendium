@@ -1,0 +1,1140 @@
+Eksempel
+
+Kilder: mai 2023, oppgave 4; jan 2022, oppgave 3f
+
+Definisjoner: La Xi være antall liter søppel levert av husstand i. La Y = X1 + X2 + · · · +
+
+X130 være totalt antall liter søppel fra 130 husstander. I fergeeksempelet er W totalt antall
+
+lastebiler over 120 turer.
+
+Sannsynlighet for total mengde: 130 husstander leverer søppel. E(Xi) = 65 liter,
+
+Var(Xi) = 900.                                                     
+                                                            Y = 130 · 900 = 342,1.
+                      µY = 130 · 65 = 8450,
+
+Sannsynlighet for mer enn 8500 liter totalt:
+
+   P (Y > 8500) = 1 - G                   8500-8450      = 1 - G(0,15) = 1 - 0,5596 = 0,442.
+                                              342,1
+
+(mai 2023, oppgave 4)
+Sentralgrenseteoremet på en simultanfordelings-variabel: Ferge med 120 turer per
+måned. W = totalt antall lastebiler. Fra simultanfordelingen ble det funnet E(Yi) = 0,97,
+Var(Yi) = 0,6691.
+
+                      µW = 120 · 0,97 = 116,4, W = 120 · 0,6691 = 8,96.
+
+   P (W > 115) = 1 - G                 115-116,4     = 1 - G(-0,16) = 1 - 0,4364 = 0,5636.
+                                           8,96
+
+(jan 2022, oppgave 3f)
+
+5 Estimering og konfidensintervall
+
+5.1 Punktestimater
+
+Vanlige estimatorer:
+
+·  Forventningsverdi:  µ^ = X¯     =   1     Xi
+                                       n
+
+· Andel: p^ = X/n
+
+· Poissonrate: ^ = X/t
+
+·  Utvalgsvarians:    S2 =    1        Xi2 - nX¯ 2
+                            n-1
+
+Eksempel
+
+Kilde: mai 2022, oppgave 3a
+
+Definisjoner: La x1, . . . , x5 være de fem målte reisetidene til Emil.
+Data: 38, 35, 37, 34, 37 minutter.
+Vi skal finne: Punktestimatet x¯ for forventet reisetid µ, og utvalgsvariansen s2.
+Emil Svensson måler tidsbruken til jobb i 5 dager: 38, 35, 37, 34, 37 minutter.
+
+                            µ^  =  x¯  =  1  (38  +  35  +  37  +  34  +  37)  =  36,2.
+                                          5
+
+   s2     =  1        382 + 352 + 372 + 342 + 372 - 5 · 36,22             =    10,8  =  2,7,  s = 1,643.
+             4                                                                   4
+
+(mai 2022, oppgave 3a)
+
+                                                         21
+5.2 Konfidensintervall for µ med kjent 
+
+Formel
+
+                       X¯           ±    z/2  ·     
+                                                   
+
+                                                     n
+
+Tolkning: Vi er (1 - ) · 100 % sikre på at intervallet inneholder den sanne verdien til µ.
+
+Eksempel
+
+Generisk eksempel
+
+Definisjoner: La µ være den sanne forventningsverdien i populasjonen.
+
+Oppgitt: n = 40, x¯ = 48 og kjent  = 5.
+
+Vi skal finne: Et 95 % konfidensintervall for µ.
+
+Anta n = 40 målinger med x¯ = 48, kjent  = 5. Et 95 % konfidensintervall ( = 0,05,
+
+z0,025 = 1,960):
+
+                   48 ± 1,960 · 5 = 48 ± 1,55 = [46,45, 49,55].
+
+                                           40
+
+Vi er 95 % sikre på at den sanne forventningsverdien ligger i dette intervallet.
+
+5.3 Konfidensintervall for µ med ukjent 
+
+Formel
+
+                   X¯  ±                 t/2, n-1  ·   S
+                                                      
+
+                                                        n
+
+Eksempel
+
+Kilde: mai 2023, oppgave 7a
+
+Definisjoner: La µ være sann forventet distanse for smågnagere.
+Oppgitt: n = 12, x¯ = 46,0 og s2 = 116,0.
+Vi skal finne: Et 95 % konfidensintervall for µ.
+For 12 smågnagere er x¯ = 46,0 km og s2 = 116,0. Et 95 % konfidensintervall ( = 0,05,
+ = 11, t0,025,11 = 2,201):
+
+                                                             
+
+                          46,0 ± 2,201 · 116,0 = 46,0 ± 6,84 = [39,16, 52,84].
+
+                                                                  12
+
+(mai 2023, oppgave 7a)
+
+5.4 Konfidensintervall for andel p
+
+Krever np^(1 - p^)  5.
+    Formel
+
+                   p^ ± z/2 ·                 p^(1 - p^)
+
+                                                      n
+
+                                         22
+Eksempel
+
+Kilde: mai 2021, oppgave 4b
+
+Definisjoner: La p være den sanne andelen unge som får kjøpe alkohol. La p^ være andelen
+i utvalget, og la X være antall i utvalget som fikk kjøpe alkohol.
+Oppgitt: n = 1393 og X = 258.
+Vi skal finne: Et 95 % konfidensintervall for p.
+1393 unge sendt inn i butikker, 258 fikk kjøpe alkohol  p^ = 258/1393 = 0,1852. Et 95 %
+KI (z0,025 = 1,960):
+
+        0,1852 ± 1,960 ·  0,1852·0,8148  = 0,1852 ± 0,0204 = [0,1648,  0,2056].
+                                1393
+
+Sjekk forutsetning: 1393 · 0,1852 · 0,8148 = 210,2  5 . (mai 2021, oppgave 4b)
+
+5.5 Konfidensintervall for poissonraten 
+
+Krever t > 10.
+    Formel
+
+                          ^ ± z/2 ·          ^
+                                             t
+
+Eksempel
+
+Kilde: mai 2024, oppgave 3b
+
+Definisjoner: La  være sann rate for antall elektroner per sekund. La X være antall
+observerte elektroner i tidsrommet t.
+Oppgitt: X = 101 elektroner og t = 120 sekunder.
+Vi skal finne: Et 90 % konfidensintervall for poissonraten .
+101 elektroner observert i 120 sek  ^ = 101/120 = 0,842. Et 90 % KI (z0,05 = 1,645):
+
+        0,842 ± 1,645 ·   0,842  = 0,842 ± 0,138 = [0,704,  0,980].
+                           120
+
+(mai 2024, oppgave 3b)
+
+5.6 Konfidensintervall for standardavvik 
+
+Bruker kjikvadratfordelingen.
+
+Formel
+
+                          (n - 1)S2          (n - 1)S2
+                          2/2, n-1 ,         21-/2, n-1
+
+Eksempel
+
+Kilde: mai 2024, oppgave 4b
+Definisjoner: La  være det sanne standardavviket i populasjonen, og la s2 være utvalgs-
+variansen.
+
+                                         23
+Oppgitt: n = 6 og s2 = 7,7667.
+
+Vi skal finne: Et 90 % konfidensintervall for .
+n = 6, s2 = 7,7667. Et 90 % KI ( = 0,1,  = 5, 20,05,5 = 11,07, 02,95,5 = 1,15):
+
+                        5·7,7667  ,  5·7,7667  = [1,87, 5,81].
+                          11,07        1,15
+
+Merk: Den lille kvantilverdien gir den store grensen. (mai 2024, oppgave 4b)
+
+5.7 Antall observasjoner for ønsket konfidensintervall-lengde
+
+For andel p:
+
+    Formel
+                                                n  4p^(1 - p^) · z/2 2
+                                                                        L
+
+    der L er ønsket total lengde av intervallet.
+
+Eksempel
+
+Kilde: mai 2021, oppgave 4c
+
+Definisjoner: La n være antall observasjoner som trengs, og la L være ønsket total lengde
+på konfidensintervallet.
+Oppgitt: p^ = 0,1852, L = 0,02 og z0,025 = 1,960.
+Vi skal finne: Minste nødvendige n.
+p^ = 0,1852, L = 0,02, z0,025 = 1,960:
+
+          n  4 · 0,1852 · 0,8148 ·   1,960     2
+                                     0,02
+                                                 = 5797,3  n = 5798.
+
+(mai 2021, oppgave 4c)
+
+6 Hypotesetesting
+
+6.1 Generell oppskrift
+
+    Fremgangsmåte
+        1. Sett opp H0 (nullhypotese) og H1 (alternativhypotese).
+        2. Velg riktig testobservator basert på datatype og kjent/ukjent .
+        3. Finn kritisk verdi (kvantil) fra tabell, ut fra signifikansnivå  og antall frihetsgrader.
+        4. Regn ut verdien til testobservatoren.
+        5. Sammenlign med kvantilet og konkluder (forkast eller behold H0).
+
+    Forklaring av notasjon:
+    · H0: påstanden vi prøver å motbevise (status quo).
+    · H1: det vi vil vise (det "interessante").
+
+                                                               24
+    · Type I-feil: forkaste H0 når den er sann (sannsynlighet ).
+    · Type II-feil: beholde H0 når den er gal.
+
+6.2 En- og tosidige tester / forkastingsregler
+
+Forkastingsregelen forteller når vi har grunnlag for å forkaste H0. Hvilken regel som gjelder, av-
+henger av hvordan H1 er formulert.
+
+Venstresidig test
+    Formel
+
+                                              H0 : µ  µ0 H1 : µ < µ0
+    Forkast H0 dersom testobservatoren er mindre enn -kvantil:
+
+                                              t < -t,  eller z < -z.
+
+    Idé: Vi prøver å vise at µ er lavere enn µ0. Da må gjennomsnittet x¯ ligge langt under µ0 for
+at vi skal tro på H1. Det gir en testobservator som er sterkt negativ.
+
+    Eksempel
+    Bensinpumpe ­ får jeg for lite bensin? Telleverket viser 5,00 L. Vi mistenker at pumpa
+    gir for lite. 10 målinger: x¯ = 4,974,  = 0,04, µ0 = 5,00,  = 0,05.
+
+                               H0 : µ  5,00 (pumpa er rettferdig eller for raus)
+                                         H1 : µ < 5,00 (pumpa gir for lite)
+                                               z = 4,974 -5,00 = -2,06
+                                                       0,04/ 10
+
+    Kvantil: z0,05 = 1,645. Forkast hvis z < -1,645.
+    Siden -2,06 < -1,645  forkast H0. Pumpa gir signifikant for lite. (jan 2022, oppgave 5a)
+
+Høyresidig test
+    Formel
+
+                                              H0 : µ  µ0 H1 : µ > µ0
+    Forkast H0 dersom testobservatoren er større enn kvantilet:
+
+                                                t > t,  eller z > z.
+
+    Idé: Vi prøver å vise at µ er høyere enn µ0. Da må x¯ ligge langt over µ0. Det gir en testobservator
+som er sterkt positiv.
+
+    Eksempel
+    IT-studenters IQ ­ har de høyere IQ enn 100? Vi måler 5 IT-studenter: x¯ = 111,80,
+    s = 7,791, µ0 = 100,  = 0,05.
+
+                                  H0 : µ  100 (IQ er ikke høyere enn snittet)
+
+                                                               25
+                                 H1 : µ > 100 (IQ er høyere enn snittet)
+
+                                            t = 111,80 -100 = 3,39
+                                                   7,791/ 5
+
+Kvantil:  = 4, t0,05, 4 = 2,132. Forkast hvis t > 2,132.
+Siden 3,39 > 2,132  forkast H0. IT-studentene har signifikant høyere IQ enn 100. (mai
+2021, oppgave 5c)
+
+Tosidig test
+    Formel
+
+                                         H0 : µ = µ0 H1 : µ = µ0
+Forkast H0 dersom absoluttverdien av testobservatoren overstiger /2-kvantilet:
+
+                                        |t| > t/2,  eller |z| > z/2.
+
+    Idé: Vi prøver å vise at µ er forskjellig fra µ0 ­ uten å si i hvilken retning. Da kan både svært
+positive og svært negative testobservatorer føre til forkasting. Vi deler signifikansnivået på 2 (én
+halv på hver side).
+
+Eksempel
+
+Søvn og eksamen ­ er det noen sammenheng? I lineær regresjon tester vi om stig-
+ningstallet er 0 (ingen sammenheng). ^ = 6,63, SE(^) = 0,625, n = 10,  = 0,05.
+
+              H0 :  = 0 (ingen sammenheng)
+
+              H1 :  = 0 (det finnes en sammenheng ­ en eller annen vei)
+
+              t=  6,63   = 10,61
+
+                  0,625
+
+Kvantil:  = n - 2 = 8, t0,025, 8 = 2,306. Forkast hvis |t| > 2,306.
+Siden |10,61| > 2,306  forkast H0. Det finnes en signifikant sammenheng. (mai 2025,
+oppgave 5d)
+
+Tips
+Hvordan velge mellom en- og tosidig? Les spørsmålet:
+
+    · "Er µ større enn/lavere enn/økt/redusert?"  ensidig.
+    · "Er det forskjell på/skiller seg fra?"  tosidig.
+Visuell huskeregel: Tegn en t- eller z-fordeling. Forkastingsområdet ligger på den siden
+H1 peker":
+    · H1 : µ < µ0  forkastingsområde i venstre hale.
+    · H1 : µ > µ0  forkastingsområde i høyre hale.
+    · H1 : µ = µ0  forkastingsområde i begge haler (/2 i hver).
+
+Hvordan velge mellom en- og tosidig? Les spørsmålet:
+
+                  26
+· "Er µ større enn/lavere enn/økt/redusert?"  ensidig.
+· "Er det forskjell på/skiller seg fra?"  tosidig.
+
+6.3 Z-test for forventningsverdi (kjent )
+
+Formel
+
+                        Z = X¯ -µ0  N (0, 1)
+                               / n
+
+Eksempel
+
+Kilde: jan 2025, oppgave 6
+
+Definisjoner: La µ være sann forventet effektbruk for de nye julelysene. Her er µ0 = 50
+verdien vi tester mot i nullhypotesen.
+Oppgitt:  = 5, n = 40, x¯ = 48 og µ0 = 50.
+Vi skal teste: Om de nye julelysene har lavere forventet energiforbruk enn 50 W.
+Komplett gjennomgang ­ venstresidig Z-test: Nye julelys,  = 5 W (kjent), µ0 = 50
+W. Utvalg n = 40 med x¯ = 48.
+1. Hypoteser:
+
+              H0 : µ  50 W (energiforbruk ikke lavere enn standard)
+              H1 : µ < 50 W (energiforbruk lavere)
+
+2. Testobservator: Z-test fordi  er kjent.
+
+                        48 - 50 -2
+                        z=  =                   = -2,53.
+                               5/ 40 0,7906
+
+3. Kvantil: Venstresidig,  = 0,05  z0,05 = 1,645. Forkast hvis z < -1,645.
+4. Konklusjon: -2,53 < -1,645  forkast H0. De nye lysene har lavere energiforbruk.
+5. p-verdi: p = G(-2,53) = 0,0057. Siden p <  bekreftes konklusjonen. (jan 2025, oppgave
+6)
+
+Eksempel
+
+Kilde: mai 2025, oppgave 4b-c
+
+Definisjoner: La µ være sann forventet fyllmengde i en såpebeholder. Her er µ0 = 302 ml
+
+verdien vi tester mot.
+
+Oppgitt:  = 5, n = 6 og x¯ = 298,67.
+
+Vi skal teste: Om forventet fyllmengde er lavere enn 302 ml.
+
+Z-test som ikke gir forkasting: Såpebeholder,  = 5 ml, µ0 = 302 ml. Utvalg n = 6 med
+
+x¯ = 298,67.            z = 298,67- 302 = -1,63.
+                                  5/ 6
+
+Venstresidig,  = 0,05  z0,05 = 1,645. Siden -1,63 > -1,645 kan vi ikke forkaste H0.
+p-verdi: p = G(-1,63) = 0,0516. Akkurat over  = 0,05 ­ "på grensen". (mai 2025, oppgave
+4b-c)
+
+                                            27
+6.4 T-test for forventningsverdi (ukjent )
+
+Formel
+
+                                       T  =     X¯ -µ0       tn-1
+                                                S/ n
+
+    Når  er ukjent må vi estimere standardavviket fra dataene ved hjelp av utvalgsstandard-
+avviket:
+
+Formel
+
+            S2 = 1       n                   =    1       n                             
+                   n-1                          n-1                               S = S2
+                           (Xi - X¯ )2                       Xi2 - nX¯ 2 ,
+
+                         i=1                              i=1
+
+Navn på størrelsene:
+· S2 er utvalgsvariansen (engelsk: sample variance). Den estimerer populasjonsvariansen 2.
+· S er utvalgsstandardavviket.
+· Faktoren n - 1 kalles Bessels korreksjon ­ en frihetsgrad er brukt opp av at vi regnet ut X¯ .
+Eksempel
+
+Kilde: mai 2021, oppgave 5c
+
+Definisjoner: La µ være sann forventet IQ blant IT-studenter.
+Data: 111, 102, 121, 107, 118.
+Vi skal teste: Om forventet IQ er høyere enn 100. Populasjonsstandardavviket  er ukjent,
+derfor bruker vi t-test med utvalgsstandardavviket s.
+Komplett gjennomgang ­ høyresidig T-test: 5 IT-studenters IQ:
+111, 102, 121, 107, 118. Test om forventningsverdien er høyere enn 100 ( = 0,05).
+1. Hypoteser:
+
+                                        H0 : µ  100, H1 : µ > 100.
+
+2. Regn ut x¯:
+
+                  x¯  =  1  (111  +  102  +  121  +  107  +  118)  =  559  =  111,80.
+                         5                                             5
+
+3. Regn ut  xi2:
+
+x2i = 1112 +1022 +1212 +1072 +1182 = 12 321+10 404+14 641+11 449+13 924 = 62 739.
+
+4. Regn ut utvalgsvariansen s2:
+
+s2 = 1      xi2 - nx¯2        = 1 62 739 - 5 · 111,802            62 739 - 62 496,20 242,80
+       n-1                       4                             =                       =     = 60,70.
+                                                                           4              4
+
+5. Utvalgsstandardavviket:
+
+                                       s = 60,70 = 7,791.
+
+6. Testobservator:
+
+                         t  =  x¯ -µ0  =  111,80 - 100       =  11,80  =   3,39.
+                                                    
+                               s/ n 7,791/ 5 3,485
+
+7. Kvantil og konklusjon:  = n-1 = 4, t0,05, 4 = 2,132. Høyresidig: forkast hvis t > 2,132.
+Siden t = 3,39 > 2,132 forkastes H0. IT-studentenes IQ er signifikant høyere enn 100. (mai
+2021, oppgave 5c)
+
+                                                     28
+Eksempel
+
+Kilde: mai 2024, oppgave 4a
+
+Definisjoner: La µ være sann forventet kadmiumverdi i fiskene.
+Data: 42, 50, 47, 47, 48, 49.
+Vi skal teste: Om µ < 50.
+Komplett gjennomgang ­ venstresidig T-test: Kadmium-måling i 6 fisker:
+42, 50, 47, 47, 48, 49. Test om µ < 50 ( = 0,05).
+1. Hypoteser:
+
+                                          H0 : µ  50, H1 : µ < 50.
+
+2. Gjennomsnitt:
+
+                        x¯   =  1  (42   +  50  +  47  +  47  +  48  +  49)  =  283  =  47,17.
+                                6                                                6
+
+3. Sum av kvadratene:
+
+                        xi2 = 1764 + 2500 + 2209 + 2209 + 2304 + 2401 = 13 387.
+
+4. Utvalgsvariansen:
+
+            s2   =  1   (13  387   -  6  ·  47,172)  =  1  (13  387  -  13 348,17)   =  38,83  =  7,767.
+                    5                                   5                                 5
+
+5. Utvalgsstandardavvik:
+
+                                                s = 7,767 = 2,787.
+
+6. Testobservator:                    t = 47,17 -50 = -2,83 = -2,49.
+                                            2,787/ 6 1,138
+
+7. Konklusjon:  = 5, t0,05, 5 = 2,015. Venstresidig: forkast hvis t < -2,015. Siden -2,49 <
+-2,015 forkastes H0. (mai 2024, oppgave 4a)
+
+Tips
+
+Slik regner du ut s2 raskt med kalkulator:
+
+1. Regn ut x¯ først.
+
+2. Regn ut x2i ved å kvadrere hver verdi og summere.
+
+3.    Sett  inn  i  s2  =    1  (     xi2 - nx¯2).
+                           n-1
+
+                             
+4. Ta kvadratrot: s = s2.
+
+Sjekk: Hvis x2i -nx¯2 blir negativ, har du gjort en regnefeil ­ summen kan aldri bli negativ.
+
+6.5 Paret t-test
+
+Bruk når man har observasjoner i par (f.eks. før/etter, eller to målinger på samme individ). La
+Di = Xi - Yi.
+
+Formel
+
+                                                           D¯
+                                                T  =                 tn-1
+                                                       SD/ n
+
+                                                           29
+Når bruke paret vs. uparet?
+
+· Paret: samme individ målt to ganger (f.eks. før og etter behandling).
+· Uparet: to uavhengige grupper (f.eks. to forskjellige klasser).
+
+Eksempel
+
+Kilde: mai 2022, oppgave 4
+
+Definisjoner: La Di være differansen i blodsukker for pasient i: Di = føri - etteri. Hvis
+Di > 0, betyr det at blodsukkeret gikk ned etter inntak av lurium.
+Vi skal teste: Om forventet differanse µD er større enn 0.
+Komplett gjennomgang ­ paret t-test: Blodsukker hos 4 pasienter før og etter inntak
+av lurium:
+
+                              Pasient                1234
+
+                              Før                  17,1 20,9 16,0 24,3
+
+                              Etter                15,2 18,7 15,5 20,2
+
+                              D (før-etter) 1,9 2,2 0,5 4,1
+
+1. Hypoteser:
+
+           H0 : µD  0 (blodsukker ikke redusert), H1 : µD > 0 (redusert).
+
+2. Regn ut d¯ og sD:          d¯ =
+
+                                      1  (1,9  +  2,2   +  0,5  +  4,1)  =  2,175
+                                      4
+
+sD2     =  1  (1,92  +  2,22  +  0,52    +  4,12  -  4  ·  2,1752)  =    1  (25,51  -  18,9225)  =  2,1958.
+           3                                                             3
+
+3. Testobservator:                          2,175             2,175
+
+                                 t=                        =           = 2,94.
+                                            2,1958/4 0,7407
+
+4. Kvantil og konklusjon:  = n-1 = 3, t0,05,3 = 2,353. Høyresidig: forkast hvis t > 2,353.
+Siden 2,94 > 2,353 forkastes H0. Lurium gir signifikant lavere blodsukker. (mai 2022,
+oppgave 4)
+
+6.6 Uparet t-test (to grupper)
+
+Bruk når to uavhengige grupper med ukjent (men antatt likt) standardavvik skal sammenlignes.
+
+Formel
+
+                                               X¯ - Y¯
+                              T=               1/nX + 1/nY  tnX +nY -2
+                                    SP
+
+                                 SP2   =    (nX   - 1)SX2 + (nY - 1)SY2
+                                                     nX + nY - 2
+
+Eksempel
+
+Kilde: mai 2023, oppgave 7b
+
+Definisjoner: La µX være forventet distanse for smågnagere i Rondane, og la µY være
+forventet distanse for smågnagere i Jotunheimen.
+Oppgitt: nX = 12, x¯ = 46,0, sX2 = 116,0, nY = 14, y¯ = 52,8 og s2Y = 82,6.
+
+                                                        30
+Vi skal teste: Om Jotunheimen-gruppen har større forventet distanse enn Rondane-
+
+gruppen.
+Smågnagere fra to fjellområder: Rondane nX = 12, x¯ = 46,0, sX2 = 116,0. Jotunheimen
+nY = 14, y¯ = 52,8, sY2 = 82,6. Test om Jotunheimen-gruppen har større forventet distanse
+( = 0,05).
+
+                        s2P  =  11 · 116 + 13  · 82,6  =  2349,8   =  97,91
+                                          24                24
+
+                        t=      46,0 - 52,8               = -1,75
+
+                                97,91 · 1/12 + 1/14
+
+ = 24, t0,05,24 = 1,711. Vi har venstresidig test: forkast hvis t < -1,711. Siden -1,75 <
+-1,711 forkastes H0. (mai 2023, oppgave 7b)
+
+6.7 Test for andel p
+
+Krever np0(1 - p0)  5.
+    Formel
+
+                                Z = X - np0  N (0, 1)
+                                         np0(1 - p0)
+
+Eksempel
+
+Kilde: mai 2023, oppgave 6c
+
+Definisjoner: La p være sann andel nyfødte med tengilis sinistra. La X være antall nyfødte
+med tilstanden i utvalget.
+Oppgitt: X = 24, n = 4231 og p0 = 0,0035.
+Vi skal teste: Om p > p0.
+24 av 4231 nyfødte med tengilis sinistra. Test om p > p0 = 0,0035 ( = 0,1, z0,1 = 1,282):
+
+          z  =   24 - 4231 · 0,0035       =  9,19      =  2,39  >  1,282     forkast  H0.
+                  4231 · 0,0035 · 0,9965       14,76
+
+(mai 2023, oppgave 6c)
+
+6.8 p-verdi (signifikanssannsynlighet)
+
+p-verdien er den minste  vi kunne valgt og fortsatt forkastet H0.
+Forkast H0 dersom p-verdi  .
+
+    Tips
+
+    For en venstresidig test med observator z er p-verdi = G(z).
+    For en høyresidig test: p-verdi = 1 - G(z).
+    For en tosidig test: p-verdi = 2 · min{G(z), 1 - G(z)}.
+
+    Eksempel
+
+    Kilder: jan 2022, oppgave 5b; sept 2022, oppgave 4b
+
+                                               31
+Definisjoner: p-verdien er sannsynligheten, gitt at H0 er sann, for å få en testobservator
+minst like ekstrem som den observerte.
+Z-test: Bensinpumpe-test gir z = -2,06. Slår vi opp i tabellen for standardnormalfordelin-
+gen finner vi p = G(-2,06) = 0,0197.
+
+    · Med  = 0,05: p <   forkast H0.
+
+    · Med  = 0,01: p >   behold H0.
+
+(jan 2022, oppgave 5b)
+T-test (overslag): pH-måling i innsjø gir t = 0,583 med  = 4. Tabellen viser t0,25,4 = 0,741.
+Siden 0,583 < 0,741 er p > 0,25. Vi kan ikke forkaste H0 for noen rimelig . (sept 2022,
+oppgave 4b)
+
+7 Ikke-parametriske tester
+
+7.1 Når brukes ikke-parametriske tester?
+
+Bruk dem når data ikke kan antas å være normalfordelt, f.eks. kategoriske data eller små utvalg
+uten kjent fordeling.
+
+7.2 Mann-Whitney-Wilcoxon (uparet)
+
+Fremgangsmåte
+
+1. Slå sammen og sorter alle observasjoner; gi rangnummer.
+
+2. Beregn rangsum W for én av gruppene (typisk minste).
+
+3.  Regn  ut  testobservator  U  =W    -  n1  (n1  +1)  .
+                                                2
+
+4. Slå opp kritisk verdi u,n1,n2.
+
+5. Forkast H0 dersom U  kritisk verdi.
+
+Eksempel
+
+Kilde: jan 2022, oppgave 6
+
+Definisjoner: La gruppe X være observasjonene for stoff X, og la gruppe Y være observa-
+sjonene for stoff Y . Rangsum WY er summen av rangene til observasjonene i gruppe Y , og
+U er testobservatoren i Mann-Whitney-Wilcoxon-testen.
+Vi skal teste: Om det er forskjell mellom de to uavhengige gruppene.
+Stoff X: 5,7, 7,3, 7,6, 6,0, 6,5. Stoff Y : 4,9, 7,4, 5,3, 4,6, 6,2. Test for forskjell,  = 0,05.
+Sortert (med gruppe og rang):
+
+              Verdi 4,6 4,9 5,3 5,7 6,0 6,2 6,5 7,3 7,4 7,6
+              Gruppe Y Y Y X X Y X X Y X
+              Rang 1 2 3 4 5 6 7 8 9 10
+
+WY  = 1 + 2 + 3 + 6 + 9 = 21  (minste  rangsum),        u  =  21  -  5·6  = 6. Kritisk verdi  u0,05,5,5 = 2.
+                                                                      2
+
+Siden u = 6 > 2 kan vi ikke forkaste H0. Tankegang: Stor forskjell på gruppene gir liten
+
+W og dermed liten U . Forkast hvis U er tilstrekkelig liten. (jan 2022, oppgave 6)
+
+                                                   32
+7.3 Wilcoxon paret test
+
+    Fremgangsmåte
+
+        1. Regn ut differanser Di.
+
+        2. Drop Di = 0. Sorter resterende etter |Di| og gi rangnummer.
+
+        3. Tildel samme gjennomsnittsrang ved like verdier.
+
+        4. Beregn W + (sum av rang for positive Di) og W -.
+
+        5. Bruk minste, W = min(W +, W -).
+
+        6. Forkast H0 dersom W  kritisk verdi.
+
+    Eksempel
+
+    Kilde: mai 2022, oppgave 6
+    Definisjoner: La Di være differansen mellom de to rangeringsverdiene for student i. W +
+    er summen av rangene for positive differanser, og W - er summen av rangene for negative
+    differanser.
+    Vi skal teste: Om det er systematisk forskjell mellom de to parede målingene.
+    10 studenter rangerte forholdet til mor og far (skala 1­5). Differansene blir:
+    -2, 0, 1, -1, -1, 3, -1, -2, 0, 1.
+    Vi dropper de to differansene som er 0 og sorterer resten etter |D|. De fem første har |D| = 1
+    (rang 1 + 2 + 3 + 4 + 5)/5 = 3). To har |D| = 2 (rang (6 + 7)/2 = 6,5). Én har |D| = 3 (rang
+    8).
+
+                 W - = 3 + 3 + 3 + 6,5 + 6,5 = 22, W + = 3 + 3 + 8 = 14  W = 14.
+    n = 8,  = 0,1 tosidig, kritisk verdi k = 5. Siden W = 14 > 5 kan vi ikke forkaste H0.
+    (mai 2022, oppgave 6)
+
+8 Variansanalyse (ANOVA)
+
+8.1 Enveis variansanalyse
+
+Brukes når man skal sammenligne forventningsverdiene til k  3 grupper.
+                                 H0 : µ1 = µ2 = · · · = µk, H1 : ikke alle like
+
+8.2 Sums-of-squares og testobservator
+
+Formel
+
+                        k                         k ni
+
+        SSG = ni(y¯i - y¯)2,           SSE =            (yij - y¯i)2
+
+                      i=1                      i=1 j=1
+
+        SG2  =  SSG                    SE2  =  SSE
+                       ,                       n-k
+
+                k-1
+
+             F  =         SG2          Fk-1, n-k
+                          SE2
+
+                               33
+Forkast H0 hvis F > F, k-1, n-k.
+
+Tips
+
+Her betyr k antall grupper, ni antall observasjoner i gruppe i, n totalt antall observasjoner,
+y¯i gjennomsnittet i gruppe i, y¯ gjennomsnittet for alle observasjonene samlet, SSG variasjon
+mellom gruppene, SSE variasjon innad i gruppene, SG2 middelkvadrat mellom grupper, og
+SE2 middelkvadrat innen grupper.
+
+Eksempel
+
+Kilde: mai 2024, oppgave 6
+
+Definisjoner: La k være antall grupper, og la n være totalt antall observasjoner. Her sam-
+menlignes tre leverandører, så k = 3.
+Oppgitt: n = 15, SSG = 12,13 og SSE = 29,2.
+Vi skal teste: Om de tre leverandørene har lik forventningsverdi.
+3 leverandører, 5 målinger fra hver (n = 15, k = 3). Oppgitt: SSG = 12,13, SSE = 29,2.
+Test ( = 0,05):
+
+                    SG2                =  12,13  =  6,065
+                                          3-1
+
+                    SE2                =   29,2   =  2,433
+                                          15 - 3
+
+                    F=                    6,065  = 2,49
+
+                                          2,433
+
+Frihetsgrader 1 = 2, 2 = 12, F0,05,2,12 = 3,8853. Siden F = 2,49 < 3,8853 kan vi ikke
+forkaste H0. (mai 2024, oppgave 6)
+
+9 Lineær regresjon
+
+9.1 Empirisk korrelasjonskoeffisient
+
+Formel
+
+          r=        (xi - x¯)(yi - y¯) , -1  r  1
+                    (xi - x¯)2 · (yi - y¯)2
+
+r2 tolkes som andelen av variasjonen i y som forklares av x.
+
+Eksempel
+
+Kilde: mai 2022, oppgave 5a
+
+Definisjoner: La x være temperatur, og la y være strømforbruk. Den empiriske korrela-
+sjonskoeffisienten r måler styrken på den lineære sammenhengen mellom x og y.
+Vi skal finne: Korrelasjonen r mellom temperatur og strømforbruk.
+Temperatur (x) og strømforbruk (y): x¯ = 3, y¯ = 60. Ferdig-utregnet:
+
+          (xi - x¯)(yi - y¯) = -1667,     (xi - x¯)2 = 746,  (yi - y¯)2 = 3778.
+
+                              -1667
+                    r =   = -0,993.
+
+                            746 · 3778
+
+                                          34
+Tolkning: Sterk negativ lineær sammenheng ­ høyere temperatur gir lavere strømforbruk.
+(mai 2022, oppgave 5a)
+
+9.2 Estimering av regresjonslinjen y^ = ^ + ^x
+
+Formel
+
+                            ^ =     (xi  - x¯)(yi -  y¯)  ,  ^ = y¯ - ^ x¯
+                                         (xi - x¯)2
+
+Eksempel
+
+Kilde: mai 2022, oppgave 5b
+Definisjoner: Vi ønsker å estimere en lineær modell på formen
+
+                                         y^ = ^ + ^x.
+
+Her er y^ predikert strømforbruk, x er temperatur, ^ er estimert konstantledd, og ^ er estimert
+stigningstall.
+Vi skal finne: Den estimerte regresjonslinjen.
+Med samme tall som over:
+
+                        ^ = -1667 = -2,235, ^ = 60 - (-2,235) · 3 = 66,7.
+                                746
+
+                                         y^ = 66,7 - 2,235 x
+
+(mai 2022, oppgave 5b)
+
+9.3 Variansestimat og standardfeil
+
+Formel
+
+                         SSE =         (yi - ^ - ^xi)2,       SE2  =  SSE
+                                                                      n-2
+
+                                       SE(^) =         SE2
+                                                     (xi - x¯)2
+
+Eksempel
+
+Kilde: sept 2022, oppgave 5c
+
+Definisjoner: La SSE være summen av kvadrerte residualer, SE2 være residualvariansen,
+og SE(^) være standardfeilen til estimert stigningstall.
+Oppgitt: n = 10, SSE = 26,859 og (xi - x¯)2 = 2086,9.
+Vi skal finne: SE2 og SE(^).
+Hvilepuls vs. alder: n = 10, SSE = 26,859, (xi - x¯)2 = 2086,9.
+
+          SE2            =  26,859  =  3,357,   SE(^) =          3,357   =  0,040.
+                               8                                 2086,9
+
+(sept 2022, oppgave 5c)
+
+                                                35
+9.4 Hypotesetest for stigningstall ( = 0)
+
+Formel
+
+                                        T  =   ^ - 0      tn-2
+                                               SE(^)
+
+Tosidig test: forkast H0 :  = 0 hvis |t| > t/2, n-2.
+Eksempel
+
+Kilde: mai 2025, oppgave 5d
+
+Definisjoner: La  være det sanne stigningstallet i regresjonsmodellen.
+Vi skal teste: Om det finnes en lineær sammenheng mellom søvn og eksamensresultat, altså
+H0 :  = 0 mot H1 :  = 0.
+Søvn vs. eksamensresultat: ^ = 6,63, SE(^) = 0,625, n = 10,  = 0,05.
+
+                                           t=  6,63   = 10,61.
+
+                                               0,625
+
+ = 8, t0,025,8 = 2,306. Siden |t| = 10,61 > 2,306 forkastes H0 ­ det er en signifikant lineær
+sammenheng. (mai 2025, oppgave 5d)
+
+9.5 Konfidensintervall for forventningsverdien E(Y ) ved gitt x
+
+Formel
+
+                                                       1            x - x¯     2
+
+                         ^ + ^x ± t/2, n-2 · s ·         +      s/SE(^)
+                                                       n
+
+Eksempel
+
+Kilde: sept 2022, oppgave 5e
+
+Definisjoner: La x være alder og Y være hvilepuls. Her finner vi et konfidensintervall for
+
+forventet hvilepuls når x = 35.      s  =             SE(^)  =  0,040,  x¯  =  41,9,  n  =  10.
+Oppgitt: ^ = 69,22, ^ = 0,114,               3,357,
+
+Vi skal finne: Et konfidensintervall for       E(Y ) når  x  = 35.             =  1,832,    SE(^)  =  0,040,
+Hvilepuls for 35-åringer: ^ = 69,22, ^         = 0,114,   s   = 3,357
+
+x¯ = 41,9, n = 10, t0,05,8 = 1,860.
+
+69,22 + 0,114 · 35 ± 1,860 · 1,832 ·           1   +     35-41,9    2
+                                               10      1,832/0,040
+                                                                      = 73,2 ± 1,2 = [72,0, 74,4].
+
+(sept 2022, oppgave 5e)
+
+                                                   36
+9.6 Prediksjonsintervall for ny y ved gitt x
+
+Formel
+
+                                                          1     x - x¯  2
+                                                     1+ +      s/SE(^)
+          ^ + ^x ± t/2, n-2 · s ·
+                                                          n
+
+    Forskjell fra KI: ekstra "1+" under rota tar høyde for variasjonen til en enkelt ny observasjon,
+ikke bare forventningsverdien.
+
+Eksempel
+
+Kilde: jan 2026, oppgave 6
+
+Definisjoner: La x være antall timer søvn, og la y være eksamensresultat. Her predikerer
+vi én ny observasjon ved x = 5.
+Oppgitt: ^ = 34,6, ^ = 6,63, s = 2,4684, SE(^) = 0,625, x¯ = 6,8, n = 10.
+Vi skal finne: Et prediksjonsintervall for eksamensresultatet til én student med 5 timers
+søvn.
+Eksamensresultat ved 5 timers søvn: ^ = 34,6, ^ = 6,63, s = 2,4684, SE(^) = 0,625, x¯ = 6,8,
+n = 10, t0,025,8 = 2,306.
+
+34,6 + 6,63 · 5 ± 2,306 · 2,4684 ·  1  +  1   +      5-6,8     2
+                                          10     2,4684/0,625
+                                                                 = 67,75 ± 6,51 = [61,24, 74,26].
+
+Konklusjon: 75 % er ikke i intervallet  usannsynlig at en student med 5 timers søvn får
+75 % eller bedre. (jan 2026, oppgave 6)
+
+9.7 Multippel lineær regresjon
+
+Modell: y^ = ^0 + ^1x1 + · · · + ^kxk.
+    Tips
+
+    Tolkning av output:
+        · p-verdi for hver koeffisient: lav p-verdi  variabelen bidrar signifikant.
+        · Konfidensintervall som inneholder 0  variabelen kan fjernes.
+        · R2: andelen av variasjonen i y som forklares av modellen.
+
+    Eksempel
+
+    Kilde: mai 2021, oppgave 6
+    Definisjoner: La y være NOx-utslipp, x1 luftfuktighet, x2 temperatur og x3 trykk. Koeffi-
+    sientene ^0, ^1, ^2, ^3 er estimerte regresjonskoeffisienter.
+    Vi skal tolke: Hvilke forklaringsvariabler som bidrar signifikant, og hva R2 betyr.
+    NOx-utslipp som funksjon av luftfuktighet (x1), temperatur (x2), trykk (x3):
+
+                                 y^ = -3,4872 - 0,0026x1 + 0,0014x2 + 0,1543x3
+
+    Tolkning av output:
+        · Luftfuktighet: p = 0,001  behold (sterkt signifikant).
+
+                                                 37
+        · Temperatur: p = 0,705, KI = [-0,006, 0,009] inneholder 0  fjern.
+        · Trykk: p = 0,147, ikke signifikant  fjern.
+    R2 = 0,800 betyr at 80 % av variasjonen i NOx forklares av modellen. (mai 2021, oppgave
+    6)
+
+10 Hurtigreferanse: Hvilken test/metode skal jeg bruke?
+
+10.1 Sannsynlighet av hendelser
+
+    · Like sannsynlige utfall?  Gunstige/mulige.
+    · "Eller"/union?  P (A  B)-formelen.
+    · "Gitt at"?  Betinget sannsynlighet.
+    · Snu betingelsen?  Bayes' setning.
+    · Flere disjunkte tilfeller som dekker alt?  Total sannsynlighet.
+
+10.2 Hvilken fordeling?
+
+    · "Antall vellykkede av n"?  Binomisk.
+    · "Antall hendelser i tidsrom"?  Poisson.
+    · "Ventetid til neste hendelse"?  Eksponential.
+    · "Sum av mange uavhengige"?  Sentralgrenseteoremet  Normal.
+
+10.3 Hvilken hypotesetest?
+
+    · Én gruppe, kjent ?  Z-test.
+    · Én gruppe, ukjent ?  T-test.
+    · To grupper i par (før/etter)?  Paret t-test.
+    · To uavhengige grupper?  Uparet t-test.
+    · Tre eller flere grupper?  Enveis ANOVA (F-test).
+    · Andel?  Z-test for p.
+    · Ikke normalfordelte data, par?  Wilcoxon paret.
+    · Ikke normalfordelte data, uavhengige?  Mann-Whitney-Wilcoxon.
+    · Lineær sammenheng?  T-test for  = 0.
+
+10.4 Hvilket konfidensintervall?
+
+    · For µ, kjent ?  z/2 og .
+    · For µ, ukjent ?  t/2, n-1 og S.
+    · For p?  z/2, krev np^(1 - p^)  5.
+    · For ?  z/2, krev t > 10.
+    · For ?  Kjikvadrat 2 /2, n-1 og 21-/2, n-1.
+
+                                                               38
+11 Oversikt over eksamensoppgaver
+
+Tabellen nedenfor viser hvilke temaer som dekkes i hvilken eksamen, slik at du raskt kan finne et
+lignende eksempel.
+
+Eksamen Temaer / oppgavetyper
+
+jan 2022   Sannsynlighet (uavhengighet, betinget) ­ Poisson + ventetid ­ Si-
+           multanfordeling + sentralgrenseteoremet ­ Binomisk ­ Z-test +
+sept 2022  p-verdi ­ T-test ­ Mann-Whitney-Wilcoxon
+
+mai 2021   Disjunkt/uavhengig + betinget ­ Binomisk ­ Poisson + normal-
+           tilnærming + KI for  ­ T-test + p-verdi ­ Lineær regresjon + KI
+mai 2022   for forventningsverdi
+mai 2023
+mai 2024   Uavhengighet ­ Total ssh + Bayes ­ Simultanfordeling + korrela-
+mai 2025   sjon ­ Andel p (KI + test) ­ Normalfordeling ­ T-test ­ Uparet
+           t-test ­ Multippel lineær regresjon
+jan 2025
+jan 2026   Disjunkt/uavhengig ­ Total ssh + Bayes ­ T-test ­ KI for  ­
+           Paret t-test ­ Lineær regresjon ­ Paret Wilcoxon
+
+           Disjunkt/uavhengig ­ Utvalgsvarians ­ Diskret fordeling ­ Sentral-
+           grenseteoremet ­ Eksponential + Bayes ­ Andel p ­ Uparet t-test
+
+           Bayes (komplement) ­ Lineære transformasjoner ­ Poisson + KI ­
+           T-test ­ KI for  ­ Lineær regresjon ­ ANOVA
+
+           Simultanfordeling + korrelasjon ­ Bayes/De Morgan ­ Binomisk
+           + KI for p ­ Normalfordeling + Z-test ­ Lineær regresjon + hy-
+           potesetest for 
+
+           Kombinatorikk ­ Diskret fordeling ­ Bayes/total ssh ­ Poisson +
+           KI ­ Normalfordeling ­ Z-test
+
+           Sannsynlighet ­ Simultanfordeling/korrelasjon ­ Bayes ­ Poisson
+           + KI ­ Uparet t-test ­ Lineær regresjon (prediksjonsintervall)
+
+12 Tabeller og kvantiler ­ viktige verdier
+
+12.1 Standardnormalfordelingens kvantiler z
+
+                                 0,10 0,05 0,025 0,01 0,005 0,001
+                                z 1,282 1,645 1,960 2,326 2,576 3,090
+
+12.2 Sammenheng signifikansnivå og konfidensnivå
+
+Et (1 - ) · 100 % konfidensintervall:  = 0,10  90 %,  = 0,05  95 %,  = 0,01  99 %.
+
+13 Tips for eksamensoppgaver
+
+    Tips
+    Generelle tips:
+
+        · Definer alltid hendelsene tidlig (f.eks. "D: viser tegn på demens").
+        · Skriv opp formel før du setter inn tall ­ gir uttelling i sensur.
+
+           39
+        · Husk å begrunne valg av fordeling og test.
+        · Sjekk antall frihetsgrader: n - 1 for én-utvalgs t-test, nX + nY - 2 for uparet, n - 2 for
+
+           regresjon, k - 1 og n - k for ANOVA.
+        · Konkluder alltid på norsk med hva resultatet betyr i kontekst.
+
+    Tips
+    Vanlige feilkilder:
+
+        · Glemme komplement: P (X  1) = 1 - P (X = 0).
+        · Forveksle betinget rekkefølge: P (A | B) = P (B | A).
+        · Bruke  når den er ukjent (skal være S, da t-fordeling).
+        · Glemme heltallskorreksjon i normaltilnærming for diskret fordeling.
+        · Sammenligne testobservator med feil fortegn (venstre- vs. høyresidig).
+        · Bruke variansen istedenfor standardavviket i konfidensintervall for .
+
+14 Type I- og Type II-feil
+
+    Formel
+        · Type I-feil (): Forkaste H0 selv om den er sann ("falsk alarm").
+        · Type II-feil (): Beholde H0 selv om den er gal ("overser sannheten").
+        · Styrke (power): 1 - . Sannsynligheten for å oppdage en reell effekt.
+        · Signifikansnivå:  kontrollerer Type I-feil direkte. Lavere   vanskeligere å forkaste
+           H0  høyere  (lavere styrke).
+
+    Tips
+    Hvilket signifikansnivå bør du velge? Det avhenger av konsekvensene:
+
+        · Type I-feil får alvorlige konsekvenser?  velg lite  (f.eks. 0,01).
+        · Type II-feil får alvorlige konsekvenser?  velg større  (f.eks. 0,10).
+        · Eksempelvis vil et lite  være riktig hvis man dømmer noen i rettsak (ikke dømme
+
+           uskyldig), mens et stort  er riktig hvis man tester for en farlig sykdom (ikke overse).
+    (mai 2021, oppgave 4d ­ diskusjon av valg av )
+
+15 Statistisk programmering (Python)
+
+I emnet "Statistikk og statistisk programmering" kan eksamen også be om kode. Her er de viktigste
+mønstrene fra numpy, pandas og scipy.stats.
+
+                                                               40
+

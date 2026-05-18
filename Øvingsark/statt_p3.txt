@@ -1,0 +1,461 @@
+15.1 Standard-imports
+
+    Fremgangsmåte
+
+    import numpy as np
+    import pandas as pd
+    from scipy import stats
+    import matplotlib.pyplot as plt
+
+15.2 Lese inn data
+
+    Fremgangsmåte
+
+    # Vanlig CSV
+    df = pd.read_csv('data.csv')
+
+    # CSV med semikolon og norsk desimal-komma
+    df = pd.read_csv('data.csv', sep=';', decimal=',')
+
+    # Fil med anforselstegn rundt tallene -- bruk converters for aa fjerne dem
+    import numpy as np
+    data = np.genfromtxt('fil.csv', delimiter=',', skip_header=1,
+
+                                     usecols=(2,),
+                                     converters={2: lambda s: float(s.decode().replace('"',''))})
+
+    # Hent en kolonne som numpy-array
+    x = df['kolonne_navn'].values
+
+15.3 Deskriptiv statistikk
+
+Fremgangsmåte
+
+np.mean(x)     # gjennomsnitt
+
+np.median(x)          # median
+
+np.std(x, ddof=1) # utvalgsstandardavvik (ddof=1 viktig!)
+
+np.var(x, ddof=1) # utvalgsvarians
+
+np.min(x), np.max(x)
+
+np.quantile(x, 0.25) # 1. kvartil
+
+Tips
+
+Pass paa ddof ! np.std(x) bruker n i nevneren (populasjons-std), men i statistikk vil vi
+nesten alltid ha utvalgs-std med n - 1. Bruk derfor np.std(x, ddof=1).
+
+15.4 Sannsynlighetsfunksjoner
+
+Normalfordeling
+    Fremgangsmåte
+
+    # P(X <= x) for X ~ N(mu, sigma)
+    stats.norm.cdf(x, loc=mu, scale=sigma)
+
+                                     41
+# Tetthet f(x)
+stats.norm.pdf(x, loc=mu, scale=sigma)
+
+# Inverse: finn x slik at P(X <= x) = q (kvantil)
+stats.norm.ppf(q, loc=mu, scale=sigma)
+
+# Standardnormalfordelingens kvantil z_alpha
+
+z_alpha = stats.norm.ppf(1 - alpha)          # ensidig
+
+z_alpha2 = stats.norm.ppf(1 - alpha/2) # tosidig
+
+Binomisk fordeling
+    Fremgangsmåte
+
+    # P(X = k)
+    stats.binom.pmf(k, n, p)
+
+    # P(X <= k)
+    stats.binom.cdf(k, n, p)
+
+    # P(X >= k) = 1 - P(X <= k-1)
+    1 - stats.binom.cdf(k-1, n, p)
+
+Poissonfordeling
+    Fremgangsmåte
+
+    # P(X = k) der mu = lambda * t
+    stats.poisson.pmf(k, mu)
+
+    # P(X <= k)
+    stats.poisson.cdf(k, mu)
+
+Eksponentialfordeling
+
+Fremgangsmåte
+
+# scipy bruker scale = 1/lambda     # P(T <= t)
+stats.expon.cdf(t, scale=1/lam)
+stats.expon.pdf(t, scale=1/lam)
+
+t-fordeling og kjikvadrat
+
+    Fremgangsmåte
+
+    # t-kvantil (tosidig): t_(alpha/2, df)
+    stats.t.ppf(1 - alpha/2, df=n-1)
+
+    # Kjikvadrat-kvantiler for KI for sigma
+    stats.chi2.ppf(alpha/2, df=n-1)
+    stats.chi2.ppf(1 - alpha/2, df=n-1)
+
+                                     42
+15.5 Hypotesetester
+
+Z-test og t-test
+    Fremgangsmåte
+    # 1-utvalgs t-test (tosidig)
+    t_stat, p_val = stats.ttest_1samp(data, popmean=mu0)
+
+    # Ensidig variant -- halver p-verdien og sjekk fortegn paa t_stat:
+    if t_stat < 0: # venstresidig test
+
+          p_one = p_val / 2
+    else:
+
+          p_one = 1 - p_val / 2
+
+    # Paret t-test
+    t, p = stats.ttest_rel(foer, etter)
+
+    # Uparet t-test (Welch -- ulikt sigma)
+    t, p = stats.ttest_ind(gruppe1, gruppe2, equal_var=False)
+
+    # Uparet t-test (antatt likt sigma -- som i pensum)
+    t, p = stats.ttest_ind(gruppe1, gruppe2, equal_var=True)
+
+ANOVA og ikke-parametriske tester
+    Fremgangsmåte
+    # Enveis ANOVA
+    F, p = stats.f_oneway(gruppe1, gruppe2, gruppe3)
+
+    # Mann-Whitney-Wilcoxon (uparet)
+    U, p = stats.mannwhitneyu(x, y, alternative='two-sided')
+
+    # Wilcoxon paret
+    W, p = stats.wilcoxon(x, y)
+
+15.6 Korrelasjon og regresjon
+
+    Fremgangsmåte
+    # Empirisk korrelasjon (Pearson) + p-verdi for H0: rho=0
+    r, p_val = stats.pearsonr(x, y)
+
+    # Enkel lineaer regresjon (en uavhengig variabel)
+    slope, intercept, r, p, se = stats.linregress(x, y)
+    # slope = beta_hat, intercept = alfa_hat, se = SE(beta_hat)
+
+    # Multippel regresjon -- bruk statsmodels for full output
+    import statsmodels.api as sm
+    X = sm.add_constant(np.column_stack([x1, x2, x3]))
+    model = sm.OLS(y, X).fit()
+
+                                                               43
+    print(model.summary()) # gir t, p, KI for hver koeffisient + R^2
+
+15.7 Konfidensintervall
+
+    Fremgangsmåte
+
+    # KI for mu med ukjent sigma (t-fordeling)
+    n = len(data)
+    xbar = np.mean(data)
+    s = np.std(data, ddof=1)
+    t_crit = stats.t.ppf(1 - alpha/2, df=n-1)
+    lower = xbar - t_crit * s / np.sqrt(n)
+    upper = xbar + t_crit * s / np.sqrt(n)
+
+    # KI for andel p
+    phat = X / n
+    z = stats.norm.ppf(1 - alpha/2)
+    margin = z * np.sqrt(phat*(1-phat)/n)
+    lower, upper = phat - margin, phat + margin
+
+15.8 Plotting
+
+    Fremgangsmåte
+
+    # Spredningsplott med regresjonslinje
+    plt.scatter(x, y, label='data')
+    slope, intercept, *_ = stats.linregress(x, y)
+    plt.plot(x, intercept + slope*x, 'r-', label=f'y={intercept:.2f}+{slope:.2f}x')
+    plt.xlabel('x'); plt.ylabel('y'); plt.legend(); plt.grid(True)
+    plt.show()
+
+    # Histogram med normalfordeling overlagt
+    plt.hist(data, bins=15, density=True, alpha=0.6)
+    xs = np.linspace(min(data), max(data), 200)
+    plt.plot(xs, stats.norm.pdf(xs, np.mean(data), np.std(data,ddof=1)))
+    plt.show()
+
+    Tips
+
+    Praktiske raad for Python paa eksamen:
+        · Sjekk alltid om scipy bruker scale eller rate: stats.expon bruker scale=1/lambda.
+        · Bruk ddof=1 naar du regner ut utvalgsvarians/standardavvik.
+        · Tosidige tester gir tosidig p-verdi som standard. Halver for ensidig (og sjekk retning).
+        · Print mellom-resultater under utvikling ­ print(xbar, s, t_crit) ­ saa er det enk-
+           lere aa feilsoeke.
+        · Sammenligne resultatet av stats.norm.ppf(0.95) med tabellverdien z0,05 = 1,645 for
+           aa bekrefte at retningen er riktig.
+
+                                                               44
+16 Tillegg: ekstra pensumpunkter lagt til
+
+Dette tillegget er lagt inn uten å fjerne faginnholdet som allerede lå i dokumentet. Eksemplene er
+kildemerket med øving/eksamen og oppgavenummer.
+
+16.1 Verdimengde, punktsannsynlighet og fordelingsfunksjon
+
+For en diskret stokastisk variabel er verdimengden alle verdier variabelen kan anta. Punktsann-
+synligheten er P (X = x), mens fordelingsfunksjonen summerer alle sannsynligheter opp til og
+med x.
+
+    Formel
+
+                                         F (x) = P (X  x) = P (X = t)
+
+                                                                                               tx
+
+Eksempel
+
+Kilde: Øving 2, oppgave 1a-c
+
+Definisjoner: La X være antall røde kuler som trekkes. Verdimengden VX er alle mulige
+verdier X kan få.
+Oppgitt: Urnen har 5 røde og 2 grønne kuler. Vi trekker 2 kuler.
+Vi skal finne: Verdimengden, punktsannsynlighetene og fordelingsfunksjonen til X.
+I en urne er det 5 røde og 2 grønne kuler. Vi trekker 2 kuler og lar X være antall røde kuler.
+Da er verdimengden
+
+                                                  VX = {0, 1, 2}.
+
+Sannsynlighetsfordelingen blir
+
+          P (X = 0) =      25       1      P (X = 1) =  25      10
+                           20   =,                      11   =,
+
+                             7     21                     7     21
+
+                           2                            2
+
+                           P (X = 2) =     25      10
+                                           02   =.
+
+                                             7     21
+
+                                           2
+
+Fordelingsfunksjonen blir
+
+                     1                   1 10 11        F (2) = 1.
+          F (0) = ,           F (1) = + = ,
+
+                    21                  21 21 21
+
+16.2 Diskret sannsynlighetshistogram og kumulativ fordeling
+
+Et sannsynlighetshistogram viser punktsannsynlighetene P (X = x) som stolper. Den kumulative
+fordelingsfunksjonen F (x) viser summen av sannsynlighetene fra venstre mot høyre.
+
+    Eksempel
+
+    Kilde: Øving 2, oppgave 3
+    Definisjoner: La X være antall systemsvikt kommende uke.
+    Oppgitt: Sannsynlighetsfordelingen til X er gitt i tabellen.
+    Vi skal finne: Forventningsverdi, varians, standardavvik og sannsynligheten P (X > 2).
+
+                                       45
+La X være antall systemsvikt kommende uke, med sannsynlighetsfordelingen
+
+                        x     01234
+
+                        P (X = x) 0,45 0,31 0,14 0,07 0,03
+
+Forventningsverdien er
+
+          E(X) = 0 · 0,45 + 1 · 0,31 + 2 · 0,14 + 3 · 0,07 + 4 · 0,03 = 0,92.
+
+Videre er
+               E(X2) = 02 · 0,45 + 12 · 0,31 + 22 · 0,14 + 32 · 0,07 + 42 · 0,03 = 1,98,
+
+slik at                                                    = 1,1336 = 1,06.
+        Var(X) = E(X2) - E(X)2 = 1,98 - 0,922 = 1,1336,
+
+Sannsynligheten for mer enn 2 systemsvikt er
+
+          P (X > 2) = P (X = 3) + P (X = 4) = 0,07 + 0,03 = 0,10.
+
+16.3 Geometrisk fordeling
+
+X  Geom(p) brukes når X er antall forsøk frem til første suksess. Dette krever uavhengige
+delforsøk, samme sannsynlighet p hver gang og to mulige utfall i hvert delforsøk.
+
+Formel
+
+                        P (X = x) = p(1 - p)x-1, x = 1, 2, 3, . . .
+
+                        1                     1-p      =      1-p
+          E(X) = ,            Var(X) = p2 ,                    p2
+                     p
+
+                              P (X  x) = 1 - (1 - p)x
+
+Eksempel
+
+Kilde: Øving 3, oppgave 5a-g
+
+Definisjoner: La X være antall terningkast frem til første ener. En "suksess" betyr å få ener.
+Oppgitt: Sannsynligheten for ener i ett kast er p = 1/6.
+Vi skal finne: Punktsannsynlighet, forventningsverdi, varians, standardavvik og hvor mange
+kast som trengs for minst 99 % sannsynlighet for minst én ener.
+I terningsspillet "ener" lar vi X være antall kast frem til første ener. Her er p = 1/6, og X er
+geometrisk fordelt.
+Sannsynligheten for at første ener kommer i tredje kast er
+
+                           1  1 3-1 1 5 2 25
+          P (X = 3) = 1 -                     =      = = 0,116.
+                           6  6                  66      216
+
+Forventningsverdien er                   11
+                              E(X) = = = 6.
+
+                                         p 1/6
+
+                                 46
+Variansen og standardavviket er
+
+                  1 - p 5/6                                      
+    Var(X) = p2 = (1/6)2 = 30,                               = 30 = 5,48.
+
+Sannsynligheten for å ha fått minst én ener innen x kast er
+
+                                 P (X  x) = 1 -  5x         .
+
+                                                 6
+
+For å finne hvor mange kast som trengs for at sannsynligheten skal være minst 0,99, løser vi
+
+1-  5x   0,99                        5x   0,01  x               ln(0,01)   25,3.
+
+    6                                6                          ln(5/6)
+
+Vi må derfor kaste minst 26 ganger.
+
+16.4 Normaltilnærming for binomisk fordeling med heltallskorreksjon
+
+Hvis X  Bin(n, p) og n er stor nok, kan vi bruke normaltilnærming
+                                                X  N (np, np(1 - p)).
+
+Siden binomisk fordeling er diskret og normalfordelingen er kontinuerlig, brukes ofte heltallskor-
+reksjon.
+
+    Formel
+
+                                                                  k + 0,5 - np
+                                           P (X  k)  G
+
+                                                                     np(1 - p)
+                                                                    k + 0,5 - np
+                                         P (X > k)  1 - G
+
+                                                                        np(1 - p)
+
+Eksempel
+
+Kilde: Øving 4, oppgave 1c-d
+
+Definisjoner: La Y være totalt antall seksere i 300 terningkast.
+Oppgitt: For hvert kast er sannsynligheten for sekser p = 1/6.
+Vi skal finne: Sannsynligheten P (Y > 55) ved normaltilnærming med heltallskorreksjon.
+En terning kastes 10 ganger, og forsøket gjentas 30 ganger. Totalt har vi da i praksis 300
+terningkast, og Y er antall seksere totalt. For hvert kast er p = 1/6, så
+
+                     1                                      15
+       µY = 300 · 6 = 50,                Y =     300 · · = 6,455.
+                                                        66
+
+Sannsynligheten for at antall seksere overstiger 55 blir med heltallskorreksjon
+
+P (Y > 55)  1 - G  55 + 0,5 - 50         = 1 - G(0,85) = 1 - 0,8023 = 0,198.
+
+                                 6,455
+
+Uten heltallskorreksjon ville svaret blitt mindre presist.
+
+                                         47
+16.5 Styrkefunksjon og Type II-feil
+
+Styrkefunksjonen () er sannsynligheten for å forkaste H0 for ulike sanne parameterverdier .
+    Formel
+
+                                           () = P (forkast H0 |  er sann)
+                                                      () = 1 - ()
+
+Her er () sannsynligheten for Type II-feil når den sanne parameterverdien er .
+
+Eksempel
+
+Kilde: Øving 5, oppgave 1d-e
+
+Definisjoner: La µ være sann fettprosent i kjøttdeig. Styrkefunksjonen (µ) er sannsynlig-
+heten for å forkaste H0 når den sanne verdien er µ.
+Oppgitt:  = 3, n = 9 og  = 0,05.
+Vi skal finne: Forkastingsgrensen og styrken for ulike sanne verdier av µ.
+Vanlig kjøttdeig skal ikke inneholde mer enn 14 % fett. Vi tester
+
+                                        H0 : µ  14, H1 : µ > 14,
+med kjent  = 3, n = 9 og  = 0,05. Forkastingsgrensen for utvalgsgjennomsnittet er
+
+                                                               3
+                                        k = 14 + 1,645 ·  = 15,645.
+
+                                                                9
+Styrken for en gitt sann verdi µ blir
+
+               (µ) = P (X¯  15,645 | µ) = 1 - G  15,645 - µ  .
+                                                       
+                                                 3/ 9
+
+For eksempel:
+
+(14) = 0,050, (15) = 1 - G(0,645) = 0,258, (16) = 1 - G(-0,355) = 0,638.
+
+Jo større den sanne verdien av µ er over grensen 14, desto større blir sannsynligheten for at
+testen faktisk forkaster H0.
+
+16.6 Python: punktsannsynlighet og fordelingsfunksjon i samme plott
+
+Dette er nyttig når du vil se både P (X = x) og F (x) = P (X  x) for en diskret fordeling.
+    Fremgangsmåte
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import scipy.stats as stats
+
+    n = int(input('Antall forsok? '))
+    p = float(input('Sannsynlighet i hvert forsok? '))
+
+    x = np.arange(n + 1)
+    plt.plot(x, stats.binom.pmf(x, n, p), 'o--', label='P(X=x)')
+
+               48
+plt.plot(x, stats.binom.cdf(x, n, p), 'o-', label='F(x)=P(X<=x)')
+plt.xlabel('x')
+plt.ylabel('Sannsynlighet')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+                                                          49
+
