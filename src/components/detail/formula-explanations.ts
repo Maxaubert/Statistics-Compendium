@@ -5716,4 +5716,498 @@ For enkel lineær regresjon: \`r² = SSR / SST = 1 − SSE / SST\`.
       ],
     },
   ],
+  "paret-t-test": [
+    {
+      id: "differanser",
+      name: "Differanser fra paret design",
+      abbreviation: "D_i",
+      formula: "D_i = X_i − Y_i",
+      short: `Trikset som reduserer to målinger per enhet til ett tall per enhet — etterpå er det bare en én-utvalg t-test på \`D\`-ene.`,
+      long: `Hjertet av paret t-test er ikke en ny test, men en **transformasjon**: vi bytter ut to kolonner \`(X_i, Y_i)\` med ett tall per enhet — differansen \`D_i = X_i − Y_i\`. Etter den endringen er problemet identisk med en én-utvalg t-test på differansene.
+
+## Hvorfor virker dette?
+
+Hver enhet (person, prøve, dag) har sitt eget nivå. Forskjellen i blodtrykk mellom Anna og Bjørn er ikke interessant — det vi vil vite er hvor mye blodtrykket til **hver enkelt** endret seg fra før til etter behandling. Differansen \`D_i\` isolerer akkurat den endringen og fjerner all variasjon mellom personer.
+
+> [!read] D_i = X_i − Y_i
+> Ett tall per par, ikke to. Variasjon mellom enheter (Anna vs. Bjørn) forsvinner; vi sitter igjen med variasjonen i **endring** (før/etter).
+
+## Hvorfor er testen kraftigere?
+
+Hvis \`X\` og \`Y\` er positivt korrelert (samme person scorer høyt før OG etter), blir \`Var(D) = Var(X) + Var(Y) − 2·Cov(X, Y)\` mindre enn både \`Var(X)\` og \`Var(Y)\`. Standardfeilen krymper, \`T\` blir større, og terskel-overskridelse blir lettere. En to-utvalgs-test på samme tall ville antatt at variansene var uavhengige og bommet på paringen.
+
+## Fortegnskonvensjon
+
+Velg én rekkefølge og hold på den hele oppgaven:
+
+- \`D_i = før − etter\` ⇒ positive \`D\` betyr at verdien sank
+- \`D_i = etter − før\` ⇒ positive \`D\` betyr at verdien steg
+
+Bytter du underveis, snur \`H₁\`-retningen.
+
+## Konkret
+
+For 8 pasienter med blodsukker før vs etter behandling, regn \`D_1 = 5.4 − 4.8 = 0.6\`, \`D_2 = 6.1 − 5.4 = 0.7\`, ... og bruk så \`D\`-ene (åtte tall) som om de var et helt vanlig én-utvalgs datasett.
+`,
+      see_also: [
+        { kind: "glossary", id: "paret-test" },
+        { kind: "entry", id: "en-utvalg-t-test" },
+        { kind: "entry", id: "utvalgsvarians-radata" },
+      ],
+    },
+    {
+      id: "paret-t-observator",
+      name: "Paret t-observator",
+      abbreviation: "T",
+      formula: "T = D̄ / (S_D/√n)   |   ν = n − 1",
+      short: `Én-utvalgs t-observator regnet på differansene. T-fordelt med \`n − 1\` frihetsgrader under \`H₀\`.`,
+      long: `Etter at vi har redusert problemet til ett tall per par (\`D_i = X_i − Y_i\`), er testobservatoren akkurat den vi kjenner fra én-utvalgs t-test — bare med \`D\` der vi før hadde \`X\`.
+
+> [!read] T = D̄ / (S_D/√n)
+> «Gjennomsnittlig endring delt på endringens standardfeil.» Sammenlignes med t-kvantilen på \`ν = n − 1\` frihetsgrader.
+
+## Tellere og nevnere
+
+- **\`D̄ = Σ D_i / n\`** — gjennomsnittlig observert differanse. Hvis \`H₀: μ_D = 0\` er sann, ligger \`D̄\` typisk nær \`0\`.
+- **\`S_D² = Σ(D_i − D̄)² / (n − 1)\`** — utvalgsvariansen til differansene. Regnes på \`D\`-ene, ikke på \`X\` eller \`Y\` hver for seg. Bessels korreksjon (\`n − 1\` i nevneren) tar høyde for at \`D̄\` allerede er estimert fra dataene.
+- **\`S_D/√n\`** — estimert standardfeil. Sammenlign med \`σ/√n\` i z-tester; eneste forskjell er at vi bruker estimert \`S_D\` siden \`σ_D\` nesten aldri er kjent i paret oppsett.
+
+## Hvorfor \`ν = n − 1\` og ikke \`2n − 2\`?
+
+Hver enhet bidrar med ÉN observasjon — differansen. Du har \`n\` differanser, \`S_D\` koster én frihetsgrad, så \`ν = n − 1\`. Det er fristende å tenke "totalt antall målinger \`− 2\`", men det gjelder to-utvalgs t-test der målingene faktisk er uavhengige.
+
+## Test mot Δ₀ ≠ 0
+
+Hvis oppgaven sammenligner med en annen referansedifferanse enn \`0\` (f.eks. "sank vekta med MER enn 2 kg"), bytt ut nullen i telleren:
+
+    T = (D̄ − Δ₀) / (S_D/√n)
+
+Alt annet er likt.
+`,
+      see_also: [
+        { kind: "glossary", id: "t-fordeling" },
+        { kind: "glossary", id: "frihetsgrader-glos" },
+        { kind: "glossary", id: "utvalgsstandardavvik" },
+        { kind: "entry", id: "en-utvalg-t-test" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+    {
+      id: "paret-venstre",
+      name: "Venstresidig paret t-test (H₁: μ_D < 0)",
+      abbreviation: "Venstre",
+      formula: "Forkast H₀ hvis T < −t_(α, ν)   |   ν = n − 1",
+      short: `Ensidig venstresidig: forkast når \`T\` er tilstrekkelig negativ. Brukes når oppgaven sier «\`Y > X\` i snitt» eller «verdien sank».`,
+      long: `Venstresidig paret t-test svarer på "ble \`Y\` i snitt større enn \`X\`?" Med \`D = X − Y\` betyr det \`μ_D < 0\`. Forkastningsområdet ligger i venstre hale av t-fordelingen med \`ν = n − 1\` frihetsgrader.
+
+## Kritisk verdi og forkastningsområde
+
+> [!read] Forkast \`H₀\` hvis \`T < −t_(α, ν)\`
+> Du slår opp den positive t-kvantilen i tabell E.5 og setter et minustegn foran. For \`α = 0.05\`, \`ν = 9\`: \`t_(0.05, 9) ≈ 1.833\`, grense \`−1.833\`.
+
+Forkastningsområdet er \`(−∞, −t_(α, ν))\`. Positive \`T\`-verdier forkaster aldri — de peker i feil retning.
+
+## p-verdi
+
+> [!read] \`p = P(T < t_obs)\` med \`ν\` frihetsgrader
+> Med tabell rapporterer du et intervall: «\`p < 0.025\`» når \`|T| > t_(0.025, ν)\`.
+
+## Når brukes denne fanen?
+
+Frasering som gir venstresidig på \`D = X − Y\`:
+
+- "Sank blodtrykket etter behandling?" (\`X = før\`, \`Y = etter\`)
+- "Var \`Y\` i snitt høyere enn \`X\`?"
+- "Reduserte tiltaket målingen?"
+
+Hvis du heller skrev \`D = Y − X\`, blir samme oppgave høyresidig — speilbilde.
+`,
+      see_also: [
+        { kind: "glossary", id: "t-fordeling" },
+        { kind: "glossary", id: "ensidig-test" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+    {
+      id: "paret-hoyre",
+      name: "Høyresidig paret t-test (H₁: μ_D > 0)",
+      abbreviation: "Høyre",
+      formula: "Forkast H₀ hvis T > +t_(α, ν)   |   ν = n − 1",
+      short: `Ensidig høyresidig: forkast når \`T\` er tilstrekkelig positiv. «Steg verdien?», «virket behandlingen?».`,
+      long: `Høyresidig paret t-test svarer på "ble \`X\` i snitt større enn \`Y\`?" Med \`D = X − Y\` betyr det \`μ_D > 0\`. Forkastningsområdet ligger i høyre hale av t-fordelingen.
+
+## Kritisk verdi og forkastningsområde
+
+> [!read] Forkast \`H₀\` hvis \`T > +t_(α, ν)\`
+> Slå opp den positive t-kvantilen. For \`α = 0.05\`, \`ν = 9\`: \`t_(0.05, 9) ≈ 1.833\`, grense \`+1.833\`.
+
+Forkastningsområdet er \`(t_(α, ν), ∞)\`. Negative \`T\`-verdier forkaster aldri.
+
+## p-verdi
+
+> [!read] \`p = P(T > t_obs)\` med \`ν\` frihetsgrader
+> Med tabell: «\`0.01 < p < 0.025\`» når \`t_(0.025, ν) < T < t_(0.01, ν)\`.
+
+## Eksamen mai22 — lurium-eksempelet
+
+Ti pasienter målte blodsukker før og etter lurium. \`D_i = før − etter\` har \`D̄ = 0.53\`, \`S_D ≈ 0.22\`, \`n = 10\`, \`ν = 9\`. Senking av blodsukker ⇒ \`før > etter\` ⇒ høyresidig på \`μ_D\`.
+
+    T = 0.53 / (0.22 / √10) ≈ 7.57
+    Kritisk verdi: t_(0.05, 9) ≈ 1.833
+    Forkast — sterkt: lurium senker blodsukkeret i snitt.
+`,
+      see_also: [
+        { kind: "glossary", id: "t-fordeling" },
+        { kind: "glossary", id: "ensidig-test" },
+        { kind: "glossary", id: "alternativhypotese" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+    {
+      id: "paret-tosidig",
+      name: "Tosidig paret t-test (H₁: μ_D ≠ 0)",
+      abbreviation: "Tosidig",
+      formula: "Forkast H₀ hvis |T| > t_(α/2, ν)   |   ν = n − 1",
+      short: `Tosidig: del \`α\` på to og bruk \`t_(α/2, ν)\` på begge haler. Når ingen retning er antydet på forhånd.`,
+      long: `Tosidig paret t-test fordeler \`α\` likt på begge halene av t-fordelingen. Brukes når oppgaven spør «er det noen forskjell?» uten å låse retningen på forhånd.
+
+## Kritisk verdi og forkastningsområde
+
+> [!read] Forkast \`H₀\` hvis \`|T| > t_(α/2, ν)\`
+> Pass på halveringen av \`α\`. For \`α = 0.05\`, \`ν = 8\`: \`t_(0.025, 8) ≈ 2.306\`.
+
+Forkastningsområdet er todelt: \`(−∞, −t_(α/2, ν)) ∪ (t_(α/2, ν), ∞)\`. Den klassiske feilen er å bruke \`t_(α, ν)\` i stedet for \`t_(α/2, ν)\` — det halverer effektivt nivået og gir for liberalt forkast.
+
+## p-verdi
+
+> [!read] \`p = 2·P(T > |t_obs|)\` med \`ν\` frihetsgrader
+> Doble den ensidige sannsynligheten siden begge haler teller.
+
+## Sammenheng med KI for \`μ_D\`
+
+> [!tip] Tosidig forkasting ⇔ 0 utenfor KI
+> Et tosidig \`95 %\` KI for \`μ_D\` som ikke inneholder \`0\` er ekvivalent med tosidig forkasting på \`α = 0.05\`. KI-fanen og tosidig-test-fanen gir alltid samme konklusjon.
+`,
+      see_also: [
+        { kind: "glossary", id: "tosidig-test" },
+        { kind: "glossary", id: "konfidensintervall" },
+        { kind: "entry", id: "ki-mu-og-varians" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+  ],
+  "geometrisk-fordeling": [
+    {
+      id: "pmf",
+      name: "Punktsannsynlighet",
+      abbreviation: "PMF",
+      formula: "P(X = k) = p · (1 − p)^(k−1)",
+      short: `Sannsynligheten for å lykkes EKSAKT på forsøk nr. \`k\` — \`k − 1\` fiasker etterfulgt av én suksess.`,
+      long: `Punktsannsynligheten for den geometriske fordelingen kommer rett fra hva «første suksess på forsøk nr. \`k\`» betyr: de \`k − 1\` første må være FIASKO, og det \`k\`-te må være SUKSESS.
+
+> [!read] P(X = k) = p · (1 − p)^(k−1)
+> Én faktor \`p\` for suksessen på det siste forsøket, og \`k − 1\` faktorer \`(1 − p)\` for fiaskoene før.
+
+## Hvordan utlede den
+
+Forsøkene er uavhengige og identiske, så sannsynligheten for en spesifikk sekvens FFFFS (fire fiasker, så suksess) er produktet av faktorene:
+
+    P(FFFFS) = (1−p)·(1−p)·(1−p)·(1−p)·p = p·(1−p)^4
+
+For \`X = k\` finnes det BARE én sekvens som gir denne hendelsen — \`k − 1\` fiasker etterfulgt av en suksess — så vi trenger ingen binomialkoeffisient.
+
+## Forenklinger
+
+- \`P(X = 1) = p\` (suksess på første forsøk, ingen fiasker)
+- Forholdet \`P(X = k+1) / P(X = k) = 1 − p\` — punktene faller geometrisk med faktoren \`1 − p\` for hver \`k\`. Det er denne geometriske avtakingen som har gitt fordelingen navnet sitt.
+
+## Konkret
+
+Med terning og første sekser (\`p = 1/6\`, \`k = 3\`):
+
+    P(X = 3) = (1/6) · (5/6)² = (1/6) · 25/36 ≈ 0.116
+`,
+      see_also: [
+        { kind: "glossary", id: "bernoulli-forsoek" },
+        { kind: "glossary", id: "sannsynlighetsfordeling" },
+        { kind: "entry", id: "binomial-fordeling" },
+      ],
+    },
+    {
+      id: "cdf",
+      name: "Kumulativ fordelingsfunksjon",
+      abbreviation: "CDF",
+      formula: "P(X ≤ k) = 1 − (1 − p)^k",
+      short: `Sannsynligheten for å lykkes INNEN \`k\` forsøk. Lukket form — bruker komplement av «\`k\` fiasker på rad».`,
+      long: `Den kumulative fordelingsfunksjonen har en spesielt ren form for geometrisk fordeling, fordi komplementet \`P(X > k)\` er lett å regne direkte.
+
+> [!read] P(X ≤ k) = 1 − (1 − p)^k
+> «Sannsynligheten for å lykkes minst én gang i \`k\` forsøk er én minus sannsynligheten for å bomme alle \`k\` gangene.»
+
+## Hvorfor virker komplementtrikset?
+
+For å ha \`X > k\` (første suksess kommer ETTER forsøk nr. \`k\`), må alle de \`k\` første være FIASKO:
+
+    P(X > k) = (1 − p)^k
+
+Da blir den kumulative fordelingen bare komplementet:
+
+    P(X ≤ k) = 1 − P(X > k) = 1 − (1 − p)^k
+
+Alternativet — å summere PMF-en \`Σ p·(1−p)^(i−1)\` for \`i = 1, ..., k\` — gir samme svar, men er mer arbeid.
+
+## De tre vanlige uttrykkene
+
+Som for eksponentialfordelingen kan nesten alle sannsynligheter skrives via to byggesteiner:
+
+- \`P(X ≤ k) = 1 − (1 − p)^k\` (suksess innen \`k\` forsøk)
+- \`P(X > k) = (1 − p)^k\` (overlevelse, ingen suksess på \`k\` første)
+- \`P(a ≤ X ≤ b) = (1 − p)^(a−1) − (1 − p)^b\` (intervall, via differanse)
+
+> [!tip] Lær \`P(X > k) = (1 − p)^k\` som refleks; det dekker hele halen og brukes også til hukommelsesløshet-formelen.
+
+## Egenskaper du kan sjekke
+
+- \`P(X ≤ 0) = 0\` (du må gjøre minst ett forsøk)
+- \`P(X ≤ 1) = p\` (suksess akkurat på første forsøk)
+- \`P(X ≤ ∞) = 1\` (du lykkes til slutt, gitt \`p > 0\`)
+`,
+      see_also: [
+        { kind: "glossary", id: "kumulativ" },
+        { kind: "entry", id: "komplementregelen" },
+        { kind: "entry", id: "eksponential-fordeling" },
+      ],
+    },
+    {
+      id: "memoryless",
+      name: "Hukommelsesløshet",
+      abbreviation: "Memoryless",
+      formula: "P(X > s + t | X > s) = P(X > t)",
+      short: `Etter \`s\` mislykkede forsøk er fordelingen for «hvor mange flere» identisk med å starte fra null. Eneste DISKRETE fordeling med denne egenskapen.`,
+      long: `Den geometriske fordelingen er den ENESTE diskrete fordelingen som er hukommelsesløs. Egenskapen sier at hvor lenge du allerede har ventet ikke påvirker fordelingen for hvor mye lenger du må vente.
+
+> [!read] P(X > s + t | X > s) = P(X > t)
+> «Gitt at suksessen ennå ikke har kommet etter \`s\` forsøk, er sannsynligheten for å vente \`t\` til den samme som om vi nettopp startet.»
+
+## Bevis i én linje
+
+Med \`P(X > k) = (1 − p)^k\` følger det direkte fra definisjonen av betinget sannsynlighet:
+
+    P(X > s + t | X > s) = P(X > s + t) / P(X > s)
+                         = (1 − p)^(s+t) / (1 − p)^s
+                         = (1 − p)^t = P(X > t)
+
+## Intuisjon
+
+Forsøkene er uavhengige. Terningen «husker» ikke at den har vist tre seks-er på rad eller fire ikke-seks-er på rad. Hvert nytt kast har sannsynlighet \`p = 1/6\` for sekser, uansett historie.
+
+> [!note] Det finnes IKKE en «turnaround-effekt»
+> Mange tror intuitivt at jo lenger du har ventet, jo MER sannsynlig er det at suksess kommer snart. Det er feil for hukommelsesløse fordelinger — sannsynligheten for å vente videre er nøyaktig den samme som om du startet på nytt.
+
+## Den kontinuerlige analogen
+
+Eksponentialfordelingen \`T ~ Exp(λ)\` har samme egenskap: \`P(T > s + t | T > s) = P(T > t) = e^(−λt)\`. Sammen utgjør geometrisk og eksponential «de to hukommelsesløse» — én diskret, én kontinuerlig.
+
+## Konkret
+
+Du har kastet en terning 5 ganger uten sekser. Sannsynligheten for at det går minst 3 kast TIL før neste sekser:
+
+    P(X > 8 | X > 5) = P(X > 3) = (5/6)³ ≈ 0.579
+`,
+      see_also: [
+        { kind: "glossary", id: "hukommelsesloshet" },
+        { kind: "glossary", id: "betinget-sannsynlighet-glos" },
+        { kind: "entry", id: "eksponential-fordeling" },
+      ],
+    },
+  ],
+  "hypotesefeil-og-styrke": [
+    {
+      id: "alpha",
+      name: "Type I-feil (α)",
+      abbreviation: "α",
+      formula: "α = P(forkast H₀ | H₀ sann)",
+      short: `Sannsynligheten for å forkaste \`H₀\` selv om den er sann — falsk alarm. Signifikansnivået, satt av oss på forhånd.`,
+      long: `Type I-feil er den feilen vi gjør når vi tror vi har funnet noe som ikke er der. Sannsynligheten er nøyaktig signifikansnivået \`α\` — det er den ene parameteren i en hypotesetest vi har full kontroll på.
+
+> [!read] α = P(forkast H₀ | H₀ sann)
+> «Andelen sanne nullhypoteser som vi (feilaktig) forkaster.» Settes typisk til \`0.05\`, \`0.01\` eller \`0.001\` avhengig av kostnaden.
+
+## Hvorfor er denne kontrollerbar?
+
+Forkastningsregelen («forkast hvis \`X̄ > k\`») bestemmer hvor stor \`α\` blir. Hvis vi vil ha eksakt \`α = 0.05\`, velger vi \`k\` slik at \`P(X̄ > k | H₀ sann) = 0.05\`. For én-utvalg z-test gir det \`k = μ₀ + z_{0.05}·σ/√n\`. \`α\` er altså et **designvalg**, ikke noe vi måler.
+
+## Trade-off mot Type II
+
+Senker du \`α\` (strenger krav for å forkaste), flytter du kritisk grense bort fra \`μ₀\`. Det reduserer falske alarmer — men ØKER sannsynligheten \`β\` for å overse en ekte effekt. \`α\` og \`β\` er ikke komplementære (de gjelder under forskjellige antakelser), men de bytter mot hverandre når \`n\` er fast.
+
+> [!tip] Eneste «gratis lunsj»: øk \`n\`
+> Større utvalg gir smalere fordeling, så både \`α\` (fastholdt) og \`β\` blir bedre uten at du må ofre noe annet enn datainnsamlingen.
+
+## Konvensjoner
+
+- \`α = 0.05\` — standard i naturfag, samfunnsfag, medisinsk forskning
+- \`α = 0.01\` eller \`0.001\` — der Type I-feil er kostbar (legemiddel, rettsapparat)
+- \`α = 0.10\` — der Type II er verre (screening, brannvarsler)
+- I høyrisiko-felt (partikkelfysikk) brukes \`5σ\` ≈ \`α = 3·10⁻⁷\` for å motvirke multiple testing
+`,
+      see_also: [
+        { kind: "glossary", id: "type-1-feil" },
+        { kind: "glossary", id: "signifikansniva-glos" },
+        { kind: "glossary", id: "alpha" },
+        { kind: "glossary", id: "nullhypotese" },
+      ],
+    },
+    {
+      id: "beta",
+      name: "Type II-feil (β(θ))",
+      abbreviation: "β",
+      formula: "β(θ) = P(behold H₀ | sann verdi = θ)",
+      short: `Sannsynligheten for å overse en ekte effekt — beholde \`H₀\` når \`H₁\` faktisk er sann. Avhenger av hvor langt \`θ\` ligger fra \`μ₀\`.`,
+      long: `Type II-feil er den feilen vi gjør når vi ikke ser noe som faktisk er der. I motsetning til \`α\` er \`β\` IKKE et enkelt tall — den avhenger av hvor langt den sanne verdien \`θ\` ligger fra grenseverdien \`μ₀\` i \`H₀\`.
+
+> [!read] β(θ) = P(behold H₀ | sann verdi = θ)
+> «Sannsynligheten for å overse effekten» — funksjon av sann \`θ\`. Den må regnes under DEN FORDELINGEN som gjelder når \`H₁\` er sann med \`μ = θ\`.
+
+## Beregning for én-utvalg z-test (høyresidig)
+
+Forkastningsregelen er \`X̄ > k\` der \`k = μ₀ + z_α·σ/√n\`. Type II-feil = «behold», altså \`X̄ ≤ k\`. Vi standardiserer i fordelingen under \`μ = θ\` (ikke \`μ = μ₀\`):
+
+    β(θ) = P(X̄ ≤ k | μ = θ) = G((k − θ)/(σ/√n))
+
+Klassisk feil: å bruke \`(k − μ₀)/(σ/√n)\` i nevneren — det blander sammen fordelingen vi regner i.
+
+## Sjekkpunkter
+
+- **\`θ = μ₀\`** (på grenseverdien): \`β(μ₀) = 1 − α\`. Sanity-sjekk hvis du regner ut og får noe annet.
+- **\`θ\` langt fra \`μ₀\` (i \`H₁\`-retning)**: \`β(θ) → 0\`. Stort avvik er lett å oppdage.
+- **\`θ\` langt fra \`μ₀\` (i feil retning)**: \`β(θ) → 1\`. Vi forkaster aldri en høyresidig test når sannheten ligger langt under \`μ₀\`.
+
+## Hvorfor er \`β\` en funksjon?
+
+Type I gjelder under én bestemt fordeling (\`H₀\` sann ⇒ \`μ = μ₀\`), så \`α\` er ett tall. Type II gjelder under hele \`H₁\`-området, og fordelingen flytter seg med \`θ\`. Hvis du ikke spesifiserer \`θ\`, har spørsmålet «hva er β?» ikke et entydig svar.
+
+## Tosidig variant
+
+For tosidig test med kritiske grenser \`k_1 < k_2\`:
+
+    β(θ) = G((k_2 − θ)/(σ/√n)) − G((k_1 − θ)/(σ/√n))
+
+Begge halene må telles med — vanlig fallgruve er å glemme den lille halen på «feil» side.
+`,
+      see_also: [
+        { kind: "glossary", id: "type-2-feil" },
+        { kind: "glossary", id: "beta" },
+        { kind: "glossary", id: "alternativhypotese" },
+        { kind: "glossary", id: "kritisk-verdi" },
+      ],
+    },
+    {
+      id: "gamma",
+      name: "Styrkefunksjon γ(θ)",
+      abbreviation: "γ(θ)",
+      formula: "γ(θ) = 1 − β(θ) = P(forkast H₀ | sann verdi = θ)",
+      short: `Sannsynligheten for å oppdage et avvik. Plottet som funksjon av \`θ\` — kurven viser hvor god testen er for ulike sanne verdier.`,
+      long: `Styrkefunksjonen er det «positive perspektivet» på Type II: i stedet for å spørre «hva er sjansen for å overse effekten», spør vi «hva er sjansen for å oppdage den». De to henger sammen som komplement.
+
+> [!read] γ(θ) = 1 − β(θ)
+> «Testens evne til å forkaste \`H₀\` når sannheten faktisk er \`θ\`.» For \`θ\` i \`H₁\`-området er dette positivt etterlysningsbart; for \`θ\` i \`H₀\`-området er det \`≤ α\` (vi forkaster ikke noe vi ikke skal).
+
+## Beregning for høyresidig z-test
+
+    γ(θ) = 1 − G((k − θ)/(σ/√n))
+
+eller, hvis du foretrekker den ekvivalente formen med \`z_α\` direkte:
+
+    γ(θ) = 1 − G(z_α − (θ − μ₀)·√n/σ)
+
+## Kurveform
+
+Plot \`γ(θ)\` mot \`θ\`:
+
+- **Ensidig test**: S-formet. Starter på \`α\` ved \`θ = μ₀\`, vokser monotont mot \`1\` for store \`θ\`.
+- **Tosidig test**: U-formet. Minst (\`= α\`) ved \`θ = μ₀\`, vokser i begge retninger.
+
+## Sjekkpunkter
+
+- \`γ(μ₀) = α\` (på grenseverdien er styrken nettopp signifikansnivået)
+- \`γ(∞) = 1\` (svært stort avvik fanges nesten sikkert)
+- \`γ(θ) ≤ α\` for \`θ\` i \`H₀\`-området (konservativ der vi skal være)
+
+## Hvordan øker man styrken?
+
+Tre håndtak (i avtakende effektivitet for å unngå Type I):
+
+1. **Større \`n\`** — smalere fordeling, brattere γ-kurve. Eneste «gratis» løsning.
+2. **Mindre \`σ\`** — bedre måleinstrument. Sjelden mulig å endre direkte.
+3. **Større \`α\`** — flytter kritisk grense nærmere \`μ₀\`, men øker Type I.
+
+## Eksempel: kjøttdeig
+
+\`μ₀ = 14\`, \`σ = 3\`, \`n = 9\`, \`α = 0.05\` gir \`k = 15.645\`. Tabuler:
+
+    γ(14) = 0.050  (= α, riktig på grenseverdien)
+    γ(15) = 0.259
+    γ(16) = 0.639
+    γ(17) = 0.912
+
+For 1-enhets avvik er testen knapp 26 % treffsikker. For 3-enhets avvik over 91 %.
+`,
+      see_also: [
+        { kind: "glossary", id: "styrkefunksjon" },
+        { kind: "glossary", id: "type-2-feil" },
+        { kind: "table", id: "E3-z-tabell" },
+      ],
+    },
+    {
+      id: "n-for-styrke",
+      name: "Utvalgsstørrelse for ønsket styrke",
+      abbreviation: "n*",
+      formula: "n ≥ ((z_α + z_β*) · σ / (θ − μ₀))²",
+      short: `Designformelen: regn ut hvor stort utvalg du trenger for at testen har styrke \`γ* = 1 − β*\` mot et bestemt avvik.`,
+      long: `Når du planlegger en studie, vil du ofte vite: «hvor mange observasjoner trenger jeg for å oppdage en effekt av størrelse \`θ − μ₀\` med god sannsynlighet?». Denne formelen er svaret for én-utvalg z-test.
+
+> [!read] n ≥ ((z_α + z_β*) · σ / (θ − μ₀))²
+> Tre faktorer: signifikansnivå \`z_α\`, styrkekrav \`z_β*\`, og «signal-til-støy-forhold» \`σ / (θ − μ₀)\`.
+
+## Hvor kommer formelen fra?
+
+Styrkekravet \`γ(θ) ≥ γ*\` for høyresidig z-test, med \`β* = 1 − γ*\`:
+
+    1 − G(z_α − (θ − μ₀)·√n/σ) ≥ 1 − β*
+                G(z_α − (θ − μ₀)·√n/σ) ≤ β*
+                       z_α − (θ − μ₀)·√n/σ ≤ −z_β*
+                       (θ − μ₀)·√n/σ ≥ z_α + z_β*
+                                  √n ≥ (z_α + z_β*) · σ / (θ − μ₀)
+                                   n ≥ [(z_α + z_β*) · σ / (θ − μ₀)]²
+
+Rund alltid OPP. Verifiser ved å regne \`γ(θ)\` med det valgte \`n\` — den skal ligge på eller over \`γ*\`.
+
+## Skalering med effektstørrelse
+
+Den viktigste innsikten: \`n\` skalerer som \`1/(θ − μ₀)²\`. Halver effekten du vil oppdage, og du trenger FIRE ganger så stort utvalg. Det er grunnen til at små effekter krever store kliniske studier.
+
+## Tosidig variant
+
+Bytt \`z_α\` med \`z_{α/2}\` i formelen. Resten er identisk.
+
+## Eksempel: kjøttdeig, γ* = 0.80
+
+\`μ₀ = 14\`, \`σ = 3\`, \`θ = 15\`, \`α = 0.05\` (\`z_α = 1.645\`), \`β* = 0.20\` (\`z_{β*} = 0.842\`):
+
+    n ≥ ((1.645 + 0.842) · 3 / 1)²
+      = (7.461)²
+      ≈ 55.66
+
+Rund opp: \`n = 56\` pakker gir styrke ≈ 0.80 mot 1-enhets avvik.
+
+For 0.5-enhets avvik blir det \`n = 223\` — fire ganger så mye for halve effekten.
+`,
+      see_also: [
+        { kind: "glossary", id: "styrkefunksjon" },
+        { kind: "glossary", id: "kvantil" },
+        { kind: "table", id: "E4-z-kvantiltabell" },
+      ],
+    },
+  ],
 };

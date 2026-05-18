@@ -593,4 +593,100 @@ export const PROPERTY_EXPLANATIONS: Record<
       },
     },
   },
+  "geometrisk-fordeling": {
+    expected_value: {
+      formula: "E[X] = 1/p",
+      intuition:
+        "I snitt trengs 1/p forsøk for å lykkes én gang. Sannsynligheten per forsøk er p, så det går «én suksess per 1/p forsøk» i det lange løp.",
+      derivation: [
+        {
+          label: "Forventningsverdi via sum",
+          lines: [
+            "`E[X] = Σ_{k=1}^∞ k · P(X = k)`",
+            "`     = Σ_{k=1}^∞ k · p · (1 − p)^(k−1)`",
+            "`     = p · Σ_{k=1}^∞ k · q^(k−1)`   (der `q = 1 − p`)",
+          ],
+        },
+        {
+          label: "Identitet for den indre summen",
+          lines: [
+            "Den geometriske summen `Σ_{k=0}^∞ q^k = 1/(1 − q)` (for `|q| < 1`).",
+            "Derivere mht. `q` ledd for ledd: `Σ_{k=1}^∞ k · q^(k−1) = 1/(1 − q)²`.",
+          ],
+          note: "Med `q = 1 − p` er `1 − q = p`, så `1/(1 − q)² = 1/p²`.",
+        },
+        {
+          label: "Sett inn",
+          lines: [
+            "`E[X] = p · (1/p²) = 1/p`",
+          ],
+        },
+      ],
+      example: {
+        setup: "Terning, første sekser: p = 1/6",
+        result: "E[X] = 1/(1/6) = 6 kast i snitt",
+      },
+    },
+    variance: {
+      formula: "Var[X] = (1 − p)/p²",
+      intuition:
+        "Variansen vokser raskt når p blir liten — for sjeldne suksesser er ventetiden ekstremt uforutsigbar (noen lykkes tidlig, andre må prøve veldig lenge).",
+      derivation: [
+        {
+          label: "Bruk Var(X) = E[X²] − (E[X])²",
+          lines: [
+            "Vi vet `E[X] = 1/p`. Det gjenstår å regne `E[X²]`.",
+          ],
+        },
+        {
+          label: "E[X²] via samme identitet",
+          lines: [
+            "`E[X²] = Σ_{k=1}^∞ k² · p · q^(k−1)`",
+            "Indre sum: `Σ k² · q^(k−1) = (1 + q) / (1 − q)³ = (2 − p) / p³`.",
+            "`E[X²] = p · (2 − p)/p³ = (2 − p)/p²`",
+          ],
+          note: "Den indre summen utledes ved å derivere `Σ k·q^k = q/(1−q)²` mht. `q` en gang til.",
+        },
+        {
+          label: "Sett sammen",
+          lines: [
+            "`Var(X) = E[X²] − (E[X])²`",
+            "`       = (2 − p)/p² − (1/p)²`",
+            "`       = (2 − p)/p² − 1/p²`",
+            "`       = (2 − p − 1)/p² = (1 − p)/p²`",
+          ],
+        },
+      ],
+      example: {
+        setup: "Terning, p = 1/6",
+        result: "Var[X] = (5/6)/(1/36) = 30  (σ ≈ 5.48 — nesten like stor som E[X])",
+      },
+    },
+    std_dev: {
+      formula: "σ = √((1 − p)/p²) = √(1 − p)/p",
+      intuition:
+        "For små p er σ ≈ 1/p ≈ E[X], dvs. spredningen er like stor som forventningen. Geometrisk fordeling har en svært lang høyrehale.",
+      derivation: [
+        {
+          label: "Definisjon",
+          lines: [
+            "`σ = √Var(X) = √((1 − p)/p²)`.",
+            "Flytt `p²` ut av rota: `σ = √(1 − p) / p`.",
+          ],
+        },
+        {
+          label: "Grense for små p",
+          lines: [
+            "Når `p → 0` er `√(1 − p) → 1`, så `σ → 1/p = E[X]`.",
+            "Variasjonskoeffisienten `σ/E[X] = √(1 − p) → 1` — fordelingen er like vid som senteret.",
+          ],
+          note: "Dette gjenspeiler at jo sjeldnere suksessen er, jo mer usikker blir ventetiden.",
+        },
+      ],
+      example: {
+        setup: "Terning, p = 1/6",
+        result: "σ = √(5/6)/(1/6) = 6·√(5/6) = √30 ≈ 5.48",
+      },
+    },
+  },
 };
