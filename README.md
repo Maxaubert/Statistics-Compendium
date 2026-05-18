@@ -37,7 +37,7 @@
 </tr>
 <tr>
 <td><img src="screenshots/08-veiviser.png" alt="Veiviser"><br><sub><b>Wizard</b> that helps you pick the right test or distribution.</sub></td>
-<td><img src="screenshots/09-veiviser-anbefaling.png" alt="Veiviser anbefaling"><br><sub><b>Wizard recommendation</b> after answering the survey questions.</sub></td>
+<td><img src="screenshots/07-ordliste.png" alt="Ordliste"><br><sub><b>Glossary</b> of Norwegian statistics terms, searchable and clickable.</sub></td>
 </tr>
 <tr>
 <td><img src="screenshots/05-table-z.png" alt="Z-tabell"><br><sub><b>Interactive table</b> for E.1 through E.8, with live lookup.</sub></td>
