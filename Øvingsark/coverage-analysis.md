@@ -50,27 +50,6 @@ Disse punktene er teknisk dekket i begge, men en av sidene har det grunnere enn 
 
 ---
 
-## 4. Anbefalt prioritering — gjenstående
-
-**Høyest prioritet (faktiske eksamensemner som fortsatt mangler):**
-1. ~~Paret t-test~~ — ✓ FIKSET runde 1
-2. ~~Geometrisk fordeling~~ — ✓ FIKSET runde 1
-3. ~~Type I/II-feil og styrkefunksjon~~ — ✓ FIKSET runde 1
-4. **Normaltilnærming med heltallskorreksjon** (to faner) — vises i sept 2022 (3b) og Øving 4 (1c-d)
-5. **Multippel lineær regresjon** (egen entry) — vises i mai 2021 (6)
-
-**Middels prioritet (utvider eksisterende sider):**
-6. **KI for E(Y|x) i regresjon** (ny fane på `lineaer-regresjon`) — vises i sept 2022 (5e)
-7. **Finn n for KI-bredde** (ny fane på `ki-andel-binomial`) — vises i mai 2021 (4c)
-8. ~~Punktestimat-oversikt~~ — △ LØST som glossary-utvidelse i stedet
-
-**Lav prioritet (fullstendighet):**
-9. **Uordnet utvalg med tilbakelegging** (`C(n+k−1, k)`) — sjeldent i eksamen
-
-**For PDF-en (hvis den skal utvides):** kjikvadrat-tester (goodness-of-fit og uavhengighet), to-utvalgs-KI, og bootstrap-KI.
-
----
-
 ## 5. Komplett emnetabell (alle emner i begge, side om side)
 
 | Emne | PDF-seksjon | Site-entry | Status |
