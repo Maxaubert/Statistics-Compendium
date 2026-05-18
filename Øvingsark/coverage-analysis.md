@@ -20,12 +20,12 @@ Komplett krysssjekk mellom det 49-siders øvingsdokumentet (`Øvingsark/statt_ek
 
 ### Alvorlige hull — egne formelsider trengs
 
-#### 1.1 Paret t-test — ✓ FIKSET
+#### ~~1.1 Paret t-test~~ — ✓ FIKSET
 - **PDF-referanse:** s. 29-30 (seksjon 6.5), eksempel: blodsukker før/etter lurium (mai 2022, 4)
 - **Formel:** `T = D̄/(S_D/√n) ~ t_(n−1)`, der `D_i = X_i − Y_i`
 - **Status:** Opprettet `content/entries/paret-t-test.yaml` med 5 faner (venstre / høyre / tosidig / `Δ₀ ≠ 0` / KI-sidefane), 8 detaljerte løsninger, full formelforklaring og python-snippet. Glossary `paret-test` lenker nå dit.
 
-#### 1.2 Geometrisk fordeling — ✓ FIKSET
+#### ~~1.2 Geometrisk fordeling~~ — ✓ FIKSET
 - **PDF-referanse:** s. 46-47 (seksjon 16.3), eksempel: terningkast frem til første ener (Øving 3, 5a-g)
 - **Formler:** `P(X=x) = p(1−p)^(x−1)`; `E(X) = 1/p`; `Var(X) = (1−p)/p²`; `P(X ≤ x) = 1 − (1−p)^x`
 - **Status:** Opprettet `content/entries/geometrisk-fordeling.yaml` med 7 faner (`P(X=k)`, `P(X≤k)`, `P(X>k)`, intervall, `E/Var/σ`, finn `k` for terskel, hukommelsesløshet), 13 detaljerte løsninger, Egenskaper-kort, glossary `geometrisk-fordeling-glos` og `hukommelsesloshet`. Filtertaksonomi utvidet med `geometric`.
@@ -36,7 +36,7 @@ Komplett krysssjekk mellom det 49-siders øvingsdokumentet (`Øvingsark/statt_ek
 - **Status:** Fortsatt ikke laget. `lineaer-regresjon.yaml` dekker bare enkel regresjon (én x).
 - **Anbefaling:** Egen entry `multippel-regresjon.yaml` (ikke fane på `lineaer-regresjon` — egen prosedyre med matriseregning, R²-adjusted, F-test for hele modellen, partiale t-tester).
 
-#### 1.4 Type I-/Type II-feil og styrkefunksjon — ✓ FIKSET
+#### ~~1.4 Type I-/Type II-feil og styrkefunksjon~~ — ✓ FIKSET
 - **PDF-referanse:** s. 40 (seksjon 14) for definisjoner; s. 48 (seksjon 16.5) for styrkefunksjon
 - **Formler/begreper:** `α` (Type I), `β` (Type II), `1 − β` (styrke); `γ(θ) = P(forkast H₀ | θ sann)`; eksempel kjøttdeig: `k = 14 + 1.645·3/√9 = 15.645`, `γ(14)=0.050`, `γ(15)=0.258`, `γ(16)=0.638`
 - **Status:** Opprettet `content/entries/hypotesefeil-og-styrke.yaml` med 5 faner (definisjoner / `β(θ)`-beregning / `γ(θ)` / drøft `α` / finn `n` for styrke), 10 detaljerte løsninger inkludert kjøttdeig-eksempelet og tosidig variant. Ny glossary `styrkefunksjon`.
@@ -53,7 +53,7 @@ Komplett krysssjekk mellom det 49-siders øvingsdokumentet (`Øvingsark/statt_ek
 
 ### Mindre hull — kan dekkes som ny fane/snippet
 
-#### 1.6 Punktestimat-oversikt — △ DELVIS (løst som glossary)
+#### ~~1.6 Punktestimat-oversikt~~ — △ DELVIS (løst som glossary)
 - **PDF-referanse:** s. 21 (seksjon 5.1)
 - **Formler:** `μ̂ = X̄`, `p̂ = X/n`, `λ̂ = X/t`, `S² = Σ(X_i − X̄)²/(n−1)`
 - **Status:** Vurdert å lage egen `punktestimat-oversikt.yaml`-entry, men besluttet å heller utvide glossary `punktestimat.yaml` med samlet liste over 11 estimatorer (`μ̂`, `σ̂²`, `σ̂`, `p̂`, `λ̂`, `X̄ − Ȳ`, `p̂_X − p̂_Y`, `D̄`, `β̂`, `α̂`, `S_E²`) og lenker til hovedsidene. Egen entry ville duplisert eksisterende oversikter (forventningsverdi/varians/standardavvik).
