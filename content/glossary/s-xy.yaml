@@ -1,0 +1,38 @@
+id: s-xy
+term_no: "S_XY (Σ(xᵢ − x̄)(yᵢ − ȳ))"
+short_def: "Krysssum mellom `x` og `y`. Teller i `β̂`, `r` og er nøkkelen til hvilken retning sammenhengen har."
+filters:
+  setup: [linear_relationship]
+  parameters_known: [sum_xx_sxy]
+  structural_cues: [linear_relationship_suspected, summary_stats_given]
+  computes: [parameter_estimate, correlation]
+aliases:
+  - s_xy
+  - sxy
+  - krysssum
+  - kryssum
+long_def: |
+  Formel:
+
+      S_XY = Σ(xᵢ − x̄)(yᵢ − ȳ) = Σxᵢ·yᵢ − n·x̄·ȳ
+
+  Krysssummen som måler **samvariasjonen** mellom `x` og `y` i utvalget.
+
+  **Fortegnet** bestemmer retningen på den lineære sammenhengen:
+
+  - `S_XY > 0` ⇒ `β̂ > 0` og `r > 0` (positiv sammenheng)
+  - `S_XY < 0` ⇒ `β̂ < 0` og `r < 0` (negativ sammenheng)
+  - `S_XY ≈ 0` ⇒ ingen lineær sammenheng
+
+  Inngår i:
+
+  - **Stigningstall:** `β̂ = S_XY / S_XX`
+  - **Korrelasjon:** `r = S_XY / √(S_XX · S_YY)`
+  - **Residualkvadratsum (kompakt):** `SSE = S_YY − β̂·S_XY`
+
+  > Pass på: `S_XY` er IKKE det samme som `Σxᵢ·yᵢ`. Den korrekte
+  > beregningsformelen er `Σxᵢ·yᵢ − n·x̄·ȳ`.
+see_also:
+  - { id: s-xx, kind: glossary }
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: kovarians-glos, kind: glossary }

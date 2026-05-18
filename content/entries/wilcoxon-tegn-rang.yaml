@@ -47,7 +47,7 @@ filters:
   computes: [hypothesis_test]
   random_variable: [continuous, mean_of_samples]
   setup: [single_population, paired_samples]
-  structural_cues: [data_as_list, total_observations_n, two_sided_alternative, one_sided_alternative, nonparametric_required, rank_based_data]
+  structural_cues: [data_as_list, two_sided_alternative, one_sided_alternative, rank_based_data]
   parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
@@ -62,6 +62,7 @@ tags:
 
 solution_variants:
   - label: "H₁: median ≠ m₀ (tosidig)"
+    recognition: "«Avviker medianen fra `m₀`?» når dataene ikke er normalfordelte. Ikke-parametrisk alternativ til én-utvalgs t-test."
     steps:
       - text: "Formuler hypotesene (tosidig):"
         formula: "H₀: median = m₀     mot     H₁: median ≠ m₀"
@@ -78,6 +79,7 @@ solution_variants:
         formula: "Forkast H₀ hvis T ≤ T_(α/2, n)"
       - "Konkluder i kontekst"
   - label: "H₁: median > m₀ (høyresidig)"
+    recognition: "«Er medianen signifikant større enn `m₀`?» (ikke-parametrisk, ensidig)."
     steps:
       - text: "Hypoteser:"
         formula: "H₀: median ≤ m₀     mot     H₁: median > m₀"
@@ -90,6 +92,7 @@ solution_variants:
         formula: "Forkast H₀ hvis T⁻ ≤ T_(α, n)"
       - "Konkluder i kontekst"
   - label: "H₁: median < m₀ (venstresidig)"
+    recognition: "«Er medianen signifikant mindre enn `m₀`?» (ikke-parametrisk, ensidig)."
     steps:
       - text: "Hypoteser:"
         formula: "H₀: median ≥ m₀     mot     H₁: median < m₀"

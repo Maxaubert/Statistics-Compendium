@@ -22,6 +22,5 @@ long_def: |
   Typisk steg før du kjører regresjon: hvis spredningsplottet ikke ser
   ut som en "rett sky", er en lineær modell ikke nødvendigvis god.
 see_also:
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
-  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: qq-plott, kind: glossary }

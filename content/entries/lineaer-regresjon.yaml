@@ -1,0 +1,867 @@
+id: lineaer-regresjon
+name_no: "Lineær regresjon og korrelasjon (Pearson r)"
+type: regression
+category: regression_estimate
+tagline: "Modeller en lineær sammenheng `Y = α + β·x + ε`. Estimer linja, mål usikkerhet, test, prediker."
+
+formula_main: "ŷ = α̂ + β̂·x;  β̂ = S_XY / S_XX;  α̂ = ȳ − β̂·x̄"
+formula_latex: "\\hat{y} = \\hat{\\alpha} + \\hat{\\beta} x \\quad\\text{der}\\quad \\hat{\\beta} = \\frac{S_{XY}}{S_{XX}}, \\quad \\hat{\\alpha} = \\bar{y} - \\hat{\\beta}\\bar{x}"
+
+what_it_does: |
+  Modellerer en LINEÆR sammenheng mellom en uavhengig variabel `x` og en avhengig
+  variabel `Y`. Modellen er `Y = α + β·x + ε` der `ε ~ N(0, σ²)` er en tilfeldig
+  feilkomponent. Vi estimerer parametrene `α` og `β` ut fra `n` observasjonspar
+  `(x_i, y_i)` med minste-kvadraters-metode og får regresjonslinja `ŷ = α̂ + β̂·x`.
+
+  Sida samler ALT du trenger for enkel lineær regresjon: estimering av linja,
+  residualvarians `S_E²`, standardfeilen `SE(β̂)`, hypotesetest for stigningstallet,
+  prediksjonsintervall for en ny `Y`, og korrelasjonskoeffisient `r`. Velg fane
+  under for prosedyren som passer oppgaven din.
+
+why_use: |
+  Lineær regresjon er det vanligste verktøyet for å beskrive og predikere
+  sammenhenger mellom to kontinuerlige størrelser. Du bruker den til å:
+
+  - estimere hvor mye `y` endres når `x` øker med én enhet (`β̂`),
+  - måle hvor godt linja passer dataene (`S_E²`, `r`, `r²`),
+  - avgjøre om sammenhengen er statistisk signifikant (hypotesetest for `β`),
+  - predikere en ny `y`-verdi for en gitt `x` (prediksjonsintervall).
+
+  Velg riktig fane under: prosedyrene bruker stort sett de samme mellom-summene
+  (`S_XX`, `S_XY`, `S_E²`), så når du har gjort én er du halvveis gjennom de andre.
+
+recognition_cues:
+  - "Du har `n` par av observasjoner `(x_i, y_i)` og mistenker en lineær sammenheng"
+  - "Spørsmålet ber om å 'estimere regresjonslinja' eller å 'finne `ŷ`'"
+  - "Spørsmålet ber om en `β̂`, `α̂`, residualvarians `S_E²`, standardfeil `SE(β̂)`, korrelasjon `r`, eller prediksjonsintervall"
+  - "Hypotesetest med `n − 2` frihetsgrader nevnes — kjennetegn på regresjonstest"
+  - "Datatabell viser `Σ(x − x̄)²`, `Σ(x − x̄)(y − ȳ)`, `Σ(y − ȳ)²` (typiske mellom-summer)"
+  - "Oppgaven sier 'er det usannsynlig at en ny observasjon ligger over/under en verdi?' (prediksjonsintervall)"
+
+when_NOT_to_use:
+  - "Sammenhengen er åpenbart ikke-lineær (kurvet, eksponentiell) → vurder transformasjon eller annen modell"
+  - "Du jobber med en simultanfordeling `P(X = x, Y = y)` (teoretisk, ikke utvalg) → bruk [korrelasjon ρ fra fellesfordeling](/entry/korrelasjon-joint)"
+  - "Du har bare `y`-verdier uten en uavhengig `x` → vanlig én-utvalgs-statistikk: [t-test](/entry/en-utvalg-t-test), [KI for μ](/entry/ki-mu-og-varians)"
+  - "Du forventer at residualene IKKE er normalfordelte eller har konstant varians → vurder bootstrap eller robust regresjon"
+
+symbols:
+  - { sym: "x_i, y_i",       means: "de `n` observasjonsparene" }
+  - { sym: "n",              means: "antall observasjonspar" }
+  - { sym: "x̄, ȳ",          means: "gjennomsnitt av `x`- og `y`-verdiene" }
+  - { sym: "α̂",             means: "estimat for skjæringspunktet (intercept), `α̂ = ȳ − β̂·x̄`" }
+  - { sym: "β̂",             means: "estimat for stigningstallet (slope), `β̂ = S_XY / S_XX`" }
+  - { sym: "β",              means: "den ukjente populasjonsstigningen (det vi tester og lager KI for)" }
+  - { sym: "ŷ",              means: "predikert verdi: `ŷ = α̂ + β̂·x`" }
+  - { sym: "ε",              means: "tilfeldig feilkomponent, `ε ~ N(0, σ²)`" }
+  - { sym: "σ²",             means: "den (ukjente) variansen til residualene i populasjonen" }
+  - { sym: "S_XX",           means: "`Σ(x_i − x̄)²` — sum av kvadrerte avvik for `x`" }
+  - { sym: "S_YY",           means: "`Σ(y_i − ȳ)²` — sum av kvadrerte avvik for `y`" }
+  - { sym: "S_XY",           means: "`Σ(x_i − x̄)(y_i − ȳ)` — krysssum" }
+  - { sym: "SSE",            means: "`Σ(y_i − ŷ_i)²` — sum av kvadrerte residualer" }
+  - { sym: "S_E²",           means: "estimat for residualvariansen, `S_E² = SSE / (n − 2)`" }
+  - { sym: "S_E",            means: "estimat for residualstandardavviket, `S_E = √S_E²`" }
+  - { sym: "SE(β̂)",         means: "standardfeilen til `β̂`, `SE(β̂) = √(S_E² / S_XX)`" }
+  - { sym: "r",              means: "korrelasjonskoeffisient (Pearson), `r = S_XY / √(S_XX · S_YY)`" }
+  - { sym: "r²",             means: "forklaringsgrad — andel av variasjonen i `y` som forklares av lineær regresjon på `x`" }
+  - { sym: "T",              means: "testobservator for `β`, t-fordelt med `n − 2` frihetsgrader under `H₀`" }
+  - { sym: "ν",              means: "frihetsgrader, `ν = n − 2`" }
+  - { sym: "t_(α/2, n−2)",   means: "kvantil i t-fordelingen med `n − 2` frihetsgrader" }
+
+properties:
+  expected_value: "E[β̂] = β"
+  variance: "Var(β̂) = σ² / S_XX"
+  std_dev: "SE(β̂) = √(S_E² / S_XX)"
+
+filters:
+  computes: [parameter_estimate, std_dev, hypothesis_test, prediction_interval, correlation, find_x_for_threshold, confidence_interval, test_independence]
+  random_variable: [slope_estimate, continuous]
+  setup: [single_population, linear_relationship]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, two_sided_alternative, one_sided_alternative]
+  parameters_known: [slope_se, residual_variance, sum_xx_sxy, confidence_level, alpha_significance, population_variance_unknown, regression_line_estimate]
+  distribution_assumption: [t_distribution, normal, none_assumed]
+  tooling: [t_quantile_table_E5, calculator_sqrt, calculator_only]
+
+tags:
+  # Hovedkonsept
+  - regresjon
+  - regresjonsanalyse
+  - regresjonslinje
+  - regresjonslinjen
+  - lineær regresjon
+  - linjær regresjon
+  - linear regresjon
+  - linear regression
+  - enkel lineær regresjon
+  # Stigningstall / skjæring
+  - stigningstall
+  - stigningstallet
+  - skjæringspunkt
+  - intercept
+  - β̂
+  - beta hat
+  - beta-hat
+  - betahat
+  - α̂
+  - alfa hat
+  - alpha hat
+  # Predikert verdi
+  - ŷ
+  - y hat
+  - y-hat
+  - y_hat
+  - yhat
+  - predikert verdi
+  - predikert y
+  - prediksjon
+  # Mellom-summer
+  - S_XX
+  - S_XY
+  - S_YY
+  - krysssum
+  - SSE
+  - kvadratsum
+  # Residualer
+  - residual
+  - residualer
+  - residualvarians
+  - residualstandardavvik
+  - S_E
+  - S_E²
+  # Standardfeil
+  - SE(β̂)
+  - standardfeil stigningstall
+  - standardfeilen til β̂
+  # Korrelasjon
+  - korrelasjon
+  - korrelasjonskoeffisient
+  - pearson
+  - pearson korrelasjon
+  - r-kvadrat
+  - r²
+  - r squared
+  - forklaringsgrad
+  # Prediksjon / KI
+  - prediksjonsintervall
+  - PI
+  - konfidensintervall regresjon
+  # Hypotesetest
+  - hypotesetest regresjon
+  - test stigningstall
+  - test β
+  - signifikant sammenheng
+  # Metode
+  - minste kvadraters metode
+  - minstekvadraters
+  - OLS
+  - least squares
+  # Antagelser / fallgruver
+  - modellantakelser
+  - forutsetninger regresjon
+  - ekstrapolering
+  - homoskedastisitet
+  - linearitet
+  # Visualisering
+  - spredningsplott
+  - scatter plot
+
+solution_variants:
+  - label: "Estimere α̂ og β̂"
+    recognition: "«Estimer regresjonslinja `ŷ = α̂ + β̂·x` fra dataene», «Finn `β̂` og `α̂`», eller «beste lineære tilpasning». Du har typisk en datatabell eller ferdige mellom-summer (`S_XX`, `S_XY`, `x̄`, `ȳ`)."
+    steps:
+      - "Beregn `x̄` og `ȳ` fra rådata, eller hent dem fra oppgaven."
+      - text: "Beregn mellom-summene `S_XX` og `S_XY`."
+        formula:
+          - "S_XX = Σ(x_i − x̄)²"
+          - "S_XY = Σ(x_i − x̄)(y_i − ȳ)"
+      - text: "Hvis bare `Σx_i², Σx_i·y_i` er gitt, bruk beregningsformlene:"
+        formula:
+          - "S_XX = Σx_i² − n·x̄²"
+          - "S_XY = Σx_i·y_i − n·x̄·ȳ"
+        conditional: true
+      - text: "Beregn stigningstallet."
+        formula: "β̂ = S_XY / S_XX"
+      - text: "Beregn skjæringspunktet."
+        formula: "α̂ = ȳ − β̂·x̄"
+      - text: "Eksempel: `S_XX = 15.6`, `S_XY = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`:"
+        formula: "β̂ = 103.4 / 15.6 ≈ 6.63;  α̂ = 79.7 − 6.63·6.8 ≈ 34.62"
+        example: true
+      - text: "Skriv regresjonslinja. `x` er den uavhengige variabelen — den lar du stå som `x` når du oppgir linja generelt. Den settes inn først NÅR du skal predikere `ŷ` for en konkret verdi (f.eks. `x = 5` timer søvn ⇒ `ŷ(5) = α̂ + β̂·5`)."
+        formula: "ŷ = α̂ + β̂·x"
+      - "Sanity-sjekk: linja må gå gjennom `(x̄, ȳ)`. Sett `x = x̄` inn i `ŷ`-uttrykket og bekreft at du får `ȳ`."
+
+  - label: "Residualvarians S_E²"
+    recognition: "«Finn estimat for residualenes varians `S_E²`», «beregn `S_E`», eller «hvor stor er spredningen rundt linja?». Du har `SSE` eller mellom-summene; oftest et mellomsteg før hypotesetest, KI eller prediksjonsintervall."
+    steps:
+      - "Forutsetter at du har `α̂` og `β̂` (fra første fane)."
+      - text: "Beregn `SSE` (sum av kvadrerte residualer), enten direkte fra rådata eller via den kompakte formelen som bruker `S_YY` og `S_XY`."
+        formula:
+          - "SSE = Σ(y_i − α̂ − β̂·x_i)²"
+          - "SSE = S_YY − β̂·S_XY        (kompakt form)"
+      - text: "Del på `n − 2` frihetsgrader (to parametre brukt opp på `α̂` og `β̂`)."
+        formula: "S_E² = SSE / (n − 2)"
+      - text: "Eksempel: `n = 10`, `SSE = 48.7437`:"
+        formula: "S_E² = 48.7437 / 8 ≈ 6.093"
+        example: true
+      - text: "Ta kvadratrota hvis oppgaven ber om residualstandardavviket."
+        formula: "S_E = √S_E² ≈ 2.4684"
+
+  - label: "Standardfeil SE(β̂)"
+    recognition: "«Finn standardfeilen til stigningstallet `SE(β̂)`» eller «hvor presist er `β̂` estimert?». Mellomsteg før hypotesetest eller KI for `β`."
+    steps:
+      - "Forutsetter at du har `S_E²` (fra forrige fane) og `S_XX` (fra første fane)."
+      - text: "Sett inn i formelen."
+        formula: "SE(β̂) = √(S_E² / S_XX)"
+      - text: "Eksempel: `S_E² = 6.093`, `S_XX = 15.6`:"
+        formula: "SE(β̂) = √(6.093 / 15.6) = √0.391 ≈ 0.625"
+        example: true
+      - "Tolkning: liten `SE(β̂)` ⇒ presis estimering av `β`; stor ⇒ bredt KI og lav test-styrke."
+
+  - label: "Hypotesetest for β"
+    recognition: "«Er det statistisk signifikant lineær sammenheng?», «test om `β = 0`», «kan sammenhengen skyldes tilfeldigheter?», eller «er stigningstallet ulikt null?». Du får ofte oppgitt et signifikansnivå `α` (f.eks. `0.05`)."
+    steps:
+      - text: "Formuler hypotesene (vanligvis tosidig, `β₀ = 0` for 'finnes sammenheng?')."
+        formula: "H₀: β = β₀     mot     H₁: β ≠ β₀"
+      - "Beregn `SE(β̂)` (fane før) hvis ikke gitt."
+      - text: "Beregn testobservatoren."
+        formula: "T = (β̂ − β₀) / SE(β̂)"
+      - text: "Eksempel: `β̂ = 6.63`, `SE(β̂) = 0.625`, `β₀ = 0`:"
+        formula: "T = 6.63 / 0.625 ≈ 10.61"
+        example: true
+      - "Slå opp `t_(α/2, n−2)` i **tabell E.5** (tosidig). For 95 %, `n = 10`: `t_(0.025, 8) = 2.306`."
+      - text: "Forkastningsregel."
+        formula: "Forkast H₀ hvis |T| > t_(α/2, n−2)"
+      - text: "Ensidig variant: hvis `H₁: β > β₀` (eller `β < β₀`), bruk `t_(α, n−2)` og sjekk fortegnet."
+        formula: "Forkast hvis T > t_(α, n−2)   (henholdsvis T < −t_(α, n−2))"
+        conditional: true
+      - "Konkluder kontekstuelt: 'forkast H₀ ⇒ statistisk grunnlag for lineær sammenheng' eller 'kan ikke forkaste — ingen statistisk grunnlag'."
+
+  - label: "Prediksjonsintervall for ny Y"
+    recognition: "«Finn et 95 % prediksjonsintervall for `Y` når `x = x₀`», «er det usannsynlig at en student med 5 timers søvn får 75 % eller bedre?», eller «mellom hvilke verdier vil en ny `y` ligge?». Spør om ÉN ny enkelt observasjon, ikke gjennomsnittet."
+    steps:
+      - text: "Sjekk hva oppgaven har gitt deg. Mange størrelser kan utledes fra hverandre — bruk den formen oppgaven gir."
+        cases:
+          - { when: "`α̂`, `β̂`", then: "Skjæringspunkt og stigningstall (fra fane 1)" }
+          - { when: "`S_E = √S²_E`", then: "Standardavviket — ta `√` hvis oppgaven gir deg variansen" }
+          - { when: "`S_XX = S²_E / SE(β̂)²`", then: "Regn ut `S_XX` hvis oppgaven kun gir deg `SE(β̂)`" }
+          - { when: "`df = n − 2`", then: "Frihetsgrader til t-fordelingen" }
+          - { when: "`x̄ = (Σx_i) / n`", then: "Gjennomsnitt av x — regn ut hvis ikke gitt" }
+          - { when: "`x₀`", then: "x-verdien du predikerer ved (gitt av oppgaven)" }
+      - "Finn `α` fra konfidensnivået (95 % ⇒ `α = 0.05`, `α/2 = 0.025`)."
+      - "Slå opp `t_(α/2, n−2)` i **tabell E.5**."
+      - text: "Beregn `ŷ₀` ved å sette `x₀` (gitt av oppgaven) inn i regresjonslinja. `α̂` er skjæringspunktet fra fane 1 — ikke `α` fra konfidensnivået."
+        formula: "ŷ₀ = α̂ + β̂·x₀"
+      - text: "Regn ut `S_XX` hvis oppgaven kun har gitt deg `SE(β̂)`."
+        formula: "S_XX = S²_E / SE(β̂)²"
+      - text: "Beregn margin."
+        formula: "margin = t_(α/2, n−2) · S_E · √(1 + 1/n + (x₀ − x̄)² / S_XX)"
+      - text: "Hvis oppgaven har gitt deg `S²_E` (variansen), husk å ta kvadratroten før du setter inn i margin-formelen: `S_E = √S²_E`."
+        conditional: true
+      - text: "Skriv prediksjonsintervallet."
+        formula: "PI = ŷ₀ ± margin"
+      - text: "Eksempel: `α̂ = 34.6`, `β̂ = 6.63`, `S_E ≈ 2.468`, `SE(β̂) = 0.625`, `n = 10`, `x̄ = 6.8`, `x₀ = 5`:"
+        formula:
+          - "ŷ₀ = 34.6 + 6.63·5 = 67.75"
+          - "margin = 2.306 · 2.468 · √(1 + 0.1 + 0.208) ≈ 6.51"
+          - "PI = 67.75 ± 6.51 ≈ [61.24, 74.26]"
+        example: true
+      - "Sammenlign mot oppgavens terskel: ligger verdien innenfor eller utenfor intervallet?"
+
+  - label: "Korrelasjon r"
+    recognition: "«Beregn korrelasjonskoeffisient `r`», «hvor sterk er den lineære sammenhengen?», «forklaringsgrad `r²`», eller «andel av variasjonen forklart». Måler bare LINEÆR sammenheng — krummet mønster kan gi `r ≈ 0`."
+    steps:
+      - text: "Beregn gjennomsnittene fra rådata (eller hent fra oppgaven):"
+        formula:
+          - "x̄ = (Σx_i) / n"
+          - "ȳ = (Σy_i) / n"
+      - text: "Beregn de tre mellom-summene (hopper du over denne hvis oppgaven oppgir dem direkte):"
+        formula:
+          - "S_XX = Σ(x_i − x̄)²"
+          - "S_YY = Σ(y_i − ȳ)²"
+          - "S_XY = Σ(x_i − x̄)(y_i − ȳ)"
+      - text: "Beregn korrelasjonskoeffisienten:"
+        formula: "r = S_XY / √(S_XX · S_YY)"
+      - text: "Eksempel: `S_XX = 15.6`, `S_YY = 734.1`, `S_XY = 103.4`:"
+        formula: "r = 103.4 / √(15.6 · 734.1) ≈ 0.966"
+        example: true
+      - text: "Tolk: `r ∈ [−1, 1]`. Nær `1` = sterk positiv, nær `−1` = sterk negativ, nær `0` = ingen lineær sammenheng."
+        cases:
+          - { when: "|r| > 0.9", then: "Svært sterk lineær sammenheng" }
+          - { when: "0.7 < |r| ≤ 0.9", then: "Sterk lineær sammenheng" }
+          - { when: "0.4 < |r| ≤ 0.7", then: "Moderat lineær sammenheng" }
+          - { when: "|r| ≤ 0.4", then: "Svak eller ingen lineær sammenheng" }
+      - text: "`r²` gir forklaringsgraden (andel av variasjonen i `y` som forklares av regresjonen)."
+        formula: "r² ≈ 0.966² ≈ 0.933  (≈ 93 %)"
+
+solution_template:
+  - "Identifiser HVA oppgaven spør om — velg en av fanene over."
+  - "Estimere linja → fane 'Estimere α̂ og β̂'. Måle spredning → 'Residualvarians S_E²'. Standardfeil → 'Standardfeil SE(β̂)'. Test β → 'Hypotesetest for β'. Predikere ny Y → 'Prediksjonsintervall'. Styrke av sammenheng → 'Korrelasjon r'."
+  - "De fleste oppgavene bygger på samme mellom-summer. Regn `x̄`, `ȳ`, `S_XX`, `S_XY` først, så har du grunnlaget for alt."
+
+common_traps: |
+  - **Frihetsgrader er `n − 2`, ikke `n − 1`**, fordi to parametre (`α̂`, `β̂`)
+    er estimert fra dataene. Bruker du `n − 1` blir `S_E²` litt for liten og
+    kritisk verdi for liten — du forkaster `H₀` for ofte.
+  - **`SE(β̂) ≠ S_E`**: `SE(β̂) = S_E / √S_XX`. Begge kalles ofte "standardfeil" og
+    blandes konstant. `S_E` er residualenes spredning; `SE(β̂)` er usikkerheten
+    i selve `β̂`-estimatet.
+  - **`SSE` vs `S_XX`**: `SSE = Σ(y_i − ŷ_i)²` (kvadrerte residualer i `y`),
+    `S_XX = Σ(x_i − x̄)²` (kvadrerte avvik i `x`). Helt forskjellige tall som
+    ofte står side ved side i en oppgave.
+  - **`S_XY` er IKKE `Σx_i·y_i`**: `S_XY = Σ(x_i − x̄)(y_i − ȳ) = Σx_i·y_i − n·x̄·ȳ`.
+    Tilsvarende for `S_XX`.
+  - **Prediksjonsintervall vs KI for `E[Y|x]`**: prediksjonsintervallet (én ny `Y`)
+    har `1 +` under rota — `√(1 + 1/n + (x₀ − x̄)²/S_XX)`. Konfidensintervallet
+    for forventningsverdien `E[Y|x]` mangler det `1`-tallet og er smalere.
+    Oppgaver ber typisk om PI når de spør 'sannsynligheten for at en ny student
+    får...'.
+  - **Ekstrapolering**: regresjonslinja gjelder bare innenfor `x`-intervallet
+    dataene dekker. Predikere langt utenfor (negative `x` eller 10× max) er
+    statistisk uforsvarlig selv om formelen gir et tall. Prediksjonsintervallet
+    blir også raskt bredt fordi `(x₀ − x̄)²/S_XX` vokser.
+  - **`r` måler bare LINEÆR sammenheng**: sterk ikke-lineær (kvadratisk, eksponentiell)
+    kan gi `r ≈ 0`. Plot dataene først.
+  - **Ikke-forkast `H₀: β = 0` betyr ikke 'ingen sammenheng'**: liten `n` eller
+    mye støy kan gi `|T| < t_kritisk` selv om sammenhengen er reell. Konklusjon:
+    'ingen statistisk grunnlag for å hevde sammenheng' — ikke 'sammenhengen er null'.
+  - **Forutsetninger** for inferens (test, KI, PI): residualene `ε` er uavhengige,
+    normalfordelte med konstant varians `σ²`. Punktestimering av `α̂, β̂` krever
+    ikke normalitet — men hypotesetest og intervaller gjør det.
+  - **Enheter**: `β̂` har enhet `(enhet av y)/(enhet av x)`. Sjekk dette mot
+    konteksten — det avslører ofte regnefeil med faktor 10.
+
+python_snippet: |
+  import numpy as np
+  from scipy.stats import t
+
+  x = np.array([5, 6, 7, 8, 6, 7, 8, 5, 9, 7])
+  y = np.array([68, 75, 80, 85, 72, 78, 92, 70, 95, 82])
+  n = len(x)
+
+  # 1) Mellom-summer
+  x_bar, y_bar = x.mean(), y.mean()      # 6.8, 79.7
+  Sxx = ((x - x_bar) ** 2).sum()           # 15.6
+  Syy = ((y - y_bar) ** 2).sum()           # 734.1
+  Sxy = ((x - x_bar) * (y - y_bar)).sum()  # 103.4
+
+  # 2) Estimater
+  beta_hat  = Sxy / Sxx                    # 6.63
+  alpha_hat = y_bar - beta_hat * x_bar     # 34.6
+
+  # 3) Residualvarians og standardfeil
+  y_hat = alpha_hat + beta_hat * x
+  SSE   = ((y - y_hat) ** 2).sum()         # 48.74
+  SE2   = SSE / (n - 2)                    # 6.093
+  SE    = SE2 ** 0.5                       # 2.468
+  SE_beta = (SE2 / Sxx) ** 0.5             # 0.625
+
+  # 4) Hypotesetest: H0: β = 0
+  T = beta_hat / SE_beta                   # 10.61
+  t_crit = t.ppf(0.975, df=n-2)            # 2.306 (tosidig α = 0.05)
+  reject = abs(T) > t_crit                 # True
+
+  # 5) Prediksjonsintervall for ny Y ved x0 = 5
+  x0 = 5
+  y_hat0 = alpha_hat + beta_hat * x0       # 67.75
+  margin = t_crit * SE * (1 + 1/n + (x0 - x_bar) ** 2 / Sxx) ** 0.5  # 6.51
+  PI = (y_hat0 - margin, y_hat0 + margin)  # (61.24, 74.26)
+
+  # 6) Korrelasjon
+  r  = Sxy / (Sxx * Syy) ** 0.5            # 0.966
+  r2 = r ** 2                              # 0.933
+
+detailed_solution_variants:
+  - label: "Estimere α̂ og β̂"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5c"
+        question: "Fra datatabellen oppgis: `Σ(x_i - x̄)² = 15.6`, `Σ(x_i - x̄)(y_i - ȳ) = 103.4`, `x̄ = 6.8`, `ȳ = 79.7`. Finn den estimerte regresjonslinjen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Datasett med `n = 10` par `(x_i, y_i)`. Mellom-summene er allerede oppgitt i tabellen." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "`x̄ = 6.8`, `ȳ = 79.7` (gitt)" }
+              - { text: "`S_XX = Σ(x_i - x̄)² = 15.6`" }
+              - { text: "`S_XY = Σ(x_i - x̄)(y_i - ȳ) = 103.4`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 103.4 / 15.6`" }
+              - { indent: "`= 6.628...`" }
+              - { indent: "`≈ 6.63`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 79.7 - 6.63·6.8`" }
+              - { indent: "`= 79.7 - 45.08`" }
+              - { indent: "`≈ 34.62`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn estimatene i `ŷ = α̂ + β̂·x`:" }
+              - { indent: "`ŷ = 34.62 + 6.63·x`" }
+        result: "`ŷ = 34.62 + 6.63·x`"
+
+      - source: "Praksis · 5 datapunkter"
+        question: "Gitt datapunktene `(1, 2)`, `(2, 3)`, `(3, 5)`, `(4, 6)`, `(5, 8)`. Estimer `α̂` og `β̂` i den enkle lineære regresjonsmodellen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par `(x_i, y_i)`: `(1,2)`, `(2,3)`, `(3,5)`, `(4,6)`, `(5,8)`." }
+              - { text: "Vi må regne ut mellom-summene fra rådata." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (1+2+3+4+5)/5 = 15/5 = 3`" }
+              - { indent: "`ȳ = (2+3+5+6+8)/5 = 24/5 = 4.8`" }
+              - { text: "Sum av kvadrater og krysssum:" }
+              - { indent: "`Σx_i² = 1 + 4 + 9 + 16 + 25 = 55`" }
+              - { indent: "`Σx_i·y_i = 2 + 6 + 15 + 24 + 40 = 87`" }
+              - { text: "Bruker beregningsformlene:" }
+              - { indent: "`S_XX = Σx_i² - n·x̄² = 55 - 5·9 = 10`" }
+              - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 87 - 5·3·4.8 = 87 - 72 = 15`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 15 / 10 = 1.5`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 4.8 - 1.5·3`" }
+              - { indent: "`= 4.8 - 4.5 = 0.3`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn i `ŷ = α̂ + β̂·x`:" }
+              - { indent: "`ŷ = 0.3 + 1.5·x`" }
+        result: "`α̂ = 0.3`, `β̂ = 1.5`, `ŷ = 0.3 + 1.5·x`"
+
+      - source: "Praksis · lab-data (strekk vs. last)"
+        question: "I et fysikkforsøk måles forlengelsen `y` (mm) av en fjær for ulike laster `x` (N). Data: `(2, 4.2)`, `(4, 7.8)`, `(6, 12.1)`, `(8, 15.9)`. Finn regresjonslinjen `ŷ = α̂ + β̂·x`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 4` målepar `(x_i, y_i)` fra fjærforsøk." }
+              - { text: "Hooke's lov antyder lineær sammenheng `y ≈ β·x` (med `α ≈ 0` ideelt sett)." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gjennomsnitt:" }
+              - { indent: "`x̄ = (2+4+6+8)/4 = 20/4 = 5`" }
+              - { indent: "`ȳ = (4.2+7.8+12.1+15.9)/4 = 40.0/4 = 10.0`" }
+              - { text: "Sum av kvadrater og krysssum:" }
+              - { indent: "`Σx_i² = 4 + 16 + 36 + 64 = 120`" }
+              - { indent: "`Σx_i·y_i = 2·4.2 + 4·7.8 + 6·12.1 + 8·15.9`" }
+              - { indent: "`= 8.4 + 31.2 + 72.6 + 127.2 = 239.4`" }
+              - { text: "Beregningsformler:" }
+              - { indent: "`S_XX = Σx_i² - n·x̄² = 120 - 4·25 = 20`" }
+              - { indent: "`S_XY = Σx_i·y_i - n·x̄·ȳ = 239.4 - 4·5·10 = 239.4 - 200 = 39.4`" }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 39.4 / 20 = 1.97`" }
+              - { text: "`α̂ = ȳ - β̂·x̄ = 10.0 - 1.97·5`" }
+              - { indent: "`= 10.0 - 9.85 = 0.15`" }
+          - label: "Linjelikning"
+            lines:
+              - { text: "Setter inn estimatene:" }
+              - { indent: "`ŷ = 0.15 + 1.97·x`" }
+        result: "`α̂ ≈ 0.15`, `β̂ ≈ 1.97`, `ŷ = 0.15 + 1.97·x`"
+
+  - label: "Residualvarians S_E²"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d"
+        question: "Datasett med n = 10 observasjonspar (x_i, y_i) der x = antall år erfaring og y = lønn. Etter regresjon er β̂ = 6.63 og α̂ = 34.6. SSE = Σ(y_i − α̂ − β̂·x_i)² er beregnet til 48.7437. Finn estimatet for residualenes varians `S_E²` og standardavviket `S_E`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Lineær regresjon med n = 10 observasjonspar." }
+              - { text: "Oppgitt: SSE = 48.7437, β̂ = 6.63, α̂ = 34.6." }
+              - { text: "Vi skal finne residualvariansen `S_E²` og `S_E`." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "SSE er allerede gitt som ferdig utregnet sum:" }
+              - { indent: "`SSE = Σ(y_i − α̂ − β̂·x_i)² = 48.7437`." }
+              - { text: "Frihetsgrader: `ν = n − 2 = 10 − 2 = 8` (to parametre estimert: α, β)." }
+          - label: "Residualvarians"
+            lines:
+              - { text: "Formel: `S_E² = SSE / (n − 2)`." }
+              - { text: "Innsetting:" }
+              - { indent: "`S_E² = 48.7437 / (10 − 2)`" }
+              - { indent: "`     = 48.7437 / 8`" }
+              - { indent: "`     ≈ 6.093`." }
+          - label: "S_E (standardavvik)"
+            lines:
+              - { text: "`S_E = √S_E² = √6.093 ≈ 2.4684`." }
+        result: "`S_E² ≈ 6.093`, `S_E ≈ 2.468`"
+
+      - source: "Praksis · lite datasett (kompakt formel)"
+        question: "Datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)` med `n = 5`. Det er beregnet `S_YY = 22.8`, `S_XY = 15`, `β̂ = 1.5`. Finn residualvariansen `S_E²` og `S_E` ved bruk av den kompakte formelen `SSE = S_YY − β̂·S_XY`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Lineær regresjon, n = 5 observasjonspar." }
+              - { text: "Oppgitt: `S_YY = 22.8`, `S_XY = 15`, `β̂ = 1.5`." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Frihetsgrader: `ν = n − 2 = 5 − 2 = 3`." }
+          - label: "Residualvarians"
+            lines:
+              - { text: "Kompakt formel:" }
+              - { indent: "`SSE = S_YY − β̂·S_XY = 22.8 − 1.5·15 = 22.8 − 22.5 = 0.3`" }
+              - { indent: "`S_E² = SSE / (n − 2) = 0.3 / 3 = 0.1`" }
+          - label: "S_E (standardavvik)"
+            lines:
+              - { text: "`S_E = √0.1 ≈ 0.3162`." }
+        result: "`S_E² = 0.1`, `S_E ≈ 0.316`"
+
+      - source: "Praksis · datasett med større spredning"
+        question: "Datasettet (1,3), (2,2), (3,7), (4,5), (5,10), (6,8) med n = 6. Det er beregnet at `x̄ = 3.5`, `ȳ = 5.833`, `S_XX = 17.5`, `S_YY = 47.833` og `S_XY = 22.5`. Finn `β̂`, `S_E²` og `S_E`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Lineær regresjon, n = 6 observasjonspar." }
+              - { text: "Oppgitt: `x̄ = 3.5`, `ȳ = 5.833`, `S_XX = 17.5`, `S_YY = 47.833`, `S_XY = 22.5`." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "`S_XX = Σ(x_i − x̄)² = 17.5`." }
+              - { text: "`S_YY = Σ(y_i − ȳ)² = 47.833`." }
+              - { text: "`S_XY = Σ(x_i − x̄)(y_i − ȳ) = 22.5`." }
+              - { text: "Frihetsgrader: `ν = n − 2 = 6 − 2 = 4`." }
+          - label: "Estimater"
+            lines:
+              - { text: "`β̂ = S_XY / S_XX = 22.5 / 17.5 ≈ 1.2857`." }
+          - label: "Residualvarians"
+            lines:
+              - { text: "Kompakt formel: `S_E² = (S_YY − β̂·S_XY) / (n − 2)`." }
+              - { text: "Innsetting:" }
+              - { indent: "`S_E² = (47.833 − 1.2857·22.5) / 4`" }
+              - { indent: "`     = (47.833 − 28.929) / 4`" }
+              - { indent: "`     = 18.904 / 4 ≈ 4.726`." }
+          - label: "S_E (standardavvik)"
+            lines:
+              - { text: "`S_E = √4.726 ≈ 2.174`." }
+        result: "`S_E² ≈ 4.726`, `S_E ≈ 2.174`"
+
+  - label: "Standardfeil SE(β̂)"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d"
+        question: "Gitt `S_E² = 6.093` og `S_XX = 15.6`. Finn standardfeilen `SE(β̂)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi skal finne standardfeilen til stigningstallet `β̂` i en lineær regresjon." }
+              - { text: "Formel: `SE(β̂) = √(S_E² / S_XX)`." }
+              - { text: "Vi trenger:" }
+              - { indent: "`S_E²` (residualvariansen)" }
+              - { indent: "`S_XX = Σ(x_i - x̄)²`" }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Oppgaven oppgir:" }
+              - { indent: "`S_E² = 6.093`" }
+              - { indent: "`S_XX = 15.6`" }
+          - label: "Standardfeil"
+            lines:
+              - { text: "Sett inn i formelen:" }
+              - { indent: "`SE(β̂) = √(S_E² / S_XX)`" }
+              - { indent: "`= √(6.093 / 15.6)`" }
+              - { indent: "`= √0.3906`" }
+              - { indent: "`≈ 0.625`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`SE(β̂) ≈ 0.625` er et moderat tall sammenliknet med et typisk stigningstall." }
+              - { text: "Estimatet `β̂` har en viss usikkerhet; vi bruker denne verdien videre i hypotesetest (`T = β̂ / SE(β̂)`) og i konfidensintervallet `β̂ ± t·SE(β̂)`." }
+        result: "`SE(β̂) ≈ 0.625`"
+
+      - source: "Praksiseksempel · sterk lineær sammenheng"
+        question: "Datasett: `(1,2), (2,3), (3,5), (4,6), (5,8)`. Tidligere er det funnet `S_E² = 0.1` og `S_XX = 10`. Finn `SE(β̂)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har en enkel lineær regresjon `y = α + βx + ε` med 5 datapunkter." }
+              - { text: "Trenger `S_E²` (allerede beregnet) og `S_XX` (allerede beregnet)." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Fra tidligere utregning:" }
+              - { indent: "`S_E² = 0.1` (liten residualvarians – punktene ligger nær linja)" }
+              - { indent: "`S_XX = 10` (god spredning i x-verdiene)" }
+          - label: "Standardfeil"
+            lines:
+              - { text: "Sett inn i formelen:" }
+              - { indent: "`SE(β̂) = √(0.1 / 10) = √0.01 = 0.1`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`SE(β̂) = 0.1` er liten. Det betyr at `β̂` er presist estimert." }
+              - { text: "I et 95 % KI for β blir bredden `± t·0.1`, dvs. smalt – høy tiltro til estimatet." }
+        result: "`SE(β̂) = 0.1`"
+
+      - source: "Praksiseksempel · svak sammenheng og få datapunkter"
+        question: "Anta en regresjon basert på `n = 4` observasjoner med `S_E² = 4.0` og `S_XX = 2.5`. Finn `SE(β̂)` og kommenter usikkerheten."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Liten utvalgsstørrelse og dårlig x-spredning gir typisk stor `SE(β̂)`." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Oppgitt: `S_E² = 4.0`, `S_XX = 2.5`." }
+          - label: "Standardfeil"
+            lines:
+              - { text: "Sett inn i formelen:" }
+              - { indent: "`SE(β̂) = √(4.0 / 2.5) = √1.6 ≈ 1.265`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`SE(β̂) ≈ 1.265` er stor. Estimatet av `β̂` er usikkert." }
+              - { text: "Et 95 % KI for `β` blir bredt (`β̂ ± t·1.265`), og en hypotesetest vil sjelden forkaste `H_0: β = 0` selv om det finnes en svak reell sammenheng." }
+              - { text: "For å redusere `SE(β̂)` kan man øke `n` eller velge `x`-verdier med større spredning." }
+        result: "`SE(β̂) ≈ 1.265` (stor)"
+
+  - label: "Hypotesetest for β"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d"
+        question: "Regresjonslinjen er `ŷ = 34.6 + 6.63·x` med `SSE = 48.7437` og `Σ(x_i - x̄)² = 15.6`, `n = 10`. Test om sammenhengen mellom søvn og eksamensresultat er signifikant på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 6.63`, `SSE = 48.7437`, `Σ(x_i - x̄)² = 15.6`" }
+              - { text: "`n = 10`, `α = 0.05`" }
+              - { comment: "SE(β̂) må beregnes fra SSE og Σ(x-x̄)²" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0` (ingen lineær sammenheng)" }
+              - { text: "`H₁: β ≠ 0` (det ER en lineær sammenheng)" }
+              - { comment: "tosidig test" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`S_E² = SSE / (n-2) = 48.7437 / 8 = 6.093`" }
+              - { text: "`SE(β̂) = √(S_E² / Σ(x-x̄)²) = √(6.093 / 15.6) = 0.625`" }
+              - { text: "`T = β̂ / SE(β̂) = 6.63 / 0.625 = 10.61`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = n - 2 = 10 - 2 = 8`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 8) = 2.306` (tosidig kritisk verdi)" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 10.61 > 2.306` ✓ → forkast `H₀`" }
+              - { comment: "klart signifikant resultat" }
+        result: "Forkast `H₀` på `α = 0.05`. Det er statistisk signifikant lineær sammenheng mellom søvn og eksamensresultat."
+
+      - source: "Praksis · klar sammenheng"
+        question: "Datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)` gir `β̂ = 1.5` og `SE(β̂) = 0.1`. Test om det er en lineær sammenheng på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 1.5`, `SE(β̂) = 0.1`, `n = 5`, `α = 0.05`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0`, `H₁: β ≠ 0` (tosidig)." }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = 1.5 / 0.1 = 15.0`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = 3`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 3) = 3.182`" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 15.0 ≫ 3.182` ✓ → forkast `H₀` med god margin" }
+        result: "Forkast `H₀`. Sterk statistisk signifikant lineær sammenheng."
+
+      - source: "Praksis · svak sammenheng"
+        question: "I et datasett med `n = 12` observasjoner finner vi `β̂ = 0.35` og `SE(β̂) = 0.28`. Test om det er en lineær sammenheng på `α = 0.05`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`β̂ = 0.35`, `SE(β̂) = 0.28`, `n = 12`, `α = 0.05`." }
+              - { comment: "merk at SE er stor relativt til β̂" }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β = 0`, `H₁: β ≠ 0` (tosidig)." }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = 0.35 / 0.28 = 1.25`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`df = 10`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 10) = 2.228`" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|T| = 1.25 < 2.228` ✗ → kan IKKE forkaste `H₀`" }
+              - { comment: "punktet ligger innenfor akseptanseområdet" }
+        result: "Vi forkaster ikke `H₀`. Ingen statistisk grunnlag for å hevde at det finnes en lineær sammenheng."
+
+  - label: "Prediksjonsintervall for ny Y"
+    solutions:
+      - source: "Eksamen jan26 · oppgave 6"
+        question: "Regresjonslinjen er ŷ = 34.6 + 6.63·x med S_E² = 6.093, SE(β̂) = 0.625, n = 10, x̄ = 6.8. Finn et 95 % prediksjonsintervall for Y når x₀ = 5, og avgjør om det er usannsynlig at en student med 5 timers søvn får 75 % eller bedre."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 34.6, β̂ = 6.63, S_E² = 6.093 ⇒ S_E = √6.093 ≈ 2.4684" }
+              - { text: "SE(β̂) = 0.625, n = 10, x̄ = 6.8" }
+              - { text: "Nytt x₀ = 5, konfidensnivå 1 − α = 0.95" }
+              - { comment: "S_XX = (S_E/SE(β̂))² = (2.4684/0.625)² ≈ 15.59" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = α̂ + β̂·x₀ = 34.6 + 6.63·5" }
+              - { indent: "= 34.6 + 33.15 = 67.75" }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { indent: "= 2.4684 · √(1 + 1/10 + (5 − 6.8)²/15.59)" }
+              - { indent: "= 2.4684 · √(1 + 0.1 + 3.24/15.59)" }
+              - { indent: "= 2.4684 · √(1 + 0.1 + 0.208)" }
+              - { indent: "= 2.4684 · √1.308 ≈ 2.4684 · 1.143 ≈ 2.822" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "ν = n − 2 = 8 frihetsgrader, α/2 = 0.025" }
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 8) = 2.306" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = t · SE_pred = 2.306 · 2.822 ≈ 6.51" }
+              - { text: "PI: ŷ₀ ± margin = 67.75 ± 6.51" }
+              - { indent: "= [61.24, 74.26]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Med 95 % sannsynlighet vil en NY student med 5 timers søvn score mellom 61.24 % og 74.26 %." }
+              - { text: "Siden 75 ligger UTENFOR intervallet, er det usannsynlig at studenten får 75 % eller bedre." }
+        result: "95 % prediksjonsintervall: [61.24, 74.26]. 75 % er usannsynlig."
+
+      - source: "Praksisoppgave · standard datasett, x₀ nær x̄"
+        question: "Et lite datasett (1,2), (2,3), (3,5), (4,6), (5,8) gir β̂ = 1.5, α̂ = 0.3, S_E = √0.1 ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5. Finn et 95 % prediksjonsintervall for en NY observasjon Y når x₀ = 4."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162" }
+              - { text: "S_XX = 10, x̄ = 3, n = 5" }
+              - { text: "Nytt x₀ = 4, konfidensnivå 1 − α = 0.95" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = α̂ + β̂·x₀ = 0.3 + 1.5·4" }
+              - { indent: "= 0.3 + 6.0 = 6.3" }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { indent: "= 0.3162 · √(1 + 1/5 + (4 − 3)²/10)" }
+              - { indent: "= 0.3162 · √(1 + 0.2 + 0.1)" }
+              - { indent: "= 0.3162 · √1.3 ≈ 0.3604" }
+              - { comment: "1-tallet under rota fanger usikkerheten i den NYE observasjonen; uten det får man KI for E[Y|x]." }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "ν = n − 2 = 3 frihetsgrader, α/2 = 0.025" }
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 3) = 3.182" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = t · SE_pred = 3.182 · 0.3604 ≈ 1.147" }
+              - { text: "PI: 6.3 ± 1.147 ≈ [5.15, 7.45]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "Med 95 % sannsynlighet vil en ny y-observasjon ved x₀ = 4 ligge mellom ca. 5.15 og 7.45." }
+              - { text: "Bredt intervall fordi n er svært liten (kun 5 punkter) og t-kvantilen er stor." }
+        result: "95 % prediksjonsintervall ved x₀ = 4: [5.15, 7.45]."
+
+      - source: "Praksisoppgave · samme datasett, x₀ langt fra x̄ (ekstrapolering)"
+        question: "Med samme datasett som over (β̂ = 1.5, α̂ = 0.3, S_E ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5), finn et 95 % prediksjonsintervall for en NY Y når x₀ = 7. Sammenlign bredden med intervallet ved x₀ = 4."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "α̂ = 0.3, β̂ = 1.5, S_E ≈ 0.3162, S_XX = 10, x̄ = 3, n = 5" }
+              - { text: "Nytt x₀ = 7 (4 enheter unna x̄), 1 − α = 0.95" }
+          - label: "Predikert verdi"
+            lines:
+              - { text: "ŷ₀ = 0.3 + 1.5·7 = 10.8" }
+              - { comment: "Merk: x₀ = 7 ligger utenfor observert x-spenn (1–5) → ekstrapolering, vær forsiktig." }
+          - label: "Standardfeil for prediksjon"
+            lines:
+              - { text: "SE_pred = S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)" }
+              - { indent: "= 0.3162 · √(1 + 0.2 + 16/10)" }
+              - { indent: "= 0.3162 · √2.8 ≈ 0.5291" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "t_(0.025, 3) = 3.182" } }
+          - label: "Intervall"
+            lines:
+              - { text: "Margin = 3.182 · 0.5291 ≈ 1.684" }
+              - { text: "PI: 10.8 ± 1.684 ≈ [9.12, 12.48]" }
+          - label: "Tolkning"
+            lines:
+              - { text: "95 % PI: [9.12, 12.48], bredde ≈ 3.37 — sammenlignet med x₀ = 4 (bredde ≈ 2.29) er intervallet ca. 47 % bredere." }
+              - { text: "Prediksjonsintervaller er smalest ved x̄ og vokser ut til sidene fordi `(x₀ − x̄)²/S_XX` øker raskt." }
+        result: "95 % prediksjonsintervall ved x₀ = 7: [9.12, 12.48] – tydelig bredere pga. avstand fra x̄."
+
+  - label: "Korrelasjon r"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5b"
+        question: "Datatabellen gir `Σ(x-x̄)² = 15.6`, `Σ(y-ȳ)² = 734.1`, `Σ(x-x̄)(y-ȳ) = 103.4`. Beregn korrelasjonskoeffisient `r` og tolk resultatet."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har `n` par av observasjoner og oppsummerte mellom-summer." }
+              - { text: "Spørsmålet ber om Pearson-korrelasjonskoeffisient `r` — et mål på styrken av den lineære sammenhengen." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "Gitt direkte fra datatabellen:" }
+              - { indent: "`S_XX = 15.6`, `S_YY = 734.1`, `S_XY = 103.4`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "`r = S_XY / √(S_XX · S_YY)`" }
+              - { indent: "`= 103.4 / √(15.6 · 734.1)`" }
+              - { indent: "`= 103.4 / √11451.96`" }
+              - { indent: "`= 103.4 / 107.01 ≈ 0.966`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ 0.966` ligger svært nær 1 — sterk positiv lineær sammenheng mellom `x` og `y`." }
+              - { text: "Forklart variasjon: `r² ≈ 0.933` — ca. 93 % av variasjonen i `y` forklares av lineær regresjon på `x`." }
+        result: "`r ≈ 0.966` (sterk positiv lineær sammenheng, `r² ≈ 0.933`)"
+
+      - source: "Praksis · perfekt nesten-rett-linje"
+        question: "Gitt datasettet `(1,2), (2,3), (3,5), (4,6), (5,8)`. Beregn `r` og tolk."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par. Vi skal kvantifisere styrken av sammenhengen." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "`x̄ = 3`, `ȳ = 4.8`" }
+              - { text: "`S_XX = 10`, `S_YY = 22.8`, `S_XY = 15`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "`r = 15 / √(10 · 22.8) = 15 / √228 = 15 / 15.0997 ≈ 0.987`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ 0.987` — meget sterk positiv lineær sammenheng." }
+              - { text: "`r² ≈ 0.975` — ca. 97.5 % av variasjonen i `y` forklares av regresjonen på `x`." }
+        result: "`r ≈ 0.987` (`r² ≈ 0.975`)"
+
+      - source: "Praksis · negativ korrelasjon"
+        question: "Datasett `(1,5), (2,4), (3,5), (4,3), (5,3)`. Beregn `r` og tolk hva en negativ verdi betyr."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` par." }
+          - label: "Mellom-summer"
+            lines:
+              - { text: "`x̄ = 3`, `ȳ = 4`" }
+              - { text: "`S_XX = 10`, `S_XY = (-2)(1) + (-1)(0) + 0·1 + 1·(-1) + 2·(-1) = -5`, `S_YY = 4`" }
+          - label: "Korrelasjonskoeffisient"
+            lines:
+              - { text: "`r = -5 / √(10 · 4) = -5 / √40 = -5 / 6.3246 ≈ -0.791`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`r ≈ -0.791` — moderat til sterk NEGATIV lineær sammenheng: når `x` øker, har `y` en tendens til å avta." }
+              - { text: "`r² ≈ 0.625` — ca. 62.5 % forklart, resten er uforklart støy." }
+              - { text: "MERK: `r` måler bare lineær sammenheng. Ved et ikke-lineært mønster kan `r` være liten selv om punktene følger en tydelig kurve." }
+        result: "`r ≈ -0.791` (`r² ≈ 0.625`, negativ retning)"
+
+related:
+  - { id: "korrelasjon-joint",                kind: "entry" }
+  - { id: "utvalgsvarians-radata",            kind: "entry" }
+  - { id: "en-utvalg-t-test",                 kind: "entry" }
+  - { id: "ki-mu-og-varians",               kind: "entry" }
+  - { id: "forutsetninger-regresjon",         kind: "glossary" }
+  - { id: "minste-kvadraters-metode",         kind: "glossary" }
+  - { id: "residual",                         kind: "glossary" }
+  - { id: "beta-koeffisient",                 kind: "glossary" }
+  - { id: "intercept",                        kind: "glossary" }
+  - { id: "spredningsplott",                  kind: "glossary" }
+  - { id: "r-kvadrat",                        kind: "glossary" }
+  - { id: "pearson-korrelasjon",              kind: "glossary" }
+  - { id: "korrelasjon-glos",                 kind: "glossary" }
+  - { id: "prediksjonsintervall-glos",        kind: "glossary" }
+  - { id: "ekstrapolering",                   kind: "glossary" }
+  - { id: "s-xx",                             kind: "glossary" }
+  - { id: "s-xy",                             kind: "glossary" }
+  - { id: "frihetsgrader-glos",               kind: "glossary" }
+  - { id: "t-fordeling",                      kind: "glossary" }
+  - { id: "E5-t-tabell",                      kind: "table" }
+
+tools:
+  - "Tabell E.5 – t-fordelingens kvantiltabell"
+  - "Kalkulator: kvadratrot, summer, gjennomsnitt"

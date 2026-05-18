@@ -49,13 +49,14 @@ filters:
   computes: [hypothesis_test]
   random_variable: [difference_of_means, mean_of_samples, continuous]
   setup: [two_independent_samples]
-  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n, two_sided_alternative, one_sided_alternative]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, two_sided_alternative, one_sided_alternative]
   parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, alpha_significance]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_variants:
   - label: "H₁: μ_X < μ_Y (venstre)"
+    recognition: "«Er snittet i gruppe X SIGNIFIKANT LAVERE enn i gruppe Y?». To uavhengige utvalg, `σ` ukjent — ensidig."
     description: "Ensidig venstresidig test på `X − Y`. Forkast H₀ hvis `T < −t_(α, ν)`."
     steps:
       - text: "Formuler hypotesene (venstresidig på `X − Y`):"
@@ -81,6 +82,7 @@ solution_variants:
         conditional: true
 
   - label: "H₁: μ_X > μ_Y (høyre)"
+    recognition: "«Er snittet i gruppe X signifikant HØYERE enn i gruppe Y?». To uavhengige utvalg, ensidig høyresidig."
     description: "Ensidig høyresidig test på `X − Y`. Forkast H₀ hvis `T > +t_(α, ν)`."
     steps:
       - text: "Formuler hypotesene (høyresidig på `X − Y`):"
@@ -106,6 +108,7 @@ solution_variants:
         conditional: true
 
   - label: "H₁: μ_X ≠ μ_Y (tosidig)"
+    recognition: "«Er det forskjell mellom gjennomsnittene i to grupper?», «virker behandling A annerledes enn B?». Tosidig — den vanligste varianten."
     description: "Tosidig test. Forkast H₀ hvis `|T| > t_(α/2, ν)`."
     steps:
       - text: "Formuler hypotesene (tosidig):"
@@ -390,6 +393,7 @@ detailed_solution_variants:
         result: "Vi kan IKKE forkaste H₀ på α = 0.05. Dataene gir ikke tilstrekkelig grunnlag for å hevde at modifikasjonen har endret produktiviteten."
 
 related:
+  - { id: "ki-to-utvalg",            kind: "entry" }
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "mann-whitney-wilcoxon",   kind: "entry" }

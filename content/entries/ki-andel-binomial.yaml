@@ -41,10 +41,12 @@ filters:
   computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
   random_variable: [proportion, discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given, probability_threshold]
+  structural_cues: [two_outcomes_per_trial, independent_events, summary_stats_given, probability_threshold]
   parameters_known: [success_p, sample_size_large, confidence_level]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+recognition: "«Lag et 95 % konfidensintervall for andelen `p`», «hvor presist er `p̂`?», eller «mellom hvilke verdier ligger sannsynligheten?». Du har `X` suksesser av `n` forsøk."
+
 solution_template:
   - "Identifiser antall suksesser `X` og utvalgsstørrelsen `n`"
   - text: "Beregn punktestimat:"
@@ -192,7 +194,7 @@ detailed_solution_variants:
 related:
   - { id: "binomial-fordeling",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel",  kind: "entry" }
-  - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "ki-mu-og-varians",       kind: "entry" }
   - { id: "konfidensintervall",      kind: "glossary" }
   - { id: "andel",                   kind: "glossary" }
   - { id: "standardfeil-til-andel",  kind: "glossary" }

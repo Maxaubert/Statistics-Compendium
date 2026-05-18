@@ -2,6 +2,11 @@ import { useState } from "react";
 import { jStat } from "jstat";
 import { clsx } from "clsx";
 import { Maximize2, Minimize2 } from "lucide-react";
+
+// @types/jstat is missing the F-distribution helpers — cast through `unknown`.
+const jStatAny = jStat as unknown as {
+  centralF: { inv(p: number, df1: number, df2: number): number };
+};
 import type { Table } from "@/data/schema";
 import {
   MWW_TABLES,
@@ -35,6 +40,8 @@ export function PrintedTable({ distribution, inputs }: Props) {
       return <BinomialPrintedTable inputs={inputs} />;
     case "mann_whitney_quantile":
       return <MannWhitneyPrintedTable inputs={inputs} />;
+    case "f_quantile":
+      return <FPrintedTable inputs={inputs} />;
     default:
       return (
         <p className="px-4 py-3 italic text-ink-3">
@@ -599,6 +606,122 @@ function ChiSquaredPrintedTable({ inputs }: { inputs: Record<string, number> }) 
                     )}
                   >
                     {val.toFixed(2)}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </ExpandableShell>
+  );
+}
+
+// ===================== F-fordelingens kvantiltabell =====================
+function FPrintedTable({ inputs }: { inputs: Record<string, number> }) {
+  const [expanded, setExpanded] = useState(false);
+  const rawDf1 = inputs["df₁"];
+  const df1 = Math.max(1, Math.round(Number.isFinite(rawDf1) ? rawDf1 : 2));
+  const rawDf2 = inputs["df₂"];
+  const df2 = Math.max(1, Math.round(Number.isFinite(rawDf2) ? rawDf2 : 12));
+  const rawα = inputs.α;
+  const α = Number.isFinite(rawα) ? rawα : 0.05;
+
+  // Standard ANOVA α-niveauer
+  const αs = [0.10, 0.05, 0.025, 0.01];
+  const closestα = αs.reduce((a, b) =>
+    Math.abs(b - α) < Math.abs(a - α) ? b : a,
+  );
+
+  // Numerator df (df₁ = k − 1) — column headers. Lærebok-spredning: 1..10, 12, 15, 20, 24, 30
+  const df1Cols = expanded
+    ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 24, 30, 40, 60, 120]
+    : [-2, -1, 0, 1, 2]
+        .map((d) => df1 + d)
+        .filter((v) => v >= 1);
+
+  // Denominator df (df₂ = n − k) — row headers
+  const df2Rows = expanded
+    ? [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 60, 120,
+      ]
+    : [-3, -2, -1, 0, 1, 2, 3]
+        .map((d) => df2 + d)
+        .filter((v) => v >= 1);
+
+  const closestDf1 = df1Cols.reduce(
+    (a, b) => (Math.abs(b - df1) < Math.abs(a - df1) ? b : a),
+    df1Cols[0],
+  );
+  const closestDf2 = df2Rows.reduce(
+    (a, b) => (Math.abs(b - df2) < Math.abs(a - df2) ? b : a),
+    df2Rows[0],
+  );
+
+  return (
+    <ExpandableShell expanded={expanded} onToggle={() => setExpanded((v) => !v)}>
+      <div className="flex items-center justify-between border-b border-line bg-paper-2 px-5 py-3 text-[12px] text-ink-3">
+        <span>Kritiske F-verdier F_(α, df₁, df₂) — øvre hale, α = {closestα}</span>
+        <span className="font-serif italic text-primary">
+          Markert: df₁ = {closestDf1}, df₂ = {closestDf2}, α = {closestα}
+        </span>
+      </div>
+      <table className="w-full border-collapse font-mono text-[12.5px] text-ink-2">
+        <thead className="sticky top-0 z-[1] bg-paper-2">
+          <tr>
+            <th className="px-2.5 py-1.5 text-center text-[11px] font-semibold text-ink-3">
+              df₂ ↓ &nbsp; df₁ →
+            </th>
+            {df1Cols.map((c) => (
+              <th
+                key={c}
+                className={clsx(
+                  "px-2.5 py-1.5 text-center text-[11px] font-semibold",
+                  c === closestDf1
+                    ? "bg-primary text-white"
+                    : "bg-primary-soft text-primary",
+                )}
+              >
+                {c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {df2Rows.map((rv) => (
+            <tr
+              key={rv}
+              className={clsx(
+                "border-b border-line",
+                rv === closestDf2 && "bg-primary-2/[0.04]",
+              )}
+            >
+              <td
+                className={clsx(
+                  "bg-paper-2 px-2.5 py-1.5 text-center font-medium text-ink-3",
+                  rv === closestDf2 && "bg-primary-soft font-bold text-primary",
+                )}
+              >
+                {rv}
+              </td>
+              {df1Cols.map((cv) => {
+                const val = jStatAny.centralF.inv(1 - closestα, cv, rv);
+                const isCol = cv === closestDf1;
+                const isCell = rv === closestDf2 && isCol;
+                return (
+                  <td
+                    key={cv}
+                    className={clsx(
+                      "px-2.5 py-1.5 text-center",
+                      isCell
+                        ? "bg-primary font-bold text-white shadow-[inset_0_0_0_2px_var(--color-warn)]"
+                        : isCol
+                          ? "bg-primary-2/[0.04]"
+                          : "",
+                    )}
+                  >
+                    {Number.isFinite(val) ? val.toFixed(2) : "—"}
                   </td>
                 );
               })}

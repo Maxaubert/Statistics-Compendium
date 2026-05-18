@@ -1,0 +1,305 @@
+id: ki-to-utvalg
+name_no: "Konfidensintervall for to utvalg"
+type: identity
+category: confidence_interval
+tagline: "`(1−α)·100 %` KI for forskjeller mellom to uavhengige utvalg — forventning eller andel."
+
+formula_main: "(x̄_X − x̄_Y) ± z_(α/2)·√(σ_X²/n_X + σ_Y²/n_Y)   |   (x̄_X − x̄_Y) ± t·S_P·√(1/n_X + 1/n_Y)   |   (p̂_X − p̂_Y) ± z_(α/2)·√(p̂_X(1−p̂_X)/n_X + p̂_Y(1−p̂_Y)/n_Y)"
+formula_latex: "(\\bar{x}_X - \\bar{x}_Y) \\pm z_{\\alpha/2}\\sqrt{\\tfrac{\\sigma_X^2}{n_X} + \\tfrac{\\sigma_Y^2}{n_Y}} \\;\\Big|\\; (\\bar{x}_X - \\bar{x}_Y) \\pm t_{\\alpha/2, n_X+n_Y-2}\\, S_P \\sqrt{\\tfrac{1}{n_X}+\\tfrac{1}{n_Y}} \\;\\Big|\\; (\\hat{p}_X - \\hat{p}_Y) \\pm z_{\\alpha/2}\\sqrt{\\tfrac{\\hat{p}_X(1-\\hat{p}_X)}{n_X}+\\tfrac{\\hat{p}_Y(1-\\hat{p}_Y)}{n_Y}}"
+
+what_it_does: |
+  Konfidensintervaller for FORSKJELLER mellom to uavhengige utvalg —
+  samlet på samme side fordi du må velge mellom dem ofte:
+
+  - **`μ_X − μ_Y` med σ kjent** ⇒ z-basert (tabell E.4)
+  - **`μ_X − μ_Y` med σ ukjent (pooled)** ⇒ t-basert (tabell E.5), antar
+    `σ_X² = σ_Y²` og bruker den felles `S_P²`
+  - **`p_X − p_Y`** ⇒ z-basert med binomialestimat for hver gruppe
+
+  Hvis KI inneholder 0, kan du IKKE konkludere at det er forskjell mellom
+  gruppene på det konfidensnivået.
+
+why_use: |
+  Standardverktøy for sammenligning av to grupper. Spørsmål som
+  «er det forskjell mellom behandling A og B?», «virker den nye metoden
+  bedre enn den gamle?», «forskjell i andel røykere mellom to land?» —
+  KI gir både en estimert forskjell og usikkerheten rundt den.
+
+  Hvis du heller vil TESTE en spesifikk hypotese om forskjellen
+  (`H₀: μ_X = μ_Y`), bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test)
+  i stedet. KI og test gir samme konklusjon ved tosidig test på samme α.
+
+recognition_cues:
+  - "Oppgaven ber om '95 % konfidensintervall for forskjellen mellom to grupper / behandlinger / utvalg'"
+  - "To uavhengige utvalg med separate `x̄`, `s`, `n` (eller `X`, `n`) for hver"
+  - "Spørsmål om 'hvor mye bedre / dårligere / forskjellig' to grupper er, med usikkerhet"
+  - "Frasering «estimer differansen `μ_X − μ_Y` (eller `p_X − p_Y`) med usikkerhet»"
+  - "Oppgaven beskriver to populasjoner og spør om hva forskjellen i populasjonene er"
+
+when_NOT_to_use:
+  - "Du har bare ETT utvalg → bruk [KI for μ og σ²](/entry/ki-mu-og-varians)"
+  - "Paret design (samme person/enhet målt to ganger) → bruk paret t-KI (regn differansen først, så ett-utvalgs-KI på differansene)"
+  - "Du vil teste en spesifikk hypotese (`H₀: μ_X = μ_Y`) → [to-utvalgs t-test](/entry/to-utvalgs-t-test)"
+  - "Du sammenligner mer enn to grupper → bruk variansanalyse (ANOVA, ikke i pensum)"
+
+symbols:
+  - { sym: "x̄_X, x̄_Y",       means: "utvalgsgjennomsnittene i hver gruppe" }
+  - { sym: "n_X, n_Y",         means: "antall observasjoner i hver gruppe" }
+  - { sym: "σ_X, σ_Y",         means: "populasjonsstandardavvik i hver gruppe (kjent i fane 1)" }
+  - { sym: "s_X, s_Y",         means: "utvalgsstandardavvik i hver gruppe (estimater for σ)" }
+  - { sym: "S_P²",             means: "pooled (felles) varians-estimat: `((n_X−1)·s_X² + (n_Y−1)·s_Y²) / (n_X + n_Y − 2)`" }
+  - { sym: "S_P",              means: "pooled standardavvik, `S_P = √S_P²`" }
+  - { sym: "X, Y",             means: "antall suksesser i hver gruppe (fane 3)" }
+  - { sym: "p̂_X, p̂_Y",        means: "estimerte andeler, `p̂_X = X/n_X`, `p̂_Y = Y/n_Y`" }
+  - { sym: "ν",                means: "frihetsgrader, `n_X + n_Y − 2` for pooled t-KI" }
+  - { sym: "α",                means: "signifikansnivå; `1 − α` er konfidensnivået" }
+  - { sym: "z_(α/2)",          means: "kvantil i standardnormal — tabell E.4" }
+  - { sym: "t_(α/2, ν)",       means: "kvantil i t-fordelingen — tabell E.5" }
+
+filters:
+  computes: [confidence_interval, parameter_estimate, find_n_for_threshold]
+  random_variable: [difference_of_means, proportion, mean_of_samples, continuous]
+  setup: [two_independent_samples]
+  structural_cues: [normal_assumed, summary_stats_given, data_as_list, two_outcomes_per_trial]
+  parameters_known: [population_variance_known, population_variance_unknown, sample_size_small_lt30, sample_size_large, confidence_level, success_p]
+  distribution_assumption: [normal, t_distribution, binomial]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, t_quantile_table_E5, calculator_sqrt]
+
+tags:
+  - konfidensintervall to utvalg
+  - KI to utvalg
+  - to-utvalgs KI
+  - forskjell mellom gjennomsnitt
+  - forskjell mellom andeler
+  - μ_X − μ_Y
+  - p_X − p_Y
+  - mu_x minus mu_y
+  - pooled
+  - pooled varians
+  - S_P²
+  - z to utvalg
+  - t to utvalg
+  - to populasjoner
+  - sammenligning av grupper
+
+solution_variants:
+  - label: "KI for μ_X − μ_Y (σ kjent)"
+    recognition: "«Lag et 95 % KI for forskjellen mellom to gjennomsnitt» når `σ_X` og `σ_Y` er KJENT (oppgitt eksternt). z-basert intervall."
+    steps:
+      - "Identifiser to UAVHENGIGE utvalg med kjente `σ_X`, `σ_Y` og målte `x̄_X`, `x̄_Y`, `n_X`, `n_Y`."
+      - "Finn `α` fra konfidensnivået og slå opp `z_(α/2)` i **tabell E.4**. F.eks. 95 % gir `z_(0.025) = 1.96`."
+      - text: "Beregn standardfeilen til differansen:"
+        formula: "SE = √(σ_X²/n_X + σ_Y²/n_Y)"
+      - text: "Sett opp intervallet:"
+        formula: "(x̄_X − x̄_Y) ± z_(α/2) · SE"
+      - text: "Eksempel: gruppe X: `n_X = 50`, `x̄_X = 100`, `σ_X = 10`; gruppe Y: `n_Y = 40`, `x̄_Y = 95`, `σ_Y = 12`; 95 % KI:"
+        formula:
+          - "SE = √(100/50 + 144/40) = √(2 + 3.6) = √5.6 ≈ 2.366"
+          - "KI = (100 − 95) ± 1.96·2.366 = 5 ± 4.64 = [0.36, 9.64]"
+        example: true
+      - text: "**Tolkning:** intervallet inneholder ikke 0, så vi konkluderer (med 95 % konfidens) at det ER en forskjell mellom populasjonsgjennomsnittene."
+        conditional: true
+
+  - label: "KI for μ_X − μ_Y (σ ukjent)"
+    recognition: "«Lag et 95 % KI for `μ_X − μ_Y`» når `σ` er UKJENT for begge grupper. Antar lik varians og bruker pooled `S_P²`."
+    steps:
+      - "Identifiser to UAVHENGIGE utvalg med utvalgsdata (eller `s_X²`, `s_Y²` direkte). Anta `σ_X² = σ_Y² = σ²` (felles, men ukjent)."
+      - text: "Regn pooled varians-estimat (vektet snitt av de to utvalgsvariansene):"
+        formula: "S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)"
+      - text: "Pooled standardavvik:"
+        formula: "S_P = √S_P²"
+      - text: "Frihetsgrader for t-kvantilen:"
+        formula: "ν = n_X + n_Y − 2"
+      - "Slå opp `t_(α/2, ν)` i **tabell E.5** (t-kvantiltabell)."
+      - text: "Beregn standardfeilen til differansen:"
+        formula: "SE = S_P · √(1/n_X + 1/n_Y)"
+      - text: "Sett opp intervallet:"
+        formula: "(x̄_X − x̄_Y) ± t_(α/2, ν) · SE"
+      - text: "Eksempel: gruppe X: `n_X = 12`, `x̄_X = 8.5`, `s_X² = 4.0`; gruppe Y: `n_Y = 10`, `x̄_Y = 7.2`, `s_Y² = 3.5`; 95 % KI:"
+        formula:
+          - "S_P² = (11·4.0 + 9·3.5) / 20 = (44 + 31.5)/20 = 3.775"
+          - "S_P = √3.775 ≈ 1.943"
+          - "ν = 20, t_(0.025, 20) = 2.086"
+          - "SE = 1.943·√(1/12 + 1/10) = 1.943·√0.1833 = 1.943·0.4282 ≈ 0.832"
+          - "KI = (8.5 − 7.2) ± 2.086·0.832 = 1.3 ± 1.735 = [−0.435, 3.035]"
+        example: true
+      - text: "**Frihetsgrader er `n_X + n_Y − 2`** (ikke `n − 1` som ett-utvalg, ikke `n − 2` som regresjon)."
+        conditional: true
+      - text: "**Pooled-antagelsen** krever omtrent lik varians i de to gruppene. Hvis variansene er svært ulike, bør du bruke Welchs metode i stedet (ikke dekket her — sjelden brukt i pensum)."
+        conditional: true
+
+  - label: "KI for p_X − p_Y (andelsforskjell)"
+    recognition: "«Lag et 95 % KI for forskjellen mellom to andeler / suksessrater», «`p_X − p_Y` med usikkerhetsangivelse»."
+    steps:
+      - "Identifiser to UAVHENGIGE utvalg med suksesser/forsøk: `X` av `n_X` i gruppe X, og `Y` av `n_Y` i gruppe Y."
+      - text: "Beregn punktestimatene:"
+        formula:
+          - "p̂_X = X/n_X"
+          - "p̂_Y = Y/n_Y"
+      - "Bekreft normalapproksimasjon: `n_X·p̂_X·(1−p̂_X) ≥ 5` og `n_Y·p̂_Y·(1−p̂_Y) ≥ 5`."
+      - "Slå opp `z_(α/2)` i **tabell E.4**."
+      - text: "Beregn standardfeilen til differansen:"
+        formula: "SE = √(p̂_X(1−p̂_X)/n_X + p̂_Y(1−p̂_Y)/n_Y)"
+      - text: "Sett opp intervallet:"
+        formula: "(p̂_X − p̂_Y) ± z_(α/2) · SE"
+      - text: "Eksempel: gruppe X: `X = 120` av `n_X = 200` (60 %); gruppe Y: `Y = 90` av `n_Y = 180` (50 %); 95 % KI:"
+        formula:
+          - "SE = √(0.6·0.4/200 + 0.5·0.5/180) = √(0.0012 + 0.00139) ≈ √0.00259 ≈ 0.0509"
+          - "KI = (0.6 − 0.5) ± 1.96·0.0509 = 0.10 ± 0.0998 = [0.0002, 0.1998]"
+        example: true
+      - text: "**Tolkning:** KI = [0.0002, 0.1998] inkluderer ikke 0, så vi konkluderer (akkurat så vidt!) at andelene er forskjellige."
+        conditional: true
+
+solution_template:
+  - "Avgjør om du sammenligner GJENNOMSNITT eller ANDELER."
+  - "For gjennomsnitt: er `σ` kjent (z-basert, fane 1) eller ukjent (t-basert med pooled, fane 2)?"
+  - "For andeler: fane 3 (z-basert med binomial-estimat)."
+
+common_traps: |
+  - **Frihetsgrader for pooled t** er `n_X + n_Y − 2` (begge gruppene minus
+    de to estimerte gjennomsnittene). IKKE `n_X − 1 + n_Y − 1` skrevet
+    sammen, IKKE `min(n_X, n_Y) − 1`.
+  - **Vekting i `S_P²`** — VEKT med frihetsgrader (`n_X − 1`, `n_Y − 1`),
+    ikke med selve `n`-ene. Sjekk at nevneren `n_X + n_Y − 2` matcher
+    summen av vekttellere.
+  - **`σ_X² = σ_Y²`-antagelsen** kreves for pooled. Hvis variansene er
+    tydelig ulike (en er 4–5× den andre), er pooled-intervallet ikke
+    pålitelig. I pensum antas typisk lik varians.
+  - **Inneholder KI 0?** Da kan du IKKE konkludere at det er forskjell på
+    populasjonsnivå (på det konfidensnivået). Hvis 0 er utenfor, er
+    forskjellen statistisk signifikant — ekvivalent med å forkaste
+    `H₀: μ_X = μ_Y` ved tosidig test.
+  - **Rekkefølge på differansen** — `μ_X − μ_Y` vs `μ_Y − μ_X`. Holder du
+    deg konsekvent får du bare motsatt fortegn. Velg én rekkefølge og
+    bli ved den.
+  - **z vs t for andelsforskjell** — alltid z (siden vi har stort utvalg
+    og normalapproksimasjon). Ikke bruk t — ingen unknown σ å justere for.
+  - **Paret design er ikke to-utvalg** — hvis samme person/enhet måles
+    to ganger (før/etter), skal du regne differansene PER ENHET først,
+    så bruke ett-utvalgs t-KI på differansene. Pooled vil overdrive
+    variansen kraftig.
+
+python_snippet: |
+  from scipy.stats import norm, t
+  import math
+
+  # Fane 1: KI for μ_X − μ_Y (σ kjent)
+  x_bar_X, x_bar_Y, sigma_X, sigma_Y, n_X, n_Y, alpha = 100, 95, 10, 12, 50, 40, 0.05
+  z = norm.ppf(1 - alpha/2)
+  SE = math.sqrt(sigma_X**2/n_X + sigma_Y**2/n_Y)
+  ci_z = ((x_bar_X - x_bar_Y) - z*SE, (x_bar_X - x_bar_Y) + z*SE)
+
+  # Fane 2: KI for μ_X − μ_Y (σ ukjent)
+  s2_X, s2_Y = 4.0, 3.5
+  n_X, n_Y = 12, 10
+  Sp2 = ((n_X - 1)*s2_X + (n_Y - 1)*s2_Y) / (n_X + n_Y - 2)
+  Sp = math.sqrt(Sp2)
+  t_crit = t.ppf(1 - alpha/2, df=n_X + n_Y - 2)
+  SE = Sp * math.sqrt(1/n_X + 1/n_Y)
+  ci_t = ((8.5 - 7.2) - t_crit*SE, (8.5 - 7.2) + t_crit*SE)
+
+  # Fane 3: KI for p_X − p_Y
+  X, Y, n_X, n_Y = 120, 90, 200, 180
+  p_hat_X, p_hat_Y = X/n_X, Y/n_Y
+  SE = math.sqrt(p_hat_X*(1-p_hat_X)/n_X + p_hat_Y*(1-p_hat_Y)/n_Y)
+  ci_p = ((p_hat_X - p_hat_Y) - z*SE, (p_hat_X - p_hat_Y) + z*SE)
+
+detailed_solution_variants:
+  - label: "KI for μ_X − μ_Y (σ kjent)"
+    solutions:
+      - source: "Praksis · to produksjonslinjer"
+        question: "To produksjonslinjer A og B fyller flasker. Linje A: `n_A = 50`, `x̄_A = 500.5` ml, `σ_A = 2.0`. Linje B: `n_B = 40`, `x̄_B = 499.8` ml, `σ_B = 2.5`. Begge `σ` er kjente fra kalibreringsdata. Lag et 95 % KI for forskjellen i forventet fyllingsmengde `μ_A − μ_B`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "To uavhengige utvalg, begge `σ` kjente ⇒ z-basert KI." }
+              - { text: "α = 0.05, så `z_(0.025) = 1.96` (tabell E.4)." }
+          - label: "Standardfeil"
+            lines:
+              - { text: "`SE = √(σ_A²/n_A + σ_B²/n_B) = √(4/50 + 6.25/40)`" }
+              - { indent: "`= √(0.08 + 0.15625) = √0.23625 ≈ 0.4860`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`(x̄_A − x̄_B) ± z_(α/2)·SE = (500.5 − 499.8) ± 1.96·0.4860`" }
+              - { indent: "`= 0.7 ± 0.953 = [−0.253, 1.653]`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "KI inkluderer 0, så vi kan IKKE konkludere at det er forskjell mellom linjenes forventede fyllingsmengde på 95 %-nivå." }
+        result: "`95 % KI for μ_A − μ_B: [−0.253, 1.653] ml`"
+
+  - label: "KI for μ_X − μ_Y (σ ukjent)"
+    solutions:
+      - source: "Praksis · to klasser, eksamenresultater"
+        question: "Klasse A: `n_A = 15`, `x̄_A = 72.3`, `s_A² = 84.1`. Klasse B: `n_B = 18`, `x̄_B = 68.7`, `s_B² = 91.4`. Anta lik varians. Lag et 95 % KI for `μ_A − μ_B`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "To uavhengige utvalg, `σ` ukjent for begge, antar `σ_A² = σ_B²` ⇒ pooled t-basert KI." }
+          - label: "Pooled varians"
+            lines:
+              - { text: "`S_P² = ((n_A − 1)·s_A² + (n_B − 1)·s_B²) / (n_A + n_B − 2)`" }
+              - { indent: "`= (14·84.1 + 17·91.4) / 31`" }
+              - { indent: "`= (1177.4 + 1553.8) / 31`" }
+              - { indent: "`= 2731.2 / 31 ≈ 88.10`" }
+              - { text: "`S_P = √88.10 ≈ 9.386`" }
+          - label: "Kvantil"
+            lines:
+              - { text: "`ν = n_A + n_B − 2 = 31`, `α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 31) ≈ 2.040`." } }
+          - label: "Standardfeil og intervall"
+            lines:
+              - { text: "`SE = S_P · √(1/n_A + 1/n_B) = 9.386 · √(1/15 + 1/18)`" }
+              - { indent: "`= 9.386 · √(0.0667 + 0.0556) = 9.386 · √0.1222 ≈ 9.386 · 0.3496 ≈ 3.282`" }
+              - { text: "`KI = (72.3 − 68.7) ± 2.040·3.282 = 3.6 ± 6.695 = [−3.10, 10.30]`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "KI inkluderer 0, så vi kan ikke statistisk konkludere at klassene har forskjellig forventet eksamensresultat." }
+        result: "`95 % KI for μ_A − μ_B: [−3.10, 10.30]`"
+
+  - label: "KI for p_X − p_Y (andelsforskjell)"
+    solutions:
+      - source: "Praksis · spørreundersøkelse"
+        question: "I et utvalg på `n_M = 200` menn svarer `X = 130` ja på et spørsmål. Blant `n_K = 180` kvinner svarer `Y = 90` ja. Lag et 95 % KI for andelsforskjellen `p_M − p_K`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "To uavhengige utvalg av andeler. Bruker z-basert KI med separate binomial-estimater." }
+          - label: "Punktestimater"
+            lines:
+              - { text: "`p̂_M = 130/200 = 0.65`" }
+              - { text: "`p̂_K = 90/180 = 0.50`" }
+              - { text: "Forutsetning: `n·p̂·(1−p̂) ≥ 5` for begge: `200·0.65·0.35 = 45.5 ✓`, `180·0.5·0.5 = 45 ✓`." }
+          - label: "Standardfeil"
+            lines:
+              - { text: "`SE = √(p̂_M(1−p̂_M)/n_M + p̂_K(1−p̂_K)/n_K)`" }
+              - { indent: "`= √(0.65·0.35/200 + 0.5·0.5/180)`" }
+              - { indent: "`= √(0.001138 + 0.001389)`" }
+              - { indent: "`= √0.002526 ≈ 0.0503`" }
+          - label: "Intervall"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.025) = 1.96`." } }
+              - { text: "`KI = (0.65 − 0.50) ± 1.96·0.0503`" }
+              - { indent: "`= 0.15 ± 0.0985 = [0.0515, 0.2485]`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "KI = [0.052, 0.248] inkluderer ikke 0 ⇒ andelene er statistisk forskjellige på 95 %-nivå." }
+              - { text: "Best estimat: menn svarer ja med 15 % høyere andel, med usikkerhet `±10` prosentpoeng." }
+        result: "`95 % KI for p_M − p_K: [0.052, 0.248]`"
+
+related:
+  - { id: "ki-mu-og-varians",        kind: "entry" }
+  - { id: "to-utvalgs-t-test",       kind: "entry" }
+  - { id: "ki-andel-binomial",       kind: "entry" }
+  - { id: "normalfordeling",         kind: "entry" }
+  - { id: "frihetsgrader-glos",      kind: "glossary" }
+  - { id: "konfidensintervall",      kind: "glossary" }
+  - { id: "pooled-varians",          kind: "glossary" }
+  - { id: "standardfeil",            kind: "glossary" }
+  - { id: "t-fordeling",             kind: "glossary" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+  - { id: "E5-t-tabell",             kind: "table" }
+
+tools:
+  - "Tabell E.4 – Z-kvantiltabell"
+  - "Tabell E.5 – t-fordelingens kvantiltabell"
+  - "Kalkulator: kvadratrot, divisjon"

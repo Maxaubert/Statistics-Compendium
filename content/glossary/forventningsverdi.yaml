@@ -38,4 +38,4 @@ see_also:
   - { id: forventningsverdi-oversikt, kind: entry }
   - { id: mu, kind: glossary }
   - { id: gjennomsnitt, kind: glossary }
-  - { id: forventningsverdi-diskret, kind: entry }
+  - { id: diskret-stokastisk-variabel, kind: entry }

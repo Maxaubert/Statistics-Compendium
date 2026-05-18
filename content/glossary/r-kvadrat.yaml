@@ -26,5 +26,5 @@ long_def: |
 see_also:
   - { id: korrelasjon-glos, kind: glossary }
   - { id: pearson-korrelasjon, kind: glossary }
-  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: residual, kind: glossary }

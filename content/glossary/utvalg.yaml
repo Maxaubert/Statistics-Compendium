@@ -3,7 +3,7 @@ term_no: Utvalg (stikkprøve, sample)
 short_def: "De `n` observasjonene du faktisk har målt — en delmengde av populasjonen."
 filters:
   setup: [single_population]
-  structural_cues: [total_observations_n, data_as_list]
+  structural_cues: [data_as_list]
   computes: [parameter_estimate]
   random_variable: [mean_of_samples, proportion]
 long_def: |

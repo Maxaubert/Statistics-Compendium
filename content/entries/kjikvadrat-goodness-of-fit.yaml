@@ -40,10 +40,12 @@ filters:
   computes: [hypothesis_test]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [more_than_two_categories, summary_stats_given, total_observations_n, counting_events]
+  structural_cues: [more_than_two_categories, summary_stats_given, counting_events]
   parameters_known: [alpha_significance, sample_size_large, rate_lambda]
   distribution_assumption: [chi_squared, poisson]
   tooling: [chi_square_quantile_table_E6]
+recognition: "«Passer dataene den forventede fordelingen?», «test om fordelingen er normal/uniform/binomial», eller «er observerte og forventede frekvenser like?». Du har observerte tellinger i flere kategorier."
+
 solution_template:
   - "Skriv ned `H₀` (forventet fordeling) og `H₁` (avvik)"
   - "Regn forventede antall `E_i` under `H₀`"

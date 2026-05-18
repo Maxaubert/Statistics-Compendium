@@ -49,12 +49,13 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, expected_value, find_n_for_threshold]
   random_variable: [discrete_count]
   setup: [single_population, events_in_window]
-  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, counting_events, complement_pattern, no_occurrences, at_least_one, probability_threshold]
+  structural_cues: [process_over_time, independent_events, counting_events, complement_pattern, no_occurrences, probability_threshold]
   parameters_known: [rate_lambda]
   distribution_assumption: [poisson]
   tooling: [cumulative_poisson_table_E2, calculator_exp, calculator_factorial]
 solution_variants:
   - label: "P(X = k)"
+    recognition: "«Sannsynligheten for nøyaktig `k` hendelser i tidsvinduet `t`», «3 kunder kommer på 1 time»."
     steps:
       - "Identifiser raten `λ` med enhet (f.eks. `λ = 0.0261` utbrudd/måned) og vinduets lengde `t` i samme enhet (f.eks. `t = 60` måneder)"
       - text: "Regn ut forventet antall (f.eks. `μ = 0.0261 · 60 = 1.5678`):"
@@ -71,6 +72,7 @@ solution_variants:
       - { text: "Hvis spørsmålet ber om en sum (f.eks. 'ett eller to'): regn `P(X = 1) + P(X = 2)` separat og legg sammen", conditional: true }
 
   - label: "P(X ≤ k)"
+    recognition: "«Sannsynligheten for høyst `k` hendelser», «færre enn 5 anrop på en time». Kumulativ — slå opp i tabell E.2."
     steps:
       - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `λ = 0.84`/min, `t = 2` min → `μ = 1.68`):"
         formula: "μ = λt"
@@ -83,6 +85,7 @@ solution_variants:
       - "Skriv ned tabellverdien som svar; ingen videre regning trengs"
 
   - label: "P(X ≥ k)"
+    recognition: "«Sannsynligheten for minst `k` hendelser», «mer enn 10 kunder per time?». Komplement av `P(X ≤ k−1)`."
     steps:
       - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `μ = 1.68`):"
         formula: "μ = λt"
@@ -96,6 +99,7 @@ solution_variants:
       - { text: "Hvis tabellen ikke har eksakt `μ`: bruk nærmeste verdi, eller summer `P(X = 0) + P(X = 1) + ... + P(X = k−1)` manuelt og trekk fra 1", conditional: true }
 
   - label: "P(a ≤ X ≤ b)"
+    recognition: "«Sannsynligheten for at antallet ligger mellom `a` og `b`», «mellom 3 og 7 hendelser per dag»."
     steps:
       - text: "Identifiser `λ` og `t`, og regn ut `μ` (f.eks. `λ = 0.05` pr. natt, `t = 60` → `μ = 3`):"
         formula: "μ = λt"
@@ -114,6 +118,7 @@ solution_variants:
         conditional: true
 
   - label: "P(X = 0)"
+    recognition: "«Sannsynligheten for INGEN hendelser», «ingen kunde i den neste timen». Spesielt enkel — `e^(−λt)`."
     steps:
       - "Gjenkjenn formuleringer som 'ingen hendelser', 'ikke finne noen', 'tom felle', 'null utbrudd' → dette er `P(X = 0)`"
       - "Identifiser `λ` og `t` med riktig enhet (f.eks. `λ = 0.01`/time, `t = 168` timer for én uke)"
@@ -129,6 +134,7 @@ solution_variants:
         conditional: true
 
   - label: "Finn k for terskel"
+    recognition: "«Hvilken `k` gir at `P(X ≤ k) ≥ 0.95`?», «hvor mange varer må vi ha for å være 95 % sikker på å dekke etterspørselen?»."
     steps:
       - "Identifiser terskelen `p*` fra oppgaven (f.eks. 'finn minste `k` slik at `P(X ≥ k) ≥ 0.05`' eller 'høyst 1% sjanse')"
       - text: "Regn ut `μ` for det aktuelle vinduet:"

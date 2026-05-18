@@ -37,25 +37,41 @@ symbols:
 filters:
   computes: [covariance, expected_value, std_dev, test_independence]
   random_variable: [discrete_count]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given, independent_events]
+  structural_cues: [summary_stats_given, independent_events]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
-solution_template:
-  - "Beregn μ_X og μ_Y fra marginalfordelingene"
-  - text: "Eksempel — `P(X = 0) = 0.40`, `P(X = 1) = 0.60`; `P(Y = 0) = 0.50`, `P(Y = 1) = 0.30`, `P(Y = 2) = 0.20`:"
-    formula:
-      - "μ_X = 0 · 0.40 + 1 · 0.60 = 0.60"
-      - "μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0.70"
-    example: true
-  - text: "Beregn E[XY] – kun celler med positiv sannsynlighet bidrar:"
-    formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
-  - text: "Sett inn i kovariansformelen:"
-    formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
-  - text: "Eksempel: `E[XY] = 0.30`, `μ_X = 0.60`, `μ_Y = 0.70`:"
-    formula: "Cov(X, Y) = 0.30 − 0.60·0.70 = −0.12"
-    example: true
+solution_variants:
+  - label: "Beregn Cov(X, Y) fra simultantabell"
+    recognition: "«Beregn `Cov(X, Y)`», «test om to variabler er uavhengige via kovarians», eller mellomsteg for `ρ` eller `Var(X+Y)`. Du har en simultanfordeling gitt som tabell."
+    steps:
+      - "Beregn μ_X og μ_Y fra marginalfordelingene"
+      - text: "Eksempel — `P(X = 0) = 0.40`, `P(X = 1) = 0.60`; `P(Y = 0) = 0.50`, `P(Y = 1) = 0.30`, `P(Y = 2) = 0.20`:"
+        formula:
+          - "μ_X = 0 · 0.40 + 1 · 0.60 = 0.60"
+          - "μ_Y = 0 · 0.50 + 1 · 0.30 + 2 · 0.20 = 0.70"
+        example: true
+      - text: "Beregn E[XY] – kun celler med positiv sannsynlighet bidrar:"
+        formula: "E[XY] = Σ_i Σ_j x_i · y_j · P(X = x_i, Y = y_j)"
+      - text: "Sett inn i kovariansformelen:"
+        formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
+      - text: "Eksempel: `E[XY] = 0.30`, `μ_X = 0.60`, `μ_Y = 0.70`:"
+        formula: "Cov(X, Y) = 0.30 − 0.60·0.70 = −0.12"
+        example: true
+
+  - label: "Finn E[XY] når Cov er gitt"
+    recognition: "«Regn ut `E(XY)`», «hva er forventet produkt når vi har `Cov(X, Y)` og `E[X]`, `E[Y]`?». Du har kovariansen oppgitt og skal løse ut joint-forventningen — IKKE bruk snarveien `E[X]·E[Y]` med mindre `Cov = 0`."
+    steps:
+      - "Identifiser hva som er gitt: `Cov(X, Y)`, `E[X]`, `E[Y]`. Sjekk at variablene IKKE er uavhengige (`Cov ≠ 0`) — ellers er snarveien rett frem."
+      - text: "Start fra definisjonen av kovarians og løs for `E[XY]`:"
+        formula:
+          - "Cov(X, Y) = E[XY] − E[X]·E[Y]"
+          - "E[XY] = E[X]·E[Y] + Cov(X, Y)"
+      - text: "Eksempel: `E[X] = 20`, `E[Y] = 15`, `Cov(X, Y) = 5`:"
+        formula: "E[XY] = 20·15 + 5 = 300 + 5 = 305"
+        example: true
+      - text: "**Pass på:** snarveien `E[XY] = E[X]·E[Y]` gjelder KUN hvis `X` og `Y` er uavhengige (`Cov = 0`). Med `Cov ≠ 0` får du feil svar med snarveien."
+        conditional: true
 
 common_traps: |
   - **Trekk fra `μ_X · μ_Y`, ikke `μ_X + μ_Y`**: formelen er
@@ -72,7 +88,7 @@ common_traps: |
     `Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)`.
 
 detailed_solution_variants:
-  - label: "Kovarians fra simultantabell"
+  - label: "Beregn Cov(X, Y) fra simultantabell"
     solutions:
       - source: "Eksamen mai25 · oppgave 1c"
         question: "Finn `Cov(X, Y)` fra simultanfordelingen."
@@ -172,13 +188,54 @@ detailed_solution_variants:
               - text: "Viktig: `Cov = 0` betyr ikke uavhengighet. Eksempelet over viser ikke-lineær avhengighet med null kovarians."
         result: "Fortegnet til `Cov(X, Y)` indikerer retning på lineær samvariasjon; `Cov = 0` utelukker ikke avhengighet."
 
+  - label: "Finn E[XY] når Cov er gitt"
+    solutions:
+      - source: "Praksis · E(XY) gitt Cov, E[X], E[Y]"
+        question: "X og Y har `E[X] = 20`, `E[Y] = 15`, og `Cov(X, Y) = 5`. Finn `E[XY]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi har `Cov(X, Y) = 5 ≠ 0`, så `X` og `Y` er IKKE uavhengige." }
+              - { text: "Snarveien `E[XY] = E[X]·E[Y]` gjelder bare ved uavhengighet — vi må bruke kovarians­definisjonen i stedet." }
+          - label: "Definisjonen av kovarians"
+            lines:
+              - { text: "`Cov(X, Y) = E[XY] − E[X]·E[Y]`" }
+              - { text: "Løs for det vi søker:" }
+              - { indent: "`E[XY] = E[X]·E[Y] + Cov(X, Y)`" }
+          - label: "Innsetting"
+            lines:
+              - { text: "`E[XY] = 20·15 + 5`" }
+              - { indent: "`= 300 + 5`" }
+              - { indent: "`= 305`" }
+          - label: "Sjekk"
+            lines:
+              - { text: "Hadde X og Y vært uavhengige ville `E[XY] = E[X]·E[Y] = 300`. Avviket `+5` er nettopp kovariansen." }
+              - { comment: "Generelt: positiv kovarians ⇒ E[XY] > E[X]·E[Y]; negativ ⇒ E[XY] < E[X]·E[Y]." }
+        result: "`E[XY] = 305`"
+
+      - source: "Praksis · negativ kovarians"
+        question: "X og Y har `E[X] = 0.6`, `E[Y] = 0.7`, `Cov(X, Y) = −0.12`. Finn `E[XY]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Cov(X, Y) = −0.12 < 0` — `X` og `Y` beveger seg motsatt (negativ avhengighet)." }
+          - label: "Bruk kovarians­definisjonen"
+            lines:
+              - { text: "`E[XY] = E[X]·E[Y] + Cov(X, Y)`" }
+              - { indent: "`= 0.6·0.7 + (−0.12)`" }
+              - { indent: "`= 0.42 − 0.12`" }
+              - { indent: "`= 0.30`" }
+          - label: "Sjekk"
+            lines:
+              - { text: "Snarvei-svaret ville vært `0.42`. Den negative kovariansen `−0.12` trekker `E[XY]` ned til `0.30`." }
+        result: "`E[XY] = 0.30`"
+
 related:
-  - { id: "forventningsverdi-diskret",   kind: "entry" }
+  - { id: "diskret-stokastisk-variabel",   kind: "entry" }
   - { id: "korrelasjon-joint",           kind: "entry" }
   - { id: "marginalfordeling",           kind: "entry" }
   - { id: "simultanfordeling",           kind: "glossary" }
   - { id: "kovarians-glos",              kind: "glossary" }
-  - { id: "varians-standardavvik-diskret", kind: "entry" }
   - { id: "joint",                       kind: "glossary" }
 
 tools:

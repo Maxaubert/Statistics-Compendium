@@ -4,7 +4,7 @@ short_def: "Påstanden vi tester mot — typisk «ingen effekt» eller «ingen f
 filters:
   computes: [hypothesis_test, test_independence]
   random_variable: [difference_of_means, proportion]
-  setup: [two_independent_samples, joint_table_given]
+  setup: [two_independent_samples]
   parameters_known: [alpha_significance, success_p]
   distribution_assumption: [chi_squared, normal, binomial, t_distribution]
   structural_cues: [one_sided_alternative, two_sided_alternative]

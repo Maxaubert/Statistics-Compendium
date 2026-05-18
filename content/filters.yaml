@@ -2,7 +2,7 @@ dimensions:
   - key: computes
     label_no: "Beregner"
     options:
-      - { key: exact_probability,       label_no: "Sannsynlighet (eksakt)" }
+      - { key: exact_probability,       label_no: "Punktsannsynlighet P(X = k)" }
       - { key: at_least_k,              label_no: "«Minst k» / «høyst k»" }
       - { key: range_probability,       label_no: "Sannsynlighet mellom to verdier" }
       - { key: conditional_probability, label_no: "Betinget sannsynlighet" }
@@ -22,7 +22,6 @@ dimensions:
       - { key: find_n_for_threshold,    label_no: "Finn n (terskel)" }
       - { key: find_mu_for_threshold,   label_no: "Finn μ (terskel)" }
       - { key: find_x_for_threshold,    label_no: "Finn x (invers / terskel)" }
-      - { key: variance,                label_no: "Varians (σ²)" }
 
   - key: random_variable
     label_no: "Tilfeldig variabel"
@@ -34,56 +33,47 @@ dimensions:
       - { key: mean_of_samples,       label_no: "Utvalgsgjennomsnitt" }
       - { key: difference_of_means,   label_no: "Differanse av to gjennomsnitt" }
       - { key: proportion,            label_no: "Andel (p)" }
-      - { key: slope_estimate,        label_no: "Stigningstall (β)" }
+      - { key: slope_estimate,        label_no: "Stigningstall β̂ (regresjon)" }
 
   - key: setup
     label_no: "Oppsett"
     options:
       - { key: single_population,        label_no: "Ett utvalg" }
       - { key: two_independent_samples,  label_no: "To uavhengige utvalg" }
+      - { key: three_plus_samples,       label_no: "3+ utvalg (ANOVA)" }
       - { key: paired_samples,           label_no: "Parede observasjoner" }
-      - { key: joint_table_given,        label_no: "Simultanfordeling gitt" }
       - { key: events_in_window,         label_no: "Hendelser i et tidsvindu" }
       - { key: fixed_n_trials,           label_no: "Fast antall forsøk" }
       - { key: trials_until_event,       label_no: "Antall forsøk til hendelse" }
       - { key: with_replacement,         label_no: "Med tilbakelegging" }
       - { key: without_replacement,      label_no: "Uten tilbakelegging" }
       - { key: finite_pool,              label_no: "Endelig populasjon" }
-      - { key: linear_relationship,      label_no: "(x, y)-par / lineær sammenheng" }
+      - { key: linear_relationship,      label_no: "Lineær sammenheng (x, y)-par" }
 
   - key: structural_cues
     label_no: "Kjennetegn"
     options:
-      - { key: rate_given,                  label_no: "Rate λ gitt" }
       - { key: two_outcomes_per_trial,      label_no: "To utfall per forsøk" }
-      - { key: success_probability_given,   label_no: "Suksessannsynlighet p gitt" }
       - { key: more_than_two_categories,    label_no: "Mer enn to kategorier" }
-      - { key: mean_and_sd_given,           label_no: "μ og σ gitt" }
       - { key: normal_assumed,              label_no: "Normalfordeling antatt" }
       - { key: independent_events,          label_no: "Hendelser uavhengige" }
       - { key: disjoint_events,             label_no: "Hendelser disjunkte" }
       - { key: conditional_given,           label_no: "Betinget sannsynlighet gitt" }
+      - { key: andel_og_rate_per_gruppe,    label_no: "Andel + rate per gruppe (Bayes-mønster)" }
       - { key: process_over_time,           label_no: "Prosess over tid" }
       - { key: linear_relationship_suspected, label_no: "Lineær sammenheng mistenkes" }
       - { key: data_as_list,                label_no: "Data som liste" }
       - { key: summary_stats_given,         label_no: "Oppsummeringstall gitt" }
-      - { key: joint_table_present,         label_no: "Simultantabell vises" }
-      - { key: poisson_process_mentioned,   label_no: "«Poissonprosess» nevnt" }
       - { key: counting_events,             label_no: "Teller hendelser" }
       - { key: time_until_first,            label_no: "Tid til første hendelse" }
       - { key: complement_pattern,          label_no: "«Minst én» / «ingen» / «ikke alle»" }
-      - { key: total_observations_n,        label_no: "n er gitt" }
       - { key: probability_threshold,       label_no: "«Sannsynligheten overstiger / under terskel»" }
-      - { key: at_least_one,                label_no: "«Minst én»" }
       - { key: no_occurrences,              label_no: "«Ingen forekomster» / P(X = 0)" }
       - { key: all_same_type,               label_no: "«Alle av samme type» / matchende" }
       - { key: mixed_categories,            label_no: "Blanding av kategorier (k₁ + k₂)" }
       - { key: conditioning_on_complement,  label_no: "Betinget på komplement (B̄)" }
       - { key: two_sided_alternative,       label_no: "Tosidig alternativ (H₁: ≠)" }
       - { key: one_sided_alternative,       label_no: "Ensidig alternativ (H₁: < eller >)" }
-      - { key: regression_line_given,       label_no: "Regresjonslinje (ŷ = α̂ + β̂x) gitt" }
-      - { key: predict_y_at_x,              label_no: "Predikere ŷ for gitt x" }
-      - { key: nonparametric_required,      label_no: "«Ikke-parametrisk» / «fordelingsfri» nevnt" }
       - { key: rank_based_data,             label_no: "Rang / rangering / ordinalskala" }
 
   - key: parameters_known
@@ -98,7 +88,7 @@ dimensions:
       - { key: success_p,                   label_no: "Sannsynlighet p" }
       - { key: slope_se,                    label_no: "SE(β̂)" }
       - { key: residual_variance,           label_no: "Residualvarians S_E²" }
-      - { key: sum_xx_sxy,                  label_no: "Σ(x−x̄)² og Σxy gitt" }
+      - { key: sum_xx_sxy,                  label_no: "Mellom-summer (S_XX, S_XY) gitt" }
       - { key: alpha_significance,          label_no: "Signifikansnivå α gitt" }
       - { key: confidence_level,            label_no: "Konfidensnivå gitt" }
       - { key: regression_line_estimate,    label_no: "Regresjonslinje (α̂, β̂) gitt" }
@@ -113,6 +103,7 @@ dimensions:
       - { key: exponential,      label_no: "Eksponential" }
       - { key: t_distribution,   label_no: "t-fordeling" }
       - { key: chi_squared,      label_no: "Kjikvadrat" }
+      - { key: f_distribution,   label_no: "F-fordeling" }
       - { key: none_assumed,     label_no: "Ingen fordeling antatt" }
 
   - key: tooling
@@ -125,6 +116,7 @@ dimensions:
       - { key: t_quantile_table_E5,          label_no: "t-tabell (E.5)" }
       - { key: chi_square_quantile_table_E6, label_no: "Kjikvadrattabell (E.6)" }
       - { key: mann_whitney_table_E7,        label_no: "Mann-Whitney U-tabell (E.7)" }
+      - { key: f_quantile_table_E8,          label_no: "F-tabell (E.8)" }
       - { key: calculator_only,              label_no: "Kun kalkulator (ingen tabell)" }
       - { key: calculator_exp,               label_no: "Kalkulator: e^x" }
       - { key: calculator_factorial,         label_no: "Kalkulator: k!" }

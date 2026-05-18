@@ -17,7 +17,7 @@ forms:
     formula: "σ = √( Σ (xᵢ − μ)² · P(X = xᵢ) )"
     description: "Når du har en PMF-tabell. Vekt = sannsynligheten."
     entry_links:
-      - { id: varians-standardavvik-diskret, label: "Entry" }
+      - { id: diskret-stokastisk-variabel, label: "Entry" }
   - title: "Populasjonsstandardavvik"
     symbol: "σ"
     glossary_id: populasjonsstandardavvik
@@ -25,7 +25,7 @@ forms:
     description: "Den «sanne» spredningen i hele populasjonen. Antas kjent eller estimeres med utvalgsstandardavviket s når den ikke er gitt."
     entry_links:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
-      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+      - { id: ki-mu-og-varians, label: "KI for μ (kjent σ)" }
   - title: "Utvalgsstandardavvik"
     symbol: "s"
     glossary_id: utvalgsstandardavvik
@@ -33,7 +33,7 @@ forms:
     description: "Estimat for σ når populasjonens standardavvik er ukjent. n − 1 er Bessels korreksjon."
     entry_links:
       - { id: en-utvalg-t-test, label: "Én-utvalg t-test" }
-      - { id: ki-mu-ukjent-sigma, label: "KI for μ (ukjent σ)" }
+      - { id: ki-mu-og-varians, label: "KI for μ (ukjent σ)" }
   - title: "Pooled standardavvik"
     symbol: "S_P"
     glossary_id: pooled-varians
@@ -47,7 +47,7 @@ forms:
     formula: "S_E = √( Σ(yᵢ − ŷᵢ)² / (n − 2) )"
     description: "Typisk avvik fra regresjonslinjen."
     entry_links:
-      - { id: regresjon-residualvarians, label: "Entry" }
+      - { id: lineaer-regresjon, label: "Entry" }
   - title: "Standardavvik for binomial"
     symbol: "B(n,p)"
     glossary_id: binomialvarians
@@ -77,17 +77,25 @@ forms:
     symbol: "σ_X̄"
     glossary_id: variansen-til-utvalgsgjennomsnittet
     formula: "σ_X̄ = σ/√n          (eller s/√n hvis σ er ukjent)"
-    description: "Spredningen i selve estimatet X̄, ikke i rådataene."
+    description: "Spredningen i selve estimatet X̄, ikke i rådataene. ⚠️ Krever at observasjonene er uavhengige og identisk fordelte (iid)."
     entry_links:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
-      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+      - { id: ki-mu-og-varians, label: "KI for μ (kjent σ)" }
+  - title: "Standardavvik av sum / lineær kombinasjon"
+    symbol: "σ(aX + bY)"
+    formula: "σ(aX + bY + c) = √Var(aX + bY + c)"
+    description: "⚠️ Den vanligste fallgruven: `σ(X + Y) ≠ σ(X) + σ(Y)`. Standardavvik kan IKKE summeres direkte. Du må alltid regne via variansen først — beregn `Var(aX + bY + c)` (legg til `2·a·b·Cov(X, Y)` hvis avhengige), så ta kvadratroten. Spesialtilfelle for n iid: `σ(ΣXᵢ) = σ·√n`, IKKE `n·σ`."
+    entry_links:
+      - { id: varians-oversikt, label: "Varians (oversikt)" }
+      - { id: diskret-stokastisk-variabel, label: "Lineær kombinasjon-fane" }
+      - { id: sum-uavhengige-normaler, label: "Sum av uavhengige normaler" }
   - title: "Standardfeil til regresjonsstigningstallet"
     symbol: "SE(β̂)"
     glossary_id: standardfeil-til-stigningstallet
     formula: "SE(β̂) = √(S_E² / S_XX)"
     description: "Kjernen i hypotesetest og KI for β."
     entry_links:
-      - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
+      - { id: lineaer-regresjon, label: "Entry" }
   - title: "Standardfeil til utvalgsandelen"
     symbol: "SE(p̂)"
     glossary_id: standardfeil-til-andel
@@ -105,10 +113,10 @@ when_NOT_to_use:
   - "Du trenger variansen `σ²` (kvadratenheten) i en KI-formel → bruk [varians (oversikt)](/entry/varians-oversikt)"
 
 filters:
-  computes: [std_dev, variance]
+  computes: [std_dev]
   random_variable: [discrete_count, continuous, mean_of_samples, sum_of_samples, proportion]
   setup: [single_population]
-  structural_cues: [data_as_list, summary_stats_given, mean_and_sd_given]
+  structural_cues: [data_as_list, summary_stats_given]
   parameters_known: [population_variance_known, population_variance_unknown, success_p]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
@@ -119,5 +127,5 @@ related:
   - { id: "populasjonsstandardavvik",             kind: "glossary" }
   - { id: "standardfeil",                         kind: "glossary" }
   - { id: "variansen-til-utvalgsgjennomsnittet",  kind: "glossary" }
-  - { id: "regresjon-standardfeil-stigningstall", kind: "entry" }
-  - { id: "ki-mu-ukjent-sigma",                   kind: "entry" }
+  - { id: "lineaer-regresjon", kind: "entry" }
+  - { id: "ki-mu-og-varians",                   kind: "entry" }

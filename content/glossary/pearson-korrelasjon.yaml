@@ -1,6 +1,6 @@
 id: pearson-korrelasjon
-term_no: "Pearson-korrelasjon (r)"
-short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom `−1` og `1`."
+term_no: "Pearson-korrelasjon (r og ρ)"
+short_def: "Mål på lineær samvariasjon mellom to variabler — verdi mellom `−1` og `1`. `r` for utvalg (rådata), `ρ` for populasjon (simultanfordeling)."
 filters:
   computes: [correlation, covariance]
   setup: [linear_relationship]
@@ -14,32 +14,39 @@ aliases:
   - korrelasjonskoeffisient
   - korrelasjonskoeffisienten
 long_def: |
-  To formler — samme tall, ulike datatyper.
+  Samme idé — kovarians delt på produkt av standardavvik — men to
+  symboler og to formler avhengig av hvilken type data du har:
 
-  **Fra rådata-par (regresjons-konteksten):**
+  **Empirisk korrelasjonskoeffisient r (fra rådata-par):**
 
       r = S_XY / √(S_XX · S_YY)
 
-  der `S_XX = Σ(x_i − x̄)²`, `S_YY = Σ(y_i − ȳ)²`, `S_XY = Σ(x_i − x̄)(y_i − ȳ)`.
+  der `S_XX = Σ(x_i − x̄)²`, `S_YY = Σ(y_i − ȳ)²`,
+  `S_XY = Σ(x_i − x̄)(y_i − ȳ)`. Også kalt «utvalgskorrelasjon» eller
+  «Pearsons r». Estimat for den sanne korrelasjonen i populasjonen,
+  basert på observerte par `(x_i, y_i)`. Det er DENNE formuleringen som
+  brukes i eksamensoppgaver med formuleringen «empirisk korrelasjon».
 
-  **Fra simultanfordeling (joint-konteksten):**
+  **Populasjons-korrelasjon ρ (fra simultanfordeling):**
 
-      r = Cov(X, Y) / (σ_X · σ_Y)
+      ρ(X, Y) = Cov(X, Y) / (σ_X · σ_Y)
 
-  Begge gir samme verdi når dataene er konsistente. Bruk rådata-formelen
-  når du har observerte par; bruk joint-formelen når oppgaven gir en PMF
-  for `(X, Y)`.
+  Den SANNE korrelasjonen i populasjonen, regnet fra simultantabellen
+  `P(X = x, Y = y)`. `r` er utvalgsestimatet for `ρ`.
 
-  - `r = 1`: perfekt positiv lineær sammenheng
-  - `r = −1`: perfekt negativ
-  - `r = 0`: ingen lineær sammenheng (kan likevel finnes ikke-lineær!)
+  Bruk `r`-formelen når du har observerte par; bruk `ρ`-formelen når
+  oppgaven gir en PMF for `(X, Y)`. Begge ligger mellom `−1` og `1`:
+
+  - `= 1`: perfekt positiv lineær sammenheng
+  - `= −1`: perfekt negativ
+  - `= 0`: ingen lineær sammenheng (kan likevel finnes ikke-lineær!)
 
   `r²` er forklaringsgraden i enkel lineær regresjon. Pearson måler kun
   lineære relasjoner og er sårbar for uteliggere — sjekk alltid
-  spredningsplottet før du stoler på `r`.
+  spredningsplottet før du stoler på `r`/`ρ`.
 see_also:
   - { id: korrelasjon-glos, kind: glossary }
   - { id: kovarians-glos, kind: glossary }
   - { id: r-kvadrat, kind: glossary }
-  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: spredningsplott, kind: glossary }

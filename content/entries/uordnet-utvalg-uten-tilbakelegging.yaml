@@ -40,15 +40,14 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n, complement_pattern, all_same_type, mixed_categories, no_occurrences]
-  parameters_known: []
+  structural_cues: [complement_pattern, all_same_type, mixed_categories, no_occurrences]
   distribution_assumption: [none_assumed, hypergeometric]
   tooling: [calculator_binomial_coef, calculator_factorial]
 
 solution_variants:
   - label: "Tell antall mulige utvalg"
+    recognition: "«Hvor mange måter kan vi velge `k` av `n` på (rekkefølge spiller ingen rolle)?», «hvor mange forskjellige hender i poker?». `C(n, k) = n!/(k!(n−k)!)`."
     steps:
-      - "Bruk når oppgaven kun ber om hvor mange måter / kombinasjoner / hender det finnes (ingen sannsynlighet ennå)"
       - "Identifiser `n` (totalt antall elementer) og `k` (antall som skal velges)"
       - "Bekreft at rekkefølgen IKKE betyr noe og at samme element ikke kan velges to ganger (uten tilbakelegging)"
       - text: "Beregn binomialkoeffisienten på kalkulator (typisk `nCr` eller `COMB`):"
@@ -58,26 +57,33 @@ solution_variants:
         example: true
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
-  - label: "Sannsynlighet: alle k er av samme type"
+  - label: "Sannsynlighet: alle / ikke alle k er av samme type"
+    recognition: "«Sannsynligheten for at alle de `k` trukne er røde», «alle som ble valgt er kvinner», eller motsatt: «minst én er av en annen type», «ikke alle er like». Uten tilbakelegging."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for at alle de `k` uttrukne er av type A' (f.eks. 'alle 5 kort er hjerter', 'alle 3 plukkede er røde')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
       - "Antall mulige utvalg: `C(N, k)`"
-      - text: "Sannsynligheten:"
+      - text: "Sannsynligheten for at ALLE er av samme type:"
         formula: "P(alle k er A) = C(K, k) / C(N, k)"
+      - text: "For motsatt utfall — «IKKE alle av samme type» (minst én avviker) — bruk komplementregelen:"
+        formula: "P(ikke alle k er A) = 1 − P(alle k er A) = 1 − C(K, k) / C(N, k)"
       - text: "Pass på: hvis oppgaven har FLERE likeverdige kategorier (f.eks. 5 par sko, og 'matchende par' kan være hvilket som helst av dem), bruk formelen per kategori og summer. Med `m` like kategorier av størrelse `K`:"
         formula: "P(alle k fra én av kategoriene) = m · C(K, k) / C(N, k)"
         conditional: true
+      - text: "Komplementet gjelder også her — «ikke alle fra samme kategori» = `1 − m · C(K, k) / C(N, k)`."
+        conditional: true
       - text: "Eksempel — 5 hjerter fra 52-korts stokk (`K = 13`, `N = 52`, `k = 5`):"
-        formula: "P = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
+        formula: "P(alle hjerter) = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
+        example: true
+      - text: "Tilsvarende — «ikke alle 5 er hjerter» (minst ett kort er noe annet):"
+        formula: "P(ikke alle hjerter) = 1 − 4.95·10⁻⁴ ≈ 0.9995"
         example: true
       - text: "Alternativt, hvis sekvensiell beregning er enklere — bruk produktregelen. Begge metodene gir samme svar."
         formula: "P = (K/N) · ((K−1)/(N−1)) · … · ((K−k+1)/(N−k+1))"
         conditional: true
   - label: "Sannsynlighet: ingen av k er av en gitt type"
+    recognition: "«Sannsynligheten for at ingen av de `k` er defekte», «ingen ess i hånda». Uten tilbakelegging."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for at ingen av de uttrukne er av type A' (f.eks. 'ingen hjerter', 'ingen jenter')"
       - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
       - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
       - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
@@ -90,8 +96,8 @@ solution_variants:
       - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
   - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
+    recognition: "«Sannsynligheten for `k₁` røde og `k₂` blå i et utvalg av `k₁ + k₂`», «2 jenter og 3 gutter i komiteen». Hypergeometrisk-mønster."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for å få nøyaktig `k₁` av type A OG `k₂` av type B' (f.eks. '2 jenter og 2 gutter', '3 hjerter og 2 ruter')"
       - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
       - text: "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen):"
         formula: "C(K_A, k₁) · C(K_B, k₂)"
@@ -161,7 +167,7 @@ detailed_solution_variants:
               - { indent: "`= 2 598 960`" }
         result: "`C(52, 5) = 2 598 960` mulige hender"
 
-  - label: "Sannsynlighet: alle k er av samme type"
+  - label: "Sannsynlighet: alle / ikke alle k er av samme type"
     solutions:
       - source: "Praksis · sko i mørket"
         question: "I en mørk garderobe ligger det fem par sko i en haug. Du plukker tilfeldig opp to sko. Hva er sannsynligheten for at skoene du har plukket opp hører sammen (utgjør et par)?"

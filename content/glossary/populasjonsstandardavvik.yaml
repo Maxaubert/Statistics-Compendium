@@ -28,5 +28,5 @@ see_also:
   - { id: utvalgsstandardavvik, kind: glossary }
   - { id: sigma, kind: glossary }
   - { id: standardavvik, kind: glossary }
-  - { id: ki-mu-kjent-sigma, kind: entry }
+  - { id: ki-mu-og-varians, kind: entry }
   - { id: en-utvalg-z-test, kind: entry }

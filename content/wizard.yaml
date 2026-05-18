@@ -72,8 +72,7 @@ nodes:
           - { id: hypergeometrisk-fordeling, kind: entry }
       - label: "Fordelingen er gitt som en tabell P(X=x_i) – ingen kjent navngitt fordeling"
         leads_to:
-          - { id: forventningsverdi-diskret, kind: entry }
-          - { id: varians-standardavvik-diskret, kind: entry }
+          - { id: diskret-stokastisk-variabel, kind: entry }
       - label: "Spørsmålet sier 'minst én', 'ingen', 'ikke alle' eller 'færre enn k'"
         leads_to:
           - { id: komplementregelen, kind: entry }
@@ -113,10 +112,10 @@ nodes:
           - { id: normalisering, kind: glossary }
       - label: "Konfidensintervall for μ – σ kjent"
         leads_to:
-          - { id: ki-mu-kjent-sigma, kind: entry }
+          - { id: ki-mu-og-varians, kind: entry }
       - label: "Konfidensintervall for μ – σ ukjent"
         leads_to:
-          - { id: ki-mu-ukjent-sigma, kind: entry }
+          - { id: ki-mu-og-varians, kind: entry }
           - { id: utvalgsvarians-radata, kind: entry }
       - label: "Hypotesetest om μ – σ kjent"
         next: n_sidedness_z_mu
@@ -158,10 +157,10 @@ nodes:
           - { id: simultanfordeling, kind: glossary }
       - label: "Forventningsverdi E(X), E(Y), eller E(XY)"
         leads_to:
-          - { id: forventningsverdi-diskret, kind: entry }
+          - { id: diskret-stokastisk-variabel, kind: entry }
       - label: "Varians eller standardavvik for X eller Y"
         leads_to:
-          - { id: varians-standardavvik-diskret, kind: entry }
+          - { id: diskret-stokastisk-variabel, kind: entry }
       - label: "Kovarians Cov(X, Y)"
         leads_to:
           - { id: kovarians, kind: entry }
@@ -194,21 +193,21 @@ nodes:
     options:
       - label: "Estimere regresjonslinja (α̂, β̂) ut fra data"
         leads_to:
-          - { id: regresjon-estimat-alpha-beta, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Korrelasjonskoeffisient r"
         leads_to:
-          - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Test om β = 0 (er det signifikant lineær sammenheng?)"
         next: n_sidedness_regresjon
       - label: "Prediksjonsintervall for ŷ ved gitt x"
         leads_to:
-          - { id: regresjon-prediksjonsintervall, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Standardfeil for stigningstallet SE(β̂)"
         leads_to:
-          - { id: regresjon-standardfeil-stigningstall, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Residualvarians S_E²"
         leads_to:
-          - { id: regresjon-residualvarians, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Spredningsplott / visualisere data"
         leads_to:
           - { id: spredningsplott, kind: glossary }
@@ -218,10 +217,10 @@ nodes:
     options:
       - label: "Tosidig (H₁: β ≠ 0) – standard 'finnes det noen sammenheng?'"
         leads_to:
-          - { id: regresjon-test-stigningstall, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
       - label: "Ensidig (H₁: β < 0 eller H₁: β > 0) – retning oppgitt"
         leads_to:
-          - { id: regresjon-test-stigningstall, kind: entry }
+          - { id: lineaer-regresjon, kind: entry }
 
   - id: n_inferens
     question: "Hva slags inferens?"
@@ -235,9 +234,12 @@ nodes:
           - { id: ki-poissonrate, kind: entry }
       - label: "KI for varians σ²"
         leads_to:
-          - { id: ki-varians, kind: entry }
+          - { id: ki-mu-og-varians, kind: entry }
       - label: "Test om to grupper har samme μ (to-utvalgs t-test)"
         next: n_sidedness_to_utvalg
+      - label: "Test om TRE eller FLERE grupper har samme μ (enveis ANOVA, F-test)"
+        leads_to:
+          - { id: enveis-anova, kind: entry }
       - label: "Test om to grupper er like — IKKE-parametrisk (ingen normalfordeling antatt)"
         leads_to:
           - { id: mann-whitney-wilcoxon, kind: entry }

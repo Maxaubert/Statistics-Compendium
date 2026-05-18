@@ -26,5 +26,4 @@ long_def: |
 see_also:
   - { id: beta-koeffisient, kind: glossary }
   - { id: type-2-feil, kind: glossary }
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
-  - { id: regresjon-test-stigningstall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

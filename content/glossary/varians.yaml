@@ -2,7 +2,7 @@ id: varians
 term_no: Varians (Var, σ²)
 short_def: "Mål på spredning: forventet kvadrert avvik fra gjennomsnittet."
 filters:
-  computes: [std_dev, covariance, parameter_estimate, expected_value, variance]
+  computes: [std_dev, covariance, parameter_estimate, expected_value]
   parameters_known: [population_variance_known, population_variance_unknown]
   random_variable: [discrete_count]
   structural_cues: [data_as_list, independent_events]
@@ -25,5 +25,5 @@ long_def: |
 
   Hvis `X` og `Y` er uavhengige er `Cov = 0`, så variansene legges sammen.
 see_also:
-  - { id: varians-standardavvik-diskret, kind: entry }
+  - { id: diskret-stokastisk-variabel, kind: entry }
   - { id: kovarians, kind: entry }

@@ -254,13 +254,15 @@ export function TableLookupWidget({ table, vals, setVals }: Props) {
 
 function defaultValueFor(name: string): number {
   switch (name) {
-    case "p":  return 0.95;
-    case "α":  return 0.05;
-    case "df": return 5;
-    case "z":  return 0;
-    case "μ":  return 1;
-    case "k":  return 0;
-    case "n":  return 10;
-    default:   return 0;
+    case "p":   return 0.95;
+    case "α":   return 0.05;
+    case "df":  return 5;
+    case "df₁": return 2;
+    case "df₂": return 12;
+    case "z":   return 0;
+    case "μ":   return 1;
+    case "k":   return 0;
+    case "n":   return 10;
+    default:    return 0;
   }
 }

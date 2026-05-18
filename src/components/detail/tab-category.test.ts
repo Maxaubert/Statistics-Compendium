@@ -65,6 +65,21 @@ describe("deriveTabMeta", () => {
     });
   });
 
+  it("splits generic em-dash labels into a resting head + subtitle formula", () => {
+    expect(deriveTabMeta("Rådata — lister med målinger per gruppe")).toEqual({
+      tag: null,
+      kind: "neutral",
+      short: "Rådata",
+      formula: "lister med målinger per gruppe",
+    });
+    expect(
+      deriveTabMeta("ANOVA-tabell — SSG og SSE delvis fylt ut, fullfør og test"),
+    ).toMatchObject({
+      short: "ANOVA-tabell",
+      formula: "SSG og SSE delvis fylt ut, fullfør og test",
+    });
+  });
+
   it("falls back to a cleaned label for plain neutral cases", () => {
     expect(deriveTabMeta("Standard 2-veis").short).toBe("Standard 2-veis");
     expect(deriveTabMeta("Multi-hypotese (3+ partisjoner)").short).toBe("Multi-hypotese");

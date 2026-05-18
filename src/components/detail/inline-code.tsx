@@ -138,7 +138,7 @@ const BOLD_RE = /\*\*([^*]+)\*\*/g;
 const LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
 // Combined: explicit link OR `tabell E.<digit>`
 const COMBINED_RE =
-  /\[([^\]]+)\]\(([^)\s]+)\)|tabell\s+E\.([1-7])\b/gi;
+  /\[([^\]]+)\]\(([^)\s]+)\)|tabell\s+E\.([1-8])\b/gi;
 
 const TABLE_ID_BY_NUM: Record<string, string> = {
   "1": "E1-binomial-kumulativ",
@@ -148,6 +148,7 @@ const TABLE_ID_BY_NUM: Record<string, string> = {
   "5": "E5-t-tabell",
   "6": "E6-kjikvadrattabell",
   "7": "E7-mann-whitney-u-tabell",
+  "8": "E8-f-tabell",
 };
 
 void LINK_RE; // kept for grep continuity; logic now lives in COMBINED_RE

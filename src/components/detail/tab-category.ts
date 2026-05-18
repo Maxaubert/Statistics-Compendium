@@ -25,10 +25,13 @@ function capitalize(s: string): string {
 
 /**
  * Strip a trailing parenthetical clarification ("Memoryless (gitt at …)")
- * but keep parens that are part of an expression like "P(X = k)".
+ * but keep parens that are part of an expression like "P(X = k)", or short
+ * label disambiguators like "(σ kjent)" / "(σ ukjent)" (≤ 12 chars inside).
  */
 function stripDescriptiveParen(text: string): string {
-  return text.replace(/\s+\([^)]+\)\s*$/, "").trim();
+  return text.replace(/(\s+)\(([^)]+)\)(\s*)$/, (match, _lead, inner, _trail) => {
+    return inner.trim().length <= 12 ? match : "";
+  }).trim();
 }
 
 /**
@@ -125,6 +128,23 @@ export function deriveTabMeta(label: string): TabMeta {
   // 6) total-sannsynlighet variants
   if (/^Forover\b/i.test(trimmed)) return { tag: "FOROVER", kind: "forover", short: "Forover", formula: trimmed };
   if (/^Bakover\b/i.test(trimmed)) return { tag: "INVERS", kind: "invers", short: "Bakover", formula: trimmed };
+
+  // 6.5) Generic "Short label — descriptive subtitle" pattern. Lets
+  //      any entry hand-author a two-line disclosure tab without
+  //      having to match one of the more specific shapes above.
+  //      Head becomes the resting label, tail becomes the subtitle
+  //      that fades in when the tab is active.
+  const genericDash = trimmed.split(/\s+[—–]\s+/);
+  if (genericDash.length > 1) {
+    const head = genericDash[0].trim();
+    const tail = genericDash.slice(1).join(" — ").trim();
+    return {
+      tag: null,
+      kind: "neutral",
+      short: capitalize(stripDescriptiveParen(head)),
+      formula: tail,
+    };
+  }
 
   // 7) Memoryless and similar "Single-word (descriptive paren)" patterns
   const wordParen = trimmed.match(/^([A-Za-zæøåÆØÅ][\wæøåÆØÅ-]+)\s*\([^)]+\)\s*$/);

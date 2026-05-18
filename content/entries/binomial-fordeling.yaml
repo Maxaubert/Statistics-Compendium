@@ -50,13 +50,14 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, find_n_for_threshold, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, complement_pattern, total_observations_n, counting_events, probability_threshold, at_least_one, no_occurrences, all_same_type]
+  structural_cues: [two_outcomes_per_trial, independent_events, complement_pattern, counting_events, probability_threshold, no_occurrences, all_same_type]
   parameters_known: [success_p]
   distribution_assumption: [binomial]
   tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
 
 solution_variants:
   - label: "P(X = k)"
+    recognition: "«Sannsynligheten for nøyaktig `k` suksesser av `n`», «hva er sjansen for 3 sekser i 10 kast?». Eksakt antall i et fast antall forsøk."
     steps:
       - "Identifiser `n` (antall forsøk) og `p` (suksessannsynlighet) fra oppgaveteksten"
       - "Skriv `X ~ Bin(n, p)` og noter ønsket verdi `k` (heltall, `0 ≤ k ≤ n`)"
@@ -74,6 +75,7 @@ solution_variants:
         formula: "P(X = n) = p^n"
         conditional: true
   - label: "P(X ≤ k)"
+    recognition: "«Sannsynligheten for høyst `k` suksesser», «færre enn 5 av 20 lykkes». Kumulativ — slå opp i tabell E.1 eller summer."
     steps:
       - "Identifiser `n`, `p` og terskelen `k` fra oppgaven"
       - "Skriv `X ~ Bin(n, p)` og bekreft at vi ønsker den kumulative `P(X ≤ k)`"
@@ -88,6 +90,7 @@ solution_variants:
         formula: "P(X ≤ k) = P(Y ≥ n−k) = 1 − P(Y ≤ n−k−1)"
         conditional: true
   - label: "P(X ≥ k)"
+    recognition: "«Sannsynligheten for minst `k` suksesser», «hva er sjansen for at flere enn 7 av 20 lykkes?». Komplement av `P(X ≤ k−1)`."
     steps:
       - "Identifiser `n`, `p` og nedre grense `k` (oppgaven sier 'minst k')"
       - "Skriv `X ~ Bin(n, p)` og noter at vi vil ha `P(X ≥ k)`"
@@ -103,6 +106,7 @@ solution_variants:
         conditional: true
       - { text: "Hvis `k − 1` er utenfor tabell E.1, summér pmf for `i = 0..k−1` for hånd og bruk komplement", conditional: true }
   - label: "Finn n / sjansen er mindre enn X"
+    recognition: "«Hvor mange forsøk må jeg gjøre for at `P(X ≤ k) < α`?», «hvor stort utvalg trengs for at sjansen for å overse defekter blir liten?». Inverst design-problem."
     steps:
       - "Definer variabelen og noter kravet. F.eks. mynt-eksperiment: `X` = antall kron i `n` kast, `X ~ Bin(n, 0.5)`. Krav: `P(X = 0) < 0.01` (sannsynligheten for å aldri få kron skal være under 1 %)"
       - text: "Skriv `P(X = 0)` som funksjon av `n` ved å bruke pmf for `k = 0`:"
@@ -117,6 +121,7 @@ solution_variants:
       - "Rund opp til nærmeste heltall: `n = 7`"
       - "Verifisér: `0.5^7 = 0.00781 < 0.01` ✓ og `0.5^6 = 0.0156 > 0.01` (så `n = 7` er minste verdi som tilfredsstiller kravet)"
   - label: "Finn n / sjansen overstiger X"
+    recognition: "«Hvor mange forsøk må til for at sjansen for minst én suksess overstiger 95 %?». Bruk komplement: `1 − (1−p)ⁿ ≥ α`."
     steps:
       - "Definer variabelen og noter kravet. F.eks. lotto-eksempel: `X` = antall vinst på `n` lodd, `X ~ Bin(n, 0.05)`. Krav: `P(X ≥ 1) > 0.99` (sannsynligheten for minst én vinst skal overstige 99 %)"
       - text: "Skriv `P(X ≥ 1)` via komplement (det er ofte det enkleste):"
@@ -135,6 +140,7 @@ solution_variants:
       - { text: "Hvis kravet gjelder en mer kompleks hendelse (f.eks. `P(X ≥ 2) ≥ 0.95`), finnes ikke lukket logaritme-løsning. Da prøver du økende `n` i **tabell E.1** til kravet er oppfylt — se variant 'Finn n / sjansen for minst k (k ≥ 2)'.", conditional: true }
 
   - label: "Finn n / sjansen for minst k (k ≥ 2)"
+    recognition: "«Hvor mange må vi inspisere for at sjansen for å finne minst 2 defekte er over 90 %?». Inverst, men med terskel høyere enn 1."
     steps:
       - "Definer variabelen og noter kravet. F.eks. avokado-eksempel: `X` = antall spiselige av `n`, `X ~ Bin(n, 0.6)`. Krav: `P(X ≥ 4) ≥ 0.90` (minst 4 spiselige med minst 90 % sjanse)."
       - text: "**Hvorfor virker ikke log-snarveien?** For `k = 1` blir `P(X ≥ 1) = 1 − (1 − p)^n` — bare én potens i `n`, så logaritmen isolerer `n` direkte. For `k ≥ 2` er `P(X ≥ k) = 1 − Σ_{i=0}^{k−1} C(n,i)·p^i·(1−p)^(n−i)` — en sum av flere ledd der `n` opptrer både i `C(n,i)` og i eksponenten. Ingen lukket formel — du må slå opp i **tabell E.1** for økende `n`."

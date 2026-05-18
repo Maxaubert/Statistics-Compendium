@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import {
   Info, Search, AlertTriangle, Pi, BarChart3, ClipboardList,
   FileText, AlertCircle, Code2, Table2, Link2,
@@ -16,7 +16,7 @@ import { PROPERTY_EXPLANATIONS } from "@/components/detail/property-explanations
 import { FormulaExplanationCards } from "@/components/detail/FormulaExplanationCards";
 import { FORMULA_EXPLANATIONS } from "@/components/detail/formula-explanations";
 import { StepByStep } from "@/components/detail/StepByStep";
-import { StepByStepTabs } from "@/components/detail/StepByStepTabs";
+import { StepByStepTabs, RecognitionBanner } from "@/components/detail/StepByStepTabs";
 import { DetailedSolution } from "@/components/detail/DetailedSolution";
 import { DetailedSolutionVariantsTabs } from "@/components/detail/DetailedSolutionVariantsTabs";
 import { TrapAlert } from "@/components/detail/TrapAlert";
@@ -31,10 +31,40 @@ import { QuickNav, type QuickNavItem } from "@/components/detail/QuickNav";
 import { loadAllContent } from "@/data/loadContent";
 import { recallVariant, rememberVariant } from "@/data/variant-memory";
 
+/**
+ * The 6 regression entries (estimat-alpha-beta, residualvarians,
+ * standardfeil-stigningstall, test-stigningstall, prediksjonsintervall,
+ * korrelasjonskoeffisient) were folded into the single `lineaer-regresjon`
+ * entry which uses tabbed variants for each sub-procedure. Old URLs and any
+ * stale `kind: entry` cross-refs that still point at the old ids redirect
+ * here.
+ */
+const ENTRY_ID_REMAP: Record<string, string> = {
+  "regresjon-estimat-alpha-beta": "lineaer-regresjon",
+  "regresjon-residualvarians": "lineaer-regresjon",
+  "regresjon-standardfeil-stigningstall": "lineaer-regresjon",
+  "regresjon-test-stigningstall": "lineaer-regresjon",
+  "regresjon-prediksjonsintervall": "lineaer-regresjon",
+  "regresjon-korrelasjonskoeffisient": "lineaer-regresjon",
+  // E[X] og Var(X) for diskret stokastisk variabel — slått sammen til
+  // én entry med to faner.
+  "forventningsverdi-diskret": "diskret-stokastisk-variabel",
+  "varians-standardavvik-diskret": "diskret-stokastisk-variabel",
+  // KI for μ (kjent σ), μ (ukjent σ), og σ² — slått sammen til én entry med 3 faner.
+  "ki-mu-kjent-sigma": "ki-mu-og-varians",
+  "ki-mu-ukjent-sigma": "ki-mu-og-varians",
+  "ki-varians": "ki-mu-og-varians",
+};
+
 export function EntryDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const data = loadAllContent();
+
+  if (id && ENTRY_ID_REMAP[id]) {
+    return <Navigate to={`/entry/${ENTRY_ID_REMAP[id]}`} replace />;
+  }
+
   const entry = data.entries.find((e) => e.id === id);
 
   if (!entry) {
@@ -256,6 +286,11 @@ export function EntryDetail() {
           </Section>
         ) : entry.solution_template ? (
           <Section id="nav-steg" title="Steg for steg" icon={ClipboardList}>
+            {entry.recognition && (
+              <div className="mb-4">
+                <RecognitionBanner text={entry.recognition} />
+              </div>
+            )}
             <StepByStep steps={entry.solution_template} />
           </Section>
         ) : null}

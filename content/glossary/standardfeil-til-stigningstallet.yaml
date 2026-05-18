@@ -34,7 +34,6 @@ aliases:
   - se(beta-hat)
 see_also:
   - { id: variansen-til-stigningstallet, kind: glossary }
-  - { id: regresjon-standardfeil-stigningstall, kind: entry }
-  - { id: regresjon-test-stigningstall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: beta-koeffisient, kind: glossary }
   - { id: standardfeil, kind: glossary }

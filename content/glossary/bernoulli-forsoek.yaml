@@ -4,7 +4,7 @@ short_def: "Et enkelt forsøk med to mulige utfall (suksess / fiasko) og fast su
 filters:
   distribution_assumption: [binomial]
   setup: [fixed_n_trials]
-  structural_cues: [two_outcomes_per_trial, success_probability_given]
+  structural_cues: [two_outcomes_per_trial]
   parameters_known: [success_p]
   computes: [parameter_estimate, exact_probability]
   random_variable: [proportion, discrete_count]

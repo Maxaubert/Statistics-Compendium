@@ -5,7 +5,7 @@ filters:
   computes: [exact_probability, at_least_k, range_probability]
   tooling: [cumulative_binomial_table_E1, cumulative_poisson_table_E2, standard_normal_table_E3]
   distribution_assumption: [binomial, normal, poisson]
-  structural_cues: [at_least_one, no_occurrences]
+  structural_cues: [no_occurrences, complement_pattern]
 long_def: |
   Standardnormaltabellen E.3 gir:
 

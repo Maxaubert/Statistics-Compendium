@@ -47,10 +47,12 @@ filters:
   computes: [exact_probability, at_least_k, range_probability, combinatorial_count, expected_value]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool, fixed_n_trials]
-  structural_cues: [two_outcomes_per_trial, total_observations_n, complement_pattern, counting_events, mixed_categories, no_occurrences, at_least_one]
+  structural_cues: [two_outcomes_per_trial, complement_pattern, counting_events, mixed_categories, no_occurrences]
   parameters_known: [success_p]
   distribution_assumption: [hypergeometric]
   tooling: [calculator_binomial_coef]
+recognition: "«Sannsynligheten for å trekke `k` av `K` typer i et utvalg på `n`», «`k` defekte blant `K` defekte i en pott av `N`». Endelig pott UTEN tilbakelegging er kjennetegnet."
+
 solution_template:
   - "Identifiser `N` (totalt), `K` (vellykkede), `n` (trekninger), `k` (spørsmål)"
   - "Skriv `X ~ Hyp(N, K, n)`"

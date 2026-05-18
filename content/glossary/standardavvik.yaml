@@ -4,7 +4,7 @@ short_def: "Kvadratroten av variansen — spredning i samme enhet som dataene."
 filters:
   computes: [std_dev, range_probability, parameter_estimate]
   parameters_known: [population_variance_known, population_variance_unknown]
-  structural_cues: [normal_assumed, data_as_list, mean_and_sd_given]
+  structural_cues: [normal_assumed, data_as_list]
   distribution_assumption: [normal]
 long_def: |
   Definisjon:
@@ -21,5 +21,5 @@ long_def: |
 
       Z = (X − μ) / σ
 see_also:
-  - { id: varians-standardavvik-diskret, kind: entry }
+  - { id: diskret-stokastisk-variabel, kind: entry }
   - { id: normalisering, kind: glossary }

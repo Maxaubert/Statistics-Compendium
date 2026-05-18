@@ -33,6 +33,5 @@ aliases:
   - s_e
 see_also:
   - { id: residualvarians, kind: glossary }
-  - { id: regresjon-residualvarians, kind: entry }
-  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: standardavvik-oversikt, kind: entry }

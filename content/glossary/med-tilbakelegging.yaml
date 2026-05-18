@@ -4,7 +4,7 @@ short_def: "Du putter trekningen tilbake før neste — hver trekning er uavheng
 filters:
   setup: [with_replacement, fixed_n_trials]
   distribution_assumption: [binomial]
-  structural_cues: [independent_events, two_outcomes_per_trial, success_probability_given]
+  structural_cues: [independent_events, two_outcomes_per_trial]
   computes: [exact_probability]
   parameters_known: [success_p]
 long_def: |

@@ -50,7 +50,7 @@ filters:
   computes: [hypothesis_test]
   random_variable: [continuous, difference_of_means]
   setup: [two_independent_samples]
-  structural_cues: [data_as_list, total_observations_n, two_sided_alternative, one_sided_alternative, nonparametric_required, rank_based_data]
+  structural_cues: [data_as_list, two_sided_alternative, one_sided_alternative, rank_based_data]
   parameters_known: [population_variance_unknown, sample_size_small_lt30, alpha_significance]
   distribution_assumption: [none_assumed]
   tooling: [mann_whitney_table_E7]
@@ -65,6 +65,7 @@ tags:
 
 solution_variants:
   - label: "H₁: μ_X ≠ μ_Y (tosidig)"
+    recognition: "«Er medianene/fordelingene til to grupper forskjellige?» når dataene ikke er normalfordelte. Ikke-parametrisk alternativ til to-utvalgs t-test."
     steps:
       - text: "Formuler hypotesene (tosidig):"
         formula: "H₀: fordelingene er like     mot     H₁: fordelingene er forskjøvet (μ_X ≠ μ_Y)"
@@ -97,6 +98,7 @@ solution_variants:
         formula: "Forkast H₀ hvis min(U₁, U₂) ≤ U_(α/2, n₁, n₂)"
       - "Konkluder i kontekst"
   - label: "H₁: μ_X < μ_Y (venstresidig)"
+    recognition: "«Er gruppe X SIGNIFIKANT LAVERE enn gruppe Y?» (ikke-parametrisk). Bruker rangsum, ikke gjennomsnitt."
     steps:
       - text: "Formuler hypotesene (venstresidig — gruppe X har lavere verdier):"
         formula: "H₀: fordelingene er like     mot     H₁: μ_X < μ_Y"
@@ -128,6 +130,7 @@ solution_variants:
         formula: "Forkast H₀ hvis U_X ≤ U_(α, n_X, n_Y)"
       - "Konkluder i kontekst"
   - label: "H₁: μ_X > μ_Y (høyresidig)"
+    recognition: "«Er gruppe X signifikant HØYERE enn gruppe Y?» (ikke-parametrisk). Bruker rangsum."
     steps:
       - text: "Formuler hypotesene (høyresidig — gruppe X har høyere verdier):"
         formula: "H₀: fordelingene er like     mot     H₁: μ_X > μ_Y"

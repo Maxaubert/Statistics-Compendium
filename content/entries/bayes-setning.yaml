@@ -1,5 +1,5 @@
 id: bayes-setning
-name_no: "Bayes' setning"
+name_no: "Betinget sannsynlighet — Bayes' setning"
 type: rule
 category: probability_rule
 tagline: "Vender om en betinget sannsynlighet: `P(A|B)` ut fra `P(B|A)`, `P(A)` og `P(B)`."
@@ -46,27 +46,35 @@ filters:
   computes: [conditional_probability, exact_probability, marginal_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories, independent_events, conditioning_on_complement]
-  parameters_known: []
+  structural_cues: [conditional_given, more_than_two_categories, independent_events, conditioning_on_complement, andel_og_rate_per_gruppe]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 solution_variants:
-  - label: "Standard 2-veis"
+  - label: "Snu retning: gitt P(B|A), finn P(A|B)"
+    recognition: "Oppgaven gir én betinget retning (`P(B|A)`) og spør om den motsatte (`P(A|B)`). Det som står etter «gitt at» eller «hvis» er det som er BETINGET PÅ — det havner høyre for `|`."
     steps:
-      - "Bruk når: én hypotese A vs. komplement Aᶜ. Du har `P(A)`, `P(B|A)` og enten `P(B)` eller `P(B|Aᶜ)`."
-      - "Identifiser hendelsene A og B, og noter hvilken retning oppgaven gir (`P(B|A)`) og hvilken den ber om (`P(A|B)`)"
-      - "Skriv ned marginalsannsynligheten `P(A)` og den betingede `P(B|A)` som er gitt"
+      - text: "**Steg 1 — oversett teksten til sannsynligheter.** Bruk dette mønsteret når du leser:"
+        cases:
+          - { when: "«60 % av frøene er ringblomst»", then: "P(R) = 0.60 — marginal (andelen i populasjonen)" }
+          - { when: "«spiregraden for ringblomst er 90 %»", then: "P(S | R) = 0.90 — betinget (S gitt R)" }
+          - { when: "«totalt spirer 80 %»", then: "P(S) = 0.80 — total/marginal for spire" }
+          - { when: "«av alle som SPIRER, hva er sjansen for ringblomst?»", then: "P(R | S) = ?  — det du søker (motsatt retning)" }
+      - "**Steg 2 — identifiser de fire størrelsene.** A = det du SØKER (det som skal foran `|` i P(A|B)). B = det som ER GITT som hendelse (kommer etter «gitt at», «hvis», «av alle som...»)."
       - text: "Hvis nevneren `P(B)` ikke er gitt eksplisitt, regn den ut med total sannsynlighet:"
         formula: "P(B) = P(A)·P(B|A) + P(Aᶜ)·P(B|Aᶜ)"
         conditional: true
       - text: "Sett inn i Bayes:"
         formula: "P(A|B) = P(A)·P(B|A) / P(B)"
-      - text: "Eksempel: defekt produksjonsdel `P(D) = 0.02`, `P(M|D) = 0.95`, `P(M) = 0.0484`:"
+      - text: "Eksempel — frøposen: `P(R) = 0.60`, `P(S|R) = 0.90`, `P(S) = 0.80` (gitt). Søker `P(R|S)`:"
+        formula: "P(R|S) = 0.60 · 0.90 / 0.80 = 0.54/0.80 = 0.675"
+        example: true
+      - text: "Eksempel — defekt produksjonsdel: `P(D) = 0.02`, `P(M|D) = 0.95`, `P(M) = 0.0484` (regnet via total sannsynlighet):"
         formula: "P(D|M) = 0.02 · 0.95 / 0.0484 ≈ 0.393"
         example: true
       - { text: "Hvis hendelsene IKKE er en partisjon (A og Aᶜ overlapper, eller dekker ikke alt), Bayes-formelen gjelder ikke direkte – sjekk forutsetningene", conditional: true }
 
   - label: "Diagnose-/test-mønster"
+    recognition: "«Falsk positiv-problem», «P(har sykdom | positiv test)», eller «hvor ofte tar testen feil?». Sensitivitet og spesifisitet (eller `P(+|syk)`, `P(−|frisk)`) er gitt."
     steps:
       - "Identifiser de tre tallene: prevalens `P(syk)` (hvor vanlig sykdommen er), sensitivitet `P(positiv|syk)` og spesifisitet `P(negativ|frisk)`"
       - "Sett opp komplementene: `P(frisk) = 1 − P(syk)`, falsk positiv-rate `= 1 − spesifisitet`, falsk negativ-rate `= 1 − sensitivitet`"
@@ -82,6 +90,7 @@ solution_variants:
       - { text: "Hvis oppgaven nevner gjentatt testing eller uavhengige tester, oppdater prevalensen til posterior fra forrige test før neste runde", conditional: true }
 
   - label: "Multi-hypotese (3+ partisjoner)"
+    recognition: "«Tre maskiner produserer enheter, hvilken er den defekte mest sannsynlig fra?», eller «gitt observasjon, hvilken delpopulasjon er den mest sannsynlige kilden?». Mer enn to mulige `A`-er."
     steps:
       - "List opp alle hypoteser `A₁, …, Aₙ` og verifiser at de er gjensidig utelukkende og dekker alle muligheter (`ΣP(Aᵢ) = 1`)"
       - "Skriv ned priorene `P(Aᵢ)` og likelihooden `P(B|Aᵢ)` for hver `i`"
@@ -96,6 +105,7 @@ solution_variants:
       - "Tolk: hvilken hypotese har størst posterior? Sammenlign med prior for å se hvor mye evidens B flyttet sannsynligheten"
 
   - label: "Tre-diagram-arbeidsflyt"
+    recognition: "«Tegn et sannsynlighetstre og bruk det til å regne `P(A|B)`». Naturlig når oppgaven beskriver sekvensielle valg eller flere trinn."
     steps:
       - "Les hele oppgaven én gang uten å regne – bla rundt teksten for å finne alle prosentene og betingelsene før du tegner noe"
       - "Tegn første nivå i treet: hovedhendelsen (f.eks. syk vs. frisk) med priorene `P(A)` og `P(Aᶜ)` på greinene"
@@ -120,7 +130,7 @@ common_traps: |
   - **Sjekk størrelsen**: Hvis `P(A)` er liten (sjelden sykdom) og `P(B)` er stor (mange falske positive), kan `P(A|B)` bli overraskende liten. Det er da Bayes' setning er nyttigst.
 
 detailed_solution_variants:
-  - label: "Standard 2-veis"
+  - label: "Snu retning: gitt P(B|A), finn P(A|B)"
     solutions:
       - source: "Eksamen jan25 · oppgave 3a"
         question: "La S være hendelsen 'frøet spirer' og R være hendelsen 'frøet er en ringblomst'. Det er gitt at `P(S) = 0.8`, `P(R) = 0.6` og `P(S|R) = 0.9`. Finn `P(R|S)`."
@@ -373,6 +383,42 @@ detailed_solution_variants:
             lines:
               - { comment: "Etter én positiv screening alene ville posterior vært ~16 %; en spesifikk bekreftende test løfter den til ~95 %. Slik virker sekvensiell testing for sjeldne sykdommer." }
         result: "`P(D | T₁ ∩ T₂) ≈ 0.951`"
+
+tags:
+  # Hovedkonsept
+  - bayes
+  - bayes setning
+  - bayes' setning
+  - bayes teorem
+  - betinget sannsynlighet
+  - betinget
+  - posterior
+  - prior
+  - likelihood
+  # Operasjonen
+  - snu betinget
+  - snu retning
+  - p(a|b) gitt p(b|a)
+  - invers betinget
+  # Mønstre i oppgaveteksten
+  - andel og betinget
+  - andel og rate
+  - rate per gruppe
+  - spiregrad
+  - feilrate
+  - prevalens
+  - sensitivitet
+  - spesifisitet
+  - falsk positiv
+  - falsk negativ
+  # Klassiske eksempler
+  - diagnose
+  - medisinsk test
+  - sykdom
+  - spam
+  - defekt
+  - frø
+  - ringblomst
 
 related:
   - { id: "produktregel",         kind: "entry" }

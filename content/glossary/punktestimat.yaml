@@ -36,6 +36,5 @@ see_also:
   - { id: forventningsrett,     kind: glossary }
   - { id: utvalgsvarians,       kind: glossary }
   - { id: ki-andel-binomial,    kind: entry }
-  - { id: ki-mu-kjent-sigma,    kind: entry }
-  - { id: ki-mu-ukjent-sigma,   kind: entry }
+  - { id: ki-mu-og-varians,     kind: entry }
   - { id: ki-poissonrate,       kind: entry }

@@ -1,0 +1,14 @@
+id: E8-f-tabell
+name_no: "F-tabell"
+formal_name_no: "F-fordelingens kvantiltabell"
+code: "E.8"
+description: "Slår opp kritiske F-verdier F_(α, df₁, df₂) for ulike telnerfrihetsgrader (df₁ = k − 1) og nevnerfrihetsgrader (df₂ = n − k). Brukes i enveis variansanalyse (ANOVA) for å sammenligne forventningsverdier mellom 3 eller flere grupper, samt i F-test for varianslikhet."
+input_hint: "α er HØYRE-hale-sannsynligheten (P(F > F_α) = α). For ANOVA: df₁ = antall grupper − 1, df₂ = totalt antall observasjoner − antall grupper."
+inputs:
+  - { name: "df₁", type: integer, min: 1,     max: 120,  step: 1 }
+  - { name: "df₂", type: integer, min: 1,     max: 120,  step: 1 }
+  - { name: "α",   type: number,  min: 0.001, max: 0.25, step: any }
+output: "F_(α, df₁, df₂)"
+distribution: f_quantile
+related_entries:
+  - enveis-anova

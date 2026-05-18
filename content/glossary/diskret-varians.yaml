@@ -3,7 +3,7 @@ term_no: Variansen til diskret stokastisk variabel
 short_def: "Når du har en PMF: `Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)` — vektet sum av kvadrerte avvik der vekten er sannsynligheten."
 filters:
   random_variable: [discrete_count]
-  computes: [std_dev, expected_value, variance]
+  computes: [std_dev, expected_value]
   parameters_known: [mean_known]
 long_def: |
   Formel:
@@ -29,6 +29,5 @@ aliases:
   - variansen til diskret stokastisk variabel
   - diskret varians
 see_also:
-  - { id: varians-standardavvik-diskret, kind: entry }
-  - { id: forventningsverdi-diskret, kind: entry }
+  - { id: diskret-stokastisk-variabel, kind: entry }
   - { id: varians-oversikt, kind: entry }

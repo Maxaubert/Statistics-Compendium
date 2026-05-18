@@ -1,0 +1,392 @@
+id: diskret-stokastisk-variabel
+name_no: "Forventningsverdi, varians og standardavvik (diskret stokastisk variabel)"
+type: identity
+category: distribution_property
+tagline: "`E[X]` = veid sum av verdiene; `Var(X)` = veid sum av kvadrerte avvik fra `μ`; `σ = √Var(X)`."
+
+formula_main: "E[X] = Σ x_i · P(X = x_i);  Var(X) = Σ (x_i − μ)² · P(X = x_i);  σ = √Var(X)"
+formula_latex: "E[X] = \\sum_i x_i \\cdot P(X = x_i), \\quad \\text{Var}(X) = \\sum_i (x_i - \\mu)^2 \\cdot P(X = x_i), \\quad \\sigma = \\sqrt{\\text{Var}(X)}"
+
+what_it_does: |
+  De tre grunnleggende egenskapene til en diskret stokastisk variabel `X` med
+  kjent sannsynlighetsfordeling (PMF):
+
+  - **Forventningsverdi** `E[X] = μ` — verdiene `x_i` vektet med
+    sannsynlighetene `P(X = x_i)`. Tyngdepunktet i fordelingen.
+  - **Varians** `Var(X) = σ²` — vektet sum av kvadrerte avvik fra `μ`.
+    Mål for spredning, men i kvadrerte enheter.
+  - **Standardavvik** `σ` — kvadratroten av variansen, i samme enhet som `X`.
+    Det vi rapporterer videre.
+
+  Sida samler alt tre på samme side fordi de regnes i sekvens: `μ` først,
+  så `Var(X)` (som krever `μ`), så `σ = √Var(X)`. Velg fane under for
+  prosedyren som passer oppgaven din.
+
+why_use: |
+  De mest grunnleggende byggeklossene for en diskret variabel. Inngår i:
+
+  - z-/t-tester og konfidensintervaller (forventning og spredning)
+  - kovarians og korrelasjon (`Cov(X, Y) = E[XY] − μ_X·μ_Y`)
+  - `Var(aX + b) = a²·Var(X)`-regelen for lineære transformasjoner
+  - `Var(X + Y) = Var(X) + Var(Y) + 2·Cov(X, Y)` for sum av variabler
+
+  Klassiske eksamensoppgaver gir en PMF-tabell og ber om `E[X]`, deretter
+  `Var(X)` og `σ`. Når `μ` er funnet, er resten mekanisk.
+
+recognition_cues:
+  - "Diskret stokastisk variabel med kjent sannsynlighetsfordeling (PMF som tabell eller formel)"
+  - "Spørsmålet ber om `E[X]`, `μ`, forventningsverdien, `Var(X)`, `σ²`, eller standardavviket"
+  - "Du har en tabell med `x`-verdier og `P(X = x)`-verdier"
+  - "Mellomsteg før kovarians, korrelasjon, eller hypotesetest"
+  - "Spørsmålet ber om forventet utbetaling, gjennomsnitt på lang sikt, eller spredning rundt forventning"
+
+when_NOT_to_use:
+  - "`X` er kontinuerlig (måling, tid, mengde) → bruk integralet `E[X] = ∫ x·f(x) dx` (og tilsvarende for `Var`)"
+  - "Du har bare rådata `x_1, ..., x_n` uten sannsynligheter → bruk [utvalgsgjennomsnitt og utvalgsvarians](/entry/utvalgsvarians-radata) (deler på `n − 1`, ikke vekter med `P(X=x)`)"
+  - "Du har en simultantabell `P(X = x, Y = y)` → marginaliser først med [marginalfordeling](/entry/marginalfordeling) for å hente ut riktige `P(X = x)`"
+  - "Du vil måle samvariasjon mellom to variabler → [kovarians](/entry/kovarians) og [korrelasjon ρ](/entry/korrelasjon-joint)"
+
+symbols:
+  - { sym: "X",          means: "den diskrete stokastiske variabelen" }
+  - { sym: "x_i",        means: "verdiene `X` kan ta" }
+  - { sym: "P(X = x_i)", means: "sannsynligheten for hver verdi" }
+  - { sym: "E[X], μ",    means: "forventningsverdien (tyngdepunkt i fordelingen)" }
+  - { sym: "Var(X), σ²", means: "variansen (vektet kvadratavvik fra `μ`)" }
+  - { sym: "σ",          means: "standardavviket, `σ = √Var(X)` (samme enhet som `X`)" }
+  - { sym: "E[X²]",      means: "`Σ x_i² · P(X = x_i)` — brukes i snarveien `Var(X) = E[X²] − μ²`" }
+
+filters:
+  computes: [expected_value, std_dev, marginal_probability]
+  random_variable: [discrete_count]
+  setup: [single_population]
+  structural_cues: [summary_stats_given, data_as_list]
+  parameters_known: [mean_known]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_only, calculator_sqrt]
+
+tags:
+  - forventningsverdi
+  - forventning
+  - E[X]
+  - μ
+  - mu
+  - varians
+  - Var(X)
+  - σ²
+  - standardavvik
+  - σ
+  - sigma
+  - diskret
+  - diskret stokastisk variabel
+  - PMF
+  - sannsynlighetsfordeling
+  - tyngdepunkt
+  - vektet gjennomsnitt
+  - vektet sum
+
+solution_variants:
+  - label: "Forventningsverdi E[X]"
+    recognition: "«Finn forventningsverdien `E[X]`», «hva er gjennomsnittsverdien i lengden?», eller «forventet utbetaling». Du har en diskret sannsynlighetsfordeling (PMF) gitt som tabell eller formel."
+    steps:
+      - "List opp alle verdier `x_i` og `P(X = x_i)` fra fordelingen."
+      - "Sjekk at `Σ P(X = x_i) = 1` (ellers er fordelingen ufullstendig)."
+      - "Multipliser hver `x_i` med sin sannsynlighet `P(X = x_i)`."
+      - text: "Summer alle produktene:"
+        formula: "E[X] = Σ x_i · P(X = x_i)"
+      - text: "Eksempel: `X ∈ {0, 1, 2, 3}` med `P = {0.1, 0.3, 0.4, 0.2}`:"
+        formula: "E[X] = 0·0.1 + 1·0.3 + 2·0.4 + 3·0.2 = 1.70"
+        example: true
+      - text: "**Lineæritetstriks** — for `Y = aX + b` slipper du å regne om hele fordelingen:"
+        formula: "E[aX + b] = a·E[X] + b"
+        conditional: true
+      - text: "**Sum av variabler** — gjelder selv når `X, Y` ikke er uavhengige:"
+        formula: "E[X + Y] = E[X] + E[Y]"
+        conditional: true
+
+  - label: "Varians Var(X) og standardavvik σ"
+    recognition: "«Finn `Var(X)` og `σ` til den diskrete variabelen», «standardavviket fra sannsynlighetsfordelingen». PMF er gitt; krever `μ = E[X]` først (fra fane 1)."
+    steps:
+      - "Bekreft at du har `μ = E[X]` (regn det ut først via fane 1 hvis ikke gitt)."
+      - text: "Summer kvadrerte avvik vektet med sannsynlighetene:"
+        formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)"
+      - text: "Eksempel: `X ∈ {0, 1, 2, 3}` med `P = {0.1, 0.3, 0.4, 0.2}`, `μ = 1.7`:"
+        formula: "Var(X) = 2.89·0.1 + 0.49·0.3 + 0.09·0.4 + 1.69·0.2 = 0.81"
+        example: true
+      - text: "Standardavviket (samme enhet som `X`):"
+        formula: "σ = √Var(X)"
+      - text: "Eksempel videre: `σ = √0.81 = 0.9`."
+        example: true
+      - text: "**Snarvei via E[X²]** — ofte raskere når du har en uniform PMF eller mange ledd:"
+        formula:
+          - "E[X²] = Σ x_i² · P(X = x_i)"
+          - "Var(X) = E[X²] − μ²"
+        conditional: true
+      - text: "**Lineær transformasjon** — `Var(aX + b) = a²·Var(X)`. Konstanten `b` flytter, men endrer ikke spredningen. Skalaen `a` blir kvadrert."
+        conditional: true
+
+  - label: "Lineær kombinasjon aX + bY + c"
+    recognition: "«Regn ut `E(3X − 2Y + 20)` eller `Var(aX + bY + c)`», «forventning/varians av en sum, differanse eller skalert kombinasjon av to variabler». Du har `E[X]`, `E[Y]`, `Var(X)`, `Var(Y)` og evt. `Cov(X, Y)`."
+    steps:
+      - "Identifiser koeffisientene `a`, `b`, `c` og hva du har: `E[X]`, `E[Y]`, `Var(X)`, `Var(Y)`. Hvis variablene er AVHENGIGE trenger du også `Cov(X, Y)`."
+      - text: "Forventning er ALLTID lineær (uansett om X og Y er uavhengige eller ikke). Konstanten `c` flytter gjennomsnittet med `c`, koeffisientene skaleres direkte:"
+        formula: "E[aX + bY + c] = a·E[X] + b·E[Y] + c"
+      - text: "Finn ut om X og Y er uavhengige eller avhengige — det avgjør om krysstermen `2·a·b·Cov(X, Y)` faller bort:"
+        cases:
+          - { when: "Oppgaven sier «uavhengige» eller «iid»", then: "Cov(X, Y) = 0 — krysstermen forsvinner" }
+          - { when: "Simultantabell P(X = x, Y = y) gitt", then: "Uavhengige hvis P(X = x, Y = y) = P(X = x)·P(Y = y) for ALLE celler" }
+          - { when: "Cov(X, Y) oppgitt", then: "Bruk verdien direkte. Cov ≠ 0 ⇒ avhengige" }
+      - text: "Varians avhenger av om X og Y er uavhengige eller ikke:"
+        formula:
+          - "Avhengige:  Var(aX + bY + c) = a²·Var(X) + b²·Var(Y) + 2·a·b·Cov(X, Y)"
+          - "Uavhengige:  Var(aX + bY + c) = a²·Var(X) + b²·Var(Y)"
+      - text: "Eksempel: `E[X] = 1`, `E[Y] = 2`, `Var(X) = 2`, `Var(Y) = 3`, `Cov(X, Y) = 1`. Finn `E(3X − 2Y + 20)` og `Var(3X − 2Y + 20)`."
+        formula:
+          - "E(3X − 2Y + 20) = 3·1 − 2·2 + 20 = 19"
+          - "Var(3X − 2Y + 20) = 9·2 + 4·3 + 2·3·(−2)·1 = 18 + 12 − 12 = 18"
+        example: true
+      - text: "**Pass på fortegn på krysstermen.** Koeffisientene `a` og `b` beholder fortegnet sitt i `2·a·b·Cov(X, Y)`. For `3X − 2Y` blir `2·a·b = 2·3·(−2) = −12`, så krysstermen blir `−12·Cov(X, Y)` — ikke `+12·Cov(X, Y)`."
+        conditional: true
+      - text: "Husk: `Cov(X, X) = Var(X)`. Hvis `X = Y` reduseres formelen til `Var((a+b)X + c) = (a+b)²·Var(X)`."
+        conditional: true
+
+solution_template:
+  - "Identifiser HVA oppgaven spør om — `E[X]`, `Var(X)`, eller `σ`?"
+  - "`E[X]` først (fane 1) — fundamentet for alt videre."
+  - "Så `Var(X)` (fane 2), som krever `μ`. `σ = √Var(X)` faller ut til slutt."
+
+common_traps: |
+  - **Σ P = 1 må gjelde** — sjekk dette før du regner videre. Hvis sannsynlighetene
+    ikke summerer til 1, er fordelingen feil eller ufullstendig.
+  - **Forventning er IKKE (Σx_i)/n** — det enkle gjennomsnittet av verdiene er feil
+    med mindre alle `P(X = x_i)` er like (uniform fordeling). Du må vekte med
+    sannsynlighetene.
+  - **E[X] trenger ikke være en mulig verdi** — for `X ∈ {0, 1}` kan `E[X] = 0.7`.
+    Forventningen er et tyngdepunkt, ikke et utfall.
+  - **Negative x_i er lov** — `E[X]` kan godt være negativ. Ikke automatisk regnefeil.
+  - **Negativ Var(X) ER regnefeil** — kvadratet `(x_i − μ)²` er alltid `≥ 0`, så
+    summen kan ikke bli negativ.
+  - **E[X²] ≠ (E[X])²** — det er nettopp forskjellen som gir variansen via snarveien
+    `Var(X) = E[X²] − μ²`.
+  - **Vekten er P(X = x_i), ikke 1/n** — forskjellen fra utvalgsvarians fra rådata
+    er det viktigste å huske: PMF gir `Σ(x − μ)²·P`, rådata gir `Σ(x_i − x̄)²/(n − 1)`.
+  - **Simultanfordeling** — regn først marginalfordelingen `P(X = x)` ved å summere
+    over `y`. Ikke vekt med joint-sannsynlighetene direkte.
+  - **σ vs Var(X)** — enheter. `Var(X)` har enheten kvadrert (f.eks. kr²); `σ` har
+    samme enhet som `X` (kr). Rapporter `σ` til leseren.
+
+python_snippet: |
+  import numpy as np
+
+  x = np.array([-2, -1, 0, 1, 2])
+  p = np.array([0.3, 0.2, 0.2, 0.1, 0.2])
+
+  assert abs(p.sum() - 1) < 1e-9   # sanity check
+
+  mu       = (x * p).sum()                # E[X]
+  e_x2     = (x**2 * p).sum()             # E[X²]
+  var_x    = ((x - mu)**2 * p).sum()      # Var(X)
+  var_x_b  = e_x2 - mu**2                 # samme via snarveien
+  sigma    = var_x ** 0.5                  # σ
+
+detailed_solution_variants:
+  - label: "Forventningsverdi E[X]"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 2b"
+        question: "Den diskrete stokastiske variabelen `X` tar verdier `{-2, -1, 0, 1, 2}` med sannsynligheter `{0.3, 0.2, 0.2, 0.1, 0.2}`. Finn `E[X]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` er diskret med endelig utfallsrom og kjent sannsynlighetsfordeling." }
+              - { text: "Vi skal beregne forventningsverdien `E[X]`." }
+          - label: "Formel"
+            lines:
+              - { text: "Forventningsverdi for diskret SV:" }
+              - { indent: "`E[X] = Σ x_i · P(X = x_i)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Les av `x_i` og `P(X = x_i)` fra fordelingstabellen for `X`." }
+              - { text: "Multipliser hver verdi med sin sannsynlighet og summer:" }
+              - { indent: "`E[X] = (-2)·0.3 + (-1)·0.2 + 0·0.2 + 1·0.1 + 2·0.2`" }
+              - { indent: "`     = -0.6 - 0.2 + 0 + 0.1 + 0.4`" }
+        result: "`E[X] = -0.3`"
+
+      - source: "Anvendelse · lineæritet av forventning"
+        question: "Gitt `E[X] = 1.7` for en diskret stokastisk variabel `X`. Finn `E[3X - 2]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Y = 3X - 2` er en lineær transformasjon av `X`." }
+              - { text: "Bruk lineæriteten av forventningsverdi i stedet for å regne ut leddvis." }
+          - label: "Formel"
+            lines:
+              - { text: "For konstanter `a, b`:" }
+              - { indent: "`E[aX + b] = a·E[X] + b`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Med `a = 3`, `b = -2` og `E[X] = 1.7`:" }
+              - { indent: "`E[3X - 2] = 3·E[X] - 2`" }
+              - { indent: "`         = 3·1.7 - 2`" }
+              - { indent: "`         = 5.1 - 2`" }
+          - label: "Verifikasjon"
+            lines:
+              - { text: "Sjekk: skala 3 strekker fordelingen, `-2` flytter den ned. Forventning følger samme transformasjon." }
+              - { comment: "Definisjonen `Σ (3x-2)·P(X=x) = 3·Σ x·P(X=x) - 2·Σ P(X=x) = 3·E[X] - 2` bekrefter formelen." }
+        result: "`E[3X - 2] = 3.1`"
+
+      - source: "Anvendelse · sum av to terninger"
+        question: "Kast to rettferdige terninger. La `X` være øynene på terning 1 og `Y` øynene på terning 2. Finn `E[X + Y]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` og `Y` er diskrete stokastiske variabler med uniform fordeling på `{1, 2, 3, 4, 5, 6}`." }
+              - { text: "Vi skal finne forventningsverdien til summen `X + Y`." }
+              - { comment: "Lineæriteten gjelder uavhengig av om `X` og `Y` er uavhengige." }
+          - label: "Formel"
+            lines:
+              - { text: "Forventning for én terning:" }
+              - { indent: "`E[X] = Σ x · P(X = x) = (1 + 2 + 3 + 4 + 5 + 6)/6`" }
+              - { text: "Lineæritet for sum:" }
+              - { indent: "`E[X + Y] = E[X] + E[Y]`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "Forventning per terning:" }
+              - { indent: "`E[X] = 21/6 = 3.5`" }
+              - { indent: "`E[Y] = 21/6 = 3.5`" }
+              - { text: "Summer ledd for ledd:" }
+              - { indent: "`E[X + Y] = 3.5 + 3.5`" }
+          - label: "Sjekk"
+            lines:
+              - { text: "Vi unngår å regne ut leddvis fra fellestabellen `Σ (x+y)·P(X=x, Y=y)` med 36 utfall." }
+              - { comment: "Lineæriteten reduserer en 36-leddssum til to enkle 6-leddssummer." }
+        result: "`E[X + Y] = 7`"
+
+  - label: "Varians Var(X) og standardavvik σ"
+    solutions:
+      - source: "Eksamen jan25 · oppgave 2c"
+        question: "X tar verdier {−2, −1, 0, 1, 2} med sannsynligheter {0.3, 0.2, 0.2, 0.1, 0.2}, og `μ = −0.3`. Finn `Var(X)` og `σ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`P(X=−2) = 0.3`, `P(X=−1) = 0.2`, `P(X=0) = 0.2`, `P(X=1) = 0.1`, `P(X=2) = 0.2`. Summen er 1 ✓" }
+              - { text: "`μ = −0.3` (oppgitt eller regnet ut tidligere)." }
+          - label: "Var(X) direkte"
+            lines:
+              - { text: "`Var(X) = Σ (x_i − μ)² · P(X = x_i)`" }
+              - { indent: "`= (−2 − (−0.3))²·0.3 + (−1 − (−0.3))²·0.2 + (0 − (−0.3))²·0.2 + (1 − (−0.3))²·0.1 + (2 − (−0.3))²·0.2`" }
+              - { indent: "`= (−1.7)²·0.3 + (−0.7)²·0.2 + (0.3)²·0.2 + (1.3)²·0.1 + (2.3)²·0.2`" }
+              - { indent: "`= 2.89·0.3 + 0.49·0.2 + 0.09·0.2 + 1.69·0.1 + 5.29·0.2`" }
+              - { indent: "`= 0.867 + 0.098 + 0.018 + 0.169 + 1.058 = 2.21`" }
+          - label: "Standardavvik"
+            lines:
+              - { text: "`σ = √Var(X) = √2.21 ≈ 1.487`" }
+        result: "Var(X) = 2.21,  σ ≈ 1.487"
+
+      - source: "Øving 4 · oppgave 2a-stil (terning, uniform fordeling)"
+        question: "Rettferdig terning: X ∈ {1, 2, 3, 4, 5, 6} med `P(X = x) = ⅙`. Tidligere fant vi `μ = 3.5`. Finn `Var(X)` og `σ`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Uniform PMF — alle sannsynligheter er like (`⅙`)." }
+              - { text: "`μ = E[X] = ⅙·(1+2+3+4+5+6) = 3.5`" }
+          - label: "Var(X) direkte"
+            lines:
+              - { text: "`Var(X) = Σ (x_i − μ)² · ⅙`" }
+              - { indent: "`= ⅙·((1−3.5)² + (2−3.5)² + (3−3.5)² + (4−3.5)² + (5−3.5)² + (6−3.5)²)`" }
+              - { indent: "`= ⅙·(6.25 + 2.25 + 0.25 + 0.25 + 2.25 + 6.25)`" }
+              - { indent: "`= ⅙·17.5 ≈ 2.92`" }
+          - label: "Standardavvik"
+            lines:
+              - { text: "`σ = √2.92 ≈ 1.71`" }
+              - { comment: "Ved uniform PMF kan du forenkle til ⅙·Σ(x − μ)² siden vekten er konstant." }
+        result: "Var(X) ≈ 2.92,  σ ≈ 1.71"
+
+      - source: "Praksis · lineær transformasjon `Var(aX+b) = a²·Var(X)`"
+        question: "La X ta verdier `{0, 1, 2, 3}` med `p = {0.1, 0.3, 0.4, 0.2}` og `μ = 1.7`. Definer `Y = 2X + 5`. Finn `Var(Y)` og verifiser regelen."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Y = 2X + 5` tar verdier `{5, 7, 9, 11}` med samme sannsynligheter." }
+              - { text: "Påstand: `Var(aX + b) = a²·Var(X)`, så `Var(Y) = 4·Var(X)`." }
+          - label: "Var(X) direkte"
+            lines:
+              - { text: "`Var(X) = (0 − 1.7)²·0.1 + (1 − 1.7)²·0.3 + (2 − 1.7)²·0.4 + (3 − 1.7)²·0.2`" }
+              - { indent: "`= 2.89·0.1 + 0.49·0.3 + 0.09·0.4 + 1.69·0.2`" }
+              - { indent: "`= 0.289 + 0.147 + 0.036 + 0.338 = 0.81`" }
+          - label: "Var(Y) direkte"
+            lines:
+              - { text: "`μ_Y = E[Y] = 2·1.7 + 5 = 8.4` (lineæritet)" }
+              - { text: "`Var(Y) = (5 − 8.4)²·0.1 + (7 − 8.4)²·0.3 + (9 − 8.4)²·0.4 + (11 − 8.4)²·0.2`" }
+              - { indent: "`= 11.56·0.1 + 1.96·0.3 + 0.36·0.4 + 6.76·0.2`" }
+              - { indent: "`= 1.156 + 0.588 + 0.144 + 1.352 = 3.24`" }
+          - label: "Verifiser regelen"
+            lines:
+              - { text: "`a²·Var(X) = 2²·0.81 = 3.24` ✓" }
+              - { text: "`σ_Y = √3.24 = 1.8 = 2·0.9 = a·σ_X` ✓" }
+              - { comment: "Konstantleddet b = 5 forskyver fordelingen, men endrer ikke spredningen." }
+        result: "Var(Y) = 3.24,  σ_Y = 1.8"
+
+  - label: "Lineær kombinasjon aX + bY + c"
+    solutions:
+      - source: "Praksis · E og Var av 3X − 2Y + 20"
+        question: "Gitt to stokastiske variabler `X` og `Y` med `E[X] = 1`, `E[Y] = 2`, `Var(X) = 2`, `Var(Y) = 3` og `Cov(X, Y) = 1`. Regn ut `E(3X − 2Y + 20)` og `Var(3X − 2Y + 20)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Lineær kombinasjon `aX + bY + c` med `a = 3`, `b = −2`, `c = 20`." }
+              - { text: "Alle nødvendige momenter er gitt, inkludert `Cov(X, Y) = 1` (variablene er avhengige)." }
+          - label: "Forventning — bruk lineæritet"
+            lines:
+              - { text: "`E[aX + bY + c] = a·E[X] + b·E[Y] + c`" }
+              - { indent: "`= 3·1 + (−2)·2 + 20`" }
+              - { indent: "`= 3 − 4 + 20`" }
+          - label: "Varians — kvadrer koeffisientene, hold styr på fortegn"
+            lines:
+              - { text: "`Var(aX + bY + c) = a²·Var(X) + b²·Var(Y) + 2·a·b·Cov(X, Y)`" }
+              - { text: "Konstanten `c = 20` faller bort i variansen — flytter middelverdien, ikke spredningen." }
+              - { indent: "`= 3²·2 + (−2)²·3 + 2·3·(−2)·1`" }
+              - { indent: "`= 9·2 + 4·3 + (−12)·1`" }
+              - { indent: "`= 18 + 12 − 12`" }
+              - { comment: "Pass på: 2·a·b = 2·3·(−2) = −12, IKKE +12. Negativt fortegn på `b` overlever i krysstermen." }
+          - label: "Sjekk"
+            lines:
+              - { text: "Hadde X og Y vært UAVHENGIGE (Cov = 0), ville `Var(3X − 2Y + 20) = 18 + 12 = 30`. Positiv kovarians krymper variansen her fordi koeffisientene har motsatt fortegn — bevegelse i X og Y delvis kansellerer hverandre." }
+        result: "`E(3X − 2Y + 20) = 19`,  `Var(3X − 2Y + 20) = 18`"
+
+      - source: "Praksis · uavhengig variant"
+        question: "La `U` og `V` være UAVHENGIGE stokastiske variabler med `E[U] = 5`, `E[V] = 10`, `Var(U) = 4`, `Var(V) = 9`. Finn `E(2U + V − 7)` og `Var(2U + V − 7)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Lineær kombinasjon med `a = 2`, `b = 1`, `c = −7`." }
+              - { text: "`U` og `V` er UAVHENGIGE ⇒ `Cov(U, V) = 0` — krysstermen forsvinner." }
+          - label: "Forventning"
+            lines:
+              - { text: "`E[2U + V − 7] = 2·E[U] + 1·E[V] + (−7)`" }
+              - { indent: "`= 2·5 + 10 − 7`" }
+              - { indent: "`= 10 + 10 − 7`" }
+          - label: "Varians"
+            lines:
+              - { text: "Med uavhengighet faller krysstermen bort:" }
+              - { indent: "`Var(2U + V − 7) = 2²·Var(U) + 1²·Var(V)`" }
+              - { indent: "`= 4·4 + 1·9`" }
+              - { indent: "`= 16 + 9`" }
+              - { comment: "Konstanten −7 endrer ikke variansen." }
+        result: "`E(2U + V − 7) = 13`,  `Var(2U + V − 7) = 25`"
+
+related:
+  - { id: "marginalfordeling",          kind: "entry" }
+  - { id: "kovarians",                  kind: "entry" }
+  - { id: "korrelasjon-joint",          kind: "entry" }
+  - { id: "utvalgsvarians-radata",      kind: "entry" }
+  - { id: "forventningsverdi-oversikt", kind: "entry" }
+  - { id: "varians-oversikt",           kind: "entry" }
+  - { id: "standardavvik-oversikt",     kind: "entry" }
+  - { id: "forventningsverdi",          kind: "glossary" }
+  - { id: "diskret-varians",            kind: "glossary" }
+  - { id: "standardavvik",              kind: "glossary" }
+  - { id: "stokastisk-variabel",        kind: "glossary" }
+  - { id: "sannsynlighetsfordeling",    kind: "glossary" }
+  - { id: "sigma-kvadrat",              kind: "glossary" }
+
+tools:
+  - "Kalkulator: multiplikasjon, kvadrering, kvadratrot, sum"

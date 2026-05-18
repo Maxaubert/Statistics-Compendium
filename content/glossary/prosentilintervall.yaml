@@ -29,4 +29,4 @@ long_def: |
   normal. Egnet når bootstrap-fordelingen er skjev eller har tunge haler.
 see_also:
   - { id: bootstrapping, kind: entry }
-  - { id: ki-mu-kjent-sigma, kind: entry }
+  - { id: ki-mu-og-varians, kind: entry }

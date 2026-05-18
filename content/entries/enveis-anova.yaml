@@ -1,0 +1,594 @@
+id: enveis-anova
+name_no: "Enveis variansanalyse (ANOVA, F-test for 3+ grupper)"
+type: test
+category: hypothesis_test
+tagline: "F-test som sammenligner forventningsverdiene i 3 eller flere uavhengige normalfordelte grupper."
+
+formula_main: "F = MSG / MSE  =  (SSG / (k − 1)) / (SSE / (n − k));   F ~ F(k − 1, n − k) under H₀"
+formula_latex: "F = \\frac{MSG}{MSE} = \\frac{SSG / (k - 1)}{SSE / (n - k)}, \\quad F \\sim F(k - 1,\\, n - k) \\text{ under } H_0"
+
+what_it_does: |
+  Enveis variansanalyse (engelsk: one-way ANOVA) er forlengelsen av
+  to-utvalgs t-test til `k ≥ 3` uavhengige grupper. Den tester én felles
+  nullhypotese:
+
+      H₀: μ₁ = μ₂ = … = μ_k     mot     H₁: minst to gruppe-middelverdier er forskjellige
+
+  Ideen er å splitte den totale variasjonen i dataene i to deler:
+
+  - **mellom grupper (SSG)** — hvor mye gruppemiddelene `x̄_i` avviker fra
+    totalmiddelet `x̄`. Stor SSG ⇒ gruppene ligger på ulike nivåer.
+  - **innen grupper (SSE)** — hvor mye observasjonene avviker fra sitt
+    eget gruppemiddel. Dette er bare «støy» innenfor hver gruppe.
+
+  Hvis H₀ er sann, skal MSG og MSE være omtrent like store (begge estimerer
+  samme `σ²`), så `F = MSG/MSE ≈ 1`. Hvis gruppemiddelene faktisk er
+  forskjellige, blir SSG (og dermed MSG) stor relativt til MSE, og `F`
+  blir stor. Forkast H₀ hvis `F > F_(α, k − 1, n − k)` (alltid HØYRE
+  hale — F-testen er ensidig per definisjon).
+
+why_use: |
+  Hvis du har tre grupper, kunne du i prinsippet gjort tre parvise
+  t-tester (gruppe 1 vs 2, 1 vs 3, 2 vs 3). Problemet er at hver test
+  har sin egen α — gjør du flere tester øker du sjansen for å forkaste
+  ved et tilfelle (familiewise error). ANOVA gir ÉN samlet test på
+  samme α-nivå.
+
+  Forutsetningene er strenge: hver gruppe må være tilnærmet normalfordelt,
+  med felles populasjonsvarians `σ²` (homoskedastisitet) og uavhengige
+  observasjoner — både innen og mellom grupper. Brytes felles-σ²-antakelsen
+  må man bruke Welch-ANOVA eller en ikke-parametrisk variant
+  (Kruskal-Wallis).
+
+recognition_cues:
+  - "Oppgaven gir TRE eller FLERE uavhengige grupper/utvalg/leverandører/behandlinger og spør om de er like"
+  - "Eksplisitt formulering: «test om gjennomsnittsverdiene er like», «er det forskjell mellom leverandørene/maskinene/behandlingene?»"
+  - "Du har `x̄_i`, `s_i²` og `n_i` for `k ≥ 3` grupper, og en hypotese om at alle `μ_i` er like"
+  - "Oppgaven nevner «variansanalyse», «ANOVA», «enveis», «one-way», «F-test»"
+  - "ANOVA-tabell med kolonnene SSG, SSE, MSG, MSE, F, df1, df2 er delvis fylt ut og du skal fullføre"
+  - "Spørsmålet er om en faktor (med 3+ nivåer) påvirker en kontinuerlig respons"
+  - "Skjult variant: «kan vi anta felles populasjonsmiddel?» med tre datakolonner"
+
+when_NOT_to_use:
+  - "Bare TO grupper → bruk [to-utvalgs t-test](/entry/to-utvalgs-t-test) (`T² = F` i det tilfellet, så de gir samme svar)"
+  - "Variansene er åpenbart ulike mellom grupper → vurder Welch-ANOVA (ikke pensum i ITD20218) eller transformér data"
+  - "Normalfordeling KAN IKKE antas (lite utvalg, asymmetri, ekstreme uteliggere) → bruk en ikke-parametrisk test (Kruskal-Wallis)"
+  - "Du vil teste om TO bestemte grupper er forskjellige etter at H₀ er forkastet → post-hoc-test (Tukey, Bonferroni) — ikke selve ANOVA"
+  - "Observasjonene er paret/parede (samme individ målt under flere behandlinger) → repetert-måle-ANOVA, ikke enveis"
+  - "Du vil teste varianslikhet (`σ₁² = σ₂²`) snarere enn middel — bruk F-test for to varianser (kvot av to `s²`-er)"
+
+symbols:
+  - { sym: "k",        means: "antall grupper (`k ≥ 3` for ANOVA)" }
+  - { sym: "n_i",      means: "antall observasjoner i gruppe `i`" }
+  - { sym: "n",        means: "totalt antall observasjoner, `n = Σn_i`" }
+  - { sym: "x̄_i",     means: "gjennomsnittet i gruppe `i`" }
+  - { sym: "x̄",       means: "totalgjennomsnittet (over alle observasjoner)" }
+  - { sym: "s_i²",     means: "utvalgsvariansen i gruppe `i`" }
+  - { sym: "SSG",      means: "sum of squares BETWEEN groups (mellom-gruppe), `Σ n_i (x̄_i − x̄)²`" }
+  - { sym: "SSE",      means: "sum of squares ERROR / WITHIN (innen-gruppe), `Σ (n_i − 1) s_i²`" }
+  - { sym: "SST",      means: "total sum of squares, `SSG + SSE`" }
+  - { sym: "MSG",      means: "mean square between, `SSG / (k − 1)` — telleren i `F`" }
+  - { sym: "MSE",      means: "mean square error, `SSE / (n − k)` — nevneren i `F`. Også estimat for `σ²`" }
+  - { sym: "df₁",      means: "telnerfrihetsgrader, `df₁ = k − 1`" }
+  - { sym: "df₂",      means: "nevnerfrihetsgrader, `df₂ = n − k`" }
+  - { sym: "F",        means: "testobservatoren, `F = MSG/MSE` — F-fordelt med `(df₁, df₂)` under H₀" }
+  - { sym: "F_α",      means: "kritisk verdi `F_(α, df₁, df₂)` — slås opp i tabell E.8" }
+  - { sym: "H₀",       means: "nullhypotesen, `H₀: μ₁ = μ₂ = … = μ_k`" }
+  - { sym: "H₁",       means: "alternativet, `H₁: minst to `μ_i` er forskjellige`" }
+  - { sym: "α",        means: "signifikansnivå (typisk `0.05`)" }
+
+properties:
+  expected_value: "E[F | H₀] = df₂ / (df₂ − 2)     (≈ 1 for store df₂)"
+  variance: "Var[F | H₀] = 2·df₂²·(df₁ + df₂ − 2) / (df₁·(df₂ − 2)²·(df₂ − 4))"
+  std_dev: "σ_F = √Var[F | H₀]"
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [mean_of_samples, continuous]
+  setup: [three_plus_samples]
+  structural_cues: [normal_assumed, summary_stats_given, data_as_list, one_sided_alternative]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, alpha_significance]
+  distribution_assumption: [f_distribution, normal]
+  tooling: [f_quantile_table_E8, calculator_sqrt]
+
+solution_variants:
+  - label: "Oppsummerte tall — gjennomsnitt og varians gitt per gruppe"
+    recognition: "«Tre leverandører / behandlinger / maskiner med oppgitt `x̄`, `s²` og `n` per gruppe. Test om gjennomsnittene er like». Det vanligste eksamensformatet — du slipper å regne `x̄_i` og `s_i²` selv."
+    steps:
+      - text: "Formuler hypotesene (én felles H₀ for alle gruppe-middelene):"
+        formula: "H₀: μ₁ = μ₂ = … = μ_k     mot     H₁: minst to μ_i er forskjellige"
+      - "Begrunn antakelsene: hver gruppe normalfordelt, felles populasjonsvarians `σ²`, uavhengige observasjoner. Ofte gitt i oppgaven, eller godtas pragmatisk."
+      - text: "Tell `k` = antall grupper og `n` = totalt antall observasjoner (`n = Σn_i`). Beregn totalgjennomsnittet som et VEKTET snitt:"
+        formula: "x̄ = (Σ n_i · x̄_i) / n"
+      - text: "Eksempel: `k = 3`, `n_1 = n_2 = n_3 = 5` (`n = 15`), `x̄_1 = 23.0`, `x̄_2 = 24.6`, `x̄_3 = 22.2`:"
+        formula: "x̄ = (5·23.0 + 5·24.6 + 5·22.2) / 15 = 349 / 15 ≈ 23.267"
+        example: true
+      - text: "Beregn SSG (mellom-gruppe-variasjon) — hvor mye gruppemiddelene avviker fra totalsnittet, vektet med gruppestørrelse:"
+        formula: "SSG = Σ n_i · (x̄_i − x̄)²"
+      - text: "Forts. eksempel — sett inn `x̄ = 23.267`:"
+        formula: "SSG = 5·(23.0 − 23.267)² + 5·(24.6 − 23.267)² + 5·(22.2 − 23.267)² ≈ 14.93"
+        example: true
+      - text: "Beregn SSE (innen-gruppe-variasjon) — vektet sum av gruppe-variansene `s_i²` (NB: vekten er `n_i − 1`, ikke `n_i`):"
+        formula: "SSE = Σ (n_i − 1) · s_i²"
+      - text: "Forts. eksempel — sett inn `s_1² = 5.5`, `s_2² = 7.3`, `s_3² = 5.2`:"
+        formula:
+          - "SSE = 4·5.5 + 4·7.3 + 4·5.2 = 72.0"
+          - "SST = SSG + SSE = 14.93 + 72.0 = 86.93   (kontrollregning)"
+        example: true
+      - text: "Frihetsgrader: telneren har `k − 1` og nevneren har `n − k`:"
+        formula:
+          - "df₁ = k − 1"
+          - "df₂ = n − k"
+      - text: "Beregn de gjennomsnittlige kvadratene (MS = SS / df):"
+        formula:
+          - "MSG = SSG / (k − 1)"
+          - "MSE = SSE / (n − k)"
+      - text: "Forts. eksempel — `k = 3`, `n = 15`:"
+        formula:
+          - "df₁ = 2,   df₂ = 12"
+          - "MSG = 14.93 / 2 = 7.465,   MSE = 72.0 / 12 = 6.0"
+        example: true
+      - text: "Beregn testobservatoren — alltid MSG OVER MSE (større tall i telleren ⇒ mer evidens mot H₀):"
+        formula: "F = MSG / MSE"
+      - text: "Forts. eksempel — sett inn MSG og MSE:"
+        formula: "F = 7.465 / 6.0 ≈ 1.244"
+        example: true
+      - "Slå opp den kritiske F-verdien `F_(α, df₁, df₂)` i **tabell E.8** (F-tabell) — α er HØYRE-hale-sannsynligheten (ensidig). For `α = 0.05`, `df₁ = 2`, `df₂ = 12` får du `F_crit ≈ 3.89`."
+      - text: "Forkastingsregel — F-testen er alltid ensidig høyre, så uansett om H₁ er «forskjellig» eller «én er størst», sammenligner du F mot øvre kritisk verdi:"
+        formula: "Forkast H₀ hvis F > F_(α, df₁, df₂)"
+      - text: "Forts. eksempel — sammenlign med kritisk verdi `F_(0.05, 2, 12) ≈ 3.89`:"
+        formula:
+          - "1.244 < 3.89   ⇒   behold H₀"
+          - "konklusjon: ingen evidens for at gruppene har ulike middelverdier"
+        example: true
+      - { text: "Pass på: SSE bruker `(n_i − 1)·s_i²`, IKKE `n_i·s_i²`. Glemmer du `−1` får du for stor SSE og for liten F.", conditional: true }
+      - { text: "Pass på: F er aldri negativ siden teller og nevner begge er kvadratiske størrelser. Hvis du får negativ F har du regnefeil.", conditional: true }
+
+  - label: "Rådata — lister med målinger per gruppe"
+    recognition: "Du får en tabell med rådata — én kolonne per gruppe, observasjonene listet ut. Steg 0 er å beregne `x̄_i` og `s_i²` selv, deretter er prosedyren identisk med oppsummerte-data-fanen."
+    steps:
+      - text: "Formuler hypotesene:"
+        formula: "H₀: μ₁ = μ₂ = … = μ_k     mot     H₁: minst to μ_i er forskjellige"
+      - "Begrunn antakelsene: normalfordeling i hver gruppe, felles `σ²`, uavhengige observasjoner."
+      - conditional: true
+        text: "**Pass på:** Antakelsen om FELLES `σ²` gjelder POPULASJONEN, ikke utvalget. Du må fortsatt beregne `s_1²`, `s_2²`, …, `s_k²` HVER FOR SEG."
+      - text: "For hver gruppe `i` med `n_i` observasjoner `y_1, y_2, …, y_{n_i}`, beregn gjennomsnittet og utvalgsvariansen som vanlig utvalgsstatistikk — bruk `(n_i − 1)` i nevneren:"
+        formula:
+          - "x̄_i = (y_1 + y_2 + … + y_{n_i}) / n_i"
+          - "s_i² = ((y_1 − x̄_i)² + (y_2 − x̄_i)² + … + (y_{n_i} − x̄_i)²) / (n_i − 1)"
+      - text: "Eksempel for én gruppe `[20, 24, 25, 22, 24]` (`n_i = 5`):"
+        formula:
+          - "x̄_i = (20 + 24 + 25 + 22 + 24) / 5 = 23"
+          - "s_i² = ((20−23)² + (24−23)² + (25−23)² + (22−23)² + (24−23)²) / (5 − 1) = 16/4 = 4.0"
+        example: true
+      - text: "Beregn totalgjennomsnittet (sum av alle observasjoner delt på totalt antall — VEKTET, ikke et enkelt snitt av snittene):"
+        formula:
+          - "n   = n_1 + n_2 + … + n_k"
+          - "x̄  = (n_1·x̄_1 + n_2·x̄_2 + … + n_k·x̄_k) / n"
+      - text: "Beregn SSG (mellom grupper) — kvadratavvikene fra hver gruppes snitt til totalsnittet, vektet med gruppestørrelse:"
+        formula: "SSG = n_1·(x̄_1 − x̄)² + n_2·(x̄_2 − x̄)² + … + n_k·(x̄_k − x̄)²"
+      - text: "Beregn SSE (innen grupper) — bruk den ekvivalente formen som matcher det du allerede har regnet:"
+        formula:
+          - "SSE = (n_1 − 1)·s_1² + (n_2 − 1)·s_2² + … + (n_k − 1)·s_k²"
+          - "      eller — sum av kvadratavvikene fra hver observasjon til SIN EGEN gruppes snitt:"
+          - "      SSE = Σ (y − x̄_(gruppen y ligger i))²   (sum over alle observasjoner)"
+      - text: "Sjekk: `SST` = sum av kvadratavvikene fra hver observasjon til TOTALSNITTET `x̄`. Den fundamentale ANOVA-identiteten er:"
+        formula: "SST = SSG + SSE"
+      - "Hvis SST ≠ SSG + SSE har du regnefeil et sted — kontrollregn."
+      - text: "Frihetsgrader, MS-verdier og F:"
+        formula:
+          - "df₁ = k − 1,   df₂ = n − k"
+          - "MSG = SSG/(k−1),   MSE = SSE/(n−k)"
+          - "F = MSG / MSE"
+      - "Slå opp `F_(α, df₁, df₂)` i **tabell E.8** og forkast H₀ hvis `F > F_(α, df₁, df₂)`."
+      - text: "Pass på: `s_i²` med `n_i − 1` i nevneren (utvalgsvarians). Bruker du `n_i` får du populasjonsvariansen, som er feil for ANOVA."
+        conditional: true
+
+  - label: "ANOVA-tabell — SSG og SSE delvis fylt ut, fullfør og test"
+    recognition: "Oppgaven viser en tabell med kolonnene «Variasjon», «SS», «df», «MS», «F» og noen ruter er allerede fylt ut. Du skal fullføre tabellen og konkludere. Sjekk hva som mangler først."
+    steps:
+      - "Identifiser hva som er gitt (`SSG`, `SSE`, `df₁`, `df₂`, eventuelt `MSG`, `MSE` eller `F`) og hva som mangler. Tabellen har alltid samme struktur."
+      - text: "ANOVA-tabellens layout (med standard formler):"
+        formula:
+          - "Mellom grupper:  SSG    df = k − 1    MSG = SSG/(k−1)    F = MSG/MSE"
+          - "Innen grupper:   SSE    df = n − k    MSE = SSE/(n−k)"
+          - "Totalt:          SST    df = n − 1"
+      - text: "Bruk identiteten `SST = SSG + SSE` til å fylle inn manglende SS-verdi hvis to av tre er gitt."
+        formula: "SST = SSG + SSE"
+      - text: "Fyll inn MS-kolonnen (rad for rad):"
+        formula:
+          - "MSG = SSG / (k − 1)"
+          - "MSE = SSE / (n − k)"
+      - text: "Beregn F (teller/nevner — MSG øverst, MSE nederst):"
+        formula: "F = MSG / MSE"
+      - text: "Hvis bare F mangler og MS-ene er gitt: `F = MSG/MSE` direkte. Hvis `df₂` mangler men `MSE` og `SSE` er gitt: `df₂ = SSE/MSE`."
+        conditional: true
+      - "Slå opp `F_(α, k−1, n−k)` i **tabell E.8** og konkluder: forkast H₀ hvis `F > F_α`."
+      - text: "Standard tolkning: hvis H₀ forkastes, finnes det MINST én gruppe som skiller seg ut — men ANOVA sier IKKE hvilken. Da trengs en post-hoc-test (Tukey, Bonferroni) som typisk er utenfor pensum."
+        conditional: true
+
+solution_template:
+  - "Sjekk forutsetningene: `k ≥ 3` grupper, normalfordeling, felles `σ²`, uavhengige observasjoner."
+  - text: "Formuler felles H₀ og H₁:"
+    formula: "H₀: μ₁ = μ₂ = … = μ_k     mot     H₁: minst to μ_i er forskjellige"
+  - text: "Bryt total variasjon i to deler:"
+    formula:
+      - "SSG = Σ n_i · (x̄_i − x̄)²   (mellom grupper)"
+      - "SSE = Σ (n_i − 1) · s_i²    (innen grupper)"
+  - text: "Beregn MS-verdier og testobservatoren:"
+    formula:
+      - "MSG = SSG/(k−1),   MSE = SSE/(n−k)"
+      - "F = MSG / MSE"
+  - "Slå opp `F_(α, k−1, n−k)` i **tabell E.8** og forkast H₀ hvis `F > F_α`."
+
+common_traps: |
+  - **Felles `σ²` betyr IKKE felles `s_i²`.** Antakelsen om at populasjonene
+    deler `σ²` (homoskedastisitet) gjelder den SANNE, ukjente variansen i
+    populasjonen. De observerte utvalgsvariansene `s_1², s_2², …, s_k²` er
+    ESTIMATER og varierer alltid litt fra hverandre — det er normalt. Du må
+    regne ut hver `s_i²` for seg og bruke dem som de er i `SSE = Σ(n_i − 1)·s_i²`.
+    Gjenbruker du `s_1²` for alle gruppene får du feil SSE og feil F.
+  - **SSE-vekten er `n_i − 1`, ikke `n_i`.** `SSE = Σ (n_i − 1)·s_i²`. Bruker du
+    `n_i` får du for stor SSE og for liten F — du «mister» nesten alltid evidens
+    mot H₀. Sjekk dette først hvis svaret ditt ikke matcher fasiten.
+  - **Totalgjennomsnittet er VEKTET, ikke et enkelt snitt av snittene.** `x̄ = Σ n_i x̄_i / n`,
+    ikke `(x̄_1 + x̄_2 + x̄_3)/k`. Med like gruppestørrelser blir det riktig ved en
+    tilfeldighet — med ulike størrelser gir det feil totalsnitt og dermed feil SSG.
+  - **F-testen er ALLTID høyresidig.** Selv om H₁ er «forskjellig» (tosidig i ord),
+    er testen ensidig: vi avviser bare hvis `F` er STOR. Ikke del `α` på 2.
+    Tabellen gir `F_(α, df₁, df₂)` direkte (øvre-hale).
+  - **Forveksle ikke `df₁` og `df₂` i tabelloppslaget.** Tabellen E.8 har telneren
+    (`df₁ = k − 1`) på KOLONNENE og nevneren (`df₂ = n − k`) på RADENE. Skifter du
+    dem henter du feil kritisk verdi. Huskeregel: «det er færre grupper enn
+    observasjoner, så `df₁ < df₂`».
+  - **ANOVA sier IKKE hvilken gruppe som skiller seg ut.** Hvis H₀ forkastes, vet
+    du bare at minst to gruppemidler er ulike. For å identifisere parene trengs
+    en post-hoc-test (Tukey-HSD, Bonferroni-korrigerte t-tester) — som vanligvis
+    er utenfor ITD20218-pensum, men nevn det i konklusjonen.
+  - **`F = T²` for `k = 2`.** Hvis du har bare to grupper, gir ANOVA og to-utvalgs
+    t-test (med pooled varians) NØYAKTIG samme p-verdi: `F = T²`. Ikke bruk ANOVA
+    «for sikkerhets skyld» med to grupper — bruk t-testen.
+  - **Forutsetningen om felles `σ²`.** Hvis gruppevariansene er åpenbart ulike
+    (tommelfingerregel: største `s_i²` mer enn 4× minste), er ANOVA upålitelig.
+    Da trengs Welch-ANOVA eller Kruskal-Wallis.
+
+python_snippet: |
+  from scipy import stats
+
+  # Variant 1 — rådata per gruppe
+  A = [20, 24, 25, 22, 24]
+  B = [22, 27, 26, 23, 25]
+  C = [21, 19, 24, 23, 24]
+  F, p = stats.f_oneway(A, B, C)
+  print(f"F = {F:.3f}, p = {p:.4f}")
+
+  # Variant 2 — oppsummerte tall (gjennomsnitt, varians, n per gruppe)
+  import numpy as np
+  xbar = np.array([23.0, 24.6, 22.2])
+  s2   = np.array([5.5,  7.3,  5.2])
+  n    = np.array([5,    5,    5])
+  k    = len(n)
+  N    = n.sum()
+  grand = (n * xbar).sum() / N
+  SSG  = (n * (xbar - grand)**2).sum()
+  SSE  = ((n - 1) * s2).sum()
+  MSG  = SSG / (k - 1)
+  MSE  = SSE / (N - k)
+  F    = MSG / MSE
+  p    = 1 - stats.f.cdf(F, k - 1, N - k)
+
+detailed_solution_variants:
+  - label: "Oppsummerte tall — gjennomsnitt og varians gitt per gruppe"
+    solutions:
+      - source: "Eksamen mai24 · oppgave 6 (leverandør-sammenligning)"
+        question: |
+          Tre leverandører `A`, `B`, `C` leverer materiale, og oppdragsgiveren
+          vil teste om gjennomsnittlig fasthet er den samme på tvers av
+          leverandørene. Hver leverandør har levert 5 prøver. Oppgitt:
+
+          Leverandør A: `x̄_A = 23.0`, `s_A² = 5.5`, `n_A = 5`
+          Leverandør B: `x̄_B = 24.6`, `s_B² = 7.3`, `n_B = 5`
+          Leverandør C: `x̄_C = 22.2`, `s_C² = 5.2`, `n_C = 5`
+
+          Test på signifikansnivå `α = 0.05` om alle tre leverandørenes
+          gjennomsnittsverdier er like.
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`k = 3` grupper, `n_i = 5` for hver, `n = 15` totalt." }
+              - { text: "Felles populasjonsvarians antas; observasjoner uavhengige; normalfordeling antas i hver gruppe." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_A = μ_B = μ_C`" }
+              - { text: "`H₁:` minst to av middelverdiene er ulike" }
+          - label: "Totalgjennomsnitt"
+            lines:
+              - { text: "Like gruppestørrelser ⇒ totalsnittet er bare snittet av `x̄_i`-ene:" }
+              - { text: "`x̄ = (5·23.0 + 5·24.6 + 5·22.2) / 15`" }
+              - { indent: "`= (115 + 123 + 111) / 15`" }
+              - { indent: "`= 349 / 15 ≈ 23.267`" }
+          - label: "SSG (mellom-gruppe)"
+            lines:
+              - { text: "`SSG = Σ n_i (x̄_i − x̄)²`" }
+              - { text: "`= 5·(23.0 − 23.267)² + 5·(24.6 − 23.267)² + 5·(22.2 − 23.267)²`" }
+              - { indent: "`= 5·0.0712 + 5·1.7777 + 5·1.1378`" }
+              - { indent: "`= 0.356 + 8.889 + 5.689`" }
+              - { indent: "`≈ 14.93`" }
+          - label: "SSE (innen-gruppe)"
+            lines:
+              - { text: "`SSE = Σ (n_i − 1) s_i²`" }
+              - { text: "`= 4·5.5 + 4·7.3 + 4·5.2`" }
+              - { indent: "`= 22.0 + 29.2 + 20.8`" }
+              - { indent: "`= 72.0`" }
+          - label: "Frihetsgrader og MS"
+            lines:
+              - { text: "`df₁ = k − 1 = 2`" }
+              - { text: "`df₂ = n − k = 15 − 3 = 12`" }
+              - { text: "`MSG = SSG / df₁ = 14.93 / 2 ≈ 7.465`" }
+              - { text: "`MSE = SSE / df₂ = 72.0 / 12 = 6.0`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = MSG / MSE = 7.465 / 6.0 ≈ 1.244`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "F_(0.05, 2, 12) ≈ 3.89; forkast H₀ hvis F > 3.89" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`1.244 < 3.89` ⇒ kan IKKE forkaste H₀" }
+              - { comment: "Testobservatoren ligger langt unna forkastningsområdet" }
+        result: "Vi kan IKKE forkaste `H₀` på `α = 0.05`. Dataene gir ikke grunnlag for å hevde at fastheten varierer mellom leverandørene — den observerte forskjellen ligger godt innenfor det vi forventer ved tilfeldig variasjon mellom utvalgene."
+
+      - source: "Praksis · sammenligne 4 behandlinger (signifikant resultat)"
+        question: |
+          Et legemiddelfirma tester 4 ulike formuleringer av samme aktive
+          stoff. For hver formulering måles blodtrykksreduksjon (mmHg) hos
+          10 pasienter, slik at `n_i = 10` for `i = 1,…,4`.
+
+          F1: `x̄_1 = 12.4`, `s_1² = 9.0`
+          F2: `x̄_2 = 15.8`, `s_2² = 11.0`
+          F3: `x̄_3 = 13.1`, `s_3² = 10.0`
+          F4: `x̄_4 = 17.2`, `s_4² = 8.5`
+
+          Test på `α = 0.01` om gjennomsnittlig reduksjon er ulik for de
+          fire formuleringene.
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`k = 4`, `n_i = 10`, `n = 40`." }
+              - { text: "Normalfordeling og felles `σ²` antas; observasjoner uavhengige." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_1 = μ_2 = μ_3 = μ_4`" }
+              - { text: "`H₁:` minst to middelverdier ulike" }
+          - label: "Totalgjennomsnitt"
+            lines:
+              - { text: "`x̄ = (10·12.4 + 10·15.8 + 10·13.1 + 10·17.2) / 40`" }
+              - { indent: "`= (124 + 158 + 131 + 172) / 40`" }
+              - { indent: "`= 585 / 40 = 14.625`" }
+          - label: "SSG"
+            lines:
+              - { text: "`SSG = Σ n_i (x̄_i − x̄)²`" }
+              - { text: "`= 10·(12.4 − 14.625)² + 10·(15.8 − 14.625)² + 10·(13.1 − 14.625)² + 10·(17.2 − 14.625)²`" }
+              - { indent: "`= 10·4.9506 + 10·1.3806 + 10·2.3256 + 10·6.6306`" }
+              - { indent: "`= 49.506 + 13.806 + 23.256 + 66.306`" }
+              - { indent: "`≈ 152.875`" }
+          - label: "SSE"
+            lines:
+              - { text: "`SSE = Σ (n_i − 1) s_i²`" }
+              - { text: "`= 9·9.0 + 9·11.0 + 9·10.0 + 9·8.5`" }
+              - { indent: "`= 81 + 99 + 90 + 76.5`" }
+              - { indent: "`= 346.5`" }
+          - label: "Frihetsgrader og MS"
+            lines:
+              - { text: "`df₁ = 3, df₂ = 36`" }
+              - { text: "`MSG = 152.875 / 3 ≈ 50.96`" }
+              - { text: "`MSE = 346.5 / 36 ≈ 9.625`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = 50.96 / 9.625 ≈ 5.295`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "F_(0.01, 3, 36) ≈ 4.38 (interpolert mellom df₂ = 30 og 40)" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`5.295 > 4.38` ⇒ forkast H₀" }
+              - { comment: "Resultatet ville også vært signifikant på α = 0.05 (F_crit ≈ 2.87)" }
+        result: "Vi forkaster `H₀` på `α = 0.01`. Det er signifikant evidens for at minst én av formuleringene gir en annen gjennomsnittlig blodtrykksreduksjon enn de andre. F4 (17.2) og F2 (15.8) ser ut til å være de mest effektive, men en post-hoc test (f.eks. Tukey) trengs for å si HVILKE par som faktisk skiller seg fra hverandre."
+
+  - label: "Rådata — lister med målinger per gruppe"
+    solutions:
+      - source: "Praksis · 3 lærere, samme prøve"
+        question: |
+          Tre lærere `L1, L2, L3` underviser hvert sitt klasserom i samme
+          fag. Etter kurset får alle studentene samme prøve. Vi vil teste om
+          gjennomsnittsskåren er den samme på tvers av lærere på `α = 0.05`.
+
+          L1: `[72, 75, 68, 80, 70]`         (`n_1 = 5`)
+          L2: `[78, 82, 85, 79, 83, 80]`     (`n_2 = 6`)
+          L3: `[65, 70, 72, 68, 71, 69, 74]` (`n_3 = 7`)
+        sections:
+          - label: "Gruppemiddel og varians"
+            lines:
+              - { text: "L1: `Σ = 365`, `x̄_1 = 73`. Avvik²: 1+4+25+49+9 = 88. `s_1² = 88/4 = 22.0`." }
+              - { text: "L2: `Σ = 487`, `x̄_2 ≈ 81.17`. Avvik²: 10.03+0.69+14.69+4.69+3.36+1.36 ≈ 34.83. `s_2² = 34.83/5 ≈ 6.967`." }
+              - { text: "L3: `Σ = 489`, `x̄_3 ≈ 69.86`. Avvik²: 23.59+0.020+4.59+3.45+1.31+0.74+17.16 ≈ 50.86. `s_3² = 50.86/6 ≈ 8.476`." }
+          - label: "Identifisering"
+            lines:
+              - { text: "`k = 3`, `n = 5 + 6 + 7 = 18`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_1 = μ_2 = μ_3`" }
+              - { text: "`H₁:` minst to middelverdier ulike" }
+          - label: "Totalgjennomsnitt"
+            lines:
+              - { text: "Sum av alle observasjoner = `365 + 487 + 489 = 1341`" }
+              - { text: "`x̄ = 1341 / 18 ≈ 74.50`" }
+          - label: "SSG"
+            lines:
+              - { text: "`SSG = 5·(73 − 74.5)² + 6·(81.17 − 74.5)² + 7·(69.86 − 74.5)²`" }
+              - { indent: "`= 5·2.25 + 6·44.49 + 7·21.53`" }
+              - { indent: "`= 11.25 + 266.94 + 150.71`" }
+              - { indent: "`≈ 428.9`" }
+          - label: "SSE"
+            lines:
+              - { text: "`SSE = (n_1 − 1)s_1² + (n_2 − 1)s_2² + (n_3 − 1)s_3²`" }
+              - { text: "`= 4·22.0 + 5·6.967 + 6·8.476`" }
+              - { indent: "`= 88.0 + 34.83 + 50.86`" }
+              - { indent: "`≈ 173.7`" }
+          - label: "Frihetsgrader og MS"
+            lines:
+              - { text: "`df₁ = 2, df₂ = 15`" }
+              - { text: "`MSG = 428.9 / 2 ≈ 214.5`" }
+              - { text: "`MSE = 173.7 / 15 ≈ 11.58`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = 214.5 / 11.58 ≈ 18.52`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "F_(0.05, 2, 15) ≈ 3.68; forkast H₀ hvis F > 3.68" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`18.52 ≫ 3.68` ⇒ klart signifikant" }
+        result: "Vi forkaster `H₀` på `α = 0.05` (med god margin). Det er sterk evidens for at gjennomsnittsskåren er ulik mellom de tre lærerne. L2 (81.17) ligger høyest, L3 (69.86) lavest — en post-hoc test ville sannsynligvis vise at L2 vs L3 og L1 vs L2 begge er signifikante."
+
+      - source: "Praksis · gjødseltype og avling (ikke-signifikant)"
+        question: |
+          En agronom sammenligner tre gjødseltyper. Hver type prøves på
+          4 åkerlapper, og avlingen i tonn/dekar måles:
+
+          Type I:   `[4.2, 4.0, 4.5, 4.1]`
+          Type II:  `[4.4, 4.6, 4.3, 4.5]`
+          Type III: `[4.3, 4.1, 4.4, 4.2]`
+
+          Test på `α = 0.05` om gjødseltypene gir forskjellig gjennomsnittlig avling.
+        sections:
+          - label: "Gruppemiddel og varians"
+            lines:
+              - { text: "Type I: `Σ = 16.8`, `x̄_1 = 4.2`. Avvik² = 0+0.04+0.09+0.01 = 0.14. `s_1² = 0.14/3 ≈ 0.0467`." }
+              - { text: "Type II: `Σ = 17.8`, `x̄_2 = 4.45`. Avvik² = 0.0025+0.0225+0.0225+0.0025 = 0.05. `s_2² = 0.05/3 ≈ 0.0167`." }
+              - { text: "Type III: `Σ = 17.0`, `x̄_3 = 4.25`. Avvik² = 0.0025+0.0225+0.0225+0.0025 = 0.05. `s_3² ≈ 0.0167`." }
+          - label: "Identifisering"
+            lines:
+              - { text: "`k = 3`, `n_i = 4`, `n = 12`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_1 = μ_2 = μ_3`" }
+              - { text: "`H₁:` minst to middelverdier ulike" }
+          - label: "Totalgjennomsnitt"
+            lines:
+              - { text: "`x̄ = (16.8 + 17.8 + 17.0) / 12 = 51.6 / 12 = 4.3`" }
+          - label: "SSG"
+            lines:
+              - { text: "`SSG = 4·(4.2 − 4.3)² + 4·(4.45 − 4.3)² + 4·(4.25 − 4.3)²`" }
+              - { indent: "`= 4·0.01 + 4·0.0225 + 4·0.0025`" }
+              - { indent: "`= 0.04 + 0.09 + 0.01 = 0.14`" }
+          - label: "SSE"
+            lines:
+              - { text: "`SSE = 3·0.0467 + 3·0.0167 + 3·0.0167`" }
+              - { indent: "`= 0.140 + 0.050 + 0.050 = 0.240`" }
+          - label: "Frihetsgrader og MS"
+            lines:
+              - { text: "`df₁ = 2, df₂ = 9`" }
+              - { text: "`MSG = 0.14 / 2 = 0.070`" }
+              - { text: "`MSE = 0.240 / 9 ≈ 0.0267`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = 0.070 / 0.0267 ≈ 2.625`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "F_(0.05, 2, 9) ≈ 4.26; forkast H₀ hvis F > 4.26" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`2.625 < 4.26` ⇒ behold H₀" }
+        result: "Vi kan IKKE forkaste `H₀` på `α = 0.05`. Selv om Type II har det høyeste utvalgssnittet (4.45), er forskjellene mellom gjødseltypene innenfor det man forventer å se ved tilfeldig variasjon mellom åkerlapper i et utvalg på 12. Datagrunnlaget er for lite til å konkludere."
+
+  - label: "ANOVA-tabell — SSG og SSE delvis fylt ut, fullfør og test"
+    solutions:
+      - source: "Eksamen-praksis · fyll ut tabellen"
+        question: |
+          Følgende ANOVA-tabell er delvis fylt ut for et eksperiment med
+          `k = 4` behandlinger og `n = 24` totalt. Fyll ut de manglende
+          verdiene og test `H₀: μ_1 = μ_2 = μ_3 = μ_4` mot `H₁:` minst to
+          ulike, på `α = 0.05`.
+
+          | Variasjon       | SS    | df | MS    | F   |
+          |----------------|-------|----|-------|-----|
+          | Mellom grupper |  ?    | ?  | 18.5  | ?   |
+          | Innen grupper  | 110.0 | ?  | ?     |     |
+          | Totalt         |  ?    | ?  |       |     |
+        sections:
+          - label: "Frihetsgrader"
+            lines:
+              - { text: "`df₁ = k − 1 = 3`" }
+              - { text: "`df₂ = n − k = 24 − 4 = 20`" }
+              - { text: "`df_total = n − 1 = 23` (`= df₁ + df₂` — sjekk)" }
+          - label: "Innen grupper (MSE)"
+            lines:
+              - { text: "`MSE = SSE / df₂ = 110.0 / 20 = 5.5`" }
+          - label: "Mellom grupper (SSG)"
+            lines:
+              - { text: "MS er gitt: `MSG = 18.5`. Snu MS-formelen for å finne SS:" }
+              - { text: "`SSG = MSG · df₁ = 18.5 · 3 = 55.5`" }
+          - label: "Totalt (SST)"
+            lines:
+              - { text: "`SST = SSG + SSE = 55.5 + 110.0 = 165.5`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = MSG / MSE = 18.5 / 5.5 ≈ 3.364`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "F_(0.05, 3, 20) ≈ 3.10; forkast H₀ hvis F > 3.10" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`3.364 > 3.10` ⇒ forkast H₀ (såvidt)" }
+        result: "Vi forkaster `H₀` på `α = 0.05` (marginalt). Det er evidens for at minst én av behandlingsmiddelene avviker fra de andre. Komplett ANOVA-tabell: `SSG = 55.5, SSE = 110.0, SST = 165.5, df = (3, 20, 23), MSG = 18.5, MSE = 5.5, F ≈ 3.36`."
+
+related:
+  - { id: "to-utvalgs-t-test",      kind: "entry" }
+  - { id: "en-utvalg-t-test",       kind: "entry" }
+  - { id: "varians-oversikt",       kind: "entry" }
+  - { id: "utvalgsvarians-radata",  kind: "entry" }
+  - { id: "normalfordeling",        kind: "entry" }
+  - { id: "frihetsgrader-glos",     kind: "glossary" }
+  - { id: "p-verdi-glos",           kind: "glossary" }
+  - { id: "observatortest",         kind: "glossary" }
+  - { id: "alternativhypotese",     kind: "glossary" }
+  - { id: "ensidig-test",           kind: "glossary" }
+  - { id: "pooled-varians",         kind: "glossary" }
+  - { id: "E8-f-tabell",            kind: "table" }
+
+tools:
+  - "Tabell E.8 – F-fordelingens kvantiltabell (F-tabell)"
+
+tags:
+  - anova
+  - "enveis variansanalyse"
+  - variansanalyse
+  - "one-way anova"
+  - "F-test"
+  - "F-fordeling"
+  - "tre utvalg"
+  - "3 utvalg"
+  - "flere utvalg"
+  - "flere grupper"
+  - "tre grupper"
+  - "k grupper"
+  - "sammenligne grupper"
+  - "sammenligne flere"
+  - "hypotesetest tre grupper"
+  - "hypotesetest flere grupper"
+  - hypotesetest
+  - MSG
+  - MSE
+  - SSG
+  - SSE
+  - SST
+  - mellomgruppevarians
+  - innengruppevarians
+  - "mellom grupper"
+  - "innen grupper"
+  - "between groups"
+  - "within groups"
+  - leverandører
+  - behandlinger
+  - "ANOVA-tabell"

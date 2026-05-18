@@ -26,6 +26,6 @@ long_def: |
 
   Sårbar for uteliggere fordi store avvik veier ekstra tungt.
 see_also:
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: residual, kind: glossary }
   - { id: regresjonslinje, kind: pattern }

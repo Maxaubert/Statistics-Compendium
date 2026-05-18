@@ -4,7 +4,6 @@ short_def: "Testobservatoren i Mann-Whitney-Wilcoxon-testen: `U = W − n₁(n�
 filters:
   computes: [hypothesis_test]
   setup: [two_independent_samples]
-  structural_cues: [nonparametric_required]
   distribution_assumption: [none_assumed]
   tooling: [mann_whitney_table_E7]
 long_def: |

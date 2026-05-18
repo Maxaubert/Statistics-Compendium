@@ -48,12 +48,13 @@ filters:
   computes: [exact_probability, range_probability, expected_value, find_x_for_threshold, conditional_probability]
   random_variable: [continuous, time_until_event]
   setup: [single_population, events_in_window]
-  structural_cues: [rate_given, process_over_time, independent_events, poisson_process_mentioned, time_until_first, complement_pattern, no_occurrences, probability_threshold]
+  structural_cues: [process_over_time, independent_events, time_until_first, complement_pattern, no_occurrences, probability_threshold]
   parameters_known: [rate_lambda]
   distribution_assumption: [exponential]
   tooling: [calculator_exp]
 solution_variants:
   - label: "P(T > t) — ingen hendelse innen t"
+    recognition: "«Sannsynligheten for at ventetiden overstiger `t`», «ingen kunde de neste 30 minutter», eller «overlevelse forbi tid `t`». Den vanligste varianten i pensum."
     steps:
       - "Identifiser raten `λ` og noter enheten (per minutt, per time, per år, ...)"
       - { text: "Hvis oppgaven gir forventet ventetid `E[T]` (f.eks. «forventet levetid 26 døgn») i stedet for raten direkte, bruk `λ = 1/E[T]`. F.eks. `E[T] = 26` ⇒ `λ = 1/26 ≈ 0.0385` per døgn.", conditional: true }
@@ -65,6 +66,7 @@ solution_variants:
         example: true
 
   - label: "P(T < t) — hendelse innen t"
+    recognition: "«Sannsynligheten for at hendelsen kommer innen `t`», «hva er sjansen for at neste kunde dukker opp før 5 min?»."
     steps:
       - "Identifiser raten `λ` og pass på at `t` er i samme tidsenhet (konvertér først om nødvendig)"
       - { text: "Hvis oppgaven gir forventet ventetid `E[T]` i stedet for raten, bruk `λ = 1/E[T]`.", conditional: true }
@@ -78,6 +80,7 @@ solution_variants:
         conditional: true
 
   - label: "P(a < T < b) — intervall"
+    recognition: "«Sannsynligheten for at ventetiden er mellom `a` og `b`», «kommer hendelsen i tidsrommet 10–20 minutter?»."
     steps:
       - "Identifiser `λ`, `a` og `b`, alle med samme tidsenhet"
       - { text: "Hvis oppgaven gir forventet ventetid `E[T]` i stedet for raten, bruk `λ = 1/E[T]`.", conditional: true }
@@ -88,6 +91,7 @@ solution_variants:
         example: true
 
   - label: "Memoryless (gitt at det ikke har skjedd noe i s minutter)"
+    recognition: "«Gitt at vi har ventet `s` minutter uten hendelse, hva er sjansen for å vente `t` til?». Memoryless: fortiden glemmes, kun ny `t` betyr noe."
     steps:
       - { text: "Hvis spørsmålet sier «gitt at det ikke har skjedd noe i de siste s minutter, hva er sannsynligheten for å vente t til», bruk memoryless-egenskapen i stedet for å betinget regne på vanlig måte", conditional: true }
       - text: "Memoryless-egenskapen — fortiden «glemmes», bare den nye ventetiden `t` betyr noe:"
@@ -102,6 +106,7 @@ solution_variants:
       - "Tolk: ventetidsfordelingen «starter på nytt» hvert øyeblikk uten hendelse — typisk for poissonprosesser"
 
   - label: "Hvilken fordeling har T? — identifiser navn og parameter"
+    recognition: "«Begrunn at `T` er eksponentialfordelt», «oppgi parameteren `λ`». Typisk når oppgaven beskriver en Poisson-prosess og du skal navngi ventetiden."
     steps:
       - "Sjekk at hendelsene følger en **poissonprosess** (gitt direkte i oppgaven, eller rimelig å anta)"
       - "Identifiser raten `λ` med enhet (f.eks. `λ = 0.01` pr. time)"

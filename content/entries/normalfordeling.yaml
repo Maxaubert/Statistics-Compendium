@@ -57,14 +57,20 @@ filters:
   computes: [exact_probability, range_probability, find_mu_for_threshold, find_x_for_threshold, find_n_for_threshold]
   random_variable: [continuous, mean_of_samples]
   setup: [single_population]
-  structural_cues: [normal_assumed, mean_and_sd_given, complement_pattern, probability_threshold]
+  structural_cues: [normal_assumed, complement_pattern, probability_threshold]
   parameters_known: [population_variance_known, mean_known, sample_size_large]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
 
 solution_variants:
   - label: "P(X < x)"
+    recognition: "«Sannsynligheten for at `X` er mindre enn `x`», «hva er sjansen for at IQ er under 90?». Standardiser og slå opp i tabell E.3."
     steps:
+      - conditional: true
+        text: "Dersom du egentlig skal finne sannsynligheten for n·μ, konverter først:"
+        formula:
+          - "μ = μ·n"
+          - "σ = √(σ²·n)"
       - "Noter `μ`, `σ` og terskelen `x` fra oppgaven (f.eks. `μ = 25`, `σ = 0.48`, `x = 24`)."
       - "Bekreft at `X ~ N(μ, σ)` — enten direkte oppgitt, eller via sentralgrenseteoremet når `n ≥ 30`."
       - text: "Standardiser og rund til 2 desimaler (f.eks. `(24 − 25)/0.48 = −2.0833 ≈ −2.08`):"
@@ -77,7 +83,13 @@ solution_variants:
         conditional: true
 
   - label: "P(X > x)"
+    recognition: "«Sannsynligheten for at `X` overstiger `x`», «hva er sjansen for å være over 180 cm?». Bruk komplement: `1 − G(z)`."
     steps:
+      - conditional: true
+        text: "Dersom du egentlig skal finne sannsynligheten for n·μ, konverter først:"
+        formula:
+          - "μ = μ·n"
+          - "σ = √(σ²·n)"
       - "Noter `μ`, `σ` og terskelen `x` (f.eks. `μ = 302`, `σ = 5`, `x = 310`)."
       - text: "Standardiser (f.eks. `(310 − 302)/5 = 1.6`):"
         formula: "z = (x − μ)/σ"
@@ -87,7 +99,13 @@ solution_variants:
       - "Fortegnssjekk: `x > μ ⇒ z > 0` (svar `< 0.5`); `x < μ ⇒ z < 0` (svar `> 0.5`)."
 
   - label: "P(a < X < b)"
+    recognition: "«Sannsynligheten for at `X` ligger mellom `a` og `b`», «hvor mange prosent har IQ mellom 85 og 115?»."
     steps:
+      - conditional: true
+        text: "Dersom du egentlig skal finne sannsynligheten for n·μ, konverter først:"
+        formula:
+          - "μ = μ·n"
+          - "σ = √(σ²·n)"
       - "Noter `μ`, `σ` og grensene `a < b` (f.eks. `μ = 302`, `σ = 5`, `a = 305`, `b = 310`)."
       - text: "Standardiser begge (f.eks. `z_a = 0.6`, `z_b = 1.6`):"
         formula: "z_a = (a − μ)/σ,   z_b = (b − μ)/σ"
@@ -96,6 +114,7 @@ solution_variants:
         formula: "P(a < X < b) = G(z_b) − G(z_a)"
 
   - label: "Invers: finn x"
+    recognition: "«Finn 95-persentilen», «hvilken IQ-verdi har bare 1 % over seg?», «hvor stor må `x` være for at `P(X ≤ x) = p`?». Bruk tabell E.4."
     steps:
       - "Les hva som er gitt: en sannsynlighet og hvilken side. Enten `P(X < x) = p`, eller `P(X > x) = α` (da er `p = 1 − α`)."
       - "Slå opp `z` slik at `G(z) = p` i **tabell E.4** (Z-kvantiltabell). Eksempel: `p = 0.975 ⇒ z = 1.96`."
@@ -106,6 +125,7 @@ solution_variants:
         formula: "x = μ + σ · z"
 
   - label: "Invers: finn μ (eller σ)"
+    recognition: "«Hvor stor må `μ` være for at `P(X < grense) < 0.001`?», «hva må `σ` være for at 95 % ligger innenfor en gitt grense?». Design-problem — løs ut det ukjente."
     steps:
       - "Identifiser det ukjente (`μ` eller `σ`) og hva som er gitt: typisk en grense `g` og en målsannsynlighet `p` (f.eks. `P(X < 300) = 0.001`, `σ = 5`)."
       - text: "Sett opp likningen:"
@@ -433,7 +453,7 @@ related:
   - { id: "sum-uavhengige-normaler", kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
   - { id: "en-utvalg-t-test",        kind: "entry" }
-  - { id: "ki-mu-kjent-sigma",       kind: "entry" }
+  - { id: "ki-mu-og-varians",       kind: "entry" }
   - { id: "z-score",                 kind: "glossary" }
   - { id: "mu",                      kind: "glossary" }
   - { id: "sigma",                   kind: "glossary" }

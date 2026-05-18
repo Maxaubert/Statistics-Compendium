@@ -1,0 +1,38 @@
+id: s-xx
+term_no: "S_XX (Σ(xᵢ − x̄)²)"
+short_def: "Sum av kvadrerte avvik for `x`. Mål for hvor godt spredt `x`-verdiene er."
+filters:
+  setup: [linear_relationship]
+  parameters_known: [sum_xx_sxy]
+  structural_cues: [linear_relationship_suspected, summary_stats_given]
+  computes: [parameter_estimate]
+aliases:
+  - s_xx
+  - sxx
+  - sum av kvadrerte avvik for x
+long_def: |
+  Formel:
+
+      S_XX = Σ(xᵢ − x̄)² = Σxᵢ² − n·x̄²
+
+  Den ene mellom-summen som dukker opp i nesten ALLE regresjonsformler:
+  stigningstall, residualvarians (kompakt), standardfeil, prediksjonsintervall.
+
+  **Tolkning:** hvor godt `x`-verdiene er spredt ut.
+
+  - **Stor `S_XX`** ⇒ god hevarm til å bestemme regresjonsstigningen ⇒
+    presis `β̂`, smalt KI, høy test-styrke.
+  - **Liten `S_XX`** (x-verdiene klumpet sammen) ⇒ usikker `β̂`, bredt
+    prediksjonsintervall, lav test-styrke.
+
+  **Nyttig identitet:** hvis `S_E` og `SE(β̂)` er oppgitt men ikke `S_XX`:
+
+      S_XX = (S_E / SE(β̂))²
+
+  Følger av `SE(β̂) = S_E / √S_XX`. Brukes ofte i eksamensoppgaver der
+  `S_E²` og `SE(β̂)` er gitt direkte og man trenger `S_XX` til
+  prediksjonsintervall.
+see_also:
+  - { id: s-xy, kind: glossary }
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: gjennomsnitt, kind: glossary }

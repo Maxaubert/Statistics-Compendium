@@ -28,7 +28,7 @@ when_NOT_to_use:
   - "(X, Y) er kontinuerlige → marginal `f_X(x) = ∫ f(x, y) dy` (integrér ut den andre)"
   - "Du har bare delsummer, ikke hele simultantabellen → ikke nok informasjon til å regne ut marginalene"
   - "Du har bare `E[X]`, `E[Y]`, `Var(X)`, `Var(Y)`, `Cov` (ingen tabell) → bruk [korrelasjon ρ(X,Y)](/entry/korrelasjon-joint) direkte"
-  - "Du har rådata-par `(x_i, y_i)` i stedet for sannsynlighetsfordeling → bruk [Pearsons r](/entry/regresjon-korrelasjonskoeffisient)"
+  - "Du har rådata-par `(x_i, y_i)` i stedet for sannsynlighetsfordeling → bruk [Pearsons r](/entry/lineaer-regresjon)"
 
 common_traps: |
   Marginalsummene MÅ summere til 1. Hvis ikke, har du sannsynligvis
@@ -42,15 +42,15 @@ symbols:
   - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
 
 filters:
-  computes: [marginal_probability, exact_probability, expected_value, variance, std_dev, covariance, correlation, test_independence]
+  computes: [marginal_probability, exact_probability, expected_value, std_dev, covariance, correlation, test_independence]
   random_variable: [discrete_count]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given, linear_relationship_suspected, independent_events]
+  structural_cues: [summary_stats_given, linear_relationship_suspected, independent_events]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only, calculator_sqrt]
 solution_variants:
   - label: "Marginalfordeling fra simultantabell"
+    recognition: "«Finn `P(X = x)`-fordelingen fra simultantabellen», «hva er marginalen til Y?». Summer rader eller kolonner."
     steps:
       - "For `P(X=x)`: summer langs raden i simultantabellen"
       - "For `P(Y=y)`: summer langs kolonnen"
@@ -68,8 +68,9 @@ solution_variants:
         example: true
 
   - label: "Forventning, varians og σ fra marginal"
+    recognition: "«Beregn `E[X]`, `Var(X)` og `σ_X`» etter at marginalfordelingen er hentet ut. Standard diskret variabel-analyse."
     steps:
-      - "Når marginalfordelingen er funnet, kan du regne `E`, `Var` og `σ` for hver variabel separat — samme oppskrift som [forventningsverdi (diskret)](/entry/forventningsverdi-diskret) og [varians/standardavvik (diskret)](/entry/varians-standardavvik-diskret)."
+      - "Når marginalfordelingen er funnet, kan du regne `E`, `Var` og `σ` for hver variabel separat — samme oppskrift som [diskret stokastisk variabel](/entry/diskret-stokastisk-variabel)."
       - { text: "Pass på: `Var(X)` og `σ_X` her er spredningen i `X` ALENE (beregnet fra marginalfordelingen). De er ikke det samme som [kovarians `Cov(X, Y)`](/entry/kovarians), som måler hvordan `X` og `Y` varierer SAMMEN. For Cov og korrelasjon trenger du den fulle simultantabellen.", conditional: true }
       - text: "Forventningsverdi:"
         formula: "E[X] = Σ_x x · P(X = x)"
@@ -96,6 +97,7 @@ solution_variants:
       - { text: "For å regne kovarians eller korrelasjon mellom `X` og `Y` trenger du den fulle simultantabellen, ikke bare marginalene — se [kovarians](/entry/kovarians) og [korrelasjon (joint)](/entry/korrelasjon-joint).", conditional: true }
 
   - label: "Korrelasjon ρ(X, Y) fra simultantabell"
+    recognition: "«Beregn korrelasjonen `ρ(X, Y)` fra fellesfordelingen». Krever begge marginale `μ`, `σ` pluss `Cov(X, Y)`."
     steps:
       - "Krever den FULLE simultantabellen — ikke bare marginalene. Vi bygger korrelasjonen ved å kombinere det vi har fra forrige fane (`σ_X`, `σ_Y`) med kovariansen `Cov(X, Y)`."
       - "Hent `μ_X`, `μ_Y`, `σ_X`, `σ_Y` fra marginalene (se forrige fane)."
@@ -502,8 +504,7 @@ detailed_solution_variants:
         result: "`ρ(X, Y) = 0` (uavhengig)"
 
 related:
-  - { id: "forventningsverdi-diskret",    kind: "entry" }
-  - { id: "varians-standardavvik-diskret", kind: "entry" }
+  - { id: "diskret-stokastisk-variabel",  kind: "entry" }
   - { id: "kovarians",                    kind: "entry" }
   - { id: "simultanfordeling",            kind: "glossary" }
   - { id: "marginalfordeling-term",       kind: "glossary" }

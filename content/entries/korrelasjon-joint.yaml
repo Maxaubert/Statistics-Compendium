@@ -23,7 +23,7 @@ recognition_cues:
   - "Mellomsteg når oppgaven ber om `Var(X + Y)` eller `Var(aX + bY)` og du trenger ρ"
 
 when_NOT_to_use:
-  - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk [Pearsons korrelasjon r](/entry/regresjon-korrelasjonskoeffisient) fra utvalget i stedet"
+  - "Du har par av rådata `(x_i, y_i)` (ikke en sannsynlighetsfordeling) → bruk [Pearsons korrelasjon r](/entry/lineaer-regresjon) fra utvalget i stedet"
   - "Sammenhengen er åpenbart ikke-lineær (f.eks. kvadratisk eller eksponentiell) → korrelasjon kan være lav selv om det finnes en sterk sammenheng — vurder å plotte først"
 
 symbols:
@@ -34,11 +34,12 @@ symbols:
 filters:
   computes: [correlation, covariance, std_dev]
   random_variable: [discrete_count]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, summary_stats_given, linear_relationship_suspected]
+  structural_cues: [summary_stats_given, linear_relationship_suspected]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
+recognition: "«Beregn ρ(X, Y) fra simultanfordelingen», «hvor sterkt korrelerer X og Y teoretisk?». Du har en `P(X=x, Y=y)`-tabell, IKKE utvalgsdata."
+
 solution_template:
   - "Beregn først μ_X, μ_Y, σ_X, σ_Y"
   - "Beregn Cov(X,Y)"
@@ -52,7 +53,7 @@ common_traps: |
   - **`ρ` vs. `r`**: `ρ` gjelder en FELLESFORDELING (teoretisk modell, vekter
     med `P(X = x, Y = y)`). `r` er utvalgs-korrelasjonskoeffisient fra rådata
     `(x_i, y_i)`. Formelen ligner, men kildedataene er forskjellige — bruk
-    [Pearsons `r`](/entry/regresjon-korrelasjonskoeffisient) for utvalg.
+    [Pearsons `r`](/entry/lineaer-regresjon) for utvalg.
   - **`−1 ≤ ρ ≤ 1`**: får du `ρ = 1.4` eller `−2.3`, er det regnefeil. Vanligste
     årsak: brukt `Var` i stedet for `σ` i nevneren (glemt kvadratrot), eller
     blandet `σ²_X · σ²_Y` med `σ_X · σ_Y`.
@@ -180,8 +181,8 @@ detailed_solution_variants:
 
 related:
   - { id: "kovarians",                       kind: "entry" }
-  - { id: "varians-standardavvik-diskret",   kind: "entry" }
-  - { id: "regresjon-korrelasjonskoeffisient", kind: "entry" }
+  - { id: "diskret-stokastisk-variabel",   kind: "entry" }
+  - { id: "lineaer-regresjon", kind: "entry" }
   - { id: "simultanfordeling",               kind: "glossary" }
   - { id: "korrelasjon-glos",                kind: "glossary" }
   - { id: "kovarians-glos",                  kind: "glossary" }

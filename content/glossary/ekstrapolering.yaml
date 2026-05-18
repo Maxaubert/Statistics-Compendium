@@ -1,0 +1,36 @@
+id: ekstrapolering
+term_no: Ekstrapolering
+short_def: "Å bruke en modell utenfor det området dataene dekker — risikabelt og ofte feilaktig."
+filters:
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
+  computes: [prediction_interval]
+aliases:
+  - ekstrapolering
+  - ekstrapolere
+  - extrapolation
+long_def: |
+  Ekstrapolering er å predikere `y` for en `x₀` som ligger UTENFOR det
+  intervallet hvor man har observert `x`. Hvis dataene dekker `x ∈ [1, 10]`
+  og du regner ut `ŷ` for `x₀ = 50`, ekstrapolerer du.
+
+  **Hvorfor det er farlig:**
+
+  - **Modellantakelsen** (lineær sammenheng) er bare verifisert innenfor
+    det observerte intervallet. Sammenhengen kan være kurvet, ha tak,
+    eller skifte regime utenfor.
+  - **Prediksjonsintervallet vokser raskt:** `(x₀ − x̄)²/S_XX` øker
+    kvadratisk med avstanden fra `x̄`. Selv om formelen gir et tall, er
+    intervallet ofte så bredt at det ikke gir praktisk informasjon.
+  - **Standardfeilen i estimatet av α̂ + β̂·x₀** blir stor — små feil i
+    `β̂` forsterkes proporsjonalt med avstanden.
+
+  **Det motsatte er INTERPOLERING** — predikere innenfor det observerte
+  intervallet. Det er normalt trygt, så lenge modellen passer dataene.
+
+  **Praktisk regel:** Hvis `(x₀ − x̄)²/S_XX > 1`, vurder om
+  ekstrapoleringen er forsvarlig. Diskuter usikkerheten i konklusjonen.
+see_also:
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: prediksjonsintervall-glos, kind: glossary }
+  - { id: s-xx, kind: glossary }

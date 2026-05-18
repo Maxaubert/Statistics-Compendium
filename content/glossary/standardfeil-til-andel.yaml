@@ -7,7 +7,6 @@ filters:
   computes: [std_dev, confidence_interval, hypothesis_test]
   distribution_assumption: [normal, binomial]
   setup: [single_population]
-  structural_cues: [success_probability_given]
   tooling: [standard_normal_table_E3]
 long_def: |
   Standardfeilen til andelen brukes i z-test og KI for andel. To

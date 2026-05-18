@@ -40,10 +40,12 @@ filters:
   computes: [confidence_interval, parameter_estimate]
   random_variable: [discrete_count]
   setup: [single_population, events_in_window]
-  structural_cues: [rate_given, process_over_time, poisson_process_mentioned, counting_events, summary_stats_given, independent_events]
+  structural_cues: [process_over_time, counting_events, summary_stats_given, independent_events]
   parameters_known: [rate_lambda, confidence_level, sample_size_large]
   distribution_assumption: [poisson, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+
+recognition: "«Lag et 95 % KI for raten `λ`», «hvor presist er hendelsesraten?». `Y` hendelser observert i tid `t`; intervallet ligger rundt `λ̂ = Y/t`."
 
 solution_template:
   - "Identifiser totalt antall observerte hendelser `Y` og total observasjonstid `t` (samme enhet som raten)"

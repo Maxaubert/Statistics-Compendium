@@ -30,10 +30,10 @@ recognition_cues:
   - "Ingen sannsynlighetsfordeling er gitt — bare rådata"
 
 when_NOT_to_use:
-  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk [varians for diskret stokastisk variabel](/entry/varians-standardavvik-diskret) i stedet"
+  - "Oppgaven gir en PMF-tabell `P(X = x_i)` → bruk [varians for diskret stokastisk variabel](/entry/diskret-stokastisk-variabel) i stedet"
   - "Oppgaven oppgir `s²` eller `σ²` direkte → ingen utregning nødvendig"
   - "Du har hele populasjonen (svært sjelden i pensum) → del på `n` i stedet for `n − 1`"
-  - "Du jobber med residualer i regresjon → bruk [residualvarians S_E²](/entry/regresjon-residualvarians) (deler på `n − 2`)"
+  - "Du jobber med residualer i regresjon → bruk [residualvarians S_E²](/entry/lineaer-regresjon) (deler på `n − 2`)"
   - "Du kombinerer to grupper med antatt lik varians → bruk [pooled S_P² i to-utvalgs t-test](/entry/to-utvalgs-t-test)"
 
 symbols:
@@ -45,13 +45,15 @@ symbols:
   - { sym: "s",     means: "utvalgsstandardavviket, `s = √s²`" }
 
 filters:
-  computes: [std_dev, parameter_estimate, variance]
+  computes: [std_dev, parameter_estimate]
   random_variable: [discrete_count, continuous, mean_of_samples]
   setup: [single_population]
-  structural_cues: [data_as_list, summary_stats_given, total_observations_n]
+  structural_cues: [data_as_list, summary_stats_given]
   parameters_known: [population_variance_unknown, sample_size_small_lt30]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
+recognition: "«Beregn utvalgsvariansen `s²` fra dataene», «finn `s` av observasjonene», eller mellomsteg før t-test/KI. Du har en liste med rådata `x₁, ..., xₙ`."
+
 solution_template:
   - text: "Regn ut utvalgsgjennomsnittet:"
     formula: "x̄ = (Σ x_i) / n"
@@ -139,8 +141,8 @@ detailed_solution_variants:
         result: "s_Y² ≈ 385.78, s_Y ≈ 19.64"
 
 related:
-  - { id: "varians-standardavvik-diskret", kind: "entry" }
-  - { id: "ki-mu-ukjent-sigma",            kind: "entry" }
+  - { id: "diskret-stokastisk-variabel", kind: "entry" }
+  - { id: "ki-mu-og-varians",            kind: "entry" }
   - { id: "en-utvalg-t-test",              kind: "entry" }
   - { id: "to-utvalgs-t-test",             kind: "entry" }
   - { id: "varians-oversikt",              kind: "entry" }

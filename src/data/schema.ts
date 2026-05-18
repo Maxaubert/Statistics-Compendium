@@ -158,6 +158,13 @@ export const EntrySchema = z.object({
   symbols: z.array(SymbolSchema).optional(),
   properties: PropertiesSchema.optional(),
   filters: FilterSelectionSchema,
+  /**
+   * Short "typical exam phrasing" line rendered as a banner above the
+   * Steg for seg section. Applies to single-procedure entries (those
+   * using `solution_template`). Multi-tab entries put their per-variant
+   * recognition inside each `solution_variants[].recognition` instead.
+   */
+  recognition: z.string().optional(),
   solution_template: z.array(StepItemSchema).optional(),
   /**
    * Multiple step-by-step procedures, rendered as tabs in the detail
@@ -170,6 +177,12 @@ export const EntrySchema = z.object({
     .array(
       z.object({
         label: z.string(),
+        /**
+         * Optional short note rendered above the steps describing the
+         * typical exam phrasing for this variant ("Typisk spørsmål: ...").
+         * Helps users pick the right tab without scanning every step.
+         */
+        recognition: z.string().optional(),
         steps: z.array(StepItemSchema),
       }),
     )
@@ -246,6 +259,7 @@ export const TableSchema = z.object({
     "t_quantile",
     "chi_squared_quantile",
     "mann_whitney_quantile",
+    "f_quantile",
   ]),
   related_entries: z.array(z.string()).optional(),
   /** Optional caption rendered under the active mode's inputs — used to head off

@@ -4,7 +4,7 @@ short_def: "Estimat for `σ²` regnet ut fra rådata: `s² = Σ(xᵢ − x̄)² 
 filters:
   parameters_known: [population_variance_unknown, confidence_level]
   distribution_assumption: [t_distribution, chi_squared]
-  computes: [std_dev, parameter_estimate, confidence_interval, variance]
+  computes: [std_dev, parameter_estimate, confidence_interval]
   structural_cues: [data_as_list]
   random_variable: [difference_of_means]
   setup: [two_independent_samples, single_population]

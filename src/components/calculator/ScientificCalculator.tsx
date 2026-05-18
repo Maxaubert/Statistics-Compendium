@@ -47,14 +47,15 @@ function normalizeExpression(input: string): string {
     // `log(...)` form which IS the natural logarithm in mathjs.
     .replace(/\bln\s*\(/g, "log(");
 
-  return s.replace(
-    /√\s*(\([^()]*\)|\d+(?:\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)?/g,
-    (_match, operand?: string) => {
-      if (!operand) return "sqrt(";
-      if (operand.startsWith("(")) return `sqrt${operand}`;
-      return `sqrt(${operand})`;
-    },
-  );
+  return s
+    // `√(...)` — let the existing `(` serve as the function-call opener so
+    // the user's matching `)` closes it. Works for any nesting depth,
+    // unlike a paren-balanced regex.
+    .replace(/√\s*\(/g, "sqrt(")
+    // `√<number>` or `√<identifier>` — wrap the bare operand.
+    .replace(/√\s*(\d+(?:\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*)/g, "sqrt($1)")
+    // Trailing `√` (user is still typing) — open a sqrt call.
+    .replace(/√/g, "sqrt(");
 }
 
 /**

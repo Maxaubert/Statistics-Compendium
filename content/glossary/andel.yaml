@@ -7,7 +7,6 @@ filters:
   distribution_assumption: [binomial, normal]
   computes: [confidence_interval, hypothesis_test, parameter_estimate]
   setup: [single_population]
-  structural_cues: [success_probability_given]
 long_def: |
   `p` er populasjonsandelen — det vi prøver å estimere. `p̂` er
   utvalgsandelen — antall «suksesser» delt på antall observasjoner:

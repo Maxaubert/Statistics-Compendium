@@ -3,7 +3,7 @@ term_no: Sannsynlighetsfordeling (PMF, PDF, CDF)
 short_def: "Tre funksjoner som beskriver hvordan en stokastisk variabel fordeler sannsynlighet: PMF (diskret), PDF (kontinuerlig), CDF (kumulativ, begge typer)."
 filters:
   random_variable: [discrete_count, continuous]
-  computes: [exact_probability, expected_value, std_dev, range_probability, variance]
+  computes: [exact_probability, expected_value, std_dev, range_probability]
   structural_cues: [data_as_list]
   distribution_assumption: [poisson, binomial, normal]
 aliases:

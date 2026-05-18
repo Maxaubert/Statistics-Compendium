@@ -5,7 +5,7 @@ filters:
   random_variable: [discrete_count, continuous, time_until_event, sum_of_samples, mean_of_samples]
   distribution_assumption: [binomial, poisson, hypergeometric, normal, exponential, t_distribution, chi_squared]
   setup: [single_population, fixed_n_trials, trials_until_event, events_in_window, with_replacement, without_replacement, finite_pool]
-  structural_cues: [counting_events, time_until_first, rate_given, success_probability_given, normal_assumed]
+  structural_cues: [counting_events, time_until_first, normal_assumed]
 aliases:
   - hvilken sannsynlighetsfordeling
   - hvilken fordeling
@@ -29,7 +29,7 @@ long_def: |
   - **[Normalfordeling](/entry/normalfordeling):** symmetrisk klokkeform. Cue: «`N(μ, σ)`», «normalfordelt med …», eller indirekte via [sentralgrenseteoremet](/glossary/sentralgrenseteoremet-glos) når man ser på gjennomsnitt/sum av mange uavhengige.
   - **[Eksponential](/entry/eksponential-fordeling):** ventetid TIL første hendelse i en poissonprosess med rate `λ`. Cue: «tid til neste», «levetid», «hvor lenge går det før …».
   - **[t-fordeling](/glossary/t-fordeling):** standardisert gjennomsnitt når `σ` IKKE er kjent og må estimeres med utvalgs-`s`. Cue: hypotesetest eller KI for `μ`, og `σ` er ukjent. Parameteren er frihetsgrader `ν = n − 1`.
-  - **Kjikvadrat (`χ²`):** sum av kvadrerte standardnormale. Brukes i [goodness-of-fit](/entry/kjikvadrat-goodness-of-fit), [uavhengighetstest](/entry/kjikvadrat-uavhengighet) og [KI for varians](/entry/ki-varians).
+  - **Kjikvadrat (`χ²`):** sum av kvadrerte standardnormale. Brukes i [goodness-of-fit](/entry/kjikvadrat-goodness-of-fit), [uavhengighetstest](/entry/kjikvadrat-uavhengighet) og [KI for varians](/entry/ki-mu-og-varians).
 
   ## Beslutningssekvens
 

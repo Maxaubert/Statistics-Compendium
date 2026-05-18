@@ -5,7 +5,7 @@ filters:
   random_variable: [slope_estimate]
   setup: [linear_relationship]
   parameters_known: [slope_se, residual_variance, sum_xx_sxy]
-  computes: [std_dev, hypothesis_test, variance]
+  computes: [std_dev, hypothesis_test]
   structural_cues: [linear_relationship_suspected]
   distribution_assumption: [t_distribution]
 long_def: |
@@ -33,7 +33,7 @@ aliases:
   - var(β̂)
   - var(beta-hat)
 see_also:
-  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }
   - { id: residualvarians, kind: glossary }
   - { id: beta-koeffisient, kind: glossary }
   - { id: varians-oversikt, kind: entry }

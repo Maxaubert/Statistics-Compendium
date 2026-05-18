@@ -3,7 +3,7 @@ term_no: "Ikke-parametrisk test"
 short_def: "Hypotesetest som ikke krever at dataene følger en bestemt fordeling (typisk normalfordeling). Bygger som regel på rangtall."
 filters:
   computes: [hypothesis_test]
-  structural_cues: [nonparametric_required, rank_based_data]
+  structural_cues: [rank_based_data]
   distribution_assumption: [none_assumed]
 long_def: |
   En **ikke-parametrisk test** (også kalt *fordelingsfri test*) gjør færre

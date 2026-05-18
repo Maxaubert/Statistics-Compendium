@@ -42,10 +42,12 @@ filters:
   computes: [exact_probability, range_probability, expected_value, std_dev, find_x_for_threshold]
   random_variable: [sum_of_samples, mean_of_samples, continuous, difference_of_means]
   setup: [single_population, fixed_n_trials, two_independent_samples]
-  structural_cues: [normal_assumed, independent_events, mean_and_sd_given, total_observations_n]
+  structural_cues: [normal_assumed, independent_events]
   parameters_known: [mean_known, population_variance_known, sample_size_large]
   distribution_assumption: [normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+recognition: "«Hva er fordelingen til `X + Y` (eller `aX + bY`)?», «`P(X₁ + X₂ + X₃ > 100)`?». Du har flere UAVHENGIGE normalfordelte variable og trenger sum, differanse eller lineær kombinasjon."
+
 solution_template:
   - "Bekreft at `X_i` er uavhengige og normalfordelte `N(μ, σ)`"
   - text: "Beregn forventningsverdi for summen:"
@@ -261,7 +263,7 @@ related:
   - { id: "normalisering",            kind: "glossary" }
   - { id: "uavhengighet-glos",        kind: "glossary" }
   - { id: "variansen-til-utvalgsgjennomsnittet", kind: "glossary" }
-  - { id: "ki-mu-kjent-sigma",        kind: "entry" }
+  - { id: "ki-mu-og-varians",        kind: "entry" }
 
 tools:
   - "Tabell E.3 – Z-tabell"

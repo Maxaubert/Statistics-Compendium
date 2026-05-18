@@ -26,7 +26,7 @@ describe("ListView", () => {
     // "Beregner" also appears as a table column header, so target the sidebar button
     const beregnerButtons = screen.getAllByText("Beregner");
     fireEvent.click(beregnerButtons[0]);
-    fireEvent.click(screen.getByLabelText(/Sannsynlighet \(eksakt\)/));
+    fireEvent.click(screen.getByLabelText(/Punktsannsynlighet/));
     expect(screen.getByText("Poissonfordeling")).toBeInTheDocument();
     expect(screen.getByText("Binomialfordeling")).toBeInTheDocument();
   });

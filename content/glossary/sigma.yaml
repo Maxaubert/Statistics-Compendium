@@ -23,5 +23,5 @@ long_def: |
 see_also:
   - { id: standardavvik, kind: glossary }
   - { id: sigma-kvadrat, kind: glossary }
-  - { id: ki-mu-kjent-sigma, kind: entry }
+  - { id: ki-mu-og-varians, kind: entry }
   - { id: en-utvalg-z-test, kind: entry }

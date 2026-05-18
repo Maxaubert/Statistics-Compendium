@@ -388,4 +388,209 @@ export const PROPERTY_EXPLANATIONS: Record<
       },
     },
   },
+  "lineaer-regresjon": {
+    expected_value: {
+      formula: "E[β̂] = β",
+      intuition:
+        "Minste-kvadraters-estimatet `β̂` er forventningsrett: i gjennomsnitt over mange repeterte utvalg treffer det den sanne populasjonsstigningen `β`. Det betyr at det ikke er systematisk for høyt eller for lavt — bare mer eller mindre presist avhengig av `n` og spredningen i `x`.",
+      derivation: [
+        {
+          label: "Modellantakelse",
+          lines: [
+            "`Y_i = α + β·x_i + ε_i` der `ε_i ~ N(0, σ²)` er uavhengige.",
+            "x-verdiene er FASTE (ikke tilfeldige), bare `Y_i` har tilfeldighet via `ε_i`.",
+          ],
+        },
+        {
+          label: "Skriv β̂ som lineær kombinasjon av Y_i",
+          lines: [
+            "`β̂ = S_XY / S_XX = Σ(x_i − x̄)(Y_i − Ȳ) / S_XX`.",
+            "Siden `Σ(x_i − x̄) = 0`, kan man skrive om til:",
+            "`β̂ = Σ c_i · Y_i`  der  `c_i = (x_i − x̄) / S_XX`.",
+          ],
+          note: "Dette skrives ofte som `β̂ er lineær i Y` — nyttig for å regne ut både forventning og varians.",
+        },
+        {
+          label: "Forventning",
+          lines: [
+            "`E[β̂] = Σ c_i · E[Y_i] = Σ c_i · (α + β·x_i)`.",
+            "`     = α · Σc_i + β · Σ c_i·x_i`.",
+            "Innsetting gir `Σc_i = 0` og `Σc_i·x_i = 1`, så:",
+            "`E[β̂] = β`. ✓",
+          ],
+        },
+      ],
+      example: {
+        setup: "Eksamen jan26 oppg 6: β̂ = 6.63",
+        result: "Estimatet treffer i snitt populasjonsstigningen β (men én enkelt verdi 6.63 har usikkerhet SE(β̂) = 0.625)",
+      },
+    },
+    variance: {
+      formula: "Var(β̂) = σ² / S_XX",
+      intuition:
+        "Variansen i estimatet faller når (a) støyen i Y er liten (`σ²` liten), og (b) `x`-verdiene er godt spredt (`S_XX` stor). Klumper du alle observasjoner ved samme x har du ingen hevarm til å bestemme stigningen — `S_XX → 0` ⇒ `Var(β̂) → ∞`.",
+      derivation: [
+        {
+          label: "β̂ som lineær kombinasjon",
+          lines: [
+            "`β̂ = Σ c_i · Y_i`  med  `c_i = (x_i − x̄) / S_XX`.",
+            "`Y_i` er uavhengige med `Var(Y_i) = σ²` (samme σ² for alle).",
+          ],
+        },
+        {
+          label: "Variansen til en lineær kombinasjon",
+          lines: [
+            "Uavhengighet ⇒ `Var(Σ c_i · Y_i) = Σ c_i² · Var(Y_i) = σ² · Σ c_i²`.",
+          ],
+        },
+        {
+          label: "Regn ut Σc_i²",
+          lines: [
+            "`Σ c_i² = Σ ((x_i − x̄)/S_XX)² = (1/S_XX²) · Σ(x_i − x̄)²`",
+            "`      = (1/S_XX²) · S_XX = 1/S_XX`.",
+          ],
+        },
+        {
+          label: "Sett sammen",
+          lines: [
+            "`Var(β̂) = σ² · (1/S_XX) = σ² / S_XX`. ✓",
+          ],
+          note: "I praksis kjenner vi ikke σ² og erstatter med estimatet S_E², som gir den ESTIMERTE variansen `S_E² / S_XX`.",
+        },
+      ],
+      example: {
+        setup: "S_E² = 6.093, S_XX = 15.6",
+        result: "estimert Var(β̂) = 6.093 / 15.6 ≈ 0.391",
+      },
+    },
+    std_dev: {
+      formula: "SE(β̂) = √(S_E² / S_XX)",
+      intuition:
+        "Kvadratrota av (estimert) Var(β̂). Står direkte i hypotesetesten `T = β̂ / SE(β̂)` og i konfidensintervallet `β̂ ± t · SE(β̂)`. Liten SE(β̂) ⇒ presist estimat ⇒ smale intervaller og høy test-styrke.",
+      derivation: [
+        {
+          label: "Ta kvadratrot av variansen",
+          lines: [
+            "`SD(β̂) = √Var(β̂) = √(σ² / S_XX) = σ / √S_XX`.",
+            "Erstatt σ med estimatet S_E (vi vet ikke σ):",
+            "`SE(β̂) = S_E / √S_XX = √(S_E² / S_XX)`.",
+          ],
+        },
+        {
+          label: "Hvorfor T blir t-fordelt (ikke Z)",
+          lines: [
+            "Hadde σ vært KJENT, ville (β̂ − β)/(σ/√S_XX) vært standardnormal Z.",
+            "Vi estimerer σ med S_E som har sin egen tilfeldighet, så",
+            "`T = (β̂ − β) / SE(β̂)` blir t-fordelt med `n − 2` frihetsgrader.",
+          ],
+          note: "Frihetsgrader er n − 2 fordi to parametre (α̂, β̂) er estimert fra dataene.",
+        },
+        {
+          label: "Brukes overalt",
+          lines: [
+            "Hypotesetest: `T = β̂ / SE(β̂)` mot `t_(α/2, n−2)`.",
+            "KI for β: `β̂ ± t_(α/2, n−2) · SE(β̂)`.",
+            "Prediksjonsintervall: via identiteten `S_XX = (S_E / SE(β̂))²`.",
+          ],
+        },
+      ],
+      example: {
+        setup: "S_E² = 6.093, S_XX = 15.6",
+        result: "SE(β̂) = √(6.093 / 15.6) ≈ 0.625",
+      },
+    },
+  },
+
+  "enveis-anova": {
+    expected_value: {
+      formula: "E[F | H₀] = df₂ / (df₂ − 2)",
+      intuition:
+        "Under H₀ er F-fordelingen sentrert nær 1. Den eksakte forventningen er litt over 1 (skjevhet til høyre), og nærmer seg 1 når nevnerfrihetsgradene df₂ vokser. Dette forklarer hvorfor en F-verdi nær 1 stemmer med H₀ — du må vesentlig over 1 før resultatet blir signifikant.",
+      derivation: [
+        {
+          label: "F-fordelingen",
+          lines: [
+            "F er definert som forholdet mellom to uavhengige kjikvadrat-fordelte variabler, hver delt på sine frihetsgrader:",
+            "`F = (χ²_1 / df₁) / (χ²_2 / df₂)`.",
+            "Telleren `MSG = SSG/(k−1)` og nevneren `MSE = SSE/(n−k)` er nettopp slike skalerte kjikvadrater under H₀.",
+          ],
+        },
+        {
+          label: "Forventning av en kjikvadrat-skala",
+          lines: [
+            "`E[χ²_df / df] = 1` for enhver `df` (siden `E[χ²_df] = df`).",
+            "Men forventning av et FORHOLD er ikke forholdet av forventningene, så `E[F] ≠ 1` eksakt.",
+          ],
+        },
+        {
+          label: "Eksakt verdi",
+          lines: [
+            "Standard resultat for F-fordelingen:",
+            "`E[F] = df₂ / (df₂ − 2)`,  gyldig for `df₂ > 2`.",
+            "Sjekk: med `df₂ → ∞` får vi `E[F] → 1`, som matcher intuisjonen om at MSG og MSE estimerer samme σ² under H₀.",
+          ],
+          note: "For `df₂ ≤ 2` er forventningen uendelig — F-fordelingen har for tunge haler. I praksis er dette ikke aktuelt siden `df₂ = n − k` og du trenger flere observasjoner enn grupper.",
+        },
+      ],
+      example: {
+        setup: "k = 3 grupper, n = 15 observasjoner → df₂ = 12",
+        result: "E[F | H₀] = 12 / 10 = 1.20  (litt over 1 på grunn av skjevhet)",
+      },
+    },
+    variance: {
+      formula: "Var[F | H₀] = 2·df₂²·(df₁ + df₂ − 2) / (df₁·(df₂ − 2)²·(df₂ − 4))",
+      intuition:
+        "Variansen til F under H₀ er ALLTID større enn variansen til en N(1, …)-tilnærming ville tilsi. Den krymper når begge frihetsgradene vokser, og den krever `df₂ > 4` for å være endelig. Dette er grunnen til at F-tabellens kritiske verdier ligger godt over 1 — selv tilfeldig variasjon kan gi F i området 2–4 når frihetsgradene er moderate.",
+      derivation: [
+        {
+          label: "F som forhold av kjikvadrater",
+          lines: [
+            "`F = (χ²_(df₁) / df₁) / (χ²_(df₂) / df₂)`.",
+            "Telleren og nevneren er uavhengige under H₀.",
+          ],
+        },
+        {
+          label: "Standard resultat",
+          lines: [
+            "Fra teorien for F-fordelingen (kommer fra moment-genererende funksjoner):",
+            "`Var[F] = 2·df₂² · (df₁ + df₂ − 2) / (df₁ · (df₂ − 2)² · (df₂ − 4))`,",
+            "gyldig for `df₂ > 4` (ellers uendelig).",
+          ],
+        },
+        {
+          label: "Grenseatferd",
+          lines: [
+            "Når både `df₁` og `df₂` vokser, går `Var[F] → 0` og F-fordelingen samler seg rundt 1.",
+            "Med store frihetsgrader trenger du ikke ekstrem F for å forkaste — `F_(0.05, ∞, ∞) = 1`, dvs. enhver F merkbart over 1 blir signifikant.",
+          ],
+        },
+      ],
+      example: {
+        setup: "df₁ = 2, df₂ = 12 (typisk ANOVA, k = 3, n = 15)",
+        result: "Var[F | H₀] = 2·144·12 / (2·100·8) = 3456/1600 = 2.16  (σ ≈ 1.47)",
+      },
+    },
+    std_dev: {
+      formula: "σ_F = √Var[F | H₀]",
+      intuition:
+        "Standardavviket til F under H₀ er på samme skala som F selv. For typiske eksamens-størrelser (k = 3, n = 15) er σ_F ≈ 1.5 — derfor må F lande godt over 1 + 2σ ≈ 4 før vi er sikre på at H₀ er feil. Den kritiske verdien F_(0.05, 2, 12) ≈ 3.89 er konsistent med dette.",
+      derivation: [
+        {
+          label: "Definisjon",
+          lines: ["`σ_F = √Var[F]` per definisjon av standardavvik."],
+        },
+        {
+          label: "Innsetting",
+          lines: [
+            "`σ_F = √(2·df₂²·(df₁ + df₂ − 2) / (df₁·(df₂ − 2)²·(df₂ − 4)))`.",
+            "Krever `df₂ > 4`. For mindre nevnerfrihetsgrader er F-fordelingen så langhalet at variansen ikke eksisterer.",
+          ],
+        },
+      ],
+      example: {
+        setup: "df₁ = 2, df₂ = 12",
+        result: "σ_F = √2.16 ≈ 1.47  (F-tabellen krever ~2.6 σ over 1 for å forkaste på α = 0.05)",
+      },
+    },
+  },
 };

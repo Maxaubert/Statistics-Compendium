@@ -15,5 +15,4 @@ long_def: |
   Variansen til residualene (`S_E²`) brukes til å lage KI og
   prediksjonsintervaller i regresjon.
 see_also:
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
-  - { id: regresjon-residualvarians, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

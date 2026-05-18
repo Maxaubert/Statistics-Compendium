@@ -27,5 +27,5 @@ long_def: |
 
       estimat ± kvantil · SE
 see_also:
-  - { id: ki-mu-kjent-sigma, kind: entry }
-  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: ki-mu-og-varians, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

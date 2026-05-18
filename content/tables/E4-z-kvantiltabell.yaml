@@ -17,7 +17,7 @@ inverse:
   input_hint: "p er kumulativ VENSTRE-hale-sannsynlighet: P(Z ≤ z) = p. F.eks. p = 0.9 gir z ≈ 1.2816."
 related_entries:
   - normalfordeling
-  - ki-mu-kjent-sigma
+  - ki-mu-og-varians
   - ki-andel-binomial
   - ki-poissonrate
   - en-utvalg-z-test

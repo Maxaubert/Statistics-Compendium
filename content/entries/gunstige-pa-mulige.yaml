@@ -35,8 +35,7 @@ filters:
   computes: [exact_probability, combinatorial_count]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n, independent_events]
-  parameters_known: []
+  structural_cues: [independent_events]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only, calculator_binomial_coef]
 

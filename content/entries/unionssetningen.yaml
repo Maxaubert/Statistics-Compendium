@@ -37,12 +37,12 @@ filters:
   computes: [exact_probability, union_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [disjoint_events, independent_events, complement_pattern, at_least_one, no_occurrences]
-  parameters_known: []
+  structural_cues: [disjoint_events, independent_events, complement_pattern, no_occurrences]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 solution_variants:
   - label: "P(A ∪ B) — minst én"
+    recognition: "«Sannsynligheten for at minst én av A eller B skjer», «P(A eller B)». Bruk `P(A) + P(B) − P(A ∩ B)`."
     steps:
       - "Identifiser hendelsene `A` og `B`"
       - "Finn `P(A)`, `P(B)`, `P(A ∩ B)`"
@@ -59,6 +59,7 @@ solution_variants:
         example: true
 
   - label: "Ingen av delene — P(Ā ∩ B̄)"
+    recognition: "«Sannsynligheten for at INGEN av hendelsene skjer» = `1 − P(A ∪ B)`. De Morgans lov."
     steps:
       - "Identifiser hendelsene `A` og `B`. 'Ingen av delene' / 'verken A eller B' betyr `Ā ∩ B̄`"
       - text: "Bruk De Morgan: komplementet av union er snitt av komplementer:"
@@ -73,6 +74,7 @@ solution_variants:
       - { text: "For disjunkte hendelser (`P(A ∩ B) = 0`) blir det fortsatt `1 − (P(A) + P(B))`. Eneste forenkling er at overlappet faller bort.", conditional: true }
 
   - label: "Bare A, ikke B — P(A ∩ B̄)"
+    recognition: "«Sannsynligheten for at A skjer men ikke B». Bruk `P(A) − P(A ∩ B)`."
     steps:
       - "Identifiser hendelsene `A` og `B`. 'Bare A, ikke B' / 'A men ikke B' betyr `A ∩ B̄`"
       - "Finn `P(A)` og `P(A ∩ B)`"

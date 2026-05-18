@@ -89,7 +89,7 @@ describe("Multi-filter robustness", () => {
         parameters_known: ["population_variance_unknown", "confidence_level"],
         distribution_assumption: ["t_distribution"],
       },
-      mustInclude: "ki-mu-ukjent-sigma",
+      mustInclude: "ki-mu-og-varians",
     },
     {
       name: "Poisson process counting events",
@@ -107,7 +107,7 @@ describe("Multi-filter robustness", () => {
         random_variable: ["slope_estimate"],
         computes: ["hypothesis_test"],
       },
-      mustInclude: "regresjon-test-stigningstall",
+      mustInclude: "lineaer-regresjon",
     },
     {
       name: "bayes setup",

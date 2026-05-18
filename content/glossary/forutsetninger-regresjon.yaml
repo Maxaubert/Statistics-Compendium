@@ -1,0 +1,46 @@
+id: forutsetninger-regresjon
+term_no: Forutsetninger for lineær regresjon
+short_def: "Antakelsene som må gjelde for at hypotesetest, KI og prediksjonsintervall i regresjon skal være gyldige."
+filters:
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected, normal_assumed]
+  distribution_assumption: [normal, t_distribution]
+aliases:
+  - forutsetninger for regresjon
+  - antakelser for regresjon
+  - modellantakelser regresjon
+  - regresjonsforutsetninger
+long_def: |
+  Den enkle lineære regresjonsmodellen
+
+      Y = α + β·x + ε
+
+  bygger på fire antakelser om feilkomponenten `ε`:
+
+  **1. Linearitet:** sammenhengen mellom `x` og `E[Y]` er lineær. Avvik
+  fra denne (kurvet mønster) gjør at `β̂` ikke lenger har en meningsfull
+  tolkning. *Sjekk:* spredningsplott av `y` mot `x`.
+
+  **2. Uavhengighet:** residualene `εᵢ` er uavhengige av hverandre.
+  Brytes typisk av tidsserier (autokorrelasjon) eller klyngede data.
+  *Sjekk:* plott residualene mot rekkefølge eller mot `x`.
+
+  **3. Homoskedastisitet (konstant varians):** `Var(εᵢ) = σ²` for ALLE
+  `i`. Brytes ofte når variabilitet vokser med `x` (vifte-mønster i
+  residualplott). *Sjekk:* plott residualene mot `ŷ` eller mot `x`.
+
+  **4. Normalitet:** `εᵢ ~ N(0, σ²)`. Kreves for at hypotesetesten,
+  konfidensintervallet og prediksjonsintervallet skal være eksakte
+  (t-fordelt). For PUNKTESTIMATENE `α̂, β̂` trengs ikke normalitet —
+  minste kvadraters metode er gyldig uansett. *Sjekk:* QQ-plott eller
+  histogram av residualene.
+
+  > **Praktisk:** I et eksamenspensum er disse antakelsene som regel
+  > antatt oppfylt — du trenger ikke teste dem hvis ikke oppgaven ber om
+  > det. Men hvis du får et residualplott eller QQ-plott, er det fordi
+  > du skal kommentere antakelsene.
+see_also:
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: residual, kind: glossary }
+  - { id: normalfordeling, kind: entry }
+  - { id: qq-plott, kind: glossary }

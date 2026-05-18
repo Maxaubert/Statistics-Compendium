@@ -14,4 +14,4 @@ long_def: |
   Prediksjonsintervallet er bredere fordi det må fange både usikkerheten
   i estimatet **og** den naturlige spredningen i `Y`.
 see_also:
-  - { id: regresjon-prediksjonsintervall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

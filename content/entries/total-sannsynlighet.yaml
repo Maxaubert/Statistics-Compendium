@@ -40,13 +40,13 @@ filters:
   computes: [exact_probability, marginal_probability, conditional_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories, disjoint_events, conditioning_on_complement]
-  parameters_known: []
+  structural_cues: [conditional_given, more_than_two_categories, disjoint_events, conditioning_on_complement, andel_og_rate_per_gruppe]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_variants:
   - label: "Forover: finn `P(B)`"
+    recognition: "«Hva er den totale sannsynligheten for `B`?», «hva er sjansen for et positivt testresultat samlet?». Partisjoner sample-rommet og summer."
     steps:
       - "Identifiser partisjonen (typisk `A` og `Ā`, eller flere disjunkte hendelser som dekker hele utfallsrommet)"
       - "Skriv ned marginalsannsynlighetene `P(A)`, `P(Ā)` og de betingede `P(B|A)`, `P(B|Ā)`"
@@ -64,8 +64,8 @@ solution_variants:
         example: true
 
   - label: "Joint-form: når du har P(A ∩ B) i stedet for P(B|A)"
+    recognition: "«Du har simultansannsynligheter, ikke betingede», eller «P(A ∩ B) gitt for hver delpopulasjon». Summer rett over partisjonen."
     steps:
-      - "Bruk når oppgaven gir deg sannsynligheten for at `B` OG `A_i` skjer samtidig — ikke 'gitt A_i'. Da trenger du ikke multiplisere med `P(A_i)` — det er allerede gjort."
       - "Gjenkjenn ordlyden: 'X % er fra A_i og B' (joint) vs. 'X % AV A_i er B' (betinget)"
       - text: "Bruk den enklere summen — disjunkte måter B kan inntreffe på:"
         formula: "P(B) = P(A ∩ B) + P(Ā ∩ B)"
@@ -79,16 +79,21 @@ solution_variants:
         example: true
       - { text: "Hvis du har en blanding av betingede og joint: konvertér før du summerer. `P(A_i ∩ B) = P(A_i)·P(B|A_i)`.", conditional: true }
 
-  - label: "Bakover: finn ukjent betinget"
+  - label: "Finn ukjent betinget (når total P(B) er gitt)"
+    recognition: "Oppgaven gir TOTAL-sannsynligheten `P(B)` (samlet rate/grad), pluss andelen `P(A)` og betinget for ÉN kategori `P(B|A)`. Du skal finne betinget for den andre, `P(B|Ā)`. Klassisk eksempel: «total spiregrad 80 %, 60 % er ringblomst med spiregrad 90 % — finn spiregraden for de andre»."
     steps:
-      - "Bruk når `P(B)` ER GITT (ofte 'totalt sett'-tall) sammen med en av de betingede, og du skal finne den ANDRE betingede"
-      - "Identifiser hva som er gitt: typisk `P(B)`, `P(A)`, `P(B|A)` — og hva som er ukjent: `P(B|Ā)`"
-      - text: "Skriv opp samme ligning som forover-varianten:"
+      - text: "**Steg 1 — oversett teksten til sannsynligheter.** Det som er gitt som «TOTALT», «SAMLET» eller «I SNITT» er `P(B)`. Det som er gitt FOR en spesifikk gruppe er betinget. Det som er ANDELEN av gruppen i populasjonen er marginal `P(A)`."
+        cases:
+          - { when: "«spiregraden TOTALT er 80 %»", then: "P(S) = 0.80 — total" }
+          - { when: "«60 % er ringblomst»", then: "P(R) = 0.60 — marginal for kategorien" }
+          - { when: "«spiregraden for ringblomst er 90 %»", then: "P(S | R) = 0.90 — gitt betinget" }
+          - { when: "«spiregraden for de andre frøene?»", then: "P(S | R̄) = ?  — det du SØKER" }
+      - text: "Skriv opp total-sannsynlighetsligningen:"
         formula: "P(B) = P(A)·P(B|A) + P(Ā)·P(B|Ā)"
-      - text: "Løs for det ukjente leddet:"
-        formula: "P(B|Ā) = (P(B) − P(A)·P(B|A)) / P(Ā)"
-      - text: "Eksempel: P(spirer) = 0.8 totalt, P(ringblomstfrø) = 0.6, P(spirer|ringblomstfrø) = 0.9. Spiregraden for andre frø:"
-        formula: "(0.8 − 0.6·0.9) / (1 − 0.6) = 0.26/0.4 = 0.65"
+      - text: "Løs algebraisk for den ukjente betingede:"
+        formula: "P(B|Ā) = (P(B) − P(A)·P(B|A)) / (1 − P(A))"
+      - text: "Eksempel — frøposen: `P(S) = 0.80`, `P(R) = 0.60`, `P(S|R) = 0.90`. Spiregraden for de andre:"
+        formula: "P(S | R̄) = (0.80 − 0.60·0.90) / (1 − 0.60) = 0.26 / 0.40 = 0.65"
         example: true
 
 common_traps: |

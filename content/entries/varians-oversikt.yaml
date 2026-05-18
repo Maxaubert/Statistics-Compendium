@@ -18,7 +18,7 @@ forms:
     formula: "Var(X) = Σ (xᵢ − μ)² · P(X = xᵢ)"
     description: "Når du har en PMF-tabell. Vekt = sannsynligheten."
     entry_links:
-      - { id: varians-standardavvik-diskret, label: "Entry" }
+      - { id: diskret-stokastisk-variabel, label: "Entry" }
   - title: "Utvalgsvarians"
     symbol: "s²"
     glossary_id: utvalgsvarians
@@ -27,8 +27,8 @@ forms:
     entry_links:
       - { id: utvalgsvarians-radata, label: "Entry" }
       - { id: en-utvalg-t-test, label: "Én-utvalg t-test" }
-      - { id: ki-mu-ukjent-sigma, label: "KI for μ (ukjent σ)" }
-      - { id: ki-varians, label: "KI for σ²" }
+      - { id: ki-mu-og-varians, label: "KI for μ (ukjent σ)" }
+      - { id: ki-mu-og-varians, label: "KI for σ²" }
   - title: "Pooled (interpolert) varians"
     symbol: "S_P²"
     glossary_id: pooled-varians
@@ -42,10 +42,7 @@ forms:
     formula: "S_E² = Σ (yᵢ − ŷᵢ)² / (n − 2)"
     description: "Spredningen i avvikene fra regresjonslinjen."
     entry_links:
-      - { id: regresjon-residualvarians, label: "Entry" }
-      - { id: regresjon-standardfeil-stigningstall, label: "SE(β̂)" }
-      - { id: regresjon-test-stigningstall, label: "Hypotesetest for β" }
-      - { id: regresjon-prediksjonsintervall, label: "Prediksjonsintervall" }
+      - { id: lineaer-regresjon, label: "Lineær regresjon" }
   - title: "Binomialvarians"
     symbol: "B(n,p)"
     glossary_id: binomialvarians
@@ -81,26 +78,33 @@ forms:
     description: "Spredningen i selve estimatet X̄, ikke i dataene."
     entry_links:
       - { id: en-utvalg-z-test, label: "Én-utvalg z-test" }
-      - { id: ki-mu-kjent-sigma, label: "KI for μ (kjent σ)" }
+      - { id: ki-mu-og-varians, label: "KI for μ (kjent σ)" }
   - title: "Variansen til en sum av n iid variabler"
     symbol: "Var(Σ Xᵢ)"
     formula: "Var(Y) = Var(X₁ + … + Xₙ) = n · Var(X) = n · σ²          σ_Y = σ·√n"
-    description: "Direkte formel når Y er en sum av n UAVHENGIGE, identisk fordelte variabler. Eksempel: Y = X₁+…+X₁₃₀ med Var(Xᵢ) = 900 gir Var(Y) = 130·900 = 117 000, σ_Y = √117 000 ≈ 342.05."
+    description: "⚠️ Gjelder BARE når X₁, …, Xₙ er UAVHENGIGE og identisk fordelte. Hvis det er avhengighet mellom dem, bruk det generelle formet `Var(aX + bY + c)` under (med krysstermer). Eksempel: Y = X₁+…+X₁₃₀ iid med Var(Xᵢ) = 900 gir Var(Y) = 130·900 = 117 000, σ_Y ≈ 342.05."
     entry_links:
       - { id: sum-uavhengige-normaler, label: "Sum av uavhengige normaler" }
       - { id: sentralgrenseteoremet-glos, label: "Sentralgrenseteoremet" }
+  - title: "Varians av lineær kombinasjon (aX + bY + c)"
+    symbol: "Var(aX + bY + c)"
+    formula: "Var(aX + bY + c) = a²·Var(X) + b²·Var(Y) + 2·a·b·Cov(X, Y)"
+    description: "⚠️ Krysstermen `2·a·b·Cov(X, Y)` MÅ med når X og Y er avhengige. Hvis uavhengige er `Cov = 0` og krysstermen forsvinner. Konstanten `c` bidrar IKKE til variansen. Koeffisientene kvadreres, så `b² = (−2)² = +4` — aldri negativt ledd fra `b²·Var(Y)`. Fortegnet på `b` overlever i krysstermen via `2·a·b`."
+    entry_links:
+      - { id: diskret-stokastisk-variabel, label: "Lineær kombinasjon-fane" }
+      - { id: kovarians, label: "Kovarians" }
   - title: "Variansen til stigningstallet"
     symbol: "Var(β̂)"
     glossary_id: variansen-til-stigningstallet
     formula: "Var(β̂) = S_E² / S_XX          SE(β̂) = √(Var(β̂))"
     description: "Hvor presist vi kjenner regresjonsstigningen."
     entry_links:
-      - { id: regresjon-standardfeil-stigningstall, label: "Entry" }
+      - { id: lineaer-regresjon, label: "Entry" }
   - title: "Kovarians"
     symbol: "Cov(X,Y)"
     glossary_id: kovarians-glos
     formula: "Cov(X, Y) = E[XY] − μ_X · μ_Y"
-    description: "Mål for samvariasjon mellom to variabler. Cov(X, X) = Var(X) — varians er kovarians med seg selv. Brukes som mellomsteg for korrelasjon ρ og for Var(X+Y)."
+    description: "Mål for samvariasjon mellom to variabler. `Cov(X, X) = Var(X)` — varians er kovarians med seg selv. Brukes som mellomsteg for korrelasjon `ρ` og for `Var(X + Y)`. ⚠️ Fallgruve: `Cov = 0` ⇏ uavhengighet. Uavhengighet medfører `Cov = 0`, men IKKE omvendt — variabler kan være ukorrelerte og likevel avhengige (f.eks. `Y = X²` på symmetrisk X-fordeling)."
     entry_links:
       - { id: kovarians, label: "Entry" }
       - { id: korrelasjon-joint, label: "ρ(X,Y)" }
@@ -115,19 +119,18 @@ when_NOT_to_use:
   - "Spørsmålet handler om senter, ikke spredning → bruk [forventningsverdi (oversikt)](/entry/forventningsverdi-oversikt)"
 
 filters:
-  computes: [std_dev, variance]
+  computes: [std_dev]
   random_variable: [discrete_count, continuous]
   setup: [single_population, two_independent_samples, linear_relationship]
-  structural_cues: [data_as_list, joint_table_present, summary_stats_given]
+  structural_cues: [data_as_list, summary_stats_given]
   parameters_known: [population_variance_unknown]
   distribution_assumption: [none_assumed]
   tooling: [calculator_sqrt]
 related:
-  - { id: "varians-standardavvik-diskret",         kind: "entry" }
+  - { id: "diskret-stokastisk-variabel",         kind: "entry" }
   - { id: "utvalgsvarians-radata",                 kind: "entry" }
   - { id: "to-utvalgs-t-test",                     kind: "entry" }
-  - { id: "regresjon-residualvarians",             kind: "entry" }
-  - { id: "regresjon-standardfeil-stigningstall",  kind: "entry" }
+  - { id: "lineaer-regresjon",                     kind: "entry" }
   - { id: "pooled-varians",                        kind: "glossary" }
   - { id: "standardavvik-oversikt",                kind: "entry" }
   - { id: "frihetsgrader-glos",                    kind: "glossary" }

@@ -42,13 +42,14 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: [discrete_count]
   setup: [with_replacement, fixed_n_trials]
-  structural_cues: [total_observations_n, complement_pattern, independent_events, at_least_one, no_occurrences, all_same_type]
+  structural_cues: [complement_pattern, independent_events, no_occurrences, all_same_type]
   parameters_known: [success_p]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_variants:
   - label: "Tell antall mulige sekvenser"
+    recognition: "«Hvor mange mulige sekvenser av lengde `k` med `n` valg per plass?», «hvor mange 4-sifrete PIN-koder finnes?». Rekkefølge teller, samme element kan gjentas."
     steps:
       - "Identifiser `n` (antall mulige verdier per posisjon) og `k` (antall posisjoner / forsøk)"
       - "Bekreft at samme verdi kan gjentas (tilbakelegging) og at rekkefølgen teller"
@@ -62,8 +63,8 @@ solution_variants:
       - text: "Pass på: dette teller sekvenser, ikke utfall. (1, 2, 3) og (3, 2, 1) regnes som to ulike sekvenser."
         conditional: true
   - label: "Sannsynlighet: spesifikk sekvens"
+    recognition: "«Sannsynligheten for en helt bestemt sekvens», «sjansen for å trekke (rød, blå, rød) i den rekkefølgen»."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for en bestemt sekvens / mønster i k uavhengige forsøk'"
       - "Tell antall gunstige sekvenser (de som matcher mønsteret)"
       - "Antall mulige sekvenser totalt = `n^k`"
       - "Sannsynligheten = gunstige / mulige"
@@ -80,8 +81,8 @@ solution_variants:
         conditional: true
 
   - label: "Sannsynlighet: alle k er av samme type"
+    recognition: "«Sannsynligheten for at alle `k` trekninger er røde», «alle som svarer er kvinner»."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for at alle k forsøkene gir type A' (f.eks. 'alle 5 kortene trekkes med tilbakelegging er hjerter', 'alle 4 PIN-sifre er 0')"
       - "Identifiser `N` (mulige verdier per posisjon), `K` (antall i kategori A), og `k` (antall forsøk)"
       - text: "La `p = K/N` være sannsynligheten for A på ett forsøk. Siden forsøkene er uavhengige (tilbakelegging), bruk produktregelen:"
         formula: "P(alle k er A) = p^k = (K/N)^k"
@@ -95,8 +96,8 @@ solution_variants:
         conditional: true
 
   - label: "Sannsynlighet: ingen er av en gitt type"
+    recognition: "«Sannsynligheten for at ingen av de `k` er defekte», «ingen suksess i `k` forsøk»."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for at ingen av k forsøkene gir type A' (f.eks. 'ingen kron i 10 myntkast', 'ingen 6-er i 8 terningkast')"
       - "Identifiser `p = K/N` (sannsynlighet for A på ett forsøk), og `k` (antall forsøk)"
       - text: "Komplementet av A har sannsynlighet `1 − p`. Bruk produktregelen på k uavhengige forsøk:"
         formula: "P(ingen er A) = (1 − p)^k"
@@ -109,8 +110,8 @@ solution_variants:
       - { text: "Komplementet av 'ingen er A' er 'minst én er A' — se fanen «Sannsynlighet: minst én (komplement)» for den direkte formelen `1 − (1 − p)^k`", conditional: true }
 
   - label: "Sannsynlighet: minst én (komplement)"
+    recognition: "«Sannsynligheten for minst én suksess i `k` forsøk» = `1 − P(ingen)`. Klassisk komplementbruk."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for minst én X i k forsøk'"
       - "Identifiser `p` (sannsynligheten for X på ett forsøk)"
       - "Komplementet 'ingen X i k forsøk' har sannsynlighet `(1 − p)^k`"
       - text: "Sannsynligheten for minst én X:"

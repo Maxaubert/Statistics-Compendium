@@ -48,13 +48,14 @@ filters:
   computes: [hypothesis_test]
   random_variable: [mean_of_samples, continuous]
   setup: [single_population]
-  structural_cues: [normal_assumed, data_as_list, summary_stats_given, total_observations_n, two_sided_alternative, one_sided_alternative]
+  structural_cues: [normal_assumed, data_as_list, summary_stats_given, two_sided_alternative, one_sided_alternative]
   parameters_known: [population_variance_unknown, mean_known, sample_size_small_lt30, sample_size_large, alpha_significance]
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
 solution_variants:
   - label: "H₁: μ < μ₀ (venstre)"
+    recognition: "«Er gjennomsnittet `μ` SIGNIFIKANT MINDRE enn `μ₀`?», eller «test om vekten er under spesifikasjonen». Ensidig — retning oppgitt, `σ` er ukjent."
     description: "Ensidig venstresidig test. Forkast H₀ hvis `T < −t_(α, ν)`."
     steps:
       - text: "Formuler hypotesene (venstresidig). `H₀: μ ≥ μ₀` er den strenge formen siden null og alternativ skal dekke hele tallinjen; mange pensumbøker forenkler til `H₀: μ = μ₀` — testmekanikken er identisk fordi grenseverdien er 'verste fall' for nullen:"
@@ -76,6 +77,7 @@ solution_variants:
         conditional: true
       - "Konkluder i kontekst: hvis `T < −t_(α, ν)`, er det signifikant evidens for at `μ < μ₀`"
   - label: "H₁: μ > μ₀ (høyre)"
+    recognition: "«Er gjennomsnittet `μ` SIGNIFIKANT STØRRE enn `μ₀`?», «kan vi hevde at den nye metoden gir høyere snitt?». Ensidig høyresidig, `σ` ukjent."
     description: "Ensidig høyresidig test. Forkast H₀ hvis `T > +t_(α, ν)`."
     steps:
       - text: "Formuler hypotesene (høyresidig). Strengt: `H₀: μ ≤ μ₀` (null og alternativ dekker hele tallinjen); forenklet form `H₀: μ = μ₀` gir identisk test:"
@@ -97,6 +99,7 @@ solution_variants:
         conditional: true
       - "Konkluder i kontekst: hvis `T > +t_(α, ν)`, er det signifikant evidens for at `μ > μ₀`"
   - label: "H₁: μ ≠ μ₀ (tosidig)"
+    recognition: "«Test om gjennomsnittet er forskjellig fra `μ₀`», «avviker dataene fra spec-verdien?». Tosidig — ingen retning oppgitt, `σ` ukjent."
     description: "Tosidig test. Forkast H₀ hvis `|T| > t_(α/2, ν)`."
     steps:
       - text: "Formuler hypotesene (tosidig):"
@@ -378,7 +381,7 @@ related:
   - { id: "p-verdi-glos",          kind: "glossary" }
   - { id: "ensidig-test",          kind: "glossary" }
   - { id: "tosidig-test",          kind: "glossary" }
-  - { id: "ki-mu-ukjent-sigma",    kind: "entry" }
+  - { id: "ki-mu-og-varians",    kind: "entry" }
   - { id: "t-fordeling",           kind: "glossary" }
   - { id: "ikke-parametrisk",      kind: "glossary" }
   - { id: "utvalgsvarians-radata", kind: "entry" }

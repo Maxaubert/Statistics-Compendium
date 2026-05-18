@@ -1,6 +1,13 @@
 import { jStat } from "jstat";
 import { lookupMwwCritical, snapMwwAlpha } from "./mann-whitney-table";
 
+// jstat ships F-distribution helpers under `centralF`, but the typings
+// shipped with @types/jstat omit them. Cast through `unknown` so the
+// runtime call type-checks without affecting other consumers.
+const jStatAny = jStat as unknown as {
+  centralF: { inv(p: number, df1: number, df2: number): number };
+};
+
 export type DistributionKey =
   | "binomial"
   | "poisson"
@@ -8,7 +15,8 @@ export type DistributionKey =
   | "normal_quantile"
   | "t_quantile"
   | "chi_squared_quantile"
-  | "mann_whitney_quantile";
+  | "mann_whitney_quantile"
+  | "f_quantile";
 
 export interface LookupRequest {
   distribution: DistributionKey;
@@ -31,6 +39,8 @@ export function lookupCumulative({ distribution, inputs }: LookupRequest): numbe
       return jStat.chisquare.inv(1 - inputs.α, inputs.df);
     case "mann_whitney_quantile":
       return lookupMwwCritical(inputs["n₁"], inputs["n₂"], inputs.α);
+    case "f_quantile":
+      return jStatAny.centralF.inv(1 - inputs.α, inputs["df₁"], inputs["df₂"]);
   }
 }
 

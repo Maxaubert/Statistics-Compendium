@@ -24,4 +24,4 @@ long_def: |
   Tolkning som «verdien når `X = 0`» gir mening bare hvis `X = 0`
   ligger innenfor observerte data; ellers er det en matematisk konstant.
 see_also:
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

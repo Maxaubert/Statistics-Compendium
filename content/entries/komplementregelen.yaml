@@ -39,12 +39,12 @@ filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
   random_variable: [discrete_count, continuous, time_until_event]
   setup: [single_population]
-  structural_cues: [complement_pattern, independent_events, time_until_first, at_least_one, no_occurrences, probability_threshold, all_same_type]
-  parameters_known: []
+  structural_cues: [complement_pattern, independent_events, time_until_first, no_occurrences, probability_threshold, all_same_type]
   distribution_assumption: [none_assumed, binomial, poisson, normal, exponential]
   tooling: [calculator_only]
 solution_variants:
   - label: "Minst k"
+    recognition: "«Sannsynligheten for minst én suksess», «sjansen for å trekke minst 3 hjerter»: bruk `1 − P(ingen)` når direktetelling er tungt."
     steps:
       - "Identifiser hendelsen: 'minst k hendelser inntreffer', altså `P(X ≥ k)`"
       - text: "Skriv om via komplement (NB: `k − 1`, ikke `k`):"
@@ -65,6 +65,7 @@ solution_variants:
         conditional: true
 
   - label: "Ikke minst k / færre enn k"
+    recognition: "«Sannsynligheten for at færre enn `k` av noe skjer». Bruk komplement til «minst `k`»."
     steps:
       - "Identifiser hendelsen: 'færre enn k', 'mindre enn k', 'under k', 'ikke minst k' — alt sammen `P(X < k)`"
       - text: "Sjekk spesialtilfellene FØR du går til tabell — disse har lukket form, ingen tabelloppslag:"
@@ -91,6 +92,7 @@ solution_variants:
       - { text: "Hvis fordelingen er kontinuerlig (normal, eksponential), faller `<` og `≤` sammen — bruk `P(X ≤ k)` direkte fra **tabell E.3** uten indeksjustering", conditional: true }
 
   - label: "Ingen / null"
+    recognition: "«Ingen feil i partiet», «P(X = 0)»: ofte den enkleste delsannsynligheten å regne — komplement gir så «minst én»."
     steps:
       - "Identifiser hendelsen som `P(X = 0)` — sannsynligheten for null forekomster"
       - text: "Velg riktig pmf-uttrykk basert på fordeling: Poisson, binomial, eller geometrisk (avh. av definisjon)."
@@ -107,6 +109,7 @@ solution_variants:
       - { text: "Hvis hendelsene IKKE er uavhengige, `(1 − p)^n` gjelder ikke — bruk hypergeometrisk eller direkte telling i stedet", conditional: true }
 
   - label: "Ikke alle"
+    recognition: "«Sannsynligheten for at IKKE alle har samme type» = `1 − P(alle samme)`. Klassisk «bursdag-paradoks»-form."
     steps:
       - "Identifiser 'alle'-hendelsen først: f.eks. 'alle n forsøk er suksess' har sannsynlighet `p^n` (uavhengige)"
       - text: "Komplementet til 'alle' er 'minst én er IKKE':"
@@ -124,6 +127,7 @@ solution_variants:
       - { text: "Hvis hendelsene IKKE er uavhengige (f.eks. trekk uten tilbakelegging), bruk hypergeometrisk for `P(alle)` før du tar komplementet", conditional: true }
 
   - label: "Finn n for terskel"
+    recognition: "«Hvor mange ganger må jeg prøve for at sannsynligheten for minst én suksess overstiger 95 %?». Løs `1 − (1−p)ⁿ ≥ α` for `n`."
     steps:
       - text: "Skriv kravet som ulikhet: 'minst én hendelse skjer med sannsynlighet ≥ T':"
         formula: "1 − (1 − p)^n ≥ T"

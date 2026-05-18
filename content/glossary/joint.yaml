@@ -3,8 +3,7 @@ term_no: Joint (felles)
 short_def: "Engelsk for «felles» — som i joint distribution = simultanfordeling."
 filters:
   computes: [joint_probability, marginal_probability, conditional_probability, test_independence]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, conditional_given]
+  structural_cues: [conditional_given]
 aliases:
   - joint
   - joint distribution

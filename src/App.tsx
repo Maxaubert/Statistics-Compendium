@@ -7,6 +7,7 @@ import { Glossary } from "./routes/Glossary";
 import { Wizard } from "./routes/Wizard";
 import { HelpIndex } from "./routes/HelpIndex";
 import { HelpCalculator } from "./routes/HelpCalculator";
+import { HelpVanskelige } from "./routes/HelpVanskelige";
 import { NotFound } from "./routes/NotFound";
 import { CalculatorWidget } from "./components/calculator/CalculatorWidget";
 
@@ -23,6 +24,7 @@ export function App() {
         <Route path="/veiviser" element={<Wizard />} />
         <Route path="/hjelp" element={<HelpIndex />} />
         <Route path="/hjelp/kalkulator" element={<HelpCalculator />} />
+        <Route path="/hjelp/vanskelige-oppgaver" element={<HelpVanskelige />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

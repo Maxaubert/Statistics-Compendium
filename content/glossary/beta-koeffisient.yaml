@@ -26,6 +26,4 @@ long_def: |
 
       β̂ ± t_(α/2, n−2) · SE(β̂)
 see_also:
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
-  - { id: regresjon-test-stigningstall, kind: entry }
-  - { id: regresjon-standardfeil-stigningstall, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

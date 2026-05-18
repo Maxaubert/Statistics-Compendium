@@ -11,6 +11,5 @@ distribution: t_quantile
 related_entries:
   - en-utvalg-t-test
   - to-utvalgs-t-test
-  - regresjon-test-stigningstall
-  - regresjon-prediksjonsintervall
-  - ki-mu-ukjent-sigma
+  - lineaer-regresjon
+  - ki-mu-og-varians

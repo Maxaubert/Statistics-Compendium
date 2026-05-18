@@ -1451,7 +1451,7 @@ Tosidig \`α = 0.05\` gir \`z_(0.025) = 1.96\`. Siden \`|2.00| > 1.96\`, forkast
       ],
     },
   ],
-  "forventningsverdi-diskret": [
+  "diskret-stokastisk-variabel": [
     {
       id: "forventningsverdi",
       name: "Forventningsverdi for diskret stokastisk variabel",
@@ -1497,11 +1497,105 @@ Forventningsverdien \`-0.3\` er IKKE en av de mulige verdiene \`X\` kan ta. Det 
         },
         {
           kind: "entry",
-          id: "varians-standardavvik-diskret",
+          id: "diskret-stokastisk-variabel",
         },
         {
           kind: "entry",
           id: "marginalfordeling",
+        },
+      ],
+    },
+{
+      id: "varians",
+      name: "Varians for diskret stokastisk variabel",
+      abbreviation: "Var(X)",
+      formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)",
+      short: `Vektet sum av kvadrerte avvik fra \`μ\`. Standardavviket \`σ\` er kvadratroten.`,
+      long: `\`Var(X)\` måler hvor langt fra forventningsverdien \`μ = E[X]\` verdiene typisk ligger. Du beregner avviket \`(x_i − μ)\`, kvadrerer det, og veier med sannsynligheten.
+
+
+## Hvorfor kvadrerte avvik?
+
+Hvis vi summerte avvikene direkte (\`Σ (x_i − μ)·P(X = x_i)\`), ville positive og negative avvik kansellere hverandre og summen ville alltid bli null. Kvadreringen gjør alle bidrag positive:
+
+> [!read] Var(X) = Σ (x_i − μ)² · P(X = x_i)
+> Variansen er forventet kvadratavvik fra forventningsverdien.
+
+Standardavviket bringer enheten tilbake:
+
+> [!read] σ = √Var(X)
+> Standardavviket er kvadratroten av variansen og har samme enhet som \`X\`.
+
+
+## Konkret eksempel
+
+La \`X\` ta verdier \`{-2, -1, 0, 1, 2}\` med \`{0.3, 0.2, 0.2, 0.1, 0.2}\` og \`μ = -0.3\`:
+
+    Var(X) = (-1.7)²·0.3 + (-0.7)²·0.2 + (0.3)²·0.2 + (1.3)²·0.1 + (2.3)²·0.2
+           = 2.89·0.3 + 0.49·0.2 + 0.09·0.2 + 1.69·0.1 + 5.29·0.2
+           = 0.867 + 0.098 + 0.018 + 0.169 + 1.058
+           = 2.21
+    σ = √2.21 ≈ 1.487
+
+
+## Snarvei via \`E[X²]\`
+
+Den ekvivalente formelen sparer ofte regning når sannsynlighetene er like:
+
+> [!read] Var(X) = E[X²] − μ²
+> Forventet kvadrat minus kvadrert forventning.
+
+> [!tip] For en lineær transformasjon: \`Var(aX + b) = a²·Var(X)\`. Konstantleddet \`b\` flytter fordelingen, men endrer ikke spredningen. Skalaen \`a\` blir kvadrert fordi avvikene blir kvadrert.
+`,
+      see_also: [
+        {
+          kind: "glossary",
+          id: "diskret-varians",
+        },
+        {
+          kind: "entry",
+          id: "diskret-stokastisk-variabel",
+        },
+        {
+          kind: "entry",
+          id: "utvalgsvarians-radata",
+        },
+      ],
+    },
+    {
+      id: "sigma",
+      name: "Standardavvik for diskret stokastisk variabel",
+      abbreviation: "Standardavvik σ",
+      formula: "σ = √Var(X)",
+      short: "Kvadratroten av variansen. Samme enhet som X — det vi rapporterer videre.",
+      long: `\`σ\` er standardavviket til \`X\` — kvadratroten av variansen. Det er det spredningsmålet du som regel rapporterer videre, fordi enheten matcher selve variabelen.
+
+
+## Hvorfor ta kvadratroten?
+
+\`Var(X)\` har enheten til \`X\` kvadrert. Hvis \`X\` er antall mål i en kamp, har \`Var(X)\` enheten "mål²", som er meningsløst å tolke. Kvadratroten bringer enheten tilbake:
+
+> [!read] σ = √Var(X)
+> Standardavvik = kvadratroten av variansen.
+
+Tommelfingerregel: en typisk verdi av \`X\` ligger ca. \`σ\` unna forventningsverdien \`μ = E[X]\`.
+
+
+## Når regne videre med σ vs. Var(X)?
+
+- **Var(X)** når du legger sammen variabler: \`Var(X + Y) = Var(X) + Var(Y)\` (under uavhengighet). Variansene legger seg pent sammen, standardavvikene gjør IKKE.
+- **σ** for tolkning, presentasjon, og for å normalisere (som i \`Z = (X − μ)/σ\`).
+
+> [!tip] For en lineær transformasjon: \`σ(aX + b) = |a|·σ(X)\`. Konstantleddet \`b\` flytter fordelingen, men endrer ikke spredningen. Faktoren \`a\` skalerer standardavviket lineært (i motsetning til variansen, som blir \`a²·Var(X)\`).
+`,
+      see_also: [
+        {
+          kind: "formula",
+          ref: "varians",
+        },
+        {
+          kind: "glossary",
+          id: "diskret-varians",
         },
       ],
     },
@@ -2414,7 +2508,7 @@ Fortegnet er negativt og størrelsen moderat: når \`X\` øker, har \`Y\` en sva
         },
         {
           kind: "entry",
-          id: "regresjon-korrelasjonskoeffisient",
+          id: "lineaer-regresjon",
         },
       ],
     },
@@ -4078,487 +4172,6 @@ Siden \`0.41 ≠ 0.36\`, er hendelsene IKKE uavhengige. Differansen \`0.41 − 0
       ],
     },
   ],
-  "regresjon-estimat-alpha-beta": [
-    {
-      id: "beta-hat",
-      name: "Stigningstallet β̂",
-      abbreviation: "β̂",
-      formula: "β̂ = S_XY / S_XX",
-      short: "Hvor mye y endres per enhet x. Minste-kvadraters-estimatet for stigningstallet.",
-      long: `\`β̂\` er minste-kvadraters-estimatet for stigningstallet i den lineære modellen \`y = α + β·x + ε\`. Den forteller hvor mye \`y\` i gjennomsnitt endres når \`x\` øker med én enhet.
-
-
-## Hvor formelen kommer fra
-
-Minste-kvadraters-prinsippet velger den linjen som minimerer summen av kvadrerte residualer \`Σ(y_i − α̂ − β̂·x_i)²\`. Setter du de partiellderiverte til null, faller formelen ut:
-
-> [!read] β̂ = Σ(x_i − x̄)(y_i − ȳ) / Σ(x_i − x̄)²
-> Krysssummen for \`(x, y)\` delt på sum av kvadrerte avvik for \`x\` alene.
-
-Telleren \`S_XY\` måler hvordan \`x\` og \`y\` varierer sammen. Nevneren \`S_XX\` måler hvor spredt \`x\`-verdiene er. Forholdet blir et stigningstall i samme enhet som \`y/x\`.
-
-
-## Beregningsformler når bare råsummer er gitt
-
-Hvis tabellen oppgir \`Σx_i\`, \`Σy_i\`, \`Σx_i²\` og \`Σx_i·y_i\` i stedet for avvikssummene, regn dem ut slik:
-
-- \`S_XX = Σx_i² − n·x̄²\`
-- \`S_XY = Σx_i·y_i − n·x̄·ȳ\`
-
-> [!tip] Skriv \`β̂\` med samme antall siffer som du vil bruke senere. Avrunder du for tidlig, drar feilen seg gjennom \`α̂\`, \`S_E²\` og hele inferensen.
-
-
-## Eksempel
-
-Med \`S_XY = 103.4\` og \`S_XX = 15.6\` får vi \`β̂ = 103.4 / 15.6 ≈ 6.63\`. Tolkning: én ekstra time søvn øker forventet eksamensresultat med ca. 6.63 prosentpoeng.
-`,
-      see_also: [
-        {
-          kind: "formula",
-          ref: "alpha-hat",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-korrelasjonskoeffisient",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-standardfeil-stigningstall",
-        },
-      ],
-    },
-    {
-      id: "alpha-hat",
-      name: "Skjæringspunktet α̂",
-      abbreviation: "α̂",
-      formula: "α̂ = ȳ − β̂·x̄",
-      short: "Verdien av ŷ når x = 0. Plasserer regresjonslinjen vertikalt etter at β̂ er bestemt.",
-      long: `\`α̂\` er minste-kvadraters-estimatet for skjæringspunktet (intercept) i \`ŷ = α̂ + β̂·x\`. Geometrisk er det \`y\`-verdien der den estimerte linjen krysser \`y\`-aksen (\`x = 0\`).
-
-
-## Hvorfor α̂ = ȳ − β̂·x̄
-
-Minste-kvadraters-løsningen tvinger regresjonslinjen til å gå gjennom tyngdepunktet \`(x̄, ȳ)\`. Setter du \`x = x̄\` i \`ŷ = α̂ + β̂·x\` og krever \`ŷ = ȳ\`, faller formelen ut:
-
-> [!read] α̂ = ȳ − β̂·x̄
-> Skjæringspunktet er det som gjenstår av ȳ etter at vi har trukket fra det β̂·x̄ allerede forklarer.
-
-Derfor må \`β̂\` regnes ut FØR \`α̂\`. Endrer du \`β̂\` med ett siffer, endres \`α̂\` automatisk via \`x̄\`.
-
-
-## Når α̂ er meningsfull og når den ikke er det
-
-\`α̂\` er et reelt utsagn om virkeligheten bare hvis \`x = 0\` ligger innenfor (eller nær) det observerte \`x\`-spennet. Ekstrapolerer du langt utenfor data, blir \`α̂\` matematisk veldefinert men fysisk meningsløs.
-
-> [!tip] Hvis \`x = 0\` ligger langt fra dataene, fokusér tolkningen på β̂ alene. α̂ er da bare en justeringskonstant som lar linjen treffe (x̄, ȳ).
-
-
-## Eksempel
-
-Med \`ȳ = 79.7\`, \`β̂ = 6.63\` og \`x̄ = 6.8\` får vi \`α̂ = 79.7 − 6.63·6.8 ≈ 34.62\`. Den estimerte regresjonslinjen blir \`ŷ = 34.62 + 6.63·x\`.
-`,
-      see_also: [
-        {
-          kind: "formula",
-          ref: "beta-hat",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-residualvarians",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-prediksjonsintervall",
-        },
-      ],
-    },
-  ],
-  "regresjon-korrelasjonskoeffisient": [
-    {
-      id: "r",
-      name: "Pearson-korrelasjon r",
-      abbreviation: "r",
-      formula: "r = S_XY / √(S_XX · S_YY)",
-      short: "Mål på styrken og retningen av lineær sammenheng. Ligger alltid mellom −1 og 1.",
-      long: `\`r\` er Pearsons utvalgskorrelasjon. Den standardiserer krysssummen \`S_XY\` slik at resultatet alltid ligger i \`[−1, 1]\`, uavhengig av hvilke enheter \`x\` og \`y\` måles i.
-
-
-## Slik leser du formelen
-
-Telleren \`S_XY\` har samme tegn som retningen i spredningsplottet. Nevneren \`√(S_XX · S_YY)\` er produktet av spredningene i \`x\` og \`y\`, og fungerer som en skalering:
-
-> [!read] r = (samvariasjon mellom x og y) / (spredning i x · spredning i y)
-> Krysssummen normalisert slik at maksimal verdi er 1 og minimum er −1.
-
-Fordi \`S_XX\` og \`S_YY\` alltid er ikke-negative, bestemmes fortegnet til \`r\` av \`S_XY\` alene.
-
-
-## Sammenheng med stigningstallet og r²
-
-Stigningstallet og korrelasjonen er nært beslektet: \`β̂ = r · (s_y / s_x)\`, der \`s_x = √(S_XX/(n−1))\` og \`s_y = √(S_YY/(n−1))\`. Det betyr at \`β̂\` og \`r\` alltid har samme fortegn.
-
-Kvadratet \`r²\` (forklart variasjon) tolkes som andelen av variasjonen i \`y\` som forklares av lineær regresjon på \`x\`:
-
-- \`|r| ≈ 1\`: punktene ligger nesten på en rett linje
-- \`|r| ≈ 0\`: ingen lineær sammenheng (men kan ha sterk ikke-lineær struktur)
-
-> [!tip] r måler bare LINEÆR sammenheng. En tydelig U-form (kvadratisk) kan gi r ≈ 0 selv om x og y er sterkt knyttet sammen. Tegn alltid spredningsplottet før du tolker r.
-
-
-## Eksempel
-
-Med \`S_XX = 15.6\`, \`S_YY = 734.1\` og \`S_XY = 103.4\`:
-
-\`r = 103.4 / √(15.6 · 734.1) = 103.4 / √11451.96 ≈ 103.4 / 107.01 ≈ 0.966\`.
-
-Tolkning: sterk positiv lineær sammenheng. \`r² ≈ 0.933\`, så ca. 93 % av variasjonen i \`y\` forklares av regresjonen på \`x\`.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-estimat-alpha-beta",
-        },
-        {
-          kind: "entry",
-          id: "korrelasjon-joint",
-        },
-        {
-          kind: "glossary",
-          id: "spredningsplott",
-        },
-      ],
-    },
-  ],
-  "regresjon-prediksjonsintervall": [
-    {
-      id: "pi-y",
-      name: "Prediksjonsintervall for ny Y",
-      abbreviation: "Ny y",
-      formula: "ŷ₀ ± t_(α/2, n−2) · S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)",
-      short: "Intervall for hvor en ENKELT ny y-observasjon vil ligge ved x = x₀. Bredere enn KI for E[Y|x].",
-      long: `Prediksjonsintervallet (PI) gir et intervall som med \`(1−α)·100 %\` sannsynlighet inneholder en ENKELT ny observasjon \`Y\` målt ved \`x = x₀\`. Det er forskjellig fra konfidensintervallet for forventningsverdien \`E[Y|x₀]\`.
-
-
-## De tre bidragene under kvadratroten
-
-Variansen til prediksjonsfeilen \`Y − ŷ₀\` består av tre uavhengige ledd, som speiles direkte i formelen:
-
-> [!read] Var(Y − ŷ₀) = σ²·(1 + 1/n + (x₀ − x̄)²/S_XX)
-> Naturlig støy + usikkerhet i ȳ + usikkerhet i β̂ ved avstand fra x̄.
-
-- \`1\`: naturlig spredning rundt regresjonslinjen, er DEN nye observasjonens egen feil.
-- \`1/n\`: usikkerhet i hvor selve linjen ligger vertikalt (bidraget fra \`α̂\`).
-- \`(x₀ − x̄)²/S_XX\`: usikkerhet i stigningstallet, vektet med hvor langt \`x₀\` er fra tyngdepunktet.
-
-Det er \`1\`-tallet som gjør PI bredere enn KI for \`E[Y|x₀]\`, uten det får du KI, ikke PI.
-
-
-## Hvorfor PI vifter ut til sidene
-
-Bidraget \`(x₀ − x̄)²/S_XX\` vokser kvadratisk når \`x₀\` fjerner seg fra \`x̄\`. Derfor er prediksjonsintervallet smalest ved \`x̄\` og åpner seg som en trakt mot kantene.
-
-> [!tip] Ekstrapolering utenfor observert x-spenn er dobbelt risikabelt: PI blir matematisk bredt, OG modellen kan slutte å gjelde. Bruk PI bare innenfor det området der dataene støtter linjen.
-
-
-## Ekvivalente skrivemåter
-
-Når oppgaven gir \`SE(β̂)\` i stedet for \`S_XX\`, er disse identiske fordi \`S_XX = (S_E / SE(β̂))²\`:
-
-- \`S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)\`
-- \`S_E · √(1 + 1/n + ((x₀ − x̄) · SE(β̂) / S_E)²)\`
-
-Velg den formen der du har færrest mellomregninger.
-
-
-## Eksempel
-
-Med \`α̂ = 34.6\`, \`β̂ = 6.63\`, \`S_E ≈ 2.468\`, \`S_XX ≈ 15.6\`, \`x̄ = 6.8\`, \`n = 10\`, \`x₀ = 5\`, \`1 − α = 0.95\`:
-
-- \`ŷ₀ = 34.6 + 6.63·5 = 67.75\`
-- \`SE_pred = 2.468 · √(1 + 0.1 + (−1.8)²/15.6) ≈ 2.468 · √1.308 ≈ 2.822\`
-- \`t_(0.025, 8) = 2.306\`
-- PI: \`67.75 ± 2.306·2.822 ≈ 67.75 ± 6.51 ≈ [61.24, 74.26]\`
-
-En ny student med \`5\` timers søvn vil med 95 % sannsynlighet score mellom ca. 61.2 % og 74.3 %.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-residualvarians",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-standardfeil-stigningstall",
-        },
-        {
-          kind: "table",
-          id: "E5-t-tabell",
-        },
-      ],
-    },
-  ],
-  "regresjon-residualvarians": [
-    {
-      id: "se-squared",
-      name: "Residualvarians S_E²",
-      abbreviation: "S_E²",
-      formula: "S_E² = SSE / (n − 2)",
-      short: "Variansen til feilene rundt regresjonslinjen. Forventningsrett estimat med n − 2 frihetsgrader.",
-      long: `\`S_E²\` er det forventningsrette estimatet for variansen til residualene \`ε_i = y_i − α̂ − β̂·x_i\` i en enkel lineær regresjon. Kvadratroten \`S_E = √S_E²\` er residualenes standardavvik og kalles ofte regresjonens "standard error of the estimate".
-
-
-## Hvorfor n − 2 i nevneren?
-
-Variansen til en stokastisk variabel estimeres ved å snitte kvadrerte avvik fra gjennomsnittet. Her er "gjennomsnittet" selve regresjonslinjen, og to parametre (\`α̂\`, \`β̂\`) er estimert fra dataene. Hver estimert parameter koster én frihetsgrad:
-
-> [!read] S_E² = SSE / (n − 2)
-> Sum av kvadrerte residualer delt på antall frihetsgrader, der \`ν = n − 2\`.
-
-Med \`n − 2\` blir estimatet forventningsrett: \`E[S_E²] = σ²\`. Bruker du \`n\` eller \`n − 1\`, blir estimatet skjevt.
-
-
-## Praktisk beregning av SSE
-
-Direkte fra residualene: \`SSE = Σ(y_i − α̂ − β̂·x_i)²\`. Når du har avvikssummene allerede regnet ut, finnes en mye raskere snarvei:
-
-- \`SSE = S_YY − β̂ · S_XY\`
-- alternativt \`SSE = S_YY − S_XY² / S_XX\`
-
-De to er ekvivalente fordi \`β̂ = S_XY / S_XX\`.
-
-> [!tip] SSE forveksles ofte med S_XX = Σ(x − x̄)². De er HELT forskjellige: SSE bruker residualer i y-retning, S_XX måler spredning i x.
-
-
-## Eksempel
-
-Med \`SSE = 48.7437\` og \`n = 10\` blir \`S_E² = 48.7437 / 8 ≈ 6.093\`, så \`S_E ≈ √6.093 ≈ 2.468\`. Tolkning: typisk avvik mellom observert og predikert \`y\` er ca. 2.47 enheter.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-estimat-alpha-beta",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-standardfeil-stigningstall",
-        },
-        {
-          kind: "glossary",
-          id: "frihetsgrader-glos",
-        },
-      ],
-    },
-    {
-      id: "sse",
-      name: "Sum av kvadrerte residualer",
-      abbreviation: "SSE",
-      formula: "SSE = Σ(y_i − α̂ − β̂·x_i)²",
-      short: "Total kvadrert avstand fra observasjoner til regresjonslinjen. Telleren i S_E².",
-      long: `\`SSE\` (Sum of Squared Errors) er totalen av de kvadrerte residualene — altså hvor langt observasjonene \`y_i\` ligger fra det regresjonslinjen forutsier, kvadrert og lagt sammen.
-
-
-## Direkte fra residualene
-
-Residualet for observasjon \`i\` er forskjellen mellom det vi observerte og det linjen sier:
-
-    e_i = y_i − ŷ_i = y_i − α̂ − β̂·x_i
-
-\`SSE\` er summen av disse kvadrert:
-
-> [!read] SSE = Σ(y_i − α̂ − β̂·x_i)²
-> Hvor mye linjen samlet sett bommer, regnet i kvadrerte enheter.
-
-Linjen \`α̂, β̂\` valgt etter minste-kvadraters-metode minimerer akkurat denne summen — derav navnet på metoden.
-
-
-## Snarvei via avvikssummer
-
-Når du allerede har avvikssummene \`S_XX\`, \`S_YY\`, \`S_XY\` ute, slipper du å regne ut alle \`n\` residualene:
-
-- \`SSE = S_YY − β̂ · S_XY\`
-- ekvivalent: \`SSE = S_YY − S_XY² / S_XX\`
-
-De tre uttrykkene gir samme tall (avvik kun i avrunding). Velg det som passer regningen din.
-
-> [!tip] Sjekk fortegnet: SSE er en sum av kvadrater og må være ≥ 0. Får du et negativt tall, er noe galt — typisk en regnefeil i \`S_YY\` eller forveksling med \`S_XY\`.
-
-
-## SSE er ikke det samme som S_E²
-
-\`SSE\` er en sum, mens \`S_E² = SSE / (n − 2)\` er et gjennomsnitt (varians). \`SSE\` har enheten \`y²\`. Når du senere skal teste eller lage KI bruker du \`S_E²\` (eller standardavviket \`S_E\`), ikke \`SSE\` direkte.
-`,
-      see_also: [
-        {
-          kind: "formula",
-          ref: "se-squared",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-estimat-alpha-beta",
-        },
-        {
-          kind: "glossary",
-          id: "minste-kvadraters-metode",
-        },
-      ],
-    },
-  ],
-  "regresjon-standardfeil-stigningstall": [
-    {
-      id: "se-beta",
-      name: "Standardfeil til β̂",
-      abbreviation: "SE(β̂)",
-      formula: "SE(β̂) = √(S_E² / S_XX)",
-      short: "Hvor mye β̂ varierer fra utvalg til utvalg. Inngår direkte i t-test og KI for β.",
-      long: `\`SE(β̂)\` er det estimerte standardavviket til stigningstallet \`β̂\`. Den kvantifiserer hvor mye \`β̂\` ville variert hvis vi gjorde forsøket om igjen med nye \`y\`-verdier ved samme \`x\`-design.
-
-
-## Hvor formelen kommer fra
-
-Under standard-antakelsene (uavhengige feil, konstant varians \`σ²\`) gjelder eksakt: \`Var(β̂) = σ² / S_XX\`. Vi kjenner ikke \`σ²\`, så vi setter inn estimatet \`S_E²\` og tar kvadratrot:
-
-> [!read] SE(β̂) = √(S_E² / S_XX)
-> Residualenes standardavvik delt på kvadratroten av x-spredningen.
-
-Lagt på en kortere form: \`SE(β̂) = S_E / √S_XX\`. De to skrivemåtene gir nøyaktig samme tall.
-
-
-## Hva styrer størrelsen på SE(β̂)?
-
-To størrelser drar i hver sin retning:
-
-- Liten \`S_E²\` (god tilpasning, lite støy) gir liten \`SE(β̂)\`.
-- Stor \`S_XX\` (godt spredte \`x\`-verdier) gir liten \`SE(β̂)\`.
-
-For å redusere usikkerheten i \`β̂\` kan du altså enten samle inn flere/mer presise målinger ELLER spre \`x\`-verdiene mer.
-
-> [!tip] Et eksperiment der alle x-verdiene ligger tett (S_XX liten) gir en upresis stigning selv om residualene er små. "Legg datapunktene langt fra hverandre" er en designregel når β er det interessante.
-
-
-## Eksempel
-
-Med \`S_E² = 6.093\` og \`S_XX = 15.6\`:
-
-\`SE(β̂) = √(6.093 / 15.6) = √0.3906 ≈ 0.625\`.
-
-Denne verdien brukes direkte i \`T = β̂ / SE(β̂)\` for hypotesetesten, og i KI-bredden \`β̂ ± t_(α/2, n−2) · SE(β̂)\`.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-residualvarians",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-test-stigningstall",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-prediksjonsintervall",
-        },
-      ],
-    },
-  ],
-  "regresjon-test-stigningstall": [
-    {
-      id: "t-slope",
-      name: "Testobservator T = β̂ / SE(β̂)",
-      abbreviation: "Test β=0",
-      formula: "T = (β̂ − β₀) / SE(β̂)",
-      short: "T-fordelt under H₀ med n − 2 frihetsgrader. Sammenlignes med t_(α/2, n−2) i tabell E.5.",
-      long: `\`T\` er testobservatoren for hypotesen \`H₀: β = β₀\` i en enkel lineær regresjon. Når \`β₀ = 0\` (det vanligste) tester den om det finnes en lineær sammenheng mellom \`x\` og \`y\` overhodet.
-
-
-## Tolkning av telleren og nevneren
-
-Telleren \`β̂ − β₀\` måler hvor langt det observerte stigningstallet ligger fra null-hypotesen, i samme enhet som \`y/x\`. Nevneren \`SE(β̂)\` er typisk "støy-skalaen" til \`β̂\`. Forholdet er enhetsløst og forteller "hvor mange standardfeil unna H₀ ligger β̂":
-
-> [!read] T = (β̂ − β₀) / SE(β̂)
-> Antall standardfeil mellom det estimerte og det hypotetiske stigningstallet.
-
-Under \`H₀\` (og normalitet på feilene) er \`T\` t-fordelt med \`ν = n − 2\` frihetsgrader.
-
-
-## Beslutningsregelen
-
-For en tosidig test på nivå \`α\`:
-
-- slå opp \`t_(α/2, n−2)\` i tabell E.5
-- forkast \`H₀\` hvis \`|T| > t_(α/2, n−2)\`
-- ellers: ikke statistisk grunnlag for å hevde lineær sammenheng
-
-Ensidige tester (\`H₁: β > 0\` eller \`β < 0\`) bruker \`t_(α, n−2)\` og ser bare på den ene halen.
-
-> [!tip] T-observatoren henger direkte sammen med korrelasjonen: T² = (n − 2)·r²/(1 − r²). Stor |T| ⇔ stor |r|. Forkaster du H₀ for β = 0, forkaster du samtidig at populasjonskorrelasjonen er null.
-
-
-## Eksempel
-
-Med \`β̂ = 6.63\`, \`SE(β̂) = 0.625\`, \`n = 10\` og \`α = 0.05\` (tosidig):
-
-\`T = 6.63 / 0.625 = 10.61\`. Kritisk verdi: \`t_(0.025, 8) = 2.306\`.
-
-\`|10.61| > 2.306\`, så vi forkaster \`H₀: β = 0\`. Det er klar statistisk støtte for en lineær sammenheng.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-standardfeil-stigningstall",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-korrelasjonskoeffisient",
-        },
-        {
-          kind: "table",
-          id: "E5-t-tabell",
-        },
-      ],
-    },
-    {
-      id: "se-beta",
-      name: "Standardfeil til β̂",
-      abbreviation: "SE(β̂)",
-      formula: "SE(β̂) = √(S_E² / S_XX)",
-      short: "Estimert standardavvik til β̂. Nevneren i T-observatoren.",
-      long: `\`SE(β̂)\` er det estimerte standardavviket til stigningstallet — altså hvor mye \`β̂\` typisk ville variere fra utvalg til utvalg ved samme \`x\`-design. Dette er nevneren i \`T = (β̂ − β₀) / SE(β̂)\`.
-
-
-## Hvor formelen kommer fra
-
-Under standard-regresjonsantakelsene gjelder \`Var(β̂) = σ² / S_XX\`, der \`S_XX = Σ(x_i − x̄)²\`. Vi kjenner ikke \`σ²\`, så vi setter inn estimatet \`S_E²\` og tar kvadratrot:
-
-> [!read] SE(β̂) = √(S_E² / S_XX) = S_E / √S_XX
-> Residualenes standardavvik delt på kvadratroten av \`x\`-spredningen.
-
-To skrivemåter, samme tall.
-
-
-## Hva styrer størrelsen?
-
-- **Liten \`S_E²\`** (god tilpasning, lite støy) ⇒ liten \`SE(β̂)\`
-- **Stor \`S_XX\`** (godt spredte \`x\`-verdier) ⇒ liten \`SE(β̂)\`
-
-Stor \`SE(β̂)\` betyr stor usikkerhet i hvor stigningstallet egentlig er, og dermed både bredt KI for \`β\` og lav \`|T|\`-verdi i hypotesetesten.
-
-> [!tip] For en grundigere gjennomgang, se [Standardfeil til β̂](/entry/regresjon-standardfeil-stigningstall) — egen oppslagsside med utledning og eksempler.
-`,
-      see_also: [
-        {
-          kind: "entry",
-          id: "regresjon-standardfeil-stigningstall",
-        },
-        {
-          kind: "entry",
-          id: "regresjon-residualvarians",
-        },
-        {
-          kind: "formula",
-          ref: "t-slope",
-        },
-      ],
-    },
-  ],
   "sum-uavhengige-normaler": [
     {
       id: "sum-formel",
@@ -4732,6 +4345,408 @@ Med \`ν = 17\` og \`α = 0.01\` venstresidig er kritisk verdi \`−t_(0.01, 17)
           kind: "table",
           id: "E5-t-tabell",
         },
+      ],
+    },
+  ],
+  "enveis-anova": [
+    {
+      id: "f-observator",
+      name: "F-observator (test-statistikk)",
+      abbreviation: "F",
+      formula: "F = MSG / MSE",
+      short: `Forholdet mellom variasjon MELLOM grupper og variasjon INNEN grupper. Stor F ⇒ gruppemiddelene ligger lengre fra hverandre enn støyen alene tilsier.`,
+      long: `\`F\` er testobservatoren i enveis variansanalyse. Den måler hvor mye gruppemiddelene varierer i forhold til den tilfeldige støyen innen hver gruppe.
+
+
+## Hvordan lese formelen
+
+> [!read] F = MSG / MSE
+> «Mellom-grupp-variasjon (signal) delt på innen-gruppe-variasjon (støy).»
+
+Under \`H₀: μ_1 = … = μ_k\` estimerer både \`MSG\` og \`MSE\` den samme populasjonsvariansen \`σ²\`. Da forventer vi at \`F ≈ 1\`. Hvis gruppene faktisk har ulike middelverdier, blir \`MSG\` oppblåst — det legger seg en ekstra term som måler avstanden mellom \`μ_i\`-ene — og \`F\` blir signifikant større enn 1.
+
+
+## Fordeling under H₀
+
+\`F\` er F-fordelt med to frihetsgrader:
+
+> [!read] F ~ F(df₁, df₂)   under H₀,   der df₁ = k − 1, df₂ = n − k
+
+F-fordelingen er asymmetrisk og bare positiv (siden både teller og nevner er kvadratiske størrelser). Toppen ligger like under 1, og den har en lang høyre-hale. Derfor er F-testen alltid HØYRE-sidig: vi forkaster bare hvis \`F > F_(α, df₁, df₂)\`.
+
+> [!tip] For \`k = 2\` grupper er \`F = T²\` der \`T\` er to-utvalgs t-observatoren. ANOVA og t-test gir nøyaktig samme p-verdi i det tilfellet.
+
+
+## Konkret eksempel
+
+Tre leverandører, \`n_i = 5\` hver. Etter regning: \`SSG = 14.93\`, \`SSE = 72.0\`. Da blir:
+
+    MSG = 14.93 / 2 = 7.465
+    MSE = 72.0 / 12 = 6.0
+    F   = 7.465 / 6.0 ≈ 1.244
+
+Med \`F_(0.05, 2, 12) ≈ 3.89\` er \`1.244 ≪ 3.89\` — vi beholder H₀. Den lille forskjellen mellom \`MSG\` og \`MSE\` er fullt forenlig med tilfeldig variasjon.
+`,
+      see_also: [
+        { kind: "formula", ref: "msg" },
+        { kind: "formula", ref: "mse" },
+        { kind: "formula", ref: "frihetsgrader" },
+        { kind: "table", id: "E8-f-tabell" },
+      ],
+    },
+    {
+      id: "msg",
+      name: "Sum av kvadrater MELLOM grupper",
+      abbreviation: "SSG",
+      formula: "SSG = Σ n_i · (x̄_i − x̄)²",
+      short: `Vektet sum av avvik fra hver gruppes snitt til TOTALSNITTET. Måler hvor langt fra hverandre gruppemiddelene ligger.`,
+      long: `\`SSG\` (sum of squares between groups) er signal-leddet i ANOVA. Den måler hvor mye gruppemiddelene \`x̄_i\` avviker fra det felles totalgjennomsnittet \`x̄\`, vektet med antall observasjoner per gruppe.
+
+
+## Hvordan lese formelen
+
+> [!read] SSG = Σ n_i · (x̄_i − x̄)²
+> «Summer kvadratet av hver gruppes avstand til totalsnittet, vektet med gruppestørrelsen.»
+
+Vekten \`n_i\` reflekterer at en gruppe med 30 observasjoner gir oss mer informasjon om sitt sanne \`μ_i\` enn en gruppe med 5 — så avviket dens skal telle tyngre.
+
+Totalsnittet \`x̄\` er det VEKTEDE snittet:
+
+> [!read] x̄ = (Σ n_i · x̄_i) / n,   n = Σ n_i
+
+Bruker du et enkelt snitt av \`x̄_i\`-ene når gruppestørrelsene er ulike, blir \`SSG\` (og dermed \`F\`) feil.
+
+
+## Mean Square (MS) — pr. frihetsgrad
+
+For å gjøre \`SSG\` sammenlignbar med \`SSE\` deler vi på telnerfrihetsgradene:
+
+> [!read] MSG = SSG / (k − 1)
+
+\`MSG\` estimerer \`σ² + (ekstra fra forskjeller mellom μ_i)\`. Når H₀ er sann, faller den ekstra termen bort, og \`MSG\` estimerer bare \`σ²\` — det samme som \`MSE\`.
+
+
+## Konkret eksempel
+
+Tre grupper, \`n_i = 5\`, \`x̄_1 = 23.0\`, \`x̄_2 = 24.6\`, \`x̄_3 = 22.2\`. Like store grupper ⇒ totalsnittet er enkelt:
+
+    x̄ = (23.0 + 24.6 + 22.2) / 3 ≈ 23.267
+
+Avvikene:
+
+    (23.0 − 23.267)² ≈ 0.071
+    (24.6 − 23.267)² ≈ 1.778
+    (22.2 − 23.267)² ≈ 1.138
+
+\`SSG = 5·(0.071 + 1.778 + 1.138) ≈ 14.93\`, og \`MSG = 14.93/2 ≈ 7.465\`.
+`,
+      see_also: [
+        { kind: "formula", ref: "mse" },
+        { kind: "formula", ref: "f-observator" },
+      ],
+    },
+    {
+      id: "mse",
+      name: "Sum av kvadrater INNEN grupper",
+      abbreviation: "SSE",
+      formula: "SSE = Σ (n_i − 1) · s_i²",
+      short: `Vektet sum av utvalgsvariansene fra hver gruppe — den tilfeldige støyen innenfor gruppene. Direkte estimat for felles σ².`,
+      long: `\`SSE\` (sum of squares error / within groups) er støy-leddet i ANOVA. Den summerer kvadratavvikene fra hver observasjon til sitt EGET gruppemiddel — informasjonen om individuell variasjon innen gruppene.
+
+
+## Hvordan lese formelen
+
+> [!read] SSE = Σ (n_i − 1) · s_i²
+> «Vektet sum av gruppe-variansene, der hver gruppe vektes med sine frihetsgrader.»
+
+Faktoren \`(n_i − 1)\` er gruppens frihetsgrader — én mistes fordi vi har estimert \`x̄_i\` selv. Dette er nøyaktig samme vekting som i pooled-varians for to-utvalgs t-test, bare utvidet til \`k\` grupper:
+
+> [!tip] Pooled-varians fra to-utvalgs t-test er et spesialtilfelle av MSE: med to grupper er \`MSE = S_P²\` og \`F = T²\`.
+
+To ekvivalente former for \`SSE\`:
+
+- Fra utvalgsvariansene: \`SSE = Σ (n_i − 1)·s_i²\` (lettest når \`s_i²\` er gitt direkte).
+- Fra rådata: \`SSE = Σ_i Σ_j (y_(i,j) − x̄_i)²\` (lettest når du har observasjonene som lister).
+
+
+## MSE estimerer σ²
+
+> [!read] MSE = SSE / (n − k)
+
+Nevnerfrihetsgradene \`n − k\` er totalt antall observasjoner minus de \`k\` gruppemiddelene vi har estimert. \`MSE\` er et upartisk estimat for den felles populasjonsvariansen \`σ²\` — uavhengig av om H₀ er sann eller ikke. Det er nettopp DERFOR \`F = MSG/MSE\` er en god test: nevneren er stabil, så bare telleren beveger seg når gruppene faktisk er forskjellige.
+
+
+## Konkret eksempel
+
+Tre grupper, \`n_i = 5\`, \`s_1² = 5.5\`, \`s_2² = 7.3\`, \`s_3² = 5.2\`:
+
+    SSE = 4·5.5 + 4·7.3 + 4·5.2
+        = 22.0 + 29.2 + 20.8 = 72.0
+    MSE = 72.0 / (15 − 3) = 72.0 / 12 = 6.0
+
+Så vår beste anslagsverdi for felles \`σ²\` er 6.0 — uavhengig av om leverandørene har like middelverdier eller ikke.
+`,
+      see_also: [
+        { kind: "formula", ref: "msg" },
+        { kind: "formula", ref: "f-observator" },
+        { kind: "glossary", id: "pooled-varians" },
+        { kind: "glossary", id: "utvalgsvarians" },
+      ],
+    },
+    {
+      id: "frihetsgrader",
+      name: "Frihetsgrader (df₁, df₂)",
+      abbreviation: "df",
+      formula: "df₁ = k − 1,   df₂ = n − k",
+      short: `Telneren har én frihetsgrad per gruppe utover den første; nevneren har én per observasjon utover de k gruppemiddelene.`,
+      long: `Frihetsgradene er argumentene til F-fordelingen i tabelloppslaget. De forteller hvor mye informasjon hver del av variansdekomponeringen bygger på.
+
+
+## Hvordan lese formlene
+
+> [!read] df₁ = k − 1   (telner / SSG)
+> «Antall grupper minus én. Vi mister én fordi totalsnittet \`x̄\` allerede er bundet til gruppemiddelene.»
+
+> [!read] df₂ = n − k   (nevner / SSE)
+> «Totalt antall observasjoner minus antall gruppemiddel-estimater vi har gjort.»
+
+Sammen utgjør de \`df₁ + df₂ = (k − 1) + (n − k) = n − 1\`, som er totalfrihetsgradene for SST. Det er den vanlige varians-aritmetikken: estimering av ETT middel fra \`n\` observasjoner gir \`n − 1\` frihetsgrader.
+
+
+## Hvor i tabellen?
+
+I **tabell E.8** ligger telneren \`df₁\` på KOLONNENE (få verdier — typisk 1–10, 12, 15, 20, 24, 30) og nevneren \`df₂\` på RADENE (mange verdier — 1–30, 40, 60, 120). Bytter du dem henter du feil kritisk verdi.
+
+> [!tip] Huskeregel: «det er færre grupper enn observasjoner, så \`df₁ < df₂\`.» Hvis du har \`k = 3\` grupper og \`n = 15\` totalt, er \`df₁ = 2\` (smal) og \`df₂ = 12\` (bred).
+
+
+## Konkret eksempel
+
+| Oppgave | k | n_i | n | df₁ | df₂ |
+|---|---|---|---|---|---|
+| Tre leverandører, 5 prøver hver | 3 | 5,5,5 | 15 | 2 | 12 |
+| Fire formuleringer, 10 pasienter | 4 | 10,10,10,10 | 40 | 3 | 36 |
+| Tre lærere, ulike klasse-størrelser | 3 | 5,6,7 | 18 | 2 | 15 |
+
+Legg merke til at gruppestørrelsene IKKE må være like — det er bare \`k\` og \`n\` som styrer frihetsgradene.
+`,
+      see_also: [
+        { kind: "glossary", id: "frihetsgrader-glos" },
+        { kind: "formula", ref: "f-observator" },
+        { kind: "table", id: "E8-f-tabell" },
+      ],
+    },
+    {
+      id: "gruppe-varians",
+      name: "Utvalgsvarians per gruppe",
+      abbreviation: "s_i²",
+      formula: "s_i² = Σ_j (y_(i,j) − x̄_i)² / (n_i − 1)",
+      short: `Hvor mye observasjonene innenfor gruppe i sprer seg om SITT EGET gruppemiddel. Inngangsverdien til SSE.`,
+      long: `\`s_i²\` er den vanlige utvalgsvariansen, men regnet ut SEPARAT for hver gruppe \`i\`. Du behandler altså hver kolonne av rådata som et eget datasett og beregner \`s²\` for hver.
+
+
+## Hvordan lese formelen
+
+> [!read] s_i² = Σ_j (y_(i,j) − x̄_i)² / (n_i − 1)
+> «Sum av kvadratavvik fra gruppe-i sitt eget snitt, delt på antall observasjoner i gruppen minus én.»
+
+Indeksen \`j\` løper over de \`n_i\` observasjonene i gruppe \`i\`. \`x̄_i\` er gruppe-i sitt eget snitt (ikke totalsnittet \`x̄\` — det kommer først inn i SSG).
+
+
+## Hva betyr den?
+
+\`s_i²\` er et upartisk estimat for variansen i populasjonen GRUPPE \`i\` er trukket fra. Med ANOVAs antakelse om FELLES populasjonsvarians, estimerer alle \`s_i²\`-ene egentlig samme størrelse \`σ²\` — bare med ulik presisjon avhengig av \`n_i\`.
+
+> [!tip] Tommelfingerregel for ANOVAs felles-σ²-antakelse: ingen \`s_i²\` bør være mer enn 4× større enn den minste. Bryter det sammen, vurder Welch-ANOVA i stedet for vanlig ANOVA.
+
+
+## Hvordan bruke den
+
+\`s_i²\` brukes alltid videre — den er ikke noe sluttsvar i seg selv. Du putter den inn i SSE:
+
+    SSE = Σ_i (n_i − 1) · s_i²
+
+Vekten \`(n_i − 1)\` er nettopp gruppens frihetsgrader, så vektingen kansellerer kvadratrot-en i \`s_i²\` og du står igjen med ren sum av kvadratavvik. Det er derfor \`SSE\` kan også skrives som \`Σ_i Σ_j (y_(i,j) − x̄_i)²\` direkte fra rådata.
+
+> [!read] Når du får rådata: regn \`s_i²\` per gruppe FØRST, så blir både SSE og MSE enkel aritmetikk.
+> Når du får \`s_i²\` direkte i oppgaveteksten: du kan hoppe over rådata-steget og gå rett til SSE.
+
+
+## Konkret eksempel
+
+Gruppe 1: \`[20, 24, 25, 22, 24]\`, \`x̄_1 = 23\`. Kvadratavvik: \`9 + 1 + 4 + 1 + 1 = 16\`.
+
+    s_1² = 16 / (5 − 1) = 16 / 4 = 4.0
+
+Som forventet i samme størrelsesorden som de andre gruppene hvis felles-σ²-antakelsen holder.
+`,
+      see_also: [
+        { kind: "formula", ref: "mse" },
+        { kind: "glossary", id: "utvalgsvarians" },
+        { kind: "entry", id: "utvalgsvarians-radata" },
+      ],
+    },
+    {
+      id: "sst",
+      name: "Total kvadratsum",
+      abbreviation: "SST",
+      formula: "SST = SSG + SSE",
+      short: `Den TOTALE variasjonen i dataene — splittes opp i mellom-gruppe-del (SSG) og innen-gruppe-del (SSE). Brukes til å kontrollregne.`,
+      long: `\`SST\` (total sum of squares) er den totale variasjonen i hele datasettet, før du har splittet observasjonene opp i grupper. Den definerende identiteten i ANOVA er at denne variasjonen DEKOMPONERER eksakt i to deler.
+
+
+## Hvordan lese formelen
+
+> [!read] SST = Σ_i Σ_j (y_(i,j) − x̄)²
+> «Sum av kvadratavvik fra hver enkelt observasjon til TOTALSNITTET \`x̄\`.»
+
+Praktisk regner du SJELDEN SST direkte fra rådata. Du bruker den fundamentale ANOVA-identiteten:
+
+> [!read] SST = SSG + SSE
+> «Total variasjon = mellom-gruppe-variasjon + innen-gruppe-variasjon.»
+
+Dette er IKKE en tilnærming — det er en eksakt algebraisk identitet (geometrisk: Pythagoras-setningen anvendt på «signal»- og «støy»-komponentene i dataene).
+
+
+## Hva betyr den?
+
+Hele poenget med ANOVA er denne dekomponeringen. Hvis ALL variasjon stammer fra innen-gruppe-støy, har vi \`SSG ≈ 0\` og \`SST ≈ SSE\` — gruppene er bare like. Hvis derimot en stor andel av variasjonen sitter i mellom-gruppe-leddet (\`SSG\` stor), forteller det at gruppene faktisk ligger på ulike nivåer.
+
+Forholdet \`SSG/SST\` kalles \`R²\` (forklaringsgrad) — andelen av total variasjon som forklares av gruppeinndelingen.
+
+> [!tip] \`R² = SSG/SST\` ligger alltid mellom 0 og 1. Verdier nær 1 ⇒ gruppene forklarer nesten alt; verdier nær 0 ⇒ gruppeinndelingen er irrelevant for variasjonen.
+
+
+## Hvordan bruke den
+
+To hovedformål:
+
+1. **Kontrollregne**: hvis du har regnet ut SSG og SSE separat, sjekk at de summerer til SST. Hvis ikke, har du regnefeil.
+
+2. **Fyll ut ANOVA-tabellens 3. rad**: i en typisk ANOVA-tabell står SST i nederste rad sammen med totalfrihetsgrader \`df_total = n − 1\`. Mangler én av \`SSG\`/\`SSE\`/\`SST\` kan du regne ut den siste fra de to andre.
+
+
+## Konkret eksempel
+
+Tre leverandører, \`SSG = 14.93\`, \`SSE = 72.0\`:
+
+    SST = 14.93 + 72.0 = 86.93
+
+Forklaringsgrad: \`R² = 14.93/86.93 ≈ 0.172\`. Bare 17 % av total variasjon skyldes leverandør-forskjeller; de andre 83 % er ren støy innenfor hver leverandør. Det stemmer med at F = 1.244 ikke ble signifikant.
+`,
+      see_also: [
+        { kind: "formula", ref: "msg" },
+        { kind: "formula", ref: "mse" },
+        { kind: "formula", ref: "f-observator" },
+      ],
+    },
+    {
+      id: "msg-card",
+      name: "Mellom-gruppe-variasjon per frihetsgrad",
+      abbreviation: "MSG",
+      formula: "MSG = SSG / (k − 1)",
+      short: `Gjennomsnittlig mellom-gruppe-variasjon per frihetsgrad. Telleren i F. Stor MSG ⇒ gruppene ligger langt fra hverandre.`,
+      long: `\`MSG\` (mean square between groups) er SSG normalisert per frihetsgrad. Normaliseringen gjør at MSG kan sammenlignes direkte med MSE — uten den ville SSG alltid vokst med antall grupper og MSE alltid vokst med totalt \`n\`, og forholdet \`SSG/SSE\` ville hatt liten mening.
+
+
+## Hvordan lese formelen
+
+> [!read] MSG = SSG / (k − 1)
+> «Mellom-gruppe-kvadratsum, delt på antall grupper minus én.»
+
+Nevneren \`k − 1\` er telnerfrihetsgradene (\`df₁\`). Hvorfor minus én? Fordi når totalsnittet \`x̄\` er fastlåst (av selve dataene), er gruppemiddelene \`x̄_1, …, x̄_k\` ikke alle frie å variere — kjenner du \`k − 1\` av dem og totalsnittet, er den siste bestemt. Derfor mister vi én frihetsgrad.
+
+
+## Hva betyr den?
+
+Under \`H₀\` (alle gruppe-middelene like) er MSG et upartisk estimat for den felles populasjonsvariansen \`σ²\`:
+
+> [!read] E[MSG | H₀] = σ²
+
+Under \`H₁\` (minst to grupper ulike) er MSG forventningsmessig STØRRE enn \`σ²\` — det legger seg en ekstra term som måler avstandene mellom \`μ_i\`-ene:
+
+> [!read] E[MSG | H₁] = σ² + (positiv term som vokser med spredningen mellom μ_i)
+
+Det er nettopp DENNE oppblåsningen F-testen utnytter: vi sammenligner MSG (oppblåses bare under H₁) med MSE (estimerer σ² uansett).
+
+
+## Hvordan bruke den
+
+MSG har sjelden interesse for seg selv. Du beregner den underveis for å få F:
+
+    F = MSG / MSE
+
+> [!tip] Sjekk fortegnet: MSG må alltid være positiv (siden SSG er kvadratisk). Hvis du får negativ MSG har du regnefeil i SSG.
+
+
+## Konkret eksempel
+
+Tre leverandører, \`SSG = 14.93\`, \`k = 3\`:
+
+    MSG = 14.93 / (3 − 1) = 14.93 / 2 ≈ 7.465
+
+Sammenlign med \`MSE = 6.0\` for samme oppgave. Forholdet \`F = 7.465/6.0 ≈ 1.244\` ligger nær 1, som er det vi forventer under H₀.
+`,
+      see_also: [
+        { kind: "formula", ref: "msg" },
+        { kind: "formula", ref: "mse" },
+        { kind: "formula", ref: "f-observator" },
+        { kind: "formula", ref: "frihetsgrader" },
+      ],
+    },
+    {
+      id: "mse-card",
+      name: "Innen-gruppe-variasjon per frihetsgrad",
+      abbreviation: "MSE",
+      formula: "MSE = SSE / (n − k)",
+      short: `Gjennomsnittlig innen-gruppe-variasjon per frihetsgrad. Nevneren i F. UPARTISK estimat for σ² uansett om H₀ er sann eller ikke.`,
+      long: `\`MSE\` (mean square error / within groups) er SSE normalisert per frihetsgrad. Den er den «støy-baseline»-en F-testen måler mellom-gruppe-signalet mot.
+
+
+## Hvordan lese formelen
+
+> [!read] MSE = SSE / (n − k)
+> «Innen-gruppe-kvadratsum, delt på totalt antall observasjoner minus antall grupper.»
+
+Nevneren \`n − k\` er nevnerfrihetsgradene (\`df₂\`). Hver gruppe bidrar med \`(n_i − 1)\` frihetsgrader (én forsvinner per gruppe fordi \`x̄_i\` er estimert fra dataene), og summen blir \`Σ(n_i − 1) = n − k\`.
+
+
+## Hva betyr den?
+
+Den viktigste egenskapen til MSE — og grunnen til at ANOVA fungerer — er at MSE estimerer \`σ²\` UANSETT om H₀ er sann eller ikke:
+
+> [!read] E[MSE] = σ²    (alltid, gitt felles-σ²-antakelsen)
+
+Mens MSG blåses opp av forskjeller mellom \`μ_i\`-ene, bryr MSE seg bare om variasjon INNEN hver gruppe. Innenfor én gruppe er alle observasjonene fra samme populasjon, så variasjonen der er ren støy uansett.
+
+Det er denne stabiliteten som gjør \`F = MSG/MSE\` til en god test: nevneren beveger seg ikke når H₁ blir mer sann; bare telleren gjør.
+
+> [!tip] MSE er et generalisering av pooled-variansen \`S_P²\` fra to-utvalgs t-test. Med \`k = 2\` er \`MSE = S_P²\` eksakt. For \`k = 3\` får du «pooled varians fra tre grupper», osv.
+
+
+## Hvordan bruke den
+
+1. **Sluttformel for F**: \`F = MSG/MSE\`.
+
+2. **Estimat for σ**: hvis du etter ANOVA vil rapportere standardavviket i den felles populasjonen, bruker du \`σ̂ = √MSE\`.
+
+3. **Post-hoc og KI**: i Tukey/Bonferroni-tester og i KI for differanser mellom gruppemiddel-par brukes \`√MSE\` som standardfeil-byggeklosser.
+
+
+## Konkret eksempel
+
+Tre leverandører, \`SSE = 72.0\`, \`n = 15\`, \`k = 3\`:
+
+    MSE = 72.0 / (15 − 3) = 72.0 / 12 = 6.0
+    σ̂   = √6.0 ≈ 2.449
+
+Så vår beste anslagsverdi for felles \`σ\` er ca. 2.45 — uavhengig av om de tre leverandørene gir samme middelverdi eller ikke.
+`,
+      see_also: [
+        { kind: "formula", ref: "mse" },
+        { kind: "formula", ref: "msg" },
+        { kind: "formula", ref: "f-observator" },
+        { kind: "glossary", id: "pooled-varians" },
       ],
     },
   ],
@@ -5256,7 +5271,7 @@ Når du har en PMF, veier du med \`P(X = x)\` og deler IKKE på noe. Når du har
         },
         {
           kind: "entry",
-          id: "varians-standardavvik-diskret",
+          id: "diskret-stokastisk-variabel",
         },
       ],
     },
@@ -5297,102 +5312,6 @@ Tolkning: en typisk beholder ligger ca. 4 ml unna gjennomsnittet på 298.7 ml.
         {
           kind: "glossary",
           id: "utvalgsvarians",
-        },
-      ],
-    },
-  ],
-  "varians-standardavvik-diskret": [
-    {
-      id: "varians",
-      name: "Varians for diskret stokastisk variabel",
-      abbreviation: "Var(X)",
-      formula: "Var(X) = Σ (x_i − μ)² · P(X = x_i)",
-      short: `Vektet sum av kvadrerte avvik fra \`μ\`. Standardavviket \`σ\` er kvadratroten.`,
-      long: `\`Var(X)\` måler hvor langt fra forventningsverdien \`μ = E[X]\` verdiene typisk ligger. Du beregner avviket \`(x_i − μ)\`, kvadrerer det, og veier med sannsynligheten.
-
-
-## Hvorfor kvadrerte avvik?
-
-Hvis vi summerte avvikene direkte (\`Σ (x_i − μ)·P(X = x_i)\`), ville positive og negative avvik kansellere hverandre og summen ville alltid bli null. Kvadreringen gjør alle bidrag positive:
-
-> [!read] Var(X) = Σ (x_i − μ)² · P(X = x_i)
-> Variansen er forventet kvadratavvik fra forventningsverdien.
-
-Standardavviket bringer enheten tilbake:
-
-> [!read] σ = √Var(X)
-> Standardavviket er kvadratroten av variansen og har samme enhet som \`X\`.
-
-
-## Konkret eksempel
-
-La \`X\` ta verdier \`{-2, -1, 0, 1, 2}\` med \`{0.3, 0.2, 0.2, 0.1, 0.2}\` og \`μ = -0.3\`:
-
-    Var(X) = (-1.7)²·0.3 + (-0.7)²·0.2 + (0.3)²·0.2 + (1.3)²·0.1 + (2.3)²·0.2
-           = 2.89·0.3 + 0.49·0.2 + 0.09·0.2 + 1.69·0.1 + 5.29·0.2
-           = 0.867 + 0.098 + 0.018 + 0.169 + 1.058
-           = 2.21
-    σ = √2.21 ≈ 1.487
-
-
-## Snarvei via \`E[X²]\`
-
-Den ekvivalente formelen sparer ofte regning når sannsynlighetene er like:
-
-> [!read] Var(X) = E[X²] − μ²
-> Forventet kvadrat minus kvadrert forventning.
-
-> [!tip] For en lineær transformasjon: \`Var(aX + b) = a²·Var(X)\`. Konstantleddet \`b\` flytter fordelingen, men endrer ikke spredningen. Skalaen \`a\` blir kvadrert fordi avvikene blir kvadrert.
-`,
-      see_also: [
-        {
-          kind: "glossary",
-          id: "diskret-varians",
-        },
-        {
-          kind: "entry",
-          id: "forventningsverdi-diskret",
-        },
-        {
-          kind: "entry",
-          id: "utvalgsvarians-radata",
-        },
-      ],
-    },
-    {
-      id: "sigma",
-      name: "Standardavvik for diskret stokastisk variabel",
-      abbreviation: "Standardavvik σ",
-      formula: "σ = √Var(X)",
-      short: "Kvadratroten av variansen. Samme enhet som X — det vi rapporterer videre.",
-      long: `\`σ\` er standardavviket til \`X\` — kvadratroten av variansen. Det er det spredningsmålet du som regel rapporterer videre, fordi enheten matcher selve variabelen.
-
-
-## Hvorfor ta kvadratroten?
-
-\`Var(X)\` har enheten til \`X\` kvadrert. Hvis \`X\` er antall mål i en kamp, har \`Var(X)\` enheten "mål²", som er meningsløst å tolke. Kvadratroten bringer enheten tilbake:
-
-> [!read] σ = √Var(X)
-> Standardavvik = kvadratroten av variansen.
-
-Tommelfingerregel: en typisk verdi av \`X\` ligger ca. \`σ\` unna forventningsverdien \`μ = E[X]\`.
-
-
-## Når regne videre med σ vs. Var(X)?
-
-- **Var(X)** når du legger sammen variabler: \`Var(X + Y) = Var(X) + Var(Y)\` (under uavhengighet). Variansene legger seg pent sammen, standardavvikene gjør IKKE.
-- **σ** for tolkning, presentasjon, og for å normalisere (som i \`Z = (X − μ)/σ\`).
-
-> [!tip] For en lineær transformasjon: \`σ(aX + b) = |a|·σ(X)\`. Konstantleddet \`b\` flytter fordelingen, men endrer ikke spredningen. Faktoren \`a\` skalerer standardavviket lineært (i motsetning til variansen, som blir \`a²·Var(X)\`).
-`,
-      see_also: [
-        {
-          kind: "formula",
-          ref: "varians",
-        },
-        {
-          kind: "glossary",
-          id: "diskret-varians",
         },
       ],
     },
@@ -5522,6 +5441,278 @@ Legg merke til at intervallet er litt asymmetrisk rundt \`x̄ = 4.625\`: avstand
           kind: "glossary",
           id: "alpha",
         },
+      ],
+    },
+  ],
+
+  "lineaer-regresjon": [
+    {
+      id: "regresjonslinjen",
+      name: "Regresjonslinjen",
+      abbreviation: "ŷ",
+      formula: "ŷ = α̂ + β̂·x",
+      short: "Den estimerte linja gjennom datapunktene — gir predikert `y` for en gitt `x`.",
+      long: `\`ŷ = α̂ + β̂·x\` er den estimerte regresjonslinja som minste-kvadraters-metode finner gjennom datapunktene \`(x_i, y_i)\`.
+
+> [!read] Punktestimat, ikke en faktisk verdi
+> \`ŷ\` er det BESTE GJETTET for \`y\` ved en gitt \`x\` — gjennomsnittet av alle mulige \`y\`-verdier ved den \`x\`-en. En faktisk ny observasjon \`Y\` vil ligge rundt \`ŷ\` med tilfeldig avvik \`ε\`.
+
+## Hva betyr koeffisientene?
+
+- \`β̂\` — **stigningstall**: hvor mye \`y\` endrer seg når \`x\` øker med én enhet. Enhet: \`(enhet av y) / (enhet av x)\`.
+- \`α̂\` — **skjæringspunkt** (intercept): verdi av \`y\` når \`x = 0\`. Ofte ikke meningsfull i kontekst (hvis \`x = 0\` ligger utenfor dataene), men matematisk nødvendig.
+
+## Linja går ALLTID gjennom (x̄, ȳ)
+
+Sett \`x = x̄\` i likninga \`ŷ = α̂ + β̂·x\` og bruk at \`α̂ = ȳ − β̂·x̄\`:
+
+    ŷ(x̄) = α̂ + β̂·x̄ = (ȳ − β̂·x̄) + β̂·x̄ = ȳ ✓
+
+Bruk dette som sanity-sjekk: hvis \`ŷ(x̄) ≠ ȳ\` har du regnet feil på \`α̂\`.
+
+## Hatter og streker: hva betyr de?
+
+I regresjon har vi to "lag": den SANNE sammenhengen i populasjonen (som vi ikke kjenner) og våre ESTIMATER fra utvalget (som vi regner ut).
+
+- \`α\`, \`β\` (**uten hatt**) — de SANNE, ukjente populasjons­parametrene. Vi vil aldri vite dem eksakt, bare gjette.
+- \`α̂\`, \`β̂\` (**med hatt**, "alfa-hatt", "beta-hatt") — våre ESTIMATER, regnet ut fra dataene med minste-kvadraters-metode. Disse er konkrete tall.
+- \`x̄\`, \`ȳ\` (**med strek over**, "x-strek", "y-strek") — gjennomsnittet av observasjonene i utvalget.
+- \`ŷ\` (**y med hatt**) — den predikerte y-verdien fra linja vår: \`ŷ = α̂ + β̂·x\`.
+
+Regelen er: bokstav uten hatt = sann verdi (ukjent); bokstav med hatt = vårt estimat (kjent tall).
+
+## Sammenheng med modellen
+
+Den underliggende populasjons­modellen er:
+
+    Y = α + β·x + ε        der ε ~ N(0, σ²)
+
+Den sier at den faktiske \`Y\`-verdien er linja \`α + β·x\` PLUSS en tilfeldig feil \`ε\` med forventning 0 og varians \`σ²\` (\`ε\` er det som gjør at observasjonene ikke ligger eksakt på en rett linje).
+
+Når vi har data, regner vi ut estimatene \`α̂\`, \`β̂\` og bruker dem til å lage **prediksjons­linja**:
+
+    ŷ = α̂ + β̂·x
+
+Merk: \`ŷ\` har INGEN \`ε\`-term. Det er kun det "gjennomsnittlige" anslaget — ikke en faktisk ny observasjon.
+
+## Når bruker jeg hvilket intervall?
+
+Når noen spør «hva blir \`y\` ved denne \`x\`-en?», er det egentlig to forskjellige spørsmål — og de gir to forskjellige intervaller:
+
+**1. «Hva er det FORVENTEDE gjennomsnittet av \`y\` ved denne \`x\`-en?»**
+
+Dette er forventningsverdien til \`Y\` gitt en bestemt \`x\`, skrevet \`E[Y|x]\` ("forventet \`Y\` GITT \`x\`"). Tenk: hvis du tar mange studenter med 5 timers søvn, hva blir GJENNOMSNITTSKARAKTEREN?
+
+- Bruk: **konfidensintervall for \`E[Y|x]\`**
+- Formel: \`ŷ₀ ± t · S_E · √(1/n + (x₀−x̄)²/S_XX)\`
+- Smalt — fanger bare usikkerhet i hvor linja ligger.
+
+**2. «Hva blir karakteren til ÉN bestemt ny student?»**
+
+Dette er en enkelt fremtidig observasjon. Du spør om én konkret realisering av \`Y\`, inkludert den tilfeldige støyen \`ε\`.
+
+- Bruk: **prediksjons­intervall for \`Y\`** (det vi regner i fane 5)
+- Formel: \`ŷ₀ ± t · S_E · √(1 + 1/n + (x₀−x̄)²/S_XX)\`
+- Bredere — har et ekstra \`1\` under rota som fanger støyen \`ε\` i den nye observasjonen.
+
+> [!tip] Tommelfingerregel
+> «GJENNOMSNITT av mange» → KI for \`E[Y|x]\`.
+> «ÉN bestemt» → prediksjons­intervall.
+`,
+      see_also: [
+        { kind: "glossary", id: "minste-kvadraters-metode" },
+        { kind: "glossary", id: "beta-koeffisient" },
+        { kind: "glossary", id: "intercept" },
+      ],
+    },
+    {
+      id: "residualvarians",
+      name: "Residualvarians",
+      abbreviation: "S_E²",
+      formula: "S_E² = SSE / (n − 2)",
+      short: "Variansen til feilene rundt linja. Inngår i alt annet: `SE(β̂)`, test, PI.",
+      long: `\`S_E²\` er estimatet for residualvariansen — hvor mye datapunktene spriker rundt regresjonslinja.
+
+> [!read] Hvorfor (n − 2), ikke (n − 1)?
+> To frihetsgrader er «brukt opp» til å estimere \`α̂\` og \`β̂\`. Hadde vi delt på \`n − 1\` (som ved utvalgsvarians fra rådata) ville \`S_E²\` bli systematisk for liten.
+
+## To måter å regne SSE på
+
+**Direkte fra residualer:**
+
+    SSE = Σ(y_i − ŷ_i)² = Σ(y_i − α̂ − β̂·x_i)²
+
+Krever at du regner ut \`ŷ_i\` for hvert datapunkt — tungvint for hånd.
+
+**Kompakt form (anbefalt for håndregning):**
+
+    SSE = S_YY − β̂·S_XY
+
+Bruker mellom-summene du allerede har. Mye raskere.
+
+## Sanity-sjekk
+
+\`S_E\` (kvadratrota) har samme enhet som \`y\`. Hvis \`y\` er prosent og du får \`S_E ≈ 2.5\`, betyr det at typiske avvik fra linja er ca. 2.5 prosentpoeng.
+
+> [!note] Forveksling: \`SSE ≠ S_XX\`. \`SSE\` er kvadrerte y-residualer, \`S_XX\` er kvadrerte x-avvik. De står ofte side ved side i samme oppgave.
+`,
+      see_also: [
+        { kind: "glossary", id: "residual" },
+        { kind: "glossary", id: "frihetsgrader-glos" },
+        { kind: "glossary", id: "residualstandardavvik" },
+      ],
+    },
+    {
+      id: "se-beta",
+      name: "Standardfeil til β̂",
+      abbreviation: "SE(β̂)",
+      formula: "SE(β̂) = √(S_E² / S_XX)",
+      short: "Usikkerheten i stigningstallet. Står i nevneren av testobservatoren og i KI for β.",
+      long: `\`SE(β̂)\` måler hvor presist vi har estimert stigningstallet \`β\`. Liten \`SE(β̂)\` ⇒ smalt KI og høy test-styrke; stor ⇒ usikkert estimat.
+
+> [!read] SE(β̂) ≠ S_E
+> Disse to blandes konstant. \`S_E\` er residualenes standardavvik (spredning rundt linja, samme enhet som \`y\`). \`SE(β̂)\` er standardfeilen til selve \`β̂\`-estimatet (enhet: \`(enhet av y) / (enhet av x)\`). Sammenhengen er \`SE(β̂) = S_E / √S_XX\`.
+
+## Hva gjør SE(β̂) liten?
+
+To ting hjelper:
+
+- **Liten** \`S_E²\` — datapunktene ligger tett på linja (lite støy)
+- **Stor** \`S_XX\` — x-verdiene er godt spredt ut
+
+Hvis alle \`x_i\` er klumpet sammen blir \`S_XX\` liten, og \`β̂\` blir veldig usikker — du har lite "spillerom" til å se hvor mye \`y\` endrer seg med \`x\`.
+
+## Brukes i
+
+- Hypotesetest: \`T = β̂ / SE(β̂)\` (t-fordelt, \`n − 2\` frihetsgrader)
+- KI for \`β\`: \`β̂ ± t_(α/2, n−2) · SE(β̂)\`
+- Prediksjonsintervall: \`SE(β̂)\` brukes implisitt via \`S_XX = (S_E/SE(β̂))²\`
+
+> [!tip] Forholdet \`S_E / SE(β̂) = √S_XX\` er en ekvivalens som ofte er gull verdt. Hvis oppgaven gir deg \`S_E\` og \`SE(β̂)\` men ikke \`S_XX\`, kan du regne den ut: \`S_XX = (S_E / SE(β̂))²\`.
+`,
+      see_also: [
+        { kind: "glossary", id: "standardfeil" },
+        { kind: "glossary", id: "beta-koeffisient" },
+        { kind: "formula", ref: "residualvarians" },
+      ],
+    },
+    {
+      id: "test-observator",
+      name: "Testobservator for β",
+      abbreviation: "T",
+      formula: "T = (β̂ − β₀) / SE(β̂)",
+      short: "T-fordelt med n − 2 frihetsgrader. Forkast H₀ hvis |T| > t_kritisk.",
+      long: `\`T\` er testobservatoren for hypotesetesten om regresjonsstigningstallet \`β\`.
+
+Under \`H₀: β = β₀\` (oftest \`β₀ = 0\`) er \`T\` t-fordelt med \`ν = n − 2\` frihetsgrader.
+
+> [!read] β₀ = 0 er standardspørsmålet
+> «Er det noen lineær sammenheng?» tilsvarer \`H₀: β = 0\`. Hvis \`H₀\` ikke forkastes, kan vi ikke statistisk skille \`β̂\` fra null — sammenhengen kan skyldes tilfeldigheter.
+
+## Tosidig vs ensidig
+
+- \`H₁: β ≠ β₀\` — **tosidig**: forkast hvis \`|T| > t_(α/2, n−2)\`. Standard «finnes en sammenheng?».
+- \`H₁: β > β₀\` eller \`H₁: β < β₀\` — **ensidig**: forkast hvis \`T > t_(α, n−2)\` (henholdsvis \`<\`). Brukes når retningen er gitt i forhåndsantakelsen.
+
+## Frihetsgrader: ν = n − 2
+
+Som med \`S_E²\`: to parametre (\`α̂, β̂\`) estimert fra dataene reduserer frihetsgradene med to.
+
+## Konkluder kontekstuelt
+
+«\`|T| = 10.61 > 2.306\` ⇒ forkast \`H₀\`» er ikke nok — koble til konteksten: «det er statistisk signifikant sammenheng mellom søvn og eksamensresultat på \`α = 0.05\`-nivå».
+
+> [!note] Ikke-forkast betyr ikke «ingen sammenheng». Det betyr «vi har ikke statistisk grunnlag til å hevde det er en sammenheng». Med liten \`n\` eller mye støy kan ekte sammenhenger forbli usynlige.
+`,
+      see_also: [
+        { kind: "glossary", id: "t-fordeling" },
+        { kind: "glossary", id: "nullhypotese" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+    {
+      id: "prediksjonsintervall",
+      name: "Prediksjonsintervall for ny Y",
+      abbreviation: "PI",
+      formula: "ŷ₀ ± t_(α/2, n−2) · S_E · √(1 + 1/n + (x₀ − x̄)²/S_XX)",
+      short: "Intervall som med (1 − α)·100 % sannsynlighet inneholder en NY enkelt observasjon ved x₀.",
+      long: `Prediksjonsintervallet er bredt der \`x₀\` ligger langt fra \`x̄\`, og smalest ved \`x₀ = x̄\`. Det fanger TRE kilder til usikkerhet:
+
+- Usikkerhet i regresjonslinja generelt (\`1/n\`-leddet)
+- Usikkerhet i linjas helning ved den spesifikke \`x₀\` (\`(x₀ − x̄)²/S_XX\`-leddet)
+- Naturlig spredning rundt linja (\`1\`-leddet)
+
+> [!read] Det er 1-tallet som gjør forskjellen
+> Uten \`1\`-tallet får du **konfidensintervall for E[Y|x]** (forventningsverdien, gjennomsnittet av alle \`y\` ved den \`x\`-en). MED 1-tallet får du **prediksjonsintervall** (én ny faktisk observasjon).
+
+## Ekvivalent form
+
+Hvis du har \`SE(β̂)\` i stedet for \`S_XX\`:
+
+    margin = t · S_E · √(1 + 1/n + ((x₀ − x̄) · SE(β̂) / S_E)²)
+
+bruker identiteten \`S_XX = (S_E/SE(β̂))²\`. Velg den formen som bruker tallene du faktisk har.
+
+## Hvorfor er PI bredere lengre fra x̄?
+
+\`(x₀ − x̄)²/S_XX\` vokser kvadratisk når \`x₀\` fjerner seg fra senteret. Linja er best «forankret» nær \`x̄\`, og lite endringer i helningen (innenfor \`SE(β̂)\`) gir store endringer i predikert \`y\` langt unna.
+
+> [!tip] Ekstrapolering
+> Hvis \`x₀\` ligger utenfor det observerte \`x\`-intervallet, sier intervallet ingenting om hvorvidt linja faktisk fortsetter å holde. Modellen ble fittet inn på det intervallet — den vet ikke noe om resten.
+
+## Praktisk bruk i oppgaver
+
+Det vanlige spørsmålet er: «er det usannsynlig at en ny observasjon ved \`x₀\` overstiger/underskrider terskel \`y_terskel\`?»
+
+1. Regn ut PI \`[L, U]\` ved nivå (1 − α).
+2. Hvis \`y_terskel > U\` (over hele intervallet) → ja, usannsynlig at \`Y > y_terskel\`.
+3. Hvis \`y_terskel < L\` → usannsynlig at \`Y < y_terskel\`.
+4. Hvis \`y_terskel ∈ [L, U]\` → kan ikke utelukkes på dette nivået.
+`,
+      see_also: [
+        { kind: "glossary", id: "prediksjonsintervall-glos" },
+        { kind: "glossary", id: "t-fordeling" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+    {
+      id: "korrelasjon",
+      name: "Korrelasjonskoeffisient r",
+      abbreviation: "r",
+      formula: "r = S_XY / √(S_XX · S_YY)",
+      short: "Mål på styrken og retningen av lineær sammenheng. Verdi mellom −1 og 1.",
+      long: `Pearson-korrelasjonskoeffisienten \`r\` kvantifiserer hvor sterkt to variabler henger sammen LINEÆRT.
+
+> [!read] Tolkning
+> - \`r = 1\`: perfekt positiv linje (punktene ligger eksakt på en stigende linje)
+> - \`r = −1\`: perfekt negativ linje
+> - \`r = 0\`: ingen lineær sammenheng (kan likevel finnes en kurvet sammenheng!)
+
+## Sammenheng med β̂
+
+\`β̂\` og \`r\` har samme fortegn (begge har \`S_XY\` i telleren). Stigningstallet sier HVOR MYE \`y\` endrer seg per enhet \`x\`; \`r\` sier HVOR TETT punktene ligger rundt den linja. En bratt linje med mye spredning kan ha lavere \`r\` enn en flat linje med tett tilpasning.
+
+## r² (forklaringsgrad)
+
+\`r² ∈ [0, 1]\` tolkes som andelen av variasjonen i \`y\` som forklares av lineær regresjon på \`x\`:
+
+- \`r² = 0.93\`: 93 % av variasjonen i \`y\` forklares av \`x\`, 7 % er uforklart støy.
+- \`r² = 0.10\`: bare 10 % forklart — modellen er svak.
+
+For enkel lineær regresjon: \`r² = SSR / SST = 1 − SSE / SST\`.
+
+## Vanlige fallgruver
+
+> [!note] r ≈ 0 betyr ikke «ingen sammenheng»
+> Bare ingen LINEÆR sammenheng. \`y = x²\` på et symmetrisk x-intervall gir \`r ≈ 0\` selv om sammenhengen er deterministisk.
+
+> [!tip] Plott alltid dataene først
+> Anscombes kvartett: fire datasett med IDENTISK \`r\`, \`β̂\`, \`α̂\` og \`S_E²\` men helt forskjellige mønstre (linje, kurve, uteligger, ...). Statistikk uten plott er farlig.
+`,
+      see_also: [
+        { kind: "glossary", id: "pearson-korrelasjon" },
+        { kind: "glossary", id: "r-kvadrat" },
+        { kind: "glossary", id: "korrelasjon-glos" },
       ],
     },
   ],

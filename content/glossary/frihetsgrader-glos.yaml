@@ -7,8 +7,7 @@ filters:
   parameters_known: [population_variance_unknown]
   computes: [test_independence, hypothesis_test]
   random_variable: [slope_estimate]
-  setup: [linear_relationship, joint_table_given, single_population, two_independent_samples]
-  structural_cues: [joint_table_present]
+  setup: [linear_relationship, single_population, two_independent_samples]
 aliases:
   - frihetsgrader
   - frihetsgrad

@@ -18,4 +18,4 @@ long_def: |
 see_also:
   - { id: signifikansniva-glos, kind: glossary }
   - { id: intercept, kind: glossary }
-  - { id: regresjon-estimat-alpha-beta, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

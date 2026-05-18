@@ -3,8 +3,7 @@ term_no: Marginalfordeling
 short_def: "Fordelingen til én variabel alene, regnet ut fra simultanfordelingen ved å summere ut den andre."
 filters:
   computes: [marginal_probability, expected_value]
-  setup: [joint_table_given]
-  structural_cues: [joint_table_present, more_than_two_categories]
+  structural_cues: [more_than_two_categories]
 long_def: |
   Fra en tabell med `P(X=x, Y=y)`:
 

@@ -15,6 +15,7 @@ what_it_means: |
 
 solution_variants:
   - label: "Tradisjonelt bootstrap-KI"
+    recognition: "«Lag et bootstrap-KI for `μ` (eller `σ`, median, ...)», «kvantifiser usikkerheten uten å anta normalfordeling». Du har et lite datasett og vil estimere et intervall fra resamplinger."
     steps:
       - "Behandle de `N` observasjonene som om de var «populasjonen»."
       - "Trekk et tilfeldig utvalg på `N` elementer MED TILBAKELEGGING (samme observasjon kan trekkes flere ganger)."
@@ -28,6 +29,7 @@ solution_variants:
         example: true
       - { text: "Sjekk bootstrap-fordelingen før du bruker normaltilnærmingen — er den skjev eller har tunge haler, bruk prosentilintervall i stedet.", conditional: true }
   - label: "Prosentilintervall"
+    recognition: "«Lag et 95 % prosentilintervall fra bootstrap-fordelingen». Tar 2.5- og 97.5-percentilene av de resamplede statistikkene — bra for skjeve fordelinger."
     steps:
       - "Behandle de `N` observasjonene som om de var «populasjonen»."
       - "Trekk et tilfeldig utvalg på `N` elementer MED TILBAKELEGGING."
@@ -61,8 +63,7 @@ recognition_cues:
   - "Oppgaven spør om standardfeil eller KI for en statistikk uten kjent fordeling (f.eks. median, kvartil)"
 
 when_NOT_to_use:
-  - "Dataene ser normalfordelte ut og `σ` er kjent → bruk [KI for μ (kjent σ)](/entry/ki-mu-kjent-sigma) i stedet"
-  - "Dataene ser normalfordelte ut men `σ` er ukjent → bruk [KI for μ (ukjent σ)](/entry/ki-mu-ukjent-sigma)"
+  - "Dataene ser normalfordelte ut → bruk [KI for μ og σ²](/entry/ki-mu-og-varians) i stedet (z- eller t-basert)"
   - "Du har en andel `X/n` med stort `n` → bruk [KI for andel](/entry/ki-andel-binomial)"
 
 filters:
@@ -77,8 +78,7 @@ filters:
 related:
   - { id: "prosentilintervall",         kind: "glossary" }
   - { id: "sentralgrenseteoremet-glos", kind: "glossary" }
-  - { id: "ki-mu-kjent-sigma",          kind: "entry" }
-  - { id: "ki-mu-ukjent-sigma",         kind: "entry" }
+  - { id: "ki-mu-og-varians",           kind: "entry" }
   - { id: "med-tilbakelegging",         kind: "glossary" }
   - { id: "konfidensintervall",         kind: "glossary" }
 

@@ -18,7 +18,7 @@ forms:
     formula: "E[X] = Σ xᵢ · P(X = xᵢ)"
     description: "Når du har en PMF-tabell. Vekten er sannsynligheten."
     entry_links:
-      - { id: forventningsverdi-diskret, label: "Entry" }
+      - { id: diskret-stokastisk-variabel, label: "Entry" }
   - title: "Forventningsverdi for kontinuerlig stokastisk variabel"
     symbol: "∫ x·f(x)dx"
     formula: "E[X] = ∫ x · f(x) dx"
@@ -45,8 +45,14 @@ forms:
       - { id: sentralgrenseteoremet-glos, label: "Sentralgrenseteoremet" }
   - title: "Produkt under uavhengighet"
     symbol: "X·Y"
-    formula: "E[X · Y] = E[X] · E[Y]        (kun hvis X ⊥ Y)"
-    description: "Hvis ikke uavhengige: regn E[X·Y] direkte fra simultanfordelingen. Sammenheng: Cov(X, Y) = E[X·Y] − E[X]·E[Y]."
+    formula: "E[X · Y] = E[X] · E[Y]        (KUN hvis X ⊥ Y)"
+    description: "⚠️ Gjelder BARE når X og Y er uavhengige (`Cov(X, Y) = 0`). Hvis `Cov(X, Y) ≠ 0` er denne snarveien FEIL — bruk formelen under i stedet."
+    entry_links:
+      - { id: kovarians, label: "Kovarians Cov(X,Y)" }
+  - title: "Produkt når X og Y er avhengige"
+    symbol: "X·Y (via Cov)"
+    formula: "E[X · Y] = E[X] · E[Y] + Cov(X, Y)"
+    description: "Når `Cov(X, Y) ≠ 0` kan du IKKE bruke `E[X·Y] = E[X]·E[Y]`. Tenk i stedet: «snarveien + Cov-korreksjon». Avledet fra definisjonen `Cov(X, Y) = E[X·Y] − E[X]·E[Y]`. Eksempel: `E[X] = 20`, `E[Y] = 15`, `Cov = 5` ⇒ `E[X·Y] = 300 + 5 = 305`."
     entry_links:
       - { id: kovarians, label: "Kovarians Cov(X,Y)" }
 
@@ -63,13 +69,13 @@ when_NOT_to_use:
 filters:
   computes: [expected_value]
   random_variable: [discrete_count, continuous]
-  setup: [single_population, joint_table_given]
-  structural_cues: [data_as_list, joint_table_present, summary_stats_given]
+  setup: [single_population]
+  structural_cues: [data_as_list, summary_stats_given]
   parameters_known: [mean_known, rate_lambda]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 related:
-  - { id: "forventningsverdi-diskret",  kind: "entry" }
+  - { id: "diskret-stokastisk-variabel",  kind: "entry" }
   - { id: "marginalfordeling",          kind: "entry" }
   - { id: "kovarians",                  kind: "entry" }
   - { id: "varians-oversikt",           kind: "entry" }

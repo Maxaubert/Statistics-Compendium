@@ -40,10 +40,12 @@ filters:
   computes: [hypothesis_test, find_n_for_threshold]
   random_variable: [proportion, discrete_count]
   setup: [single_population, fixed_n_trials, with_replacement]
-  structural_cues: [two_outcomes_per_trial, success_probability_given, independent_events, total_observations_n, summary_stats_given, two_sided_alternative, one_sided_alternative]
+  structural_cues: [two_outcomes_per_trial, independent_events, summary_stats_given, two_sided_alternative, one_sided_alternative]
   parameters_known: [success_p, sample_size_large, alpha_significance]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+recognition: "«Test om suksessraten/andelen `p` er lik `p₀`», «er andelen større/mindre enn 0.5?», eller «kan vi hevde at p ≠ p₀?». Du har `X` suksesser av `n` forsøk og en påstand om `p`."
+
 solution_template:
   - text: "Formuler hypotesene (én- eller tosidig):"
     formula: "H₀: p = p₀     mot     H₁ (én- eller tosidig)"

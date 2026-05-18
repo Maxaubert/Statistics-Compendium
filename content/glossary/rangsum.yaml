@@ -4,7 +4,7 @@ short_def: "Sum av rangtall (rekkefølgetall) for observasjonene i en gruppe, br
 filters:
   computes: [hypothesis_test]
   setup: [two_independent_samples, single_population, paired_samples]
-  structural_cues: [nonparametric_required, rank_based_data]
+  structural_cues: [rank_based_data]
   distribution_assumption: [none_assumed]
 long_def: |
   En **rangsum** `W` er summen av rangtall (rekkefølgetall i den samlede sorterte

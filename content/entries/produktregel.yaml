@@ -44,26 +44,25 @@ filters:
   computes: [exact_probability, conditional_probability, joint_probability, test_independence]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, with_replacement, finite_pool]
-  structural_cues: [conditional_given, independent_events, conditioning_on_complement]
-  parameters_known: []
+  structural_cues: [conditional_given, independent_events, conditioning_on_complement, andel_og_rate_per_gruppe]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 
 solution_variants:
   - label: "Snitt P(A ∩ B)"
+    recognition: "«Sannsynligheten for at A OG B skjer», «sannsynligheten for to suksesser på rad». Bruk `P(A) · P(B|A)`, eller `P(A) · P(B)` hvis uavhengige."
     steps:
-      - "Identifiser hendelsene `A` og `B`"
-      - "Avgjør om hendelsene er sekvensielle (gjør det ene først, så det andre) eller om du har en betinget sannsynlighet `P(B|A)` gitt"
-      - text: "Hvis `A` og `B` er uavhengige:"
-        formula: "P(A ∩ B) = P(A)·P(B)"
-      - text: "Ellers (avhengige). Bruk gjerne den retningen oppgaven gir betingelsen i:"
-        formula: "P(A ∩ B) = P(A) · P(B|A)"
+      - text: "Bruk en av disse, avhengig av relasjonen mellom hendelsene:"
+        formula:
+          - "Disjunkte:  P(A ∩ B) = 0"
+          - "Uavhengige:  P(A ∩ B) = P(A) · P(B)"
+          - "Avhengige:  P(A ∩ B) = P(A) · P(B|A)"
       - text: "Eksempel: trekk 2 kort uten tilbakelegging, `P(første ess) = 4/52`, `P(andre ess|første ess) = 3/51`:"
         formula: "P(begge ess) = (4/52)·(3/51) = 1/221 ≈ 0.0045"
         example: true
   - label: "Betinget P(A | B) direkte"
+    recognition: "«Sannsynligheten for `A` GITT at `B` har skjedd», «P(har sykdom | positiv test)». Bruk `P(A ∩ B) / P(B)`."
     steps:
-      - "Bruk når oppgaven spør 'gitt at B inntreffer, hva er sannsynligheten for A?' og du har `P(A ∩ B)` og `P(B)`"
       - text: "Bruk definisjonen, forutsatt `P(B) > 0`:"
         formula: "P(A | B) = P(A ∩ B) / P(B)"
       - "Hvis `P(A ∩ B)` ikke er gitt eksplisitt, regn det først ut (typisk via produktregel, total sannsynlighet, eller et venndiagram)"
@@ -77,8 +76,8 @@ solution_variants:
         conditional: true
 
   - label: "Betinget på komplement P(A | B̄)"
+    recognition: "«Sannsynligheten for `A` gitt at `B` IKKE skjer», «P(suksess | ingen feil)»."
     steps:
-      - "Bruk når oppgaven spør 'gitt at B IKKE inntreffer, hva er sannsynligheten for A?'"
       - text: "Definisjonen — samme som vanlig betinget, men nevneren er `P(B̄)`:"
         formula: "P(A | B̄) = P(A ∩ B̄) / P(B̄)"
       - text: "Nevneren er rett frem:"
@@ -87,7 +86,7 @@ solution_variants:
         formula:
           - "A og B disjunkte:  P(A ∩ B̄) = P(A)   (siden A ⊆ B̄)"
           - "A og B uavhengige:  P(A ∩ B̄) = P(A) · (1 − P(B))"
-          - "Generelt (venndiagram):  P(A ∩ B̄) = P(A) − P(A ∩ B)"
+          - "A og B avhengige:  P(A ∩ B̄) = P(A) − P(A ∩ B)"
       - text: "Eksempel — disjunkt (ansettelse: `P(Anna) = 0.50`, `P(Bjørn) = 0.30`, disjunkte). Gitt at Bjørn IKKE blir ansatt, sjansen for Anna:"
         formula: "P(Anna | ¬Bjørn) = 0.50 / (1 − 0.30) = 0.50 / 0.70 ≈ 0.714"
         example: true
@@ -97,8 +96,8 @@ solution_variants:
       - { text: "Hvis A og B er disjunkte, forenkles uttrykket til `P(A | B̄) = P(A) / (1 − P(B))` — telleren er bare `P(A)` fordi `A ⊆ B̄` automatisk", conditional: true }
 
   - label: "Begge negert P(Ā | B̄)"
+    recognition: "«Sannsynligheten for at ingen av delene skjer, betinget», «ingen feil gitt at testen er negativ»."
     steps:
-      - "Bruk når både hendelsen og betingelsen er negert: 'gitt at B IKKE inntreffer, sjansen for at A heller IKKE inntreffer'"
       - text: "Definisjonen, samme oppskrift:"
         formula: "P(Ā | B̄) = P(Ā ∩ B̄) / P(B̄)"
       - text: "Bruk De Morgan på telleren — komplementet av union:"
@@ -113,8 +112,8 @@ solution_variants:
         example: true
 
   - label: "Test om A og B er uavhengige"
+    recognition: "«Er A og B uavhengige hendelser?», «test om P(A ∩ B) = P(A)·P(B)»."
     steps:
-      - "Bruk når oppgaven spør 'er A og B uavhengige?'"
       - text: "Definisjonen: `A` og `B` er uavhengige hvis:"
         formula: "P(A ∩ B) = P(A) · P(B)"
       - "Regn ut `P(A) · P(B)` fra de gitte marginalsannsynlighetene"

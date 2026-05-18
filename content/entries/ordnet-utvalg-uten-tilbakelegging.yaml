@@ -42,13 +42,12 @@ filters:
   computes: [combinatorial_count, exact_probability]
   random_variable: [discrete_count]
   setup: [single_population, without_replacement, finite_pool]
-  structural_cues: [total_observations_n]
-  parameters_known: []
   distribution_assumption: [none_assumed]
   tooling: [calculator_factorial, calculator_only]
 
 solution_variants:
   - label: "Tell antall ordnede utvalg"
+    recognition: "«Hvor mange måter kan vi velge og rangere `k` av `n` på?», «hvor mange forskjellige medaljevinner-rekkefølger i et løp med `n` deltakere?». `nPk = n!/(n−k)!`."
     steps:
       - "Identifiser `n` (antall elementer å velge fra) og `k` (antall posisjoner)"
       - "Bekreft: rekkefølgen teller, og samme element kan IKKE velges to ganger"
@@ -63,6 +62,7 @@ solution_variants:
       - text: "Pass på: hvis rekkefølgen IKKE teller (f.eks. 'velg ut 3 personer til en komité') skal du bruke `C(n, k) = P(n, k) / k!` i stedet."
         conditional: true
   - label: "Tell antall hele permutasjoner (k = n)"
+    recognition: "«Hvor mange måter kan `n` ting stilles opp i rekkefølge?», «hvor mange anagrammer?». `n!`."
     steps:
       - "Når alle n elementene skal settes på rekke i en bestemt rekkefølge: antall = `n!`"
       - "Eksempel — 5 personer på rekke: `5! = 120` ulike rekkefølger"
@@ -74,8 +74,8 @@ solution_variants:
       - text: "Pass på: 0! = 1 per definisjon, så `P(n, n) = n! / 0! = n!` — formelen funker også når k = n."
         conditional: true
   - label: "Sannsynlighet: spesifikk ordnet sekvens"
+    recognition: "«Sannsynligheten for en helt spesifikk ordnet sekvens uten tilbakelegging», «sjansen for å trekke (ess, konge, dame) i den rekkefølgen»."
     steps:
-      - "Bruk når oppgaven spør 'sannsynligheten for en spesifikk ordnet sekvens fra en endelig populasjon uten tilbakelegging'"
       - "Antall gunstige — avhengig av oppgaven, bruk én av disse to metodene:"
       - text: "**Metode 1** — helt spesifikk rekkefølge («spar ess, så hjerter dame»):"
         formula: "Gunstige = 1"

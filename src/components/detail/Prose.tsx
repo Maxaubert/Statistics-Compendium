@@ -99,7 +99,7 @@ export function Prose({
         if (block.kind === "code_block") {
           return (
             <pre key={i} className={CODE_BLOCK_CLASS[theme]}>
-              {block.lines.join("\n")}
+              {renderCombiningMarks(block.lines.join("\n"))}
             </pre>
           );
         }

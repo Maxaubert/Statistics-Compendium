@@ -18,4 +18,4 @@ long_def: |
   Korrelasjon er ikke det samme som årsak.
 see_also:
   - { id: korrelasjon-joint, kind: entry }
-  - { id: regresjon-korrelasjonskoeffisient, kind: entry }
+  - { id: lineaer-regresjon, kind: entry }

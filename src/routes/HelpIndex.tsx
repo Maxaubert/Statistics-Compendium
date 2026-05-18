@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Calculator, ChevronRight } from "lucide-react";
+import { Calculator, ChevronRight, Compass } from "lucide-react";
 import { Banner } from "@/components/shell/Banner";
 
 interface HelpCard {
@@ -16,6 +16,13 @@ const HELP_CARDS: HelpCard[] = [
     blurb:
       "Den flytende kalkulatoren, hvilke uttrykk den støtter, hurtigtaster og persistens.",
     Icon: Calculator,
+  },
+  {
+    to: "/hjelp/vanskelige-oppgaver",
+    title: "Vanskelige oppgaver",
+    blurb:
+      "Kurert liste over vriende deloppgaver fra tidligere eksamener — med løsningsskisser og lenker til riktig formelside.",
+    Icon: Compass,
   },
 ];
 
