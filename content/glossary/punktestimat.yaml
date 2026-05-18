@@ -23,11 +23,17 @@ long_def: |
 
   ## Standardformler
 
-  - **Andel** (`p`): `p̂ = X / n` (antall suksesser delt på antall forsøk). Eksempel: `K = 24` av `N = 4231` ⇒ `p̂ = 24/4231 ≈ 0.00567`. Se også [andel](/glossary/andel).
-  - **Forventningsverdi** (`μ`): `μ̂ = x̄ = (1/n) · Σ xᵢ` (utvalgsgjennomsnittet).
-  - **Varians** (`σ²`): `σ̂² = s² = (1/(n−1)) · Σ (xᵢ − x̄)²` (utvalgsvariansen).
-  - **Poissonrate** (`λ`): `λ̂ = X / t` (antall hendelser delt på observasjonsvinduet).
-  - **Regresjonsstigningstall** (`β`): `β̂ = S_XY / S_XX`.
+  - **Forventningsverdi** (`μ`): `μ̂ = x̄ = (1/n)·Σ xᵢ` — utvalgsgjennomsnittet. Se [forventningsverdi (oversikt)](/entry/forventningsverdi-oversikt).
+  - **Varians** (`σ²`): `σ̂² = s² = (1/(n−1))·Σ(xᵢ − x̄)²` — utvalgsvariansen. Se [utvalgsvarians fra rådata](/entry/utvalgsvarians-radata).
+  - **Standardavvik** (`σ`): `σ̂ = s = √s²` — kvadratrot av utvalgsvariansen.
+  - **Andel** (`p`): `p̂ = X/n` — antall suksesser delt på antall forsøk. Eksempel: `K = 24` av `N = 4231` ⇒ `p̂ ≈ 0.00567`. Se [KI for andel](/entry/ki-andel-binomial).
+  - **Poissonrate** (`λ`): `λ̂ = X/t` — antall hendelser delt på observasjonsvinduet. Se [KI for poissonrate](/entry/ki-poissonrate).
+  - **Differanse av forventninger** (`μ_X − μ_Y`): `X̄ − Ȳ`. Se [KI for to utvalg](/entry/ki-to-utvalg).
+  - **Differanse av andeler** (`p_X − p_Y`): `p̂_X − p̂_Y`.
+  - **Paret differanse** (`μ_D`): `D̄ = (1/n)·Σ Dᵢ` med `Dᵢ = Xᵢ − Yᵢ`. Se [paret t-test](/entry/paret-t-test).
+  - **Regresjonsstigningstall** (`β`): `β̂ = S_XY / S_XX`. Se [lineær regresjon](/entry/lineaer-regresjon).
+  - **Regresjonens skjæringspunkt** (`α`): `α̂ = ȳ − β̂·x̄`.
+  - **Residualvarians** (`σ²` i regresjon): `S_E² = SSE/(n−2)`.
 
   Punktestimat brukes som «midtpunkt» i et konfidensintervall: `estimat ± feilmargin`.
 see_also:

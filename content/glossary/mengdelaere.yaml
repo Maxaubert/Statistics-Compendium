@@ -1,0 +1,131 @@
+id: mengdelaere
+term_no: Mengdelære (union, snitt, komplement)
+short_def: "Operasjoner på hendelser: union `∪` («eller»), snitt `∩` («og»), komplement `Ā` («ikke»). Brukes til å konvertere mellom alle sannsynlighetsuttrykk."
+filters:
+  computes: [union_probability, joint_probability, exact_probability]
+  structural_cues: [independent_events, disjoint_events, complement_pattern, conditioning_on_complement]
+aliases:
+  - mengdelære
+  - mengde
+  - mengder
+  - settoperasjoner
+  - union
+  - snitt
+  - komplement
+  - venndiagram
+long_def: |
+  Hendelser kombineres med tre grunnoperasjoner. Alle sannsynlighets-
+  uttrykk kan konverteres mellom hverandre med formlene nedenfor.
+
+  ## Symboler
+
+  | Symbol | Lese | Betydning |
+  |---|---|---|
+  | `A ∪ B` | «A union B», «A eller B» | minst én av `A`, `B` inntreffer |
+  | `A ∩ B` | «A snitt B», «A og B» | både `A` og `B` inntreffer |
+  | `Ā` (eller `A^c`) | «ikke A», «A komplement» | `A` inntreffer IKKE |
+  | `A \ B` (= `A ∩ B̄`) | «A men ikke B» | `A` skjer, `B` skjer ikke |
+  | `A ⊂ B` | «A delmengde av B» | `A` impliserer `B` |
+  | `∅` | tom mengde | umulig hendelse |
+  | `Ω` (eller `S`) | utfallsrom | alle mulige utfall, `P(Ω) = 1` |
+
+  ## Konverteringer (alle uttrykk fra hverandre)
+
+  ### Union og snitt
+
+      P(A ∪ B) = P(A) + P(B) − P(A ∩ B)         (unionssetningen)
+      P(A ∩ B) = P(A) + P(B) − P(A ∪ B)         (snu unionssetningen)
+
+  ### De Morgans lover (komplement av union/snitt)
+
+      P(Ā ∩ B̄) = 1 − P(A ∪ B)                   («ingen av delene»)
+      P(Ā ∪ B̄) = 1 − P(A ∩ B)                   («ikke begge»)
+
+  ### Set-differanse (én ja, andre nei)
+
+      P(A ∩ B̄) = P(A) − P(A ∩ B)                («bare A, ikke B»)
+      P(Ā ∩ B) = P(B) − P(A ∩ B)                («bare B, ikke A»)
+
+  ### Komplement
+
+      P(Ā) = 1 − P(A)
+      Ā̄ = A                                      (dobbelt komplement)
+
+  ### Partisjon over én hendelse
+
+      P(A) = P(A ∩ B) + P(A ∩ B̄)                (A skjer enten med eller uten B)
+
+  ## Mulige konverteringer — hva kan du finne fra hva
+
+  Tabellen viser hvilke uttrykk som lar seg regne ut fra hver
+  startpakke. Symboler: ✓ = direkte, ✗ = trenger mer.
+
+  | Du har | `P(A∪B)` | `P(A∩B)` | `P(Ā∩B̄)` | `P(A∩B̄)` | `P(Ā∩B)` |
+  |---|---|---|---|---|---|
+  | `P(A), P(B), P(A∩B)` | ✓ | ✓ | ✓ | ✓ | ✓ |
+  | `P(A), P(B), P(A∪B)` | ✓ | ✓ | ✓ | ✓ | ✓ |
+  | `P(A), P(B), P(A∩B̄)` | ✓ | ✓ | ✓ | ✓ | ✓ |
+  | `P(A), P(B)` alene | ✗ | ✗ | ✗ | ✗ | ✗ |
+  | `P(A), P(B)` + uavhengige | ✓ | ✓ | ✓ | ✓ | ✓ |
+  | `P(A), P(B)` + disjunkte | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+  Regelen er: når du har MARGINALENE og **én** av joint-formene, er
+  resten en mekanisk omregning. Med bare marginalene trenger du en
+  ekstra antagelse (uavhengig, disjunkt, eller en betinget).
+
+  ## Spesialtilfeller
+
+  ### Disjunkte (`A ∩ B = ∅`)
+
+      P(A ∩ B) = 0
+      P(A ∪ B) = P(A) + P(B)
+
+  Disjunkthet impliserer avhengighet når begge har `P > 0`.
+
+  ### Uavhengige
+
+      P(A ∩ B) = P(A) · P(B)
+      P(A ∪ B) = P(A) + P(B) − P(A)·P(B)
+      P(Ā ∩ B̄) = (1 − P(A))·(1 − P(B))         (også Ā, B̄ uavhengige)
+
+  ### `A ⊂ B` (A impliserer B)
+
+      P(A ∩ B) = P(A)
+      P(A ∪ B) = P(B)
+      P(A) ≤ P(B)
+
+  ## Tre hendelser — inklusjon-eksklusjon
+
+      P(A ∪ B ∪ C) = P(A) + P(B) + P(C)
+                    − P(A ∩ B) − P(A ∩ C) − P(B ∩ C)
+                    + P(A ∩ B ∩ C)
+
+  Tilsvarende for snitt av tre via De Morgan:
+
+      P(Ā ∩ B̄ ∩ C̄) = 1 − P(A ∪ B ∪ C)
+
+  ## Bruk i sannsynlighetsoppgaver
+
+  - **«Minst én»** → `P(A ∪ B) = P(A) + P(B) − P(A ∩ B)` eller komplement `1 − P(Ā ∩ B̄)`.
+  - **«Ingen»** → `P(Ā ∩ B̄) = 1 − P(A ∪ B)`.
+  - **«Bare A»** → `P(A ∩ B̄) = P(A) − P(A ∩ B)`.
+  - **«Begge»** → `P(A ∩ B)` (direkte eller via produktregelen).
+  - **«Test om A og B er uavhengige»** → sjekk om `P(A ∩ B) = P(A)·P(B)`.
+
+  ## Venndiagram
+
+  De fire disjunkte feltene `A ∩ B`, `A ∩ B̄`, `Ā ∩ B`, `Ā ∩ B̄` summerer
+  alltid til 1. Tegn dem og fyll inn det du kjenner — resten er trekk
+  fra-subtraksjon.
+see_also:
+  - { id: komplement, kind: glossary }
+  - { id: disjunkte-hendelser-glos, kind: glossary }
+  - { id: de-morgans-lov, kind: glossary }
+  - { id: hendelse, kind: glossary }
+  - { id: partisjon, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: uavhengighet-glos, kind: glossary }
+  - { id: unionssetningen, kind: entry }
+  - { id: komplementregelen, kind: entry }
+  - { id: produktregel, kind: entry }
+  - { id: total-sannsynlighet, kind: entry }

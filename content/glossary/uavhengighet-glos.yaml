@@ -4,22 +4,6 @@ short_def: "`A` og `B` er uavhengige hvis `P(A ∩ B) = P(A)·P(B)` — `A` endr
 filters:
   structural_cues: [independent_events]
   computes: [test_independence, joint_probability]
-long_def: |
-  Tre ekvivalente definisjoner:
-
-      P(A ∩ B) = P(A) · P(B)
-      P(B | A) = P(B)
-      P(A | B) = P(A)
-
-  Uavhengighet er **IKKE** det samme som disjunkthet — disjunkte hendelser
-  med positiv sannsynlighet er sterkt avhengige.
-
-  **TESTE uavhengighet:** regn ut `P(A) · P(B)` og sammenlign med oppgitt
-  eller observert `P(A ∩ B)`. Hvis de er like, er hendelsene uavhengige.
-  Alternativt: sjekk om `P(B|A) = P(B)`.
-
-  For utvalg: observasjoner kalles uavhengige hvis verdien til den ene
-  ikke påvirker den andre (typisk antatt for utvalg fra populasjon).
 aliases:
   - uavhengig
   - uavhengige
@@ -27,6 +11,61 @@ aliases:
   - uavhengigheten
   - uavhengighetene
   - uavhengigheter
+long_def: |
+  Tre **ekvivalente definisjoner** — bruk den som er lettest å sjekke ut fra det du har:
+
+      P(A ∩ B) = P(A) · P(B)
+      P(B | A) = P(B)
+      P(A | B) = P(A)
+
+  Uavhengighet er **IKKE** det samme som disjunkthet — disjunkte hendelser
+  med positiv sannsynlighet er sterkt avhengige (du vet for sikkert at den
+  andre ikke skjer hvis den første gjorde).
+
+  ## Teste uavhengighet
+
+  Regn ut `P(A)·P(B)` og sammenlign med oppgitt eller observert `P(A ∩ B)`:
+
+  - **Like** ⇒ uavhengige
+  - **Ulike** ⇒ avhengige (oppgi differansen som dokumentasjon)
+
+  Eksempel: `P(F) = 0.45`, `P(M) = 0.80`, `P(F ∩ M) = 0.41`. Da er
+  `P(F)·P(M) = 0.36 ≠ 0.41` ⇒ ikke uavhengige.
+
+  ## Slik finner du `P(A ∩ B)` når det ikke er gitt
+
+  | Du har | Formel |
+  |---|---|
+  | `P(A∪B)`, `P(A)`, `P(B)` | `P(A ∩ B) = P(A) + P(B) − P(A ∪ B)` |
+  | `P(A)`, `P(B\|A)` | `P(A ∩ B) = P(A) · P(B\|A)` |
+  | `P(B)`, `P(A\|B)` | `P(A ∩ B) = P(B) · P(A\|B)` |
+  | Hendelsene er uavhengige | `P(A ∩ B) = P(A) · P(B)` |
+  | Hendelsene er disjunkte | `P(A ∩ B) = 0` |
+  | Trekning uten tilbakelegging | `P(A) · P(B\|A)` med oppdatert pott |
+
+  ## Vanlige fallgruver
+
+  - **Disjunkte ⟹ avhengige** (når begge har `P > 0`) — A som skjer utelukker B.
+  - **Uavhengig ⟹ IKKE disjunkt** (når begge har `P > 0`) — de kan begge skje samtidig.
+  - **Parvis uavhengighet ⟹ ikke felles uavhengighet** for 3+ hendelser. Tre hendelser kan være parvis uavhengige uten å være «jointly independent».
+
+  ## Bruksmønstre på tvers av formler
+
+  - **Sum/lineær kombinasjon:** `Var(aX + bY) = a²·Var(X) + b²·Var(Y)` KUN hvis `X ⊥ Y`.
+  - **Produkt av forventninger:** `E[X·Y] = E[X]·E[Y]` KUN hvis `X ⊥ Y`.
+  - **Binomial:** krever uavhengige forsøk med konstant `p`.
+  - **Geometrisk/eksponential:** hukommelsesløshet er en konsekvens av uavhengighet mellom forsøk/intervall.
+
+  ## For utvalg
+
+  Observasjoner kalles uavhengige hvis verdien til den ene ikke påvirker
+  den andre. Typisk antatt for tilfeldig utvalg fra stor populasjon.
+  Brytes ved klyngeutvalg, gjentatte målinger på samme enhet (paret design),
+  eller når utvalget er en stor andel av endelig pott.
 see_also:
   - { id: disjunkte-hendelser-glos, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: mengdelaere, kind: glossary }
   - { id: produktregel, kind: entry }
+  - { id: unionssetningen, kind: entry }
+  - { id: kovarians, kind: entry }

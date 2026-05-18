@@ -1,9 +1,9 @@
 id: betinget-sannsynlighet-glos
 term_no: Betinget sannsynlighet
-short_def: "`P(A|B)` = sannsynligheten for `A` når vi vet at `B` har inntruffet."
+short_def: "`P(A|B)` = sannsynligheten for `A` når vi vet at `B` har inntruffet. Definert som `P(A ∩ B) / P(B)` for `P(B) > 0`."
 filters:
   computes: [conditional_probability, test_independence]
-  structural_cues: [conditional_given, independent_events]
+  structural_cues: [conditional_given, independent_events, conditioning_on_complement]
 aliases:
   - betinget sannsynlighet
   - betinget sannsynligheten
@@ -13,20 +13,72 @@ aliases:
   - betingede
   - betingelse
 long_def: |
-  Formel:
+  **Grunnformel:**
 
       P(A|B) = P(A ∩ B) / P(B)        forutsatt P(B) > 0
 
-  Hvis `A` og `B` er uavhengige, er `P(A|B) = P(A)`. Brukes i Bayes'
-  setning og total sannsynlighet.
+  Lese: «sannsynligheten for `A` gitt at `B` har skjedd». Du innskrenker
+  utfallsrommet til de tilfellene der `B` faktisk inntreffer, og spør
+  hvor stor andel av DEM som også har `A`.
 
-  **Sammenhenger:**
+  ## Alle åtte betingede formene
 
-      Produktregel:        P(A ∩ B) = P(B) · P(A|B)
+  Med utgangspunkt i `P(A)`, `P(B)` og **én** snitt-sannsynlighet
+  `P(A ∩ B)` kan du regne ut alle åtte betingede mulige kombinasjoner:
 
+  | Form | Formel | Snarvei |
+  |---|---|---|
+  | `P(A\|B)` | `P(A ∩ B) / P(B)` | — |
+  | `P(B\|A)` | `P(A ∩ B) / P(A)` | — |
+  | `P(Ā\|B)` | `P(Ā ∩ B) / P(B) = (P(B) − P(A ∩ B)) / P(B)` | `= 1 − P(A\|B)` |
+  | `P(B̄\|A)` | `P(A ∩ B̄) / P(A) = (P(A) − P(A ∩ B)) / P(A)` | `= 1 − P(B\|A)` |
+  | `P(A\|B̄)` | `P(A ∩ B̄) / P(B̄) = (P(A) − P(A ∩ B)) / (1 − P(B))` | — |
+  | `P(B\|Ā)` | `P(Ā ∩ B) / P(Ā) = (P(B) − P(A ∩ B)) / (1 − P(A))` | — |
+  | `P(Ā\|B̄)` | `P(Ā ∩ B̄) / P(B̄) = (1 − P(A ∪ B)) / (1 − P(B))` | — |
+  | `P(B̄\|Ā)` | `P(Ā ∩ B̄) / P(Ā) = (1 − P(A ∪ B)) / (1 − P(A))` | — |
+
+  **Komplement-i-teller-snarvei:** for samme betingelse summerer formene
+  med komplementært hode til 1:
+
+      P(A|B) + P(Ā|B) = 1
+      P(B|A) + P(B̄|A) = 1
+
+  ## Hvordan finne snitt-sannsynlighetene
+
+  Du trenger en `P(A ∩ ·)`-verdi. Velg formel etter hva som er gitt:
+
+      P(A ∩ B)  = P(A) + P(B) − P(A ∪ B)        (fra union)
+                = P(A) · P(B|A)                   (produktregel)
+                = P(B) · P(A|B)                   (produktregel, motsatt)
+                = P(A) · P(B)                     (KUN hvis uavhengige)
+                = 0                                (KUN hvis disjunkte)
+
+      P(A ∩ B̄)  = P(A) − P(A ∩ B)                (komplement i B)
+      P(Ā ∩ B)  = P(B) − P(A ∩ B)                (komplement i A)
+      P(Ā ∩ B̄) = 1 − P(A ∪ B)                    (De Morgan)
+
+  ## Sammenhenger som brukes ofte
+
+      Produktregel:        P(A ∩ B) = P(B) · P(A|B) = P(A) · P(B|A)
       Bayes' setning:      P(A|B) = P(A) · P(B|A) / P(B)
+      Total sannsynlighet: P(B) = P(A)·P(B|A) + P(Ā)·P(B|Ā)
+      Uavhengighet:        P(A|B) = P(A)   ⟺   P(A ∩ B) = P(A)·P(B)
 
-      Total sannsynlighet: bryter P(B) over en partisjon.
+  ## Vanlige fallgruver
+
+  - **`P(A|B) ≠ P(B|A)`** generelt. «Sannsynligheten for kreft gitt
+    positiv test» er noe helt annet enn «sannsynligheten for positiv test
+    gitt kreft». Konverter med Bayes hvis du må snu.
+  - **Betingelsen sitter til høyre for `|`** — `P(A|B)` betinger på `B`,
+    ikke `A`. «Gitt at `B`» og «vitende at `B`» peker på `B`.
+  - **`P(B) = 0`** gjør `P(A|B)` udefinert. Du kan ikke betinge på noe
+    som ikke kan skje.
 see_also:
+  - { id: produktregel, kind: entry }
   - { id: bayes-setning, kind: entry }
   - { id: total-sannsynlighet, kind: entry }
+  - { id: unionssetningen, kind: entry }
+  - { id: komplementregelen, kind: entry }
+  - { id: mengdelaere, kind: glossary }
+  - { id: uavhengighet-glos, kind: glossary }
+  - { id: komplement, kind: glossary }
