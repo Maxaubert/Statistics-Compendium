@@ -39,6 +39,7 @@ recognition_cues:
   - "Oppgaven sier 'er det usannsynlig at en ny observasjon ligger over/under en verdi?' (prediksjonsintervall)"
 
 when_NOT_to_use:
+  - "Du har flere uavhengige variabler `x_1, x_2, …` → bruk [multippel regresjon](/entry/multippel-regresjon)"
   - "Sammenhengen er åpenbart ikke-lineær (kurvet, eksponentiell) → vurder transformasjon eller annen modell"
   - "Du jobber med en simultanfordeling `P(X = x, Y = y)` (teoretisk, ikke utvalg) → bruk [korrelasjon ρ fra fellesfordeling](/entry/korrelasjon-joint)"
   - "Du har bare `y`-verdier uten en uavhengig `x` → vanlig én-utvalgs-statistikk: [t-test](/entry/en-utvalg-t-test), [KI for μ](/entry/ki-mu-og-varians)"
@@ -234,6 +235,43 @@ solution_variants:
         formula: "Forkast hvis T > t_(α, n−2)   (henholdsvis T < −t_(α, n−2))"
         conditional: true
       - "Konkluder kontekstuelt: 'forkast H₀ ⇒ statistisk grunnlag for lineær sammenheng' eller 'kan ikke forkaste — ingen statistisk grunnlag'."
+
+  - label: "KI for E(Y|x)"
+    recognition: "«Finn et 95 % konfidensintervall for `E(Y|x)` når `x = x₀`», «forventet hvilepuls for 35-åringer», «gjennomsnittlig respons ved gitt `x`», eller «estimer forventningsverdien til `Y` ved `x = x₀`». Spør om GJENNOMSNITTET (forventningsverdien) — ikke én ny enkelt observasjon."
+    steps:
+      - text: "Sjekk hva oppgaven har gitt deg. Mange størrelser kan utledes fra hverandre — bruk den formen oppgaven gir."
+        cases:
+          - { when: "`α̂`, `β̂`", then: "Skjæringspunkt og stigningstall (fra fane 1)" }
+          - { when: "`s = √S²_E`", then: "Residualstandardavvik — ta `√` hvis oppgaven gir deg variansen `S²_E`" }
+          - { when: "`SE(β̂)`", then: "Standardfeilen til `β̂` — brukes direkte i kompakt formel via `s/SE(β̂) = √S_XX`" }
+          - { when: "`df = n − 2`", then: "Frihetsgrader til t-fordelingen" }
+          - { when: "`x̄ = (Σx_i)/n`", then: "Gjennomsnitt av x — regn ut hvis ikke gitt" }
+          - { when: "`x₀`", then: "x-verdien du estimerer forventningsverdien ved (gitt av oppgaven)" }
+      - "Finn `α` fra konfidensnivået (90 % ⇒ `α = 0.10`, `α/2 = 0.05`; 95 % ⇒ `α/2 = 0.025`)."
+      - "Slå opp `t_(α/2, n−2)` i **tabell E.5**."
+      - text: "Beregn `ŷ₀` ved å sette `x₀` inn i regresjonslinja. `α̂` er skjæringspunktet (fra fane 1) — ikke `α` fra konfidensnivået."
+        formula: "ŷ₀ = α̂ + β̂·x₀"
+      - text: "Beregn margin (merk: INGEN `1+` under rota — det skiller fra prediksjonsintervallet). Bruk kompakt PDF-formel med `s/SE(β̂)` direkte:"
+        formula: "margin = t_(α/2, n−2) · s · √(1/n + ((x₀ − x̄)/(s/SE(β̂)))²)"
+      - text: "Ekvivalent form hvis oppgaven gir deg `S_XX` direkte i stedet for `SE(β̂)`:"
+        formula: "margin = t_(α/2, n−2) · s · √(1/n + (x₀ − x̄)²/S_XX)"
+        conditional: true
+      - text: "Hvis oppgaven har gitt deg `S²_E` (variansen), husk å ta kvadratroten først: `s = √S²_E`."
+        conditional: true
+      - text: "Skriv konfidensintervallet."
+        formula: "KI = ŷ₀ ± margin"
+      - text: "Eksempel (sept 2022 oppg. 5e — hvilepuls vs alder): `α̂ = 69.22`, `β̂ = 0.114`, `s = 1.832`, `SE(β̂) = 0.040`, `x̄ = 41.9`, `n = 10`, `x₀ = 35`, 90 % ⇒ `t_(0.05, 8) = 1.860`:"
+        formula:
+          - "ŷ₀ = 69.22 + 0.114·35 = 73.2"
+          - "margin = 1.860 · 1.832 · √(1/10 + ((35−41.9)/(1.832/0.040))²) ≈ 1.2"
+          - "KI = 73.2 ± 1.2 = [72.0, 74.4]"
+        example: true
+      - text: "**Sammenligning med prediksjonsintervall** (samme oppsett): PI har `1 +` ekstra under rota, så det er ALLTID bredere enn KI for `E(Y|x)`."
+        cases:
+          - { when: "KI for `E(Y|x)`", then: "`margin = 1.860 · 1.832 · √(1/10 + 0.0227) ≈ 1.2`" }
+          - { when: "PI for ny `Y`",   then: "`margin = 1.860 · 1.832 · √(1 + 1/10 + 0.0227) ≈ 3.6`" }
+          - { when: "Forhold `PI/KI`", then: "≈ 3.0 ved `x₀ = 35` her — PI er ca. tre ganger bredere" }
+      - "Tolkning: KI er smalest når `x₀ = x̄` (siste ledd under rota forsvinner) og vokser parabolsk når `x₀` fjerner seg fra `x̄`. Ekstrapolering langt utenfor datasettet gir uforsvarlig bred KI."
 
   - label: "Prediksjonsintervall for ny Y"
     recognition: "«Finn et 95 % prediksjonsintervall for `Y` når `x = x₀`», «er det usannsynlig at en student med 5 timers søvn får 75 % eller bedre?», eller «mellom hvilke verdier vil en ny `y` ligge?». Spør om ÉN ny enkelt observasjon, ikke gjennomsnittet."
@@ -677,6 +715,82 @@ detailed_solution_variants:
               - { comment: "punktet ligger innenfor akseptanseområdet" }
         result: "Vi forkaster ikke `H₀`. Ingen statistisk grunnlag for å hevde at det finnes en lineær sammenheng."
 
+  - label: "KI for E(Y|x)"
+    solutions:
+      - source: "Eksamen sept 2022 · oppgave 5e"
+        question: "Regresjonsmodell for hvilepuls `Y` mot alder `x`: `α̂ = 69.22`, `β̂ = 0.114`, `s = 1.832`, `SE(β̂) = 0.040`, `x̄ = 41.9`, `n = 10`. Finn et 90 % konfidensintervall for forventet hvilepuls `E(Y|x)` når `x₀ = 35`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Vi skal finne et konfidensintervall for FORVENTNINGSVERDIEN `E(Y|x₀)`, ikke for en ny enkelt observasjon." }
+              - { text: "Formel: `KI = α̂ + β̂·x₀ ± t_(α/2, n−2) · s · √(1/n + ((x₀ − x̄)/(s/SE(β̂)))²)`." }
+              - { comment: "INGEN `1 +` under rota — det er det som skiller KI for E(Y|x) fra prediksjonsintervallet for ny Y." }
+          - label: "Oppgitt"
+            lines:
+              - { text: "`α̂ = 69.22`, `β̂ = 0.114`" }
+              - { text: "`s = 1.832`, `SE(β̂) = 0.040`" }
+              - { text: "`x̄ = 41.9`, `n = 10`, `x₀ = 35`" }
+              - { text: "Konfidensnivå 90 % ⇒ `α = 0.10`, `α/2 = 0.05`, `df = n − 2 = 8`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 8) = 1.860`" } }
+          - label: "Punktestimat ŷ₀"
+            lines:
+              - { text: "`ŷ₀ = α̂ + β̂·x₀ = 69.22 + 0.114·35`" }
+              - { indent: "`= 69.22 + 3.99 = 73.21 ≈ 73.2`" }
+          - label: "Margin"
+            lines:
+              - { text: "Hjelpestørrelse `s/SE(β̂)`:" }
+              - { indent: "`s/SE(β̂) = 1.832/0.040 = 45.8`" }
+              - { text: "Avviksleddet `(x₀ − x̄)/(s/SE(β̂))`:" }
+              - { indent: "`(35 − 41.9)/45.8 ≈ −0.1507`,  `(−0.1507)² ≈ 0.0227`" }
+              - { text: "Under rota:" }
+              - { indent: "`1/n + 0.0227 = 0.1 + 0.0227 = 0.1227`,  `√0.1227 ≈ 0.3503`" }
+              - { text: "Sett sammen:" }
+              - { indent: "`margin = 1.860 · 1.832 · 0.3503 ≈ 1.19 ≈ 1.2`" }
+              - { comment: "Ingen `1+` under rota — derfor smalere enn prediksjonsintervallet." }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = ŷ₀ ± margin = 73.2 ± 1.2`" }
+              - { indent: "`≈ [72.0, 74.4]`" }
+          - label: "Sammenligning med PI"
+            lines:
+              - { text: "Til sammenligning, prediksjonsintervall for ny `Y` ved samme `x₀ = 35`:" }
+              - { indent: "`margin_PI = 1.860 · 1.832 · √(1 + 0.1 + 0.0227) = 1.860 · 1.832 · √1.1227 ≈ 3.61`" }
+              - { text: "PI ville altså vært `73.2 ± 3.6 ≈ [69.6, 76.8]` — ca. 3 ganger bredere enn KI." }
+        result: "`KI ≈ 73.2 ± 1.2 = [72.0, 74.4]` (90 % KI for `E(Y|x = 35)`)"
+
+      - source: "Variant · hvilepuls ved `x₀ = x̄`"
+        question: "Samme oppsett som forrige (`α̂ = 69.22`, `β̂ = 0.114`, `s = 1.832`, `SE(β̂) = 0.040`, `x̄ = 41.9`, `n = 10`, 90 % nivå). Finn konfidensintervallet for `E(Y|x)` når `x₀ = x̄ = 41.9`. Vis at dette gir den SMALESTE mulige KI."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Når `x₀ = x̄` forsvinner avviksleddet `(x₀ − x̄)²` fra rota:" }
+              - { indent: "`margin = t · s · √(1/n + 0) = t · s · √(1/n)`" }
+              - { text: "Dette er bredden ved senterverdien `x̄` — alle andre `x₀` gir bredere KI." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 8) = 1.860`" } }
+          - label: "Punktestimat ŷ₀"
+            lines:
+              - { text: "`ŷ₀ = α̂ + β̂·x̄ = 69.22 + 0.114·41.9`" }
+              - { indent: "`= 69.22 + 4.7766 ≈ 74.0`" }
+              - { comment: "Dette er punktet `(x̄, ȳ)` som regresjonslinja alltid går gjennom." }
+          - label: "Margin"
+            lines:
+              - { text: "Avviksleddet forsvinner siden `x₀ − x̄ = 0`:" }
+              - { indent: "`margin = 1.860 · 1.832 · √(1/10) = 1.860 · 1.832 · 0.3162 ≈ 1.08`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = 74.0 ± 1.08 ≈ [72.9, 75.1]`" }
+          - label: "Sammenligning og innsikt"
+            lines:
+              - { text: "Smalere enn KI ved `x₀ = 35` (gikk fra `1.2` til `1.08`)." }
+              - { text: "PI ved `x₀ = x̄` ville vært `≈ 3.57` — fortsatt bred siden `1`-tallet dominerer under rota." }
+              - { text: "Forhold `PI/KI ≈ 3.3` ved `x₀ = x̄`: PI tjener lite på å stå i sentrum, mens KI krymper merkbart." }
+              - { comment: "Generell regel: KI for E(Y|x) er smalest ved x̄ og vokser parabolsk i begge retninger. Design forsøket slik at interessante x₀ ligger nær x̄." }
+        result: "`KI ≈ 74.0 ± 1.08 ≈ [72.9, 75.1]` — smalest mulig KI for `E(Y|x)` med disse parameterne"
+
   - label: "Prediksjonsintervall for ny Y"
     solutions:
       - source: "Eksamen jan26 · oppgave 6"
@@ -841,6 +955,7 @@ detailed_solution_variants:
         result: "`r ≈ -0.791` (`r² ≈ 0.625`, negativ retning)"
 
 related:
+  - { id: "multippel-regresjon",              kind: "entry" }
   - { id: "korrelasjon-joint",                kind: "entry" }
   - { id: "utvalgsvarians-radata",            kind: "entry" }
   - { id: "en-utvalg-t-test",                 kind: "entry" }

@@ -1,0 +1,2700 @@
+\documentclass[11pt,a4paper]{article}
+
+% --------- Pakker ---------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[norsk]{babel}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{geometry}
+\geometry{margin=2.3cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black,
+    pdftitle={Oppslagsverk i statistikk},
+    pdfauthor={Adrian Ditmansen},
+    bookmarks=true,
+    bookmarksnumbered=true
+}
+
+% --------- Egendefinerte bokser ---------
+\newtcolorbox{formel}[1][]{
+    colback=blue!5!white,
+    colframe=blue!60!black,
+    fonttitle=\bfseries,
+    title=Formel,
+    breakable,
+    #1
+}
+\newtcolorbox{fremgangsmate}[1][]{
+    colback=green!5!white,
+    colframe=green!50!black,
+    fonttitle=\bfseries,
+    title=Fremgangsmåte,
+    breakable,
+    #1
+}
+\newtcolorbox{eksempel}[1][]{
+    colback=orange!5!white,
+    colframe=orange!70!black,
+    fonttitle=\bfseries,
+    title=Eksempel,
+    breakable,
+    #1
+}
+\newtcolorbox{tips}[1][]{
+    colback=yellow!10!white,
+    colframe=yellow!60!black,
+    fonttitle=\bfseries,
+    title=Tips,
+    breakable,
+    #1
+}
+
+% --------- Tittel ---------
+\title{\textbf{Komplett oppslagsverk i statistikk}\\
+       \large Statistikk og statistisk programmering --- HiØ\\
+       \normalsize Teori, tabelloppslag og Python-koding for eksamen}
+\author{Clanker union}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Dette dokumentet er et oppslagsverk basert på løsningsforslag fra ni eksamener i emnet \emph{Statistikk og statistisk programmering} ved HiØ. Hvert tema har egen hovedoverskrift, og hvert undertema har en underoverskrift slik at man enkelt kan finne fremgangsmåten man trenger. Bruk innholdsfortegnelsen (klikkbar) for raskt å navigere til riktig oppgavetype.
+\end{abstract}
+
+\tableofcontents
+
+\section*{Notasjon og symboler}
+\addcontentsline{toc}{section}{Notasjon og symboler}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Symbol} & \textbf{Betydning} \\
+\midrule
+$P(A)$ & Sannsynligheten for hendelsen $A$ \\
+$\bar A$ & Komplementet til $A$, altså at $A$ ikke skjer \\
+$A\cap B$ & Snitt: både $A$ og $B$ skjer \\
+$A\cup B$ & Union: $A$ eller $B$ eller begge skjer \\
+$P(A\mid B)$ & Sannsynligheten for $A$ gitt at $B$ har skjedd \\
+$X,Y$ & Stokastiske variabler \\
+$x,y$ & Mulige observerte verdier av $X$ og $Y$ \\
+$E(X)$ eller $\mu$ & Forventningsverdi/gjennomsnitt i populasjonen \\
+$\operatorname{Var}(X)$ eller $\sigma^2$ & Varians i populasjonen \\
+$\sigma$ & Standardavvik i populasjonen \\
+$\bar X$ eller $\bar x$ & Utvalgsgjennomsnitt \\
+$S^2$ eller $s^2$ & Utvalgsvarians \\
+$S$ eller $s$ & Utvalgsstandardavvik \\
+$n$ & Antall observasjoner eller delforsøk \\
+$p$ & Sannsynlighet for suksess / andel i populasjonen \\
+$\hat p$ & Estimert andel fra et utvalg \\
+$\lambda$ & Rate, for eksempel hendelser per tidsenhet \\
+$t$ & Tid eller testobservator, avhengig av kontekst \\
+$Z$ & Standardnormalfordelt variabel, $Z\sim N(0,1)$ \\
+$G(z)$ & Fordelingsfunksjonen til standardnormalfordelingen: $G(z)=P(Z\le z)$ \\
+$z_\alpha$ & Høyresidekvantil: $P(Z>z_\alpha)=\alpha$ \\
+$t_{\alpha,\nu}$ & Høyresidekvantil i t-fordelingen med $\nu$ frihetsgrader \\
+$\chi^2_{\alpha,\nu}$ & Høyresidekvantil i kjikvadratfordelingen med $\nu$ frihetsgrader \\
+$F_{\alpha,\nu_1,\nu_2}$ & Høyresidekvantil i F-fordelingen \\
+$\alpha$ & Signifikansnivå / sannsynlighet for Type I-feil \\
+$\beta$ & Type II-feil i hypotesetesting; regresjonskoeffisient i regresjon \\
+$\rho$ & Korrelasjon i populasjonen \\
+$r$ & Empirisk korrelasjon i et utvalg \\
+$\operatorname{Cov}(X,Y)$ & Kovarians mellom $X$ og $Y$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{tips}
+Noen symboler brukes i flere sammenhenger. For eksempel kan $t$ bety tid i en poissonprosess, men også en t-testobservator. Tilsvarende kan $\beta$ bety Type II-feil i hypotesetesting, men regresjonskoeffisient i regresjon. Se alltid på konteksten.
+\end{tips}
+
+\newpage
+
+% =========================================================
+\section{Sannsynlighetsregning}
+% =========================================================
+
+\subsection{Uniform sannsynlighetsmodell (gunstige/mulige)}
+Brukes når alle utfall er like sannsynlige.
+\begin{formel}
+\[
+P(A) = \frac{\text{antall gunstige utfall}}{\text{antall mulige utfall}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 1a}\par
+\medskip
+
+\textbf{Definisjoner:} La $H$ være hendelsen at en tilfeldig valgt person har betydelig hørselssvekkelse.
+
+\textbf{Oppgitt:} Det er totalt 4965 personer, og 3774 av dem har hørselssvekkelse.
+
+\textbf{Vi skal finne:} Sannsynligheten $P(H)$ for at en tilfeldig valgt person har hørselssvekkelse.
+
+4965 personer i en gruppe, 3774 har hørselssvekkelse:
+\[ P(H) = \frac{3774}{4965} = 0{,}760. \]
+(jan 2022, oppgave 1a)
+\end{eksempel}
+
+\subsection{Disjunkte hendelser}
+To hendelser $A$ og $B$ er disjunkte dersom $A \cap B = \emptyset$ (de kan ikke inntreffe samtidig). Man sier også at de er gjensidig utelukkende.
+\begin{formel}
+\[
+A,B \text{ disjunkte} \iff P(A \cap B)=0 \iff P(A \cup B)=P(A)+P(B)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 1a}\par
+\medskip
+
+\textbf{Definisjoner:} La $A$ være hendelsen at kortet er hjerter, og la $B$ være hendelsen at kortet er spar.
+
+\textbf{Vi skal avgjøre:} Om hendelsene $A$ og $B$ er disjunkte, altså om de kan skje samtidig.
+
+Vi trekker ett kort fra en kortstokk. La $A$: ``kortet er hjerter'' og $B$: ``kortet er spar''. Et kort kan ikke være både hjerter og spar samtidig, så $A \cap B = \emptyset$. \textbf{Hendelsene er disjunkte.}
+
+I det andre eksempelet lar vi $A$ være hendelsen at kortet er hjerter, og $B$ være hendelsen at kortet er konge. Et annet eksempel: $A$: ``kortet er hjerter'', $B$: ``kortet er konge''. Hjerterkonge er både hjerter og konge, så $A \cap B \ne \emptyset$. \textbf{Hendelsene er ikke disjunkte.} (mai 2022, oppgave 1a)
+\end{eksempel}
+
+\subsection{Uavhengige hendelser}
+At to hendelser er uavhengige, innebærer at informasjon om at den ene hendelsen inntreffer (eller har inntruffet), ikke påvirker sannsynligheten for at den andre hendelsen inntreffer.
+\begin{formel}
+\[
+A,B \text{ uavhengige} \iff P(A\cap B)=P(A)\cdot P(B) \iff P(A\mid B)=P(A)
+\]
+\end{formel}
+\textbf{Merk:} Disjunkte hendelser er aldri uavhengige (med mindre minst én har sannsynlighet 0).
+
+\begin{eksempel}
+\textbf{Kilder: mai 2021, oppgave 1a; jan 2022, oppgave 1c}\par
+\medskip
+
+\textbf{Definisjoner:} I pumpeeksempelet lar vi $A$ være hendelsen at pumpe A virker, og $B$ være hendelsen at pumpe B virker. I demenseksempelet lar vi $D$ være hendelsen at en person viser tegn på demens, og $H$ være hendelsen at personen har betydelig hørselssvekkelse.
+
+\textbf{Vi skal avgjøre:} Om hendelsene i hvert eksempel er uavhengige.
+
+\textbf{Sjekke uavhengighet med tall:} For pumpene $A$ og $B$ i et kjernekraftverk er $P(A) = P(B) = 0{,}99$ og $P(A \mid B) = 0{,}995$. For at hendelsene skal være uavhengige må $P(A\mid B) = P(A)$. Her er $0{,}995 \ne 0{,}99$, så \textbf{hendelsene er ikke uavhengige}. (mai 2021, oppgave 1a)
+
+\textbf{Sjekke uavhengighet med snitt:} I undersøkelsen av demens og hørselssvekkelse er
+\[ P(D \cap H) = \tfrac{646}{4965} = 0{,}130, \quad P(D)\cdot P(H) = 0{,}150 \cdot 0{,}760 = 0{,}114. \]
+Siden $P(D\cap H) \ne P(D)\cdot P(H)$ er hendelsene \textbf{ikke uavhengige}. (jan 2022, oppgave 1c)
+\end{eksempel}
+
+\subsection{Union og snitt}
+\begin{formel}
+\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]
+\end{formel}
+De Morgans lover:
+\[
+\overline{A \cap B} = \bar A \cup \bar B, \qquad \overline{A \cup B} = \bar A \cap \bar B
+\]
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 1b}\par
+\medskip
+
+\textbf{Definisjoner:} La $A$ være hendelsen at pumpe A virker, og la $B$ være hendelsen at pumpe B virker.
+
+\textbf{Vi skal finne:} Sannsynligheten for at minst én pumpe virker. Dette er unionen $A\cup B$.
+
+For to pumper er $P(A)=P(B)=0{,}99$ og $P(A\mid B)=0{,}995$. Vi finner først snittet ved produktsetningen:
+\[ P(A\cap B) = P(B)\cdot P(A\mid B) = 0{,}99 \cdot 0{,}995 = 0{,}98505. \]
+Sannsynligheten for at \emph{minst én} pumpe virker (kjøling fungerer):
+\[ P(A \cup B) = P(A) + P(B) - P(A\cap B) = 0{,}99 + 0{,}99 - 0{,}98505 = 0{,}99495. \]
+(mai 2021, oppgave 1b)
+\end{eksempel}
+
+\subsection{Komplementhendelse}
+\begin{formel}
+\[
+P(\bar A) = 1 - P(A)
+\]
+\end{formel}
+Brukes ofte sammen med ``minst'' og ``høyst''-formuleringer:
+\[ P(X \ge 1) = 1 - P(X = 0). \]
+
+\begin{eksempel}
+\textbf{Kilde: jan 2025, oppgave 1b}\par
+\medskip
+
+\textbf{Definisjoner:} La $A$ være hendelsen at alle de fem kortene er hjerter.
+
+\textbf{Oppgitt:} $P(A)=0{,}000495$.
+
+\textbf{Vi skal finne:} Sannsynligheten for at ikke alle fem kortene er hjerter, altså $P(\bar A)$.
+
+Sannsynligheten for å trekke 5 hjerter er $P=0{,}000495$. Sannsynligheten for at \emph{ikke alle} de fem kortene er hjerter, er den komplementære hendelsen:
+\[ P(\text{ikke alle hjerter}) = 1 - 0{,}000495 = 0{,}999505. \]
+(jan 2025, oppgave 1b)
+\end{eksempel}
+
+\subsection{Sannsynligheter for kombinerte hendelser}
+Når to hendelser $A$ og $B$ overlapper, deler de utfallsrommet i fire områder: $A\cap B$, $A\cap\bar B$, $\bar A\cap B$ og $\bar A\cap\bar B$. Spørsmål om ``bare den ene'', ``ingen av delene'' eller betingelser med komplement løses med disse identitetene:
+\begin{formel}
+\begin{align*}
+P(A \cap \bar B) &= P(A) - P(A \cap B) \quad \text{(bare $A$, ikke $B$)} \\
+P(\bar A \cap B) &= P(B) - P(A \cap B) \quad \text{(bare $B$, ikke $A$)} \\
+P(\bar A \cap \bar B) &= 1 - P(A \cup B) \quad \text{(verken $A$ eller $B$)} \\
+P(\bar A \mid \bar B) &= \dfrac{1 - P(A \cup B)}{1 - P(B)} \quad \text{(ikke $A$ gitt ikke $B$)}
+\end{align*}
+\end{formel}
+De Morgan gir snarveien $\overline{A \cup B} = \bar A \cap \bar B$, så det er ofte raskest å regne unionen først.
+
+\begin{eksempel}
+\textbf{Kilde: borettslag-eksempel}\par
+\medskip
+
+\textbf{Definisjoner:} La $B$ være hendelsen at en leilighet har balkong, og la $T$ være hendelsen at den har terrasse.
+
+\textbf{Oppgitt:} $P(B)=0{,}45$, $P(T)=0{,}60$ og $P(B \cap T)=0{,}25$.
+
+\textbf{Vi skal finne:} $P(B \cap \bar T)$ (bare balkong, ikke terrasse) og $P(\bar B \cap \bar T)$ (verken balkong eller terrasse).
+
+\textbf{Bare balkong, ikke terrasse:}
+\[ P(B \cap \bar T) = P(B) - P(B \cap T) = 0{,}45 - 0{,}25 = 0{,}20. \]
+\textbf{Verken balkong eller terrasse:} Først unionen:
+\[ P(B \cup T) = 0{,}45 + 0{,}60 - 0{,}25 = 0{,}80, \qquad P(\bar B \cap \bar T) = 1 - 0{,}80 = 0{,}20. \]
+\textbf{Sjekk:} De fire områdene summerer alltid til 1 ($0{,}25 + 0{,}20 + 0{,}35 + 0{,}20 = 1$).
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- betinget med komplement}\par
+\medskip
+
+\textbf{Definisjoner:} La $A$ og $B$ være to hendelser.
+
+\textbf{Oppgitt:} $P(A) = 0{,}30$, $P(B) = 0{,}40$, $P(A \cap B) = 0{,}10$.
+
+\textbf{Vi skal finne:} $P(\bar A \mid \bar B)$ -- sannsynligheten for at $A$ ikke skjer, gitt at $B$ ikke skjer.
+
+\[ P(A \cup B) = 0{,}30 + 0{,}40 - 0{,}10 = 0{,}60. \]
+\[ P(\bar A \mid \bar B) = \frac{1 - P(A \cup B)}{1 - P(B)} = \frac{1 - 0{,}60}{1 - 0{,}40} = \frac{0{,}40}{0{,}60} \approx 0{,}667. \]
+\end{eksempel}
+
+\subsection{Finn $n$ via komplementet (terskeloppgaver)}
+Et klassisk mønster: ``Hvor mange uavhengige forsøk trengs for at sannsynligheten for minst én suksess overstiger terskel $T$?''. Direkte beregning krever sum over alle $k\ge 1$, mens komplementet (``ingen suksess'') gir én linje.
+\begin{formel}
+\[
+1 - (1-p)^n \ge T \quad\Longleftrightarrow\quad n \ge \frac{\ln(1-T)}{\ln(1-p)}
+\]
+\end{formel}
+Siden $\ln(1-p)<0$ for $0<p<1$, snur ulikheten ved logaritmen. Rund alltid opp til nærmeste heltall.
+
+\begin{eksempel}
+\textbf{Kilder: jan 2026, oppgave 1c; generisk sjeldenhet}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall suksesser i $n$ uavhengige forsøk, med suksess-sannsynlighet $p$ pr.\ forsøk.
+
+\textbf{Vi skal finne:} Minste $n$ slik at $P(X \ge 1) \ge T$.
+
+\textbf{Myntkast ($p=0{,}5$, $T=0{,}99$):} Komplementet er $P(X=0)=0{,}5^n$, så
+\[ 0{,}5^n \le 0{,}01 \;\Rightarrow\; n \ge \tfrac{\ln 0{,}01}{\ln 0{,}5} \approx 6{,}64 \;\Rightarrow\; n = 7. \]
+(jan 2026, oppgave 1c)
+
+\textbf{Sjeldent eksperiment ($p=0{,}02$, $T=0{,}95$):}
+\[ n \ge \tfrac{\ln 0{,}05}{\ln 0{,}98} \approx 148{,}3 \;\Rightarrow\; n = 149. \]
+\textbf{Verifiser:} $1 - 0{,}98^{149} \approx 0{,}951 \ge 0{,}95$ \checkmark.
+\end{eksempel}
+
+\subsection{Betinget sannsynlighet}
+Sannsynligheten for $A$ \emph{gitt at} $B$ har inntruffet:
+\begin{formel}
+\[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \qquad P(B) > 0
+\]
+\end{formel}
+Produktsetningen:
+\[
+P(A \cap B) = P(B) \cdot P(A \mid B) = P(A) \cdot P(B \mid A)
+\]
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 1d}\par
+\medskip
+
+\textbf{Definisjoner:} La $H$ være hendelsen at en person har betydelig hørselssvekkelse, og la $D$ være hendelsen at personen viser tegn på demens.
+
+\textbf{Oppgitt:}
+\[
+P(H)=0{,}760,\qquad P(D)=0{,}150,\qquad P(D\cap H)=0{,}130.
+\]
+
+\textbf{Vi skal finne:} Både $P(H\mid D)$ og $P(D\mid H)$.
+
+Demens og hørselssvekkelse: $P(H) = 0{,}760$, $P(D) = 0{,}150$ og $P(D \cap H) = 0{,}130$.
+
+Sannsynligheten for å ha betydelig hørselssvekkelse \emph{gitt at} man viser tegn på demens:
+\[ P(H \mid D) = \frac{P(H \cap D)}{P(D)} = \frac{0{,}130}{0{,}150} = 0{,}867. \]
+
+Sannsynligheten for å vise tegn på demens \emph{gitt at} man har hørselssvekkelse:
+\[ P(D \mid H) = \frac{P(D \cap H)}{P(H)} = \frac{0{,}130}{0{,}760} = 0{,}171. \]
+Legg merke til at $P(H \mid D) \ne P(D \mid H)$ -- rekkefølgen i betingelsen er viktig. (jan 2022, oppgave 1d)
+\end{eksempel}
+
+\subsection{Setningen om total sannsynlighet}
+La $B_1, B_2, \ldots, B_n$ partisjonere utfallsrommet (disjunkte og dekkende -- dvs.\ alle utfall havner i nøyaktig én $B_i$). Da gjelder:
+\begin{formel}
+\[
+P(A) = \sum_{i=1}^n P(B_i) \cdot P(A \mid B_i)
+\]
+\end{formel}
+
+\textbf{Når brukes den?} Når du har den betingede sannsynligheten for $A$ i hver av flere disjunkte ``kategorier'', men ikke $P(A)$ direkte.
+
+\begin{eksempel}
+\textbf{Kilder: mai 2021, oppgave 2a; mai 2022, oppgave 2a}\par
+\medskip
+
+\textbf{Definisjoner:} I kollisjonseksempelet lar vi $B$ være hendelsen at sjåføren er beruset, og $K$ være hendelsen at turen ender i kollisjon. I regioneksempelet lar vi $N,S,O,V$ være hendelsene at en tilfeldig valgt person kommer fra henholdsvis Nord, Sør, Øst og Vest, og $R$ være hendelsen at personen har rotte som kjæledyr.
+
+\textbf{Med to kategorier:} 2{,}5\,\% av norske bilførere er beruset; 11\,\% av berusede sjåførers turer ender i kollisjon, 0{,}2\,\% av edru. Hva er $P(\text{kollisjon})$?
+
+Definer: $B$ = beruset sjåfør, $K$ = kollisjon. Oppgitt: $P(B)=0{,}025$, $P(K\mid B)=0{,}11$, $P(K\mid \bar B)=0{,}002$. Da er $P(\bar B) = 1-0{,}025 = 0{,}975$.
+
+\[ P(K) = P(B)\cdot P(K\mid B) + P(\bar B)\cdot P(K\mid \bar B) = 0{,}025\cdot 0{,}11 + 0{,}975\cdot 0{,}002 = 0{,}00275 + 0{,}00195 = 0{,}0047. \]
+(mai 2021, oppgave 2a)
+
+\textbf{Med fire kategorier:} I Nangijala er befolkningen fordelt på regionene N, S, O, V med andeler $0{,}21,\ 0{,}34,\ 0{,}27,\ 0{,}18$, og andelen som har rotte som kjæledyr i hver region er $0{,}52,\ 0{,}79,\ 0{,}34,\ 0{,}41$.
+\[ P(R) = 0{,}21\cdot 0{,}52 + 0{,}34\cdot 0{,}79 + 0{,}27\cdot 0{,}34 + 0{,}18\cdot 0{,}41 = 0{,}5434. \]
+Regionene partisjonerer utfallsrommet -- alle innbyggere tilhører nøyaktig én region. (mai 2022, oppgave 2a)
+\end{eksempel}
+
+\subsection{Bayes' setning}
+``Snur'' betingelsen: gir oss $P(B\mid A)$ når vi har $P(A\mid B)$.
+\begin{formel}
+\[
+P(B \mid A) = \frac{P(B) \cdot P(A \mid B)}{P(A)}
+\]
+\end{formel}
+$P(A)$ regnes ofte ved hjelp av total sannsynlighet.
+
+\textbf{Strukturen i en typisk Bayes-oppgave:}
+\begin{enumerate}
+\item Definer hendelsene.
+\item Skriv opp alle gitte sannsynligheter.
+\item Finn $P(A)$ -- ofte via total sannsynlighet.
+\item Sett inn i Bayes' formel.
+\end{enumerate}
+
+\begin{eksempel}
+\textbf{Kilder: mai 2024, oppgave 1a; mai 2022, oppgave 2b; mai 2021, oppgave 2b}\par
+\medskip
+
+\textbf{Definisjoner:} I dysleksieksempelet lar vi $D$ være hendelsen at et barn har dysleksi, og $A$ være hendelsen at barnet har ADHD. I Nangijala-eksempelet betyr $S$ at personen er fra Sør, og $R$ at personen har rotte som kjæledyr. I kollisjonseksempelet betyr $B$ beruset sjåfør og $K$ kollisjon.
+
+\textbf{Enkel Bayes:} 5\,\% av barn har dysleksi, 4\,\% har ADHD, og 30\,\% av de med dysleksi har også ADHD. Sannsynligheten for dysleksi gitt ADHD:
+\[ P(D \mid A) = \frac{P(D)\cdot P(A\mid D)}{P(A)} = \frac{0{,}05 \cdot 0{,}30}{0{,}04} = 0{,}375. \]
+(mai 2024, oppgave 1a)
+
+\textbf{Bayes etter total sannsynlighet:} Med tallene fra Nangijala over -- gitt at en person har rotte som kjæledyr, hva er sannsynligheten for at vedkommende er fra Sør?
+\[ P(S \mid R) = \frac{P(S)\cdot P(R\mid S)}{P(R)} = \frac{0{,}34 \cdot 0{,}79}{0{,}5434} = 0{,}4943. \]
+\textbf{Merk:} Vi måtte først finne $P(R) = 0{,}5434$ ved total sannsynlighet (forrige eksempel). (mai 2022, oppgave 2b)
+
+\textbf{Bayes i kollisjonseksempelet:} En bil har nettopp kollidert. Sannsynligheten for at føreren er beruset:
+\[ P(B \mid K) = \frac{P(B)\cdot P(K\mid B)}{P(K)} = \frac{0{,}025 \cdot 0{,}11}{0{,}0047} = 0{,}585. \]
+\textbf{Tolkning:} Selv om bare 2{,}5\,\% av sjåfører er beruset, er 58{,}5\,\% av kollisjonene gjort av berusede -- fordi de er mye mer kollisjons-tilbøyelige. (mai 2021, oppgave 2b)
+\end{eksempel}
+
+\subsection{Kombinatorikk}
+Antall måter å velge $k$ elementer fra $n$ avhenger av om rekkefølgen teller og om vi legger tilbake mellom hver trekning.
+\begin{formel}
+\begin{itemize}
+\item \textbf{Uordnet uten tilbakelegging} (``nCr''): $\displaystyle \binom{n}{k} = \frac{n!}{k!(n-k)!}$
+\item \textbf{Ordnet uten tilbakelegging} (permutasjoner): $\displaystyle \frac{n!}{(n-k)!} = n \cdot (n-1) \cdots (n-k+1)$
+\item \textbf{Ordnet med tilbakelegging}: $n^k$
+\item \textbf{Uordnet med tilbakelegging}: $\displaystyle \binom{n+k-1}{k}$
+\end{itemize}
+\end{formel}
+
+\textbf{Bruk i sannsynlighet:} Med uniform fordeling er $P = g/m$ der $g$ er antall gunstige utvalg og $m$ er antall mulige.
+
+\begin{tips}
+\textbf{Hvordan velge formel?}
+\begin{itemize}
+\item Bryr du deg om rekkefølgen kortene/personene kommer i? $\Rightarrow$ ordnet.
+\item Kan samme element brukes to ganger? $\Rightarrow$ med tilbakelegging.
+\end{itemize}
+For statistikk-eksamen er det \emph{uordnet uten tilbakelegging} (binomialkoeffisienten) som oftest dukker opp.
+\end{tips}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2025, oppgave 1}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall hjerter blant de 5 kortene som trekkes. En vanlig kortstokk har 52 kort, hvorav 13 er hjerter og 39 ikke er hjerter.
+
+\textbf{Vi skal finne:} Sannsynligheten for 5 hjerter, sannsynligheten for ingen hjerter, samt noen eksempler på opptellingsregler.
+
+\textbf{Uordnet uten tilbakelegging:} 5 kort fra 52. 13 hjerter i kortstokken. \textbf{Alle hjerter:}
+\[ P(\text{5 hjerter}) = \frac{\binom{13}{5}}{\binom{52}{5}} = \frac{1287}{2\,598\,960} = 4{,}95 \cdot 10^{-4}. \]
+\textbf{Ingen hjerter:} 39 ikke-hjerter:
+\[ P(\text{0 hjerter}) = \frac{\binom{39}{5}}{\binom{52}{5}} = \frac{575\,757}{2\,598\,960} = 0{,}2215. \]
+
+\textbf{Sekvensiell utregning (alternativ):} Sannsynlighet for 5 hjerter etter hverandre:
+\[ \tfrac{13}{52}\cdot \tfrac{12}{51}\cdot \tfrac{11}{50}\cdot \tfrac{10}{49}\cdot \tfrac{9}{48} = 4{,}95\cdot 10^{-4}. \]
+Samme svar -- bare en annen tankegang. (jan 2025, oppgave 1)
+
+\textbf{Ordnet med tilbakelegging:} Antall mulige PIN-koder med 4 siffer:
+\[ 10^4 = 10\,000. \]
+
+\textbf{Permutasjon:} Antall måter 3 personer kan settes på en rangert podiumsplass fra en gruppe på 8:
+\[ \frac{8!}{(8-3)!} = 8 \cdot 7 \cdot 6 = 336. \]
+\end{eksempel}
+
+
+% =========================================================
+\section{Stokastiske variabler}
+% =========================================================
+
+\subsection{Forventningsverdi}
+For en diskret stokastisk variabel:
+\begin{formel}
+\[
+\mu = E(X) = \sum_i x_i \cdot P(X = x_i)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2025, oppgave 2b}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være en diskret stokastisk variabel som kan få verdiene $-2,-1,0,1,2$.
+
+\textbf{Oppgitt:}
+\[
+P(X=-2)=0{,}3,\quad P(X=-1)=0{,}2,\quad P(X=0)=0{,}2,\quad P(X=1)=0{,}1,\quad P(X=2)=0{,}2.
+\]
+
+\textbf{Vi skal finne:} Forventningsverdien $\mu=E(X)$.
+
+Gitt fordelingen for $X$ med verdier $-2, -1, 0, 1, 2$ og sannsynligheter $0{,}3,\ 0{,}2,\ 0{,}2,\ 0{,}1,\ 0{,}2$:
+\[ \mu = (-2)(0{,}3) + (-1)(0{,}2) + 0(0{,}2) + 1(0{,}1) + 2(0{,}2) = -0{,}3. \]
+(jan 2025, oppgave 2b)
+\end{eksempel}
+
+\subsection{Varians og standardavvik}
+\begin{formel}
+\[
+\sigma^2 = \text{Var}(X) = E(X^2) - \mu^2 = \sum_i x_i^2 \cdot P(X=x_i) - \mu^2
+\]
+\[
+\sigma = \sqrt{\sigma^2}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2025, oppgave 2c}\par
+\medskip
+
+\textbf{Definisjoner:} Vi bruker samme stokastiske variabel $X$ som i forrige eksempel.
+
+\textbf{Oppgitt:} Forventningsverdien er allerede funnet: $\mu=E(X)=-0{,}3$.
+
+\textbf{Vi skal finne:} Variansen $\operatorname{Var}(X)$ og standardavviket $\sigma$.
+
+Med samme fordeling som over og $\mu = -0{,}3$:
+\[ \text{Var}(X) = 4(0{,}3) + 1(0{,}2) + 0(0{,}2) + 1(0{,}1) + 4(0{,}2) - (-0{,}3)^2 = 2{,}3 - 0{,}09 = 2{,}21. \]
+Standardavviket er $\sigma = \sqrt{2{,}21} = 1{,}487$. (jan 2025, oppgave 2c)
+\end{eksempel}
+
+\subsection{Lineære transformasjoner av stokastiske variabler}
+For konstanter $a, b, c$ og stokastiske variabler $X, Y$:
+\begin{formel}
+\[
+E(aX + bY + c) = a E(X) + b E(Y) + c
+\]
+\[
+\text{Var}(aX + bY + c) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\,\text{Cov}(X,Y)
+\]
+\end{formel}
+Hvis $X$ og $Y$ er uavhengige er $\text{Cov}(X,Y)=0$.
+
+\begin{eksempel}
+\textbf{Kilde: mai 2024, oppgave 2}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ og $Y$ være to stokastiske variabler.
+
+\textbf{Oppgitt:}
+\[
+E(X)=20,\quad \operatorname{Var}(X)=9,\quad E(Y)=15,\quad \operatorname{Var}(Y)=7,\quad \operatorname{Cov}(X,Y)=5.
+\]
+
+\textbf{Vi skal finne:}
+\[
+E(3X-2Y+20),\qquad \operatorname{Var}(3X-2Y+20),\qquad E(XY).
+\]
+
+La $E(X)=20$, $\text{Var}(X)=9$, $E(Y)=15$, $\text{Var}(Y)=7$, $\text{Cov}(X,Y)=5$.
+\begin{align*}
+E(3X - 2Y + 20) &= 3\cdot 20 - 2 \cdot 15 + 20 = 50 \\
+\text{Var}(3X - 2Y + 20) &= 9\cdot 9 + 4\cdot 7 + 2\cdot 3 \cdot (-2)\cdot 5 = 81 + 28 - 60 = 49 \\
+E(XY) &= \text{Cov}(X,Y) + E(X)\cdot E(Y) = 5 + 20\cdot 15 = 305
+\end{align*}
+\textbf{Tips:} For å finne $E(XY)$ bruker vi definisjonen av kovarians: $\text{Cov}(X,Y) = E(XY) - E(X)E(Y)$. (mai 2024, oppgave 2)
+\end{eksempel}
+
+\subsection{Simultanfordeling og marginale fordelinger}
+Marginalfordelingen finnes ved å summere over den andre variabelen:
+\begin{formel}
+\[
+P(X=x) = \sum_y P(X=x, Y=y), \qquad
+P(Y=y) = \sum_x P(X=x, Y=y)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 3b}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall personbiler, og la $Y$ være antall lastebiler/busser.
+
+\textbf{Vi skal finne:} Marginalfordelingen til $X$, altså sannsynlighetene $P(X=0),P(X=1),P(X=2)$ og $P(X=3)$.
+
+For en simultanfordeling der $X \in \{0,1,2,3\}$ er antall personbiler og $Y \in \{0,1,2\}$ er antall lastebiler/busser, finner vi marginalfordelingen for $X$ ved å summere radvis:
+\begin{align*}
+P(X=0) &= 0{,}02 + 0{,}04 + 0{,}07 = 0{,}13 \\
+P(X=1) &= 0{,}05 + 0{,}07 + 0{,}09 = 0{,}21 \\
+P(X=2) &= 0{,}08 + 0{,}12 + 0{,}10 = 0{,}30 \\
+P(X=3) &= 0{,}20 + 0{,}10 + 0{,}06 = 0{,}36
+\end{align*}
+Marginalfordelingen til $Y$ finnes ved å summere kolonnevis. (jan 2022, oppgave 3b)
+\end{eksempel}
+
+\subsection{Kovarians}
+\begin{formel}
+\[
+\text{Cov}(X,Y) = E(XY) - E(X)\,E(Y), \qquad E(XY) = \sum_i \sum_j x_i y_j \, p(x_i,y_j)
+\]
+\end{formel}
+
+\begin{tips}
+Ved beregning av $E(XY)$ kan man droppe alle ledd der $x_i = 0$, $y_j = 0$ eller $p(x_i, y_j)=0$, siden disse bidrar med 0.
+\end{tips}
+
+\textbf{Tolkning:}
+\begin{itemize}
+\item $\text{Cov}(X,Y) > 0$: $X$ og $Y$ har en tendens til å variere i samme retning (når $X$ er stor, er $Y$ ofte stor).
+\item $\text{Cov}(X,Y) < 0$: $X$ og $Y$ varierer i motsatt retning.
+\item $\text{Cov}(X,Y) = 0$: ingen lineær samvariasjon. \emph{Hvis} $X$ og $Y$ er uavhengige er kovariansen 0, men det motsatte gjelder ikke generelt.
+\end{itemize}
+
+\textbf{Nyttige regler:}
+\[
+\text{Cov}(X,X) = \text{Var}(X), \quad \text{Cov}(X,Y) = \text{Cov}(Y,X), \quad \text{Cov}(aX+b,\,cY+d) = ac\,\text{Cov}(X,Y).
+\]
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 3}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ og $Y$ være to diskrete stokastiske variabler med simultanfordelingen i tabellen.
+
+\textbf{Vi skal finne:} Kovariansen $\operatorname{Cov}(X,Y)$.
+
+\textbf{Plan:} Først finner vi marginalfordelingene, deretter $E(X)$, $E(Y)$ og $E(XY)$, før vi bruker
+\[
+\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y).
+\]
+
+\textbf{Steg-for-steg kovariansberegning.} Gitt simultanfordelingen:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{c|ccc}
+ & $y=0$ & $y=1$ & $y=2$ \\ \hline
+$x=0$ & 0{,}2 & 0{,}3 & 0{,}1 \\
+$x=1$ & 0{,}1 & 0{,}2 & 0{,}1 \\
+\end{tabular}
+\end{center}
+
+\textbf{Steg 1 -- marginale fordelinger:}
+\begin{align*}
+P(X=0) &= 0{,}2 + 0{,}3 + 0{,}1 = 0{,}6 \\
+P(X=1) &= 0{,}1 + 0{,}2 + 0{,}1 = 0{,}4 \\
+P(Y=0) &= 0{,}2 + 0{,}1 = 0{,}3 \\
+P(Y=1) &= 0{,}3 + 0{,}2 = 0{,}5 \\
+P(Y=2) &= 0{,}1 + 0{,}1 = 0{,}2
+\end{align*}
+
+\textbf{Steg 2 -- forventningsverdier:}
+\begin{align*}
+E(X) &= 0\cdot 0{,}6 + 1\cdot 0{,}4 = 0{,}4 \\
+E(Y) &= 0\cdot 0{,}3 + 1\cdot 0{,}5 + 2\cdot 0{,}2 = 0{,}9
+\end{align*}
+
+\textbf{Steg 3 -- $E(XY)$.} Vi summerer $x_i\cdot y_j \cdot p(x_i, y_j)$ over alle celler. Alle ledd der $x_i = 0$ eller $y_j = 0$ blir 0. Det er kun to celler igjen som bidrar:
+\begin{align*}
+E(XY) &= 1 \cdot 1 \cdot 0{,}2 \;+\; 1 \cdot 2 \cdot 0{,}1 \\
+      &= 0{,}2 + 0{,}2 = 0{,}4
+\end{align*}
+
+\textbf{Steg 4 -- selve kovariansen:}
+\[
+\text{Cov}(X,Y) = E(XY) - E(X)\cdot E(Y) = 0{,}4 - 0{,}4 \cdot 0{,}9 = 0{,}4 - 0{,}36 = 0{,}04.
+\]
+
+\textbf{Tolkning:} Liten positiv kovarians -- når $X$ vokser, har $Y$ en svak tendens til også å vokse. (mai 2021, oppgave 3)
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2026, oppgave 2c}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ og $Y$ være to stokastiske variabler.
+
+\textbf{Oppgitt:} $E(XY)=4$, $E(X)=0{,}9$ og $E(Y)=4{,}5$.
+
+\textbf{Vi skal finne:} Kovariansen $\operatorname{Cov}(X,Y)$.
+
+\textbf{Negativ kovarians.} Gitt en simultanfordeling med $E(XY) = 4$, $E(X) = 0{,}9$, $E(Y) = 4{,}5$:
+\[
+\text{Cov}(X,Y) = 4 - 0{,}9 \cdot 4{,}5 = 4 - 4{,}05 = -0{,}05.
+\]
+Negativ verdi $\Rightarrow$ små negativ samvariasjon. (jan 2026, oppgave 2c)
+\end{eksempel}
+
+\begin{tips}
+Husk rekkefølgen:
+\begin{enumerate}
+\item Finn marginalfordelingene (rad- og kolonne-summer).
+\item Regn ut $E(X)$ og $E(Y)$ fra marginalfordelingene.
+\item Regn ut $E(XY)$ fra hele simultantabellen (drop nuller).
+\item Sett inn i $\text{Cov}(X,Y) = E(XY) - E(X)E(Y)$.
+\end{enumerate}
+Skal du videre til korrelasjonen $\rho$, trenger du også $\sigma_X$ og $\sigma_Y$.
+\end{tips}
+
+\subsection{Korrelasjon}
+\begin{formel}
+\[
+\rho(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \cdot \sigma_Y}, \qquad -1 \le \rho \le 1
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2025, oppgave 1c}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ og $Y$ være to stokastiske variabler. Korrelasjonen $\rho(X,Y)$ måler lineær samvariasjon mellom dem.
+
+\textbf{Oppgitt:}
+\[
+E(XY)=0{,}3,\quad \mu_X=0{,}6,\quad \mu_Y=0{,}7,\quad \sigma_X=0{,}8,\quad \sigma_Y=0{,}781.
+\]
+
+\textbf{Vi skal finne:} Kovariansen $\operatorname{Cov}(X,Y)$ og korrelasjonen $\rho(X,Y)$.
+
+For en simultanfordeling med $E(XY) = 0{,}3$, $\mu_X = 0{,}6$, $\mu_Y = 0{,}7$, $\sigma_X = 0{,}8$, $\sigma_Y = 0{,}781$:
+\[ \text{Cov}(X,Y) = 0{,}3 - 0{,}6 \cdot 0{,}7 = -0{,}12, \]
+\[ \rho(X,Y) = \frac{-0{,}12}{0{,}8 \cdot 0{,}781} = -0{,}192. \]
+Tolkning: liten negativ samvariasjon. (mai 2025, oppgave 1c)
+\end{eksempel}
+
+\subsection{Sum av uavhengige stokastiske variabler}
+For $n$ uavhengige $X_i$ med samme fordeling:
+\begin{formel}
+\[
+E(X_1 + \cdots + X_n) = n\mu, \qquad
+\text{Var}(X_1 + \cdots + X_n) = n\sigma^2,\qquad
+\text{SD}(\cdot) = \sqrt{n}\,\sigma
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 3f}\par
+\medskip
+
+\textbf{Definisjoner:} La $X_i$ være verdien for én tur, og la $Y=X_1+\cdots+X_{120}$ være summen over 120 uavhengige turer.
+
+\textbf{Oppgitt:} $E(X)=0{,}97$ og $\operatorname{Var}(X)=0{,}6691$.
+
+\textbf{Vi skal finne:} Forventningsverdi og standardavvik for summen $Y$.
+
+$Y = X_1 + \cdots + X_{120}$ der $E(X)=0{,}97$ og $\text{Var}(X)=0{,}6691$:
+\[ \mu_Y = 120 \cdot 0{,}97 = 116{,}40, \qquad \sigma_Y = \sqrt{120 \cdot 0{,}6691} = 8{,}9606. \]
+(jan 2022, oppgave 3f)
+\end{eksempel}
+
+
+% =========================================================
+\section{Diskrete fordelinger}
+% =========================================================
+
+\begin{tips}
+\textbf{Valg og begrunnelse av modell.} Eksamen spør ofte: ``Begrunn hvorfor $X$ kan antas å være\dots''. Da bør du sjekke disse kjennetegnene:
+\begin{itemize}
+\item \textbf{Binomisk:} Fast antall delforsøk $n$, to mulige utfall pr. delforsøk, uavhengige delforsøk, konstant suksess-sannsynlighet $p$.
+\item \textbf{Hypergeometrisk:} Trekking \emph{uten} tilbakelegging fra populasjon. Kan tilnærmes med binomisk hvis utvalget er $\le 10\,\%$ av populasjonen.
+\item \textbf{Poisson:} Antall hendelser i tidsrom (eller område) med konstant rate $\lambda$, hendelsene uavhengige, ikke to samtidig.
+\item \textbf{Eksponential:} Ventetid \emph{mellom} hendelser i en poissonprosess.
+\item \textbf{Normalfordeling:} Kontinuerlige måledata, eller tilnærming for sum/gjennomsnitt av mange uavhengige variable (sentralgrenseteoremet).
+\end{itemize}
+\end{tips}
+
+\subsection{Binomisk fordeling}
+$X \sim \text{bin}(n, p)$: antall ``suksesser'' i $n$ uavhengige delforsøk, der hver delforsøk har suksess-sannsynlighet $p$.
+\begin{formel}
+\[
+P(X=x) = \binom{n}{x} p^x (1-p)^{n-x}, \quad x=0,1,\ldots,n
+\]
+\[
+\mu = np, \qquad \sigma^2 = np(1-p), \qquad \sigma = \sqrt{np(1-p)}
+\]
+\end{formel}
+
+\textbf{Kjennetegn:} fast antall delforsøk $n$, hvert delforsøk er uavhengig, og samme suksess-sannsynlighet $p$ hver gang. ``Antall vellykkede av $n$''.
+
+\begin{eksempel}
+\textbf{Kilder: sept 2022, oppgave 2a-c; mai 2024, oppgave 1d; jan 2026, oppgave 1c}\par
+\medskip
+
+\textbf{Definisjoner:} I vannpistoleksempelet lar vi $X$ være antall vannpistoler uten feil blant de 10 som trekkes. I dysleksieksempelet lar vi $X$ være antall barn med dysleksi blant 20 skolebarn. I myntkasteksempelet lar vi $X$ være antall kron i løpet av $n$ myntkast.
+
+\textbf{Punktsannsynlighet:} 10 vannpistoler trekkes, $p=0{,}9$ er sannsynlighet for at en pistol er uten feil. Sannsynlighet for at \emph{alle 10} er i orden:
+\[ P(X=10) = \binom{10}{10} \cdot 0{,}9^{10} \cdot 0{,}1^0 = 1 \cdot 0{,}349 \cdot 1 = 0{,}349. \]
+Sannsynlighet for at \emph{nøyaktig 9} er i orden:
+\[ P(X=9) = \binom{10}{9} \cdot 0{,}9^9 \cdot 0{,}1^1 = 10 \cdot 0{,}387 \cdot 0{,}1 = 0{,}387. \]
+Sannsynlighet for \emph{minst 9} i orden:
+\[ P(X \ge 9) = P(X=9) + P(X=10) = 0{,}387 + 0{,}349 = 0{,}736. \]
+(sept 2022, oppgave 2a-c)
+
+\textbf{Tabelloppslag:} 20 skolebarn, $p=0{,}05$ (dysleksi). Sannsynlighet for nøyaktig 2:
+\[ P(X=2) = \binom{20}{2} \cdot 0{,}05^2 \cdot 0{,}95^{18} = 190 \cdot 0{,}0025 \cdot 0{,}3972 = 0{,}189. \]
+(mai 2024, oppgave 1d)
+
+\textbf{Finne $n$:} Hvor mange myntkast trengs for at $P(\text{minst én kron}) > 0{,}99$? Med $p=0{,}5$ er
+\[ P(X \ge 1) = 1 - P(X=0) = 1 - 0{,}5^n > 0{,}99 \;\Leftrightarrow\; 0{,}5^n < 0{,}01. \]
+Tar logaritmen (snu ulikheten siden $\ln 0{,}5 < 0$):
+\[ n > \frac{\ln 0{,}01}{\ln 0{,}5} \approx 6{,}6 \Rightarrow n \ge 7. \]
+(jan 2026, oppgave 1c)
+\end{eksempel}
+
+\subsection{Hypergeometrisk fordeling -- tilnærmes med binomisk}
+Trekking uten tilbakelegging fra liten populasjon. Hvis utvalget er $\le 10\,\%$ av populasjonen kan vi tilnærme med binomisk fordeling.
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 4}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall spiselige avokadoer blant de $n$ avokadoene Fru Petrell plukker.
+
+\textbf{Modell:} Egentlig er $X$ hypergeometrisk fordelt, fordi avokadoene trekkes uten tilbakelegging. Siden butikken har mange avokadoer sammenlignet med antallet som trekkes, bruker vi binomisk tilnærming: $X\sim \operatorname{Bin}(n,0{,}6)$.
+
+\textbf{Vi skal finne:} For $n=4$ skal vi finne sannsynligheten for at minst tre avokadoer er spiselige, altså $P(X\ge 3)$.
+
+Fru Petrell plukker $n$ avokadoer der 60\,\% er spiselige. Trekkingen er uten tilbakelegging, så $X$ er strengt tatt hypergeometrisk fordelt. Men siden antall avokadoer i butikken er stort sammenlignet med utvalget, endrer ikke sannsynligheten seg særlig fra trekning til trekning, og vi kan tilnærme med en binomisk fordeling: $X \sim \text{bin}(n, 0{,}6)$.
+
+Vi plukker $n=4$ avokadoer. Sannsynligheten for at minst tre er spiselige:
+\[ P(X \ge 3) = 1 - P(X \le 2) = 1 - 0{,}525 = 0{,}475. \]
+(jan 2022, oppgave 4)
+\end{eksempel}
+
+\subsection{Poissonfordeling}
+$X \sim \text{Poisson}(\lambda t)$: antall hendelser i tidsrom $t$ med konstant rate $\lambda$.
+\begin{formel}
+\[
+P(X=x) = \frac{(\lambda t)^x \, e^{-\lambda t}}{x!}, \quad x=0,1,2,\ldots
+\]
+\[
+\mu = \sigma^2 = \lambda t
+\]
+\end{formel}
+
+\textbf{Kjennetegn:} ``antall hendelser i et tidsrom (eller område) med konstant rate''. Hendelsene må være uavhengige.
+
+\begin{tips}
+\textbf{Pass på enhetene!} Hvis $\lambda$ er pr.\ minutt og spørsmålet gjelder en time, må du multiplisere: $\mu = \lambda t = 0{,}15 \cdot 60 = 9$.
+\end{tips}
+
+\begin{eksempel}
+\textbf{Kilder: jan 2022, oppgave 2a; jan 2025, oppgave 4a; jan 2026, oppgave 4b}\par
+\medskip
+
+\textbf{Definisjoner:} I butikkeksempelet lar vi $X$ være antall kunder som kommer innom butikken i løpet av én time. I vulkaneksempelet lar vi $X$ være antall utbrudd i løpet av 5 år. I sommerfugleksempelet lar vi $X$ være antall klippeblåvinger på en uke.
+
+\textbf{Tabelloppslag:} Butikk med $\lambda = 0{,}15$ kunder/minutt. På én time er $\mu = \lambda t = 9$. Sannsynlighet for minst 8 kunder:
+\[ P(X \ge 8) = 1 - P(X \le 7) = 1 - 0{,}324 = 0{,}676. \]
+(jan 2022, oppgave 2a)
+
+\textbf{Direkte utregning fra formel:} Vulkanen Mauna Loa har $\lambda = 0{,}0261$ utbrudd/måned. På 5 år ($t=60$ måneder) er $\lambda t = 1{,}5678$.
+\[ P(X=1) = \frac{1{,}5678^1}{1!}\cdot e^{-1{,}5678} = 1{,}5678 \cdot 0{,}2085 = 0{,}327, \]
+\[ P(X=2) = \frac{1{,}5678^2}{2!}\cdot e^{-1{,}5678} = 0{,}256, \]
+\[ P(X=1 \text{ eller } 2) = 0{,}327 + 0{,}256 = 0{,}583. \]
+(jan 2025, oppgave 4a)
+
+\textbf{Komplement-triks:} Sannsynlighet for minst 3 klippeblåvinger på en uke ($\lambda t = 1{,}68$):
+\[ P(X \ge 3) = 1 - P(X \le 2) = 1 - (P(X=0)+P(X=1)+P(X=2)) = 1 - 0{,}7625 = 0{,}2375. \]
+(jan 2026, oppgave 4b)
+\end{eksempel}
+
+\subsection{Normaltilnærming for poissonfordeling}
+Når $\lambda t \ge 10$ kan vi bruke normaltilnærming med heltallskorreksjon:
+\begin{formel}
+\[
+P(X \le x) \approx G\!\left( \frac{x + 0{,}5 - \mu}{\sigma} \right), \quad
+\mu = \lambda t,\ \sigma = \sqrt{\lambda t}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: sept 2022, oppgave 3b}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall bøter i løpet av en periode på 5 dager.
+
+\textbf{Oppgitt:} Det gis i gjennomsnitt $\lambda=17$ bøter per dag. For 5 dager blir $\mu=17\cdot 5=85$ og $\sigma=\sqrt{85}$.
+
+\textbf{Vi skal finne:} Sannsynligheten $P(82\le X\le 101)$.
+
+$\lambda = 17$ bøter pr.\ dag, periode på 5 dager $\Rightarrow$ $\mu = \lambda t = 85$, $\sigma = \sqrt{85}$.
+\begin{align*}
+P(82 \le X \le 101) &= P(81 < X \le 101) \\
+ &\approx G\!\left(\tfrac{101+0{,}5-85}{\sqrt{85}}\right) - G\!\left(\tfrac{81+0{,}5-85}{\sqrt{85}}\right) \\
+ &= G(1{,}79) - G(-0{,}38) = 0{,}9633 - 0{,}3520 = 0{,}611.
+\end{align*}
+\textbf{Heltallskorreksjonen} ($+0{,}5$) er viktig fordi vi tilnærmer en diskret fordeling med en kontinuerlig. (sept 2022, oppgave 3b)
+\end{eksempel}
+
+
+% =========================================================
+\section{Kontinuerlige fordelinger}
+% =========================================================
+
+\subsection{Normalfordeling}
+$X \sim N(\mu, \sigma)$. Standardiseres ved $Z$-transformasjon:
+\begin{formel}
+\[
+Z = \frac{X - \mu}{\sigma} \sim N(0,1)
+\]
+\[
+P(X \le x) = G\!\left(\frac{x-\mu}{\sigma}\right)
+\]
+\end{formel}
+
+\textbf{Tre nyttige formler:}
+\begin{itemize}
+\item $P(X \le x) = G\!\left(\tfrac{x-\mu}{\sigma}\right)$
+\item $P(X > x) = 1 - G\!\left(\tfrac{x-\mu}{\sigma}\right)$
+\item $P(a \le X \le b) = G\!\left(\tfrac{b-\mu}{\sigma}\right) - G\!\left(\tfrac{a-\mu}{\sigma}\right)$
+\end{itemize}
+
+\textbf{Bruk symmetri:} $G(-z) = 1 - G(z)$.
+
+\begin{eksempel}
+\textbf{Kilder: jan 2025, oppgave 5a; mai 2021, oppgave 5a; mai 2021, oppgave 5b; mai 2025, oppgave 4d}\par
+\medskip
+
+\textbf{Definisjoner:} I kaffeeksempelet lar vi $X$ være mengden kaffe i én kopp. I IQ-eksemplene lar vi $W$ være IQ-skåren til en tilfeldig valgt person. I såpeeksempelet lar vi $X$ være fyllmengden i en beholder.
+
+\textbf{Sannsynlighet i én hale:} $X \sim N(25,\ 0{,}48)$. Sannsynlighet for at $X < 24$:
+\[ P(X \le 24) = G\!\left(\frac{24-25}{0{,}48}\right) = G(-2{,}08) = 0{,}0188. \]
+(jan 2025, oppgave 5a)
+
+\textbf{Sannsynlighet i øvre hale:} $W \sim N(100,\ 15)$ (IQ). Sannsynlighet over 120:
+\[ P(W > 120) = 1 - G\!\left(\frac{120-100}{15}\right) = 1 - G(1{,}33) = 1 - 0{,}9082 = 0{,}0918. \]
+(mai 2021, oppgave 5a)
+
+\textbf{Sannsynlighet i et intervall:} $W \sim N(100, 15)$. Sannsynlighet for $95 \le W < 110$:
+\[ G\!\left(\tfrac{110-100}{15}\right) - G\!\left(\tfrac{95-100}{15}\right) = G(0{,}67) - G(-0{,}33) = 0{,}7486 - 0{,}3707 = 0{,}3779. \]
+(mai 2021, oppgave 5b)
+
+\textbf{Bakveien -- finn $\mu$:} $\sigma = 5$, vi vil at $P(X < 300) < 0{,}001$.
+\[ G\!\left(\tfrac{300-\mu}{5}\right) = 0{,}001 \Rightarrow \tfrac{300-\mu}{5} = -z_{0{,}001} = -3{,}090 \Rightarrow \mu = 300 + 3{,}090\cdot 5 = 315{,}45. \]
+Produsenten må stille inn $\mu \ge 315{,}45$ ml. (mai 2025, oppgave 4d)
+\end{eksempel}
+
+\textbf{Sum av normalfordelte:} Hvis $X \sim N(\mu, \sigma)$ og $Y = nX$ er summen av $n$ uavhengige slike, så
+\[ Y \sim N(n\mu,\ \sqrt{n}\,\sigma). \]
+\textbf{Eksempel:} 5 trykk på kaffeknappen gir $Y \sim N(125,\ \sqrt{5}\cdot 0{,}48) = N(125,\ 1{,}0733)$, og
+\[ P(Y > 127) = 1 - G\!\left(\tfrac{127-125}{1{,}0733}\right) = 1 - G(1{,}86) = 0{,}0314. \]
+(jan 2025, oppgave 5b)
+
+\subsection{Eksponentialfordeling}
+Modellerer ventetid i en poissonprosess med rate $\lambda$. Med andre ord: hvis hendelser skjer med rate $\lambda$, så er tiden $T$ til neste hendelse eksponentialfordelt.
+\begin{formel}
+\[
+f(t) = \lambda e^{-\lambda t}, \quad
+F(t) = 1 - e^{-\lambda t}, \quad
+\mu = \frac{1}{\lambda}, \quad t \ge 0
+\]
+\end{formel}
+
+\textbf{Nyttige uttrykk:}
+\[ P(T \le t) = 1 - e^{-\lambda t}, \quad P(T > t) = e^{-\lambda t}, \quad P(a \le T \le b) = e^{-\lambda a} - e^{-\lambda b}. \]
+
+\begin{eksempel}
+\textbf{Kilder: jan 2022, oppgave 2b; jan 2025, oppgave 4b; mai 2024, oppgave 3d}\par
+\medskip
+
+\textbf{Definisjoner:} La $T$ være ventetiden til første hendelse. I butikkeksempelet måles $T$ i minutter til første kunde kommer. I vulkaneksempelet måles $T$ i måneder til første utbrudd.
+
+\textbf{Ventetid mellom $a$ og $b$:} Butikk med $\lambda = 0{,}15$ kunder/minutt. Sannsynlighet for at den første kunden kommer mellom 4 og 6 minutter:
+\[ P(4 \le T < 6) = e^{-0{,}15 \cdot 4} - e^{-0{,}15 \cdot 6} = 0{,}5488 - 0{,}4066 = 0{,}142. \]
+(jan 2022, oppgave 2b)
+
+\textbf{Minimum-ett-tilfelle via $F$:} Vulkan, $\lambda = 0{,}0261$/måned, periode på 60 måneder. Sannsynlighet for minst ett utbrudd:
+\[ P(T \le 60) = F(60) = 1 - e^{-0{,}0261 \cdot 60} = 1 - e^{-1{,}5678} = 1 - 0{,}2085 = 0{,}792. \]
+\textbf{Merk:} Dette er samme svar som $1 - P(X=0)$ i Poisson-fordelingen -- ``minst ett utbrudd i tidsrommet'' = ``første utbrudd kommer før tidsrommet er omme''. (jan 2025, oppgave 4b)
+
+\textbf{Direkte fra $\mu$:} Hannmygg har forventet levetid 17 døgn $\Rightarrow$ $\lambda = 1/17$. Sannsynlighet for første hendelse innen 0,5 døgn med $\lambda = 0{,}8$ (annet scenario):
+\[ P(T \le 0{,}5) = 1 - e^{-0{,}8 \cdot 0{,}5} = 1 - e^{-0{,}4} = 0{,}330. \]
+(mai 2024, oppgave 3d)
+\end{eksempel}
+
+\subsection{Eksponentialfordelingens minneløshet}
+\begin{formel}
+\[
+P(T > s + t \mid T > s) = P(T > t)
+\]
+\end{formel}
+Sannsynligheten for å vente $t$ ekstra avhenger ikke av hvor lenge man allerede har ventet.
+
+\begin{eksempel}
+\textbf{Kilde: mai 2023, oppgave 5b}\par
+\medskip
+
+\textbf{Definisjoner:} La $T$ være gjenværende levetid for en hunnmygg, målt i døgn.
+
+\textbf{Oppgitt:} Forventet levetid er 26 døgn, så $\lambda=1/26$.
+
+\textbf{Vi skal finne:} Sannsynligheten for å leve minst 20 døgn til.
+
+For en hunnmygg med forventet levetid 26 døgn ($\lambda = 1/26$) er sannsynligheten for å leve i minst 20 døgn til (gitt at den fortsatt lever) ganske enkelt:
+\[ P(T > 20) = e^{-20/26} = 0{,}463. \]
+Vi behøver ikke å betinge på at den allerede har levd 10 døgn -- minneløsheten gjør at det blir samme svar uansett. (mai 2023, oppgave 5b)
+\end{eksempel}
+
+\subsection{Sentralgrenseteoremet}
+For sum $Y = X_1 + \cdots + X_n$ av uavhengige variable med samme fordeling (uansett hva $X_i$'s fordeling er):
+\begin{formel}
+\[
+Y \approx N(n\mu,\ \sqrt{n}\,\sigma) \quad \text{når } n \text{ er stor}
+\]
+\end{formel}
+
+\textbf{Når brukes det?} Når du har en sum (eller gjennomsnitt) av mange uavhengige variable og vil regne en sannsynlighet -- da kan du bruke normaltilnærming uavhengig av den underliggende fordelingen.
+
+\begin{eksempel}
+\textbf{Kilder: mai 2023, oppgave 4; jan 2022, oppgave 3f}\par
+\medskip
+
+\textbf{Definisjoner:} La $X_i$ være antall liter søppel levert av husstand $i$. La $Y=X_1+X_2+\cdots+X_{130}$ være totalt antall liter søppel fra 130 husstander. I fergeeksempelet er $W$ totalt antall lastebiler over 120 turer.
+
+\textbf{Sannsynlighet for total mengde:} 130 husstander leverer søppel. $E(X_i)=65$ liter, $\text{Var}(X_i)=900$.
+\[ \mu_Y = 130 \cdot 65 = 8450, \qquad \sigma_Y = \sqrt{130 \cdot 900} = 342{,}1. \]
+Sannsynlighet for mer enn 8500 liter totalt:
+\[ P(Y > 8500) = 1 - G\!\left(\tfrac{8500-8450}{342{,}1}\right) = 1 - G(0{,}15) = 1 - 0{,}5596 = 0{,}442. \]
+(mai 2023, oppgave 4)
+
+\textbf{Sentralgrenseteoremet på en simultanfordelings-variabel:} Ferge med 120 turer per måned. $W$ = totalt antall lastebiler. Fra simultanfordelingen ble det funnet $E(Y_i) = 0{,}97$, $\text{Var}(Y_i) = 0{,}6691$.
+\[ \mu_W = 120 \cdot 0{,}97 = 116{,}4, \qquad \sigma_W = \sqrt{120 \cdot 0{,}6691} = 8{,}96. \]
+\[ P(W > 115) = 1 - G\!\left(\tfrac{115 - 116{,}4}{8{,}96}\right) = 1 - G(-0{,}16) = 1 - 0{,}4364 = 0{,}5636. \]
+(jan 2022, oppgave 3f)
+\end{eksempel}
+
+
+% =========================================================
+\section{Estimering og konfidensintervall}
+% =========================================================
+
+\subsection{Punktestimater}
+Vanlige estimatorer:
+\begin{itemize}
+\item Forventningsverdi: $\hat{\mu} = \bar{X} = \frac{1}{n}\sum X_i$
+\item Andel: $\hat{p} = X/n$
+\item Poissonrate: $\hat{\lambda} = X/t$
+\item Utvalgsvarians: $S^2 = \frac{1}{n-1}\left(\sum X_i^2 - n\bar{X}^2\right)$
+\end{itemize}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 3a}\par
+\medskip
+
+\textbf{Definisjoner:} La $x_1,\ldots,x_5$ være de fem målte reisetidene til Emil.
+
+\textbf{Data:} $38, 35, 37, 34, 37$ minutter.
+
+\textbf{Vi skal finne:} Punktestimatet $\bar x$ for forventet reisetid $\mu$, og utvalgsvariansen $s^2$.
+
+Emil Svensson måler tidsbruken til jobb i 5 dager: $38, 35, 37, 34, 37$ minutter.
+\[ \hat\mu = \bar x = \tfrac{1}{5}(38+35+37+34+37) = 36{,}2. \]
+\[ s^2 = \tfrac{1}{4}\left(38^2 + 35^2 + 37^2 + 34^2 + 37^2 - 5\cdot 36{,}2^2\right) = \tfrac{10{,}8}{4} = 2{,}7, \quad s = 1{,}643. \]
+(mai 2022, oppgave 3a)
+\end{eksempel}
+
+\subsection{Konfidensintervall for $\mu$ med kjent $\sigma$}
+\begin{formel}
+\[
+\bar{X} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}
+\]
+\end{formel}
+
+\textbf{Tolkning:} Vi er $(1-\alpha)\cdot 100\,\%$ sikre på at intervallet inneholder den sanne verdien til $\mu$.
+
+\begin{eksempel}
+\textbf{Generisk eksempel}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være den sanne forventningsverdien i populasjonen.
+
+\textbf{Oppgitt:} $n=40$, $\bar x=48$ og kjent $\sigma=5$.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $\mu$.
+
+Anta $n=40$ målinger med $\bar x = 48$, kjent $\sigma = 5$. Et 95\,\% konfidensintervall ($\alpha=0{,}05$, $z_{0{,}025}=1{,}960$):
+\[ 48 \pm 1{,}960 \cdot \tfrac{5}{\sqrt{40}} = 48 \pm 1{,}55 = [46{,}45,\ 49{,}55]. \]
+Vi er 95\,\% sikre på at den sanne forventningsverdien ligger i dette intervallet.
+\end{eksempel}
+
+\subsection{Konfidensintervall for $\mu$ med ukjent $\sigma$}
+\begin{formel}
+\[
+\bar{X} \pm t_{\alpha/2,\,n-1} \cdot \frac{S}{\sqrt{n}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2023, oppgave 7a}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann forventet distanse for smågnagere.
+
+\textbf{Oppgitt:} $n=12$, $\bar x=46{,}0$ og $s^2=116{,}0$.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $\mu$.
+
+For 12 smågnagere er $\bar x = 46{,}0$ km og $s^2 = 116{,}0$. Et 95\,\% konfidensintervall ($\alpha=0{,}05$, $\nu=11$, $t_{0{,}025,11}=2{,}201$):
+\[ 46{,}0 \pm 2{,}201 \cdot \tfrac{\sqrt{116{,}0}}{\sqrt{12}} = 46{,}0 \pm 6{,}84 = [39{,}16,\ 52{,}84]. \]
+(mai 2023, oppgave 7a)
+\end{eksempel}
+
+\subsection{Konfidensintervall for andel $p$}
+Krever $n\hat{p}(1-\hat{p}) \ge 5$.
+\begin{formel}
+\[
+\hat{p} \pm z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 4b}\par
+\medskip
+
+\textbf{Definisjoner:} La $p$ være den sanne andelen unge som får kjøpe alkohol. La $\hat p$ være andelen i utvalget, og la $X$ være antall i utvalget som fikk kjøpe alkohol.
+
+\textbf{Oppgitt:} $n=1393$ og $X=258$.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $p$.
+
+1393 unge sendt inn i butikker, 258 fikk kjøpe alkohol $\Rightarrow$ $\hat p = 258/1393 = 0{,}1852$. Et 95\,\% KI ($z_{0{,}025} = 1{,}960$):
+\[ 0{,}1852 \pm 1{,}960 \cdot \sqrt{\tfrac{0{,}1852\cdot 0{,}8148}{1393}} = 0{,}1852 \pm 0{,}0204 = [0{,}1648,\ 0{,}2056]. \]
+Sjekk forutsetning: $1393 \cdot 0{,}1852 \cdot 0{,}8148 = 210{,}2 \gg 5$ \checkmark. (mai 2021, oppgave 4b)
+\end{eksempel}
+
+\subsection{Konfidensintervall for poissonraten $\lambda$}
+Krever $\lambda t > 10$.
+\begin{formel}
+\[
+\hat{\lambda} \pm z_{\alpha/2} \cdot \sqrt{\frac{\hat{\lambda}}{t}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2024, oppgave 3b}\par
+\medskip
+
+\textbf{Definisjoner:} La $\lambda$ være sann rate for antall elektroner per sekund. La $X$ være antall observerte elektroner i tidsrommet $t$.
+
+\textbf{Oppgitt:} $X=101$ elektroner og $t=120$ sekunder.
+
+\textbf{Vi skal finne:} Et 90\,\% konfidensintervall for poissonraten $\lambda$.
+
+101 elektroner observert i 120 sek $\Rightarrow$ $\hat\lambda = 101/120 = 0{,}842$. Et 90\,\% KI ($z_{0{,}05} = 1{,}645$):
+\[ 0{,}842 \pm 1{,}645 \cdot \sqrt{\tfrac{0{,}842}{120}} = 0{,}842 \pm 0{,}138 = [0{,}704,\ 0{,}980]. \]
+(mai 2024, oppgave 3b)
+\end{eksempel}
+
+\subsection{Konfidensintervall for standardavvik $\sigma$}
+Bruker kjikvadratfordelingen.
+\begin{formel}
+\[
+\left[\sqrt{\frac{(n-1)S^2}{\chi^2_{\alpha/2,\,n-1}}}, \quad
+       \sqrt{\frac{(n-1)S^2}{\chi^2_{1-\alpha/2,\,n-1}}}\right]
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2024, oppgave 4b}\par
+\medskip
+
+\textbf{Definisjoner:} La $\sigma$ være det sanne standardavviket i populasjonen, og la $s^2$ være utvalgsvariansen.
+
+\textbf{Oppgitt:} $n=6$ og $s^2=7{,}7667$.
+
+\textbf{Vi skal finne:} Et 90\,\% konfidensintervall for $\sigma$.
+
+$n=6$, $s^2 = 7{,}7667$. Et 90\,\% KI ($\alpha=0{,}1$, $\nu=5$, $\chi^2_{0{,}05,5}=11{,}07$, $\chi^2_{0{,}95,5}=1{,}15$):
+\[ \left[\sqrt{\tfrac{5\cdot 7{,}7667}{11{,}07}},\ \sqrt{\tfrac{5\cdot 7{,}7667}{1{,}15}}\right] = [1{,}87,\ 5{,}81]. \]
+\textbf{Merk:} Den \emph{lille} kvantilverdien gir den \emph{store} grensen. (mai 2024, oppgave 4b)
+\end{eksempel}
+
+\subsection{Antall observasjoner for ønsket konfidensintervall-lengde}
+For andel $p$:
+\begin{formel}
+\[
+n \ge 4\hat{p}(1-\hat{p}) \cdot \left(\frac{z_{\alpha/2}}{L}\right)^2
+\]
+der $L$ er ønsket total lengde av intervallet.
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 4c}\par
+\medskip
+
+\textbf{Definisjoner:} La $n$ være antall observasjoner som trengs, og la $L$ være ønsket total lengde på konfidensintervallet.
+
+\textbf{Oppgitt:} $\hat p=0{,}1852$, $L=0{,}02$ og $z_{0{,}025}=1{,}960$.
+
+\textbf{Vi skal finne:} Minste nødvendige $n$.
+
+$\hat p = 0{,}1852$, $L = 0{,}02$, $z_{0{,}025} = 1{,}960$:
+\[ n \ge 4 \cdot 0{,}1852 \cdot 0{,}8148 \cdot \left(\tfrac{1{,}960}{0{,}02}\right)^2 = 5797{,}3 \Rightarrow n = 5798. \]
+(mai 2021, oppgave 4c)
+\end{eksempel}
+
+\subsection{Konfidensintervall for to uavhengige utvalg}
+Standardverktøyet når oppgaven spør om FORSKJELLEN mellom to populasjoner: ``hvor mye bedre er behandling $A$ enn $B$?'', ``forskjell i andel mellom to land?''. Hvis intervallet inneholder 0, kan vi IKKE konkludere at gruppene er forskjellige på det aktuelle konfidensnivået.
+
+\subsubsection*{Forskjell mellom $\mu_X$ og $\mu_Y$ (kjent $\sigma$)}
+\begin{formel}
+\[
+(\bar X - \bar Y) \;\pm\; z_{\alpha/2}\sqrt{\frac{\sigma_X^2}{n_X} + \frac{\sigma_Y^2}{n_Y}}
+\]
+\end{formel}
+
+\subsubsection*{Forskjell mellom $\mu_X$ og $\mu_Y$ (ukjent $\sigma$, antatt likt)}
+\begin{formel}
+\[
+(\bar X - \bar Y) \;\pm\; t_{\alpha/2,\,n_X+n_Y-2} \cdot S_P \sqrt{\frac{1}{n_X} + \frac{1}{n_Y}}
+\]
+\[
+S_P^2 = \frac{(n_X-1)S_X^2 + (n_Y-1)S_Y^2}{n_X + n_Y - 2}, \qquad S_P = \sqrt{S_P^2}
+\]
+\end{formel}
+
+\subsubsection*{Forskjell mellom andeler $p_X - p_Y$}
+Krever $n_X \hat p_X(1-\hat p_X) \ge 5$ og $n_Y \hat p_Y(1-\hat p_Y) \ge 5$.
+\begin{formel}
+\[
+(\hat p_X - \hat p_Y) \;\pm\; z_{\alpha/2}\sqrt{\frac{\hat p_X(1-\hat p_X)}{n_X} + \frac{\hat p_Y(1-\hat p_Y)}{n_Y}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- $\mu_X - \mu_Y$ med kjent $\sigma$}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu_A$ og $\mu_B$ være forventet fyllmengde på to produksjonslinjer.
+
+\textbf{Oppgitt:} $n_A=50$, $\bar x_A=500{,}5$, $\sigma_A=2{,}0$; $n_B=40$, $\bar x_B=499{,}8$, $\sigma_B=2{,}5$.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $\mu_A - \mu_B$.
+
+\[ SE = \sqrt{\tfrac{2{,}0^2}{50} + \tfrac{2{,}5^2}{40}} = \sqrt{0{,}08 + 0{,}15625} = 0{,}486. \]
+\[ (500{,}5 - 499{,}8) \pm 1{,}960 \cdot 0{,}486 = 0{,}7 \pm 0{,}953 = [-0{,}253,\ 1{,}653]. \]
+\textbf{Tolkning:} 0 ligger i intervallet $\Rightarrow$ ingen signifikant forskjell mellom linjene på 95\,\%-nivå.
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- pooled $t$-KI for $\mu_X - \mu_Y$}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu_A$ og $\mu_B$ være forventet eksamensresultat i to klasser.
+
+\textbf{Oppgitt:} $n_A=15$, $\bar x_A=72{,}3$, $s_A^2=84{,}1$; $n_B=18$, $\bar x_B=68{,}7$, $s_B^2=91{,}4$. Anta lik varians.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $\mu_A - \mu_B$.
+
+\[ S_P^2 = \tfrac{14\cdot 84{,}1 + 17\cdot 91{,}4}{31} = \tfrac{2731{,}2}{31} = 88{,}10, \quad S_P = 9{,}386. \]
+$\nu = 31$, $t_{0{,}025,\,31} \approx 2{,}040$:
+\[ SE = 9{,}386 \cdot \sqrt{\tfrac{1}{15} + \tfrac{1}{18}} = 9{,}386 \cdot 0{,}3496 = 3{,}282. \]
+\[ (72{,}3 - 68{,}7) \pm 2{,}040 \cdot 3{,}282 = 3{,}6 \pm 6{,}70 = [-3{,}10,\ 10{,}30]. \]
+\textbf{Tolkning:} 0 ligger i intervallet $\Rightarrow$ ingen signifikant forskjell mellom klassene.
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- KI for $p_X - p_Y$}\par
+\medskip
+
+\textbf{Definisjoner:} La $p_M$ og $p_K$ være sann andel som svarer ``ja'' blant menn og kvinner.
+
+\textbf{Oppgitt:} $X = 130$ av $n_M = 200$ menn svarer ja; $Y = 90$ av $n_K = 180$ kvinner.
+
+\textbf{Vi skal finne:} Et 95\,\% konfidensintervall for $p_M - p_K$.
+
+\[ \hat p_M = 130/200 = 0{,}65, \qquad \hat p_K = 90/180 = 0{,}50. \]
+Sjekk forutsetninger: $200\cdot 0{,}65\cdot 0{,}35 = 45{,}5 \ge 5$ \checkmark, $180\cdot 0{,}5\cdot 0{,}5 = 45 \ge 5$ \checkmark.
+\[ SE = \sqrt{\tfrac{0{,}65 \cdot 0{,}35}{200} + \tfrac{0{,}5 \cdot 0{,}5}{180}} = \sqrt{0{,}001138 + 0{,}001389} = 0{,}0503. \]
+\[ (0{,}65 - 0{,}50) \pm 1{,}960 \cdot 0{,}0503 = 0{,}15 \pm 0{,}099 = [0{,}051,\ 0{,}249]. \]
+\textbf{Tolkning:} 0 ligger UTENFOR intervallet $\Rightarrow$ andelene er signifikant forskjellige; menn svarer ja med 5--25 prosentpoeng høyere andel.
+\end{eksempel}
+
+\begin{tips}
+\textbf{Vanlige feller:}
+\begin{itemize}
+\item Frihetsgrader for pooled $t$ er $\nu = n_X + n_Y - 2$ (ikke $n_X-1+n_Y-1$ behandlet adskilt).
+\item Vekt med frihetsgrader ($n_X-1$, $n_Y-1$) i $S_P^2$ -- ikke med $n$-ene direkte.
+\item Pooled antar $\sigma_X^2 = \sigma_Y^2$. Hvis variansene er svært ulike, bruk Welch (se tipsboks under uparet $t$-test).
+\item Paret design er ikke to-utvalg -- regn differansene $D_i = X_i - Y_i$ først og bruk ett-utvalgs $t$-KI.
+\end{itemize}
+\end{tips}
+
+\subsection{Bootstrap-konfidensintervall}
+Brukes når dataene ikke kan antas normalfordelte og utvalget er for lite til at sentralgrenseteoremet kan anvendes. Idéen er å resample MED TILBAKELEGGING fra dataene mange ganger og bygge usikkerhetsmålet direkte fra disse resamplene.
+
+\subsubsection*{Tradisjonelt bootstrap-KI}
+\begin{fremgangsmate}
+\begin{enumerate}
+\item Trekk $N$ verdier med tilbakelegging fra de $N$ originale observasjonene.
+\item Beregn statistikken (typisk $\bar x$) for resamplet og lagre verdien.
+\item Gjenta steg 1--2 mange ganger (typisk 999 eller 1000).
+\item La $\mathrm{SE}_{\text{boot}}$ være standardavviket av de lagrede bootstrap-statistikkene.
+\item Bygg intervallet: $\bar x \pm z_{\alpha/2} \cdot \mathrm{SE}_{\text{boot}}$.
+\end{enumerate}
+\end{fremgangsmate}
+
+\subsubsection*{Prosentilintervall}
+Egner seg når bootstrap-fordelingen er skjev eller har tunge haler. Sorter de 999 bootstrap-statistikkene og bruk verdi nr.\ 25 ($\approx 2{,}5$-prosentilen) som nedre grense og nr.\ 975 ($\approx 97{,}5$-prosentilen) som øvre grense. Ingen antakelse om symmetri.
+
+\begin{eksempel}
+\textbf{Generisk eksempel}\par
+\medskip
+
+\textbf{Definisjoner:} La $X_1,\ldots,X_n$ være observerte ventetider på et legekontor.
+
+\textbf{Oppgitt:} $\bar x = 14{,}3$ minutter og bootstrap-standardfeil $\mathrm{SE}_{\text{boot}} = 1{,}8$.
+
+\textbf{Vi skal finne:} Et 95\,\% bootstrap-KI for $\mu$.
+
+\textbf{Tradisjonelt:}
+\[ 14{,}3 \pm 1{,}960 \cdot 1{,}8 = 14{,}3 \pm 3{,}528 = [10{,}77,\ 17{,}83]. \]
+\textbf{Prosentilintervall:} Sorter de 999 bootstrap-snittene og les av verdiene i posisjon 25 og 975, f.eks.\ $[10{,}9,\ 17{,}5]$.
+\end{eksempel}
+
+\begin{tips}
+\textbf{Bootstrap-feller:}
+\begin{itemize}
+\item Bootstrap fjerner ikke skjevhet i utvalget -- det estimerer kun usikkerhet ut fra dataene du allerede har.
+\item Hvis bootstrap-fordelingen er tydelig skjev, bruk prosentilintervall fremfor normaltilnærming.
+\item Forveksle ikke bootstrap-fordelingen til $\bar x$ med populasjonsfordelingen til enkelt-observasjoner.
+\end{itemize}
+\end{tips}
+
+
+% =========================================================
+\section{Hypotesetesting}
+% =========================================================
+
+\subsection{Generell oppskrift}
+\begin{fremgangsmate}
+\begin{enumerate}
+\item Sett opp $H_0$ (nullhypotese) og $H_1$ (alternativhypotese).
+\item Velg riktig testobservator basert på datatype og kjent/ukjent $\sigma$.
+\item Finn kritisk verdi (kvantil) fra tabell, ut fra signifikansnivå $\alpha$ og antall frihetsgrader.
+\item Regn ut verdien til testobservatoren.
+\item Sammenlign med kvantilet og konkluder (forkast eller behold $H_0$).
+\end{enumerate}
+\end{fremgangsmate}
+
+\textbf{Forklaring av notasjon:}
+\begin{itemize}
+\item $H_0$: påstanden vi prøver å motbevise (status quo).
+\item $H_1$: det vi vil vise (det ``interessante'').
+\item Type I-feil: forkaste $H_0$ når den er sann (sannsynlighet $\alpha$).
+\item Type II-feil: beholde $H_0$ når den er gal.
+\end{itemize}
+
+\subsection{En- og tosidige tester / forkastingsregler}
+ 
+Forkastingsregelen forteller \emph{når} vi har grunnlag for å forkaste $H_0$. Hvilken regel som gjelder, avhenger av hvordan $H_1$ er formulert.
+ 
+\subsubsection*{Venstresidig test}
+\begin{formel}
+\[ H_0: \mu \ge \mu_0 \qquad H_1: \mu < \mu_0 \]
+Forkast $H_0$ dersom testobservatoren er \textbf{mindre enn} $-$kvantil:
+\[ t < -t_{\alpha,\,\nu} \quad \text{eller} \quad z < -z_\alpha. \]
+\end{formel}
+ 
+\textbf{Idé:} Vi prøver å vise at $\mu$ er \emph{lavere} enn $\mu_0$. Da må gjennomsnittet $\bar x$ ligge langt \emph{under} $\mu_0$ for at vi skal tro på $H_1$. Det gir en testobservator som er sterkt negativ.
+ 
+\begin{eksempel}
+\textbf{Bensinpumpe -- får jeg for lite bensin?} Telleverket viser 5,00 L. Vi mistenker at pumpa gir for lite. 10 målinger: $\bar x = 4{,}974$, $\sigma = 0{,}04$, $\mu_0 = 5{,}00$, $\alpha = 0{,}05$.
+\[ H_0: \mu \ge 5{,}00 \quad\text{(pumpa er rettferdig eller for raus)} \]
+\[ H_1: \mu < 5{,}00 \quad\text{(pumpa gir for lite)} \]
+\[ z = \frac{4{,}974 - 5{,}00}{0{,}04/\sqrt{10}} = -2{,}06 \]
+Kvantil: $z_{0{,}05} = 1{,}645$. Forkast hvis $z < -1{,}645$.
+ 
+Siden $-2{,}06 < -1{,}645$ $\Rightarrow$ \textbf{forkast $H_0$}. Pumpa gir signifikant for lite. (jan 2022, oppgave 5a)
+\end{eksempel}
+ 
+\subsubsection*{Høyresidig test}
+\begin{formel}
+\[ H_0: \mu \le \mu_0 \qquad H_1: \mu > \mu_0 \]
+Forkast $H_0$ dersom testobservatoren er \textbf{større enn} kvantilet:
+\[ t > t_{\alpha,\,\nu} \quad \text{eller} \quad z > z_\alpha. \]
+\end{formel}
+ 
+\textbf{Idé:} Vi prøver å vise at $\mu$ er \emph{høyere} enn $\mu_0$. Da må $\bar x$ ligge langt \emph{over} $\mu_0$. Det gir en testobservator som er sterkt positiv.
+ 
+\begin{eksempel}
+\textbf{IT-studenters IQ -- har de høyere IQ enn 100?} Vi måler 5 IT-studenter: $\bar x = 111{,}80$, $s = 7{,}791$, $\mu_0 = 100$, $\alpha = 0{,}05$.
+\[ H_0: \mu \le 100 \quad\text{(IQ er ikke høyere enn snittet)} \]
+\[ H_1: \mu > 100 \quad\text{(IQ er høyere enn snittet)} \]
+\[ t = \frac{111{,}80 - 100}{7{,}791/\sqrt{5}} = 3{,}39 \]
+Kvantil: $\nu = 4$, $t_{0{,}05,\,4} = 2{,}132$. Forkast hvis $t > 2{,}132$.
+ 
+Siden $3{,}39 > 2{,}132$ $\Rightarrow$ \textbf{forkast $H_0$}. IT-studentene har signifikant høyere IQ enn 100. (mai 2021, oppgave 5c)
+\end{eksempel}
+ 
+\subsubsection*{Tosidig test}
+\begin{formel}
+\[ H_0: \mu = \mu_0 \qquad H_1: \mu \ne \mu_0 \]
+Forkast $H_0$ dersom \textbf{absoluttverdien} av testobservatoren overstiger $\alpha/2$-kvantilet:
+\[ |t| > t_{\alpha/2,\,\nu} \quad \text{eller} \quad |z| > z_{\alpha/2}. \]
+\end{formel}
+ 
+\textbf{Idé:} Vi prøver å vise at $\mu$ er \emph{forskjellig} fra $\mu_0$ -- uten å si i hvilken retning. Da kan både svært positive og svært negative testobservatorer føre til forkasting. Vi deler signifikansnivået på 2 (én halv på hver side).
+ 
+\begin{eksempel}
+\textbf{Søvn og eksamen -- er det noen sammenheng?} I lineær regresjon tester vi om stigningstallet er 0 (ingen sammenheng). $\hat\beta = 6{,}63$, $\text{SE}(\hat\beta) = 0{,}625$, $n = 10$, $\alpha = 0{,}05$.
+\[ H_0: \beta = 0 \quad\text{(ingen sammenheng)} \]
+\[ H_1: \beta \ne 0 \quad\text{(det finnes en sammenheng -- en eller annen vei)} \]
+\[ t = \frac{6{,}63}{0{,}625} = 10{,}61 \]
+Kvantil: $\nu = n-2 = 8$, $t_{0{,}025,\,8} = 2{,}306$. Forkast hvis $|t| > 2{,}306$.
+ 
+Siden $|10{,}61| > 2{,}306$ $\Rightarrow$ \textbf{forkast $H_0$}. Det finnes en signifikant sammenheng. (mai 2025, oppgave 5d)
+\end{eksempel}
+ 
+\begin{tips}
+\textbf{Hvordan velge mellom en- og tosidig?} Les spørsmålet:
+\begin{itemize}
+\item ``Er $\mu$ \emph{større enn}/\emph{lavere enn}/\emph{økt}/\emph{redusert}?'' $\Rightarrow$ ensidig.
+\item ``Er det \emph{forskjell} på/skiller seg fra?'' $\Rightarrow$ tosidig.
+\end{itemize}
+ 
+\textbf{Visuell huskeregel:} Tegn en $t$- eller $z$-fordeling. Forkastingsområdet ligger på den siden $H_1$ "peker":
+\begin{itemize}
+\item $H_1: \mu < \mu_0$ $\Rightarrow$ forkastingsområde i \emph{venstre} hale.
+\item $H_1: \mu > \mu_0$ $\Rightarrow$ forkastingsområde i \emph{høyre} hale.
+\item $H_1: \mu \ne \mu_0$ $\Rightarrow$ forkastingsområde i \emph{begge} haler ($\alpha/2$ i hver).
+\end{itemize}
+\end{tips}
+
+\textbf{Hvordan velge mellom en- og tosidig?} Les spørsmålet:
+\begin{itemize}
+\item ``Er $\mu$ \emph{større enn}/\emph{lavere enn}/\emph{økt}/\emph{redusert}?'' $\Rightarrow$ ensidig.
+\item ``Er det \emph{forskjell} på/skiller seg fra?'' $\Rightarrow$ tosidig.
+\end{itemize}
+
+\subsection{Z-test for forventningsverdi (kjent $\sigma$)}
+\begin{formel}
+\[
+Z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}} \sim N(0,1)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2025, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann forventet effektbruk for de nye julelysene. Her er $\mu_0=50$ verdien vi tester mot i nullhypotesen.
+
+\textbf{Oppgitt:} $\sigma=5$, $n=40$, $\bar x=48$ og $\mu_0=50$.
+
+\textbf{Vi skal teste:} Om de nye julelysene har lavere forventet energiforbruk enn 50 W.
+
+\textbf{Komplett gjennomgang -- venstresidig Z-test:} Nye julelys, $\sigma = 5$ W (kjent), $\mu_0 = 50$ W. Utvalg $n=40$ med $\bar x = 48$.
+
+\textbf{1. Hypoteser:}
+\begin{align*}
+H_0: \mu &\ge 50\ \text{W (energiforbruk ikke lavere enn standard)} \\
+H_1: \mu &< 50\ \text{W (energiforbruk lavere)}
+\end{align*}
+
+\textbf{2. Testobservator:} Z-test fordi $\sigma$ er kjent.
+\[ z = \frac{48-50}{5/\sqrt{40}} = \frac{-2}{0{,}7906} = -2{,}53. \]
+
+\textbf{3. Kvantil:} Venstresidig, $\alpha=0{,}05 \Rightarrow z_{0{,}05} = 1{,}645$. Forkast hvis $z < -1{,}645$.
+
+\textbf{4. Konklusjon:} $-2{,}53 < -1{,}645 \Rightarrow$ \textbf{forkast $H_0$}. De nye lysene har lavere energiforbruk.
+
+\textbf{5. p-verdi:} $p = G(-2{,}53) = 0{,}0057$. Siden $p < \alpha$ bekreftes konklusjonen. (jan 2025, oppgave 6)
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2025, oppgave 4b-c}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann forventet fyllmengde i en såpebeholder. Her er $\mu_0=302$ ml verdien vi tester mot.
+
+\textbf{Oppgitt:} $\sigma=5$, $n=6$ og $\bar x=298{,}67$.
+
+\textbf{Vi skal teste:} Om forventet fyllmengde er lavere enn 302 ml.
+
+\textbf{Z-test som ikke gir forkasting:} Såpebeholder, $\sigma=5$ ml, $\mu_0 = 302$ ml. Utvalg $n=6$ med $\bar x = 298{,}67$.
+\[ z = \frac{298{,}67 - 302}{5/\sqrt{6}} = -1{,}63. \]
+Venstresidig, $\alpha=0{,}05 \Rightarrow z_{0{,}05} = 1{,}645$. Siden $-1{,}63 > -1{,}645$ kan vi \textbf{ikke forkaste} $H_0$.
+
+p-verdi: $p = G(-1{,}63) = 0{,}0516$. Akkurat over $\alpha=0{,}05$ -- ``på grensen''. (mai 2025, oppgave 4b-c)
+\end{eksempel}
+
+\subsection{T-test for forventningsverdi (ukjent $\sigma$)}
+\begin{formel}
+\[
+T = \frac{\bar{X} - \mu_0}{S / \sqrt{n}} \sim t_{n-1}
+\]
+\end{formel}
+
+\textbf{Når $\sigma$ er ukjent} må vi estimere standardavviket fra dataene ved hjelp av \textbf{utvalgsstandardavviket}:
+\begin{formel}
+\[
+S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X)^2 \;=\; \frac{1}{n-1}\!\left(\sum_{i=1}^n X_i^2 - n\bar X^2\right), \qquad S = \sqrt{S^2}
+\]
+\end{formel}
+
+\textbf{Navn på størrelsene:}
+\begin{itemize}
+\item $S^2$ er \textbf{utvalgsvariansen} (engelsk: \emph{sample variance}). Den estimerer populasjonsvariansen $\sigma^2$.
+\item $S$ er \textbf{utvalgsstandardavviket}.
+\item Faktoren $n-1$ kalles \emph{Bessels korreksjon} -- en frihetsgrad er brukt opp av at vi regnet ut $\bar X$.
+\end{itemize}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 5c}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann forventet IQ blant IT-studenter.
+
+\textbf{Data:} $111,\ 102,\ 121,\ 107,\ 118$.
+
+\textbf{Vi skal teste:} Om forventet IQ er høyere enn 100. Populasjonsstandardavviket $\sigma$ er ukjent, derfor bruker vi t-test med utvalgsstandardavviket $s$.
+
+\textbf{Komplett gjennomgang -- høyresidig T-test:} 5 IT-studenters IQ: $111,\ 102,\ 121,\ 107,\ 118$. Test om forventningsverdien er høyere enn 100 ($\alpha = 0{,}05$).
+
+\textbf{1. Hypoteser:}
+\[ H_0: \mu \le 100, \quad H_1: \mu > 100. \]
+
+\textbf{2. Regn ut $\bar x$:}
+\[ \bar x = \tfrac{1}{5}(111 + 102 + 121 + 107 + 118) = \tfrac{559}{5} = 111{,}80. \]
+
+\textbf{3. Regn ut $\sum x_i^2$:}
+\[ \sum x_i^2 = 111^2 + 102^2 + 121^2 + 107^2 + 118^2 = 12\,321 + 10\,404 + 14\,641 + 11\,449 + 13\,924 = 62\,739. \]
+
+\textbf{4. Regn ut utvalgsvariansen $s^2$:}
+\[ s^2 = \frac{1}{n-1}\!\left(\sum x_i^2 - n\bar x^2\right) = \frac{1}{4}\!\left(62\,739 - 5\cdot 111{,}80^2\right) = \frac{62\,739 - 62\,496{,}20}{4} = \frac{242{,}80}{4} = 60{,}70. \]
+
+\textbf{5. Utvalgsstandardavviket:}
+\[ s = \sqrt{60{,}70} = 7{,}791. \]
+
+\textbf{6. Testobservator:}
+\[ t = \frac{\bar x - \mu_0}{s/\sqrt{n}} = \frac{111{,}80 - 100}{7{,}791/\sqrt{5}} = \frac{11{,}80}{3{,}485} = 3{,}39. \]
+
+\textbf{7. Kvantil og konklusjon:} $\nu = n-1 = 4$, $t_{0{,}05,\,4} = 2{,}132$. Høyresidig: forkast hvis $t > 2{,}132$. Siden $t = 3{,}39 > 2{,}132$ \textbf{forkastes $H_0$}. IT-studentenes IQ er signifikant høyere enn 100. (mai 2021, oppgave 5c)
+\end{eksempel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2024, oppgave 4a}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann forventet kadmiumverdi i fiskene.
+
+\textbf{Data:} $42,\ 50,\ 47,\ 47,\ 48,\ 49$.
+
+\textbf{Vi skal teste:} Om $\mu<50$.
+
+\textbf{Komplett gjennomgang -- venstresidig T-test:} Kadmium-måling i 6 fisker: $42,\ 50,\ 47,\ 47,\ 48,\ 49$. Test om $\mu < 50$ ($\alpha = 0{,}05$).
+
+\textbf{1. Hypoteser:}
+\[ H_0: \mu \ge 50, \quad H_1: \mu < 50. \]
+
+\textbf{2. Gjennomsnitt:}
+\[ \bar x = \tfrac{1}{6}(42 + 50 + 47 + 47 + 48 + 49) = \tfrac{283}{6} = 47{,}17. \]
+
+\textbf{3. Sum av kvadratene:}
+\[ \sum x_i^2 = 1764 + 2500 + 2209 + 2209 + 2304 + 2401 = 13\,387. \]
+
+\textbf{4. Utvalgsvariansen:}
+\[ s^2 = \tfrac{1}{5}(13\,387 - 6\cdot 47{,}17^2) = \tfrac{1}{5}(13\,387 - 13\,348{,}17) = \tfrac{38{,}83}{5} = 7{,}767. \]
+
+\textbf{5. Utvalgsstandardavvik:}
+\[ s = \sqrt{7{,}767} = 2{,}787. \]
+
+\textbf{6. Testobservator:}
+\[ t = \frac{47{,}17 - 50}{2{,}787/\sqrt{6}} = \frac{-2{,}83}{1{,}138} = -2{,}49. \]
+
+\textbf{7. Konklusjon:} $\nu = 5$, $t_{0{,}05,\,5} = 2{,}015$. Venstresidig: forkast hvis $t < -2{,}015$. Siden $-2{,}49 < -2{,}015$ \textbf{forkastes $H_0$}. (mai 2024, oppgave 4a)
+\end{eksempel}
+
+\begin{tips}
+\textbf{Slik regner du ut $s^2$ raskt med kalkulator:}
+\begin{enumerate}
+\item Regn ut $\bar x$ først.
+\item Regn ut $\sum x_i^2$ ved å kvadrere hver verdi og summere.
+\item Sett inn i $s^2 = \frac{1}{n-1}(\sum x_i^2 - n\bar x^2)$.
+\item Ta kvadratrot: $s = \sqrt{s^2}$.
+\end{enumerate}
+\textbf{Sjekk:} Hvis $\sum x_i^2 - n\bar x^2$ blir negativ, har du gjort en regnefeil -- summen kan aldri bli negativ.
+\end{tips}
+
+\subsection{Paret t-test}
+Bruk når man har observasjoner i par (f.eks.\ før/etter, eller to målinger på samme individ). La $D_i = X_i - Y_i$.
+\begin{formel}
+\[
+T = \frac{\bar{D}}{S_D / \sqrt{n}} \sim t_{n-1}
+\]
+\end{formel}
+
+\textbf{Når bruke paret vs.\ uparet?}
+\begin{itemize}
+\item \textbf{Paret}: samme individ målt to ganger (f.eks.\ før og etter behandling).
+\item \textbf{Uparet}: to uavhengige grupper (f.eks.\ to forskjellige klasser).
+\end{itemize}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 4}\par
+\medskip
+
+\textbf{Definisjoner:} La $D_i$ være differansen i blodsukker for pasient $i$: $D_i=\text{før}_i-\text{etter}_i$. Hvis $D_i>0$, betyr det at blodsukkeret gikk ned etter inntak av lurium.
+
+\textbf{Vi skal teste:} Om forventet differanse $\mu_D$ er større enn 0.
+
+\textbf{Komplett gjennomgang -- paret t-test:} Blodsukker hos 4 pasienter før og etter inntak av lurium:
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+Pasient & 1 & 2 & 3 & 4 \\
+\midrule
+Før & 17{,}1 & 20{,}9 & 16{,}0 & 24{,}3 \\
+Etter & 15{,}2 & 18{,}7 & 15{,}5 & 20{,}2 \\
+$D$ (før-etter) & 1{,}9 & 2{,}2 & 0{,}5 & 4{,}1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{1. Hypoteser:}
+\[ H_0: \mu_D \le 0\ \text{(blodsukker ikke redusert)}, \quad H_1: \mu_D > 0\ \text{(redusert)}. \]
+
+\textbf{2. Regn ut} $\bar d$ \textbf{og} $s_D$:
+\[ \bar d = \tfrac{1}{4}(1{,}9+2{,}2+0{,}5+4{,}1) = 2{,}175 \]
+\[ s_D^2 = \tfrac{1}{3}(1{,}9^2+2{,}2^2+0{,}5^2+4{,}1^2 - 4\cdot 2{,}175^2) = \tfrac{1}{3}(25{,}51 - 18{,}9225) = 2{,}1958. \]
+
+\textbf{3. Testobservator:}
+\[ t = \frac{2{,}175}{\sqrt{2{,}1958/4}} = \frac{2{,}175}{0{,}7407} = 2{,}94. \]
+
+\textbf{4. Kvantil og konklusjon:} $\nu = n-1 = 3$, $t_{0{,}05,3} = 2{,}353$. Høyresidig: forkast hvis $t > 2{,}353$. Siden $2{,}94 > 2{,}353$ \textbf{forkastes $H_0$}. Lurium gir signifikant lavere blodsukker. (mai 2022, oppgave 4)
+\end{eksempel}
+
+\subsection{Uparet t-test (to grupper)}
+Bruk når to uavhengige grupper med ukjent (men antatt likt) standardavvik skal sammenlignes.
+\begin{formel}
+\[
+T = \frac{\bar{X} - \bar{Y}}{S_P \sqrt{1/n_X + 1/n_Y}} \sim t_{n_X+n_Y-2}
+\]
+\[
+S_P^2 = \frac{(n_X-1)S_X^2 + (n_Y-1)S_Y^2}{n_X + n_Y - 2}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2023, oppgave 7b}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu_X$ være forventet distanse for smågnagere i Rondane, og la $\mu_Y$ være forventet distanse for smågnagere i Jotunheimen.
+
+\textbf{Oppgitt:} $n_X=12$, $\bar x=46{,}0$, $s_X^2=116{,}0$, $n_Y=14$, $\bar y=52{,}8$ og $s_Y^2=82{,}6$.
+
+\textbf{Vi skal teste:} Om Jotunheimen-gruppen har større forventet distanse enn Rondane-gruppen.
+
+Smågnagere fra to fjellområder: Rondane $n_X=12$, $\bar x = 46{,}0$, $s_X^2 = 116{,}0$. Jotunheimen $n_Y=14$, $\bar y = 52{,}8$, $s_Y^2 = 82{,}6$. Test om Jotunheimen-gruppen har større forventet distanse ($\alpha = 0{,}05$).
+\begin{align*}
+s_P^2 &= \frac{11 \cdot 116 + 13 \cdot 82{,}6}{24} = \frac{2349{,}8}{24} = 97{,}91 \\
+t &= \frac{46{,}0 - 52{,}8}{\sqrt{97{,}91} \cdot \sqrt{1/12 + 1/14}} = -1{,}75
+\end{align*}
+$\nu = 24$, $t_{0{,}05,24} = 1{,}711$. Vi har venstresidig test: forkast hvis $t < -1{,}711$. Siden $-1{,}75 < -1{,}711$ \textbf{forkastes $H_0$}. (mai 2023, oppgave 7b)
+\end{eksempel}
+
+\begin{tips}
+\textbf{Welch t-test (ulike varianser).} Hvis du ikke vil anta $\sigma_X^2 = \sigma_Y^2$, kan du bruke Welch-varianten:
+\[ T = \frac{\bar X - \bar Y}{\sqrt{S_X^2/n_X + S_Y^2/n_Y}}. \]
+Frihetsgradene gis av Welch--Satterthwaite-tilnærmingen. I pensum brukes pooled-formelen over, men Welch er Python-standard (\texttt{stats.ttest\_ind(..., equal\_var=False)}) og anbefales i praksis når variansene er tydelig forskjellige.
+\end{tips}
+
+\subsection{Test for andel $p$}
+Krever $np_0(1-p_0) \ge 5$.
+\begin{formel}
+\[
+Z = \frac{X - np_0}{\sqrt{np_0(1-p_0)}} \sim N(0,1)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2023, oppgave 6c}\par
+\medskip
+
+\textbf{Definisjoner:} La $p$ være sann andel nyfødte med tengilis sinistra. La $X$ være antall nyfødte med tilstanden i utvalget.
+
+\textbf{Oppgitt:} $X=24$, $n=4231$ og $p_0=0{,}0035$.
+
+\textbf{Vi skal teste:} Om $p>p_0$.
+
+24 av 4231 nyfødte med tengilis sinistra. Test om $p > p_0 = 0{,}0035$ ($\alpha=0{,}1$, $z_{0{,}1}=1{,}282$):
+\[ z = \frac{24 - 4231\cdot 0{,}0035}{\sqrt{4231\cdot 0{,}0035 \cdot 0{,}9965}} = \frac{9{,}19}{\sqrt{14{,}76}} = 2{,}39 > 1{,}282 \Rightarrow \text{forkast } H_0. \]
+(mai 2023, oppgave 6c)
+\end{eksempel}
+
+\subsection{p-verdi (signifikanssannsynlighet)}
+$p$-verdien er den minste $\alpha$ vi kunne valgt og fortsatt forkastet $H_0$. \\
+Forkast $H_0$ dersom $p\text{-verdi} \le \alpha$.
+
+\begin{tips}
+For en venstresidig test med observator $z$ er $p\text{-verdi} = G(z)$. \\
+For en høyresidig test: $p\text{-verdi} = 1 - G(z)$. \\
+For en tosidig test: $p\text{-verdi} = 2\cdot\min\{G(z),\ 1-G(z)\}$.
+\end{tips}
+
+\begin{eksempel}
+\textbf{Kilder: jan 2022, oppgave 5b; sept 2022, oppgave 4b}\par
+\medskip
+
+\textbf{Definisjoner:} $p$-verdien er sannsynligheten, gitt at $H_0$ er sann, for å få en testobservator minst like ekstrem som den observerte.
+
+\textbf{Z-test:} Bensinpumpe-test gir $z = -2{,}06$. Slår vi opp i tabellen for standardnormalfordelingen finner vi $p = G(-2{,}06) = 0{,}0197$.
+\begin{itemize}
+\item Med $\alpha = 0{,}05$: $p < \alpha \Rightarrow$ forkast $H_0$.
+\item Med $\alpha = 0{,}01$: $p > \alpha \Rightarrow$ behold $H_0$.
+\end{itemize}
+(jan 2022, oppgave 5b)
+
+\textbf{T-test (overslag):} pH-måling i innsjø gir $t = 0{,}583$ med $\nu = 4$. Tabellen viser $t_{0{,}25,4} = 0{,}741$. Siden $0{,}583 < 0{,}741$ er $p > 0{,}25$. Vi kan ikke forkaste $H_0$ for noen rimelig $\alpha$. (sept 2022, oppgave 4b)
+\end{eksempel}
+
+
+% =========================================================
+\section{Kjikvadrat-tester}
+% =========================================================
+
+Kjikvadrat-tester brukes for KATEGORISKE data -- telleantall i flere kategorier eller en kontingenstabell. Testobservatoren sammenligner observerte antall $O$ med forventede antall $E$ under $H_0$, og er kjikvadrat-fordelt under $H_0$ med antall frihetsgrader $\nu$ som avhenger av testtypen. Kritiske verdier finnes i \textbf{tabell E.6}.
+
+\subsection{Tilpasningstest (goodness-of-fit)}
+Tester om observerte frekvenser i $k$ kategorier passer en hypotetisk fordeling (f.eks.\ om en terning er rettferdig, eller om data følger Poisson).
+\begin{formel}
+\[
+\chi^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i} \;\sim\; \chi^2_\nu, \qquad \nu = k - 1 - m
+\]
+\end{formel}
+Her er $O_i$ observert antall, $E_i$ forventet antall under $H_0$, $k$ antall kategorier og $m$ antall parametre som er estimert fra dataene (typisk $m=0$). Forkast $H_0$ hvis $\chi^2 > \chi^2_{\alpha,\,\nu}$.
+
+\textbf{Forutsetning:} alle $E_i \ge 5$. Hvis flere $E_i < 5$, slå sammen kategorier før testen.
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- er terningen rettferdig?}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være sidetallet ved et terningkast og $p_i = P(X=i)$ for $i=1,\ldots,6$.
+
+\textbf{Oppgitt:} 60 kast med observerte frekvenser $O=(8,\ 9,\ 11,\ 13,\ 10,\ 9)$.
+
+\textbf{Vi skal teste:} $H_0: p_i = 1/6$ for alle $i$, mot $H_1$: minst én $p_i \ne 1/6$, med $\alpha = 0{,}05$.
+
+\textbf{Forventet:} $E_i = n\cdot p_i = 60 \cdot \tfrac{1}{6} = 10$ for alle sider; alle $E_i \ge 5$ \checkmark.
+
+\textbf{Testobservator:}
+\[ \chi^2 = \tfrac{(8-10)^2 + (9-10)^2 + (11-10)^2 + (13-10)^2 + (10-10)^2 + (9-10)^2}{10} = \tfrac{4+1+1+9+0+1}{10} = 1{,}60. \]
+
+\textbf{Konklusjon:} $\nu = k-1 = 5$, $\chi^2_{0{,}05,\,5} = 11{,}07$. Siden $1{,}60 < 11{,}07$ kan vi \textbf{ikke forkaste} $H_0$ -- ingen grunnlag for å hevde at terningen er urettferdig.
+\end{eksempel}
+
+\subsection{Test for uavhengighet (kontingenstabell)}
+Tester om to kategoriske variable er uavhengige i populasjonen. Data oppgis som en $r \times c$-tabell der hver celle har observert antall $O_{ij}$.
+\begin{formel}
+\[
+\chi^2 = \sum_{i,j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}} \;\sim\; \chi^2_\nu, \qquad
+E_{ij} = \frac{(\text{rad-sum}_i)(\text{kol-sum}_j)}{n}, \qquad \nu = (r-1)(c-1)
+\]
+\end{formel}
+Forkast $H_0$ (uavhengighet) hvis $\chi^2 > \chi^2_{\alpha,\,\nu}$.
+
+\begin{eksempel}
+\textbf{Generisk eksempel -- kjønn vs.\ trandrikking}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være kjønn (M/K) og $Y$ være om personen tar tran daglig (Ja/Nei).
+
+\textbf{Oppgitt:} I et utvalg på $n=100$ er antallene:
+\begin{center}
+\begin{tabular}{l|cc|c}
+ & Ja & Nei & Rad-sum \\ \hline
+Menn & 20 & 30 & 50 \\
+Kvinner & 25 & 25 & 50 \\ \hline
+Kol-sum & 45 & 55 & 100
+\end{tabular}
+\end{center}
+
+\textbf{Vi skal teste:} Om kjønn og trandrikking er uavhengige, $\alpha=0{,}05$.
+
+\textbf{Forventet under uavhengighet} ($E_{ij} = \text{rad}_i \cdot \text{kol}_j / n$):
+\[ E_{M,Ja} = \tfrac{50\cdot 45}{100} = 22{,}5, \quad E_{M,Nei} = 27{,}5, \quad E_{K,Ja} = 22{,}5, \quad E_{K,Nei} = 27{,}5. \]
+Alle $E_{ij} \ge 5$ \checkmark.
+
+\textbf{Testobservator:}
+\[ \chi^2 = \tfrac{(20-22{,}5)^2}{22{,}5} + \tfrac{(30-27{,}5)^2}{27{,}5} + \tfrac{(25-22{,}5)^2}{22{,}5} + \tfrac{(25-27{,}5)^2}{27{,}5} = 0{,}278 + 0{,}227 + 0{,}278 + 0{,}227 = 1{,}010. \]
+
+\textbf{Konklusjon:} $\nu = (2-1)(2-1) = 1$, $\chi^2_{0{,}05,\,1} = 3{,}841$. Siden $1{,}010 < 3{,}841$ kan vi \textbf{ikke forkaste} $H_0$ -- ingen statistisk evidens for at kjønn og trandrikking er avhengige.
+\end{eksempel}
+
+\begin{tips}
+\textbf{Vanlige feller for $\chi^2$-tester:}
+\begin{itemize}
+\item Frihetsgrader: for goodness-of-fit er $\nu = k - 1 - m$ (trekk fra ekstra for hver parameter estimert fra dataene). For uavhengighet er $\nu = (r-1)(c-1)$ -- IKKE $r\cdot c - 1$.
+\item Forventet antall (ikke observert) i nevneren.
+\item Hvis flere $E_{ij} < 5$, slå sammen kategorier.
+\item Sjekk at marginalsummene treffer totalsummen $n$.
+\end{itemize}
+\end{tips}
+
+
+% =========================================================
+\section{Ikke-parametriske tester}
+% =========================================================
+
+\subsection{Når brukes ikke-parametriske tester?}
+Bruk dem når data ikke kan antas å være normalfordelt, f.eks.\ kategoriske data eller små utvalg uten kjent fordeling.
+
+\subsection{Mann-Whitney-Wilcoxon (uparet)}
+\begin{fremgangsmate}
+\begin{enumerate}
+\item Slå sammen og sorter alle observasjoner; gi rangnummer.
+\item Beregn rangsum $W$ for én av gruppene (typisk minste).
+\item Regn ut testobservator $U = W - \frac{n_1(n_1+1)}{2}$.
+\item Slå opp kritisk verdi $u_{\alpha, n_1, n_2}$.
+\item Forkast $H_0$ dersom $U \le $ kritisk verdi.
+\end{enumerate}
+\end{fremgangsmate}
+
+\begin{eksempel}
+\textbf{Kilde: jan 2022, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La gruppe $X$ være observasjonene for stoff $X$, og la gruppe $Y$ være observasjonene for stoff $Y$. Rangsum $W_Y$ er summen av rangene til observasjonene i gruppe $Y$, og $U$ er testobservatoren i Mann-Whitney-Wilcoxon-testen.
+
+\textbf{Vi skal teste:} Om det er forskjell mellom de to uavhengige gruppene.
+
+Stoff $X$: $5{,}7,\ 7{,}3,\ 7{,}6,\ 6{,}0,\ 6{,}5$. Stoff $Y$: $4{,}9,\ 7{,}4,\ 5{,}3,\ 4{,}6,\ 6{,}2$. Test for forskjell, $\alpha=0{,}05$.
+
+Sortert (med gruppe og rang):
+\begin{center}
+\begin{tabular}{lcccccccccc}
+\toprule
+Verdi & 4{,}6 & 4{,}9 & 5{,}3 & 5{,}7 & 6{,}0 & 6{,}2 & 6{,}5 & 7{,}3 & 7{,}4 & 7{,}6 \\
+Gruppe & Y & Y & Y & X & X & Y & X & X & Y & X \\
+Rang & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\bottomrule
+\end{tabular}
+\end{center}
+$W_Y = 1 + 2 + 3 + 6 + 9 = 21$ (minste rangsum), $u = 21 - \tfrac{5\cdot 6}{2} = 6$. Kritisk verdi $u_{0{,}05,5,5} = 2$.
+
+Siden $u = 6 > 2$ kan vi \textbf{ikke forkaste} $H_0$. \textbf{Tankegang:} Stor forskjell på gruppene gir liten $W$ og dermed liten $U$. Forkast hvis $U$ er tilstrekkelig liten. (jan 2022, oppgave 6)
+\end{eksempel}
+
+\subsection{Wilcoxon paret test}
+\begin{fremgangsmate}
+\begin{enumerate}
+\item Regn ut differanser $D_i$.
+\item Drop $D_i = 0$. Sorter resterende etter $|D_i|$ og gi rangnummer.
+\item Tildel samme gjennomsnittsrang ved like verdier.
+\item Beregn $W^+$ (sum av rang for positive $D_i$) og $W^-$.
+\item Bruk minste, $W = \min(W^+, W^-)$.
+\item Forkast $H_0$ dersom $W \le $ kritisk verdi.
+\end{enumerate}
+\end{fremgangsmate}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La $D_i$ være differansen mellom de to rangeringsverdiene for student $i$. $W^+$ er summen av rangene for positive differanser, og $W^-$ er summen av rangene for negative differanser.
+
+\textbf{Vi skal teste:} Om det er systematisk forskjell mellom de to parede målingene.
+
+10 studenter rangerte forholdet til mor og far (skala 1--5). Differansene blir: $-2,\ 0,\ 1,\ -1,\ -1,\ 3,\ -1,\ -2,\ 0,\ 1$.
+
+Vi dropper de to differansene som er 0 og sorterer resten etter $|D|$. De fem første har $|D|=1$ (rang $1+2+3+4+5)/5 = 3$). To har $|D|=2$ (rang $(6+7)/2 = 6{,}5$). Én har $|D|=3$ (rang 8).
+
+\[ W^- = 3 + 3 + 3 + 6{,}5 + 6{,}5 = 22, \qquad W^+ = 3 + 3 + 8 = 14 \Rightarrow W = 14. \]
+$n=8$, $\alpha=0{,}1$ tosidig, kritisk verdi $k=5$. Siden $W = 14 > 5$ kan vi \textbf{ikke forkaste} $H_0$. (mai 2022, oppgave 6)
+\end{eksempel}
+
+
+% =========================================================
+\section{Variansanalyse (ANOVA)}
+% =========================================================
+
+\subsection{Enveis variansanalyse}
+Brukes når man skal sammenligne forventningsverdiene til $k \ge 3$ grupper.
+\[
+H_0: \mu_1 = \mu_2 = \cdots = \mu_k, \qquad H_1: \text{ikke alle like}
+\]
+
+\subsection{Sums-of-squares og testobservator}
+\begin{formel}
+\[
+SSG = \sum_{i=1}^k n_i (\bar{y}_i - \bar{y})^2, \qquad
+SSE = \sum_{i=1}^k \sum_{j=1}^{n_i}(y_{ij} - \bar{y}_i)^2
+\]
+\[
+S_G^2 = \frac{SSG}{k-1}, \qquad S_E^2 = \frac{SSE}{n-k}
+\]
+\[
+F = \frac{S_G^2}{S_E^2} \sim F_{k-1,\,n-k}
+\]
+\end{formel}
+Forkast $H_0$ hvis $F > F_{\alpha,\,k-1,\,n-k}$.
+
+\begin{tips}
+Her betyr $k$ antall grupper, $n_i$ antall observasjoner i gruppe $i$, $n$ totalt antall observasjoner, $\bar y_i$ gjennomsnittet i gruppe $i$, $\bar y$ gjennomsnittet for alle observasjonene samlet, $SSG$ variasjon mellom gruppene, $SSE$ variasjon innad i gruppene, $S_G^2$ middelkvadrat mellom grupper, og $S_E^2$ middelkvadrat innen grupper.
+\end{tips}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2024, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La $k$ være antall grupper, og la $n$ være totalt antall observasjoner. Her sammenlignes tre leverandører, så $k=3$.
+
+\textbf{Oppgitt:} $n=15$, $SSG=12{,}13$ og $SSE=29{,}2$.
+
+\textbf{Vi skal teste:} Om de tre leverandørene har lik forventningsverdi.
+
+3 leverandører, 5 målinger fra hver ($n=15$, $k=3$). Oppgitt: $SSG = 12{,}13$, $SSE = 29{,}2$. Test ($\alpha = 0{,}05$):
+\begin{align*}
+S_G^2 &= \frac{12{,}13}{3-1} = 6{,}065 \\
+S_E^2 &= \frac{29{,}2}{15-3} = 2{,}433 \\
+F &= \frac{6{,}065}{2{,}433} = 2{,}49
+\end{align*}
+Frihetsgrader $\nu_1 = 2$, $\nu_2 = 12$, $F_{0{,}05,2,12} = 3{,}8853$. Siden $F = 2{,}49 < 3{,}8853$ kan vi \textbf{ikke forkaste} $H_0$. (mai 2024, oppgave 6)
+\end{eksempel}
+
+
+% =========================================================
+\section{Lineær regresjon}
+% =========================================================
+
+\subsection{Empirisk korrelasjonskoeffisient}
+\begin{formel}
+\[
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}
+         {\sqrt{\sum (x_i-\bar{x})^2 \cdot \sum (y_i-\bar{y})^2}}, \qquad -1 \le r \le 1
+\]
+\end{formel}
+$r^2$ tolkes som andelen av variasjonen i $y$ som forklares av $x$.
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 5a}\par
+\medskip
+
+\textbf{Definisjoner:} La $x$ være temperatur, og la $y$ være strømforbruk. Den empiriske korrelasjonskoeffisienten $r$ måler styrken på den lineære sammenhengen mellom $x$ og $y$.
+
+\textbf{Vi skal finne:} Korrelasjonen $r$ mellom temperatur og strømforbruk.
+
+Temperatur ($x$) og strømforbruk ($y$): $\bar x = 3$, $\bar y = 60$. Ferdig-utregnet:
+\[ \sum(x_i-\bar x)(y_i-\bar y) = -1667, \quad \sum (x_i-\bar x)^2 = 746, \quad \sum (y_i-\bar y)^2 = 3778. \]
+\[ r = \frac{-1667}{\sqrt{746}\cdot \sqrt{3778}} = -0{,}993. \]
+\textbf{Tolkning:} Sterk negativ lineær sammenheng -- høyere temperatur gir lavere strømforbruk. (mai 2022, oppgave 5a)
+\end{eksempel}
+
+\subsection{Estimering av regresjonslinjen $\hat{y} = \hat{\alpha} + \hat{\beta}x$}
+\begin{formel}
+\[
+\hat{\beta} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}, \qquad
+\hat{\alpha} = \bar{y} - \hat{\beta}\,\bar{x}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2022, oppgave 5b}\par
+\medskip
+
+\textbf{Definisjoner:} Vi ønsker å estimere en lineær modell på formen
+\[
+\hat y=\hat\alpha+\hat\beta x.
+\]
+Her er $\hat y$ predikert strømforbruk, $x$ er temperatur, $\hat\alpha$ er estimert konstantledd, og $\hat\beta$ er estimert stigningstall.
+
+\textbf{Vi skal finne:} Den estimerte regresjonslinjen.
+
+Med samme tall som over:
+\[ \hat\beta = \frac{-1667}{746} = -2{,}235, \quad \hat\alpha = 60 - (-2{,}235)\cdot 3 = 66{,}7. \]
+\[ \boxed{\hat y = 66{,}7 - 2{,}235\, x} \]
+(mai 2022, oppgave 5b)
+\end{eksempel}
+
+\subsection{Variansestimat og standardfeil}
+\begin{formel}
+\[
+SSE = \sum (y_i - \hat{\alpha} - \hat{\beta}x_i)^2, \qquad
+S_E^2 = \frac{SSE}{n-2}
+\]
+\[
+\text{SE}(\hat{\beta}) = \sqrt{\frac{S_E^2}{\sum (x_i - \bar{x})^2}}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: sept 2022, oppgave 5c}\par
+\medskip
+
+\textbf{Definisjoner:} La $SSE$ være summen av kvadrerte residualer, $S_E^2$ være residualvariansen, og $\operatorname{SE}(\hat\beta)$ være standardfeilen til estimert stigningstall.
+
+\textbf{Oppgitt:} $n=10$, $SSE=26{,}859$ og $\sum (x_i-\bar x)^2=2086{,}9$.
+
+\textbf{Vi skal finne:} $S_E^2$ og $\operatorname{SE}(\hat\beta)$.
+
+Hvilepuls vs.\ alder: $n = 10$, $SSE = 26{,}859$, $\sum (x_i-\bar x)^2 = 2086{,}9$.
+\[ S_E^2 = \tfrac{26{,}859}{8} = 3{,}357, \qquad \text{SE}(\hat\beta) = \sqrt{\tfrac{3{,}357}{2086{,}9}} = 0{,}040. \]
+(sept 2022, oppgave 5c)
+\end{eksempel}
+
+\subsection{Hypotesetest for stigningstall ($\beta=0$)}
+\begin{formel}
+\[
+T = \frac{\hat{\beta} - \beta_0}{\text{SE}(\hat{\beta})} \sim t_{n-2}
+\]
+\end{formel}
+Tosidig test: forkast $H_0: \beta=0$ hvis $|t| > t_{\alpha/2,\,n-2}$.
+
+\begin{eksempel}
+\textbf{Kilde: mai 2025, oppgave 5d}\par
+\medskip
+
+\textbf{Definisjoner:} La $\beta$ være det sanne stigningstallet i regresjonsmodellen.
+
+\textbf{Vi skal teste:} Om det finnes en lineær sammenheng mellom søvn og eksamensresultat, altså $H_0:\beta=0$ mot $H_1:\beta\ne 0$.
+
+Søvn vs.\ eksamensresultat: $\hat\beta = 6{,}63$, $\text{SE}(\hat\beta) = 0{,}625$, $n=10$, $\alpha = 0{,}05$.
+\[ t = \frac{6{,}63}{0{,}625} = 10{,}61. \]
+$\nu = 8$, $t_{0{,}025,8} = 2{,}306$. Siden $|t| = 10{,}61 > 2{,}306$ \textbf{forkastes $H_0$} -- det er en signifikant lineær sammenheng. (mai 2025, oppgave 5d)
+\end{eksempel}
+
+\subsection{Konfidensintervall for forventningsverdien $E(Y)$ ved gitt $x$}
+\begin{formel}
+\[
+\hat{\alpha} + \hat{\beta} x \;\pm\; t_{\alpha/2,\,n-2} \cdot s \cdot
+\sqrt{\frac{1}{n} + \left(\frac{x - \bar{x}}{s/\text{SE}(\hat{\beta})}\right)^2}
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: sept 2022, oppgave 5e}\par
+\medskip
+
+\textbf{Definisjoner:} La $x$ være alder og $Y$ være hvilepuls. Her finner vi et konfidensintervall for forventet hvilepuls når $x=35$.
+
+\textbf{Oppgitt:} $\hat\alpha=69{,}22$, $\hat\beta=0{,}114$, $s=\sqrt{3{,}357}$, $\operatorname{SE}(\hat\beta)=0{,}040$, $\bar x=41{,}9$, $n=10$.
+
+\textbf{Vi skal finne:} Et konfidensintervall for $E(Y)$ når $x=35$.
+
+Hvilepuls for 35-åringer: $\hat\alpha = 69{,}22$, $\hat\beta = 0{,}114$, $s = \sqrt{3{,}357} = 1{,}832$, $\text{SE}(\hat\beta) = 0{,}040$, $\bar x = 41{,}9$, $n=10$, $t_{0{,}05,8}=1{,}860$.
+\[ 69{,}22 + 0{,}114\cdot 35 \pm 1{,}860 \cdot 1{,}832 \cdot \sqrt{\tfrac{1}{10} + \left(\tfrac{35 - 41{,}9}{1{,}832/0{,}040}\right)^2} = 73{,}2 \pm 1{,}2 = [72{,}0,\ 74{,}4]. \]
+(sept 2022, oppgave 5e)
+\end{eksempel}
+
+\subsection{Prediksjonsintervall for ny $y$ ved gitt $x$}
+\begin{formel}
+\[
+\hat{\alpha} + \hat{\beta} x \;\pm\; t_{\alpha/2,\,n-2} \cdot s \cdot
+\sqrt{1 + \frac{1}{n} + \left(\frac{x - \bar{x}}{s/\text{SE}(\hat{\beta})}\right)^2}
+\]
+\end{formel}
+\textbf{Forskjell fra KI:} ekstra ``$1+$'' under rota tar høyde for variasjonen til en \emph{enkelt} ny observasjon, ikke bare forventningsverdien.
+
+\begin{eksempel}
+\textbf{Kilde: jan 2026, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La $x$ være antall timer søvn, og la $y$ være eksamensresultat. Her predikerer vi én ny observasjon ved $x=5$.
+
+\textbf{Oppgitt:} $\hat\alpha=34{,}6$, $\hat\beta=6{,}63$, $s=2{,}4684$, $\operatorname{SE}(\hat\beta)=0{,}625$, $\bar x=6{,}8$, $n=10$.
+
+\textbf{Vi skal finne:} Et prediksjonsintervall for eksamensresultatet til én student med 5 timers søvn.
+
+Eksamensresultat ved 5 timers søvn: $\hat\alpha = 34{,}6$, $\hat\beta = 6{,}63$, $s = 2{,}4684$, $\text{SE}(\hat\beta)=0{,}625$, $\bar x = 6{,}8$, $n=10$, $t_{0{,}025,8} = 2{,}306$.
+\[ 34{,}6 + 6{,}63\cdot 5 \pm 2{,}306 \cdot 2{,}4684 \cdot \sqrt{1 + \tfrac{1}{10} + \left(\tfrac{5-6{,}8}{2{,}4684/0{,}625}\right)^2} = 67{,}75 \pm 6{,}51 = [61{,}24,\ 74{,}26]. \]
+\textbf{Konklusjon:} 75\,\% er ikke i intervallet $\Rightarrow$ usannsynlig at en student med 5 timers søvn får 75\,\% eller bedre. (jan 2026, oppgave 6)
+\end{eksempel}
+
+\subsection{Multippel lineær regresjon}
+Modell: $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \cdots + \hat{\beta}_k x_k$.
+\begin{tips}
+\textbf{Tolkning av output:}
+\begin{itemize}
+\item $p$-verdi for hver koeffisient: lav $p$-verdi $\Rightarrow$ variabelen bidrar signifikant.
+\item Konfidensintervall som inneholder 0 $\Rightarrow$ variabelen kan fjernes.
+\item $R^2$: andelen av variasjonen i $y$ som forklares av modellen.
+\end{itemize}
+\end{tips}
+
+\begin{eksempel}
+\textbf{Kilde: mai 2021, oppgave 6}\par
+\medskip
+
+\textbf{Definisjoner:} La $y$ være NOx-utslipp, $x_1$ luftfuktighet, $x_2$ temperatur og $x_3$ trykk. Koeffisientene $\hat\beta_0,\hat\beta_1,\hat\beta_2,\hat\beta_3$ er estimerte regresjonskoeffisienter.
+
+\textbf{Vi skal tolke:} Hvilke forklaringsvariabler som bidrar signifikant, og hva $R^2$ betyr.
+
+NOx-utslipp som funksjon av luftfuktighet ($x_1$), temperatur ($x_2$), trykk ($x_3$):
+\[ \hat y = -3{,}4872 - 0{,}0026 x_1 + 0{,}0014 x_2 + 0{,}1543 x_3 \]
+\textbf{Tolkning av output:}
+\begin{itemize}
+\item Luftfuktighet: $p = 0{,}001$ $\Rightarrow$ \emph{behold} (sterkt signifikant).
+\item Temperatur: $p = 0{,}705$, KI $= [-0{,}006,\ 0{,}009]$ inneholder 0 $\Rightarrow$ \emph{fjern}.
+\item Trykk: $p = 0{,}147$, ikke signifikant $\Rightarrow$ \emph{fjern}.
+\end{itemize}
+$R^2 = 0{,}800$ betyr at 80\,\% av variasjonen i NOx forklares av modellen. (mai 2021, oppgave 6)
+\end{eksempel}
+
+
+% =========================================================
+\section{Hurtigreferanse: Hvilken test/metode skal jeg bruke?}
+% =========================================================
+
+\subsection{Sannsynlighet av hendelser}
+\begin{itemize}
+\item Like sannsynlige utfall? $\Rightarrow$ Gunstige/mulige.
+\item ``Eller''/union? $\Rightarrow$ $P(A \cup B)$-formelen.
+\item ``Gitt at''? $\Rightarrow$ Betinget sannsynlighet.
+\item Snu betingelsen? $\Rightarrow$ Bayes' setning.
+\item Flere disjunkte tilfeller som dekker alt? $\Rightarrow$ Total sannsynlighet.
+\end{itemize}
+
+\subsection{Hvilken fordeling?}
+\begin{itemize}
+\item ``Antall vellykkede av $n$''? $\Rightarrow$ Binomisk.
+\item ``Antall hendelser i tidsrom''? $\Rightarrow$ Poisson.
+\item ``Ventetid til neste hendelse''? $\Rightarrow$ Eksponential.
+\item ``Sum av mange uavhengige''? $\Rightarrow$ Sentralgrenseteoremet $\Rightarrow$ Normal.
+\end{itemize}
+
+\subsection{Hvilken hypotesetest?}
+\begin{itemize}
+\item Én gruppe, kjent $\sigma$? $\Rightarrow$ Z-test.
+\item Én gruppe, ukjent $\sigma$? $\Rightarrow$ T-test.
+\item To grupper i par (før/etter)? $\Rightarrow$ Paret t-test.
+\item To uavhengige grupper? $\Rightarrow$ Uparet t-test (pooled / Welch).
+\item Tre eller flere grupper? $\Rightarrow$ Enveis ANOVA (F-test).
+\item Andel? $\Rightarrow$ Z-test for $p$.
+\item Ikke normalfordelte data, par? $\Rightarrow$ Wilcoxon paret.
+\item Ikke normalfordelte data, uavhengige? $\Rightarrow$ Mann-Whitney-Wilcoxon.
+\item Kategoriske data, én variabel (passer en fordeling)? $\Rightarrow$ Kjikvadrat tilpasningstest.
+\item Kategoriske data, to variable (uavhengige)? $\Rightarrow$ Kjikvadrat-test for uavhengighet.
+\item Lineær sammenheng? $\Rightarrow$ T-test for $\beta = 0$.
+\end{itemize}
+
+\subsection{Hvilket konfidensintervall?}
+\begin{itemize}
+\item For $\mu$, kjent $\sigma$? $\Rightarrow$ $z_{\alpha/2}$ og $\sigma$.
+\item For $\mu$, ukjent $\sigma$? $\Rightarrow$ $t_{\alpha/2,\,n-1}$ og $S$.
+\item For $p$? $\Rightarrow$ $z_{\alpha/2}$, krev $n\hat p(1-\hat p) \ge 5$.
+\item For $\lambda$? $\Rightarrow$ $z_{\alpha/2}$, krev $\lambda t > 10$.
+\item For $\sigma$? $\Rightarrow$ Kjikvadrat $\chi^2_{\alpha/2,\,n-1}$ og $\chi^2_{1-\alpha/2,\,n-1}$.
+\item For $\mu_X - \mu_Y$ (kjent $\sigma$)? $\Rightarrow$ $z_{\alpha/2}$ og $\sqrt{\sigma_X^2/n_X + \sigma_Y^2/n_Y}$.
+\item For $\mu_X - \mu_Y$ (ukjent, antatt lik $\sigma$)? $\Rightarrow$ $t_{\alpha/2,\,n_X+n_Y-2}$ og pooled $S_P$.
+\item For $p_X - p_Y$? $\Rightarrow$ $z_{\alpha/2}$ med separate andelsestimater.
+\item Ikke-normalt utvalg, liten $n$? $\Rightarrow$ Bootstrap (normaltilnærming eller prosentilintervall).
+\end{itemize}
+
+
+% =========================================================
+\section{Oversikt over eksamensoppgaver}
+% =========================================================
+
+Tabellen nedenfor viser hvilke temaer som dekkes i hvilken eksamen, slik at du raskt kan finne et lignende eksempel.
+
+\renewcommand{\arraystretch}{1.25}
+\begin{center}
+\begin{tabular}{@{}lp{11cm}@{}}
+\toprule
+\textbf{Eksamen} & \textbf{Temaer / oppgavetyper} \\
+\midrule
+jan 2022  & Sannsynlighet (uavhengighet, betinget) -- Poisson + ventetid -- Simultanfordeling + sentralgrenseteoremet -- Binomisk -- Z-test + p-verdi -- T-test -- Mann-Whitney-Wilcoxon \\
+sept 2022 & Disjunkt/uavhengig + betinget -- Binomisk -- Poisson + normaltilnærming + KI for $\lambda$ -- T-test + p-verdi -- Lineær regresjon + KI for forventningsverdi \\
+mai 2021  & Uavhengighet -- Total ssh + Bayes -- Simultanfordeling + korrelasjon -- Andel $p$ (KI + test) -- Normalfordeling -- T-test -- Uparet t-test -- Multippel lineær regresjon \\
+mai 2022  & Disjunkt/uavhengig -- Total ssh + Bayes -- T-test -- KI for $\sigma$ -- Paret t-test -- Lineær regresjon -- Paret Wilcoxon \\
+mai 2023  & Disjunkt/uavhengig -- Utvalgsvarians -- Diskret fordeling -- Sentralgrenseteoremet -- Eksponential + Bayes -- Andel $p$ -- Uparet t-test \\
+mai 2024  & Bayes (komplement) -- Lineære transformasjoner -- Poisson + KI -- T-test -- KI for $\sigma$ -- Lineær regresjon -- ANOVA \\
+mai 2025  & Simultanfordeling + korrelasjon -- Bayes/De Morgan -- Binomisk + KI for $p$ -- Normalfordeling + Z-test -- Lineær regresjon + hypotesetest for $\beta$ \\
+jan 2025  & Kombinatorikk -- Diskret fordeling -- Bayes/total ssh -- Poisson + KI -- Normalfordeling -- Z-test \\
+jan 2026  & Sannsynlighet -- Simultanfordeling/korrelasjon -- Bayes -- Poisson + KI -- Uparet t-test -- Lineær regresjon (prediksjonsintervall) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% =========================================================
+\section{Tabeller og kvantiler -- viktige verdier}
+% =========================================================
+
+\subsection{Standardnormalfordelingens kvantiler $z_\alpha$}
+\begin{center}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+$\alpha$ & 0{,}10 & 0{,}05 & 0{,}025 & 0{,}01 & 0{,}005 & 0{,}001 \\
+\midrule
+$z_\alpha$ & 1{,}282 & 1{,}645 & 1{,}960 & 2{,}326 & 2{,}576 & 3{,}090 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Sammenheng signifikansnivå og konfidensnivå}
+Et $(1-\alpha)\cdot 100\,\%$ konfidensintervall: $\alpha=0{,}10 \Rightarrow 90\,\%$, $\alpha=0{,}05 \Rightarrow 95\,\%$, $\alpha=0{,}01 \Rightarrow 99\,\%$.
+
+
+% =========================================================
+\section{Tips for eksamensoppgaver}
+% =========================================================
+
+\begin{tips}
+\textbf{Generelle tips:}
+\begin{itemize}
+\item Definer alltid hendelsene tidlig (f.eks.\ ``$D$: viser tegn på demens'').
+\item Skriv opp formel før du setter inn tall -- gir uttelling i sensur.
+\item Husk å begrunne valg av fordeling og test.
+\item Sjekk antall frihetsgrader: $n-1$ for én-utvalgs t-test, $n_X+n_Y-2$ for uparet, $n-2$ for regresjon, $k-1$ og $n-k$ for ANOVA.
+\item Konkluder alltid \emph{på norsk} med hva resultatet betyr i kontekst.
+\end{itemize}
+\end{tips}
+
+\begin{tips}
+\textbf{Vanlige feilkilder:}
+\begin{itemize}
+\item Glemme komplement: $P(X \ge 1) = 1 - P(X = 0)$.
+\item Forveksle betinget rekkefølge: $P(A\mid B) \ne P(B \mid A)$.
+\item Bruke $\sigma$ når den er ukjent (skal være $S$, da $t$-fordeling).
+\item Glemme heltallskorreksjon i normaltilnærming for diskret fordeling.
+\item Sammenligne testobservator med feil fortegn (venstre- vs.\ høyresidig).
+\item Bruke variansen istedenfor standardavviket i konfidensintervall for $\sigma$.
+\end{itemize}
+\end{tips}
+
+
+% =========================================================
+\section{Type I- og Type II-feil}
+% =========================================================
+
+\begin{formel}
+\begin{itemize}
+\item \textbf{Type I-feil ($\alpha$):} Forkaste $H_0$ selv om den er sann (``falsk alarm'').
+\item \textbf{Type II-feil ($\beta$):} Beholde $H_0$ selv om den er gal (``overser sannheten'').
+\item \textbf{Styrke (power):} $1 - \beta$. Sannsynligheten for å oppdage en reell effekt.
+\item \textbf{Signifikansnivå:} $\alpha$ kontrollerer Type I-feil direkte. Lavere $\alpha$ $\Rightarrow$ vanskeligere å forkaste $H_0$ $\Rightarrow$ høyere $\beta$ (lavere styrke).
+\end{itemize}
+\end{formel}
+
+\begin{tips}
+\textbf{Hvilket signifikansnivå bør du velge?} Det avhenger av konsekvensene:
+\begin{itemize}
+\item Type I-feil får alvorlige konsekvenser? $\Rightarrow$ velg lite $\alpha$ (f.eks. 0{,}01).
+\item Type II-feil får alvorlige konsekvenser? $\Rightarrow$ velg større $\alpha$ (f.eks. 0{,}10).
+\item Eksempelvis vil et lite $\alpha$ være riktig hvis man dømmer noen i rettsak (ikke dømme uskyldig), mens et stort $\alpha$ er riktig hvis man tester for en farlig sykdom (ikke overse).
+\end{itemize}
+(mai 2021, oppgave 4d -- diskusjon av valg av $\alpha$)
+\end{tips}
+
+
+% =========================================================
+\section{Statistisk programmering (Python)}
+% =========================================================
+
+I emnet ``Statistikk og statistisk programmering'' kan eksamen også be om kode. Her er de viktigste mønstrene fra \texttt{numpy}, \texttt{pandas} og \texttt{scipy.stats}.
+
+\subsection{Standard-imports}
+\begin{fremgangsmate}
+\begin{verbatim}
+import numpy as np
+import pandas as pd
+from scipy import stats
+import matplotlib.pyplot as plt
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Lese inn data}
+\begin{fremgangsmate}
+\begin{verbatim}
+# Vanlig CSV
+df = pd.read_csv('data.csv')
+
+# CSV med semikolon og norsk desimal-komma
+df = pd.read_csv('data.csv', sep=';', decimal=',')
+
+# Fil med anforselstegn rundt tallene -- bruk converters for aa fjerne dem
+import numpy as np
+data = np.genfromtxt('fil.csv', delimiter=',', skip_header=1,
+                     usecols=(2,),
+                     converters={2: lambda s: float(s.decode().replace('"',''))})
+
+# Hent en kolonne som numpy-array
+x = df['kolonne_navn'].values
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Deskriptiv statistikk}
+\begin{fremgangsmate}
+\begin{verbatim}
+np.mean(x)          # gjennomsnitt
+np.median(x)        # median
+np.std(x, ddof=1)   # utvalgsstandardavvik (ddof=1 viktig!)
+np.var(x, ddof=1)   # utvalgsvarians
+np.min(x), np.max(x)
+np.quantile(x, 0.25)  # 1. kvartil
+\end{verbatim}
+\end{fremgangsmate}
+
+\begin{tips}
+\textbf{Pass paa ddof!} \texttt{np.std(x)} bruker $n$ i nevneren (populasjons-std), men i statistikk vil vi nesten alltid ha utvalgs-std med $n-1$. Bruk derfor \texttt{np.std(x, ddof=1)}.
+\end{tips}
+
+\subsection{Sannsynlighetsfunksjoner}
+
+\subsubsection*{Normalfordeling}
+\begin{fremgangsmate}
+\begin{verbatim}
+# P(X <= x) for X ~ N(mu, sigma)
+stats.norm.cdf(x, loc=mu, scale=sigma)
+
+# Tetthet f(x)
+stats.norm.pdf(x, loc=mu, scale=sigma)
+
+# Inverse: finn x slik at P(X <= x) = q (kvantil)
+stats.norm.ppf(q, loc=mu, scale=sigma)
+
+# Standardnormalfordelingens kvantil z_alpha
+z_alpha = stats.norm.ppf(1 - alpha)        # ensidig
+z_alpha2 = stats.norm.ppf(1 - alpha/2)     # tosidig
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsubsection*{Binomisk fordeling}
+\begin{fremgangsmate}
+\begin{verbatim}
+# P(X = k)
+stats.binom.pmf(k, n, p)
+
+# P(X <= k)
+stats.binom.cdf(k, n, p)
+
+# P(X >= k) = 1 - P(X <= k-1)
+1 - stats.binom.cdf(k-1, n, p)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsubsection*{Poissonfordeling}
+\begin{fremgangsmate}
+\begin{verbatim}
+# P(X = k) der mu = lambda * t
+stats.poisson.pmf(k, mu)
+
+# P(X <= k)
+stats.poisson.cdf(k, mu)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsubsection*{Eksponentialfordeling}
+\begin{fremgangsmate}
+\begin{verbatim}
+# scipy bruker scale = 1/lambda
+stats.expon.cdf(t, scale=1/lam)   # P(T <= t)
+stats.expon.pdf(t, scale=1/lam)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsubsection*{t-fordeling og kjikvadrat}
+\begin{fremgangsmate}
+\begin{verbatim}
+# t-kvantil (tosidig): t_(alpha/2, df)
+stats.t.ppf(1 - alpha/2, df=n-1)
+
+# Kjikvadrat-kvantiler for KI for sigma
+stats.chi2.ppf(alpha/2, df=n-1)
+stats.chi2.ppf(1 - alpha/2, df=n-1)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Hypotesetester}
+
+\subsubsection*{Z-test og t-test}
+\begin{fremgangsmate}
+\begin{verbatim}
+# 1-utvalgs t-test (tosidig)
+t_stat, p_val = stats.ttest_1samp(data, popmean=mu0)
+
+# Ensidig variant -- halver p-verdien og sjekk fortegn paa t_stat:
+if t_stat < 0:   # venstresidig test
+    p_one = p_val / 2
+else:
+    p_one = 1 - p_val / 2
+
+# Paret t-test
+t, p = stats.ttest_rel(foer, etter)
+
+# Uparet t-test (Welch -- ulikt sigma)
+t, p = stats.ttest_ind(gruppe1, gruppe2, equal_var=False)
+
+# Uparet t-test (antatt likt sigma -- som i pensum)
+t, p = stats.ttest_ind(gruppe1, gruppe2, equal_var=True)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsubsection*{ANOVA og ikke-parametriske tester}
+\begin{fremgangsmate}
+\begin{verbatim}
+# Enveis ANOVA
+F, p = stats.f_oneway(gruppe1, gruppe2, gruppe3)
+
+# Mann-Whitney-Wilcoxon (uparet)
+U, p = stats.mannwhitneyu(x, y, alternative='two-sided')
+
+# Wilcoxon paret
+W, p = stats.wilcoxon(x, y)
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Korrelasjon og regresjon}
+\begin{fremgangsmate}
+\begin{verbatim}
+# Empirisk korrelasjon (Pearson) + p-verdi for H0: rho=0
+r, p_val = stats.pearsonr(x, y)
+
+# Enkel lineaer regresjon (en uavhengig variabel)
+slope, intercept, r, p, se = stats.linregress(x, y)
+# slope = beta_hat, intercept = alfa_hat, se = SE(beta_hat)
+
+# Multippel regresjon -- bruk statsmodels for full output
+import statsmodels.api as sm
+X = sm.add_constant(np.column_stack([x1, x2, x3]))
+model = sm.OLS(y, X).fit()
+print(model.summary())  # gir t, p, KI for hver koeffisient + R^2
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Konfidensintervall}
+\begin{fremgangsmate}
+\begin{verbatim}
+# KI for mu med ukjent sigma (t-fordeling)
+n = len(data)
+xbar = np.mean(data)
+s = np.std(data, ddof=1)
+t_crit = stats.t.ppf(1 - alpha/2, df=n-1)
+lower = xbar - t_crit * s / np.sqrt(n)
+upper = xbar + t_crit * s / np.sqrt(n)
+
+# KI for andel p
+phat = X / n
+z = stats.norm.ppf(1 - alpha/2)
+margin = z * np.sqrt(phat*(1-phat)/n)
+lower, upper = phat - margin, phat + margin
+\end{verbatim}
+\end{fremgangsmate}
+
+\subsection{Plotting}
+\begin{fremgangsmate}
+\begin{verbatim}
+# Spredningsplott med regresjonslinje
+plt.scatter(x, y, label='data')
+slope, intercept, *_ = stats.linregress(x, y)
+plt.plot(x, intercept + slope*x, 'r-', label=f'y={intercept:.2f}+{slope:.2f}x')
+plt.xlabel('x'); plt.ylabel('y'); plt.legend(); plt.grid(True)
+plt.show()
+
+# Histogram med normalfordeling overlagt
+plt.hist(data, bins=15, density=True, alpha=0.6)
+xs = np.linspace(min(data), max(data), 200)
+plt.plot(xs, stats.norm.pdf(xs, np.mean(data), np.std(data,ddof=1)))
+plt.show()
+\end{verbatim}
+\end{fremgangsmate}
+
+\begin{tips}
+\textbf{Praktiske raad for Python paa eksamen:}
+\begin{itemize}
+\item Sjekk alltid om scipy bruker \emph{scale} eller \emph{rate}: \texttt{stats.expon} bruker \texttt{scale=1/lambda}.
+\item Bruk \texttt{ddof=1} naar du regner ut utvalgsvarians/standardavvik.
+\item Tosidige tester gir tosidig p-verdi som standard. Halver for ensidig (og sjekk retning).
+\item Print mellom-resultater under utvikling -- \texttt{print(xbar, s, t\_crit)} -- saa er det enklere aa feilsoeke.
+\item Sammenligne resultatet av \texttt{stats.norm.ppf(0.95)} med tabellverdien $z_{0{,}05}=1{,}645$ for aa bekrefte at retningen er riktig.
+\end{itemize}
+\end{tips}
+
+
+
+
+% =========================================================
+\section{Tillegg: ekstra pensumpunkter lagt til}
+% =========================================================
+
+Dette tillegget er lagt inn uten å fjerne faginnholdet som allerede lå i dokumentet. Eksemplene er kildemerket med øving/eksamen og oppgavenummer.
+
+\subsection{Verdimengde, punktsannsynlighet og fordelingsfunksjon}
+For en diskret stokastisk variabel er \textbf{verdimengden} alle verdier variabelen kan anta. \textbf{Punktsannsynligheten} er $P(X=x)$, mens \textbf{fordelingsfunksjonen} summerer alle sannsynligheter opp til og med $x$.
+\begin{formel}
+\[
+F(x)=P(X\le x)=\sum_{t\le x}P(X=t)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: Øving 2, oppgave 1a-c}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall røde kuler som trekkes. Verdimengden $V_X$ er alle mulige verdier $X$ kan få.
+
+\textbf{Oppgitt:} Urnen har 5 røde og 2 grønne kuler. Vi trekker 2 kuler.
+
+\textbf{Vi skal finne:} Verdimengden, punktsannsynlighetene og fordelingsfunksjonen til $X$.
+
+I en urne er det 5 røde og 2 grønne kuler. Vi trekker 2 kuler og lar $X$ være antall røde kuler. Da er verdimengden
+\[
+V_X=\{0,1,2\}.
+\]
+Sannsynlighetsfordelingen blir
+\[
+P(X=0)=\frac{\binom{2}{2}\binom{5}{0}}{\binom{7}{2}}=\frac{1}{21},\qquad
+P(X=1)=\frac{\binom{2}{1}\binom{5}{1}}{\binom{7}{2}}=\frac{10}{21},
+\]
+\[
+P(X=2)=\frac{\binom{2}{0}\binom{5}{2}}{\binom{7}{2}}=\frac{10}{21}.
+\]
+Fordelingsfunksjonen blir
+\[
+F(0)=\frac{1}{21},\qquad F(1)=\frac{1}{21}+\frac{10}{21}=\frac{11}{21},\qquad F(2)=1.
+\]
+\end{eksempel}
+
+\subsection{Diskret sannsynlighetshistogram og kumulativ fordeling}
+Et sannsynlighetshistogram viser punktsannsynlighetene $P(X=x)$ som stolper. Den kumulative fordelingsfunksjonen $F(x)$ viser summen av sannsynlighetene fra venstre mot høyre.
+
+\begin{eksempel}
+\textbf{Kilde: Øving 2, oppgave 3}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall systemsvikt kommende uke.
+
+\textbf{Oppgitt:} Sannsynlighetsfordelingen til $X$ er gitt i tabellen.
+
+\textbf{Vi skal finne:} Forventningsverdi, varians, standardavvik og sannsynligheten $P(X>2)$.
+
+La $X$ være antall systemsvikt kommende uke, med sannsynlighetsfordelingen
+\[
+\begin{array}{c|ccccc}
+x&0&1&2&3&4\\ \hline
+P(X=x)&0{,}45&0{,}31&0{,}14&0{,}07&0{,}03
+\end{array}
+\]
+Forventningsverdien er
+\[
+E(X)=0\cdot0{,}45+1\cdot0{,}31+2\cdot0{,}14+3\cdot0{,}07+4\cdot0{,}03=0{,}92.
+\]
+Videre er
+\[
+E(X^2)=0^2\cdot0{,}45+1^2\cdot0{,}31+2^2\cdot0{,}14+3^2\cdot0{,}07+4^2\cdot0{,}03=1{,}98,
+\]
+slik at
+\[
+\operatorname{Var}(X)=E(X^2)-E(X)^2=1{,}98-0{,}92^2=1{,}1336,
+\qquad \sigma=\sqrt{1{,}1336}=1{,}06.
+\]
+Sannsynligheten for mer enn 2 systemsvikt er
+\[
+P(X>2)=P(X=3)+P(X=4)=0{,}07+0{,}03=0{,}10.
+\]
+\end{eksempel}
+
+\subsection{Geometrisk fordeling}
+$X\sim\operatorname{Geom}(p)$ brukes når $X$ er antall forsøk frem til første suksess. Dette krever uavhengige delforsøk, samme sannsynlighet $p$ hver gang og to mulige utfall i hvert delforsøk.
+\begin{formel}
+\[
+P(X=x)=p(1-p)^{x-1},\qquad x=1,2,3,\ldots
+\]
+\[
+E(X)=\frac{1}{p},\qquad \operatorname{Var}(X)=\frac{1-p}{p^2},\qquad \sigma=\sqrt{\frac{1-p}{p^2}}
+\]
+\[
+P(X\le x)=1-(1-p)^x
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: Øving 3, oppgave 5a-g}\par
+\medskip
+
+\textbf{Definisjoner:} La $X$ være antall terningkast frem til første ener. En ``suksess'' betyr å få ener.
+
+\textbf{Oppgitt:} Sannsynligheten for ener i ett kast er $p=1/6$.
+
+\textbf{Vi skal finne:} Punktsannsynlighet, forventningsverdi, varians, standardavvik og hvor mange kast som trengs for minst 99\,\% sannsynlighet for minst én ener.
+
+I terningsspillet ``ener'' lar vi $X$ være antall kast frem til første ener. Her er $p=1/6$, og $X$ er geometrisk fordelt.
+
+Sannsynligheten for at første ener kommer i tredje kast er
+\[
+P(X=3)=\frac16\left(1-\frac16\right)^{3-1}=\frac16\left(\frac56\right)^2=\frac{25}{216}=0{,}116.
+\]
+Forventningsverdien er
+\[
+E(X)=\frac{1}{p}=\frac{1}{1/6}=6.
+\]
+Variansen og standardavviket er
+\[
+\operatorname{Var}(X)=\frac{1-p}{p^2}=\frac{5/6}{(1/6)^2}=30,
+\qquad \sigma=\sqrt{30}=5{,}48.
+\]
+Sannsynligheten for å ha fått minst én ener innen $x$ kast er
+\[
+P(X\le x)=1-\left(\frac56\right)^x.
+\]
+For å finne hvor mange kast som trengs for at sannsynligheten skal være minst $0{,}99$, løser vi
+\[
+1-\left(\frac56\right)^x\ge 0{,}99
+\quad\Rightarrow\quad
+\left(\frac56\right)^x\le 0{,}01
+\quad\Rightarrow\quad
+x\ge \frac{\ln(0{,}01)}{\ln(5/6)}\approx 25{,}3.
+\]
+Vi må derfor kaste minst 26 ganger.
+\end{eksempel}
+
+\subsection{Normaltilnærming for binomisk fordeling med heltallskorreksjon}
+Hvis $X\sim\operatorname{Bin}(n,p)$ og $n$ er stor nok, kan vi bruke normaltilnærming
+\[
+X\approx N(np,\sqrt{np(1-p)}).
+\]
+Siden binomisk fordeling er diskret og normalfordelingen er kontinuerlig, brukes ofte heltallskorreksjon.
+\begin{formel}
+\[
+P(X\le k)\approx G\!\left(\frac{k+0{,}5-np}{\sqrt{np(1-p)}}\right)
+\]
+\[
+P(X>k)\approx 1-G\!\left(\frac{k+0{,}5-np}{\sqrt{np(1-p)}}\right)
+\]
+\end{formel}
+
+\begin{eksempel}
+\textbf{Kilde: Øving 4, oppgave 1c-d}\par
+\medskip
+
+\textbf{Definisjoner:} La $Y$ være totalt antall seksere i 300 terningkast.
+
+\textbf{Oppgitt:} For hvert kast er sannsynligheten for sekser $p=1/6$.
+
+\textbf{Vi skal finne:} Sannsynligheten $P(Y>55)$ ved normaltilnærming med heltallskorreksjon.
+
+En terning kastes 10 ganger, og forsøket gjentas 30 ganger. Totalt har vi da i praksis 300 terningkast, og $Y$ er antall seksere totalt. For hvert kast er $p=1/6$, så
+\[
+\mu_Y=300\cdot\frac16=50,
+\qquad
+\sigma_Y=\sqrt{300\cdot\frac16\cdot\frac56}=6{,}455.
+\]
+Sannsynligheten for at antall seksere overstiger 55 blir med heltallskorreksjon
+\[
+P(Y>55)\approx 1-G\!\left(\frac{55+0{,}5-50}{6{,}455}\right)
+=1-G(0{,}85)=1-0{,}8023=0{,}198.
+\]
+Uten heltallskorreksjon ville svaret blitt mindre presist.
+\end{eksempel}
+
+\subsection{Styrkefunksjon og Type II-feil}
+Styrkefunksjonen $\gamma(\theta)$ er sannsynligheten for å forkaste $H_0$ for ulike sanne parameterverdier $\theta$.
+\begin{formel}
+\[
+\gamma(\theta)=P(\text{forkast }H_0\mid \theta \text{ er sann})
+\]
+\[
+\beta(\theta)=1-\gamma(\theta)
+\]
+\end{formel}
+Her er $\beta(\theta)$ sannsynligheten for Type II-feil når den sanne parameterverdien er $\theta$.
+
+\begin{eksempel}
+\textbf{Kilde: Øving 5, oppgave 1d-e}\par
+\medskip
+
+\textbf{Definisjoner:} La $\mu$ være sann fettprosent i kjøttdeig. Styrkefunksjonen $\gamma(\mu)$ er sannsynligheten for å forkaste $H_0$ når den sanne verdien er $\mu$.
+
+\textbf{Oppgitt:} $\sigma=3$, $n=9$ og $\alpha=0{,}05$.
+
+\textbf{Vi skal finne:} Forkastingsgrensen og styrken for ulike sanne verdier av $\mu$.
+
+Vanlig kjøttdeig skal ikke inneholde mer enn 14\,\% fett. Vi tester
+\[
+H_0:\mu\le 14,
+\qquad
+H_1:\mu>14,
+\]
+med kjent $\sigma=3$, $n=9$ og $\alpha=0{,}05$. Forkastingsgrensen for utvalgsgjennomsnittet er
+\[
+k=14+1{,}645\cdot\frac{3}{\sqrt{9}}=15{,}645.
+\]
+Styrken for en gitt sann verdi $\mu$ blir
+\[
+\gamma(\mu)=P(\bar X\ge 15{,}645\mid \mu)
+=1-G\!\left(\frac{15{,}645-\mu}{3/\sqrt9}\right).
+\]
+For eksempel:
+\[
+\gamma(14)=0{,}050,
+\qquad
+\gamma(15)=1-G(0{,}645)=0{,}258,
+\qquad
+\gamma(16)=1-G(-0{,}355)=0{,}638.
+\]
+Jo større den sanne verdien av $\mu$ er over grensen 14, desto større blir sannsynligheten for at testen faktisk forkaster $H_0$.
+\end{eksempel}
+
+\subsection{Python: punktsannsynlighet og fordelingsfunksjon i samme plott}
+Dette er nyttig når du vil se både $P(X=x)$ og $F(x)=P(X\le x)$ for en diskret fordeling.
+\begin{fremgangsmate}
+\begin{verbatim}
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+n = int(input('Antall forsok? '))
+p = float(input('Sannsynlighet i hvert forsok? '))
+
+x = np.arange(n + 1)
+plt.plot(x, stats.binom.pmf(x, n, p), 'o--', label='P(X=x)')
+plt.plot(x, stats.binom.cdf(x, n, p), 'o-', label='F(x)=P(X<=x)')
+plt.xlabel('x')
+plt.ylabel('Sannsynlighet')
+plt.legend()
+plt.grid(True)
+plt.show()
+\end{verbatim}
+\end{fremgangsmate}
+
+\end{document}

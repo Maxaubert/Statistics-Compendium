@@ -254,6 +254,7 @@ detailed_solution_variants:
 related:
   - { id: "ordnet-utvalg-uten-tilbakelegging", kind: "entry" }
   - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
+  - { id: "uordnet-utvalg-med-tilbakelegging", kind: "entry" }
   - { id: "gunstige-pa-mulige",                kind: "entry" }
   - { id: "binomial-fordeling",                kind: "entry" }
   - { id: "med-tilbakelegging",                kind: "glossary" }

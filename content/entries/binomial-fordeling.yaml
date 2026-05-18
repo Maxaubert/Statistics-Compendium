@@ -53,7 +53,7 @@ filters:
   structural_cues: [two_outcomes_per_trial, independent_events, complement_pattern, counting_events, probability_threshold, no_occurrences, all_same_type]
   parameters_known: [success_p]
   distribution_assumption: [binomial]
-  tooling: [cumulative_binomial_table_E1, calculator_binomial_coef]
+  tooling: [cumulative_binomial_table_E1, standard_normal_table_E3, calculator_binomial_coef, calculator_sqrt]
 
 solution_variants:
   - label: "P(X = k)"
@@ -155,6 +155,38 @@ solution_variants:
       - "Verifisér at `n − 1` IKKE tilfredsstiller kravet — ellers er svaret ditt ikke 'minste `n`'. (For `n = 8`: `P(X ≥ 4) = 1 − 0.174 = 0.826 < 0.90`, så `n = 9` er korrekt minste.)"
       - { text: "**Motsatt retning** (`P(X ≥ k) ≤ p*`, dvs. sannsynligheten skal være MINDRE enn terskel): ekvivalent med `P(X ≤ k − 1) ≥ 1 − p*`. Da reduserer du `n` til tabellverdien overstiger `1 − p*`, og svaret er da STØRSTE `n` som holder.", conditional: true }
       - { text: "Hvis `p` ikke står i tabell E.1, eller `n` blir for stort: summer pmf for hånd, eller bruk Python — `1 - binom.cdf(k-1, n, p)`.", conditional: true }
+
+  - label: "Normaltilnærming (med heltallskorr.)"
+    recognition: "«`n` er stort og tabell E.1 dekker det ikke», eller «`P(Y > 55)` i 300 terningkast». Når `np(1−p) ≥ 5` tilnærmes Bin med normalfordeling, og `±0.5`-korreksjonen bygger bro fra diskret til kontinuerlig."
+    steps:
+      - "Identifiser `n` og `p`, og noter grensen(e) `k` (eller `a`, `b`)"
+      - text: "Sjekk gyldighetskravet — tommelfingerregel:"
+        formula: "np(1−p) ≥ 5     (alternativt `np ≥ 5` og `n(1−p) ≥ 5`)"
+      - text: "Beregn forventning og spredning til normaltilnærmingen:"
+        formula:
+          - "μ = np"
+          - "σ = √(np(1−p))"
+      - text: "Hovedformel — «høyst `k`» (nedre hale) med heltallskorreksjon `+0.5`:"
+        formula: "P(X ≤ k) ≈ G((k + 0.5 − np)/√(np(1−p)))"
+      - text: "«Mer enn `k`» (`X > k`) via komplement — samme `+0.5` siden vi inkluderer `k` i nedre hale:"
+        formula: "P(X > k) ≈ 1 − G((k + 0.5 − np)/√(np(1−p)))"
+      - text: "«Minst `k`» (`X ≥ k`) — pass på korreksjonen `−0.5` (vi inkluderer `k` selv):"
+        formula: "P(X ≥ k) ≈ 1 − G((k − 0.5 − np)/√(np(1−p)))"
+      - text: "Tosidig intervall `a ≤ X ≤ b` — utvid begge ender med 0.5:"
+        formula: "P(a ≤ X ≤ b) ≈ G((b + 0.5 − np)/σ) − G((a − 0.5 − np)/σ)"
+      - text: "Punkt-sannsynlighet «ved likhet» (`X = k`) — differanse av to nærliggende `G`-verdier:"
+        formula: "P(X = k) ≈ G((k + 0.5 − np)/σ) − G((k − 0.5 − np)/σ)"
+      - "Slå opp `G(z)` i **tabell E.3** (standard normalfordeling). Bruk `G(−z) = 1 − G(z)` for negative argumenter."
+      - text: "Eksempel — `n = 300`, `p = 1/6`, `P(Y > 55)`. Her er `μ = 50`, `σ ≈ 6.455`:"
+        formula: "P(Y > 55) ≈ 1 − G(0.85) ≈ 1 − 0.8023 = 0.198"
+        example: true
+      - text: "Tosidig — samme oppsett, `P(40 ≤ Y ≤ 60)`:"
+        formula: "P(40 ≤ Y ≤ 60) ≈ G(1.63) − G(−1.63) ≈ 0.897"
+        example: true
+      - text: "Hvis `np(1−p) < 5`, ikke bruk normaltilnærming — gå til pmf-sum eller [Poisson-tilnærming](/entry/poisson-fordeling) i stedet (særlig hvis `p` er svært nær 0 eller 1)."
+        conditional: true
+      - text: "Glemmer du `±0.5`-korreksjonen blir svaret mindre presist (særlig nær halene og for små `n`). Inkluder den alltid når oppgaven sier «med heltallskorreksjon»."
+        conditional: true
 
 common_traps: |
   Vær sikker på at `p` er konstant fra forsøk til forsøk. Hvis du trekker
@@ -495,8 +527,73 @@ detailed_solution_variants:
               - { indent: "≈ 89.78" }
         result: "`n = 90` lodd"
 
+  - label: "Normaltilnærming (med heltallskorr.)"
+    solutions:
+      - source: "Øving 4 · oppgave 1c-d (300 terningkast)"
+        question: "En terning kastes 10 ganger, og forsøket gjentas 30 ganger — totalt `n = 300` kast. La `Y` være antall seksere. For hvert kast er `p = 1/6`. Bruk normaltilnærming med heltallskorreksjon til å finne `P(Y > 55)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Y` = antall seksere i 300 terningkast" }
+              - { text: "`Y ~ Bin(300, 1/6)`" }
+              - { comment: "Vi vil ha `P(Y > 55)` — øvre hale, motsatt retning" }
+          - label: "Gyldighetssjekk"
+            lines:
+              - { text: "`np(1−p) = 300 · (1/6) · (5/6) ≈ 41.67 ≥ 5` ✓" }
+              - { comment: "normaltilnærming er gyldig" }
+          - label: "Forventning og spredning"
+            lines:
+              - { text: "`μ_Y = np = 300 · (1/6) = 50`" }
+              - { text: "`σ_Y = √(np(1−p)) = √(300 · (1/6) · (5/6))`" }
+              - { indent: "`= √41.667 ≈ 6.455`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(Y > 55) ≈ 1 − G((55 + 0.5 − np)/√(np(1−p)))`" }
+              - { comment: "heltallskorreksjonen `+0.5` legges til fordi `Y` er diskret og normalfordelingen kontinuerlig" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(Y > 55) ≈ 1 − G((55.5 − 50)/6.455)`" }
+              - { indent: "`= 1 − G(5.5/6.455)`" }
+              - { indent: "`= 1 − G(0.85)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "Slå opp `G(0.85)` i standard normalfordeling → `0.8023`" } }
+          - label: "Sluttregning"
+            lines:
+              - { text: "`P(Y > 55) ≈ 1 − 0.8023`" }
+        result: "`P(Y > 55) ≈ 0.198` (knapt 20 % sjanse for over 55 seksere i 300 kast)"
+
+      - source: "Praksis · samme terningoppsett, tosidig intervall"
+        question: "Samme oppsett: `Y ~ Bin(300, 1/6)`. Bruk normaltilnærming med heltallskorreksjon til å finne `P(40 ≤ Y ≤ 60)` — sannsynligheten for at antall seksere ligger i intervallet `[40, 60]`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`Y ~ Bin(300, 1/6)`" }
+              - { comment: "tosidig intervall: `a = 40`, `b = 60` — utvid begge ender med 0.5" }
+          - label: "Forventning og spredning"
+            lines:
+              - { text: "`μ_Y = np = 50`" }
+              - { text: "`σ_Y = √(np(1−p)) ≈ 6.455`" }
+              - { comment: "samme verdier som over — gjenbrukes" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a ≤ Y ≤ b) ≈ G((b + 0.5 − np)/σ) − G((a − 0.5 − np)/σ)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(40 ≤ Y ≤ 60) ≈ G((60.5 − 50)/6.455) − G((39.5 − 50)/6.455)`" }
+              - { indent: "`= G(10.5/6.455) − G(−10.5/6.455)`" }
+              - { indent: "`= G(1.63) − G(−1.63)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "Slå opp `G(1.63) → 0.9484`, og bruk symmetri `G(−1.63) = 1 − 0.9484 = 0.0516`" } }
+          - label: "Sluttregning"
+            lines:
+              - { text: "`= 0.9484 − 0.0516`" }
+        result: "`P(40 ≤ Y ≤ 60) ≈ 0.897` (~90 % sjanse for at antall seksere ligger mellom 40 og 60)"
+
 related:
   - { id: "poisson-fordeling",      kind: "entry" }
+  - { id: "normalfordeling",        kind: "entry" }
   - { id: "hypergeometrisk-fordeling", kind: "entry" }
   - { id: "komplementregelen",      kind: "entry" }
   - { id: "ki-andel-binomial",      kind: "entry" }
@@ -505,8 +602,10 @@ related:
   - { id: "bernoulli-forsoek",      kind: "glossary" }
   - { id: "uavhengighet-glos",      kind: "glossary" }
   - { id: "med-tilbakelegging",     kind: "glossary" }
+  - { id: "normalapproksimasjon",   kind: "glossary" }
   - { id: "E1-binomial-kumulativ",  kind: "table" }
 
 tools:
   - "Tabell E.1 – Kumulativ binomisk sannsynlighet"
+  - "Tabell E.3 – Standard normalfordeling (for normaltilnærming)"
   - "Kalkulator: potens, binomialkoeffisient C(n,k)"

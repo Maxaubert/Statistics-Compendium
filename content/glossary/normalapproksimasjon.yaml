@@ -1,34 +1,115 @@
 id: normalapproksimasjon
-term_no: Normalapproksimasjon
-short_def: "Tilnærming der en diskret fordeling (binomial, poisson) byttes ut med en normalfordeling."
+term_no: Normalapproksimasjon (normaltilnærming)
+short_def: "Tilnærming der en annen fordeling (binomial, Poisson, utvalgsgjennomsnitt, andel, sum) byttes ut med en normalfordeling når utvalget/forventningen er stor nok. Drivkraften bak z-test, KI for `p`, KI for `λ` og z-baserte KI for `μ`."
 filters:
   distribution_assumption: [normal, binomial, poisson]
   tooling: [standard_normal_table_E3]
   parameters_known: [sample_size_large, rate_lambda, success_p]
-  computes: [confidence_interval]
-  random_variable: [proportion, mean_of_samples]
-  structural_cues: [two_outcomes_per_trial]
-long_def: |
-  **Binomial:** hvis `n·p·(1−p) ≥ 5`, så
-
-      X ≈ N(np, √(np(1−p)))
-
-  **Poisson:** hvis `λ` er stor (typisk `λ ≥ 10`), så
-
-      Y ≈ N(λ, √λ)
-
-  Normalapproksimasjon er drivkraften bak z-test og KI for andel og for
-  poissonrate. Tommelfingerregel for andel-KI: bruk `p̂` i stedet for `p`
-  i sjekken:
-
-      n · p̂ · (1 − p̂) ≥ 5
+  computes: [confidence_interval, hypothesis_test]
+  random_variable: [proportion, mean_of_samples, sum_of_samples, discrete_count]
+  structural_cues: [two_outcomes_per_trial, normal_assumed]
 aliases:
   - normalapproksimasjon
   - normalapproksimasjonen
   - normaltilnærming
   - normaltilnærmingen
+  - kontinuitetskorreksjon
+  - heltallskorreksjon
+long_def: |
+  Normalapproksimasjon betyr at vi *bytter ut* en fordeling med en normalfordeling
+  som har samme forventning og varians. Det fungerer fordi mange fordelinger
+  «glattes» mot normalfordelingen når utvalget eller forventet antall vokser —
+  drevet av sentralgrenseteoremet for kontinuerlige sums-baserte størrelser, og
+  av punktvise grenseargumenter for diskrete fordelinger som binomial og Poisson.
+
+  ## Oversikt over alle normaltilnærminger i pensum
+
+  | Original fordeling | Tilnærmes med | Gyldighetskrav | Trenger heltallskorr.? |
+  |---|---|---|---|
+  | `X ~ Bin(n, p)` (diskret) | `N(np, √(np(1−p)))` | `np(1−p) ≥ 5` (eller `np ≥ 5` og `n(1−p) ≥ 5`) | **Ja** (`±0.5`) |
+  | `X ~ Poisson(μ)` (diskret) | `N(μ, √μ)` med `μ = λt` | `μ ≥ 10` | **Ja** (`±0.5`) |
+  | `X̄` for `n` iid med endelig varians | `N(μ, σ/√n)` | `n ≥ 30` (CLT) | Nei (kontinuerlig) |
+  | `S_n = X_1 + … + X_n` | `N(nμ, σ√n)` | `n ≥ 30` (CLT) | Nei |
+  | `p̂ = X/n` for andel | `N(p, √(p(1−p)/n))` | `np(1−p) ≥ 5` | Nei (vi behandler `p̂` kontinuerlig) |
+  | `X̄ − Ȳ` (differanse av snitt) | `N(μ_X − μ_Y, …)` | `n_X, n_Y ≥ 30` | Nei |
+  | `p̂_X − p̂_Y` (differanse av andeler) | `N(p_X − p_Y, …)` | `n_X p̂_X(1−p̂_X) ≥ 5` osv. | Nei |
+
+  ## De to «typene» normaltilnærming
+
+  Det er konseptuelt to ulike argumenter som leder til samme konklusjon — viktig
+  å holde dem fra hverandre:
+
+  ### 1. Diskret → kontinuerlig (binomial, Poisson)
+
+  Her tilnærmer vi en diskret fordeling (heltallsverdier) med en kontinuerlig
+  normalfordeling. Argumentet kommer fra at både binomial og Poisson kan
+  representeres som en sum av uavhengige Bernoulli/«småhendelser»; for stor
+  forventning slår CLT inn på selve fordelingen, ikke bare gjennomsnittet.
+
+  **Krever heltallskorreksjon** (også kalt **kontinuitetskorreksjon**): siden
+  binomial og Poisson bare tar heltallsverdier mens normalfordelingen er
+  kontinuerlig, må vi justere grensene med `±0.5` for å «bygge bro»:
+
+      P(X ≤ k) ≈ G((k + 0.5 − μ)/σ)
+      P(X ≥ k) ≈ 1 − G((k − 0.5 − μ)/σ)
+      P(a ≤ X ≤ b) ≈ G((b + 0.5 − μ)/σ) − G((a − 0.5 − μ)/σ)
+      P(X = k)   ≈ G((k + 0.5 − μ)/σ) − G((k − 0.5 − μ)/σ)
+
+  Uten `±0.5` blir svaret systematisk litt feil — særlig nær halene og for
+  moderat `n` / `μ`.
+
+  ### 2. Sum/gjennomsnitt → normal (CLT for kontinuerlige eller mange forsøk)
+
+  Her er argumentet rent [sentralgrenseteoremet (CLT)](/glossary/sentralgrenseteoremet-glos):
+  for iid `X_1, …, X_n` med `E[X_i] = μ` og `Var(X_i) = σ²`,
+
+      X̄ = (X_1 + … + X_n)/n  ≈  N(μ, σ²/n)   for stor `n`
+
+  Tommelfingerregel: `n ≥ 30` for moderat skjeve fordelinger; mindre kreves
+  for symmetriske fordelinger. **Ingen heltallskorreksjon** trengs her — `X̄`
+  er kontinuerlig.
+
+  Andelen `p̂ = X/n` med `X ~ Bin(n, p)` faller i samme kategori siden den
+  kan skrives som gjennomsnittet av `n` Bernoulli-variabler.
+
+  ## Hvorfor det betyr noe
+
+  Normalapproksimasjon er fundamentet som ALLE z-baserte test- og KI-prosedyrer
+  hviler på:
+
+  - **z-test og KI for `μ`** (`σ` kjent): krever at `X̄` er normalfordelt, som
+    enten følger fra at `X_i` er normale, eller fra CLT når `n ≥ 30`.
+  - **z-test og KI for andel `p`**: bruker `p̂ ≈ N(p, √(p(1−p)/n))` med
+    gyldighetskrav `np̂(1−p̂) ≥ 5`.
+  - **KI for poissonrate `λ`**: bruker `λ̂ = X/t ≈ N(λ, √(λ/t))`.
+  - **z-test og KI for differanser** (to utvalg): kombinerer to normalapprokimerte
+    estimatorer.
+
+  Når du ser «`z_(α/2)`» i en formel, er det normalapproksimasjon i bakgrunnen.
+
+  ## Når normalapproksimasjon IKKE virker
+
+  - **Binomial med liten `np` eller liten `n(1−p)`** (< 5): bruk
+    [eksakt binomialtabell E.1](/table/E1-binomial-kumulativ), evt.
+    Poisson-tilnærming hvis `p` er svært liten.
+  - **Poisson med liten `μ`** (< 10): bruk
+    [eksakt poissontabell E.2](/table/E2-poisson-kumulativ) eller summer pmf.
+  - **Liten `n` og ikke-normal underliggende fordeling**: bruk
+    [t-fordeling](/glossary/t-fordeling) (når `σ` er ukjent og `X_i` er normale),
+    [bootstrapping](/entry/bootstrapping), eller ikke-parametriske tester som
+    [Mann-Whitney-Wilcoxon](/entry/mann-whitney-wilcoxon).
+  - **Tunghale-fordelinger** med uendelig varians (Cauchy m.fl.): CLT gjelder
+    ikke, og dermed heller ikke normalapproksimasjon.
+
 see_also:
-  - { id: en-utvalg-z-test-andel, kind: entry }
-  - { id: ki-andel-binomial, kind: entry }
-  - { id: ki-poissonrate, kind: entry }
   - { id: sentralgrenseteoremet-glos, kind: glossary }
+  - { id: normalfordeling,            kind: entry }
+  - { id: binomial-fordeling,         kind: entry }
+  - { id: poisson-fordeling,          kind: entry }
+  - { id: en-utvalg-z-test,           kind: entry }
+  - { id: en-utvalg-z-test-andel,     kind: entry }
+  - { id: ki-andel-binomial,          kind: entry }
+  - { id: ki-poissonrate,             kind: entry }
+  - { id: ki-mu-og-varians,           kind: entry }
+  - { id: bootstrapping,              kind: entry }
+  - { id: mann-whitney-wilcoxon,      kind: entry }

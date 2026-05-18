@@ -1,0 +1,349 @@
+id: uordnet-utvalg-med-tilbakelegging
+name_no: "Uordnet utvalg med tilbakelegging (multimengder / stars and bars)"
+type: combinatorics
+category: combinatorics
+tagline: "Tell antall multimengder (uordnede utvalg `k` fra `n` typer med gjentakelser tillatt) via `C(n + k − 1, k)` — stars and bars."
+
+formula_main: "C(n + k − 1, k) = (n + k − 1)! / (k! · (n − 1)!)"
+formula_latex: "\\binom{n + k - 1}{k} = \\frac{(n + k - 1)!}{k!\\,(n - 1)!}"
+
+what_it_does: |
+  Teller antall måter å velge `k` elementer fra `n` ulike typer når
+  rekkefølgen IKKE spiller noen rolle og samme type kan velges flere
+  ganger (tilbakelegging tillatt). Et slikt utvalg kalles en multimengde
+  av størrelse `k` over `n` typer, og kan ekvivalent leses som antall
+  heltallsløsninger `(x₁, …, xₙ)` med `x_i ≥ 0` og `x₁ + … + xₙ = k`,
+  eller antall måter å fordele `k` like objekter i `n` skillbare bokser.
+
+  Dette er den fjerde «hjørnesteinen» i kombinatorikken — sammen med
+  ordnet/uordnet × med/uten tilbakelegging. Sjelden i statistikk-eksamen,
+  men nyttig referanse for å skille de fire grunnformlene.
+
+why_use: |
+  Den minst kjente av de fire grunnformlene i kombinatorikk, men dukker
+  jevnlig opp når man fordeler like enheter (prøver, kuler, poeng, enheter
+  av produkt) mellom skillbare mottakere (laboratorier, urner, kategorier).
+  Også grunnlaget for å telle terningskast hvor «bare totalmønsteret» betyr
+  noe, og for negativ-binomial-/Polya-type argumenter. Beviset (stars and
+  bars) er en standard kombinatorisk teknikk verdt å kunne.
+
+recognition_cues:
+  - "Du fordeler `k` LIKE objekter på `n` SKILLBARE bokser/kategorier"
+  - "Du velger `k` elementer fra `n` typer, samme type kan gjentas, rekkefølgen er likegyldig"
+  - "Du skal telle heltallsløsninger av `x₁ + … + xₙ = k` med `x_i ≥ 0`"
+  - "Multimengde, kombinasjon med repetisjon, «hvor mange måter å sette sammen et utvalg av størrelse `k` fra `n` smaker»"
+  - "Stikkord: «like terninger», «iskremkuler fra smaker», «like baller i bokser»"
+
+when_NOT_to_use:
+  - "Rekkefølgen teller, tilbakelegging tillatt → bruk [ordnet utvalg med tilbakelegging](/entry/ordnet-utvalg-med-tilbakelegging) (`n^k`)"
+  - "Rekkefølgen teller, uten tilbakelegging → bruk [ordnet utvalg uten tilbakelegging](/entry/ordnet-utvalg-uten-tilbakelegging) (`n!/(n−k)!`)"
+  - "Rekkefølgen er likegyldig, uten tilbakelegging → bruk [uordnet utvalg uten tilbakelegging](/entry/uordnet-utvalg-uten-tilbakelegging) (`C(n, k)`)"
+  - "Objektene som fordeles er FORSKJELLIGE (ikke like) → bruk `n^k` (ordnet med tilbakelegging) hvis hvert objekt selvstendig plasseres i én av `n` bokser"
+
+symbols:
+  - { sym: "n",                means: "antall ulike typer / bokser / kategorier" }
+  - { sym: "k",                means: "antall valg / objekter som fordeles" }
+  - { sym: "n − 1",            means: "antall skillevegger («bars») i stars-and-bars-konstruksjonen" }
+  - { sym: "C(n+k−1, k)",      means: "antall multimengder av størrelse `k` over `n` typer" }
+  - { sym: "x_i",              means: "antall objekter av type `i`, ikke-negativt heltall" }
+
+filters:
+  computes: [combinatorial_count, exact_probability]
+  random_variable: [discrete_count]
+  setup: [single_population, with_replacement]
+  structural_cues: [counting_events]
+  distribution_assumption: [none_assumed]
+  tooling: [calculator_binomial_coef, calculator_factorial]
+
+solution_variants:
+  - label: "Tell antall multimengder"
+    recognition: "«Hvor mange måter kan vi sette sammen et utvalg på `k` fra `n` typer når samme type kan gjentas og rekkefølgen er likegyldig?». Klassisk multimengdeproblem — bruk `C(n + k − 1, k)`."
+    steps:
+      - "Identifiser `n` (antall ulike TYPER vi kan velge mellom) og `k` (antall vi skal velge totalt)"
+      - "Bekreft at samme type kan brukes flere ganger og at rekkefølgen IKKE betyr noe"
+      - text: "Beregn binomialkoeffisienten (vanligvis enklest på kalkulator med `nCr`):"
+        formula: "C(n + k − 1, k) = (n + k − 1)! / (k! · (n − 1)!)"
+      - text: "Eksempel — 5 epler fra 4 sorter (`n = 4`, `k = 5`):"
+        formula: "C(4 + 5 − 1, 5) = C(8, 5) = 56"
+        example: true
+      - text: "Eksempel — 4 iskremkuler fra 6 smaker (`n = 6`, `k = 4`):"
+        formula: "C(6 + 4 − 1, 4) = C(9, 4) = 126"
+        example: true
+      - text: "Symmetrien `C(n + k − 1, k) = C(n + k − 1, n − 1)` lar deg velge den minste av `k` og `n − 1` for å forenkle håndregning."
+        conditional: true
+
+  - label: "Stars and bars-bevis"
+    recognition: "«Vis at antall multimengder er `C(n + k − 1, k)`», eller «hvorfor denne formelen?». Standard kombinatorisk bevis via bijeksjon."
+    steps:
+      - "Representer hvert valg som en stjerne `★` og bruk `n − 1` skillevegger `|` for å dele stjernene inn i `n` grupper (én per type)"
+      - "Mellom skillevegger `i − 1` og `i` står stjernene som tilhører type `i`; antallet er `x_i`"
+      - text: "Eksempel med `n = 3`, `k = 5`: strengen `★★|★|★★` koder `x₁ = 2, x₂ = 1, x₃ = 2` (totalt `2 + 1 + 2 = 5`)"
+      - "Hver gyldig multimengde svarer entydig til én slik streng med `k` stjerner og `n − 1` skillevegger, og omvendt"
+      - text: "Antall slike strenger = antall måter å velge posisjonene til de `k` stjernene blant `k + (n − 1)` totalplasser:"
+        formula: "C(n + k − 1, k)"
+      - text: "Ekvivalent: velg posisjonene til de `n − 1` skilleveggene blant samme `k + n − 1` plasser:"
+        formula: "C(n + k − 1, n − 1)"
+        conditional: true
+      - "Bijeksjon mellom multimengder og strenger ⇒ samme antall."
+
+  - label: "Fordele k like objekter i n bokser"
+    recognition: "«På hvor mange måter kan `k` LIKE objekter (prøver, kuler, poeng) fordeles på `n` SKILLBARE bokser (laboratorier, personer, urner)?». Direkte anvendelse — `n` = bokser, `k` = objekter."
+    steps:
+      - "Identifiser `n` = antall skillbare bokser/mottakere og `k` = antall like objekter som skal fordeles"
+      - "Tomme bokser er tillatt (`x_i = 0` er greit)"
+      - text: "Antall fordelinger:"
+        formula: "C(n + k − 1, k)"
+      - text: "Eksempel — 3 like baller i 5 bokser (`n = 5`, `k = 3`):"
+        formula: "C(5 + 3 − 1, 3) = C(7, 3) = 35"
+        example: true
+      - text: "Eksempel — 6 like prøver mellom 3 laboratorier (`n = 3`, `k = 6`):"
+        formula: "C(3 + 6 − 1, 6) = C(8, 6) = C(8, 2) = 28"
+        example: true
+      - text: "Eksempel — kast av 2 like terninger telt som multimengder over 6 øyne (`n = 6`, `k = 2`):"
+        formula: "C(6 + 2 − 1, 2) = C(7, 2) = 21"
+        example: true
+      - text: "Hvis det er KRAV om at hver boks får minst ett objekt (`x_i ≥ 1`), gjør substitusjonen `y_i = x_i − 1 ≥ 0` med `y₁ + … + yₙ = k − n`:"
+        formula: "C(k − 1, n − 1)"
+        conditional: true
+      - text: "Pass på: hvis objektene er FORSKJELLIGE (skiller seg fra hverandre), er svaret `n^k` (ordnet med tilbakelegging), ikke denne formelen."
+        conditional: true
+
+  - label: "Heltallsløsninger av x₁ + … + xₙ = k, x_i ≥ 0"
+    recognition: "«Hvor mange ikke-negative heltallsløsninger har likningen `x₁ + x₂ + … + xₙ = k`?». Klassisk diskret matematikk-formulering; samme telleproblem som multimengde."
+    steps:
+      - "Tolk variablene: `n` = antall variabler, `k` = sumkravet, alle `x_i` ikke-negative heltall"
+      - text: "Antall løsninger:"
+        formula: "C(n + k − 1, k) = C(n + k − 1, n − 1)"
+      - text: "Eksempel — antall løsninger av `x₁ + x₂ + x₃ + x₄ = 10` med `x_i ≥ 0` (`n = 4`, `k = 10`):"
+        formula: "C(4 + 10 − 1, 10) = C(13, 10) = C(13, 3) = 286"
+        example: true
+      - text: "Strenge ulikheter (`x_i ≥ 1`): substituer `y_i = x_i − 1`, så `y₁ + … + yₙ = k − n` med `y_i ≥ 0`:"
+        formula: "C(k − 1, n − 1)"
+        conditional: true
+      - text: "Mer generelt nedre skranke `x_i ≥ a_i`: la `y_i = x_i − a_i`. Ny sum blir `k − Σ a_i`, samme formel anvendes på den."
+        conditional: true
+      - text: "Øvre skranker (`x_i ≤ b_i`) krever inklusjon-eksklusjon — utenfor scope her, men prinsippet er å trekke fra overskridelser."
+        conditional: true
+
+common_traps: |
+  - **Forveksles med `C(n, k)`**: `C(n, k)` er uten tilbakelegging, mens
+    `C(n + k − 1, k)` er med tilbakelegging. Forskjellen kan bli stor:
+    `C(4, 2) = 6` vs `C(5, 2) = 10` (uordnet med tilbakelegging fra 4
+    typer, velge 2).
+
+  - **Forveksles med `n^k`**: `n^k` er ORDNET med tilbakelegging (rekkefølge
+    teller); `C(n + k − 1, k)` er UORDNET med tilbakelegging. F.eks. for
+    `n = 6` terning kastet `k = 3` ganger: `6³ = 216` ordnede utfall, men
+    bare `C(8, 3) = 56` uordnede totalmønstre.
+
+  - **`n` og `k` byttet om**: i formelen er `n` = typer/bokser og
+    `k` = valg/objekter. Skriv det opp før du regner. Symmetrien
+    `C(n+k−1, k) = C(n+k−1, n−1)` hjelper også å sjekke.
+
+  - **«Stars and bars» har `n − 1` skillevegger**, ikke `n`. Det er `n`
+    bokser, så det trengs `n − 1` skillevegger mellom dem. Glipp her
+    gir `C(n + k, k)` som er feil.
+
+  - **Tomme bokser**: formelen tillater `x_i = 0`. Krever oppgaven minst
+    ett objekt per boks, må du gjøre `y_i = x_i − 1`-substitusjonen og
+    bruke `C(k − 1, n − 1)`.
+
+  - **Like vs. forskjellige objekter**: `C(n + k − 1, k)` forutsetter at
+    objektene som fordeles er identiske. Skal `k` forskjellige objekter
+    plasseres i `n` bokser, er svaret `n^k`.
+
+  - **Skillbare vs. uskillbare bokser**: bokser/typer må kunne skilles
+    (boks 1 ≠ boks 2). Hvis også boksene er identiske, blir det
+    partisjons-tall (Stirling-tall) — ikke samme formel.
+
+  - **Sannsynlighetsfeil**: utfall i en multimengde-modell er IKKE
+    likesannsynlige. To terninger har 21 uordnede utfall, men de er
+    ikke likesannsynlige (`{1,2}` opptrer to ganger blant de 36 ordnede,
+    `{1,1}` bare én gang). Bruk ordnet utfallsrom (`n^k = 36`) som
+    nevner i sannsynlighetsregning med terninger.
+
+  - **Ekstrem sjelden i pensum**: i norsk statistikkundervisning er det
+    nesten alltid uordnet uten tilbakelegging eller ordnet uten
+    tilbakelegging som dukker opp. Skummel som «standardvalg» — sjekk
+    hva oppgaven faktisk krever.
+
+detailed_solution_variants:
+  - label: "Tell antall multimengder"
+    solutions:
+      - source: "Praksiseksempel · iskremkuler"
+        question: "En iskremsjappe har 6 smaker. Du kjøper en sundae med 4 kuler. Hvor mange ulike kombinasjoner finnes hvis rekkefølgen ikke betyr noe og du gjerne kan ta samme smak flere ganger?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 6` smaker (typer), `k = 4` kuler velges." }
+              - { text: "Rekkefølgen i begeret er irrelevant; samme smak kan brukes flere ganger." }
+              - { comment: "Uordnet med tilbakelegging — multimengde av størrelse 4 fra 6 typer." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n + k − 1, k) = (n + k − 1)! / (k! · (n − 1)!)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(6 + 4 − 1, 4) = C(9, 4)`" }
+              - { indent: "`= 9! / (4! · 5!)`" }
+              - { indent: "`= (9·8·7·6)/(4·3·2·1) = 3024/24 = 126`" }
+        result: "`C(9, 4) = 126` ulike iskremkombinasjoner"
+
+      - source: "Praksiseksempel · 2 like terninger"
+        question: "To like terninger kastes samtidig. Hvor mange ulike utfall finnes når vi ikke skiller hvilken terning som viser hva (kun multimengden av øyne teller)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 6` mulige øyne per terning (typer), `k = 2` terninger (elementer)." }
+              - { text: "Terningene er like, så vi skiller ikke `(1, 2)` fra `(2, 1)` — kun multimengden `{1, 2}`." }
+              - { comment: "Ordnet versjon ville gi n^k = 36 utfall; uordnet gir et mindre tall." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n + k − 1, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(6 + 2 − 1, 2) = C(7, 2) = 7!/(2!·5!) = 21`" }
+              - { comment: "Sjekk: par (i, j) med i ≤ j for i, j ∈ {1..6} — 6 par med i = j og 15 med i < j, totalt 21. Stemmer." }
+        result: "`C(7, 2) = 21` ulike uordnede utfall"
+
+  - label: "Stars and bars-bevis"
+    solutions:
+      - source: "Bevis · stars and bars"
+        question: "Vis at antall måter å velge en multimengde av størrelse `k` fra `n` typer er `C(n + k − 1, k)`."
+        sections:
+          - label: "Idé"
+            lines:
+              - { text: "Vi etablerer en bijeksjon mellom multimengder og binærstrenger med `k` stjerner `★` og `n − 1` skillevegger `|`." }
+              - { text: "Antallet stjerner som havner i den `i`-te «kassen» (mellom skillevegg `i − 1` og `i`) angir hvor mange ganger type `i` er valgt." }
+          - label: "Konstruksjon"
+            lines:
+              - { text: "La en multimengde være gitt ved telletallene `(x₁, …, xₙ)` med `x_i ≥ 0` og `x₁ + … + xₙ = k`." }
+              - { text: "Skriv først `x₁` stjerner, så en skillevegg, så `x₂` stjerner, så en skillevegg, …, til slutt `xₙ` stjerner." }
+              - { text: "Resultatet er en streng med totalt `k + (n − 1)` symboler — `k` stjerner og `n − 1` skillevegger." }
+              - { text: "Eksempel (`n = 3`, `k = 5`, `x = (2, 1, 2)`): `★★|★|★★`." }
+          - label: "Bijeksjon"
+            lines:
+              - { text: "Hver multimengde gir en entydig streng (av konstruksjonen)." }
+              - { text: "Omvendt: enhver streng med `k` stjerner og `n − 1` skillevegger gir entydige telletall `x_i ≥ 0` ved å telle stjerner i hver kasse — så avbildningen er invertibel." }
+              - { comment: "Bijeksjon ⇒ multimengder og strenger har samme antall." }
+          - label: "Telling av strengene"
+            lines:
+              - { text: "En streng er entydig bestemt av hvilke av `n + k − 1` posisjoner som inneholder stjerner — eller ekvivalent, hvilke `n − 1` som er skillevegger." }
+              - { text: "Antall slike strenger:" }
+              - { indent: "`C(n + k − 1, k) = C(n + k − 1, n − 1) = (n + k − 1)! / (k! · (n − 1)!)`" }
+        result: "Antall multimengder av størrelse `k` fra `n` typer er `C(n + k − 1, k)`. ∎"
+
+  - label: "Fordele k like objekter i n bokser"
+    solutions:
+      - source: "Praksiseksempel · 6 prøver til 3 laboratorier"
+        question: "En forskningsleder skal fordele 6 identiske blodprøver mellom 3 laboratorier. Et laboratorium kan motta 0 prøver. På hvor mange måter kan dette gjøres?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Prøvene er identiske (`k = 6` like objekter)." }
+              - { text: "Laboratoriene er skillbare (`n = 3` bokser med ulik identitet)." }
+              - { text: "Tomme «bokser» er tillatt — et laboratorium kan stå uten prøver." }
+              - { text: "Tilsvarer telling av heltallsløsninger til `x₁ + x₂ + x₃ = 6` med `x_i ≥ 0`." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n + k − 1, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(3 + 6 − 1, 6) = C(8, 6) = C(8, 2) = (8·7)/2 = 28`" }
+              - { comment: "Ved symmetri er C(8, 6) = C(8, 2). Begge gir 28." }
+          - label: "Variant — minst én prøve per laboratorium"
+            lines:
+              - { text: "Hvis hvert lab MÅ få minst én prøve (`x_i ≥ 1`), substituer `y_i = x_i − 1 ≥ 0` med `y₁ + y₂ + y₃ = 6 − 3 = 3`:" }
+              - { indent: "`C(3 + 3 − 1, 3) = C(5, 3) = 10`" }
+              - { comment: "Ekvivalent direkte formel: C(k − 1, n − 1) = C(5, 2) = 10." }
+        result: "`28` fordelinger uten krav (tomme labber tillatt), eller `10` hvis hver lab må få minst én prøve"
+
+      - source: "Praksiseksempel · baller i bokser med stars-and-bars-visualisering"
+        question: "På hvor mange måter kan vi fordele 3 like baller i 5 nummererte bokser, der en boks gjerne kan inneholde flere baller (eller ingen)?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` bokser, `k = 3` like baller fordeles." }
+              - { text: "Ballene er identiske; boksene er distinkte. Ekvivalent med å telle ikke-negative heltallsløsninger av `x₁ + x₂ + x₃ + x₄ + x₅ = 3`." }
+          - label: "Stars and bars"
+            lines:
+              - { text: "Tenk på arrangementer av 3 stjerner (`★`) og 4 skillevegger (`|`) — `n − 1 = 4`:" }
+              - { indent: "`★★★||||`  → boks 1 har 3 baller, resten tomme" }
+              - { indent: "`★|★|★||`  → bokser 1, 2, 3 har én ball hver" }
+              - { indent: "`|||★★★|`  → boks 4 har 3 baller, resten tomme" }
+              - { text: "Hver slik rad svarer til én fordeling. Antall rader = antall måter å velge plassene til de 3 stjernene blant 7 posisjoner." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n + k − 1, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(5 + 3 − 1, 3) = C(7, 3) = 7!/(3!·4!) = 35`" }
+        result: "`C(7, 3) = 35` fordelinger"
+
+  - label: "Heltallsløsninger av x₁ + … + xₙ = k, x_i ≥ 0"
+    solutions:
+      - source: "Praksiseksempel · diskret matematikk"
+        question: "Hvor mange ikke-negative heltallsløsninger har likningen `x₁ + x₂ + x₃ + x₄ = 10`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 4` variabler, `k = 10` sumkrav." }
+              - { text: "Krav `x_i ≥ 0` for alle `i` — ingen øvre skranker." }
+              - { comment: "Direkte anvendelse av multimengdeformelen." }
+          - label: "Formel"
+            lines:
+              - { text: "Antall løsninger = `C(n + k − 1, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(4 + 10 − 1, 10) = C(13, 10) = C(13, 3) = (13·12·11)/(3·2·1) = 1716/6 = 286`" }
+          - label: "Variant — strenge krav `x_i ≥ 1`"
+            lines:
+              - { text: "Med `x_i ≥ 1` for alle `i`: substituer `y_i = x_i − 1 ≥ 0`, så `y₁ + y₂ + y₃ + y₄ = 10 − 4 = 6`:" }
+              - { indent: "`C(4 + 6 − 1, 6) = C(9, 6) = C(9, 3) = 84`" }
+              - { comment: "Ekvivalent: C(k − 1, n − 1) = C(9, 3) = 84." }
+        result: "`286` løsninger med `x_i ≥ 0`, eller `84` med `x_i ≥ 1`"
+
+      - source: "Praksiseksempel · poengfordeling"
+        question: "En studentgruppe på 5 personer skal dele 12 like deltakerpoeng seg imellom (alle hele poeng, hver person får 0 eller flere). På hvor mange måter kan poengene fordeles?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 5` skillbare personer." }
+              - { text: "`k = 12` like poeng å fordele." }
+              - { text: "Ekvivalent: heltallsløsninger av `x₁ + x₂ + x₃ + x₄ + x₅ = 12` med `x_i ≥ 0`." }
+          - label: "Formel"
+            lines:
+              - { text: "`C(n + k − 1, k)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`C(5 + 12 − 1, 12) = C(16, 12) = C(16, 4) = (16·15·14·13)/(4·3·2·1) = 43680/24 = 1 820`" }
+        result: "`C(16, 12) = 1 820` mulige poengfordelinger"
+
+related:
+  - { id: "uordnet-utvalg-uten-tilbakelegging",  kind: "entry" }
+  - { id: "ordnet-utvalg-med-tilbakelegging",    kind: "entry" }
+  - { id: "ordnet-utvalg-uten-tilbakelegging",   kind: "entry" }
+  - { id: "gunstige-pa-mulige",                  kind: "entry" }
+  - { id: "uordnet-utvalg",                      kind: "glossary" }
+  - { id: "med-tilbakelegging",                  kind: "glossary" }
+  - { id: "multiplikasjonsprinsippet",           kind: "glossary" }
+
+tools:
+  - "Kalkulator: nCr / COMB / binomialkoeffisient-funksjon"
+  - "Kalkulator: fakultet (`k!`)"
+
+tags:
+  - "kombinatorikk"
+  - "telling"
+  - "multimengder"
+  - "multimengde"
+  - "stars and bars"
+  - "stars-and-bars"
+  - "uordnet med tilbakelegging"
+  - "uordnet utvalg med tilbakelegging"
+  - "kombinasjon med repetisjon"
+  - "combinations with repetition"
+  - "fordele like objekter"
+  - "baller i bokser"
+  - "heltallsløsninger"
+  - "ikke-negative heltallsløsninger"
+  - "C(n+k-1, k)"

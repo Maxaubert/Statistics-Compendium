@@ -47,6 +47,52 @@ describe("Prose", () => {
     expect(ps[1].textContent).toBe("Nytt avsnitt");
   });
 
+  it("renders bold spans that contain inline code", () => {
+    const { container } = render(
+      <Prose body={"Test: **`X̄` er normalfordelt** ✓"} />,
+    );
+    const strong = container.querySelector("strong");
+    expect(strong).not.toBeNull();
+    // Bold should contain a code span inside, not literal asterisks.
+    expect(strong!.querySelector("code")?.textContent).toBe("X̄");
+    expect(strong!.textContent).toBe("X̄ er normalfordelt");
+    // No literal `**` should leak into the paragraph.
+    expect(container.querySelector("p")?.textContent).not.toContain("**");
+  });
+
+  it("renders GitHub-style markdown tables", () => {
+    const { container } = render(
+      <Prose
+        body={
+          "| Form | Verdi |\n" +
+          "|---|---|\n" +
+          "| `α` | 0.05 |\n" +
+          "| `β` | 0.20 |"
+        }
+      />,
+    );
+    const table = container.querySelector("table");
+    expect(table).not.toBeNull();
+    const ths = container.querySelectorAll("thead th");
+    expect(ths).toHaveLength(2);
+    expect(ths[0].textContent).toBe("Form");
+    expect(ths[1].textContent).toBe("Verdi");
+    const rows = container.querySelectorAll("tbody tr");
+    expect(rows).toHaveLength(2);
+    const firstRowCells = rows[0].querySelectorAll("td");
+    expect(firstRowCells[1].textContent).toBe("0.05");
+    // First cell uses inline code rendering for `α`
+    expect(firstRowCells[0].querySelector("code")?.textContent).toBe("α");
+  });
+
+  it("treats a `|`-line not followed by a separator as a paragraph", () => {
+    const { container } = render(
+      <Prose body={"| not | a | table |\nstill paragraph"} />,
+    );
+    expect(container.querySelector("table")).toBeNull();
+    expect(container.querySelector("p")?.textContent).toContain("| not | a | table |");
+  });
+
   it("renders bullet lists", () => {
     const { container } = render(
       <Prose body={"- Første\n- Andre\n- Tredje"} />,

@@ -52,7 +52,7 @@ filters:
   structural_cues: [process_over_time, independent_events, counting_events, complement_pattern, no_occurrences, probability_threshold]
   parameters_known: [rate_lambda]
   distribution_assumption: [poisson]
-  tooling: [cumulative_poisson_table_E2, calculator_exp, calculator_factorial]
+  tooling: [cumulative_poisson_table_E2, standard_normal_table_E3, calculator_exp, calculator_factorial, calculator_sqrt]
 solution_variants:
   - label: "P(X = k)"
     recognition: "«Sannsynligheten for nøyaktig `k` hendelser i tidsvinduet `t`», «3 kunder kommer på 1 time»."
@@ -146,6 +146,38 @@ solution_variants:
       - "Velg det minste (eller største) `k` som tilfredsstiller ulikheten — les nøye om kravet er strikt (`>`) eller ikke-strikt (`≥`)"
       - { text: "Hvis ingen `k` i tabellen tilfredsstiller terskelen: utvid tabellen manuelt med formelen, eller konkluder at hendelsen er praktisk umulig/sikker", conditional: true }
       - "Skriv svaret med ord ('minste `k` er ...') og oppgi den tilhørende sannsynligheten som dokumentasjon"
+
+  - label: "Normaltilnærming (med heltallskorr.)"
+    recognition: "«`λt` er stort og tabell E.2 dekker ikke verdien», eller «`P(82 ≤ X ≤ 101)` med 17 båter/dag i 5 dager». Når forventet antall `μ = λt ≥ 10` tilnærmes Poisson med normalfordeling, og `±0.5`-korreksjonen bygger bro fra diskret til kontinuerlig."
+    steps:
+      - "Identifiser raten `λ` med enhet (f.eks. `λ = 17` båter/dag) og vinduets lengde `t` (f.eks. `t = 5` dager), og noter grensen(e) `x` (eller `a`, `b`)"
+      - text: "Sjekk gyldighetskravet — forventet antall må være stort nok:"
+        formula: "μ = λt ≥ 10"
+      - text: "Beregn forventning og spredning. Merk at for Poisson er **varians = forventning** (`Var(X) = μ`), så `σ = √μ`:"
+        formula:
+          - "μ = λt"
+          - "σ = √(λt) = √μ"
+      - text: "Hovedformel — «høyst `x`» (nedre hale) med heltallskorreksjon `+0.5`:"
+        formula: "P(X ≤ x) ≈ G((x + 0.5 − μ)/σ)"
+      - text: "«Mer enn `x`» (`X > x`) via komplement — samme `+0.5` siden vi inkluderer `x` i nedre hale:"
+        formula: "P(X > x) ≈ 1 − G((x + 0.5 − μ)/σ)"
+      - text: "«Minst `x`» (`X ≥ x`) — pass på korreksjonen `−0.5` (vi inkluderer `x` selv):"
+        formula: "P(X ≥ x) ≈ 1 − G((x − 0.5 − μ)/σ)"
+      - text: "Tosidig intervall `a ≤ X ≤ b` — utvid begge ender med 0.5:"
+        formula: "P(a ≤ X ≤ b) ≈ G((b + 0.5 − μ)/σ) − G((a − 0.5 − μ)/σ)"
+      - text: "Punkt-sannsynlighet «ved likhet» (`X = x`) — differanse av to nærliggende `G`-verdier:"
+        formula: "P(X = x) ≈ G((x + 0.5 − μ)/σ) − G((x − 0.5 − μ)/σ)"
+      - "Slå opp `G(z)` i **tabell E.3** (standard normalfordeling). Bruk `G(−z) = 1 − G(z)` for negative argumenter."
+      - text: "Eksempel — `λ = 17` båter/dag, `t = 5` dager (`μ = 85`, `σ = √85 ≈ 9.220`), `P(82 ≤ X ≤ 101)`:"
+        formula: "P(82 ≤ X ≤ 101) ≈ G(1.79) − G(−0.38) = 0.9633 − 0.3520 ≈ 0.611"
+        example: true
+      - text: "Samme oppsett, øvre hale `P(X > 100)`:"
+        formula: "P(X > 100) ≈ 1 − G(1.68) ≈ 1 − 0.9535 = 0.0465"
+        example: true
+      - text: "Hvis `μ = λt < 10`, ikke bruk normaltilnærming — slå opp `P(X ≤ k)` i **tabell E.2** (Poisson kumulativ) direkte, eller summer pmf for hånd."
+        conditional: true
+      - text: "Glemmer du `±0.5`-korreksjonen blir svaret mindre presist (særlig nær halene og for moderat `μ`). Inkluder den alltid når oppgaven sier «med heltallskorreksjon»."
+        conditional: true
 
 common_traps: |
   Husk å multiplisere raten med vindusstørrelsen før innsetting (`μ = λt`,
@@ -446,10 +478,79 @@ detailed_solution_variants:
               - { text: "Minste `k` er 12" }
         result: "`k = 12` med `P(X > 12) ≈ 0.064`"
 
+  - label: "Normaltilnærming (med heltallskorr.)"
+    solutions:
+      - source: "sept 2022 · oppgave 3b (båter i havn)"
+        question: "Det ankommer i gjennomsnitt `λ = 17` båter per dag til en havn. La `X` være antall båter i løpet av en periode på `t = 5` dager. Bruk normaltilnærming med heltallskorreksjon til å finne `P(82 ≤ X ≤ 101)`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X` = antall båter i løpet av 5 dager" }
+              - { text: "`X ~ Poisson(μ = λt)` med `λ = 17`/dag og `t = 5` dager" }
+              - { comment: "tosidig intervall: `a = 82`, `b = 101` — utvid begge ender med 0.5" }
+          - label: "Gyldighetssjekk"
+            lines:
+              - { text: "`μ = λt = 17 · 5 = 85 ≥ 10` ✓" }
+              - { comment: "normaltilnærming er gyldig" }
+          - label: "Forventning og spredning"
+            lines:
+              - { text: "`μ = λt = 17 · 5 = 85`" }
+              - { text: "`σ = √(λt) = √85 ≈ 9.220`" }
+              - { comment: "for Poisson er `Var(X) = μ`, så `σ = √μ`" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(a ≤ X ≤ b) ≈ G((b + 0.5 − μ)/σ) − G((a − 0.5 − μ)/σ)`" }
+              - { comment: "heltallskorreksjonen `±0.5` siden `X` er diskret og normalfordelingen kontinuerlig" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(82 ≤ X ≤ 101) ≈ G((101 + 0.5 − 85)/√85) − G((82 − 0.5 − 85)/√85)`" }
+              - { indent: "`= G(16.5/9.220) − G(−3.5/9.220)`" }
+              - { indent: "`= G(1.79) − G(−0.38)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "Slå opp `G(1.79) → 0.9633`" } }
+              - { table_lookup: { ref: "E.3", text: "Slå opp `G(0.38) → 0.6480`, og bruk symmetri `G(−0.38) = 1 − 0.6480 = 0.3520`" } }
+          - label: "Sluttregning"
+            lines:
+              - { text: "`= 0.9633 − 0.3520`" }
+        result: "`P(82 ≤ X ≤ 101) ≈ 0.611` (~61 % sjanse for at antall båter ligger i intervallet `[82, 101]`)"
+
+      - source: "Praksis · samme båtoppsett, øvre hale"
+        question: "Samme oppsett: `X ~ Poisson(μ = 85)` (`λ = 17` båter/dag, `t = 5` dager). Bruk normaltilnærming med heltallskorreksjon til å finne `P(X > 100)` — sannsynligheten for at det kommer flere enn 100 båter."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`X ~ Poisson(μ = 85)`" }
+              - { comment: "øvre hale: `P(X > 100)` — bruk komplement med `+0.5` siden `X = 100` inkluderes i nedre hale" }
+          - label: "Gyldighetssjekk"
+            lines:
+              - { text: "`μ = 85 ≥ 10` ✓" }
+          - label: "Forventning og spredning"
+            lines:
+              - { text: "`μ = λt = 85`" }
+              - { text: "`σ = √(λt) = √85 ≈ 9.220`" }
+              - { comment: "samme verdier som over — gjenbrukes" }
+          - label: "Formel"
+            lines:
+              - { text: "`P(X > x) ≈ 1 − G((x + 0.5 − μ)/σ)`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`P(X > 100) ≈ 1 − G((100 + 0.5 − 85)/√85)`" }
+              - { indent: "`= 1 − G(15.5/9.220)`" }
+              - { indent: "`= 1 − G(1.68)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.3", text: "Slå opp `G(1.68)` i standard normalfordeling → `0.9535`" } }
+          - label: "Sluttregning"
+            lines:
+              - { text: "`P(X > 100) ≈ 1 − 0.9535`" }
+        result: "`P(X > 100) ≈ 0.0465` (~4.7 % sjanse for mer enn 100 båter på 5 dager)"
+
 related:
   - { id: "poisson-prosess",      kind: "glossary" }
   - { id: "eksponential-fordeling", kind: "entry" }
   - { id: "binomial-fordeling",   kind: "entry" }
+  - { id: "normalfordeling",      kind: "entry" }
   - { id: "komplementregelen",    kind: "entry" }
   - { id: "ki-poissonrate",       kind: "entry" }
   - { id: "poissonvarians",       kind: "glossary" }
@@ -459,4 +560,5 @@ related:
 
 tools:
   - "Tabell E.2 – Kumulativ poissonfordeling"
+  - "Tabell E.3 – Standard normalfordeling (for normaltilnærming)"
   - "Kalkulator: e^x, k!"

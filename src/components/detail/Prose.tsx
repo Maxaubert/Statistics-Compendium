@@ -103,6 +103,34 @@ export function Prose({
             </pre>
           );
         }
+        if (block.kind === "table") {
+          return (
+            <div key={i} className="overflow-x-auto">
+              <table className={TABLE_CLASS[theme]}>
+                <thead>
+                  <tr>
+                    {block.header.map((cell, ci) => (
+                      <th key={ci} className={TABLE_TH_CLASS[theme]}>
+                        {renderInline(cell, aliases, popup?.openTerm, theme)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block.rows.map((row, ri) => (
+                    <tr key={ri}>
+                      {row.map((cell, ci) => (
+                        <td key={ci} className={TABLE_TD_CLASS[theme]}>
+                          {renderInline(cell, aliases, popup?.openTerm, theme)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
         if (block.kind === "callout") {
           const config = CALLOUT_CONFIG[block.variant] ?? CALLOUT_CONFIG.note;
           // For [!read] callouts, the first content line is the formula
@@ -198,6 +226,24 @@ const CODE_BLOCK_CLASS: Record<ProseTheme, string> = {
   dark:
     "m-0 overflow-x-auto rounded-md bg-white/[0.05] px-4 py-3 font-mono text-[13.5px] leading-relaxed text-[inherit]",
 };
+const TABLE_CLASS: Record<ProseTheme, string> = {
+  light:
+    "min-w-full border-collapse border border-line text-left text-[14px]",
+  dark:
+    "min-w-full border-collapse border border-white/20 text-left text-[13.5px]",
+};
+const TABLE_TH_CLASS: Record<ProseTheme, string> = {
+  light:
+    "border border-line bg-paper-2 px-2.5 py-1.5 font-semibold text-ink",
+  dark:
+    "border border-white/20 bg-white/[0.05] px-2.5 py-1.5 font-semibold text-white",
+};
+const TABLE_TD_CLASS: Record<ProseTheme, string> = {
+  light:
+    "border border-line px-2.5 py-1.5 align-top text-ink",
+  dark:
+    "border border-white/20 px-2.5 py-1.5 align-top",
+};
 interface CalloutConfig {
   label: string;
   accent: string;
@@ -250,6 +296,7 @@ interface RuleBlock { kind: "rule" }
 interface CodeBlock { kind: "code_block"; lines: string[] }
 interface HeadingBlock { kind: "heading"; level: 2 | 3; text: string }
 interface CalloutBlock { kind: "callout"; variant: string; lines: string[] }
+interface TableBlock { kind: "table"; header: string[]; rows: string[][] }
 type Block =
   | ParagraphBlock
   | ListBlock
@@ -257,7 +304,8 @@ type Block =
   | RuleBlock
   | CodeBlock
   | HeadingBlock
-  | CalloutBlock;
+  | CalloutBlock
+  | TableBlock;
 
 const BULLET_RE = /^\s*[-*]\s+/;
 const NUMBERED_RE = /^\s*\d+\.\s+/;
@@ -266,6 +314,16 @@ const INDENTED_CODE_RE = /^(?: {4}|\t)(.*)$/;
 const HEADING_RE = /^(##|###)\s+(.+)$/;
 const CALLOUT_OPEN_RE = /^>\s*\[!(\w+)\]\s*(.*)$/;
 const CALLOUT_CONT_RE = /^>\s?(.*)$/;
+// GitHub-style markdown table: a header row `| a | b |` followed by a
+// separator row `|---|---|` of dashes (optionally with `:` for alignment).
+const TABLE_ROW_RE = /^\s*\|(.+)\|\s*$/;
+const TABLE_SEPARATOR_RE = /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/;
+
+function splitTableRow(line: string): string[] {
+  const m = line.match(TABLE_ROW_RE);
+  if (!m) return [];
+  return m[1].split("|").map((c) => c.trim());
+}
 
 function parseBlocks(body: string): Block[] {
   // Normalize line endings, then split on blank lines into raw blocks.
@@ -339,6 +397,20 @@ function parseBlocks(body: string): Block[] {
       blocks.push({ kind: "code_block", lines: codeLines });
       continue;
     }
+    // GitHub-style markdown table: header row, then separator, then data rows.
+    // Must look ahead for the separator before committing — a `|`-containing
+    // line that is NOT followed by `|---|---|` is just a paragraph.
+    if (TABLE_ROW_RE.test(lines[i]) && i + 1 < lines.length && TABLE_SEPARATOR_RE.test(lines[i + 1])) {
+      const header = splitTableRow(lines[i]);
+      i += 2; // consume header + separator
+      const rows: string[][] = [];
+      while (i < lines.length && lines[i].trim() !== "" && TABLE_ROW_RE.test(lines[i])) {
+        rows.push(splitTableRow(lines[i]));
+        i++;
+      }
+      blocks.push({ kind: "table", header, rows });
+      continue;
+    }
     if (BULLET_RE.test(lines[i])) {
       const items: string[] = [];
       while (i < lines.length && lines[i].trim() !== "" && !RULE_RE.test(lines[i]) && !HEADING_RE.test(lines[i])) {
@@ -400,53 +472,59 @@ const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 /**
  * Tokenize an inline string into code spans, bold spans, italic spans,
- * markdown links, and plain text. Backticks have priority: content
- * inside backticks is never further processed (so `**inside code**`
- * stays literal in code). Then `[label](href)` markdown links are split
- * out before bold/italic so link targets don't get parsed as emphasis.
+ * markdown links, and plain text. Precedence:
+ *   1. Links — peeled off first (own bracket syntax).
+ *   2. Bold (`**...**`) — found at the outer level so the bold pair can
+ *      span inline code, e.g. `**\`X̄\` er normalfordelt**`. The bold
+ *      token's `value` is a raw string; rendering recurses via
+ *      `renderInline` to handle inline code/italic inside.
+ *   3. Code (`` `...` ``) and italic (`*...*`) — inside each segment.
  */
 function tokenizeInline(text: string): Token[] {
   const out: Token[] = [];
-  const codeParts = text.split(/(`[^`]+`)/g);
-  for (const part of codeParts) {
-    if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
-      out.push({ kind: "code", value: part.slice(1, -1) });
-      continue;
-    }
-    if (part.length === 0) continue;
-    // Pull out [label](href) link tokens before bold/italic so the link
-    // target's parens etc. don't fight with emphasis parsing.
-    let cursor = 0;
-    LINK_RE.lastIndex = 0;
-    let match: RegExpExecArray | null;
-    while ((match = LINK_RE.exec(part)) !== null) {
-      if (match.index > cursor) {
-        emitNonLink(part.slice(cursor, match.index), out);
-      }
-      out.push({ kind: "link", label: match[1], href: match[2] });
-      cursor = match.index + match[0].length;
-    }
-    if (cursor < part.length) {
-      emitNonLink(part.slice(cursor), out);
-    }
+  let cursor = 0;
+  LINK_RE.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = LINK_RE.exec(text)) !== null) {
+    if (m.index > cursor) emitBoldThenCode(text.slice(cursor, m.index), out);
+    out.push({ kind: "link", label: m[1], href: m[2] });
+    cursor = m.index + m[0].length;
   }
+  if (cursor < text.length) emitBoldThenCode(text.slice(cursor), out);
   return out;
 }
 
 /**
- * Tokenize a chunk that has already been peeled of backticks and links.
- * Splits on bold, then italic.
+ * Split a chunk on `**bold**` pairs (non-greedy across the chunk), then
+ * process each non-bold segment for code/italic/text. The bold body
+ * can contain backticks and italic — they're tokenized when rendering.
  */
-function emitNonLink(chunk: string, out: Token[]) {
+function emitBoldThenCode(chunk: string, out: Token[]) {
   if (chunk.length === 0) return;
-  const boldParts = chunk.split(/(\*\*[^*]+\*\*)/g);
+  const boldParts = chunk.split(/(\*\*.+?\*\*)/g);
   for (const bp of boldParts) {
     if (bp.length >= 4 && bp.startsWith("**") && bp.endsWith("**")) {
       out.push({ kind: "bold", value: bp.slice(2, -2) });
       continue;
     }
     if (bp.length === 0) continue;
-    const italicParts = bp.split(/(\*[^*]+\*)/g);
+    emitCodeAndItalic(bp, out);
+  }
+}
+
+/**
+ * Tokenize a non-bold chunk into code spans, italic spans, and text.
+ */
+function emitCodeAndItalic(chunk: string, out: Token[]) {
+  if (chunk.length === 0) return;
+  const codeParts = chunk.split(/(`[^`]+`)/g);
+  for (const part of codeParts) {
+    if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
+      out.push({ kind: "code", value: part.slice(1, -1) });
+      continue;
+    }
+    if (part.length === 0) continue;
+    const italicParts = part.split(/(\*[^*]+\*)/g);
     for (const ip of italicParts) {
       if (ip.length >= 2 && ip.startsWith("*") && ip.endsWith("*")) {
         out.push({ kind: "italic", value: ip.slice(1, -1) });
@@ -473,9 +551,10 @@ function renderInline(
       );
     }
     if (tok.kind === "bold") {
+      // Recurse so bold can contain inline code, italic, and glossary links.
       return (
         <strong key={i} className={BOLD_CLASS[theme]}>
-          {renderTextWithLinks(tok.value, aliases, openTerm, theme)}
+          {renderInline(tok.value, aliases, openTerm, theme)}
         </strong>
       );
     }

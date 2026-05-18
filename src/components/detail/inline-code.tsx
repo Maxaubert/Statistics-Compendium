@@ -6,13 +6,14 @@ export type InlineCodeTheme = "light" | "dark" | "warn" | "step" | "example";
 /**
  * Render a string with five flavors of inline markdown:
  *   - `backtick`-delimited spans → <code> pill
- *   - **bold** → <strong> (links and auto-links work inside bold)
+ *   - **bold** → <strong> (can wrap code, links, and auto-links)
  *   - [label](href) → router <Link>
  *   - tabell E.1 … E.6 → auto-linked to the corresponding /table/EX-... page
  *
- * Bold spans are matched only within non-backtick text, so backtick code
- * inside bold delimiters (e.g. `**foo `bar` baz**`) is NOT supported —
- * use a heading or split the markup if you need that combination.
+ * Bold is parsed at the OUTER level so `**foo \`bar\` baz**` correctly
+ * produces a bold span containing a code pill. Within each bold or
+ * non-bold segment we then split on backtick code spans, links, and
+ * table-ref auto-links.
  *
  * Plain unicode is preserved as-is — KaTeX is not invoked here, the symbols
  * are already Unicode in the YAML.
@@ -21,9 +22,47 @@ export function renderInlineCode(
   text: string,
   theme: InlineCodeTheme = "light",
 ): ReactNode {
-  const codeParts = text.split(/(`[^`]+`)/g);
   const out: ReactNode[] = [];
   const ctx = { key: 0 };
+  pushBoldThenInner(text, theme, out, ctx);
+  return out;
+}
+
+/** Walk a text segment, peeling off **bold** pairs at the outer level
+ *  so they can wrap inline code, links, and auto-link refs. Within each
+ *  bold and non-bold segment, split on backtick code spans next. */
+function pushBoldThenInner(
+  text: string,
+  theme: InlineCodeTheme,
+  out: ReactNode[],
+  ctx: { key: number },
+) {
+  let cursor = 0;
+  BOLD_RE.lastIndex = 0;
+  let hit: RegExpExecArray | null;
+  while ((hit = BOLD_RE.exec(text)) !== null) {
+    if (hit.index > cursor) {
+      pushCodeLinksAndTableRefs(text.slice(cursor, hit.index), theme, out, ctx);
+    }
+    const innerOut: ReactNode[] = [];
+    pushCodeLinksAndTableRefs(hit[1], theme, innerOut, ctx);
+    out.push(<strong key={ctx.key++}>{innerOut}</strong>);
+    cursor = hit.index + hit[0].length;
+  }
+  if (cursor < text.length) {
+    pushCodeLinksAndTableRefs(text.slice(cursor), theme, out, ctx);
+  }
+}
+
+/** Split a chunk on backtick code spans, then process links / table-refs
+ *  in the remaining non-code text. Used inside both bold and non-bold. */
+function pushCodeLinksAndTableRefs(
+  text: string,
+  theme: InlineCodeTheme,
+  out: ReactNode[],
+  ctx: { key: number },
+) {
+  const codeParts = text.split(/(`[^`]+`)/g);
   for (const part of codeParts) {
     if (part.length >= 2 && part.startsWith("`") && part.endsWith("`")) {
       out.push(
@@ -34,36 +73,7 @@ export function renderInlineCode(
       continue;
     }
     if (part.length === 0) continue;
-    pushBoldAndLinks(part, theme, out, ctx);
-  }
-  return out;
-}
-
-/** Walk a non-code text segment for **bold** spans; inside each
- *  bold span and around it, render explicit links and auto-link
- *  `tabell E.X` references. */
-function pushBoldAndLinks(
-  text: string,
-  theme: InlineCodeTheme,
-  out: ReactNode[],
-  ctx: { key: number },
-) {
-  let cursor = 0;
-  BOLD_RE.lastIndex = 0;
-  let m: RegExpExecArray | null;
-  while ((m = BOLD_RE.exec(text)) !== null) {
-    if (m.index > cursor) {
-      pushLinksAndTableRefs(text.slice(cursor, m.index), theme, out, ctx);
-    }
-    out.push(
-      <strong key={ctx.key++}>
-        {renderLinksAndTableRefs(m[1], theme, ctx)}
-      </strong>,
-    );
-    cursor = m.index + m[0].length;
-  }
-  if (cursor < text.length) {
-    pushLinksAndTableRefs(text.slice(cursor), theme, out, ctx);
+    pushLinksAndTableRefs(part, theme, out, ctx);
   }
 }
 

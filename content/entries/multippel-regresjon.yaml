@@ -1,0 +1,466 @@
+id: multippel-regresjon
+name_no: "Multippel lineær regresjon"
+type: regression
+category: regression_estimate
+tagline: "Generaliser enkel lineær regresjon til flere forklaringsvariabler `x_1, …, x_k`. Estimer koeffisientene, tolk p-verdier og KI, mål forklaringsgrad med `R²`, og test hele modellen med F-test."
+
+formula_main: "ŷ = β̂_0 + β̂_1·x_1 + β̂_2·x_2 + … + β̂_k·x_k"
+formula_latex: "\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_1 + \\hat{\\beta}_2 x_2 + \\cdots + \\hat{\\beta}_k x_k"
+
+what_it_does: |
+  Utvider enkel lineær regresjon til å la `Y` avhenge LINEÆRT av `k`
+  forklaringsvariabler `x_1, x_2, …, x_k` samtidig:
+
+  `Y = β_0 + β_1·x_1 + β_2·x_2 + … + β_k·x_k + ε`,   `ε ~ N(0, σ²)`.
+
+  Hver `β_j` tolkes som **partiell** effekt: gjennomsnittlig endring i `Y` når
+  `x_j` øker med én enhet, ALLE andre `x_l` (`l ≠ j`) holdt konstante.
+  Estimering skjer typisk med minste-kvadraters-metode på matriseform
+  (`β̂ = (X^T X)^(−1) X^T y`), og programvare gir ut tabell med
+  `β̂_j`, `SE(β̂_j)`, t-observator, p-verdi og KI per koeffisient samt
+  globale mål `R²`, `R²_adj` og F-statistikk.
+
+  Pensum-oppgavene fokuserer på TOLKNING av output, ikke selve matriseregningen —
+  hvilke variabler er signifikante, hva betyr `R²`, hvilken redusert modell anbefales.
+
+why_use: |
+  Få fenomener avhenger av bare én variabel. Multippel regresjon lar deg:
+
+  - estimere effekten av hver `x_j` korrigert for de andre forklaringsvariablene,
+  - sammenligne størrelse og statistisk signifikans på tvers av variabler,
+  - måle hvor mye av variasjonen i `Y` modellen totalt forklarer (`R²`),
+  - teste om modellen som helhet bidrar utover null-modellen (F-test),
+  - velge en sparsommelig modell ved å fjerne ikke-signifikante prediktorer.
+
+  Se også [forutsetninger-regresjon](/glossary/forutsetninger-regresjon) for
+  antakelsene som må holde for at p-verdier og KI skal være gyldige.
+
+recognition_cues:
+  - "Oppgaven oppgir en utskrift fra statistikkprogram med flere koeffisienter `β̂_0, β̂_1, …, β̂_k` og tilhørende p-verdier"
+  - "Flere forklaringsvariabler nevnes: «NOx som funksjon av luftfuktighet, temperatur og trykk»"
+  - "Du blir spurt om å TOLKE hvilke variabler som bidrar signifikant, eller hvilke som bør fjernes"
+  - "`R²` (eventuelt justert `R²_adj`) er gitt eller skal beregnes"
+  - "F-statistikk og df-paret `(k, n−k−1)` dukker opp"
+  - "Modellformelen `ŷ = β̂_0 + β̂_1·x_1 + … + β̂_k·x_k` er allerede oppgitt"
+
+when_NOT_to_use:
+  - "Bare én forklaringsvariabel `x` → bruk [lineær regresjon](/entry/lineaer-regresjon)"
+  - "Responsvariabelen `Y` er binær (0/1) → logistisk regresjon (utenfor pensum)"
+  - "Forklaringsvariablene har klar ikke-lineær sammenheng med `Y` → vurder transformasjon (`log x`, `x²`) eller annen modell"
+  - "Sterkt korrelerte prediktorer (multikollinearitet) gjør koeffisientene ustabile — fjern eller kombiner variabler"
+  - "Antallet observasjoner er nær antallet prediktorer (`n ≈ k`) → modellen tilpasser støy («overfitting»)"
+
+symbols:
+  - { sym: "Y",            means: "responsvariabelen (avhengig variabel)" }
+  - { sym: "x_1, …, x_k",  means: "de `k` forklaringsvariablene (prediktorene)" }
+  - { sym: "k",            means: "antall forklaringsvariabler (ekskluderer skjæringspunktet)" }
+  - { sym: "n",            means: "antall observasjoner" }
+  - { sym: "β_0",          means: "skjæringspunkt (intercept) — forventet `Y` når alle `x_j = 0`" }
+  - { sym: "β_j",          means: "partiell effekt av `x_j`: endring i `E[Y]` per enhetsøkning i `x_j`, øvrige holdt konstant" }
+  - { sym: "β̂_j",         means: "minste-kvadraters-estimat for `β_j`" }
+  - { sym: "ŷ",            means: "predikert verdi: `β̂_0 + β̂_1·x_1 + … + β̂_k·x_k`" }
+  - { sym: "ε",            means: "tilfeldig feilkomponent, `ε ~ N(0, σ²)`" }
+  - { sym: "σ²",           means: "residualenes (ukjente) varians" }
+  - { sym: "SSE",          means: "`Σ(y_i − ŷ_i)²` — restkvadratsum" }
+  - { sym: "SST",          means: "`Σ(y_i − ȳ)²` — total kvadratsum" }
+  - { sym: "SSR",          means: "`SST − SSE` — kvadratsum forklart av modellen" }
+  - { sym: "R²",           means: "forklart andel av variasjonen, `R² = 1 − SSE/SST = SSR/SST ∈ [0, 1]`" }
+  - { sym: "R²_adj",       means: "justert R², korrigerer for antall prediktorer" }
+  - { sym: "F",            means: "F-observator for «hele modellen», fordelt `F_(k, n−k−1)` under `H₀`" }
+  - { sym: "p-verdi",      means: "sannsynlighet for å observere en så ekstrem `β̂_j` (eller F) hvis `H₀` er sann" }
+  - { sym: "KI",           means: "konfidensintervall for `β_j`, vanligvis `β̂_j ± t·SE(β̂_j)`" }
+  - { sym: "α",            means: "signifikansnivå" }
+  - { sym: "X",            means: "designmatrise (`n × (k+1)`), kolonne av 1-ere først for skjæringspunkt" }
+
+filters:
+  computes: [parameter_estimate, hypothesis_test, confidence_interval, correlation]
+  random_variable: [continuous, slope_estimate]
+  setup: [single_population, linear_relationship]
+  structural_cues: [linear_relationship_suspected, data_as_list, summary_stats_given, normal_assumed, two_sided_alternative]
+  parameters_known: [slope_se, residual_variance, confidence_level, alpha_significance, regression_line_estimate]
+  distribution_assumption: [t_distribution, normal, f_distribution]
+  tooling: [t_quantile_table_E5, f_quantile_table_E8, calculator_sqrt]
+
+tags:
+  # Hovedkonsept
+  - multippel regresjon
+  - multippel lineær regresjon
+  - multipel regresjon
+  - multiple regression
+  - multivariat regresjon
+  - flere forklaringsvariabler
+  - flere prediktorer
+  # Koeffisienter
+  - β̂_0
+  - β̂_1
+  - β̂_j
+  - β_0
+  - β_1
+  - β_j
+  - beta_0
+  - beta_j
+  - partiell effekt
+  - regresjonskoeffisient
+  - regresjonskoeffisienter
+  # Output / tolkning
+  - p-verdi
+  - p-verdier
+  - p value
+  - signifikant variabel
+  - signifikante prediktorer
+  - tolke output
+  - regresjonsutskrift
+  - utskrift fra programvare
+  # R² / forklaringsgrad
+  - R²
+  - R^2
+  - R-kvadrat
+  - r-squared
+  - forklaringsgrad
+  - justert R²
+  - R²_adj
+  - adjusted R²
+  - andel forklart variasjon
+  # SST / SSE / SSR
+  - SST
+  - SSE
+  - SSR
+  - total kvadratsum
+  - restkvadratsum
+  - kvadratsum forklart
+  # F-test
+  - F-test
+  - F-statistikk
+  - F-observator
+  - F-fordeling
+  - hele modellen signifikant
+  - global signifikanstest
+  - tabell E.8
+  # Konfidensintervall
+  - KI for β_j
+  - konfidensintervall koeffisient
+  - inneholder 0
+  # Variabelseleksjon
+  - variabelseleksjon
+  - modellseleksjon
+  - fjerne variabel
+  - beholde variabel
+  - sparsommelig modell
+  - parsimoni
+  # Matrise / metode
+  - designmatrise
+  - X^T X
+  - normallikning
+  - minste kvadraters metode
+  - OLS
+  - ordinary least squares
+  # Antagelser / fallgruver
+  - multikollinearitet
+  - korrelerte prediktorer
+  - overfitting
+  - forutsetninger regresjon
+  - ekstrapolering
+  # Prediksjon
+  - predikere ŷ
+  - predikere y
+  - prediksjon multippel
+  # Praktiske eksempler
+  - NOx
+  - luftfuktighet
+  - temperatur
+  - trykk
+
+solution_variants:
+  - label: "Estimere koeffisientene"
+    recognition: "«Estimer regresjonskoeffisientene `β̂_0, β̂_1, …, β̂_k`» — sjelden for hånd; programvare gir tallene. Vi gjengir matriseformelen for fullstendighet og for å forstå hva som ligger bak utskriften."
+    description: "Minste-kvadraters-løsning på matriseform. Du regner aldri dette manuelt for `k ≥ 2`, men formelen er kjernen som genererer alle koeffisientene i en utskrift."
+    steps:
+      - text: "Sett opp designmatrisen `X` med en kolonne av 1-ere først (intercept) og deretter én kolonne per forklaringsvariabel:"
+        formula:
+          - "X = [1  x_(1,1)  x_(1,2)  …  x_(1,k)]"
+          - "    [1  x_(2,1)  x_(2,2)  …  x_(2,k)]"
+          - "    [⋮   ⋮         ⋮          ⋮     ]"
+          - "    [1  x_(n,1)  x_(n,2)  …  x_(n,k)]"
+      - text: "Samle responsvariabelen i en kolonnevektor `y = (y_1, …, y_n)^T`."
+      - text: "Minste-kvadraters-estimatoren finnes ved å minimere `‖y − Xβ‖²`. Løsningen tilfredsstiller normallikningen `(X^T X) β̂ = X^T y`:"
+        formula: "β̂ = (X^T X)^(−1) X^T y"
+      - text: "Resultatet er en `(k+1)×1`-vektor med `β̂_0, β̂_1, …, β̂_k` i den rekkefølgen kolonnene i `X` står."
+      - { text: "Forutsetning: `X^T X` må være invertibel — kollinearitet (en `x_j` er lineær kombinasjon av andre) bryter dette.", conditional: true }
+      - text: "I praksis kjører du `statsmodels.OLS(y, X).fit()` eller tilsvarende i R/Excel og leser koeffisientene rett av."
+      - text: "Eksempel (NOx-modell, mai 2021/6): programvaren returnerer:"
+        formula: "ŷ = −3.4872 − 0.0026·x_1 + 0.0014·x_2 + 0.1543·x_3"
+        example: true
+
+  - label: "Tolke output (p-verdier og KI)"
+    recognition: "«Hvilke forklaringsvariabler bidrar signifikant?», «hvilke kan fjernes?». Du har en utskrift med `β̂_j`, `SE(β̂_j)`, t-observator, p-verdi og KI for hver variabel."
+    description: "Per variabel: liten p-verdi (`p < α`) eller KI som IKKE inneholder 0 ⇒ behold. Stor p-verdi eller KI som inneholder 0 ⇒ vurder å fjerne."
+    steps:
+      - text: "For hver `β̂_j`: hypotesetesten er per definisjon:"
+        formula:
+          - "H₀: β_j = 0     mot     H₁: β_j ≠ 0"
+          - "T_j = β̂_j / SE(β̂_j) ~ t_(n−k−1) under H₀"
+      - text: "Bestem `α` (typisk `0.05`). Slå opp `t_(α/2, n−k−1)` i **tabell E.5** hvis ikke p-verdi er gitt."
+      - text: "Beslutningsregler (likeverdige):"
+        formula:
+          - "p_j < α     ⇒ forkast H₀ ⇒ behold x_j"
+          - "0 ∈ KI_j   ⇒ behold H₀ ⇒ vurder å fjerne x_j"
+      - text: "Eksempel (NOx). Modellen `ŷ = −3.4872 − 0.0026·x_1 + 0.0014·x_2 + 0.1543·x_3`:"
+        formula:
+          - "Luftfuktighet (x_1): p = 0.001 < 0.05      ⇒ behold (sterkt signifikant)"
+          - "Temperatur (x_2):    p = 0.705, KI = [−0.006, 0.009] inneholder 0 ⇒ fjern"
+          - "Trykk (x_3):         p = 0.147 > 0.05      ⇒ fjern (ikke signifikant)"
+        example: true
+      - { text: "**Sammenheng KI ↔ p-verdi:** «0 inneholdt i 95 % KI» er ekvivalent med «p > 0.05» i tosidig test. Det er to vinkler på samme avgjørelse.", conditional: true }
+      - text: "Konkluder: behold variabler med `p < α`, vurder å fjerne resten. Bygg en redusert modell og kjør på nytt for å sjekke at `β̂`-ene for de gjenværende ikke endrer seg dramatisk."
+
+  - label: "R² og R²-adjusted"
+    recognition: "«Hva betyr `R² = 0.80`?», «beregn justert R²», «hvor stor andel av variasjonen forklares av modellen?»."
+    description: "`R²` er forklart andel av variasjonen. `R²_adj` straffer modellen for å ha mange prediktorer og er det riktige målet når du sammenligner modeller med ulike `k`."
+    steps:
+      - text: "Definer de tre kvadratsummene:"
+        formula:
+          - "SST = Σ(y_i − ȳ)²        (total variasjon i y)"
+          - "SSE = Σ(y_i − ŷ_i)²      (uforklart variasjon — residualene)"
+          - "SSR = SST − SSE          (variasjon forklart av modellen)"
+      - text: "`R²` (Pearson, koeffisienten av determinasjon):"
+        formula: "R² = 1 − SSE/SST = SSR/SST"
+      - text: "Tolkning: `R² = 0.80` ⇒ 80 % av variasjonen i `Y` forklares av lineær regresjon på `x_1, …, x_k`."
+      - text: "Tolkningsskala (grov):"
+        cases:
+          - { when: "R² > 0.9",        then: "Svært god tilpasning" }
+          - { when: "0.7 < R² ≤ 0.9",  then: "God tilpasning" }
+          - { when: "0.4 < R² ≤ 0.7",  then: "Moderat — modellen forklarer en del, men mye er uforklart" }
+          - { when: "R² ≤ 0.4",        then: "Svak tilpasning — vurder andre variabler eller modell" }
+      - text: "`R²` øker (svakt) hver gang du legger til en variabel, selv om den er ren støy. Justert `R²` straffer dette:"
+        formula: "R²_adj = 1 − (1 − R²) · (n − 1)/(n − k − 1)"
+      - text: "Eksempel: `R² = 0.80`, `n = 20`, `k = 3`:"
+        formula: "R²_adj = 1 − 0.20·19/16 = 1 − 0.2375 ≈ 0.7625"
+        example: true
+      - text: "Bruk `R²_adj` (ikke `R²`) når du sammenligner modeller med ulikt antall prediktorer. Øker `R²_adj` når du legger til en variabel ⇒ variabelen var verdt det."
+      - { text: "**Fallgruve:** høy `R²` betyr ikke at modellen er riktig — den kan likevel ha ikke-lineære mønstre i residualene eller utelatte variabler.", conditional: true }
+
+  - label: "F-test for hele modellen"
+    recognition: "«Test om modellen som helhet er signifikant», «test `H₀: β_1 = β_2 = … = β_k = 0`», «global F-test». Brukes for å avgjøre om modellen forklarer noe i det hele tatt — utover bare gjennomsnittet `ȳ`."
+    description: "Tester at MINST ÉN koeffisient `≠ 0`. F-observatoren bygger på `R²` og frihetsgradene `(k, n−k−1)`."
+    steps:
+      - text: "Formuler hypotesen for hele modellen:"
+        formula:
+          - "H₀: β_1 = β_2 = … = β_k = 0       (modellen forklarer ingenting)"
+          - "H₁: minst én β_j ≠ 0               (modellen forklarer noe)"
+      - text: "F-observatoren kan skrives på flere ekvivalente former:"
+        formula:
+          - "F = (SSR/k) / (SSE/(n−k−1))                       (kvadratsum-form)"
+          - "F = (R²/k) / ((1 − R²)/(n − k − 1))                (R²-form, ofte mest praktisk)"
+      - text: "Under `H₀`: `F ~ F_(k, n−k−1)`. Frihetsgradparet er `(teller, nevner) = (k, n−k−1)`."
+      - text: "Slå opp kritisk verdi `F_(α, k, n−k−1)` i **tabell E.8**."
+      - text: "Forkastingsregel:"
+        formula: "Forkast H₀ hvis F > F_(α, k, n−k−1)"
+      - text: "Eksempel: `R² = 0.80`, `n = 20`, `k = 3`, `α = 0.05`:"
+        formula: "F = (0.80/3) / (0.20/16) = 0.2667/0.0125 ≈ 21.33 > F_(0.05, 3, 16) ≈ 3.24 ⇒ forkast H₀"
+        example: true
+      - { text: "**Forholdet til t-testene:** for `k = 1` faller F-testen sammen med tosidig t-test på `β_1` (`F = T²`). For `k ≥ 2` er F-test og enkelt-t-tester forskjellige spørsmål: F sier «forklarer modellen noe?»; t-tester sier «hvilke prediktorer er det som forklarer».", conditional: true }
+
+  - label: "Variabelseleksjon (hvilke fjernes?)"
+    recognition: "«Lag en redusert modell», «hvilke forklaringsvariabler beholdes?», «hvilke kan droppes?». Bygger på output-tabellen fra fane 2."
+    description: "Bakovervalgseliminasjon (backward elimination): fjern én og én ikke-signifikant variabel, refit, gjenta til alle gjenstående er signifikante."
+    steps:
+      - text: "Identifiser alle variabler med `p > α` eller `0 ∈ KI` — det er kandidater for fjerning."
+      - text: "Fjern den ENE variabelen med høyest p-verdi (den mest «overflødige»)."
+      - text: "Refitt modellen med de gjenværende variablene. Koeffisientene endres som regel litt fordi resterende prediktorer absorberer det den fjernede bidro med."
+      - text: "Sjekk p-verdiene i den nye utskriften: er det fortsatt ikke-signifikante variabler? Gjenta. Stopp når alle gjenstående har `p < α`."
+      - text: "Sjekk at `R²_adj` ikke faller dramatisk; dersom det stuper, kan variabelen likevel ha vært verdifull."
+      - text: "Eksempel (NOx). Med `α = 0.05`: `x_2` (temperatur, `p = 0.705`) fjernes først, så `x_3` (trykk, `p = 0.147`) — den endelige modellen blir:"
+        formula: "ŷ_redusert = β̂_0_ny + β̂_1_ny·x_1   (bare luftfuktighet)"
+        example: true
+      - { text: "**Fallgruve:** ikke fjern flere variabler samtidig — gjør én av gangen, fordi p-verdiene endres etter hver refitt (særlig ved multikollinearitet).", conditional: true }
+      - { text: "**Domeneargumenter trumfer:** en variabel som er teoretisk viktig kan beholdes selv om `p` er marginal — statistisk seleksjon er ikke alt.", conditional: true }
+
+  - label: "Predikere ŷ for nye x-verdier"
+    recognition: "«Hva forventer modellen at NOx blir ved luftfuktighet = 50, temperatur = 15, trykk = 1015?». Sett inn `x_(0,1), x_(0,2), …, x_(0,k)` i estimert linje."
+    description: "Punktprediksjon er rett innsetting. Vær varsom med ekstrapolering utenfor området forklaringsvariablene dekker i datasettet."
+    steps:
+      - text: "Sjekk at de oppgitte `x_(0,1), …, x_(0,k)` ligger innenfor de observerte verdiene for hver variabel (interpolering, ikke ekstrapolering)."
+      - text: "Sett inn i estimert regresjon:"
+        formula: "ŷ_0 = β̂_0 + β̂_1·x_(0,1) + β̂_2·x_(0,2) + … + β̂_k·x_(0,k)"
+      - text: "Eksempel (NOx-modell, `x_(0,1) = 50`, `x_(0,2) = 15`, `x_(0,3) = 30`):"
+        formula: "ŷ_0 = −3.4872 − 0.0026·50 + 0.0014·15 + 0.1543·30 ≈ 0.969"
+        example: true
+      - { text: "Et fullt prediksjonsintervall krever `S_E` og designmatrisen — programvaren gir dette direkte; for hånd er det upraktisk når `k ≥ 2`.", conditional: true }
+      - { text: "**Ekstrapolering**: predikerer du langt utenfor observert x-område, blir intervallet bredt og modellen lite pålitelig — selv om punktestimatet ser fornuftig ut. Se [ekstrapolering](/glossary/ekstrapolering).", conditional: true }
+
+solution_template:
+  - "Identifiser om oppgaven gir deg en ferdig regresjonsutskrift eller ber deg estimere fra rådata."
+  - text: "Skriv ut den estimerte modellen:"
+    formula: "ŷ = β̂_0 + β̂_1·x_1 + … + β̂_k·x_k"
+  - "Tolk per variabel (p-verdi og KI) — behold dem med `p < α`, vurder fjerning av resten."
+  - "Tolk `R²` (og `R²_adj` ved modellsammenligning)."
+  - "Kjør F-test for global signifikans hvis spørsmålet er «forklarer modellen noe i det hele tatt?»."
+  - "Predikér nye `ŷ` ved innsetting — pass på interpolering vs ekstrapolering."
+
+common_traps: |
+  - **`β_j` er en PARTIELL effekt**, ikke en marginal: «endring i `E[Y]` per enhet
+    `x_j`, gitt at de andre variablene holdes konstant». I korrelerte prediktorer
+    kan en variabel se ut til å være ikke-signifikant alene, men være avgjørende
+    sammen med andre.
+
+  - **`R²` straffes ikke for ekstra variabler**: legger du til en tilfeldig
+    støy-variabel, øker `R²` (svakt). Bruk `R²_adj` ved modellsammenligning.
+
+  - **Frihetsgradene er `n − k − 1`, ikke `n − 2`**: vi har estimert `k + 1`
+    parametre (`β̂_0` pluss `k` stigninger). Bruker du `n − 2` (riktig for enkel
+    regresjon) blir `S_E²` for liten.
+
+  - **F-test ↔ t-tester** er ikke det samme: F svarer på «forklarer modellen som
+    helhet noe?». t-tester per koeffisient svarer på «er DENNE variabelen viktig
+    gitt de andre?». Du kan ha signifikant F men ingen signifikant enkel-t
+    (multikollinearitet) — og omvendt (mange svake variabler).
+
+  - **«Inneholder 0 i KI» = «p > α»** for tosidig test — to formuleringer av
+    samme avgjørelse, ikke uavhengige kriterier.
+
+  - **Multikollinearitet** (sterk korrelasjon mellom `x`-er) blåser opp
+    `SE(β̂_j)`, øker p-verdiene og gjør koeffisientene ustabile. To variabler
+    som måler samme ting (`temperatur i °C` og `temperatur i K`) gjør `X^T X`
+    nesten singulær.
+
+  - **Variabelseleksjon én av gangen**: fjern den variabelen med høyest p-verdi,
+    refitt, vurder på nytt. Slumper du flere ut samtidig, kan du miste en som
+    ble signifikant etter at en annen ble fjernet.
+
+  - **Ekstrapolering**: forklaringsvariablene må ligge i området modellen er
+    fittet på. Predikering ved `x_1 = 200` når data dekker `[20, 80]` er
+    upålitelig selv om formelen gir et tall.
+
+  - **Normalitetsantakelse** gjelder RESIDUALENE `ε`, ikke `Y` eller `x_j` hver
+    for seg. Plot residualene og sjekk for symmetri og konstant varians.
+
+  - **«Signifikant» ≠ «stor effekt»**: med stor `n` blir selv små `β̂_j`
+    signifikante. Se på STØRRELSEN av `β̂_j` (i tolkbare enheter) i tillegg til
+    p-verdien.
+
+python_snippet: |
+  import numpy as np
+  import statsmodels.api as sm
+  from scipy.stats import f as f_dist
+
+  # Mock-data: NOx-utslipp y, luftfuktighet x1, temperatur x2, trykk x3
+  x1 = np.array([55, 70, 65, 80, 60, 75, 68, 72])
+  x2 = np.array([10, 12, 15, 18, 11, 14, 16, 13])
+  x3 = np.array([1010, 1015, 1012, 1018, 1009, 1016, 1014, 1011])
+  y  = np.array([149, 153, 152, 158, 148, 155, 154, 151])
+
+  # Bygg designmatrise med intercept-kolonne
+  X = sm.add_constant(np.column_stack([x1, x2, x3]))
+  n, p_params = X.shape
+  k = p_params - 1                     # antall forklaringsvariabler
+
+  # 1) Estimer modellen (OLS)
+  model    = sm.OLS(y, X).fit()
+  beta_hat = model.params              # [β̂_0, β̂_1, β̂_2, β̂_3]
+  print(model.summary())
+
+  # 2) Tolk per variabel
+  for j, name in enumerate(["const", "x1", "x2", "x3"]):
+      ci_low, ci_high = model.conf_int(alpha=0.05)[j]
+      keep = (model.pvalues[j] < 0.05)
+      print(f"{name}: β̂={beta_hat[j]:.4f}, p={model.pvalues[j]:.3f}, "
+            f"KI=[{ci_low:.4f}, {ci_high:.4f}], behold={keep}")
+
+  # 3) R² og R²_adj
+  R2     = model.rsquared              # andel forklart variasjon
+  R2_adj = model.rsquared_adj          # justert R²
+
+  # 4) F-test for hele modellen
+  F_stat = (R2/k) / ((1 - R2)/(n - k - 1))
+  F_crit = f_dist.ppf(0.95, dfn=k, dfd=n - k - 1)
+  reject_global = F_stat > F_crit
+
+  # 5) Prediker ŷ for nye x-verdier
+  x_new  = np.array([1, 50, 15, 1015]) # [intercept, x1, x2, x3]
+  y_hat0 = x_new @ beta_hat            # punktprediksjon
+
+detailed_solution_variants:
+  - label: "Tolke output (p-verdier og KI)"
+    solutions:
+      - source: "Eksamen mai21 · oppgave 6 (NOx-modell)"
+        question: "La `y` være NOx-utslipp og `x_1` luftfuktighet, `x_2` temperatur, `x_3` trykk. En multippel regresjon gir `ŷ = −3.4872 − 0.0026·x_1 + 0.0014·x_2 + 0.1543·x_3`. Output: luftfuktighet `p = 0.001`; temperatur `p = 0.705`, KI = `[−0.006, 0.009]`; trykk `p = 0.147`. `R² = 0.800`. Tolk: hvilke forklaringsvariabler bidrar signifikant, hva betyr `R²`, og hva blir den reduserte modellen på `α = 0.05`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Multippel lineær regresjon med `k = 3` forklaringsvariabler." }
+              - { text: "Per variabel skal vi avgjøre signifikans via `p < α` eller «0 ∈ KI»." }
+              - { text: "Beslutningsnivå: `α = 0.05`." }
+          - label: "Estimert modell"
+            lines:
+              - { text: "`ŷ = −3.4872 − 0.0026·x_1 + 0.0014·x_2 + 0.1543·x_3`" }
+              - { text: "Hver koeffisient er en partiell effekt: f.eks. én enhets økning i trykk gir `+0.1543` i forventet NOx, med luftfuktighet og temperatur holdt konstante." }
+          - label: "Tolkning per variabel"
+            lines:
+              - { text: "**Luftfuktighet (x_1):** `p = 0.001 < 0.05` ⇒ forkast `H₀: β_1 = 0` ⇒ BEHOLD (sterkt signifikant). Koeffisienten er negativ (`−0.0026`): høyere luftfuktighet ⇒ lavere NOx." }
+              - { text: "**Temperatur (x_2):** `p = 0.705 ≫ 0.05` og KI `[−0.006, 0.009]` inneholder 0 ⇒ behold `H₀` ⇒ FJERN. Variabelen bidrar ikke signifikant gitt de andre." }
+              - { text: "**Trykk (x_3):** `p = 0.147 > 0.05` ⇒ behold `H₀` ⇒ FJERN. Selv om `β̂_3 = 0.1543` er størst i absoluttverdi, er usikkerheten for stor til å konkludere." }
+          - label: "R² og konklusjon"
+            lines:
+              - { text: "`R² = 0.800` betyr at **80 %** av variasjonen i NOx-utslipp forklares av modellen (luftfuktighet + temperatur + trykk samlet)." }
+              - { text: "Resterende 20 % skyldes uobserverte faktorer og målestøy." }
+          - label: "Redusert modell"
+            lines:
+              - { text: "Etter at temperatur og trykk er fjernet, gjenstår luftfuktighet alene:" }
+              - { indent: "`ŷ_redusert = β̂_0_ny + β̂_1_ny·x_1`" }
+              - { text: "Modellen må refittes — `β̂_0_ny` og `β̂_1_ny` vil avvike noe fra `−3.4872` og `−0.0026`, fordi prediktorene som ble fjernet ikke lenger «trekker» variasjon." }
+              - { text: "Sjekk i den reduserte utskriften at `x_1` fortsatt har `p < 0.05`, og at `R²_adj` ikke falt dramatisk." }
+        result: "Behold luftfuktighet (`p = 0.001`); fjern temperatur (`p = 0.705`, `0 ∈ KI`) og trykk (`p = 0.147`). `R² = 0.800` ⇒ 80 % av variasjonen forklart. Redusert modell: `ŷ = β̂_0_ny + β̂_1_ny·x_1`."
+
+  - label: "F-test for hele modellen"
+    solutions:
+      - source: "Praksis · F-test fra R² (n=20, k=3)"
+        question: "En multippel regresjon med `k = 3` forklaringsvariabler er fittet på `n = 20` observasjoner og gir `R² = 0.800`. Test på signifikansnivå `α = 0.05` om modellen som helhet er signifikant — dvs. om minst én av koeffisientene `β_1, β_2, β_3` er forskjellig fra null."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Multippel regresjon, `n = 20`, `k = 3` forklaringsvariabler." }
+              - { text: "`R² = 0.800` er andel forklart variasjon." }
+              - { text: "Vi gjør GLOBAL F-test (hele modellen), ikke per-variabel-t-test." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: β_1 = β_2 = β_3 = 0` (modellen forklarer ingenting utover gjennomsnittet `ȳ`)" }
+              - { text: "`H₁:` minst én `β_j ≠ 0`" }
+          - label: "F-observator"
+            lines:
+              - { text: "Formel (R²-form):" }
+              - { indent: "`F = (R²/k) / ((1 − R²)/(n − k − 1))`" }
+              - { text: "Innsetting:" }
+              - { indent: "`F = (0.800/3) / (0.200/(20 − 3 − 1)) = (0.800/3) / (0.200/16)`" }
+              - { indent: "`  = 0.2667 / 0.0125 ≈ 21.33`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "Frihetsgrader: teller `df_1 = k = 3`, nevner `df_2 = n − k − 1 = 16`." }
+              - { table_lookup: { ref: "E.8", text: "`F_(0.05, 3, 16) ≈ 3.24`" } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Sammenlign: `F ≈ 21.33 > 3.24` ✓" }
+              - { text: "Forkast `H₀` på `α = 0.05`." }
+              - { text: "Modellen som helhet er statistisk signifikant — minst én forklaringsvariabel bidrar. (Hvilken/hvilke avgjøres av t-testene per koeffisient.)" }
+        result: "`F ≈ 21.33 > F_(0.05, 3, 16) ≈ 3.24` ⇒ forkast `H₀`. Modellen som helhet er signifikant på `α = 0.05`."
+
+related:
+  - { id: "lineaer-regresjon",          kind: "entry" }
+  - { id: "forutsetninger-regresjon",   kind: "glossary" }
+  - { id: "ekstrapolering",             kind: "glossary" }
+  - { id: "minste-kvadraters-metode",   kind: "glossary" }
+  - { id: "beta-koeffisient",           kind: "glossary" }
+  - { id: "intercept",                  kind: "glossary" }
+  - { id: "r-kvadrat",                  kind: "glossary" }
+  - { id: "t-fordeling",                kind: "glossary" }
+  - { id: "frihetsgrader-glos",         kind: "glossary" }
+  - { id: "nullhypotese",               kind: "glossary" }
+  - { id: "alternativhypotese",         kind: "glossary" }
+  - { id: "konfidensintervall",         kind: "glossary" }
+  - { id: "E5-t-tabell",                kind: "table" }
+  - { id: "E8-f-tabell",                kind: "table" }
+
+tools:
+  - "Tabell E.5 – t-fordelingens kvantiltabell (per-koeffisient t-test)"
+  - "Tabell E.8 – F-fordelingens kvantiltabell (global F-test)"
+  - "Statistikkprogram (statsmodels / R / Excel) for å estimere `β̂`-vektoren"
+  - "Kalkulator: kvadratrot, basale aritmetiske operasjoner"

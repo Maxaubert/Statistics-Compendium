@@ -45,23 +45,47 @@ filters:
   parameters_known: [success_p, sample_size_large, confidence_level]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
-recognition: "«Lag et 95 % konfidensintervall for andelen `p`», «hvor presist er `p̂`?», eller «mellom hvilke verdier ligger sannsynligheten?». Du har `X` suksesser av `n` forsøk."
+solution_variants:
+  - label: "KI for andel p"
+    recognition: "«Lag et 95 % konfidensintervall for andelen `p`», «hvor presist er `p̂`?», eller «mellom hvilke verdier ligger sannsynligheten?». Du har `X` suksesser av `n` forsøk."
+    steps:
+      - "Identifiser antall suksesser `X` og utvalgsstørrelsen `n`"
+      - text: "Beregn punktestimat:"
+        formula: "p̂ = X/n"
+      - text: "Sjekk at normalapproksimasjon er gyldig:"
+        formula: "n·p̂·(1−p̂) ≥ 5"
+      - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
+      - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `z_(0.05) = 1.645`"
+      - text: "Beregn margin:"
+        formula: "margin = z_(α/2) · √(p̂(1−p̂)/n)"
+      - text: "Sett opp KI:"
+        formula: "p̂ ± margin"
+      - text: "Eksempel: meningsmåling med `X = 200`, `n = 500`, 95 % KI (`z_(0.025) = 1.96`):"
+        formula: "0.40 ± 1.96·√(0.4·0.6/500) ≈ 0.40 ± 0.0429 = (0.357, 0.443)"
+        example: true
 
-solution_template:
-  - "Identifiser antall suksesser `X` og utvalgsstørrelsen `n`"
-  - text: "Beregn punktestimat:"
-    formula: "p̂ = X/n"
-  - text: "Sjekk at normalapproksimasjon er gyldig:"
-    formula: "n·p̂·(1−p̂) ≥ 5"
-  - "Finn `α` fra konfidensnivået: `(1 − α)·100 %` KI ⇒ `α = 1 − konfidensnivå` (f.eks. 90 % KI gir `α = 0.10`, så `α/2 = 0.05`)"
-  - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `z_(0.05) = 1.645`"
-  - text: "Beregn margin:"
-    formula: "margin = z_(α/2) · √(p̂(1−p̂)/n)"
-  - text: "Sett opp KI:"
-    formula: "p̂ ± margin"
-  - text: "Eksempel: meningsmåling med `X = 200`, `n = 500`, 95 % KI (`z_(0.025) = 1.96`):"
-    formula: "0.40 ± 1.96·√(0.4·0.6/500) ≈ 0.40 ± 0.0429 = (0.357, 0.443)"
-    example: true
+  - label: "Finn n for ønsket KI-bredde"
+    recognition: "«Hvor mange observasjoner trengs for at 95 % KI for `p` skal ha lengde høyst `L`?», «hvor stort utvalg må vi ha for at intervallet ikke skal bli bredere enn …?». Du har et anslag for `p̂` (eller bruker `p̂ = 0.5` som verste tilfelle) og en ønsket total intervall-lengde `L`."
+    steps:
+      - "Identifiser kravet: ønsket TOTAL lengde `L` på KI og konfidensnivå `(1−α)·100 %`."
+      - text: "**ADVARSEL — `L` er total lengde, IKKE halvbredde/margin.** Hvis oppgaven sier «marginalen skal være høyst `m`», så er `L = 2m`. Bruker du feil form, blir `n` 4× for stor eller 4× for liten."
+        conditional: true
+      - "Skaff `p̂`: enten gitt fra tidligere undersøkelse, eller bruk worst-case `p̂ = 0.5` (gir største `p̂(1−p̂) = 0.25` og dermed største `n`)."
+      - "Slå opp `z_(α/2)` i **tabell E.4** (Z-kvantiltabell). F.eks. `z_(0.025) = 1.960` for 95 % KI."
+      - text: "Bruk formelen:"
+        formula: "n ≥ 4·p̂·(1−p̂)·(z_(α/2)/L)²"
+      - text: "Worst-case-snarvei (når `p̂` er ukjent): sett `p̂ = 0.5` og formelen kollapser til:"
+        formula: "n ≥ (z_(α/2)/L)²"
+        conditional: true
+      - text: "Alternativ form hvis oppgaven bruker halvbredde/margin `E = L/2` i stedet for total bredde:"
+        formula: "n ≥ p̂(1−p̂)·(z_(α/2)/E)²"
+        conditional: true
+      - "Rund **alltid** opp til nærmeste heltall (selv `5797.01 → 5798`), siden `n` må være heltall og kravet er en nedre grense."
+      - text: "Eksempel (mai 2021, oppg. 4c): `p̂ = 0.1852`, `L = 0.02`, `z_(0.025) = 1.960`:"
+        formula: "n ≥ 4·0.1852·0.8148·(1.960/0.02)² ≈ 5797.3 ⇒ n = 5798"
+        example: true
+      - text: "Worst-case-eksempel: ingen pilot, `L = 0.04`, 95 % ⇒ `n ≥ (1.960/0.04)² = 49² = 2401`."
+        example: true
 
 common_traps: |
   Standard error i KI bruker `p̂` (estimert), MEN i [hypotesetest for andel](/entry/en-utvalg-z-test-andel)
@@ -190,6 +214,61 @@ detailed_solution_variants:
             lines:
               - { text: "Vi er 99 % sikre på at den sanne defekt-raten ligger mellom 4.7 % og 25.3 %. Intervallet er bredt fordi konfidensnivået er høyt og n relativt lite." }
         result: "`p ∈ (0.047, 0.253)`"
+
+  - label: "Finn n for ønsket KI-bredde"
+    solutions:
+      - source: "Eksamen mai 2021 · oppgave 4c"
+        question: "Det ble observert `p̂ = 0.1852` i en tidligere undersøkelse. Hvor mange observasjoner `n` trengs for at et 95 % konfidensintervall for andelen `p` skal ha total lengde høyst `L = 0.02`?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Oppgitt: `p̂ = 0.1852`, ønsket total lengde `L = 0.02`, konfidensnivå 95 % → `α = 0.05`." }
+              - { text: "Vi skal finne: minste nødvendige `n`." }
+              - { comment: "Merk: L er TOTAL lengde av intervallet, ikke margin/halvbredde." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(α/2) = z_(0.025) = 1.960`" } }
+          - label: "Formel"
+            lines:
+              - { text: "`n ≥ 4·p̂·(1−p̂)·(z_(α/2)/L)²`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ 4·0.1852·0.8148·(1.960/0.02)²`" }
+              - { indent: "`= 4·0.1852·0.8148·(98)²`" }
+              - { indent: "`= 4·0.1852·0.8148·9604`" }
+              - { indent: "`= 5797.3`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Vi runder **alltid opp** (selv om desimalen er liten), siden `n` må være heltall og ulikheten er en nedre grense:" }
+              - { indent: "`5797.3 → n = 5798`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Det trengs minst **5798 observasjoner** for at 95 % KI skal ha total lengde høyst 0.02." }
+        result: "`n = 5798`"
+
+      - source: "Praksis · worst-case (ukjent p̂)"
+        question: "En meningsmåling skal planlegges. Vi har ingen forhåndsinformasjon om andelen `p`, men vi ønsker et 95 % konfidensintervall med total bredde høyst `L = 0.04`. Finn minste nødvendige `n`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Ingen pilot ⇒ bruk worst case `p̂ = 0.5` (gir maks `p̂(1−p̂) = 0.25`)." }
+              - { text: "Ønsket bredde `L = 0.04`, konfidensnivå 95 % → `α = 0.05`." }
+              - { comment: "Worst case er konservativt — gir alltid bred nok KI uansett sann p." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(α/2) = z_(0.025) = 1.960`" } }
+          - label: "Worst-case-formel"
+            lines:
+              - { text: "Med `p̂ = 0.5` blir `4·p̂(1−p̂) = 1`, så:" }
+              - { indent: "`n ≥ (z_(α/2)/L)²`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ (1.960/0.04)² = 49² = 2401`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Med 2401 spurte er vi sikret 95 % KI for `p` med bredde høyst 0.04, uansett hva den sanne `p` er." }
+              - { comment: "Hvis pilot hadde gitt p̂ langt fra 0.5, ville færre observasjoner holdt." }
+        result: "`n = 2401`"
 
 related:
   - { id: "binomial-fordeling",      kind: "entry" }

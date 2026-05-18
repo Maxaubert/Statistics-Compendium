@@ -148,6 +148,31 @@ solution_variants:
       - text: "**Pass på asymmetrien:** intervallet er IKKE sentrert om `s²`. Den LILLE kvantilen `χ²_(1−α/2)` står i nevneren for ØVRE grense; den STORE `χ²_(α/2)` står i nevneren for NEDRE grense. Lett å bytte om."
         conditional: true
 
+  - label: "Finn n for ønsket KI-bredde"
+    recognition: "«Hvor stor må `n` være for at 95 % KI for `μ` skal ha total bredde høyst `L`?», «hvor mange målinger trengs for halvbredde `E`?». Planlegger utvalgsstørrelsen FØR data samles inn."
+    steps:
+      - text: "Husk skillet: `L` er TOTAL bredde av KI, `E = L/2` er halvbredde/margin. Mange oppgaver oppgir det ene — dobbeltsjekk hvilket. Bruker du feil form blir `n` 4× for stor eller 4× for liten."
+        conditional: true
+      - "Identifiser konfidensnivå `(1 − α)` og finn `α/2` (95 % ⇒ `α/2 = 0.025`)."
+      - "Slå opp `z_(α/2)` i **tabell E.4** (95 % ⇒ `z_(0.025) = 1.960`)."
+      - text: "**σ kjent — total bredde `L`:** løs `2·z_(α/2)·σ/√n ≤ L` for `n`:"
+        formula: "n ≥ (2·z_(α/2)·σ/L)²"
+      - text: "Ekvivalent form med halvbredde `E = L/2`:"
+        formula: "n ≥ (z_(α/2)·σ/E)²"
+        conditional: true
+      - text: "**σ ukjent (pilot `s`):** strengt tatt iterativt — bytt `z` med `t_(α/2, n−1)`. Bruk z-formelen med pilot-`s` som god startestimat (`t ≈ z` når `n > 30`)."
+        formula: "n ≈ (2·z_(α/2)·s/L)²    ⟵ z-tilnærming; iterer med t hvis n < 30"
+      - text: "**Rund ALLTID OPP** til neste hele tall — `n = 96.04` betyr at `n = 96` ikke er nok; du må ha `n = 97` for å garantere bredden."
+        conditional: true
+      - text: "Eksempel (σ kjent): `σ = 10`, total bredde `L = 4`, 95 % (`z = 1.960`):"
+        formula: "n ≥ (2·1.960·10/4)² = 9.8² = 96.04 ⇒ n = 97"
+        example: true
+      - text: "Eksempel (σ ukjent, pilot `s = 12`, `L = 5`, 95 %, z-tilnærming):"
+        formula: "n ≥ (2·1.960·12/5)² ≈ 88.51 ⇒ n = 89"
+        example: true
+      - text: "Sjekk t-korreksjon hvis `n` blir lite (`n < 30`): slå opp `t_(α/2, n−1)` i **tabell E.5** og gjenta. For `n = 89` ⇒ `t_(0.025, 88) ≈ 1.987 ≈ z`, så `n = 89` står."
+        conditional: true
+
 solution_template:
   - "Identifiser HVA oppgaven spør om — KI for `μ` eller for `σ²`/`σ`?"
   - "For `μ`: er `σ` kjent (gitt eksternt) eller ukjent (må estimeres med `s`)? Velg riktig fane."
@@ -309,6 +334,64 @@ detailed_solution_variants:
               - { text: "`KI for σ² = [2.41, 11.19]`" }
               - { text: "Tilhørende KI for σ (kvadratroten av begge): `[√2.41, √11.19] = [1.55, 3.34]`" }
         result: "`95 % KI for σ²: [2.41, 11.19]`; for `σ: [1.55, 3.34]`"
+
+  - label: "Finn n for ønsket KI-bredde"
+    solutions:
+      - source: "Praksis · prosesskontroll, σ kjent"
+        question: "Et historisk datasett gir kjent standardavvik `σ = 10`. Du ønsker et 95 % konfidensintervall for `μ` med total bredde høyst `L = 4`. Hvor stor må utvalgsstørrelsen `n` være?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: `σ = 10` (kjent), ønsket total bredde `L = 4`, konfidensnivå `(1 − α) = 0.95`." }
+              - { text: "Siden `σ` er kjent bruker vi z-basert formel for `n`." }
+          - label: "Tabelloppslag"
+            lines:
+              - { text: "`α = 0.05`, så `α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.4", text: "`z_(0.025) = 1.960`" } }
+          - label: "Formel"
+            lines:
+              - { text: "Marginen er `z_(α/2)·σ/√n`, og total bredde `L = 2·margin`. Krav `L ≤ 4` gir:" }
+              - { indent: "`2·z_(α/2)·σ/√n ≤ L`" }
+              - { indent: "`⇔ n ≥ (2·z_(α/2)·σ/L)²`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ (2·1.960·10/4)² = 9.8² = 96.04`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund OPP for å garantere kravet: `n = ⌈96.04⌉ = 97`." }
+          - label: "Kontroll"
+            lines:
+              - { text: "Med `n = 97`: bredde `= 2·1.960·10/√97 ≈ 3.98 ≤ 4` ✓" }
+              - { text: "Med `n = 96`: bredde `= 2·1.960·10/√96 ≈ 4.001 > 4` ✗ — akkurat for bredt." }
+        result: "`n = 97` gir 95 % KI for `μ` med bredde høyst `4` når `σ = 10`."
+
+      - source: "Praksis · pilotstudie, σ ukjent"
+        question: "En pilotstudie ga utvalgsstandardavvik `s = 12`. Du ønsker et 95 % konfidensintervall for `μ` med total bredde høyst `L = 5`. Hvor stor må `n` være? `σ` er ikke kjent."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Gitt: pilot `s = 12`, ønsket total bredde `L = 5`, konfidensnivå 95 %." }
+              - { text: "`σ` er ukjent ⇒ strengt tatt iterativt med `t_(α/2, n−1)`. Vi starter med z-tilnærming (god når `n > 30`)." }
+          - label: "Tabelloppslag (z-tilnærming)"
+            lines:
+              - { text: "`α/2 = 0.025`." }
+              - { table_lookup: { ref: "E.4", text: "`z_(0.025) = 1.960`" } }
+          - label: "Formel"
+            lines:
+              - { text: "Samme form som σ kjent, men `σ` byttes med pilot-`s`:" }
+              - { indent: "`n ≥ (2·z_(α/2)·s/L)²`" }
+          - label: "Innsatt"
+            lines:
+              - { text: "`n ≥ (2·1.960·12/5)² = 9.408² ≈ 88.51`" }
+          - label: "Avrunding"
+            lines:
+              - { text: "Rund OPP: `n = ⌈88.51⌉ = 89`." }
+          - label: "Sjekk t-korreksjon"
+            lines:
+              - { text: "`n = 89 > 30`, så `t ≈ z` — z-tilnærmingen er god. Slå opp for sikkerhets skyld:" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 88) ≈ 1.987` (≈ `z = 1.960`)" } }
+              - { text: "Med `t = 1.987`: `n ≥ (2·1.987·12/5)² ≈ 90.97 ⇒ n = 91`. Forskjellen er marginal; mange oppgaver godtar z-tilnærmingen `n = 89`. Vil du være konservativ, oppgi `n = 91`." }
+        result: "`n ≈ 89` med z-tilnærming (eller `n = 91` med t-korreksjon når `s = 12`, `L = 5`)."
 
 related:
   - { id: "normalfordeling",         kind: "entry" }
