@@ -63,6 +63,9 @@ nodes:
     options:
       - label: "Fast antall n forsøk, hver med samme suksesssannsynlighet p"
         next: n_diskret_fast_n
+      - label: "Antall forsøk til FØRSTE suksess, p gitt (geometrisk fordeling)"
+        leads_to:
+          - { id: geometrisk-fordeling, kind: entry }
       - label: "Hendelser kommer som de kommer, rate λ gitt (poissonprosess)"
         leads_to:
           - { id: poisson-fordeling, kind: entry }
@@ -76,6 +79,11 @@ nodes:
       - label: "Spørsmålet sier 'minst én', 'ingen', 'ikke alle' eller 'færre enn k'"
         leads_to:
           - { id: komplementregelen, kind: entry }
+      - label: "Bare bla i OVERSIKT over E(X), Var(X), σ for diskrete fordelinger"
+        leads_to:
+          - { id: forventningsverdi-oversikt, kind: entry }
+          - { id: varians-oversikt, kind: entry }
+          - { id: standardavvik-oversikt, kind: entry }
 
   - id: n_diskret_fast_n
     question: "Med tilbakelegging?"
@@ -175,9 +183,12 @@ nodes:
   - id: n_telling
     question: "Hva slags telleproblem?"
     options:
-      - label: "Trekker k objekter fra n uten tilbakelegging (uordnet, kortstokk-stil)"
+      - label: "Trekker k objekter fra n UTEN tilbakelegging (uordnet, kortstokk-stil)"
         leads_to:
           - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
+      - label: "Trekker k objekter fra n MED tilbakelegging (uordnet — multiset / kombinasjon med repetisjon)"
+        leads_to:
+          - { id: uordnet-utvalg-med-tilbakelegging, kind: entry }
       - label: "Antall ordnede sekvenser med tilbakelegging (passord, PIN)"
         leads_to:
           - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
@@ -191,6 +202,9 @@ nodes:
   - id: n_regresjon
     question: "Hva er du på jakt etter?"
     options:
+      - label: "Multippel regresjon — modellen har FLERE forklaringsvariabler (x₁, x₂, …, x_p)"
+        leads_to:
+          - { id: multippel-regresjon, kind: entry }
       - label: "Estimere regresjonslinja (α̂, β̂) ut fra data"
         leads_to:
           - { id: lineaer-regresjon, kind: entry }
@@ -225,6 +239,9 @@ nodes:
   - id: n_inferens
     question: "Hva slags inferens?"
     options:
+      - label: "Vis OVERSIKT over alle hypotesetester (klikkbare kort med 'når brukes hva')"
+        leads_to:
+          - { id: test-oversikt, kind: entry }
       - label: "Test eller KI for gjennomsnitt μ"
         next: n_normal
       - label: "Test eller KI for andel p"
@@ -232,11 +249,21 @@ nodes:
       - label: "KI for poissonrate λ"
         leads_to:
           - { id: ki-poissonrate, kind: entry }
-      - label: "KI for varians σ²"
+      - label: "KI for varians σ² eller standardavvik σ (ett utvalg)"
         leads_to:
           - { id: ki-mu-og-varians, kind: entry }
-      - label: "Test om to grupper har samme μ (to-utvalgs t-test)"
+      - label: "KI for differanse mellom to gjennomsnitt μ_X − μ_Y eller to andeler p_X − p_Y"
+        leads_to:
+          - { id: ki-to-utvalg, kind: entry }
+      - label: "Hypotesetest for VARIANS (én utvalg: σ² mot σ₀², eller to utvalg: σ_X² = σ_Y²)"
+        leads_to:
+          - { id: test-varians, kind: entry }
+      - label: "Test om to grupper har samme μ — UAVHENGIGE utvalg (to-utvalgs t-test)"
         next: n_sidedness_to_utvalg
+      - label: "Test om to grupper har samme μ — PARETE observasjoner (samme individ målt før/etter, eller matchede par)"
+        leads_to:
+          - { id: paret-t-test, kind: entry }
+          - { id: paret-test, kind: glossary }
       - label: "Test om TRE eller FLERE grupper har samme μ (enveis ANOVA, F-test)"
         leads_to:
           - { id: enveis-anova, kind: entry }
@@ -252,6 +279,11 @@ nodes:
           - { id: kjikvadrat-uavhengighet, kind: entry }
       - label: "Hypotesetest om regresjons-stigningstall β = 0"
         next: n_sidedness_regresjon
+      - label: "Type I-feil, Type II-feil eller test-styrke (β-funksjon, power)"
+        leads_to:
+          - { id: hypotesefeil-og-styrke, kind: entry }
+          - { id: type-1-feil, kind: glossary }
+          - { id: type-2-feil, kind: glossary }
 
   - id: n_sidedness_to_utvalg
     question: "Tosidig eller ensidig to-utvalgs t-test?"

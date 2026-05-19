@@ -1,6 +1,11 @@
 id: signifikansniva-glos
 term_no: Signifikansnivå (α)
 short_def: "Risikoen du godtar for å forkaste `H₀` når `H₀` egentlig er sann."
+aliases:
+  - signifikansnivÃ¥et
+  - signifikansnivÃ¥er
+  - signifikansnivÃ¥ene
+  - signifikansnivÃ¥
 filters:
   parameters_known: [alpha_significance, confidence_level]
   computes: [hypothesis_test, confidence_interval]

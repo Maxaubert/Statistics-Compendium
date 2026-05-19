@@ -289,7 +289,10 @@ detailed_solution_variants:
 related:
   - { id: "ki-mu-og-varians",        kind: "entry" }
   - { id: "to-utvalgs-t-test",       kind: "entry" }
+  - { id: "paret-t-test",            kind: "entry" }
   - { id: "ki-andel-binomial",       kind: "entry" }
+  - { id: "ki-poissonrate",          kind: "entry" }
+  - { id: "bootstrapping",           kind: "entry" }
   - { id: "normalfordeling",         kind: "entry" }
   - { id: "frihetsgrader-glos",      kind: "glossary" }
   - { id: "konfidensintervall",      kind: "glossary" }

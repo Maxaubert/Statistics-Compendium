@@ -10,5 +10,14 @@ inputs:
   - { name: "α",   type: number,  min: 0.001, max: 0.25, step: any }
 output: "F_(α, df₁, df₂)"
 distribution: f_quantile
+toggle_label: "α → F"
+inverse:
+  inputs:
+    - { name: "df₁", type: integer, min: 1, max: 120, step: 1 }
+    - { name: "df₂", type: integer, min: 1, max: 120, step: 1 }
+    - { name: "F",   type: number,  min: 0, max: 100, step: any }
+  output: "p = P(F > observert) (høyre hale)"
+  toggle_label: "F → p"
+  input_hint: "Sett inn observert F-verdi og frihetsgradene. Får p-verdi (ANOVA og F-test for varianser er alltid høyresidig)."
 related_entries:
   - enveis-anova

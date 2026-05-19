@@ -1,0 +1,45 @@
+id: test-en-z-mu
+term_no: "Én-utvalg z-test (μ, σ kjent)"
+short_def: "Tester `H₀: μ = μ₀` på ett utvalg når populasjonsstandardavviket `σ` er kjent. Bruker Z-fordelingen og tabell E.4."
+aliases:
+  - en-utvalg z-test
+  - z-test for gjennomsnitt
+  - z-test for mu
+  - mu-test sigma kjent
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population]
+  parameters_known: [population_variance_known]
+  distribution_assumption: [normal]
+long_def: |
+  ## Når brukes den?
+
+  - Du har **ett utvalg** og vil teste om dets gjennomsnitt `μ` er forskjellig fra en spesifisert verdi `μ₀`.
+  - Populasjonens standardavvik `σ` er **kjent** (oppgitt direkte, eller utledet eksakt fra en oppgitt fordeling/PMF).
+  - Observasjonene er normalfordelte, ELLER `n ≥ 30` (CLT gir tilnærmet normal).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - «Populasjonens standardavvik er kjent» — eller `σ` er gitt eksplisitt som tall
+  - **IKKE** «utvalgsstandardavviket s» (det leder til t-test)
+  - Spørsmålet handler om GJENNOMSNITTET (μ), ikke andelen (p), ikke variansen (σ²), ikke 2+ grupper
+  - Typiske ord: «test om gjennomsnittet er», «kan vi anta μ = ...»
+
+  ## Hva gjør den?
+
+      Z = (X̄ − μ₀) / (σ/√n)        under H₀: Z ~ N(0, 1)
+
+  Forkast `H₀` hvis `|Z| > z_(α/2)` (tosidig) eller `Z > z_α` / `Z < −z_α` (ensidig).
+
+  Slå opp `z_α` i tabell E.4. Klassisk: `z_(0.025) = 1.96`, `z_(0.05) = 1.645`.
+
+  ## Forveksles ofte med
+
+  - **én-utvalg t-test**: brukes når `σ` er ukjent og må estimeres som `s`
+  - **z-test for andel**: brukes når data er suksess/fiasko (andel `p`), ikke en kontinuerlig størrelse
+see_also:
+  - { id: en-utvalg-z-test, kind: entry }
+  - { id: test-en-t-mu, kind: glossary }
+  - { id: test-en-z-andel, kind: glossary }
+  - { id: nullhypotese, kind: glossary }
+  - { id: E4-z-kvantiltabell, kind: table }

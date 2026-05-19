@@ -1,6 +1,10 @@
 id: residual
 term_no: Residual
 short_def: "Forskjellen mellom observert `y` og predikert `ŷ` i en regresjonsmodell."
+aliases:
+  - residualen
+  - residualer
+  - residualene
 filters:
   setup: [linear_relationship]
   parameters_known: [residual_variance]

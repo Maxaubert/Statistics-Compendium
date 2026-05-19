@@ -1,6 +1,11 @@
 id: prediksjonsintervall-glos
 term_no: Prediksjonsintervall
 short_def: "Intervall for hvor en NY enkeltobservasjon vil ligge — bredere enn et KI."
+aliases:
+  - prediksjonsintervallet
+  - prediksjonsintervaller
+  - prediksjonsintervallene
+  - prediksjonsintervall
 filters:
   computes: [prediction_interval, confidence_interval]
   setup: [linear_relationship]

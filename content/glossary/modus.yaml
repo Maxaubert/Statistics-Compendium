@@ -1,0 +1,36 @@
+id: modus
+term_no: Modus (typetall)
+short_def: "Den hyppigste verdien i datasettet — verdien som forekommer flest ganger. Kalles også «typetall»."
+aliases:
+  - modusen
+  - moduser
+  - modusene
+  - typetall
+  - typetallet
+filters:
+  computes: [parameter_estimate]
+  structural_cues: [data_as_list, summary_stats_given]
+long_def: |
+  Modus er den verdien som forekommer hyppigst i datasettet. I motsetning til
+  gjennomsnitt og median kan modus brukes på KATEGORISKE data også.
+
+  - **Unimodal**: én tydelig topp (typisk normalfordelt data).
+  - **Bimodal / multimodal**: to eller flere topper — antyder at dataene
+    består av flere subpopulasjoner.
+  - **Ingen modus**: alle verdier forekommer like ofte.
+
+  **Eksempel:** `[2, 3, 3, 5, 7, 7, 7, 9]` har modus `7`.
+
+  ## For fordelinger
+
+  - **Diskret:** modus = `argmax_x P(X = x)`.
+  - **Kontinuerlig:** modus = `argmax_x f(x)` (toppen av tetthetsfunksjonen).
+    For normalfordelingen er modus = median = μ.
+
+  Modus er nyttig som «typisk verdi» når datasettet er kategorisk eller
+  klart unimodalt — men gir lite info ved jevn spredning.
+see_also:
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: median, kind: glossary }
+  - { id: kategorisk-variabel, kind: glossary }
+  - { id: histogram-glos, kind: glossary }

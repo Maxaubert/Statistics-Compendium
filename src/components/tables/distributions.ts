@@ -1,11 +1,17 @@
 import { jStat } from "jstat";
 import { lookupMwwCritical, snapMwwAlpha } from "./mann-whitney-table";
 
-// jstat ships F-distribution helpers under `centralF`, but the typings
-// shipped with @types/jstat omit them. Cast through `unknown` so the
-// runtime call type-checks without affecting other consumers.
+// jstat ships F-distribution helpers under `centralF`, plus `cdf` methods
+// on studentt and chisquare. The typings shipped with @types/jstat omit
+// these. Cast through `unknown` so the runtime call type-checks without
+// affecting other consumers.
 const jStatAny = jStat as unknown as {
-  centralF: { inv(p: number, df1: number, df2: number): number };
+  centralF: {
+    inv(p: number, df1: number, df2: number): number;
+    cdf(x: number, df1: number, df2: number): number;
+  };
+  studentt: { cdf(x: number, df: number): number };
+  chisquare: { cdf(x: number, df: number): number };
 };
 
 export type DistributionKey =
@@ -59,6 +65,17 @@ export function lookupInverse({ distribution, inputs }: LookupRequest): number {
       // output is z such that P(Z ≤ z) = p. Same math as the cumulative-normal
       // inverse — different framing for the user.
       return jStat.normal.inv(inputs.p, 0, 1);
+    case "t_quantile":
+      // E.5 inverse: observed t + df → p-value (upper tail).
+      // p = P(T > t) = 1 − CDF(t, df)
+      return 1 - jStatAny.studentt.cdf(inputs.t, inputs.df);
+    case "chi_squared_quantile":
+      // E.6 inverse: observed χ² + df → p-value (upper tail).
+      // p = P(χ² > x) = 1 − CDF(x, df)
+      return 1 - jStatAny.chisquare.cdf(inputs["χ²"], inputs.df);
+    case "f_quantile":
+      // E.8 inverse: observed F + df₁ + df₂ → p-value (upper tail).
+      return 1 - jStatAny.centralF.cdf(inputs.F, inputs["df₁"], inputs["df₂"]);
     default:
       throw new Error(`No inverse defined for distribution "${distribution}"`);
   }
@@ -96,6 +113,39 @@ export function computeInverseBonus({ distribution, inputs }: LookupRequest): Bo
         label: `Tosidig kritisk z_(α/2), α = ${alpha.toFixed(4)}`,
         value: `≈ ${zTwoSided.toFixed(4)}`,
       },
+    ];
+  }
+  if (distribution === "t_quantile") {
+    const p = 1 - jStatAny.studentt.cdf(inputs.t, inputs.df);
+    if (!Number.isFinite(p) || p <= 0 || p >= 1) return [];
+    return [
+      {
+        label: `p (tosidig)`,
+        value: `≈ ${(2 * Math.min(p, 1 - p)).toFixed(4)}`,
+      },
+      {
+        label: `1 − p (venstre hale)`,
+        value: `≈ ${(1 - p).toFixed(4)}`,
+      },
+    ];
+  }
+  if (distribution === "chi_squared_quantile") {
+    const x = inputs["χ²"];
+    const df = inputs.df;
+    const p = 1 - jStatAny.chisquare.cdf(x, df);
+    if (!Number.isFinite(p) || p <= 0) return [];
+    return [
+      { label: `1 − p (venstre hale)`, value: `≈ ${(1 - p).toFixed(4)}` },
+    ];
+  }
+  if (distribution === "f_quantile") {
+    const F = inputs.F;
+    const df1 = inputs["df₁"];
+    const df2 = inputs["df₂"];
+    const p = 1 - jStatAny.centralF.cdf(F, df1, df2);
+    if (!Number.isFinite(p) || p <= 0) return [];
+    return [
+      { label: `1 − p (venstre hale)`, value: `≈ ${(1 - p).toFixed(4)}` },
     ];
   }
   return [];

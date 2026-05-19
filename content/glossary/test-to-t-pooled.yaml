@@ -1,0 +1,46 @@
+id: test-to-t-pooled
+term_no: "To-utvalgs t-test (pooled)"
+short_def: "Tester `H₀: μ_X = μ_Y` på to UAVHENGIGE utvalg når variansene antas like. Bruker pooled variansestimat `S_P²`."
+aliases:
+  - to-utvalgs t-test
+  - pooled t-test
+  - sammenligne to gjennomsnitt
+  - test for mu_X = mu_Y
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+long_def: |
+  ## Når brukes den?
+
+  - To **uavhengige** grupper (X og Y) — IKKE paret design.
+  - Du vil teste om `μ_X = μ_Y` (eller en retningsspesifikk versjon).
+  - Populasjonens varianser er ukjente, men antas å være LIKE (`σ_X² = σ_Y²`).
+  - Normalfordeling antatt i hver gruppe, eller `n_X + n_Y` stort.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - To grupper med separate observasjoner (f.eks. «behandling A vs behandling B»)
+  - Gruppene er målt på FORSKJELLIGE individer (ikke samme individ to ganger)
+  - Oppgaven gir `n_X, x̄, s_X², n_Y, ȳ, s_Y²` — separate verdier per gruppe
+  - Typiske ord: «er det forskjell mellom gruppene?», «er behandling A bedre enn B?»
+
+  ## Hva gjør den?
+
+      S_P² = ((n_X − 1)·s_X² + (n_Y − 1)·s_Y²) / (n_X + n_Y − 2)
+      T = (X̄ − Ȳ) / (S_P · √(1/n_X + 1/n_Y))        ν = n_X + n_Y − 2
+
+  Forkast `H₀` etter retning og kritisk t-verdi fra tabell E.5.
+
+  ## Forveksles ofte med
+
+  - **Welch t-test**: brukes når variansene IKKE kan antas like (F-test for varianslikhet forkastet)
+  - **paret t-test**: brukes når observasjonene er paret (samme individ målt to ganger)
+  - **ANOVA**: brukes når du har 3 eller flere grupper
+see_also:
+  - { id: to-utvalgs-t-test, kind: entry }
+  - { id: test-welch, kind: glossary }
+  - { id: test-paret, kind: glossary }
+  - { id: test-anova, kind: glossary }
+  - { id: pooled-varians, kind: glossary }

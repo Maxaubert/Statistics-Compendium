@@ -1,0 +1,44 @@
+id: sensitivitet
+term_no: Sensitivitet (sann positiv-rate)
+short_def: "Sannsynligheten for at en SYK person tester positivt: `P(positiv | syk)`. Også kalt «sann positiv-rate» eller «recall»."
+aliases:
+  - sensitiviteten
+  - sann positiv-rate
+  - sann positiv rate
+  - recall
+  - true positive rate
+filters:
+  computes: [conditional_probability]
+  structural_cues: [conditional_given, andel_og_rate_per_gruppe]
+long_def: |
+  Sensitivitet måler hvor god en diagnostisk test er til å OPPDAGE
+  sykdommen blant de som faktisk er syke:
+
+      sensitivitet = P(positiv test | syk)
+
+  Komplementet er **falsk negativ-rate**: `P(negativ test | syk) = 1 − sensitivitet`.
+
+  ## Hvor brukes den i Bayes?
+
+  Sensitivitet er likelihooden for det positive utfallet under hypotesen
+  «syk». Den inngår i telleren i Bayes-formelen:
+
+      P(syk | positiv) = P(syk) · sensitivitet / P(positiv)
+
+  ## Eksempel
+
+  En kreft-test har sensitivitet 99 %. Det betyr at av 100 personer
+  med kreft, vil testen oppdage 99. Den ene falske negative er en alvorlig
+  klinisk feil (en syk person tror hun er frisk).
+
+  ## Trade-off med spesifisitet
+
+  Sensitivitet og spesifisitet kan justeres mot hverandre med en
+  terskel-verdi. Senker du terskelen blir flere positive — sensitiviteten
+  går opp, men spesifisiteten ned. Klassisk presisjon-vs-recall.
+see_also:
+  - { id: bayes-setning, kind: entry }
+  - { id: prevalens, kind: glossary }
+  - { id: spesifisitet, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: total-sannsynlighet, kind: entry }

@@ -459,7 +459,7 @@ related:
   - { id: "med-tilbakelegging",    kind: "glossary" }
   - { id: "forventningsverdi",     kind: "glossary" }
   - { id: "varians",               kind: "glossary" }
-
+  - { id: "geometrisk-fordeling-glos", kind: "glossary" }
 tools:
   - "Ingen tabell nødvendig — bruk lukket formel direkte."
   - "Kalkulator: potens `^`, naturlig logaritme `ln`"

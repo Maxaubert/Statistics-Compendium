@@ -1,0 +1,51 @@
+id: kombinasjon
+term_no: Kombinasjon (uordnet utvalg)
+short_def: "Antall måter å plukke `k` objekter fra `n`, UORDNET. Notasjon `C(n,k)` eller `(n choose k)`. Formel: `n! / (k!(n−k)!)`."
+aliases:
+  - kombinasjonen
+  - kombinasjoner
+  - kombinasjonene
+  - C(n,k)
+  - n choose k
+  - binomialkoeffisient
+  - binomialkoeffisienten
+filters:
+  computes: [combinatorial_count]
+  setup: [without_replacement, finite_pool]
+  structural_cues: [counting_events]
+long_def: |
+  En **kombinasjon** er et utvalg av objekter der rekkefølgen IKKE betyr noe.
+
+      C(n, k) = n! / (k! · (n − k)!)
+
+  ## Sammenligning med permutasjon
+
+  | Spørsmål | Bruk |
+  |---|---|
+  | «Hvor mange måter kan jeg velge 3 personer fra 10?» (uten rekkefølge) | C(10, 3) = 120 |
+  | «Hvor mange måter kan jeg arrangere 3 personer fra 10 på 3 plasser?» (med rekkefølge) | P(10, 3) = 720 |
+
+  Permutasjon er ALLTID `k!` ganger større enn kombinasjon — fordi hver
+  uordnet utvalg svarer til `k!` ulike rekkefølger.
+
+  ## Hvor brukes det?
+
+  - **Binomialfordeling**: `C(n, k)` er antall måter å få `k` suksesser
+    i `n` forsøk.
+  - **Hypergeometrisk**: `C(N, n)` er totalt antall mulige utvalg av
+    størrelse `n`.
+  - **Telleproblemer**: «kortgenker», «utvalg fra urne», «teamvalg».
+
+  ## Eksempler
+
+  - `C(5, 2) = 10` (måter å velge 2 av 5 dessert-typer)
+  - `C(52, 5) = 2 598 960` (forskjellige poker-hender)
+  - `C(n, 0) = C(n, n) = 1` (én måte å velge ingen eller alle)
+  - `C(n, 1) = n` (n måter å velge én)
+  - `C(n, k) = C(n, n−k)` (symmetri)
+see_also:
+  - { id: permutasjon, kind: glossary }
+  - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
+  - { id: binomial-fordeling, kind: entry }
+  - { id: hypergeometrisk-fordeling, kind: entry }
+  - { id: multiplikasjonsprinsippet, kind: glossary }

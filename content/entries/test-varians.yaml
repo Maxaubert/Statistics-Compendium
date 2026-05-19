@@ -1,0 +1,303 @@
+id: test-varians
+name_no: "Test for varians eller standardavvik (χ² for σ² og F-test for σ_X² = σ_Y²)"
+type: test
+category: hypothesis_test
+tagline: "Hypotesetester for spredning: kjikvadrat for én `σ²`/`σ` og F-test for å sammenligne to. Hypoteser på `σ` håndteres ved å kvadrere — formelen bruker varians-form."
+
+formula_main: "Én utvalg: χ² = (n−1)·s²/σ₀² ~ χ²(n−1);   To utvalg: F = s_X²/s_Y² ~ F(n_X−1, n_Y−1)"
+formula_latex: "\\chi^2 = \\frac{(n-1)s^2}{\\sigma_0^2} \\sim \\chi^2(n-1), \\quad F = \\frac{s_X^2}{s_Y^2} \\sim F(n_X-1, n_Y-1)"
+
+what_it_does: |
+  **Dette er IKKE en t-test.** Mens t- og z-tester sammenligner
+  gjennomsnitt (`μ`), sammenligner disse to testene spredningen
+  (`σ²` eller `σ`) i populasjonene. Bruk dem når selve spørsmålet
+  handler om varians, ikke om gjennomsnitt.
+
+  - **Én-utvalg χ²-test:** tester om en enkelt populasjons varians `σ²`
+    avviker fra en spesifisert verdi `σ₀²`. Testobservatoren
+    `χ² = (n − 1)·s²/σ₀²` er kjikvadrat-fordelt med `n − 1` frihetsgrader
+    under `H₀: σ² = σ₀²`.
+
+  - **To-utvalg F-test:** tester om to populasjoner har samme varians,
+    `σ_X² = σ_Y²`. Testobservatoren `F = s_X²/s_Y²` er F-fordelt med
+    `(n_X − 1, n_Y − 1)` frihetsgrader under `H₀`.
+
+why_use: |
+  Klassiske bruksområder:
+
+  - **Kvalitetskontroll:** er produksjonens varians akseptabel? («Maskinen
+    er bare godkjent hvis `σ ≤ 0.5` mm.»)
+  - **Forutsetning for pooled t-test:** før du bruker pooled to-utvalgs
+    t-test, sjekk med F-test om variansene kan antas like. Hvis F-testen
+    forkastes må du bruke Welch i stedet.
+  - **Sammenligne presisjon:** er ett måleinstrument mer presist (mindre
+    varians) enn et annet?
+
+recognition: "Bruk denne når SPØRSMÅLET selv handler om varians, standardavvik, spredning eller presisjon — IKKE når dataene tilfeldigvis har en varians. Lett feil: «test om reaksjonstiden er den samme» (t-test, om μ) vs. «test om reaksjonstiden er like KONSISTENT» (denne testen, om σ²). Hypotese på `σ` (f.eks. `σ ≤ 0.30`) kvadreres til `σ² ≤ 0.09` før innsetting i formelen."
+
+recognition_cues:
+  - "Spørsmålet handler **eksplisitt** om varians, standardavvik, spredning eller presisjon — ikke om gjennomsnitt"
+  - "«Test om variansen er forskjellig fra/mindre enn/større enn `σ₀²`», «kan vi anta `σ² = 0.25`?»"
+  - "«Er de to populasjonene like presise?», «har gruppene samme spredning?», «er én maskin mer konsistent enn en annen?»"
+  - "Du har `n`, `s²` og en påstand `σ₀²` (én utvalg) eller `n_X, n_Y, s_X², s_Y²` (to utvalg)"
+  - "Kvalitetskontroll-oppgaver der toleranse-grenser er gitt på SPREDNING (ikke nivå)"
+  - "Som forutsetnings-sjekk for pooled to-utvalgs t-test: «kan vi anta felles `σ²`?»"
+
+when_NOT_to_use:
+  - "Spørsmålet er om gjennomsnittet `μ` (selv om datapunktene har varians) → bruk [z-test](/entry/en-utvalg-z-test), [t-test](/entry/en-utvalg-t-test), eller [to-utvalgs t-test](/entry/to-utvalgs-t-test). Tommelfingerregel: hvis konklusjonen er om `μ` (eller `μ_X − μ_Y`), er det IKKE denne testen."
+  - "Du vil ha KI for `σ²` (ikke teste mot en verdi) → bruk [KI for μ, σ² og σ](/entry/ki-mu-og-varians)"
+  - "Variablene er ikke normalfordelte → χ²- og F-testene er ikke robuste mot brudd på normalantakelse (mer enn t-testen er)"
+  - "Du sammenligner 3 eller flere grupper på samme egenskap → bruk [ANOVA](/entry/enveis-anova) for middel; for varianslikhet i ANOVA, bruk Levene's test (ikke i pensum)"
+
+symbols:
+  - { sym: "s²",       means: "utvalgsvariansen, `s² = Σ(xᵢ − x̄)²/(n − 1)`" }
+  - { sym: "σ₀²",      means: "påstands-variansen i `H₀` (én-utvalg)" }
+  - { sym: "σ_X², σ_Y²", means: "populasjonsvariansene i de to gruppene (to-utvalg)" }
+  - { sym: "n, n_X, n_Y", means: "utvalgsstørrelse(r)" }
+  - { sym: "χ²",       means: "testobservatoren for én-utvalg, `(n−1)s²/σ₀²` — kjikvadrat-fordelt under H₀" }
+  - { sym: "F",        means: "testobservatoren for to-utvalg, `s_X²/s_Y²` — F-fordelt under H₀" }
+  - { sym: "ν",        means: "frihetsgrader (én-utvalg: `n−1`; to-utvalg: `(n_X−1, n_Y−1)`)" }
+  - { sym: "α",        means: "signifikansnivå (typisk 0.05)" }
+  - { sym: "H₀",       means: "nullhypotesen (én-utvalg: `σ² = σ₀²`; to-utvalg: `σ_X² = σ_Y²`)" }
+
+properties:
+  expected_value: "E[χ² | H₀] = n − 1     (én utvalg)"
+  variance: "Var[χ² | H₀] = 2(n − 1)"
+  std_dev: "σ_χ² = √(2(n − 1))"
+
+filters:
+  computes: [hypothesis_test, std_dev]
+  random_variable: [continuous]
+  setup: [single_population, two_independent_samples]
+  structural_cues: [normal_assumed, summary_stats_given, one_sided_alternative, two_sided_alternative]
+  parameters_known: [population_variance_unknown, sample_size_small_lt30, sample_size_large, alpha_significance]
+  distribution_assumption: [chi_squared, f_distribution, normal]
+  tooling: [chi_square_quantile_table_E6, f_quantile_table_E8, calculator_sqrt]
+
+solution_variants:
+  - label: "Én utvalg — test om σ² (χ²-test)"
+    recognition: "«Test om variansen er forskjellig fra/under/over σ₀²», «kan vi anta at maskinen har spredning σ ≤ 0.5?». Du har `n`, `s²` og en påstand `σ₀²`."
+    steps:
+      - text: "Formuler hypotesene (én av tre retninger):"
+        formula:
+          - "Tosidig:    H₀: σ² = σ₀²    mot   H₁: σ² ≠ σ₀²"
+          - "Venstre:    H₀: σ² ≥ σ₀²    mot   H₁: σ² < σ₀²"
+          - "Høyre:      H₀: σ² ≤ σ₀²    mot   H₁: σ² > σ₀²"
+      - "Begrunn antakelsen: populasjonen er normalfordelt. χ²-testen for varians er svært følsom for brudd på dette."
+      - text: "Beregn testobservatoren:"
+        formula: "χ² = (n − 1) · s² / σ₀²"
+      - "Frihetsgrader: `ν = n − 1`. Slå opp kritiske verdier i **tabell E.6** (kjikvadrattabell)."
+      - text: "Forkastningsregel — avhenger av retning:"
+        formula:
+          - "Tosidig:    Forkast H₀ hvis χ² > χ²_(α/2, n−1)  eller  χ² < χ²_(1−α/2, n−1)"
+          - "Venstre:    Forkast H₀ hvis χ² < χ²_(1−α, n−1)"
+          - "Høyre:      Forkast H₀ hvis χ² > χ²_(α, n−1)"
+      - text: "Eksempel — maskin med oppgitt `σ₀ = 0.5`, `n = 25`, `s = 0.7` (`s² = 0.49`). Test høyresidig om `σ² > 0.25` på `α = 0.05`:"
+        formula: "χ² = 24 · 0.49 / 0.25 = 47.04;  χ²_(0.05, 24) = 36.42;  47.04 > 36.42 ⇒ forkast H₀"
+        example: true
+      - { text: "Pass på: kjikvadrat-fordelingen er asymmetrisk. For tosidig test bruker du IKKE `±χ²_(α/2)` — du må slå opp begge halene separat.", conditional: true }
+
+  - label: "To utvalg — F-test for σ_X² = σ_Y²"
+    recognition: "«Er variansene i de to gruppene like?», «kan vi bruke pooled t-test?», «er presisjon ulik mellom maskinene?». Du har `s_X², s_Y², n_X, n_Y`."
+    steps:
+      - text: "Formuler hypotesene:"
+        formula:
+          - "Tosidig (vanligst): H₀: σ_X² = σ_Y²    mot   H₁: σ_X² ≠ σ_Y²"
+      - "Begrunn antakelsen: begge populasjonene er normalfordelte. F-testen er heller ikke robust mot brudd."
+      - text: "Beregn testobservatoren — konvensjon: sett den STØRSTE `s²` i telleren slik at `F ≥ 1`:"
+        formula:
+          - "F = s_større² / s_mindre²"
+          - "Frihetsgrader: ν_teller = n_større − 1,  ν_nevner = n_mindre − 1"
+      - "Slå opp `F_(α/2, ν_teller, ν_nevner)` i **tabell E.8** (F-tabell). NB: `α/2` for tosidig fordi vi bare ser i øvre hale (det er hele poenget med å sette største i teller)."
+      - text: "Forkastningsregel:"
+        formula: "Tosidig: Forkast H₀ hvis F > F_(α/2, ν_teller, ν_nevner)"
+      - text: "Eksempel — maskin A: `n_A = 12`, `s_A² = 4.5`; maskin B: `n_B = 15`, `s_B² = 1.8`. Tosidig α = 0.05:"
+        formula:
+          - "F = 4.5 / 1.8 = 2.5  (A i teller siden større s²)"
+          - "ν = (11, 14)"
+          - "F_(0.025, 11, 14) ≈ 3.09"
+          - "2.5 < 3.09 ⇒ behold H₀ — kan anta lik varians (pooled t-test gyldig)"
+        example: true
+      - text: "Ensidig variant (`H₁: σ_X² > σ_Y²`): bruk hele α i øvre hale, kritisk verdi blir `F_(α, n_X−1, n_Y−1)`."
+        conditional: true
+
+solution_template:
+  - "Identifiser om du har én populasjon (test mot `σ₀²`) eller to populasjoner (test om `σ_X² = σ_Y²`)."
+  - "Verifiser normalfordelings-antakelsen — disse testene er følsomme for brudd."
+  - "Velg riktig fane over: χ²-test (én utvalg) eller F-test (to utvalg)."
+  - "Slå opp kritisk verdi i **tabell E.6** (χ²) eller **tabell E.8** (F)."
+
+common_traps: |
+  - **χ²-fordelingen er asymmetrisk** — for tosidig test bruker du to ulike
+    kritiske verdier (en for hver hale), ikke `±χ²_(α/2)`. For venstre hale
+    bruker du `χ²_(1−α/2, n−1)`, og for høyre hale `χ²_(α/2, n−1)`.
+  - **F-test krever største `s²` i telleren** (per konvensjon) — da bruker
+    du bare øvre hale, og kritisk verdi er `F_(α/2, df_større, df_mindre)`
+    for tosidig.
+  - **Begge testene er ekstremt følsomme for brudd på normalfordeling**.
+    Mer enn t-tester. Hvis qq-plottet eller histogrammet ser skjevt ut, er
+    resultatet upålitelig. Vurder bootstrap eller Levene's test som
+    alternativer (sistnevnte er ikke i ITD20218-pensum).
+  - **F-testen brukes ofte som forutsetningstest** for to-utvalgs t-test:
+    er variansene like (F-test ikke signifikant) → pooled. Er de ulike
+    (F-test signifikant) → bruk Welch t-test.
+  - **Frihetsgrader:** én utvalg `n − 1`. To utvalg `(n_X − 1, n_Y − 1)` —
+    rekkefølgen matcher teller/nevner i `F = s_X²/s_Y²`.
+
+python_snippet: |
+  from scipy import stats
+
+  # ÉN UTVALG: test om σ² = σ₀²
+  n, s2, sigma0_sq = 25, 0.49, 0.25
+  chi2_obs = (n - 1) * s2 / sigma0_sq
+  p_right = 1 - stats.chi2.cdf(chi2_obs, df=n-1)  # høyresidig
+
+  # TO UTVALG: F-test
+  s_X2, s_Y2, n_X, n_Y = 4.5, 1.8, 12, 15
+  F = s_X2 / s_Y2  # største s² i teller
+  p_two_sided = 2 * (1 - stats.f.cdf(F, n_X-1, n_Y-1))
+
+detailed_solution_variants:
+  - label: "Én utvalg — test om σ² (χ²-test)"
+    solutions:
+      - source: "Praksis · maskinpresisjon (høyresidig)"
+        question: |
+          En produsent påstår at presisjonen til en CNC-maskin er
+          `σ ≤ 0.50 mm` (eller ekvivalent `σ² ≤ 0.25 mm²`). Du tar 25
+          målinger og finner `s = 0.70 mm` (`s² = 0.49`). Test om
+          variansen overstiger spesifikasjonen på α = 0.05.
+        sections:
+          - label: "Hypoteser (høyresidig)"
+            lines:
+              - { text: "`H₀: σ² ≤ 0.25`" }
+              - { text: "`H₁: σ² > 0.25` (maskinen er mindre presis enn påstått)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (n − 1)·s² / σ₀²`" }
+              - { indent: "`= 24 · 0.49 / 0.25`" }
+              - { indent: "`= 11.76 / 0.25 = 47.04`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 24) = 36.42`. Forkast H₀ hvis χ² > 36.42." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`47.04 > 36.42` ⇒ forkast H₀" }
+              - { comment: "Maskinen er signifikant mindre presis enn produsenten påstår." }
+        result: "Forkast `H₀` på α = 0.05. Variansen til maskinen er signifikant større enn 0.25 mm²."
+
+      - source: "Praksis · medikamentdose (tosidig)"
+        question: |
+          En tablettpresse skal levere kapsler med jevn dose. Spesifikasjonen
+          krever `σ² = 0.04 mg²` (verken mer eller mindre — for mye spredning
+          er dårlig kvalitet, for lite kan tyde på sensor-feil). Du tar 18
+          målinger og finner `s² = 0.075 mg²`. Test om variansen er
+          forskjellig fra spesifikasjonen på α = 0.05.
+        sections:
+          - label: "Hypoteser (tosidig)"
+            lines:
+              - { text: "`H₀: σ² = 0.04`" }
+              - { text: "`H₁: σ² ≠ 0.04`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (18 − 1) · 0.075 / 0.04`" }
+              - { indent: "`= 17 · 1.875 = 31.875`" }
+          - label: "Tabelloppslag (begge haler for tosidig)"
+            lines:
+              - { table_lookup: { ref: "E.6", text: "Øvre: `χ²_(0.025, 17) = 30.19`. Forkast hvis χ² > 30.19." } }
+              - { table_lookup: { ref: "E.6", text: "Nedre: `χ²_(0.975, 17) = 7.564`. Forkast hvis χ² < 7.564." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`χ² = 31.875 > 30.19` (øvre kritisk) ⇒ forkast H₀" }
+              - { comment: "Variansen er signifikant større enn spesifisert; maskinen leverer for variabel dose." }
+        result: "Forkast `H₀` på α = 0.05. Tablettpressen har for stor varians og må kalibreres."
+
+  - label: "To utvalg — F-test for σ_X² = σ_Y²"
+    solutions:
+      - source: "Praksis · sammenlign to maskiner"
+        question: |
+          To produksjonslinjer måles på samme produkt. Linje A: `n_A = 12`
+          målinger, `s_A² = 4.5`. Linje B: `n_B = 15`, `s_B² = 1.8`. Test
+          om de har samme presisjon (varians) på α = 0.05.
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: σ_A² = σ_B²`" }
+              - { text: "`H₁: σ_A² ≠ σ_B²`" }
+          - label: "Testobservator (største s² i teller)"
+            lines:
+              - { text: "`F = s_A² / s_B² = 4.5 / 1.8 = 2.5`" }
+              - { text: "Frihetsgrader: `(n_A − 1, n_B − 1) = (11, 14)`" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "`F_(0.025, 11, 14) ≈ 3.09`. Forkast hvis F > 3.09." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`F = 2.5 < 3.09` ⇒ behold H₀" }
+              - { comment: "Datene gir ikke statistisk grunnlag for å hevde at maskinene er ulikt presise. Pooled to-utvalgs t-test er gyldig for middelsammenligning." }
+        result: "Behold `H₀` på α = 0.05. Ingen evidens for ulik varians ⇒ pooled t-test kan brukes."
+
+      - source: "Praksis · før/etter modifikasjon (signifikant)"
+        question: |
+          Før en designendring var standardavviket på reaksjonstid hos 20
+          testere `s_før = 0.45 s`. Etter modifikasjonen ble det målt 18
+          testere med `s_etter = 0.22 s`. Designeren påstår at endringen
+          har gitt mer konsistente resultater. Test om
+          `σ_før² > σ_etter²` på α = 0.05 (ensidig).
+        sections:
+          - label: "Hypoteser (ensidig, høyre)"
+            lines:
+              - { text: "`H₀: σ_før² ≤ σ_etter²`" }
+              - { text: "`H₁: σ_før² > σ_etter²` (modifikasjon gjorde det mer konsistent)" }
+          - label: "Utvalgsvarianser"
+            lines:
+              - { text: "`s_før² = 0.45² = 0.2025`" }
+              - { text: "`s_etter² = 0.22² = 0.0484`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`F = s_før² / s_etter² = 0.2025 / 0.0484 ≈ 4.184`" }
+              - { text: "Frihetsgrader: `(n_før − 1, n_etter − 1) = (19, 17)`" }
+          - label: "Tabelloppslag (ensidig — hele α i øvre hale)"
+            lines:
+              - { table_lookup: { ref: "E.8", text: "`F_(0.05, 19, 17) ≈ 2.24`. Forkast hvis F > 2.24." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`F = 4.184 > 2.24` ⇒ forkast H₀" }
+              - { comment: "Sterk evidens for at modifikasjonen reduserte variansen i reaksjonstid. Welch t-test bør brukes for å sammenligne gjennomsnittet (pooled-antakelsen er brutt)." }
+        result: "Forkast `H₀` på α = 0.05. Variansen er signifikant lavere etter modifikasjonen ⇒ bruk Welch t-test for middelsammenligning."
+
+related:
+  - { id: "en-utvalg-z-test",          kind: "entry" }
+  - { id: "en-utvalg-t-test",          kind: "entry" }
+  - { id: "to-utvalgs-t-test",         kind: "entry" }
+  - { id: "ki-mu-og-varians",          kind: "entry" }
+  - { id: "enveis-anova",              kind: "entry" }
+  - { id: "kjikvadrat-goodness-of-fit", kind: "entry" }
+  - { id: "varians",                   kind: "glossary" }
+  - { id: "utvalgsvarians",            kind: "glossary" }
+  - { id: "frihetsgrader-glos",        kind: "glossary" }
+  - { id: "nullhypotese",              kind: "glossary" }
+  - { id: "forkastningsomrade",        kind: "glossary" }
+  - { id: "observatortest",            kind: "glossary" }
+  - { id: "pooled-varians",            kind: "glossary" }
+  - { id: "E6-kjikvadrattabell",       kind: "table" }
+  - { id: "E8-f-tabell",               kind: "table" }
+
+tools:
+  - "Tabell E.6 — Kjikvadrattabell (én-utvalg)"
+  - "Tabell E.8 — F-tabell (to-utvalg)"
+
+tags:
+  - "test for varians"
+  - "test om varians"
+  - "test om sigma kvadrat"
+  - "chi-kvadrat test varians"
+  - "kjikvadrat test varians"
+  - "F-test for varianslikhet"
+  - "F-test varianser"
+  - "varianshomogenitet"
+  - "homoskedastisitet"
+  - "varianslikhet"
+  - "test for spredning"
+  - "presisjon"
+  - "kvalitetskontroll"
+  - "test av to varianser"

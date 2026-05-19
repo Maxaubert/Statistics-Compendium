@@ -1,0 +1,45 @@
+id: test-gof
+term_no: "Kjikvadrat goodness-of-fit"
+short_def: "Tester om observerte frekvenser i flere kategorier passer med en hypotetisk fordeling. Bruker χ²-fordelingen og tabell E.6."
+aliases:
+  - goodness-of-fit
+  - chi-square goodness-of-fit
+  - kjikvadrat tilpasningstest
+  - tilpasningstest
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population]
+  random_variable: [discrete_count]
+  distribution_assumption: [chi_squared]
+long_def: |
+  ## Når brukes den?
+
+  - Du har **observerte frekvenser** i 2 eller flere kategorier.
+  - Du vil teste om dataene passer med en SPESIFISERT FORDELING (uniform, binomial, Poisson, eller andre angitte sannsynligheter).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Frekvens-tabell: «vi observerte X i kategori A, Y i kategori B, ...»
+  - Påstand om hvordan fordelingen «burde» være
+  - Typiske ord: «passer dataene en uniform fordeling», «er fordelingen som forventet», «test om terningen er rettferdig»
+  - Bare ÉN dimensjon av kategorisering (ikke kontingenstabell)
+
+  ## Hva gjør den?
+
+      χ² = Σ (O_i − E_i)² / E_i        under H₀: χ² ~ χ²(k − 1 − m)
+
+  der `k` er antall kategorier og `m` er antall parametre estimert fra dataene (vanligvis 0).
+
+  Forkast `H₀` hvis `χ² > χ²_(α, k − 1 − m)`.
+
+  Krav: alle `E_i ≥ 5` (ellers slå sammen kategorier).
+
+  ## Forveksles ofte med
+
+  - **Kjikvadrat uavhengighet**: brukes for KONTINGENSTABELL (to dimensjoner)
+  - **z-test for andel**: brukes for ÉN kategori-andel (binær), ikke flere kategorier
+see_also:
+  - { id: kjikvadrat-goodness-of-fit, kind: entry }
+  - { id: test-uavhengighet, kind: glossary }
+  - { id: goodness-of-fit, kind: glossary }
+  - { id: E6-kjikvadrattabell, kind: table }

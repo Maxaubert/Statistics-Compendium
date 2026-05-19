@@ -1,0 +1,47 @@
+id: test-anova
+term_no: "Enveis ANOVA (F-test for 3+ grupper)"
+short_def: "Tester `H₀: μ₁ = μ₂ = … = μ_k` på 3 eller flere uavhengige grupper. Bruker F-fordelingen og tabell E.8."
+aliases:
+  - anova
+  - enveis anova
+  - one-way anova
+  - F-test for flere grupper
+  - test for flere gjennomsnitt
+filters:
+  computes: [hypothesis_test]
+  setup: [three_plus_samples]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [f_distribution, normal]
+long_def: |
+  ## Når brukes den?
+
+  - Du har **3 eller flere uavhengige grupper** (k ≥ 3).
+  - Du vil teste om alle gruppe-gjennomsnitt er like, eller om minst ett skiller seg.
+  - Hver gruppe er normalfordelt, og populasjonens varians `σ²` antas felles (homoskedastisitet).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Eksplisitt: «tre leverandører», «fire behandlinger», «k grupper»
+  - Oppgaven nevner «variansanalyse», «ANOVA», «one-way», «enveis», «F-test»
+  - Data gitt som `x̄_i`, `s_i²`, `n_i` for k ≥ 3 grupper
+  - ANOVA-tabell (SSG, SSE, MSG, MSE, F) delvis fylt ut
+
+  ## Hva gjør den?
+
+      SSG = Σ n_i (x̄_i − x̄)²       (mellom grupper)
+      SSE = Σ (n_i − 1) s_i²         (innen grupper)
+      F = (SSG/(k − 1)) / (SSE/(n − k))        ν = (k − 1, n − k)
+
+  Forkast `H₀` hvis `F > F_(α, k − 1, n − k)` (alltid HØYRE-sidig).
+
+  ## Forveksles ofte med
+
+  - **To-utvalgs t-test**: brukes for `k = 2`. For k = 2 gjelder `F = T²`.
+  - **F-test for varianslikhet**: ANOVAs F er `MSG/MSE`, ikke `s_X²/s_Y²` — annerledes!
+  - **Kjikvadrat-test**: brukes for kategoriske, ikke kontinuerlige data
+see_also:
+  - { id: enveis-anova, kind: entry }
+  - { id: test-to-t-pooled, kind: glossary }
+  - { id: test-f-varians, kind: glossary }
+  - { id: pooled-varians, kind: glossary }
+  - { id: E8-f-tabell, kind: table }

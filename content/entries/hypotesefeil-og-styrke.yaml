@@ -461,10 +461,12 @@ related:
   - { id: "en-utvalg-t-test",       kind: "entry" }
   - { id: "paret-t-test",           kind: "entry" }
   - { id: "to-utvalgs-t-test",      kind: "entry" }
+  - { id: "enveis-anova",           kind: "entry" }
   - { id: "ki-mu-og-varians",       kind: "entry" }
   - { id: "normalfordeling",        kind: "entry" }
   - { id: "type-1-feil",            kind: "glossary" }
   - { id: "type-2-feil",            kind: "glossary" }
+  - { id: "styrkefunksjon",         kind: "glossary" }
   - { id: "alpha",                  kind: "glossary" }
   - { id: "beta",                   kind: "glossary" }
   - { id: "signifikansniva-glos",   kind: "glossary" }

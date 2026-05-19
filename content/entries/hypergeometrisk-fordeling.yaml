@@ -147,6 +147,7 @@ detailed_solution_variants:
 
 related:
   - { id: "binomial-fordeling",   kind: "entry" }
+  - { id: "geometrisk-fordeling", kind: "entry" }
   - { id: "uordnet-utvalg-uten-tilbakelegging", kind: "entry" }
   - { id: "gunstige-pa-mulige",     kind: "entry" }
   - { id: "uten-tilbakelegging-glos", kind: "glossary" }

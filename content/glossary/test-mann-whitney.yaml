@@ -1,0 +1,46 @@
+id: test-mann-whitney
+term_no: "Mann-Whitney U-test (ikke-parametrisk)"
+short_def: "Ikke-parametrisk versjon av to-utvalgs t-test. Tester om to UAVHENGIGE grupper kommer fra samme fordeling, basert på RANGER. Krever ikke normalfordeling."
+aliases:
+  - mann-whitney
+  - mann-whitney u
+  - wilcoxon rang-sum
+  - rank sum test
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples]
+  structural_cues: [rank_based_data]
+  distribution_assumption: [none_assumed]
+long_def: |
+  ## Når brukes den?
+
+  - To **uavhengige** grupper, og du vil sammenligne dem.
+  - Du KAN IKKE anta normalfordeling (lite utvalg, skjevhet, ordinal data).
+  - Alternativ til to-utvalgs t-test når normalantakelsen brytes.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Eksplisitt: «ikke-parametrisk», «uten å anta normalfordeling»
+  - Lite utvalg + tydelig skjev fordeling i histogrammet
+  - Ordinal data (rangerte verdier, ikke målbare)
+  - Typiske ord: «ranger observasjonene», «Mann-Whitney», «Wilcoxon rang-sum»
+
+  ## Hva gjør den?
+
+  1. Slå sammen begge grupper og rangér alle observasjonene fra minst til størst.
+  2. Summer rangene i hver gruppe → `R_X` og `R_Y`.
+  3. Beregn `U = R − n(n+1)/2` for hver gruppe.
+  4. Slå opp kritisk verdi i **tabell E.7** (Mann-Whitney U).
+  5. Forkast `H₀` hvis `U ≤ U_crit`.
+
+  ## Forveksles ofte med
+
+  - **To-utvalgs t-test**: brukes når normalfordeling kan antas — har høyere styrke
+  - **Wilcoxon tegn-rang**: brukes for PARETE observasjoner, ikke uavhengige
+  - **Kruskal-Wallis**: brukes for 3+ grupper (ikke-parametrisk ANOVA — ikke i ITD20218-pensum)
+see_also:
+  - { id: mann-whitney-wilcoxon, kind: entry }
+  - { id: test-to-t-pooled, kind: glossary }
+  - { id: test-wilcoxon-tegn-rang, kind: glossary }
+  - { id: ikke-parametrisk, kind: glossary }
+  - { id: E7-mann-whitney-u-tabell, kind: table }

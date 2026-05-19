@@ -976,7 +976,8 @@ related:
   - { id: "frihetsgrader-glos",               kind: "glossary" }
   - { id: "t-fordeling",                      kind: "glossary" }
   - { id: "E5-t-tabell",                      kind: "table" }
-
+  - { id: "bias", kind: "glossary" }
+  - { id: "standardfeil-til-stigningstallet", kind: "glossary" }
 tools:
   - "Tabell E.5 – t-fordelingens kvantiltabell"
   - "Kalkulator: kvadratrot, summer, gjennomsnitt"

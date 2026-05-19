@@ -1,6 +1,11 @@
 id: forkastningsomrade
 term_no: Forkastningsområde
 short_def: "Settet av testobservator-verdier som fører til at `H₀` forkastes."
+aliases:
+  - forkastningsomrÃ¥det
+  - forkastningsomrÃ¥der
+  - forkastningsomrÃ¥dene
+  - forkastningsomrade
 filters:
   computes: [hypothesis_test]
   parameters_known: [alpha_significance]

@@ -1,6 +1,10 @@
 id: utvalg
 term_no: Utvalg (stikkprøve, sample)
 short_def: "De `n` observasjonene du faktisk har målt — en delmengde av populasjonen."
+aliases:
+  - utvalget
+  - utvalg
+  - utvalgene
 filters:
   setup: [single_population]
   structural_cues: [data_as_list]

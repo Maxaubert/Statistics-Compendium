@@ -1,6 +1,10 @@
 id: estimator
 term_no: Estimator
 short_def: "En funksjon av dataene som gir et tallestimat for en ukjent parameter."
+aliases:
+  - estimatoren
+  - estimatorer
+  - estimatorene
 filters:
   computes: [parameter_estimate, std_dev, expected_value]
   random_variable: [mean_of_samples]

@@ -391,7 +391,10 @@ related:
   - { id: "nullhypotese",            kind: "glossary" }
   - { id: "z-score",                 kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
-
+  - { id: "alternativhypotese", kind: "glossary" }
+  - { id: "forkastningsomrade", kind: "glossary" }
+  - { id: "observatortest", kind: "glossary" }
+  - { id: "variansen-til-utvalgsgjennomsnittet", kind: "glossary" }
 tools:
   - "Tabell E.4 – Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"
   - "Tabell E.3 – Z-tabell (for p-verdi-utregning)"

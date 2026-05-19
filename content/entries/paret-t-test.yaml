@@ -487,7 +487,7 @@ related:
   - { id: "ensidig-test",           kind: "glossary" }
   - { id: "tosidig-test",           kind: "glossary" }
   - { id: "E5-t-tabell",            kind: "table" }
-
+  - { id: "observatortest", kind: "glossary" }
 tools:
   - "Tabell E.5 – t-fordelingens kvantiltabell"
   - "Kalkulator: kvadratrot, sum av kvadrater"

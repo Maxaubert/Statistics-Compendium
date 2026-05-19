@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { OversiktForm } from "@/data/schema";
+import type { OversiktForm, OversiktSection } from "@/data/schema";
 import { useGlossaryPopup } from "./GlossaryPopup";
 import { renderCombiningMarks } from "./inline-code";
 
@@ -20,6 +20,41 @@ export function OversiktCardGrid({ forms }: OversiktCardGridProps) {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {forms.map((form, i) => (
         <OversiktCard key={i} form={form} />
+      ))}
+    </div>
+  );
+}
+
+export interface OversiktSectionedGridProps {
+  sections: OversiktSection[];
+}
+
+/**
+ * Sectioned variant of the overview card grid. Renders a heading +
+ * optional description per section, then a 2-column grid of cards.
+ * Used by entries like test-oversikt that have 10+ forms and benefit
+ * from thematic grouping (e.g. "Tester på gjennomsnitt", "Tester på
+ * varians", "Ikke-parametriske tester").
+ */
+export function OversiktSectionedGrid({ sections }: OversiktSectionedGridProps) {
+  return (
+    <div className="flex flex-col gap-10">
+      {sections.map((section, s) => (
+        <section key={s}>
+          <h3 className="m-0 mb-2 font-serif text-[20px] font-semibold text-ink">
+            {section.title}
+          </h3>
+          {section.description && (
+            <p className="m-0 mb-4 font-serif text-[14px] leading-relaxed text-ink-3">
+              {renderCombiningMarks(section.description)}
+            </p>
+          )}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {section.forms.map((form, i) => (
+              <OversiktCard key={i} form={form} />
+            ))}
+          </div>
+        </section>
       ))}
     </div>
   );

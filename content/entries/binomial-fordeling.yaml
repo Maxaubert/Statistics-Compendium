@@ -595,6 +595,7 @@ related:
   - { id: "poisson-fordeling",      kind: "entry" }
   - { id: "normalfordeling",        kind: "entry" }
   - { id: "hypergeometrisk-fordeling", kind: "entry" }
+  - { id: "geometrisk-fordeling",   kind: "entry" }
   - { id: "komplementregelen",      kind: "entry" }
   - { id: "ki-andel-binomial",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel", kind: "entry" }

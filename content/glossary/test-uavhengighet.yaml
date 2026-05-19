@@ -1,0 +1,44 @@
+id: test-uavhengighet
+term_no: "Kjikvadrat-test for uavhengighet"
+short_def: "Tester om to KATEGORISKE variable er uavhengige, gitt en kontingenstabell (r × c). Bruker χ²-fordelingen og tabell E.6."
+aliases:
+  - chi-square uavhengighet
+  - kjikvadrat uavhengighet
+  - kontingenstabell-test
+  - test for sammenheng kategoriske
+filters:
+  computes: [hypothesis_test, test_independence]
+  setup: [single_population]
+  random_variable: [discrete_count]
+  distribution_assumption: [chi_squared]
+long_def: |
+  ## Når brukes den?
+
+  - Du har en **`r × c`-kontingenstabell** (rader × kolonner) med observerte antall.
+  - Du vil teste om de to kategoriske variablene er UAVHENGIGE i populasjonen.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Tabell med rader × kolonner, observert antall i hver celle
+  - Spørsmålet handler om SAMMENHENG mellom to KATEGORISKE variabler
+  - Typiske ord: «er kjønn og preferanse uavhengige?», «henger valg sammen med alder?»
+
+  ## Hva gjør den?
+
+      E_ij = (rad_i · kol_j) / n        (forventet under uavhengighet)
+      χ² = Σ (O_ij − E_ij)² / E_ij        under H₀: χ² ~ χ²((r − 1)(c − 1))
+
+  Forkast `H₀` hvis `χ² > χ²_(α, (r−1)(c−1))`.
+
+  Krav: alle `E_ij ≥ 5` (ellers slå sammen kategorier).
+
+  ## Forveksles ofte med
+
+  - **Goodness-of-fit**: brukes for ÉN dimensjon (sjekk om frekvensene passer en fordeling)
+  - **Korrelasjon/regresjon**: brukes for KONTINUERLIGE variable, ikke kategoriske
+see_also:
+  - { id: kjikvadrat-uavhengighet, kind: entry }
+  - { id: test-gof, kind: glossary }
+  - { id: kategorisk-variabel, kind: glossary }
+  - { id: kontingenstabell, kind: glossary }
+  - { id: E6-kjikvadrattabell, kind: table }

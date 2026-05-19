@@ -1,6 +1,12 @@
 id: type-2-feil
 term_no: Type-II-feil
 short_def: "Å beholde `H₀` når `H₁` faktisk er sann — du oppdaget ikke effekten."
+aliases:
+  - type-II-feilen
+  - type-II-feil
+  - type-II-feilene
+  - type II-feil
+  - type 2-feil
 filters:
   computes: [hypothesis_test, find_n_for_threshold]
   parameters_known: [alpha_significance]

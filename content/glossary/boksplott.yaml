@@ -1,6 +1,10 @@
 id: boksplott
 term_no: Boksplott (box plot)
 short_def: "Visualisering av median, kvartiler og uteliggere — boksen dekker midtre 50 % av dataene."
+aliases:
+  - boksplottet
+  - boksplott
+  - boksplottene
 filters:
   structural_cues: [data_as_list]
   setup: [two_independent_samples]

@@ -322,7 +322,12 @@ const TABLE_SEPARATOR_RE = /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/;
 function splitTableRow(line: string): string[] {
   const m = line.match(TABLE_ROW_RE);
   if (!m) return [];
-  return m[1].split("|").map((c) => c.trim());
+  // GFM lets you escape `|` inside a cell as `\|` (needed for content like
+  // `P(A|B)`). Stash the escape, split on real pipes, restore as a literal.
+  return m[1]
+    .replace(/\\\|/g, "\x00")
+    .split("|")
+    .map((c) => c.trim().replace(/\x00/g, "|"));
 }
 
 function parseBlocks(body: string): Block[] {

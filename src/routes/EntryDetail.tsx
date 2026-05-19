@@ -25,7 +25,7 @@ import { ToolCards } from "@/components/detail/ToolCards";
 import { RelatedPills } from "@/components/detail/RelatedPills";
 import { Pager } from "@/components/detail/Pager";
 import { Prose } from "@/components/detail/Prose";
-import { OversiktCardGrid } from "@/components/detail/OversiktCardGrid";
+import { OversiktCardGrid, OversiktSectionedGrid } from "@/components/detail/OversiktCardGrid";
 import { GlossaryPopupProvider } from "@/components/detail/GlossaryPopup";
 import { QuickNav, type QuickNavItem } from "@/components/detail/QuickNav";
 import { loadAllContent } from "@/data/loadContent";
@@ -217,6 +217,11 @@ export function EntryDetail() {
             {entry.what_it_means && (
               <Section title="Hva det betyr" icon={Info}>
                 <Prose body={entry.what_it_means} glossary={data.glossary} />
+              </Section>
+            )}
+            {entry.form_sections && entry.form_sections.length > 0 && (
+              <Section title="Former" icon={BarChart3}>
+                <OversiktSectionedGrid sections={entry.form_sections} />
               </Section>
             )}
             {entry.forms && entry.forms.length > 0 && (

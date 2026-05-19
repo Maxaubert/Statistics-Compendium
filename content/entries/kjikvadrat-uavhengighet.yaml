@@ -111,6 +111,74 @@ detailed_solution_variants:
               - { text: "`χ² = 1.010 < 3.841` → behold `H₀`." }
         result: "Behold `H₀`: ingen statistisk grunnlag for å hevde at kjønn og trandrikking er avhengige."
 
+      - source: "Praksis · alder × stemmegivning (3×3, signifikant)"
+        question: |
+          300 velgere kategoriseres etter alder (`<30`, `30–50`, `>50`) og parti
+          (`A`, `B`, `C`):
+
+          |               | Parti A | Parti B | Parti C | Sum  |
+          |---------------|---------|---------|---------|------|
+          | Under 30      | 30      | 40      | 30      | 100  |
+          | 30–50         | 50      | 35      | 25      | 110  |
+          | Over 50       | 60      | 20      | 10      | 90   |
+          | **Sum**       | **140** | **95**  | **65**  | **300** |
+
+          Test om alder og partivalg er uavhengige på α = 0.05.
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: alder og parti er uavhengige`" }
+              - { text: "`H₁: alder og parti er avhengige`" }
+          - label: "Forventede antall E_ij = (rad·kol)/n"
+            lines:
+              - { text: "**Rad 1 (`<30`, sum 100):**" }
+              - { indent: "`E(1,A) = 100·140/300 ≈ 46.67`" }
+              - { indent: "`E(1,B) = 100·95/300 ≈ 31.67`" }
+              - { indent: "`E(1,C) = 100·65/300 ≈ 21.67`" }
+              - { text: "**Rad 2 (`30–50`, sum 110):**" }
+              - { indent: "`E(2,A) = 110·140/300 ≈ 51.33`" }
+              - { indent: "`E(2,B) = 110·95/300 ≈ 34.83`" }
+              - { indent: "`E(2,C) = 110·65/300 ≈ 23.83`" }
+              - { text: "**Rad 3 (`>50`, sum 90):**" }
+              - { indent: "`E(3,A) = 90·140/300 = 42`" }
+              - { indent: "`E(3,B) = 90·95/300 = 28.5`" }
+              - { indent: "`E(3,C) = 90·65/300 = 19.5`" }
+              - { text: "Alle `E_ij ≥ 5` ✓" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = Σ (O_ij − E_ij)² / E_ij`" }
+              - { indent: "`= (30−46.67)²/46.67 + (40−31.67)²/31.67 + (30−21.67)²/21.67`" }
+              - { indent: "`+ (50−51.33)²/51.33 + (35−34.83)²/34.83 + (25−23.83)²/23.83`" }
+              - { indent: "`+ (60−42)²/42 + (20−28.5)²/28.5 + (10−19.5)²/19.5`" }
+              - { indent: "`= 5.95 + 2.19 + 3.20 + 0.034 + 0.0008 + 0.0574 + 7.71 + 2.535 + 4.628`" }
+              - { indent: "`≈ 26.31`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Frihetsgrader: `ν = (3−1)(3−1) = 4`." }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 4) = 9.488`." } }
+              - { text: "`χ² = 26.31 ≫ 9.488` → forkast `H₀` (klart signifikant)." }
+              - { comment: "p-verdi ≈ 0.00003 — sterk evidens for sammenheng. Eldre velgere viser tydelig preferanse for parti A; yngre er mer jevnt fordelt." }
+        result: "Forkast `H₀` på α = 0.05. Alder og parti er signifikant assosiert i denne populasjonen."
+
+      - source: "Praksis · effektstørrelse Cramér's V (når H₀ forkastes)"
+        question: "Med samme alder × parti-resultat (`χ² = 26.31`, `n = 300`, tabell `3 × 3`): beregn Cramér's V som mål på STYRKEN av sammenhengen."
+        sections:
+          - label: "Formel"
+            lines:
+              - { text: "`V = √(χ² / (n · min(r−1, c−1)))`" }
+              - { comment: "`V` ligger mellom 0 (uavhengig) og 1 (perfekt avhengig). Cohens skala: 0.1 svak, 0.3 moderat, 0.5 sterk." }
+          - label: "Innsetting"
+            lines:
+              - { text: "Med `r = c = 3`, blir `min(r−1, c−1) = 2`:" }
+              - { indent: "`V = √(26.31 / (300 · 2))`" }
+              - { indent: "`= √(26.31/600)`" }
+              - { indent: "`= √0.04385`" }
+              - { indent: "`≈ 0.21`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "`V ≈ 0.21` ⇒ svak til moderat sammenheng. Selv om kjikvadrat-testen er sterkt signifikant, er DEN PRAKTISKE styrken bare moderat — testen ble signifikant særlig fordi `n = 300` er stort." }
+        result: "`Cramér's V ≈ 0.21` — moderat assosiasjon mellom alder og partivalg."
+
 related:
   - { id: frihetsgrader-glos, kind: glossary }
   - { id: marginalfordeling, kind: entry }
@@ -118,7 +186,8 @@ related:
   - { id: kontingenstabell, kind: glossary }
   - { id: uavhengighet-glos, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
-
+  - { id: "kategorisk-variabel", kind: "glossary" }
+  - { id: "nullhypotese", kind: "glossary" }
 tools:
   - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadrat, divisjon, sum"

@@ -1,0 +1,48 @@
+id: test-paret
+term_no: "Paret t-test"
+short_def: "Tester om gjennomsnittsforskjellen `μ_D` mellom to PARTE målinger er null. Brukes når samme individ måles to ganger (før/etter), eller for matchede par."
+aliases:
+  - paret t-test
+  - parvis t-test
+  - before-after t-test
+  - matchet par-test
+filters:
+  computes: [hypothesis_test]
+  setup: [paired_samples]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+long_def: |
+  ## Når brukes den?
+
+  - Hver observasjon i utvalget er **et par** av to målinger.
+  - Eksempler: før/etter samme person, tvilling-par, høyre/venstre øye, før/etter behandling.
+  - Du vil teste om gjennomsnittsforskjellen `μ_D` er forskjellig fra null (eller en annen verdi).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - **Samme individ er målt to ganger** — før/etter, baseline/oppfølging
+  - **Matchede par** — par sammensatt av to enheter med like egenskaper
+  - Dataene rapporteres som `(x_i, y_i)` for HVER individ, IKKE som to separate grupper
+  - Typiske ord: «før og etter behandling», «paret design», «hvert individ målt to ganger»
+
+  ## Hva gjør den?
+
+      For hvert par: D_i = X_i − Y_i
+      x̄_D = gjennomsnittet av D_i, s_D = standardavviket av D_i
+      T = x̄_D / (s_D / √n)        ν = n − 1
+
+  Behandler altså `D` som ETT utvalg, og kjører én-utvalg t-test mot `μ_D = 0`.
+
+  ## Forveksles ofte med
+
+  - **To-utvalgs t-test (pooled/Welch)**: brukes når gruppene er UAVHENGIGE — ikke paret
+  - **Wilcoxon tegn-rang**: ikke-parametrisk versjon av paret t-test (når normalitet brytes)
+
+  ## Hvorfor PARET, ikke to-utvalgs?
+
+  Paret design reduserer variansen ved å fjerne «mellom-individ»-variasjon. Hver person fungerer som sin egen kontroll. Hvis du gjør to-utvalgs t-test på paret data, mister du mye styrke.
+see_also:
+  - { id: paret-t-test, kind: entry }
+  - { id: test-to-t-pooled, kind: glossary }
+  - { id: test-wilcoxon-tegn-rang, kind: glossary }
+  - { id: paret-test, kind: glossary }

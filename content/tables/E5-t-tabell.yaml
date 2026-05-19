@@ -3,13 +3,24 @@ name_no: "t-tabell"
 formal_name_no: "t-fordelingens kvantiltabell"
 code: "E.5"
 description: "Slår opp kritiske t-verdier t_α for ulike frihetsgrader ν og signifikansnivåer α. Brukes når populasjonsvariansen er ukjent."
+input_hint: "α er HØYRE-hale-sannsynligheten (P(T > t_α) = α). For tosidig test: del problemets α på 2 først."
 inputs:
   - { name: "df", type: integer, min: 1,     max: 1000, step: 1 }
   - { name: "α",  type: number,  min: 0.005, max: 0.25, step: any }
 output: "t_(α, df)"
 distribution: t_quantile
+toggle_label: "α → t"
+inverse:
+  inputs:
+    - { name: "df", type: integer, min: 1,     max: 1000, step: 1 }
+    - { name: "t",  type: number,  min: -100,  max: 100,  step: any }
+  output: "p = P(T > t) (én-sidig høyre hale)"
+  toggle_label: "t → p"
+  input_hint: "Sett inn observert t-verdi og df. Får p-verdi (høyre hale). For tosidig: dobble p."
 related_entries:
   - en-utvalg-t-test
   - to-utvalgs-t-test
+  - paret-t-test
   - lineaer-regresjon
   - ki-mu-og-varians
+  - ki-to-utvalg

@@ -1,0 +1,48 @@
+id: iid
+term_no: IID (uavhengig identisk fordelt)
+short_def: "«Independent and Identically Distributed» — variablene er uavhengige OG har samme fordeling. Grunnantakelsen bak nesten alle utvalgsbaserte metoder."
+aliases:
+  - i.i.d.
+  - iid-utvalg
+  - i.i.d
+  - iid-antakelsen
+  - uavhengig identisk fordelt
+filters:
+  structural_cues: [independent_events]
+  computes: [parameter_estimate, hypothesis_test, confidence_interval]
+long_def: |
+  En sekvens `X₁, X₂, …, Xₙ` er **iid** hvis to krav er oppfylt:
+
+  1. **Identisk fordelt:** alle `Xᵢ` har samme sannsynlighetsfordeling
+     (samme `μ`, `σ`, PMF/PDF).
+  2. **Uavhengige:** verdien til `Xᵢ` påvirker ikke verdien til `Xⱼ`
+     for `i ≠ j`.
+
+  ## Hvorfor er iid så viktig?
+
+  Nesten alle standardresultater i statistikk forutsetter iid-utvalg:
+
+  - **Sentralgrenseteoremet**: gjennomsnittet av iid-variabler er
+    tilnærmet normalfordelt for stor `n`.
+  - **Utvalgsvarians** `s²` er forventningsrett estimator for `σ²` KUN
+    hvis observasjonene er iid.
+  - **Hypotesetester** (z, t, ANOVA, χ²) krever iid innen hver gruppe.
+
+  ## Når brytes iid?
+
+  - **Klyngeutvalg**: observasjoner innen samme klynge (klasse, familie)
+    er korrelerte → ikke uavhengige.
+  - **Paret design**: hver observasjon er knyttet til en annen (samme
+    person før/etter) → ikke uavhengige.
+  - **Tidsserier**: dagens verdi henger ofte sammen med gårsdagens.
+  - **Trekning uten tilbakelegging** fra liten populasjon: hver trekning
+    endrer fordelingen for de neste.
+
+  Brytes iid-antakelsen må man enten korrigere (paret t-test, miksete
+  modeller) eller bruke en metode som ikke krever den (bootstrap).
+see_also:
+  - { id: uavhengighet-glos, kind: glossary }
+  - { id: sentralgrenseteoremet-glos, kind: glossary }
+  - { id: utvalg, kind: glossary }
+  - { id: utvalgsvarians, kind: glossary }
+  - { id: bootstrapping, kind: entry }

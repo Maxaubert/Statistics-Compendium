@@ -1,6 +1,12 @@
 id: type-1-feil
 term_no: Type-I-feil
 short_def: "Å forkaste `H₀` når `H₀` faktisk er sann — falsk alarm."
+aliases:
+  - type-I-feilen
+  - type-I-feil
+  - type-I-feilene
+  - type I-feil
+  - type 1-feil
 filters:
   computes: [hypothesis_test]
   parameters_known: [alpha_significance]

@@ -54,6 +54,11 @@ filters:
   distribution_assumption: [t_distribution, normal]
   tooling: [t_quantile_table_E5, calculator_sqrt]
 
+properties:
+  expected_value: "E[T | H₀] = 0     (for ν > 1)"
+  variance: "Var[T | H₀] = ν / (ν − 2)     (for ν > 2)"
+  std_dev: "σ_T = √(ν / (ν − 2))"
+
 solution_variants:
   - label: "H₁: μ_X < μ_Y (venstre)"
     recognition: "«Er snittet i gruppe X SIGNIFIKANT LAVERE enn i gruppe Y?». To uavhengige utvalg, `σ` ukjent — ensidig."
@@ -131,6 +136,36 @@ solution_variants:
       - "Sammenlign og konkluder i kontekst: hvis `|T| > t_(α/2, ν)`, er det signifikant evidens for at `μ_X ≠ μ_Y`"
       - text: "Alternativ: Welch t-test krever ikke antakelse om felles `σ²`. Brukes ofte i øving og praksis. Eksamen i ITD20218 bruker pooled."
         formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
+        conditional: true
+
+  - label: "Welch t-test (σ_X² ≠ σ_Y², ulike varianser)"
+    recognition: "«Variansene er ulike» eller F-test for varianslikhet er forkastet. Welch er den robuste varianten — krever IKKE pooled antakelse. Bruk når `s_X²` og `s_Y²` skiller seg med faktor `> 4`, eller når F-test for varianser har forkastet H₀."
+    description: "Robust to-utvalgs t-test uten pooled-antakelse. Bruker Welch-Satterthwaite tilnærmet df."
+    steps:
+      - text: "Formuler hypotesene (kan være tosidig eller ensidig — samme valg som pooled):"
+        formula: "H₀: μ_X = μ_Y     mot     H₁: μ_X ≠ μ_Y  (eller <, >)"
+      - "Begrunn Welch: to uavhengige grupper, ukjent `σ`, men variansene KAN IKKE antas like (F-test forkastet, eller tommelfingerregel `max s² > 4·min s²`)."
+      - text: "Beregn utvalgsstatistikkene:"
+        formula: "x̄, ȳ, s_X², s_Y², n_X, n_Y"
+      - text: "Beregn testobservatoren (ulik fra pooled — IKKE bruk `s_P` her):"
+        formula: "T = (x̄ − ȳ) / √(s_X²/n_X + s_Y²/n_Y)"
+      - text: "Beregn Welch-Satterthwaite frihetsgrader (komplisert, men en gangs formel):"
+        formula:
+          - "ν = (s_X²/n_X + s_Y²/n_Y)²"
+          - "    / [ (s_X²/n_X)²/(n_X − 1) + (s_Y²/n_Y)²/(n_Y − 1) ]"
+      - "Rund `ν` ned til nærmeste heltall ved tabelloppslag."
+      - text: "Eksempel: `n_X = 15`, `s_X² = 4.5`; `n_Y = 18`, `s_Y² = 1.2`. F-test (4.5/1.2 = 3.75 mot F_(0.025, 14, 17) ≈ 2.75) FORKASTER varianslikhet:"
+        formula:
+          - "T = (x̄ − ȳ) / √(4.5/15 + 1.2/18) = (x̄ − ȳ) / √0.367 = (x̄ − ȳ) / 0.606"
+          - "ν ≈ (0.367)² / [(0.3)²/14 + (0.0667)²/17] ≈ 0.1347/(0.00643 + 0.000261) ≈ 20.1 ⇒ 20"
+        example: true
+      - "Slå opp `t_(α/2, ν)` i **tabell E.5** med Welch-df (ikke `n_X + n_Y − 2`)."
+      - text: "Forkastingsregel — identisk med pooled, bare ν er ulik:"
+        formula:
+          - "Tosidig:    Forkast H₀ hvis |T| > t_(α/2, ν_Welch)"
+          - "Ensidig:    Forkast H₀ hvis T > t_(α, ν_Welch)  eller  T < −t_(α, ν_Welch)"
+      - { text: "Pass på: Welch er KONSERVATIV ved like varianser — har litt mindre styrke enn pooled hvis pooled-antakelsen faktisk holder. Bruk derfor pooled når F-testen IKKE forkaster, og Welch når den FORKASTER.", conditional: true }
+      - text: "ITD20218-eksamen bruker som regel pooled. Velg Welch kun hvis oppgaven eksplisitt sier 'variansene er ulike' eller en F-test allerede er gjennomført med signifikant resultat."
         conditional: true
 
 common_traps: |
@@ -392,11 +427,86 @@ detailed_solution_variants:
               - { text: "|-1.784| = 1.784 IKKE > 2.064" }
         result: "Vi kan IKKE forkaste H₀ på α = 0.05. Dataene gir ikke tilstrekkelig grunnlag for å hevde at modifikasjonen har endret produktiviteten."
 
+  - label: "Welch t-test (σ_X² ≠ σ_Y², ulike varianser)"
+    solutions:
+      - source: "Praksis · ulik varians (Welch-flow)"
+        question: |
+          Konsentrasjonen av et stoff måles i to laboratorier. Lab X bruker
+          eldre utstyr: `n_X = 15`, `x̄ = 12.4`, `s_X² = 4.5`. Lab Y har nytt
+          presisjonsutstyr: `n_Y = 18`, `ȳ = 11.1`, `s_Y² = 1.2`. F-test for
+          varianslikhet ga `F = 4.5/1.2 = 3.75 > F_(0.025, 14, 17) ≈ 2.75` —
+          variansene er signifikant ulike. Bruk Welch-test for å sjekke om
+          lab X og Y gir forskjellige middelverdier på `α = 0.05` (tosidig).
+        sections:
+          - label: "Hypoteser (tosidig)"
+            lines:
+              - { text: "`H₀: μ_X = μ_Y`" }
+              - { text: "`H₁: μ_X ≠ μ_Y`" }
+          - label: "Standardfeil (Welch-form, IKKE pooled)"
+            lines:
+              - { text: "`SE = √(s_X²/n_X + s_Y²/n_Y)`" }
+              - { indent: "`= √(4.5/15 + 1.2/18)`" }
+              - { indent: "`= √(0.300 + 0.0667)`" }
+              - { indent: "`= √0.367 ≈ 0.606`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`T = (x̄ − ȳ) / SE = (12.4 − 11.1) / 0.606`" }
+              - { indent: "`= 1.3 / 0.606 ≈ 2.145`" }
+          - label: "Welch-Satterthwaite frihetsgrader"
+            lines:
+              - { text: "`ν = (s_X²/n_X + s_Y²/n_Y)² / [(s_X²/n_X)²/(n_X−1) + (s_Y²/n_Y)²/(n_Y−1)]`" }
+              - { indent: "teller: `(0.300 + 0.0667)² = 0.367² ≈ 0.1347`" }
+              - { indent: "nevner: `0.300²/14 + 0.0667²/17 = 0.00643 + 0.000262 ≈ 0.00669`" }
+              - { indent: "`ν ≈ 0.1347 / 0.00669 ≈ 20.1`  →  rund ned til **20**" }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 20) = 2.086`. Forkast H₀ hvis `|T| > 2.086`." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`|2.145| = 2.145 > 2.086` ⇒ forkast H₀ (såvidt)" }
+              - { comment: "Lab-resultatene er statistisk forskjellige på α = 0.05. Hvis vi feilaktig hadde brukt pooled (ν = 31, t = 2.040, og litt annen SE), kunne resultatet blitt annerledes — Welch er tryggere her." }
+        result: "Forkast `H₀` på α = 0.05. Lab X og Y rapporterer signifikant forskjellige middelkonsentrasjoner."
+
+      - source: "Praksis · liten gruppe med stor varians (Welch viktig)"
+        question: |
+          To behandlinger for søvnløshet sammenlignes på minutter ekstra
+          søvn første natt. Behandling A: `n_A = 6`, `x̄_A = 45`, `s_A = 22`.
+          Behandling B: `n_B = 20`, `x̄_B = 30`, `s_B = 5`. Test om A gir
+          mer søvn enn B (ensidig høyre, `α = 0.05`).
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: μ_A ≤ μ_B`" }
+              - { text: "`H₁: μ_A > μ_B`" }
+              - { comment: "Variansene er svært ulike (22² = 484 vs. 5² = 25) ⇒ pooled-antakelse er klart brutt. Welch er nødvendig." }
+          - label: "Welch-SE og T"
+            lines:
+              - { text: "`s_A² = 484`, `s_B² = 25`" }
+              - { text: "`SE = √(484/6 + 25/20) = √(80.67 + 1.25) = √81.92 ≈ 9.05`" }
+              - { text: "`T = (45 − 30) / 9.05 = 15 / 9.05 ≈ 1.657`" }
+          - label: "Frihetsgrader"
+            lines:
+              - { text: "teller: `(80.67 + 1.25)² = 81.92² ≈ 6710`" }
+              - { text: "nevner: `80.67²/5 + 1.25²/19 = 1301.6 + 0.0822 ≈ 1301.7`" }
+              - { text: "`ν ≈ 6710 / 1301.7 ≈ 5.15`  →  rund ned til **5**" }
+              - { comment: "Welch-df nær 5 — mye lavere enn pooled (`n_A + n_B − 2 = 24`). Behandling A's høye varians og lille `n_A` straffer frihetsgradene." }
+          - label: "Tabelloppslag"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.05, 5) = 2.015`. Forkast H₀ hvis `T > 2.015` (ensidig høyre)." } }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`1.657 < 2.015` ⇒ behold H₀" }
+              - { comment: "Den observerte forskjellen er ikke signifikant. Med pooled-df = 24 ville kritisk verdi vært `t_(0.05, 24) = 1.711` — fortsatt ikke signifikant her, men Welch ville generelt være MER konservativ pga lav ν." }
+        result: "Behold `H₀` på α = 0.05. Behandling A's tilsynelatende fordel ligger innenfor den store variasjonen i den lille gruppen."
+
 related:
   - { id: "ki-to-utvalg",            kind: "entry" }
   - { id: "en-utvalg-t-test",        kind: "entry" }
   - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "paret-t-test",            kind: "entry" }
+  - { id: "enveis-anova",            kind: "entry" }
   - { id: "mann-whitney-wilcoxon",   kind: "entry" }
+  - { id: "hypotesefeil-og-styrke",  kind: "entry" }
   - { id: "pooled-varians",          kind: "glossary" }
   - { id: "frihetsgrader-glos",      kind: "glossary" }
   - { id: "p-verdi-glos",            kind: "glossary" }

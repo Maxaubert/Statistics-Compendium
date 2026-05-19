@@ -387,6 +387,6 @@ related:
   - { id: "stokastisk-variabel",        kind: "glossary" }
   - { id: "sannsynlighetsfordeling",    kind: "glossary" }
   - { id: "sigma-kvadrat",              kind: "glossary" }
-
+  - { id: "joint", kind: "glossary" }
 tools:
   - "Kalkulator: multiplikasjon, kvadrering, kvadratrot, sum"

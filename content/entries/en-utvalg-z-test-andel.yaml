@@ -47,6 +47,8 @@ filters:
 recognition: "«Test om suksessraten/andelen `p` er lik `p₀`», «er andelen større/mindre enn 0.5?», eller «kan vi hevde at p ≠ p₀?». Du har `X` suksesser av `n` forsøk og en påstand om `p`."
 
 solution_template:
+  - { text: "**Pass på:** Denne testen krever IKKE en oppgitt populasjons-`σ`. Standardfeilen til `p̂` kommer fra `p₀` selv: `√(p₀(1−p₀)/n)`. Det finnes derfor heller INGEN «t-test for andel» — du trenger aldri å estimere `σ` separat for andeler. Hvis du synes du «mangler σ», er det fordi du forveksler med z-test for `μ`.", conditional: true }
+  - { text: "**Pass på:** Denne testen er for ÉN binær andel (suksess/fiasko). Har du 3 eller flere kategorier (f.eks. 'rød/blå/grønn/gul') eller en hel fordeling å teste, skal du bruke [kjikvadrat goodness-of-fit](/entry/kjikvadrat-goodness-of-fit) i stedet.", conditional: true }
   - text: "Formuler hypotesene (én- eller tosidig):"
     formula: "H₀: p = p₀     mot     H₁ (én- eller tosidig)"
   - text: "Bekreft normalapproksimasjon:"
@@ -132,7 +134,10 @@ related:
   - { id: "andel",                   kind: "glossary" }
   - { id: "normalapproksimasjon",    kind: "glossary" }
   - { id: "E4-z-kvantiltabell",      kind: "table" }
-
+  - { id: "nullhypotese", kind: "glossary" }
+  - { id: "forkastningsomrade", kind: "glossary" }
+  - { id: "observatortest", kind: "glossary" }
+  - { id: "standardfeil-til-andel", kind: "glossary" }
 tools:
   - "Tabell E.4 – Z-kvantiltabell (kritisk verdi)"
   - "Tabell E.3 – Z-tabell (for p-verdi-utregning)"

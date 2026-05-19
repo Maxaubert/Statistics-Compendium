@@ -1,0 +1,45 @@
+id: test-welch
+term_no: "Welch t-test (ulike varianser)"
+short_def: "Robust to-utvalgs t-test som IKKE forutsetter felles varians. Brukes når F-test for varianslikhet forkaster H₀."
+aliases:
+  - welch t-test
+  - welch test
+  - welch satterthwaite
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution]
+long_def: |
+  ## Når brukes den?
+
+  - To uavhengige grupper, og variansene **kan IKKE antas like**.
+  - F-test for varianslikhet er forkastet, eller tommelfingerregel: `max(s²) > 4·min(s²)`.
+  - Du har separate `s_X²` og `s_Y²` som er klart ulike.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Oppgaven sier eksplisitt «variansene er ulike» eller «pooled-antakelsen er brutt»
+  - F-test allerede gjennomført og forkastet
+  - Stor forskjell mellom `s_X²` og `s_Y²` i de oppgitte tallene
+  - ITD20218: SJELDEN på eksamen — pooled er konvensjon. Bruk Welch bare hvis oppgaven eksplisitt sier det.
+
+  ## Hva gjør den?
+
+      T = (X̄ − Ȳ) / √(s_X²/n_X + s_Y²/n_Y)
+
+  Welch-Satterthwaite frihetsgrader (rund ned til nærmeste heltall):
+
+      ν = (s_X²/n_X + s_Y²/n_Y)² / [ (s_X²/n_X)²/(n_X − 1) + (s_Y²/n_Y)²/(n_Y − 1) ]
+
+  Forkast `H₀` etter samme regel som pooled t-test, men med ν fra Welch-formelen.
+
+  ## Forveksles ofte med
+
+  - **Pooled t-test**: forutsetter felles varians — bruk denne hvis F-test ikke forkaster
+  - **F-test for varianser**: brukes FØR Welch for å avgjøre om Welch er nødvendig
+see_also:
+  - { id: to-utvalgs-t-test, kind: entry }
+  - { id: test-to-t-pooled, kind: glossary }
+  - { id: test-f-varians, kind: glossary }
+  - { id: test-varians, kind: entry }

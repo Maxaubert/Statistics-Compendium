@@ -1,0 +1,42 @@
+id: test-en-z-andel
+term_no: "Én-utvalg z-test for andel (p)"
+short_def: "Tester `H₀: p = p₀` på ett utvalg av suksess/fiasko-data. Bruker normaltilnærmingen til binomialfordelingen — krever `n` stor nok."
+aliases:
+  - z-test for andel
+  - z-test for p
+  - andel-test
+  - test for proporsjon
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population]
+  random_variable: [proportion]
+  parameters_known: [success_p]
+  distribution_assumption: [binomial, normal]
+long_def: |
+  ## Når brukes den?
+
+  - Du har **ett utvalg** av binære utfall (suksess/fiasko, ja/nei, defekt/OK).
+  - Du vil teste om suksessandelen `p` er forskjellig fra en spesifisert verdi `p₀`.
+  - `n·p₀ ≥ 5` OG `n·(1 − p₀) ≥ 5` (normaltilnærmingen er gyldig).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Dataene er TELT antall suksesser `X` av `n` forsøk, ELLER en andel `p̂ = X/n`
+  - Påstanden er om en ANDEL (`p`), ikke et gjennomsnitt
+  - Typiske ord: «andelen er 23 %», «50 av 200 har egenskapen», «kan vi anta p = 0.5?»
+
+  ## Hva gjør den?
+
+      Z = (p̂ − p₀) / √(p₀(1 − p₀)/n)        under H₀: Z ~ N(0, 1)
+
+  Forkast `H₀` hvis `|Z| > z_(α/2)` (tosidig) eller etter retning (ensidig).
+
+  ## Forveksles ofte med
+
+  - **én-utvalg z-test for μ**: brukes når dataene er kontinuerlige målinger
+  - **kjikvadrat goodness-of-fit**: brukes når du har MER ENN to kategorier
+see_also:
+  - { id: en-utvalg-z-test-andel, kind: entry }
+  - { id: ki-andel-binomial, kind: entry }
+  - { id: andel, kind: glossary }
+  - { id: standardfeil-til-andel, kind: glossary }

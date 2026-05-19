@@ -142,6 +142,20 @@ export const OversiktFormSchema = z.object({
 });
 export type OversiktForm = z.infer<typeof OversiktFormSchema>;
 
+/**
+ * A labelled group of overview cards. Used by `type: overview` entries
+ * that want to split many forms into thematic sections with headings,
+ * e.g. test-oversikt grouping its 14 hypothesis tests by what they test
+ * (mean, proportion, variance, categorical, non-parametric, regression).
+ * Entries may use EITHER flat `forms` OR `form_sections` — never both.
+ */
+export const OversiktSectionSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  forms: z.array(OversiktFormSchema),
+});
+export type OversiktSection = z.infer<typeof OversiktSectionSchema>;
+
 export const EntrySchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/, "id must be kebab-case"),
   name_no: z.string(),
@@ -224,6 +238,9 @@ export const EntrySchema = z.object({
   tools: z.array(z.string()).optional(),
   /** Card-grid sections for type: overview entries (see OversiktFormSchema). */
   forms: z.array(OversiktFormSchema).optional(),
+  /** Grouped card-grid sections for overview entries with many forms.
+   *  Use either `forms` (flat) or `form_sections` (grouped) — not both. */
+  form_sections: z.array(OversiktSectionSchema).optional(),
   /**
    * Free-form Norwegian search tags (e.g. "kombinatorikk", "regresjon").
    * Indexed by the search engine so users can find related entries by topic

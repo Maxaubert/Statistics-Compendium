@@ -1,0 +1,45 @@
+id: test-en-t-mu
+term_no: "Én-utvalg t-test (μ, σ ukjent)"
+short_def: "Tester `H₀: μ = μ₀` på ett utvalg når populasjonsstandardavviket `σ` er UKJENT og estimeres som `s` fra dataene. Bruker t-fordelingen og tabell E.5."
+aliases:
+  - en-utvalg t-test
+  - t-test for gjennomsnitt
+  - t-test for mu
+  - mu-test sigma ukjent
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [t_distribution, normal]
+long_def: |
+  ## Når brukes den?
+
+  - Du har **ett utvalg** og vil teste om dets gjennomsnitt `μ` er forskjellig fra en spesifisert verdi `μ₀`.
+  - Populasjonens standardavvik `σ` er **ukjent** og må estimeres som `s` fra utvalget.
+  - Observasjonene er normalfordelte (eller `n` er moderat stor).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Du får RÅDATA (en liste av observasjoner) eller `s` direkte
+  - Oppgaven nevner IKKE noen kjent populasjonsstandardavvik
+  - `n` er typisk lite (`< 30`) — men t-test gjelder uansett `n` så lenge σ er ukjent
+  - Typiske ord: «testene viste s = ...», «utvalgsstandardavviket er ...»
+
+  ## Hva gjør den?
+
+      T = (X̄ − μ₀) / (s/√n)        under H₀: T ~ t(n − 1)
+
+  Frihetsgrader: `ν = n − 1`. Slå opp `t_(α, ν)` i tabell E.5.
+
+  Forkast `H₀` hvis `|T| > t_(α/2, ν)` (tosidig) eller etter retning (ensidig).
+
+  ## Forveksles ofte med
+
+  - **én-utvalg z-test**: brukes når `σ` er KJENT
+  - **paret t-test**: brukes når observasjonene er paret (samme individ målt to ganger)
+see_also:
+  - { id: en-utvalg-t-test, kind: entry }
+  - { id: test-en-z-mu, kind: glossary }
+  - { id: test-paret, kind: glossary }
+  - { id: utvalgsvarians, kind: glossary }
+  - { id: E5-t-tabell, kind: table }

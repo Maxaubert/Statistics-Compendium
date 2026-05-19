@@ -1,0 +1,40 @@
+id: interkvartilbredde
+term_no: Interkvartilbredde (IQR)
+short_def: "Avstand mellom 1. og 3. kvartil: `IQR = Q₃ − Q₁`. Robust mål på spredning som ignorerer uteliggere."
+aliases:
+  - interkvartilbredden
+  - interkvartilbredder
+  - iqr
+  - IQR
+  - kvartilavstand
+  - kvartilbredde
+filters:
+  computes: [std_dev, parameter_estimate]
+  structural_cues: [data_as_list]
+long_def: |
+  Interkvartilbredden (IQR) måler spredningen i de MIDDELSTE 50 % av dataene:
+
+      IQR = Q₃ − Q₁
+
+  der `Q₁` er nedre kvartil (25-persentilen) og `Q₃` er øvre kvartil
+  (75-persentilen).
+
+  ## Hvorfor robust?
+
+  IQR ignorerer de 25 % laveste og 25 % høyeste observasjonene, så
+  ekstreme uteliggere endrer den ikke. I motsetning til standardavviket
+  som kvadreres og blåses opp av enkeltverdier langt unna gjennomsnittet.
+
+  ## Bruk i boksplott
+
+  Boksen i et boksplott går fra `Q₁` til `Q₃`. Mustasjene strekker seg
+  typisk til siste observasjon innenfor `Q₁ − 1.5·IQR` og `Q₃ + 1.5·IQR` —
+  alt utenfor markeres som «mulig uteligger».
+
+  **Eksempel:** for IQ-fordeling med `Q₁ = 90`, `Q₃ = 110` er `IQR = 20`.
+  Mulige uteliggere er `< 60` eller `> 140`.
+see_also:
+  - { id: kvantil, kind: glossary }
+  - { id: boksplott, kind: glossary }
+  - { id: median, kind: glossary }
+  - { id: standardavvik, kind: glossary }

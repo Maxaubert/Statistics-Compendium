@@ -38,7 +38,14 @@ export function EntryTable({ entries, onRowClick }: Props) {
     );
   }
   return (
-    <table className="w-full border-collapse text-[13px]">
+    <table className="w-full table-fixed border-collapse text-[13px]">
+      <colgroup>
+        <col className="w-[26%]" />
+        <col className="w-[9%]" />
+        <col className="w-[24%]" />
+        <col className="w-[39%]" />
+        <col className="w-[2%]" />
+      </colgroup>
       <thead>
         <tr>
           <th className="border-b border-line-2 py-2 px-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-ink-3">
@@ -53,7 +60,7 @@ export function EntryTable({ entries, onRowClick }: Props) {
           <th className="border-b border-line-2 py-2 px-2.5 text-left text-[11px] font-medium uppercase tracking-wider text-ink-3">
             Kjennetegn
           </th>
-          <th className="w-8 border-b border-line-2"></th>
+          <th className="border-b border-line-2"></th>
         </tr>
       </thead>
       <tbody>
@@ -76,11 +83,13 @@ export function EntryTable({ entries, onRowClick }: Props) {
                 {TYPE_LABEL[e.type]}
               </span>
             </td>
-            <td className="px-2.5 py-3 align-middle font-math text-sm text-ink-2">
+            <td className="px-2.5 py-3 align-middle font-math text-sm text-ink-2 truncate" title={e.formula_main ?? ""}>
               {e.formula_main}
             </td>
             <td className="px-2.5 py-3 align-middle text-[12.5px] leading-snug text-ink-3">
-              {e.recognition_cues.slice(0, 1).join(" · ")}
+              <span className="line-clamp-2" title={firstRecognition(e.recognition_cues)}>
+                {firstRecognition(e.recognition_cues)}
+              </span>
             </td>
             <td className="px-2.5 py-3 align-middle">
               <ArrowRight size={16} className="text-ink-4" />
@@ -90,4 +99,14 @@ export function EntryTable({ entries, onRowClick }: Props) {
       </tbody>
     </table>
   );
+}
+
+/**
+ * Pull the first concrete recognition cue, skipping any meta/disambiguation
+ * cues that start with **Hvilken regel?** — those repeat across all 5 sister
+ * probability rules and aren't useful as a one-line preview in the listing.
+ */
+function firstRecognition(cues: string[]): string {
+  const first = cues.find((c) => !c.startsWith("**Hvilken regel?")) ?? cues[0] ?? "";
+  return first;
 }

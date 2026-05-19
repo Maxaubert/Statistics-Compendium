@@ -1,0 +1,60 @@
+id: test-f-varians
+term_no: "F-test for varianslikhet eller standardavvik-likhet (to utvalg)"
+short_def: "Tester `H₀: σ_X² = σ_Y²` (ekvivalent `σ_X = σ_Y`) på to uavhengige utvalg. Bruker F-fordelingen og tabell E.8. Ulik fra ANOVAs F-test."
+aliases:
+  - f-test for varianslikhet
+  - f-test for to varianser
+  - f-test for to standardavvik
+  - test for varianslikhet
+  - test for standardavvik-likhet
+  - test for like spredninger
+  - varianshomogenitet
+  - homoskedastisitet
+filters:
+  computes: [hypothesis_test]
+  setup: [two_independent_samples]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [f_distribution]
+long_def: |
+  ## Når brukes den?
+
+  - **To uavhengige utvalg**, og spørsmålet handler om SPREDNING/PRESISJON.
+  - Du vil teste om gruppene har samme varians, ofte som FORUTSETNINGS-SJEKK før pooled to-utvalgs t-test.
+  - Begge populasjoner antas normalfordelte.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - «Er de to gruppene like presise?», «har de samme varians?»
+  - «Kan vi bruke pooled varians i to-utvalgs t-test?»
+  - «Er én maskin/metode mer konsistent enn en annen?»
+  - To `s²`-verdier oppgitt med tilhørende `n`
+
+  ## Hva gjør den?
+
+      F = s_større² / s_mindre²        (konvensjon: største i teller)
+      Frihetsgrader: ν = (n_større − 1, n_mindre − 1)
+
+  Tosidig forkastningsregel:
+
+      Forkast H₀ hvis F > F_(α/2, ν_teller, ν_nevner)
+
+  Merk: vi bruker `α/2` for tosidig fordi den ene halen er allerede «brukt» til å bestemme rekkefølgen.
+
+  ## Forveksles ofte med
+
+  - **Enveis ANOVA F-test**: ANOVA bruker `F = MSG/MSE`, IKKE `s_X²/s_Y²` — helt ulik observator
+  - **χ²-test for varians**: brukes for ÉN utvalg, ikke to
+  - **To-utvalgs t-test**: brukes for å sammenligne GJENNOMSNITT, ikke varianser
+
+  ## Vanlig bruk
+
+  Brukes ofte som pre-test for å bestemme om pooled t-test eller Welch t-test skal brukes:
+  - F-test ikke signifikant → pooled t-test gyldig
+  - F-test signifikant → bruk Welch t-test i stedet
+see_also:
+  - { id: test-varians, kind: entry }
+  - { id: test-chi2-varians, kind: glossary }
+  - { id: test-to-t-pooled, kind: glossary }
+  - { id: test-welch, kind: glossary }
+  - { id: test-anova, kind: glossary }
+  - { id: E8-f-tabell, kind: table }

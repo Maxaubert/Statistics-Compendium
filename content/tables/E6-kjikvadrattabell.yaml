@@ -3,9 +3,21 @@ name_no: "Kjikvadrattabell"
 formal_name_no: "Kjikvadratfordelingens kvantiltabell"
 code: "E.6"
 description: "Kritiske χ²-verdier for ulike frihetsgrader og signifikansnivåer. Brukes i kjikvadrattester (goodness of fit, uavhengighet) og konfidensintervall for varians."
+input_hint: "α er HØYRE-hale-sannsynligheten (P(χ² > χ²_α) = α). For KI for σ²: bruk α/2 i hver hale."
 inputs:
   - { name: "df", type: integer, min: 1,     max: 100,  step: 1 }
   - { name: "α",  type: number,  min: 0.002, max: 0.998, step: any }
 output: "χ²_(α, df)"
 distribution: chi_squared_quantile
-related_entries: []
+toggle_label: "α → χ²"
+inverse:
+  inputs:
+    - { name: "df", type: integer, min: 1,    max: 100, step: 1 }
+    - { name: "χ²", type: number,  min: 0,    max: 200, step: any }
+  output: "p = P(χ² > observert) (høyre hale)"
+  toggle_label: "χ² → p"
+  input_hint: "Sett inn observert χ²-verdi og df. Får p-verdi i høyre hale (kjikvadrattester er alltid høyresidig)."
+related_entries:
+  - kjikvadrat-goodness-of-fit
+  - kjikvadrat-uavhengighet
+  - ki-mu-og-varians

@@ -1,0 +1,53 @@
+id: permutasjon
+term_no: Permutasjon (ordnet utvalg)
+short_def: "Antall måter å plukke OG ordne `k` objekter fra `n`. Notasjon `P(n,k)` eller `nPk`. Formel: `n! / (n−k)!`."
+aliases:
+  - permutasjonen
+  - permutasjoner
+  - permutasjonene
+  - P(n,k)
+  - nPk
+filters:
+  computes: [combinatorial_count]
+  setup: [without_replacement, with_replacement]
+  structural_cues: [counting_events]
+long_def: |
+  En **permutasjon** er et ORDNET utvalg av objekter:
+
+      P(n, k) = n! / (n − k)!         (uten tilbakelegging)
+      n^k                              (med tilbakelegging)
+
+  ## Når permutasjon vs kombinasjon?
+
+  Spør: SPILLER REKKEFØLGEN NOEN ROLLE?
+
+  - **Ja:** permutasjon. Et podiet med 1.-, 2.- og 3.-plass er ikke samme
+    som å bare velge tre vinnere.
+  - **Nei:** kombinasjon. Tre personer på et team er samme team uansett
+    hvem som ble valgt først.
+
+  ## Eksempler
+
+  | Problem | Formel | Verdi |
+  |---|---|---|
+  | Antall PIN-koder med 4 sifre (med gjentakelse) | `10⁴` | 10 000 |
+  | Antall 4-bokstavers ord med ulike bokstaver fra A–Z | `P(26, 4) = 26·25·24·23` | 358 800 |
+  | Antall måter å arrangere 5 bøker | `5!` | 120 |
+  | Antall poker-hender (rekkefølge IKKE relevant) | `C(52, 5)` (kombinasjon!) | 2 598 960 |
+
+  ## Spesialtilfeller
+
+  - `P(n, n) = n!` (alle på rekke)
+  - `P(n, 0) = 1` (ingen valgt)
+  - `P(n, 1) = n`
+
+  ## Forbindelsen til kombinasjon
+
+      P(n, k) = C(n, k) · k!
+
+  «Velg først `k` av `n` (uordnet), arrangér deretter de `k` på `k!` måter.»
+see_also:
+  - { id: kombinasjon, kind: glossary }
+  - { id: ordnet-utvalg-uten-tilbakelegging, kind: entry }
+  - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
+  - { id: multiplikasjonsprinsippet, kind: glossary }

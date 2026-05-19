@@ -1,6 +1,11 @@
 id: p-verdi-glos
 term_no: P-verdi
 short_def: "Sannsynligheten for å se data minst like ekstreme som dine, gitt at `H₀` er sann."
+aliases:
+  - p-verdien
+  - p-verdier
+  - p-verdiene
+  - p-verdi
 filters:
   computes: [hypothesis_test]
   parameters_known: [alpha_significance, population_variance_unknown, population_variance_known]

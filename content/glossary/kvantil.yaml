@@ -1,6 +1,10 @@
 id: kvantil
 term_no: Kvantil
 short_def: "Verdien som har en gitt sannsynlighet til venstre for seg i en fordeling."
+aliases:
+  - kvantilen
+  - kvantiler
+  - kvantilene
 filters:
   tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6, standard_normal_table_E3]
   computes: [confidence_interval, hypothesis_test, find_x_for_threshold]

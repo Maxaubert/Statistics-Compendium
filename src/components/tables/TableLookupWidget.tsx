@@ -260,6 +260,9 @@ function defaultValueFor(name: string): number {
     case "df₁": return 2;
     case "df₂": return 12;
     case "z":   return 0;
+    case "t":   return 2;
+    case "χ²":  return 5;
+    case "F":   return 3;
     case "μ":   return 1;
     case "k":   return 0;
     case "n":   return 10;

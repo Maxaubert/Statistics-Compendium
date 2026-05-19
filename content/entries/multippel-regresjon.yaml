@@ -458,7 +458,7 @@ related:
   - { id: "konfidensintervall",         kind: "glossary" }
   - { id: "E5-t-tabell",                kind: "table" }
   - { id: "E8-f-tabell",                kind: "table" }
-
+  - { id: "bias", kind: "glossary" }
 tools:
   - "Tabell E.5 – t-fordelingens kvantiltabell (per-koeffisient t-test)"
   - "Tabell E.8 – F-fordelingens kvantiltabell (global F-test)"

@@ -556,7 +556,7 @@ related:
   - { id: "ensidig-test",           kind: "glossary" }
   - { id: "pooled-varians",         kind: "glossary" }
   - { id: "E8-f-tabell",            kind: "table" }
-
+  - { id: "nullhypotese", kind: "glossary" }
 tools:
   - "Tabell E.8 – F-fordelingens kvantiltabell (F-tabell)"
 

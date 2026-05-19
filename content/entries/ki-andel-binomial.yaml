@@ -274,6 +274,9 @@ related:
   - { id: "binomial-fordeling",      kind: "entry" }
   - { id: "en-utvalg-z-test-andel",  kind: "entry" }
   - { id: "ki-mu-og-varians",       kind: "entry" }
+  - { id: "ki-to-utvalg",            kind: "entry" }
+  - { id: "ki-poissonrate",          kind: "entry" }
+  - { id: "bootstrapping",           kind: "entry" }
   - { id: "konfidensintervall",      kind: "glossary" }
   - { id: "andel",                   kind: "glossary" }
   - { id: "standardfeil-til-andel",  kind: "glossary" }

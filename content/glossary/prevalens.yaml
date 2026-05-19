@@ -1,0 +1,41 @@
+id: prevalens
+term_no: Prevalens
+short_def: "Andelen av populasjonen som har en tilstand (sykdom, egenskap). `P(syk)` i Bayes-oppgaver. Også kalt «grunnrate» eller «base rate»."
+aliases:
+  - prevalensen
+  - grunnrate
+  - grunnraten
+  - base rate
+filters:
+  computes: [conditional_probability, exact_probability]
+  structural_cues: [conditional_given, andel_og_rate_per_gruppe]
+long_def: |
+  Prevalensen er sannsynligheten for at et tilfeldig medlem av populasjonen
+  har tilstanden. I diagnostisk språk: `P(syk)`.
+
+      P(syk) = (antall med tilstanden) / (totalt i populasjonen)
+
+  ## Hvorfor matter prevalens i Bayes?
+
+  Posterior-sannsynligheten `P(syk | positiv test)` avhenger STERKT av
+  prevalensen, selv om sensitiviteten og spesifisiteten er like.
+
+  **Eksempel — samme test, ulik prevalens:**
+  - Prevalens 1 %, sensitivitet 99 %, spesifisitet 95 %: `P(syk | +) ≈ 16.7 %`
+  - Prevalens 10 %, samme test: `P(syk | +) ≈ 68.8 %`
+
+  Med sjelden tilstand dominerer falske positive — selv «en god test»
+  gir overraskende lav posterior. Dette er kjent som **base-rate-fellen**.
+
+  ## Hvor finner du prevalens i en oppgave?
+
+  Den er gjerne formulert som:
+  - «X % av populasjonen har sykdommen»
+  - «Frekvensen i befolkningen er X»
+  - «Sannsynligheten for at en tilfeldig person er ...»
+see_also:
+  - { id: bayes-setning, kind: entry }
+  - { id: sensitivitet, kind: glossary }
+  - { id: spesifisitet, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: total-sannsynlighet, kind: entry }

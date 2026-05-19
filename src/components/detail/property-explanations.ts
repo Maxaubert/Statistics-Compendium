@@ -501,6 +501,156 @@ export const PROPERTY_EXPLANATIONS: Record<
     },
   },
 
+  "to-utvalgs-t-test": {
+    expected_value: {
+      formula: "E[T | H₀] = 0",
+      intuition:
+        "Under H₀ er forskjellen mellom de to gjennomsnittene i snitt null. T-fordelingen er symmetrisk om 0, så sentralverdien blir 0 — uansett om vi bruker pooled eller Welch.",
+      derivation: [
+        {
+          label: "Definisjon av T",
+          lines: [
+            "`T = (X̄ − Ȳ) / SE` der `SE` er standardfeilen til differansen.",
+            "Under `H₀: μ_X = μ_Y` har telleren `X̄ − Ȳ` forventning 0.",
+          ],
+        },
+        {
+          label: "Forventning av forhold",
+          lines: [
+            "Forventningen av en t-fordelt variabel er 0 for `ν > 1` (symmetrien rundt 0).",
+            "For `ν = 1` (Cauchy-fordelingen) eksisterer ikke forventningen i det hele tatt.",
+          ],
+          note: "I praksis har du alltid `ν = n_X + n_Y − 2 ≥ 1`, og normalt `≥ 10`, så `E[T | H₀] = 0` er trygt.",
+        },
+      ],
+      example: {
+        setup: "n_X = 10, n_Y = 12, ν = 20",
+        result: "E[T | H₀] = 0  (uansett gruppestørrelse)",
+      },
+    },
+    variance: {
+      formula: "Var[T | H₀] = ν / (ν − 2)",
+      intuition:
+        "T-fordelingen har tyngre haler enn normalfordelingen, særlig for små frihetsgrader. Variansen er litt større enn 1 (som er normalvariansen), og krymper mot 1 når ν vokser. For ν ≥ 30 er forskjellen ubetydelig.",
+      derivation: [
+        {
+          label: "Standard t-resultat",
+          lines: [
+            "For en t-fordelt variabel med ν frihetsgrader:",
+            "`Var[T] = ν / (ν − 2)`,  gyldig for `ν > 2`.",
+          ],
+        },
+        {
+          label: "Grenseatferd",
+          lines: [
+            "For `ν → ∞` blir `ν/(ν−2) → 1` (samme som standardnormal).",
+            "For `ν = 3`: `Var[T] = 3`. For `ν = 10`: `Var[T] ≈ 1.25`. For `ν = 30`: `Var[T] ≈ 1.07`.",
+          ],
+          note: "Det er nettopp dette som gjør t-tabellen ulik z-tabellen for små ν — kritiske verdier ligger lenger ute fordi halene er tykkere.",
+        },
+      ],
+      example: {
+        setup: "ν = 20 (typisk to-utvalg, n_X = 10, n_Y = 12)",
+        result: "Var[T] = 20/18 ≈ 1.111  (svært nær 1, så t ≈ z her)",
+      },
+    },
+    std_dev: {
+      formula: "σ_T = √(ν / (ν − 2))",
+      intuition:
+        "Standardavviket sier hvor langt T typisk ligger fra 0 under H₀. For typiske to-utvalgs-frihetsgrader er det knapt over 1, så T-verdier mellom −2 og 2 er ganske vanlige — du må vesentlig forbi disse før resultatet blir signifikant.",
+      derivation: [
+        {
+          label: "Definisjon",
+          lines: ["`σ_T = √Var[T] = √(ν/(ν−2))`."],
+        },
+        {
+          label: "Konsekvens for tabelloppslag",
+          lines: [
+            "T-tabellen (E.5) gir kritiske verdier som er noe større enn z-tabellens kritiske verdier — for `α = 0.05`, ν = 10: `t_(0.025, 10) = 2.228`, vs. `z_(0.025) = 1.96`.",
+            "Forskjellen krymper jo større ν blir.",
+          ],
+        },
+      ],
+      example: {
+        setup: "ν = 20",
+        result: "σ_T ≈ √1.111 ≈ 1.054  (litt over 1)",
+      },
+    },
+  },
+
+  "test-varians": {
+    expected_value: {
+      formula: "E[χ² | H₀] = n − 1     (én utvalg)",
+      intuition:
+        "Under H₀: σ² = σ₀² er observatoren `χ² = (n−1)s²/σ₀²` sentrert rundt frihetsgradene `n − 1`. Får du en verdi langt fra `n − 1`, indikerer det at variansen avviker fra påstanden — testen forkaster.",
+      derivation: [
+        {
+          label: "Definisjon",
+          lines: [
+            "Under H₀ er `(n−1)·s²/σ₀²` kjikvadrat-fordelt med `n − 1` frihetsgrader.",
+            "En kjikvadrat-fordeling med ν frihetsgrader har forventning ν.",
+          ],
+        },
+        {
+          label: "Tolkning",
+          lines: [
+            "Det er nettopp derfor du forkaster i begge haler ved tosidig test — hvis χ² er mye STØRRE enn `n − 1`, er variansen for stor; mye MINDRE enn `n − 1`, er den for liten.",
+          ],
+        },
+      ],
+      example: {
+        setup: "n = 25 (24 frihetsgrader)",
+        result: "E[χ² | H₀] = 24. Får vi χ² = 47, er det 23 enheter over forventet — tydelig signal.",
+      },
+    },
+    variance: {
+      formula: "Var[χ² | H₀] = 2(n − 1)",
+      intuition:
+        "Variansen til kjikvadrat-fordelingen vokser lineært med frihetsgradene. Standardavviket er `√(2ν)`, så for `ν = 24` er `σ = √48 ≈ 6.9` — en χ²-verdi på 47 ligger derfor ~3.3 standardavvik over forventet. Det er hvorfor testen forkaster.",
+      derivation: [
+        {
+          label: "Standard kjikvadrat-resultat",
+          lines: [
+            "For χ²-fordeling med ν frihetsgrader: `Var = 2ν`.",
+            "Konsekvens: σ-skalaen er `√(2ν)`.",
+          ],
+        },
+        {
+          label: "F-fordelingen som forhold",
+          lines: [
+            "For to-utvalg F-test (`F = s_X²/s_Y²` under H₀): `E[F] = df₂/(df₂ − 2)`, `Var[F]` har en mer komplisert formel — se [enveis-anova](/entry/enveis-anova).",
+            "Asymptotisk samler F seg om 1 når begge df vokser.",
+          ],
+        },
+      ],
+      example: {
+        setup: "n = 25, ν = 24",
+        result: "Var[χ²] = 48,  σ_χ² ≈ 6.93. En χ² på 47 ligger (47 − 24)/6.93 ≈ 3.3σ over forventet.",
+      },
+    },
+    std_dev: {
+      formula: "σ_χ² = √(2(n − 1))     (én utvalg)",
+      intuition:
+        "Standardavviket gir en intuitiv målestokk: hvor mange σ unna `n − 1` ligger den observerte χ². For ν = 24 er σ ≈ 6.9, så χ²-verdier i området [17, 31] er normale; over 35 eller under 13 er klare signaler.",
+      derivation: [
+        {
+          label: "Definisjon",
+          lines: ["`σ_χ² = √Var[χ²] = √(2ν)`."],
+        },
+        {
+          label: "Visuell sjekk",
+          lines: [
+            "For ν = 24: forventet 24, σ ≈ 6.93. Kritiske verdier ved α = 0.05 er ca. 13.85 (nedre) og 36.42 (øvre) — begge ~2 standardavvik fra forventet.",
+          ],
+        },
+      ],
+      example: {
+        setup: "n = 25, ν = 24",
+        result: "σ_χ² ≈ 6.93. Kritisk høyresidig 36.42 ligger ~1.8σ over forventet (24).",
+      },
+    },
+  },
+
   "enveis-anova": {
     expected_value: {
       formula: "E[F | H₀] = df₂ / (df₂ − 2)",

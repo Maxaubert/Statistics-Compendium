@@ -1,0 +1,45 @@
+id: spesifisitet
+term_no: Spesifisitet (sann negativ-rate)
+short_def: "Sannsynligheten for at en FRISK person tester negativt: `P(negativ | frisk)`. Også kalt «sann negativ-rate»."
+aliases:
+  - spesifisiteten
+  - sann negativ-rate
+  - sann negativ rate
+  - true negative rate
+filters:
+  computes: [conditional_probability]
+  structural_cues: [conditional_given, andel_og_rate_per_gruppe]
+long_def: |
+  Spesifisitet måler hvor god en diagnostisk test er til å EKSKLUDERE
+  sykdommen blant de som faktisk er friske:
+
+      spesifisitet = P(negativ test | frisk)
+
+  Komplementet er **falsk positiv-rate**: `P(positiv | frisk) = 1 − spesifisitet`.
+
+  ## Hvor brukes den i Bayes?
+
+  Den falske positive raten `(1 − spesifisitet)` inngår i NEVNEREN av
+  Bayes-formelen via setningen om total sannsynlighet:
+
+      P(positiv) = P(syk)·sensitivitet + P(frisk)·(1 − spesifisitet)
+
+  ## Eksempel
+
+  En screening-test har spesifisitet 95 %. Av 100 friske personer vil
+  testen feilaktig si «positiv» for 5. I en populasjon der 99 % er friske
+  blir dette en MASSE falske positive — kombinert med lav prevalens, kan
+  posterior-sannsynligheten for syk gitt positiv være overraskende lav.
+
+  ## Trade-off med sensitivitet
+
+  Høyere sensitivitet → lavere spesifisitet, og omvendt. Tester med både
+  høy sensitivitet og spesifisitet er sjeldne; vanlig er en screening-test
+  med høy sensitivitet (fanger flest tilfeller) etterfulgt av en
+  bekreftende test med høy spesifisitet (lavt falsk positiv-rate).
+see_also:
+  - { id: bayes-setning, kind: entry }
+  - { id: prevalens, kind: glossary }
+  - { id: sensitivitet, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: total-sannsynlighet, kind: entry }

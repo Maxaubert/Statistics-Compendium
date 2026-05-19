@@ -510,6 +510,6 @@ related:
   - { id: "marginalfordeling-term",       kind: "glossary" }
   - { id: "korrelasjon-joint",            kind: "entry" }
   - { id: "uavhengighet-glos",            kind: "glossary" }
-
+  - { id: "joint", kind: "glossary" }
 tools:
   - "Kalkulator: addisjon"

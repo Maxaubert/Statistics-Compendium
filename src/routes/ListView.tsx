@@ -27,6 +27,7 @@ const VALID_TABS = new Set(["formler", "tabeller"]);
  * without scrolling through the table.
  */
 const OVERVIEW_ENTRY_IDS = [
+  "test-oversikt",
   "varians-oversikt",
   "standardavvik-oversikt",
   "forventningsverdi-oversikt",

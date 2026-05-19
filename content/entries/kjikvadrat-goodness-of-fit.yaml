@@ -29,9 +29,11 @@ when_NOT_to_use:
 
 symbols:
   - { sym: "χ²",  means: "testobservatoren, kjikvadrat-fordelt med `ν` frihetsgrader under `H₀`" }
-  - { sym: "O_i", means: "observert antall i kategori `i`" }
-  - { sym: "E_i", means: "forventet antall i kategori `i` under `H₀`" }
-  - { sym: "k",   means: "antall kategorier" }
+  - { sym: "k",   means: "antall kategorier (f.eks. 4 drinker, 6 terningssider)" }
+  - { sym: "n",   means: "totalt antall observasjoner, `n = Σ O_i` (f.eks. 200 bestillinger totalt)" }
+  - { sym: "O_i", means: "observert antall i kategori `i` (de telte verdiene)" }
+  - { sym: "p_i", means: "påstått andel i kategori `i` under `H₀` (sum av alle `p_i = 1`)" }
+  - { sym: "E_i", means: "forventet antall i kategori `i` under `H₀`, beregnet som `E_i = n · p_i`" }
   - { sym: "ν",   means: "frihetsgrader `= k − 1` (eller `k − 1 − m` hvis `m` parametre er estimert)" }
   - { sym: "H₀",  means: "nullhypotesen som angir de forventede andelene / fordelingen" }
   - { sym: "α",   means: "signifikansnivå (typisk `0.05`)" }
@@ -46,19 +48,109 @@ filters:
   tooling: [chi_square_quantile_table_E6]
 recognition: "«Passer dataene den forventede fordelingen?», «test om fordelingen er normal/uniform/binomial», eller «er observerte og forventede frekvenser like?». Du har observerte tellinger i flere kategorier."
 
+solution_variants:
+  - label: "Mot oppgitt lik (uniform) fordeling"
+    recognition: "«Er fordelingen lik mellom kategoriene?», «er terningen rettferdig?», «selges alle fargene like ofte?». Alle kategorier har samme forventede andel `1/k`."
+    steps:
+      - text: "Identifiser **k** (antall kategorier) og **n** (totalt antall observasjoner = sum av alle `O_i`)."
+      - text: "Eksempel — cocktail-bar med 4 drinker, du teller 200 bestillinger fordelt som O = (62, 45, 38, 55):"
+        formula:
+          - "k = 4    (Mojito, Margarita, Gin & Tonic, Negroni)"
+          - "n = 62 + 45 + 38 + 55 = 200    (totalt observert)"
+        example: true
+      - text: "Formuler hypotesene:"
+        formula:
+          - "H₀: p_1 = p_2 = … = p_k = 1/k     (alle like)"
+          - "H₁: minst én p_i ≠ 1/k             (ikke alle like)"
+      - text: "Forts. eksempel:"
+        formula:
+          - "H₀: p_Mojito = p_Margarita = p_GT = p_Negroni = 1/4 = 0.25"
+          - "H₁: minst én andel ≠ 0.25"
+        example: true
+      - text: "Beregn forventet antall per kategori — siden fordelingen er lik:"
+        formula: "E_i = n / k     (samme E for alle kategorier)"
+      - text: "Forts. eksempel:"
+        formula: "E_i = 200 / 4 = 50  for alle 4 drinker"
+        example: true
+      - "Sjekk at alle `E_i ≥ 5` (testen er gyldig). Hvis ikke: slå sammen kategorier."
+      - text: "Beregn testobservatoren:"
+        formula: "χ² = Σ (O_i − E_i)² / E_i"
+      - text: "Forts. eksempel — sett inn `O = (62, 45, 38, 55)`, `E = 50` overalt:"
+        formula:
+          - "χ² = (62−50)²/50 + (45−50)²/50 + (38−50)²/50 + (55−50)²/50"
+          - "    = 144/50 + 25/50 + 144/50 + 25/50"
+          - "    = 2.88 + 0.50 + 2.88 + 0.50 = 6.76"
+        example: true
+      - text: "Frihetsgrader (uten estimerte parametre):"
+        formula: "ν = k − 1"
+      - text: "Forts. eksempel — `k = 4` drinker:"
+        formula: "ν = 4 − 1 = 3"
+        example: true
+      - "Slå opp `χ²_(α, ν)` i **tabell E.6** (kjikvadrattabell). Eksempel: `χ²_(0.05, 3) = 7.815`."
+      - text: "Forkastningsregel — kjikvadrat-test er alltid HØYRESIDIG:"
+        formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
+      - text: "Forts. eksempel:"
+        formula: "6.76 < 7.815  ⇒  behold H₀ — fordelingen er forenlig med 25/25/25/25"
+        example: true
+
+  - label: "Mot oppgitt ulik fordeling"
+    recognition: "«Passer dataene en spesifisert fordeling med ULIKE andeler?», f.eks. «produsenten påstår 50/30/20»-fordeling, «er fordelingen som det historiske gjennomsnittet?». Hver kategori har sin egen forventede andel `p_i`."
+    steps:
+      - text: "Identifiser **k** (antall kategorier) og **n** (totalt antall observasjoner = sum av alle `O_i`)."
+      - text: "Eksempel — produsent påstår at defekt-typer fordeler seg `50/30/20`, du teller `O = (42, 35, 23)`:"
+        formula:
+          - "k = 3    (defekt-typer A, B, C)"
+          - "n = 42 + 35 + 23 = 100    (totalt observert)"
+        example: true
+      - text: "Formuler hypotesene — H₀ spesifiserer de eksakte andelene:"
+        formula:
+          - "H₀: p_1 = π_1, p_2 = π_2, …, p_k = π_k     (oppgitte verdier)"
+          - "H₁: minst én p_i ≠ π_i"
+      - text: "Forts. eksempel:"
+        formula:
+          - "H₀: p_A = 0.50, p_B = 0.30, p_C = 0.20"
+          - "H₁: minst én p_i avviker"
+        example: true
+      - text: "Beregn forventet antall per kategori — multipliser oppgitt andel med totalen:"
+        formula: "E_i = n · π_i"
+      - text: "Forts. eksempel:"
+        formula:
+          - "E_A = 100 · 0.50 = 50"
+          - "E_B = 100 · 0.30 = 30"
+          - "E_C = 100 · 0.20 = 20"
+        example: true
+      - "Sjekk at alle `E_i ≥ 5`."
+      - text: "Beregn testobservatoren (samme formel som uniform-tilfellet, men nå ulike `E_i`):"
+        formula: "χ² = Σ (O_i − E_i)² / E_i"
+      - text: "Forts. eksempel:"
+        formula:
+          - "χ² = (42−50)²/50 + (35−30)²/30 + (23−20)²/20"
+          - "    = 64/50 + 25/30 + 9/20"
+          - "    = 1.28 + 0.833 + 0.45 = 2.563"
+        example: true
+      - text: "Frihetsgrader (uten estimerte parametre):"
+        formula: "ν = k − 1"
+      - text: "Forts. eksempel — `k = 3` kategorier:"
+        formula: "ν = 3 − 1 = 2"
+        example: true
+      - "Slå opp `χ²_(α, ν)` i **tabell E.6**. Eksempel: `χ²_(0.05, 2) = 5.99`."
+      - text: "Forkastningsregel:"
+        formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
+      - text: "Forts. eksempel:"
+        formula: "2.563 < 5.99  ⇒  behold H₀ — fordelingen samsvarer med 50/30/20-påstanden"
+        example: true
+      - { text: "**Pass på:** Hvis du estimerer `m` parametre fra DATAENE (f.eks. tilpasse en Poisson-fordeling med rate `λ̂` regnet fra observasjonene), faller frihetsgradene med `m`: `ν = k − 1 − m`. Oppgitte andeler er IKKE estimater, så `m = 0` der.", conditional: true }
+
 solution_template:
   - "Skriv ned `H₀` (forventet fordeling) og `H₁` (avvik)"
-  - "Regn forventede antall `E_i` under `H₀`"
+  - "Regn forventede antall `E_i = n · p_i` under `H₀`"
   - "Sjekk at alle `E_i ≥ 5`"
   - text: "Regn testobservatoren:"
     formula: "χ² = Σ (O_i − E_i)² / E_i"
-  - text: "Eksempel — terning kastet 60 ganger, observert `O = (8, 9, 11, 13, 10, 9)`, `E = 10` per side:"
-    formula: "χ² = (4 + 1 + 1 + 9 + 0 + 1)/10 = 1.60"
-    example: true
   - text: "Bestem frihetsgrader (minus `m` hvis estimerte parametre):"
     formula: "ν = k − 1 − m"
-  - "Slå opp kritisk verdi `χ²_(α, ν)` i **tabell E.6** (kjikvadrat-kvantiltabell)"
-  - text: "Forkastningsregel:"
+  - "Slå opp kritisk verdi `χ²_(α, ν)` i **tabell E.6**"
+  - text: "Forkastningsregel — alltid høyresidig:"
     formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
 
 common_traps: |
@@ -76,7 +168,7 @@ python_snippet: |
   chisq, p = chisquare(observed, f_exp=expected)
 
 detailed_solution_variants:
-  - label: "Test mot uniform fordeling"
+  - label: "Mot oppgitt lik (uniform) fordeling"
     solutions:
       - source: "Praksis · rettferdig terning"
         question: "En terning kastes 60 ganger. Antall observasjoner per side er: `1: 8, 2: 9, 3: 11, 4: 13, 5: 10, 6: 9`. Test om terningen er rettferdig på 5 %-nivå."
@@ -102,6 +194,123 @@ detailed_solution_variants:
               - { text: "`χ² = 1.6 < 11.07` → behold `H₀`." }
         result: "Behold `H₀`: ingen grunnlag for å hevde at terningen er urettferdig."
 
+      - source: "Praksis · cocktail-bar med 4 drinker"
+        question: |
+          En cocktail-bar påstår at de fire bestselgerne — Mojito, Margarita, Gin & Tonic og Negroni — bestilles like ofte (25 % hver). Du teller 200 bestillinger en fredagsvakt:
+
+          | Drink | Antall |
+          |---|---|
+          | Mojito | 62 |
+          | Margarita | 45 |
+          | Gin & Tonic | 38 |
+          | Negroni | 55 |
+
+          Test eierens påstand på α = 0.05.
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p_Mojito = p_Margarita = p_GT = p_Negroni = 0.25`" }
+              - { text: "`H₁: minst én andel ≠ 0.25`" }
+          - label: "Forventede antall"
+            lines:
+              - { text: "`E_i = n · p_i = 200 · 0.25 = 50` for alle 4 drinker." }
+              - { text: "Sjekk: alle `E_i = 50 ≥ 5` ✓" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (62−50)²/50 + (45−50)²/50 + (38−50)²/50 + (55−50)²/50`" }
+              - { indent: "`= 144/50 + 25/50 + 144/50 + 25/50`" }
+              - { indent: "`= 2.88 + 0.50 + 2.88 + 0.50`" }
+              - { indent: "`= 6.76`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Frihetsgrader: `ν = k − 1 = 4 − 1 = 3`." }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 3) = 7.815`." } }
+              - { text: "`χ² = 6.76 < 7.815` → behold `H₀`." }
+              - { comment: "Bemerk: Mojito (62) og Gin & Tonic (38) er på hver sin side av 50, men avviket er ikke stort nok til å være signifikant." }
+        result: "Behold `H₀` på α = 0.05. Bestillingene er forenlige med 25/25/25/25-fordelingen — eieren har ikke grunnlag for klage."
+
+  - label: "Mot oppgitt ulik fordeling"
+    solutions:
+      - source: "Praksis · genetikk Mendel (kjent 9:3:3:1)"
+        question: |
+          I et Mendel-kryssingsforsøk forventes 4 fenotyper i forholdet 9 : 3 : 3 : 1
+          (henholdsvis gul-rund, gul-rynket, grønn-rund, grønn-rynket). Du krysser
+          erter og teller 320 avkom med fordelingen:
+
+          | Fenotype | Antall |
+          |---|---|
+          | Gul-rund | 168 |
+          | Gul-rynket | 70 |
+          | Grønn-rund | 58 |
+          | Grønn-rynket | 24 |
+
+          Test om resultatene er forenlige med 9:3:3:1 på α = 0.05.
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Andeler under `H₀`: `9/16, 3/16, 3/16, 1/16`." }
+              - { text: "Totalt: `n = 320`." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p = (9/16, 3/16, 3/16, 1/16)`" }
+              - { text: "`H₁: fordelingen avviker fra 9:3:3:1`" }
+          - label: "Forventede antall"
+            lines:
+              - { text: "`E_GR = 320 · 9/16 = 180`" }
+              - { text: "`E_GRy = 320 · 3/16 = 60`" }
+              - { text: "`E_GøR = 320 · 3/16 = 60`" }
+              - { text: "`E_GøRy = 320 · 1/16 = 20`" }
+              - { text: "Sum: `180 + 60 + 60 + 20 = 320` ✓ Alle `E_i ≥ 5` ✓" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (168−180)²/180 + (70−60)²/60 + (58−60)²/60 + (24−20)²/20`" }
+              - { indent: "`= 144/180 + 100/60 + 4/60 + 16/20`" }
+              - { indent: "`= 0.800 + 1.667 + 0.067 + 0.800`" }
+              - { indent: "`= 3.333`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`ν = k − 1 = 3`." }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 3) = 7.815`." } }
+              - { text: "`χ² = 3.333 < 7.815` → behold `H₀`." }
+        result: "Behold `H₀` på α = 0.05. Dataene støtter Mendel-forholdet 9:3:3:1."
+
+      - source: "Praksis · markedsandel mot påstand"
+        question: |
+          Tre konkurrerende butikker (A, B, C) hevder at de har markedsandelene
+          50 %, 30 % og 20 % i nabolaget. En undersøkelse blant 100 tilfeldig
+          spurte personer viser handel hos:
+
+          | Butikk | Antall |
+          |---|---|
+          | A | 42 |
+          | B | 35 |
+          | C | 23 |
+
+          Stemmer markedsandel-påstanden på α = 0.05?
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p_A = 0.50, p_B = 0.30, p_C = 0.20`" }
+              - { text: "`H₁: minst én andel avviker fra påstanden`" }
+          - label: "Forventede antall"
+            lines:
+              - { text: "`E_A = 100 · 0.50 = 50`" }
+              - { text: "`E_B = 100 · 0.30 = 30`" }
+              - { text: "`E_C = 100 · 0.20 = 20`" }
+              - { text: "Alle `E_i ≥ 5` ✓" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (42−50)²/50 + (35−30)²/30 + (23−20)²/20`" }
+              - { indent: "`= 64/50 + 25/30 + 9/20`" }
+              - { indent: "`= 1.280 + 0.833 + 0.450`" }
+              - { indent: "`= 2.563`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`ν = k − 1 = 2`." }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 2) = 5.991`." } }
+              - { text: "`χ² = 2.563 < 5.991` → behold `H₀`." }
+        result: "Behold `H₀` på α = 0.05. Undersøkelsen er forenlig med 50/30/20-markedsandelen."
+
 related:
   - { id: frihetsgrader-glos, kind: glossary }
   - { id: signifikansniva-glos, kind: glossary }
@@ -109,7 +318,8 @@ related:
   - { id: goodness-of-fit, kind: glossary }
   - { id: chi, kind: glossary }
   - { id: E6-kjikvadrattabell, kind: table }
-
+  - { id: "nullhypotese", kind: "glossary" }
+  - { id: "kategorisk-variabel", kind: "glossary" }
 tools:
   - "Tabell E.6 – Kjikvadrat-kvantiltabell"
   - "Kalkulator: kvadrat, divisjon, sum"

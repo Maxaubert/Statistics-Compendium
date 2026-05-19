@@ -1,0 +1,184 @@
+id: test-oversikt
+name_no: "Hypotesetester (oversikt)"
+type: overview
+tagline: "Hvilken test passer til oppgaven? Klikk et kort for å lese om når den brukes, hvordan kjenne den igjen, og hva den gjør."
+
+what_it_means: |
+  Det finnes mange hypotesetester, og valget avhenger av tre hovedspørsmål:
+
+  1. **Hva spør jeg om?** Gjennomsnitt (`μ`), andel (`p`), varians (`σ²`), eller sammenheng?
+  2. **Hvor mange grupper?** Ett utvalg, to (uavhengige eller parete), eller tre+?
+  3. **Hvilke antakelser holder?** Normalfordeling, kjent eller ukjent `σ`, like varianser?
+
+  Seksjonene under er sortert fra mest til minst brukt i ITD20218-eksamen. Innen
+  hver seksjon er testene også sortert etter hyppighet. Klikk et kort for en
+  «når brukes den / hvordan kjenne igjen / hva gjør den»-forklaring.
+
+form_sections:
+  - title: "Tester på gjennomsnitt (μ)"
+    description: "Klart vanligste type på eksamen. Du har målinger (kontinuerlige tall) og vil teste om gjennomsnittet er forskjellig fra noe, eller om to/flere grupper har like gjennomsnitt."
+    forms:
+      - title: "Én-utvalg t-test (μ, σ ukjent)"
+        symbol: "T"
+        glossary_id: test-en-t-mu
+        formula: "T = (X̄ − μ₀) / (s/√n) ~ t(n − 1)"
+        description: "Ett utvalg, gjennomsnitt μ, populasjonens σ er UKJENT og estimeres som s. Vanligst på eksamen siden σ sjelden er gitt."
+        entry_links:
+          - { id: en-utvalg-t-test, label: "Entry" }
+
+      - title: "To-utvalgs t-test (uparet, pooled)"
+        symbol: "T"
+        glossary_id: test-to-t-pooled
+        formula: "T = (X̄ − Ȳ) / (S_P · √(1/n_X + 1/n_Y)),   ν = n_X + n_Y − 2"
+        description: "To UAVHENGIGE grupper (forskjellige individer i hver gruppe), samme antatte varians. Sammenligner μ_X og μ_Y. ITD20218-konvensjon."
+        entry_links:
+          - { id: to-utvalgs-t-test, label: "Entry" }
+
+      - title: "Én-utvalg z-test (μ, σ kjent)"
+        symbol: "Z"
+        glossary_id: test-en-z-mu
+        formula: "Z = (X̄ − μ₀) / (σ/√n) ~ N(0, 1)"
+        description: "Ett utvalg, gjennomsnitt μ, populasjonens σ er KJENT (eller utledet eksakt fra oppgitt fordeling). Slå opp i tabell E.4."
+        entry_links:
+          - { id: en-utvalg-z-test, label: "Entry" }
+
+      - title: "Paret t-test"
+        symbol: "T"
+        glossary_id: test-paret
+        formula: "T = x̄_D / (s_D/√n),   ν = n − 1"
+        description: "Samme individ målt to ganger (før/etter), eller matchede par. Sammenligner gjennomsnittsforskjellen μ_D mot null."
+        entry_links:
+          - { id: paret-t-test, label: "Entry" }
+
+      - title: "Enveis ANOVA (3+ grupper)"
+        symbol: "F"
+        glossary_id: test-anova
+        formula: "F = MSG / MSE ~ F(k − 1, n − k)"
+        description: "3 eller flere UAVHENGIGE grupper. Tester om alle μ_i er like. Alltid HØYRESIDIG. Slå opp i tabell E.8."
+        entry_links:
+          - { id: enveis-anova, label: "Entry" }
+
+      - title: "Welch t-test (uparet, ulike varianser)"
+        symbol: "T"
+        glossary_id: test-welch
+        formula: "T = (X̄ − Ȳ) / √(s_X²/n_X + s_Y²/n_Y),   Welch-Satterthwaite ν"
+        description: "Robust to-utvalgs t-test for UAVHENGIGE grupper uten antakelse om felles σ². Brukes når F-test for varianslikhet er forkastet. Sjelden på ITD20218."
+        entry_links:
+          - { id: to-utvalgs-t-test, label: "Welch-fane" }
+
+  - title: "Tester på andel(er) og kategorisk fordeling"
+    description: "Du har TELLINGER per kategori. Binær (suksess/fiasko) ⇒ z-test for én andel. 3+ kategorier mot en spesifisert fordeling ⇒ χ²-goodness-of-fit. Hvis du har en TODIMENSJONAL kontingenstabell (rad × kolonne), se «Test for uavhengighet» lenger nede."
+    forms:
+      - title: "Én-utvalg z-test for andel p (binær)"
+        symbol: "Z"
+        glossary_id: test-en-z-andel
+        formula: "Z = (p̂ − p₀) / √(p₀(1 − p₀)/n) ~ N(0, 1)"
+        description: "⚠️ Krever IKKE oppgitt `σ` — standardfeilen kommer fra `p₀` selv. Det finnes derfor INGEN t-test for andel. Brukes BARE for ÉN binær kategori (suksess/fiasko). Har du 3+ kategorier, bruk kortet under."
+        entry_links:
+          - { id: en-utvalg-z-test-andel, label: "Entry" }
+
+      - title: "Kjikvadrat goodness-of-fit (3+ kategorier)"
+        symbol: "χ²"
+        glossary_id: test-gof
+        formula: "χ² = Σ (O_i − E_i)² / E_i ~ χ²(k − 1)"
+        description: "Tester om frekvenser i 3+ kategorier passer en spesifisert fordeling (f.eks. 25/25/25/25 eller uniform/binomial/Poisson). Generaliseringen av z-test for andel til flere kategorier samtidig."
+        entry_links:
+          - { id: kjikvadrat-goodness-of-fit, label: "Entry" }
+
+  - title: "Tester i regresjon"
+    description: "Tester knyttet til lineær regresjon — er sammenhengen mellom x og y signifikant?"
+    forms:
+      - title: "Test om regresjons-stigningstall (β = 0)"
+        symbol: "T"
+        glossary_id: test-beta-regresjon
+        formula: "T = β̂ / SE(β̂) ~ t(n − 2)"
+        description: "Lineær regresjon. Test om det er signifikant LINEÆR SAMMENHENG mellom x og y. Vanligst når oppgaven gir regresjonsmodell + standardfeil."
+        entry_links:
+          - { id: lineaer-regresjon, label: "Entry" }
+
+  - title: "Test for uavhengighet (kontingenstabell)"
+    description: "Du har en TODIMENSJONAL tabell (rad × kolonne) der hver celle er antall observasjoner som faller i kombinasjonen. Spørsmålet er om de to dimensjonene henger sammen."
+    forms:
+      - title: "Kjikvadrat for uavhengighet (r × c kontingenstabell)"
+        symbol: "χ²"
+        glossary_id: test-uavhengighet
+        formula: "χ² = Σ (O_ij − E_ij)² / E_ij ~ χ²((r − 1)(c − 1))"
+        description: "Test om to KATEGORISKE variabler er uavhengige, gitt en r × c kontingenstabell. To dimensjoner. Forveksles ikke med goodness-of-fit (én dimensjon)."
+        entry_links:
+          - { id: kjikvadrat-uavhengighet, label: "Entry" }
+
+  - title: "Tester på varians eller standardavvik (σ², σ)"
+    description: "Mindre vanlig på eksamen, men kommer av og til som kvalitetskontroll. Spørsmålet er om SPREDNING — uansett om uttrykt som varians `σ²` eller standardavvik `σ`. Kvadrer eller trekk rot etter behov; testen er den samme."
+    forms:
+      - title: "χ²-test for varians/standardavvik (én utvalg)"
+        symbol: "χ²"
+        glossary_id: test-chi2-varians
+        formula: "χ² = (n − 1)·s² / σ₀² ~ χ²(n − 1)"
+        description: "Ett utvalg. Spørsmålet handler om SPREDNING (uttrykt som `σ²` eller `σ`), ikke gjennomsnitt. Typisk kvalitetskontroll. Hvis `σ` er gitt, kvadrer først. Slå opp i tabell E.6."
+        entry_links:
+          - { id: test-varians, label: "Entry" }
+
+      - title: "F-test for varians/standardavvik-likhet (to utvalg)"
+        symbol: "F"
+        glossary_id: test-f-varians
+        formula: "F = s_større² / s_mindre² ~ F(ν_større, ν_mindre)"
+        description: "To uavhengige utvalg. Test om `σ_X² = σ_Y²` (eller ekvivalent `σ_X = σ_Y`). Brukes ofte som forutsetnings-sjekk før pooled t-test."
+        entry_links:
+          - { id: test-varians, label: "Entry" }
+
+  - title: "Ikke-parametriske tester"
+    description: "Når normalfordeling IKKE kan antas (lite utvalg + skjev fordeling, eller rang-data). Mindre vanlig på ITD20218, men kan dukke opp."
+    forms:
+      - title: "Mann-Whitney U (uparet)"
+        symbol: "U"
+        glossary_id: test-mann-whitney
+        formula: "U = R − n(n+1)/2;  Forkast hvis U ≤ U_crit"
+        description: "Ikke-parametrisk versjon av uparet to-utvalgs t-test. To UAVHENGIGE grupper, bruker rang. Slå opp i tabell E.7."
+        entry_links:
+          - { id: mann-whitney-wilcoxon, label: "Entry" }
+
+      - title: "Wilcoxon tegn-rang (paret)"
+        symbol: "W"
+        glossary_id: test-wilcoxon-tegn-rang
+        formula: "W = min(W₊, W₋);  basert på rang av |D_i|"
+        description: "Ikke-parametrisk versjon av paret t-test. Bruker rang av differansene, krever ikke normalfordeling."
+        entry_links:
+          - { id: wilcoxon-tegn-rang, label: "Entry" }
+
+recognition_cues:
+  - "Du er usikker på hvilken hypotesetest oppgaven krever"
+  - "Du leter etter «riktig formel» blant flere kandidater"
+  - "Du må navigere mellom z-, t-, F-, χ²- og ikke-parametriske tester"
+
+when_NOT_to_use:
+  - "Du vet allerede hvilken test du skal bruke → gå direkte til den spesifikke entryen"
+  - "Du skal lage et konfidensintervall, ikke en test → bruk [KI for μ, σ²](/entry/ki-mu-og-varians), [KI for andel](/entry/ki-andel-binomial), eller [KI for to utvalg](/entry/ki-to-utvalg)"
+  - "Spørsmålet handler om en FORDELING (binomial, Poisson, normal) — ikke om en test mot en hypotese"
+
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population, two_independent_samples, three_plus_samples, paired_samples, linear_relationship]
+  structural_cues: [normal_assumed, summary_stats_given, one_sided_alternative, two_sided_alternative, rank_based_data]
+  distribution_assumption: [normal, t_distribution, chi_squared, f_distribution, none_assumed]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6, mann_whitney_table_E7, f_quantile_table_E8]
+
+related:
+  - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "en-utvalg-t-test",        kind: "entry" }
+  - { id: "en-utvalg-z-test-andel",  kind: "entry" }
+  - { id: "to-utvalgs-t-test",       kind: "entry" }
+  - { id: "paret-t-test",            kind: "entry" }
+  - { id: "enveis-anova",            kind: "entry" }
+  - { id: "test-varians",            kind: "entry" }
+  - { id: "kjikvadrat-goodness-of-fit", kind: "entry" }
+  - { id: "kjikvadrat-uavhengighet", kind: "entry" }
+  - { id: "mann-whitney-wilcoxon",   kind: "entry" }
+  - { id: "wilcoxon-tegn-rang",      kind: "entry" }
+  - { id: "lineaer-regresjon",       kind: "entry" }
+  - { id: "hypotesefeil-og-styrke",  kind: "entry" }
+  - { id: "nullhypotese",            kind: "glossary" }
+  - { id: "alternativhypotese",      kind: "glossary" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
+  - { id: "signifikansniva-glos",    kind: "glossary" }
+  - { id: "forkastningsomrade",      kind: "glossary" }
+  - { id: "observatortest",          kind: "glossary" }

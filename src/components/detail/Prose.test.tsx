@@ -85,6 +85,22 @@ describe("Prose", () => {
     expect(firstRowCells[0].querySelector("code")?.textContent).toBe("α");
   });
 
+  it("respects escaped pipes (`\\|`) inside table cells", () => {
+    const { container } = render(
+      <Prose
+        body={
+          "| Uttrykk | Verdi |\n" +
+          "|---|---|\n" +
+          "| `P(A\\|B)` | 0.6 |"
+        }
+      />,
+    );
+    const cells = container.querySelectorAll("tbody td");
+    expect(cells).toHaveLength(2);
+    expect(cells[0].textContent).toBe("P(A|B)");
+    expect(cells[1].textContent).toBe("0.6");
+  });
+
   it("treats a `|`-line not followed by a separator as a paragraph", () => {
     const { container } = render(
       <Prose body={"| not | a | table |\nstill paragraph"} />,

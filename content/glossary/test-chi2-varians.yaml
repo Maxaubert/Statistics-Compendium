@@ -1,0 +1,68 @@
+id: test-chi2-varians
+term_no: "Kjikvadrat-test for varians eller standardavvik (én utvalg)"
+short_def: "Tester `H₀: σ² = σ₀²` (ekvivalent `σ = σ₀`) på ett utvalg. Bruker χ²-fordelingen og tabell E.6. Spørsmålet handler om spredning, ikke om gjennomsnitt."
+aliases:
+  - chi-kvadrat test varians
+  - kjikvadrat test varians
+  - test for sigma kvadrat
+  - test om varians
+  - test om standardavvik
+  - test for standardavvik
+  - test om sigma
+  - test for spredning
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population]
+  parameters_known: [population_variance_unknown]
+  distribution_assumption: [chi_squared]
+long_def: |
+  ## Varians og standardavvik — SAMME test
+
+  Denne testen dekker BÅDE `σ²` (varians) og `σ` (standardavvik). De er bare
+  kvadratrota av hverandre, så hypoteser formulert på `σ` håndteres ved å
+  kvadrere både påstandsverdien og utvalgsstandardavviket:
+
+      H₀: σ ≤ 0.30   ⇔   σ² ≤ 0.09
+      s = 0.42       ⇔   s² = 0.1764
+
+  Formelen `χ² = (n − 1)·s² / σ₀²` bruker ALLTID variansformen. Hvis oppgaven
+  oppgir `σ₀` og `s`, kvadrer dem først.
+
+  ## Når brukes den?
+
+  - Du har **ett utvalg** og spørsmålet handler EKSPLISITT om spredning,
+    presisjon, konsistens, varians ELLER standardavvik.
+  - Det er en spesifisert verdi `σ₀²` (eller `σ₀`) du tester mot.
+  - Populasjonen er normalfordelt (testen er svært følsom for brudd).
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Spørsmålet er om SPREDNING, IKKE om gjennomsnitt
+  - Typiske ord: «test om variansen er», «test om standardavviket er», «kan vi anta `σ² ≤ 0.25`», «kan vi anta `σ ≤ 0.5`», «er maskinens spredning/presisjon akseptabel?»
+  - Kvalitetskontroll: toleranse-grenser gitt på SPREDNING (uansett om uttrykt som `σ` eller `σ²`)
+  - Eksempel-fallgruve: «test om reaksjonstiden er **konsistent**» (denne testen) vs «test om reaksjonstiden er **den samme**» (t-test om μ)
+
+  ## Hva gjør den?
+
+      χ² = (n − 1) · s² / σ₀²        under H₀: χ² ~ χ²(n − 1)
+
+  Hvis oppgaven gir `σ` og `s` (standardavvik), kvadrer dem først:
+
+      σ₀² = σ₀ · σ₀   og   s² = s · s
+
+  Forkastningsregel (NB: kjikvadrat er ASYMMETRISK):
+
+      Tosidig:  Forkast hvis χ² > χ²_(α/2, n−1)  ELLER  χ² < χ²_(1−α/2, n−1)
+      Høyresidig:  Forkast hvis χ² > χ²_(α, n−1)
+      Venstresidig:  Forkast hvis χ² < χ²_(1−α, n−1)
+
+  ## Forveksles ofte med
+
+  - **t-test/z-test**: brukes når spørsmålet handler om GJENNOMSNITTET (μ), ikke spredningen
+  - **F-test for varianser**: brukes når du sammenligner TO utvalgs varianser
+  - **KI for σ²**: konfidensintervall i stedet for hypotesetest — bruker samme observator men annen rolle
+see_also:
+  - { id: test-varians, kind: entry }
+  - { id: test-f-varians, kind: glossary }
+  - { id: ki-mu-og-varians, kind: entry }
+  - { id: E6-kjikvadrattabell, kind: table }

@@ -1,6 +1,11 @@
 id: marginalfordeling-term
 term_no: Marginalfordeling
 short_def: "Fordelingen til én variabel alene, regnet ut fra simultanfordelingen ved å summere ut den andre."
+aliases:
+  - marginalfordelingen
+  - marginalfordelinger
+  - marginalfordelingene
+  - marginalfordeling
 filters:
   computes: [marginal_probability, expected_value]
   structural_cues: [more_than_two_categories]

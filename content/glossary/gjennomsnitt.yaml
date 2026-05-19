@@ -1,6 +1,10 @@
 id: gjennomsnitt
 term_no: Gjennomsnitt (X̄, μ)
 short_def: "Summen av observasjoner delt på antallet — det aritmetiske midlet."
+aliases:
+  - gjennomsnittet
+  - gjennomsnitt
+  - gjennomsnittene
 filters:
   random_variable: [mean_of_samples, difference_of_means]
   computes: [expected_value, parameter_estimate, confidence_interval, hypothesis_test]

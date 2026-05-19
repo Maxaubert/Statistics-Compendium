@@ -1,0 +1,46 @@
+id: test-wilcoxon-tegn-rang
+term_no: "Wilcoxon tegn-rang-test (paret, ikke-parametrisk)"
+short_def: "Ikke-parametrisk versjon av PARET t-test. Tester om medianforskjellen er null mellom to målinger på samme individ. Krever ikke normalfordeling."
+aliases:
+  - wilcoxon tegn-rang
+  - wilcoxon signed-rank
+  - signed rank test
+  - paret ikke-parametrisk
+filters:
+  computes: [hypothesis_test]
+  setup: [paired_samples]
+  structural_cues: [rank_based_data]
+  distribution_assumption: [none_assumed]
+long_def: |
+  ## Når brukes den?
+
+  - **Paret design** (samme individ målt to ganger eller matchede par).
+  - Du KAN IKKE anta at differansene `D_i = X_i − Y_i` er normalfordelte.
+  - Alternativ til paret t-test når normalantakelsen brytes.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Paret data (før/etter, høyre/venstre, etc.) — samme som paret t-test
+  - Eksplisitt: «ikke-parametrisk», «uten normalfordeling»
+  - Lite utvalg + skjev differansefordeling
+  - Typiske ord: «tegn-rang», «Wilcoxon signed-rank»
+
+  ## Hva gjør den?
+
+  1. Beregn differansene `D_i = X_i − Y_i` for hvert par.
+  2. Drop par med `D_i = 0`.
+  3. Rang |D_i| fra minst til størst.
+  4. Summer rangene for positive og negative differanser separat → `W_+` og `W_−`.
+  5. Test-observatoren er den minste av `W_+` og `W_−`.
+  6. Forkast `H₀` hvis testobservatoren er liten nok (slå opp kritisk verdi).
+
+  ## Forveksles ofte med
+
+  - **Paret t-test**: brukes når differansene er normalfordelte — har høyere styrke
+  - **Mann-Whitney**: brukes for UAVHENGIGE grupper, ikke parete
+  - **Tegnetest**: enklere ikke-parametrisk paret test, bruker bare fortegn (ikke rang)
+see_also:
+  - { id: wilcoxon-tegn-rang, kind: entry }
+  - { id: test-paret, kind: glossary }
+  - { id: test-mann-whitney, kind: glossary }
+  - { id: ikke-parametrisk, kind: glossary }

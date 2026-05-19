@@ -1,6 +1,11 @@
 id: histogram-glos
 term_no: Histogram
 short_def: "Stolpediagram der hver stolpe viser frekvensen (eller tettheten) i et tallintervall."
+aliases:
+  - histogrammet
+  - histogrammer
+  - histogrammene
+  - histogram
 filters:
   structural_cues: [data_as_list]
   distribution_assumption: [normal, none_assumed]

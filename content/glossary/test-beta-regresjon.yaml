@@ -1,0 +1,45 @@
+id: test-beta-regresjon
+term_no: "Test om regresjons-stigningstall (β = 0)"
+short_def: "Tester `H₀: β = 0` (ingen lineær sammenheng) i lineær regresjon. Bruker t-fordelingen med `n − 2` frihetsgrader."
+aliases:
+  - test om beta
+  - test for stigningstall
+  - test om b=0
+  - signifikans av regresjon
+  - test om lineær sammenheng
+filters:
+  computes: [hypothesis_test]
+  setup: [linear_relationship]
+  random_variable: [slope_estimate]
+  distribution_assumption: [t_distribution, normal]
+long_def: |
+  ## Når brukes den?
+
+  - Du har data med `(x_i, y_i)`-par og har tilpasset en lineær regresjon `Y = α + β·X + ε`.
+  - Du vil teste om det er en SIGNIFIKANT LINEÆR SAMMENHENG mellom `x` og `y`.
+
+  ## Hvordan kjenne den igjen i en oppgave?
+
+  - Data oppgitt som `(x, y)`-par eller en regresjonsmodell er allerede tilpasset
+  - Spørsmålet er om SAMMENHENG mellom `x` og `y` er signifikant
+  - Typiske ord: «er det en lineær sammenheng?», «test om β = 0», «test om regresjonen er signifikant»
+
+  ## Hva gjør den?
+
+      T = β̂ / SE(β̂)        under H₀: T ~ t(n − 2)
+
+  der `SE(β̂) = √(S_E² / S_XX)`, `S_E²` er residualvariansen.
+
+  Forkast `H₀` hvis `|T| > t_(α/2, n − 2)` (tosidig) eller etter retning (ensidig).
+
+  ## Forveksles ofte med
+
+  - **Korrelasjonstest (`H₀: ρ = 0`)**: ekvivalent for enkel lineær regresjon — gir samme p-verdi
+  - **ANOVA F-test for regresjon**: for enkel lineær regresjon gir `F = T²`, samme konklusjon
+  - **t-test for μ**: helt ulik test — handler om en enkelt populasjonsmiddel, ikke om sammenheng
+see_also:
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: standardfeil-til-stigningstallet, kind: glossary }
+  - { id: residualvarians, kind: glossary }
+  - { id: pearson-korrelasjon, kind: glossary }
+  - { id: E5-t-tabell, kind: table }

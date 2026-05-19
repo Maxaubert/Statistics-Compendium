@@ -13,6 +13,15 @@ what_it_means: |
   Kjerneidé: behandle ditt utvalg som om det var populasjonen, og bruk
   kjent sampling-statistikk på det.
 
+symbols:
+  - { sym: "N",          means: "antall observasjoner i opprinnelig utvalg" }
+  - { sym: "B",          means: "antall bootstrap-resamples (typisk 999 eller 1000)" }
+  - { sym: "x̄*",        means: "gjennomsnittet for ETT bootstrap-resample" }
+  - { sym: "SE_boot",    means: "standardfeilen estimert fra bootstrap: utvalgsstandardavviket av de `B` x̄*-verdiene" }
+  - { sym: "α",          means: "signifikansnivå (typisk 0.05 for 95 %-KI)" }
+  - { sym: "z_(α/2)",    means: "kritisk z-verdi fra tabell E.4 for normaltilnærmet bootstrap-KI" }
+  - { sym: "P_q",        means: "q-prosentilen av de `B` bootstrap-statistikkene (f.eks. `P_2.5`)" }
+
 solution_variants:
   - label: "Tradisjonelt bootstrap-KI"
     recognition: "«Lag et bootstrap-KI for `μ` (eller `σ`, median, ...)», «kvantifiser usikkerheten uten å anta normalfordeling». Du har et lite datasett og vil estimere et intervall fra resamplinger."
@@ -54,6 +63,93 @@ python_snippet: |
       for _ in range(1000)
   ])
   ki_lo, ki_hi = np.percentile(resamples, [2.5, 97.5])
+
+detailed_solution_variants:
+  - label: "Tradisjonelt bootstrap-KI"
+    solutions:
+      - source: "Praksis · ventetid på legekontor"
+        question: "12 pasienter rapporterte ventetid i minutter: `[8, 12, 14, 9, 17, 15, 11, 13, 20, 10, 14, 16]`. Bygg et 95 %-bootstrap-KI for gjennomsnittlig ventetid."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 12`, `x̄ = 13.25` min. Datasettet er lite — bootstrap brukes for å unngå antakelser om normalfordeling." }
+              - { text: "Vi resampler `B = 999` ganger MED TILBAKELEGGING og lagrer hvert resample-gjennomsnitt." }
+          - label: "Bootstrap-fordeling"
+            lines:
+              - { text: "Anta at de 999 bootstrap-gjennomsnittene har:" }
+              - { indent: "`gjennomsnitt ≈ 13.25` (samme som original)" }
+              - { indent: "`SE_boot = utvalgsstandardavvik(x̄*) ≈ 1.06`" }
+          - label: "Normaltilnærmet KI"
+            lines:
+              - { text: "`z_(0.025) = 1.96` (fra tabell E.4)" }
+              - { table_lookup: { ref: "E.4", text: "z_(0.025) = 1.96" } }
+              - { text: "`KI = x̄ ± z·SE_boot = 13.25 ± 1.96 · 1.06`" }
+              - { indent: "`= 13.25 ± 2.08`" }
+              - { indent: "`= [11.17, 15.33]`" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "95 % konfidens for at sann gjennomsnittlig ventetid ligger mellom 11.2 og 15.3 minutter." }
+        result: "`95 %-KI ≈ [11.17, 15.33] min`"
+
+      - source: "Praksis · medianlønn fra skjevt datasett"
+        question: "8 personer rapporterer årslønn (i 1000 kr): `[450, 520, 480, 510, 470, 1500, 490, 460]`. En outlier (1500) gjør gjennomsnittet upålitelig. Bygg et 95 %-bootstrap-KI for MEDIANLØNNEN."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Original median: `Q₂ = (480 + 490)/2 = 485`. Outlier (1500) gjør t-basert KI uegnet siden fordelingen er svært skjev." }
+              - { text: "Vi resampler `B = 999` ganger MED TILBAKELEGGING og lagrer MEDIANEN av hvert resample." }
+          - label: "Bootstrap-fordeling for median"
+            lines:
+              - { text: "Anta bootstrap-medianene har:" }
+              - { indent: "`gjennomsnitt ≈ 485`" }
+              - { indent: "`SE_boot ≈ 17`" }
+              - { comment: "Lavere SE enn bootstrap-fordelingen for gjennomsnittet ville gitt — medianen er ufølsom for outlieren." }
+          - label: "Normaltilnærmet KI (gyldig hvis bootstrap-fordelingen ser normal ut)"
+            lines:
+              - { text: "`KI = 485 ± 1.96 · 17 ≈ [451.7, 518.3]`" }
+          - label: "Sjekk: prosentilintervall som alternativ"
+            lines:
+              - { text: "Hvis bootstrap-fordelingen er skjev, bruk prosentil-versjonen (se neste fane)." }
+        result: "`95 %-bootstrap-KI for medianen ≈ [452, 518] tusen kr/år`"
+
+  - label: "Prosentilintervall"
+    solutions:
+      - source: "Praksis · ventetid, prosentil-versjon"
+        question: "Samme ventetidsdata som over (`[8, 12, 14, 9, 17, 15, 11, 13, 20, 10, 14, 16]`, `N=12`). Bygg 95 %-KI med prosentilmetoden direkte (uten å bruke `SE`)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Resample `B = 999` ganger MED TILBAKELEGGING. Beregn `x̄*` for hvert." }
+              - { text: "Sortér de 999 verdiene fra minst til størst." }
+          - label: "Prosentil-grenser for 95 %"
+            lines:
+              - { text: "`α/2 = 0.025` ⇒ nedre grense er verdi nummer `⌈999 · 0.025⌉ = 25` i sortert rekkefølge." }
+              - { text: "`1 − α/2 = 0.975` ⇒ øvre grense er verdi nummer `⌊999 · 0.975⌋ + 1 = 975`." }
+              - { text: "Anta sortert bootstrap-fordeling gir:" }
+              - { indent: "`P_2.5 ≈ 11.4` (verdi nr. 25)" }
+              - { indent: "`P_97.5 ≈ 15.2` (verdi nr. 975)" }
+          - label: "Tolkning"
+            lines:
+              - { comment: "Prosentilmetoden krever IKKE normal bootstrap-fordeling. Tryggere enn ± z·SE når fordelingen er skjev." }
+        result: "`95 %-prosentilintervall ≈ [11.4, 15.2] min`"
+
+      - source: "Praksis · median, prosentil-versjon"
+        question: "Samme lønnsdata (`[450, 520, 480, 510, 470, 1500, 490, 460]`). Bygg 95 %-prosentil-KI for medianen."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`N = 8`, original median = 485. Resample `B = 999` ganger og beregn MEDIAN av hvert resample." }
+              - { text: "Bootstrap-fordelingen for median fra et lite skjevt datasett er typisk SKJEV — perfekt for prosentilmetoden." }
+          - label: "Prosentil-grenser"
+            lines:
+              - { text: "Sortér de 999 bootstrap-medianene. Plukk:" }
+              - { indent: "`P_2.5 ≈ 465` (verdi nr. 25)" }
+              - { indent: "`P_97.5 ≈ 510` (verdi nr. 975)" }
+              - { comment: "Intervallet er ASYMMETRISK rundt 485 — det reflekterer skjevheten i bootstrap-fordelingen." }
+          - label: "Sammenlign med normaltilnærmet KI"
+            lines:
+              - { text: "Normaltilnærming ga `[451.7, 518.3]`, prosentil gir `[465, 510]`. Prosentil er strammere og mer realistisk for skjev fordeling." }
+        result: "`95 %-prosentil-KI for medianen ≈ [465, 510] tusen kr/år`"
 
 recognition_cues:
   - "Oppgaven sier eksplisitt 'bruk bootstrap' eller 'bootstrap-konfidensintervall'"

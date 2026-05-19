@@ -1,6 +1,10 @@
 id: hendelse
 term_no: Hendelse (event)
 short_def: "En delmengde av utfallsrommet — noe som enten inntreffer eller ikke."
+aliases:
+  - hendelsen
+  - hendelser
+  - hendelsene
 filters:
   computes: [exact_probability, union_probability, test_independence]
   structural_cues: [disjoint_events, complement_pattern, independent_events]

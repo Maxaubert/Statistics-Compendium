@@ -550,6 +550,7 @@ related:
   - { id: "poisson-prosess",      kind: "glossary" }
   - { id: "eksponential-fordeling", kind: "entry" }
   - { id: "binomial-fordeling",   kind: "entry" }
+  - { id: "geometrisk-fordeling", kind: "entry" }
   - { id: "normalfordeling",      kind: "entry" }
   - { id: "komplementregelen",    kind: "entry" }
   - { id: "ki-poissonrate",       kind: "entry" }

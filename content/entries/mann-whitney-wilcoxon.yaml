@@ -376,6 +376,6 @@ related:
   - { id: "tosidig-test",            kind: "glossary" }
   - { id: "p-verdi-glos",            kind: "glossary" }
   - { id: "E7-mann-whitney-u-tabell", kind: "table" }
-
+  - { id: "nullhypotese", kind: "glossary" }
 tools:
   - "Tabell E.7 – Mann-Whitney U-tabell for kritiske verdier `U_(α, n₁, n₂)`"

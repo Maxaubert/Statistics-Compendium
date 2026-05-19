@@ -1,0 +1,31 @@
+id: median
+term_no: Median
+short_def: "Midten i sortert datasett — verdien som har like mange observasjoner over og under seg. Mindre påvirket av uteliggere enn gjennomsnitt."
+aliases:
+  - medianen
+  - medianer
+  - medianene
+filters:
+  computes: [parameter_estimate]
+  structural_cues: [data_as_list, summary_stats_given, rank_based_data]
+long_def: |
+  Medianen finnes ved å SORTERE observasjonene og plukke verdien i midten:
+
+  - **Oddetall `n`:** medianen er observasjon nummer `(n + 1)/2` i sortert rekkefølge.
+  - **Partall `n`:** medianen er snittet av observasjon `n/2` og `n/2 + 1`.
+
+  **Eksempel:** for `[3, 7, 2, 9, 5]` sorteres til `[2, 3, 5, 7, 9]` og medianen er `5`.
+  For `[3, 7, 2, 9]` sorteres til `[2, 3, 7, 9]` og medianen er `(3 + 7)/2 = 5`.
+
+  ## Når median framfor gjennomsnitt?
+
+  - **Skjev fordeling** (lønnsdata, inntekt) — uteliggere drar gjennomsnittet, ikke medianen.
+  - **Ordinal data** — du kan ikke regne snitt av rangerte verdier.
+  - **Boksplott** — medianen er linja midt i boksen.
+
+  Median er det andre kvartilet `Q₂` og 50-persentilen.
+see_also:
+  - { id: gjennomsnitt, kind: glossary }
+  - { id: kvantil, kind: glossary }
+  - { id: boksplott, kind: glossary }
+  - { id: utvalg, kind: glossary }

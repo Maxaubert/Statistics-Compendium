@@ -4347,6 +4347,229 @@ Med \`ν = 17\` og \`α = 0.01\` venstresidig er kritisk verdi \`−t_(0.01, 17)
         },
       ],
     },
+    {
+      id: "welch-observator",
+      name: "Welch t-observator (ulike varianser)",
+      abbreviation: "T",
+      formula: "T = (X̄ − Ȳ) / √(s_X²/n_X + s_Y²/n_Y)",
+      short: `Brukes når variansene IKKE kan antas like. Pooler ikke s_X² og s_Y² — hver gruppes varians teller direkte i nevneren med sin egen vekt.`,
+      long: `Welch t-observatoren er en robust variant av to-utvalgs t-test som IKKE forutsetter felles populasjonsvarians \`σ_X² = σ_Y²\`. Forskjellen fra pooled-varianten ligger i hvordan standardfeilen er konstruert.
+
+
+## Hvordan lese formelen
+
+> [!read] T = (X̄ − Ȳ) / √(s_X²/n_X + s_Y²/n_Y)
+> «Forskjellen mellom gruppemiddelene, delt på standardfeilen til differansen — der hver gruppes varians vektes med sin egen utvalgsstørrelse.»
+
+Sammenlign med pooled-varianten: \`T_pooled = (X̄ − Ȳ) / (s_P · √(1/n_X + 1/n_Y))\`. Pooled bruker ett felles estimat \`s_P²\`; Welch holder \`s_X²\` og \`s_Y²\` separat. Når variansene faktisk er like, gir begge nesten samme svar — men når de er ulike, blir pooled biased.
+
+
+## Når Welch?
+
+> [!tip] Bruk Welch dersom F-test for varianslikhet har forkastet H₀, eller dersom \`max(s_X², s_Y²) > 4 · min(s_X², s_Y²)\`. Hvis variansene er like nok, bruk pooled (litt høyere styrke).
+
+ITD20218 bruker som regel pooled. Du bør likevel kjenne Welch fordi:
+
+- Lærebøker (Walpole, Devore) og statistikkverktøy (R, scipy, jStat) bruker Welch som STANDARD.
+- Hvis oppgaven eksplisitt sier «variansene er ulike» eller en F-test allerede er forkastet, må du bruke Welch.
+
+
+## Konkret eksempel
+
+Gruppe X: \`n_X = 15\`, \`s_X² = 4.5\`. Gruppe Y: \`n_Y = 18\`, \`s_Y² = 1.2\`.
+
+    SE_Welch = √(4.5/15 + 1.2/18)
+             = √(0.300 + 0.0667)
+             = √0.367
+             ≈ 0.606
+
+Hvis \`x̄ − ȳ = 1.3\`: \`T = 1.3 / 0.606 ≈ 2.14\`. Sammenlign med pooled (hvor variansene veies sammen) — Welch gir ofte en T-verdi nær pooled, men med ANDRE frihetsgrader (se neste kort).
+`,
+      see_also: [
+        { kind: "formula", ref: "welch-df" },
+        { kind: "formula", ref: "pooled-varians" },
+        { kind: "formula", ref: "t-observator" },
+        { kind: "entry", id: "test-varians" },
+      ],
+    },
+    {
+      id: "welch-df",
+      name: "Welch-Satterthwaite frihetsgrader",
+      abbreviation: "ν_W",
+      formula: "ν = (s_X²/n_X + s_Y²/n_Y)² / [ (s_X²/n_X)²/(n_X−1) + (s_Y²/n_Y)²/(n_Y−1) ]",
+      short: `Tilnærmet ν for Welch — typisk mellom min(n_X, n_Y) − 1 og n_X + n_Y − 2. Rund ned til nærmeste heltall ved tabelloppslag.`,
+      long: `Welch-testen bruker en tilnærmet t-fordeling, men frihetsgradene er ikke \`n_X + n_Y − 2\` som i pooled. I stedet bruker man Welch-Satterthwaite-formelen:
+
+> [!read] ν = (s_X²/n_X + s_Y²/n_Y)² / [ (s_X²/n_X)²/(n_X − 1) + (s_Y²/n_Y)²/(n_Y − 1) ]
+
+
+## Hva betyr formelen?
+
+Hvis variansene er like blir ν nesten \`n_X + n_Y − 2\`. Hvis de er svært ulike, krymper ν mot \`min(n_X, n_Y) − 1\`. Sagt på en annen måte: Welch «straffer» frihetsgradene når variansene skiller seg, slik at usikkerheten i estimatet av SE telles med.
+
+> [!tip] Du trenger sjelden å regne ν eksakt — runde ned til nærmeste heltall holder. ITD20218-eksamen krever sjelden Welch, så hvis du gjør det, oppgi ν som «≈ 20» (eller hva du får).
+
+
+## Konkret eksempel
+
+Fortsetter fra Welch-observatoren over (\`s_X²/n_X = 0.300\`, \`s_Y²/n_Y = 0.0667\`):
+
+    teller    = (0.300 + 0.0667)² = 0.367² ≈ 0.1347
+    nevner    = 0.300²/14 + 0.0667²/17
+              = 0.0900/14 + 0.00445/17
+              ≈ 0.00643 + 0.000262
+              ≈ 0.00669
+
+    ν ≈ 0.1347 / 0.00669 ≈ 20.1   ⇒   ν = 20
+
+Tabelloppslag: bruk \`t_(α/2, 20)\` i tabell E.5. For α = 0.05 tosidig blir det \`t_(0.025, 20) = 2.086\`.
+
+
+## Sammenligning med pooled-df
+
+For samme data ville pooled gitt \`ν = n_X + n_Y − 2 = 15 + 18 − 2 = 31\`, med tilsvarende \`t_(0.025, 31) ≈ 2.040\`. Welch sin litt lavere ν gir litt høyere kritisk verdi — det er prisen for ikke å anta felles σ².
+`,
+      see_also: [
+        { kind: "formula", ref: "welch-observator" },
+        { kind: "glossary", id: "frihetsgrader-glos" },
+        { kind: "table", id: "E5-t-tabell" },
+      ],
+    },
+  ],
+  "test-varians": [
+    {
+      id: "chi-squared-observator",
+      name: "χ²-observator (test for σ² i ett utvalg)",
+      abbreviation: "χ²",
+      formula: "χ² = (n − 1) · s² / σ₀²",
+      short: `Sammenligner observert varians s² mot påstandsverdien σ₀². Under H₀ er χ² kjikvadrat-fordelt med n − 1 frihetsgrader.`,
+      long: `\`χ²\` er testobservatoren for én-utvalg test om varians. Den måler hvor langt utvalgsvariansen \`s²\` ligger fra påstandsverdien \`σ₀²\`, vektet med frihetsgradene.
+
+
+## Hvordan lese formelen
+
+> [!read] χ² = (n − 1) · s² / σ₀²
+> «Frihetsgrader ganger forholdet mellom observert og påstått varians.»
+
+- Hvis \`s² ≈ σ₀²\`: \`χ² ≈ n − 1\` (forventet verdi under H₀).
+- Hvis \`s² > σ₀²\`: \`χ²\` blir stor.
+- Hvis \`s² < σ₀²\`: \`χ²\` blir liten (men aldri negativ siden alt er kvadratisk).
+
+
+## Fordeling under H₀
+
+> [!read] χ² ~ χ²(n − 1) under H₀
+
+Forventning er \`n − 1\`, standardavvik er \`√(2(n − 1))\`. For \`n = 25\` er forventet 24 med σ ≈ 6.93 — så χ²-verdier i området [13, 36] er normale, mens 47 eller 7 er klare avvik.
+
+
+## Hvorfor asymmetrisk?
+
+Kjikvadrat-fordelingen er IKKE symmetrisk (i motsetning til z, t og F). Det betyr at for tosidig test må du slå opp BEGGE haler separat — ikke bruke \`±\`-symmetri. Tabell E.6 gir kvantilene for ulike α-verdier.
+
+
+## Konkret eksempel
+
+CNC-maskin med \`σ₀² = 0.25\`, observert \`s² = 0.49\` fra \`n = 25\` målinger:
+
+    χ² = 24 · 0.49 / 0.25 = 47.04
+
+Med \`χ²_(0.05, 24) = 36.42\` (høyresidig kritisk): \`47.04 > 36.42\` ⇒ variansen er signifikant større enn påstått.
+`,
+      see_also: [
+        { kind: "formula", ref: "f-observator-varians" },
+        { kind: "formula", ref: "frihetsgrader-varians" },
+        { kind: "glossary", id: "chi" },
+        { kind: "table", id: "E6-kjikvadrattabell" },
+      ],
+    },
+    {
+      id: "f-observator-varians",
+      name: "F-observator (test for σ_X² = σ_Y²)",
+      abbreviation: "F",
+      formula: "F = s_X² / s_Y²     (største i teller)",
+      short: `Forholdet mellom to utvalgsvarianser. Per konvensjon settes den største i telleren slik at F ≥ 1, og vi tester bare øvre hale.`,
+      long: `Til forskjell fra ANOVAs F-observator (som er \`MSG/MSE\`), bruker F-testen for varianslikhet RÅ utvalgsvarianser direkte. Den brukes som forutsetnings-sjekk før to-utvalgs t-test.
+
+
+## Hvordan lese formelen
+
+> [!read] F = s_større² / s_mindre²,   ν = (n_større − 1, n_mindre − 1)
+> «Forholdet mellom de to utvalgsvariansene, vektet med deres respektive frihetsgrader.»
+
+Per konvensjon plasserer vi den STØRSTE \`s²\` i telleren. Da blir alltid \`F ≥ 1\`, og vi kan begrense oss til øvre hale av F-fordelingen.
+
+
+## Fordeling under H₀
+
+> [!read] F ~ F(n_X − 1, n_Y − 1) under H₀
+
+\`E[F] = ν₂/(ν₂ − 2) ≈ 1\` for store nevnerfrihetsgrader. Avvik fra 1 er evidens for ulik varians.
+
+
+## α/2-konvensjonen for tosidig
+
+Siden vi ALLTID setter største i teller, tester vi automatisk «er den ene betydelig større enn den andre». Det er den tosidige hypotesen \`H₁: σ_X² ≠ σ_Y²\`. Men siden vi har «brukt» den ene halen til å bestemme rekkefølgen, er den effektive α-verdien for kritisk verdi \`α/2\`:
+
+    Tosidig α = 0.05:   slå opp F_(0.025, ν_større, ν_mindre)
+
+> [!tip] Ensidig test (\`H₁: σ_X² > σ_Y²\` med spesifikk retning): bruk hele α i øvre hale, og IKKE bytt teller/nevner basert på hvilken er størst.
+
+
+## Konkret eksempel
+
+To linjer: \`s_A² = 4.5\` (\`n_A = 12\`), \`s_B² = 1.8\` (\`n_B = 15\`). Tosidig α = 0.05:
+
+    F = 4.5 / 1.8 = 2.5
+    F_(0.025, 11, 14) ≈ 3.09
+
+\`2.5 < 3.09\` ⇒ behold H₀ — kan anta lik varians, så pooled t-test er gyldig.
+`,
+      see_also: [
+        { kind: "formula", ref: "chi-squared-observator" },
+        { kind: "formula", ref: "frihetsgrader-varians" },
+        { kind: "table", id: "E8-f-tabell" },
+        { kind: "entry", id: "to-utvalgs-t-test" },
+      ],
+    },
+    {
+      id: "frihetsgrader-varians",
+      name: "Frihetsgrader for varians-tester",
+      abbreviation: "ν",
+      formula: "Én utvalg: ν = n − 1;     To utvalg: ν = (n_X − 1, n_Y − 1)",
+      short: `Varians-testene mister én frihetsgrad per estimert gjennomsnitt, fordi s² beregnes med x̄ som er bundet av dataene.`,
+      long: `Frihetsgradene styrer hvilken fordeling testobservatoren følger under H₀.
+
+
+## Hvorfor n − 1 (én utvalg)?
+
+> [!read] ν = n − 1   (én utvalg)
+
+Når du regner \`s² = Σ(xᵢ − x̄)² / (n − 1)\`, har du ALLEREDE brukt dataene til å estimere \`x̄\`. De n avvikene \`(xᵢ − x̄)\` summerer alltid til 0 — dvs. når du kjenner n − 1 av dem, er den siste bestemt. Derfor er det bare \`n − 1\` «frie» avvik, og fordeling-en er χ²(n − 1).
+
+
+## Hvorfor (n_X − 1, n_Y − 1) (to utvalg)?
+
+> [!read] ν_teller = n_større − 1,   ν_nevner = n_mindre − 1
+
+Hver gruppe gir bort én frihetsgrad fordi gruppemiddelet er estimert. F-fordelingen er forhold mellom to χ²-fordelte tellere/nevnere, hver med sine egne frihetsgrader.
+
+
+## Hvor i tabellen?
+
+- **E.6 (kjikvadrat):** rad er \`ν\`, kolonne er \`α\`.
+- **E.8 (F):** kolonne er telnerfrihetsgrader (\`ν₁\`), rad er nevnerfrihetsgrader (\`ν₂\`). Bytter du rekkefølge, henter du feil kritisk verdi.
+
+> [!tip] Huskeregel for F-tabellen: tellerens df er for det «interessante» (større s² eller MSG), nevnerens df er for «støy»-baseline (mindre s² eller MSE).
+`,
+      see_also: [
+        { kind: "formula", ref: "chi-squared-observator" },
+        { kind: "formula", ref: "f-observator-varians" },
+        { kind: "glossary", id: "frihetsgrader-glos" },
+        { kind: "table", id: "E6-kjikvadrattabell" },
+        { kind: "table", id: "E8-f-tabell" },
+      ],
+    },
   ],
   "enveis-anova": [
     {

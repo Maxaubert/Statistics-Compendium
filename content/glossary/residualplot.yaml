@@ -1,0 +1,44 @@
+id: residualplot
+term_no: Residualplot
+short_def: "Spredningsplott av residualer mot x (eller mot ŷ). Brukes for å sjekke om regresjonsantakelsene holder — særlig konstant varians og linearitet."
+aliases:
+  - residualplottet
+  - residualplots
+  - residualplottene
+  - residual plot
+filters:
+  computes: [parameter_estimate]
+  setup: [linear_relationship]
+  structural_cues: [linear_relationship_suspected]
+long_def: |
+  Et residualplot er et spredningsplott der man tegner residualene
+  `e_i = y_i − ŷ_i` på y-aksen mot enten `x_i` eller `ŷ_i` på x-aksen.
+
+  ## Hva ser du etter?
+
+  Et IDEELT residualplot viser:
+  - **Tilfeldig spredning** rundt 0 — ingen mønster.
+  - **Konstant bredde** langs hele x-aksen — homoskedastisitet (`Var(ε) = σ²`).
+  - **Ingen krumning** — linearitet er en god antakelse.
+
+  Patologier å se etter:
+
+  | Mønster | Hva det betyr | Tiltak |
+  |---|---|---|
+  | Tydelig U- eller invers-U-form | Linearitet brutt — sann sammenheng er kvadratisk eller mer | Transformér x, eller polynomial regresjon |
+  | Bredden vokser med x (trakt) | Heteroskedastisitet — `Var(ε)` ikke konstant | Vekt-regresjon eller log-transformasjon av y |
+  | Klare gruppedannelser | Manglende forklaringsvariabel | Inkluder den manglende variabelen |
+  | Enkelt-punkt langt fra resten | Mulig uteligger eller leverage-punkt | Sjekk om observasjonen er reell |
+
+  ## Når i analysen?
+
+  Residualplottet er det FØRSTE diagnostikkverktøyet du sjekker etter
+  å ha tilpasset en regresjonsmodell — før du tolker koeffisienter, p-verdier
+  eller R². Hvis residualene viser et tydelig mønster, er modellen feil og
+  inferensen upålitelig.
+see_also:
+  - { id: residual, kind: glossary }
+  - { id: forutsetninger-regresjon, kind: glossary }
+  - { id: spredningsplott, kind: glossary }
+  - { id: lineaer-regresjon, kind: entry }
+  - { id: residualvarians, kind: glossary }

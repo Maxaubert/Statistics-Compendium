@@ -20,19 +20,27 @@ why_use: |
   fordeling og binomial sannsynlighet.
 
 recognition_cues:
-  - "Du trekker eller velger ut `k` elementer fra `n`"
+  - "Du trekker eller velger ut `k` elementer fra `n` (eller `N` i sannsynlighets-varianter)"
   - "Rekkefølgen er IKKE viktig (samme utvalg uansett rekkefølge)"
   - "UTEN tilbakelegging: hvert element kan velges maksimalt én gang"
-  - "Ofte blir det gunstige/mulige med `C(K,k)·C(N−K,n−k) / C(N,n)`"
+  - "Ofte blir det gunstige/mulige med `C(A₁, k₁)·C(A₂, k₂) / C(N, k)` (hypergeometrisk: del populasjon i 2 kategorier, plukk noen fra hver)"
 
 when_NOT_to_use:
   - "Rekkefølgen teller, uten tilbakelegging → bruk [ordnet utvalg uten tilbakelegging](/entry/ordnet-utvalg-uten-tilbakelegging) (`n!/(n−k)!`)"
   - "Tilbakelegging er tillatt (rekkefølgen teller) → bruk [ordnet utvalg med tilbakelegging](/entry/ordnet-utvalg-med-tilbakelegging) (`n^k`)"
   - "Antall suksesser i `n` uavhengige forsøk med konstant `p` → bruk [binomialfordeling](/entry/binomial-fordeling)"
+  - "Oppgaven definerer `X` som en STOKASTISK VARIABEL og spør om `E[X]`, `Var[X]`, `σ`, eller bruker «X ~ ...»-notasjon → bruk [hypergeometrisk fordeling](/entry/hypergeometrisk-fordeling). Selve sannsynlighetsformelen `C(K, k)·C(N − K, n − k) / C(N, n)` er den samme, men hypergeometrisk-entryen har forventning, varians og det fulle fordelings-rammeverket. Tommelfingerregel: «hvor mange måter / hva er sannsynligheten» ⇒ denne entryen; «hva er fordelingen til `X` / forventet antall / standardavvik» ⇒ hypergeometrisk."
 
 symbols:
-  - { sym: "n",       means: "antall elementer i populasjonen" }
-  - { sym: "k",       means: "antall vi trekker ut" }
+  - { sym: "n",       means: "antall elementer i populasjonen — brukes i ren telling-variant (samme rolle som `N` i sannsynlighets-variantene)" }
+  - { sym: "k",       means: "antall vi trekker ut (sample size). Visuelt distinkt fra `K` — vi bruker `A` for kategori-størrelse i stedet for å unngå forveksling" }
+  - { sym: "N",       means: "TOTAL populasjon i sannsynlighets-variantene (samme rolle som `n` i tellings-varianten)" }
+  - { sym: "A",       means: "antall i kategori A — «suksesser» i populasjonen" }
+  - { sym: "M",       means: "antall IKKE i kategori A, `M = N − A` — «ikke-suksesser» i populasjonen" }
+  - { sym: "A₁, A₂",  means: "antall i kategori 1 og 2 når oppgaven har to navngitte kategorier (jenter/gutter, røde/svarte)" }
+  - { sym: "k₁, k₂",  means: "antall trukket fra hver kategori (`k₁ + k₂ = k`)" }
+  - { sym: "m",       means: "antall par/symmetriske kategorier (i par-fanen)" }
+  - { sym: "j",       means: "antall komplette par i utvalget (i par-fanen)" }
   - { sym: "n!",      means: "`n`-fakultet, `n·(n−1)·...·1`" }
   - { sym: "C(n,k)",  means: "binomialkoeffisient, også skrevet som `ⁿCₖ` eller `(n velg k)`" }
 
@@ -45,7 +53,7 @@ filters:
   tooling: [calculator_binomial_coef, calculator_factorial]
 
 solution_variants:
-  - label: "Tell antall mulige utvalg"
+  - label: "Antall utvalg"
     recognition: "«Hvor mange måter kan vi velge `k` av `n` på (rekkefølge spiller ingen rolle)?», «hvor mange forskjellige hender i poker?». `C(n, k) = n!/(k!(n−k)!)`."
     steps:
       - "Identifiser `n` (totalt antall elementer) og `k` (antall som skal velges)"
@@ -57,53 +65,108 @@ solution_variants:
         example: true
       - text: "Hvis `k` er stor og du må regne for hånd, bruk symmetrien `C(n, k) = C(n, n − k)` for å redusere arbeidet"
         conditional: true
-  - label: "Sannsynlighet: alle / ikke alle k er av samme type"
+  - label: "Alle (eller ikke alle) samme type"
     recognition: "«Sannsynligheten for at alle de `k` trukne er røde», «alle som ble valgt er kvinner», eller motsatt: «minst én er av en annen type», «ikke alle er like». Uten tilbakelegging."
     steps:
-      - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
-      - "Antall gunstige utvalg (alle k velges fra de K i kategorien): `C(K, k)`"
-      - "Antall mulige utvalg: `C(N, k)`"
-      - text: "Sannsynligheten for at ALLE er av samme type:"
-        formula: "P(alle k er A) = C(K, k) / C(N, k)"
-      - text: "For motsatt utfall — «IKKE alle av samme type» (minst én avviker) — bruk komplementregelen:"
-        formula: "P(ikke alle k er A) = 1 − P(alle k er A) = 1 − C(K, k) / C(N, k)"
-      - text: "Pass på: hvis oppgaven har FLERE likeverdige kategorier (f.eks. 5 par sko, og 'matchende par' kan være hvilket som helst av dem), bruk formelen per kategori og summer. Med `m` like kategorier av størrelse `K`:"
-        formula: "P(alle k fra én av kategoriene) = m · C(K, k) / C(N, k)"
-        conditional: true
-      - text: "Komplementet gjelder også her — «ikke alle fra samme kategori» = `1 − m · C(K, k) / C(N, k)`."
-        conditional: true
-      - text: "Eksempel — 5 hjerter fra 52-korts stokk (`K = 13`, `N = 52`, `k = 5`):"
-        formula: "P(alle hjerter) = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
+      - text: "For denne formelen trenger du KUN tre tall: `N`, `A`, og `k`. Identifiser dem fra oppgaven:"
+        formula:
+          - "N  = total populasjon"
+          - "A  = antall i den ønskede kategorien (kategori A — det du vil alle k skal komme fra)"
+          - "k  = antall du trekker"
+      - text: "Sannsynligheten for ALLE eller IKKE ALLE av samme type (komplementet er bare `1 − ` første formel):"
+        formula:
+          - "P(alle k er A)       = C(A, k) / C(N, k)"
+          - "P(ikke alle k er A)  = 1 − C(A, k) / C(N, k)"
+      - text: "Eksempel — 5 hjerter fra 52-korts stokk (`N = 52`, `A = 13`, `k = 5`):"
+        formula:
+          - "P(alle hjerter)       = C(13, 5) / C(52, 5) = 1 287 / 2 598 960 ≈ 4.95·10⁻⁴"
+          - "P(ikke alle hjerter)  = 1 − 4.95·10⁻⁴ ≈ 0.9995"
         example: true
-      - text: "Tilsvarende — «ikke alle 5 er hjerter» (minst ett kort er noe annet):"
-        formula: "P(ikke alle hjerter) = 1 − 4.95·10⁻⁴ ≈ 0.9995"
-        example: true
-      - text: "Alternativt, hvis sekvensiell beregning er enklere — bruk produktregelen. Begge metodene gir samme svar."
-        formula: "P = (K/N) · ((K−1)/(N−1)) · … · ((K−k+1)/(N−k+1))"
+      - { text: "**Hvis du har `m` symmetriske kategorier (par sko, par sokker, par batcher) og spørsmålet er om matchende par**, bruk heller **«Sannsynlighet for par»-fanen** — den håndterer alle `k`-verdier korrekt. Formelen under fungerer kun når `k ≤ A` (du kan trekke alle k fra ÉN av kategoriene).", conditional: true }
+      - text: "Med `m` like kategorier av størrelse `A`, sannsynlighet for at alle `k` kommer fra én og samme kategori:"
+        formula: "P(alle k fra én av m kategoriene) = m · C(A, k) / C(N, k)     (krever k ≤ A)"
         conditional: true
-  - label: "Sannsynlighet: ingen av k er av en gitt type"
+      - { text: "Alternativt: bruk produktregelen sekvensielt — plukk én sko (uansett), så er sjansen for matchende andre `(A−1)/(N−1)`, osv. Begge metoder gir samme svar.", conditional: true }
+      - text: "Sekvensiell form (uten tilbakelegging):"
+        formula: "P = (A/N) · ((A−1)/(N−1)) · … · ((A−k+1)/(N−k+1))"
+        conditional: true
+  - label: "Ingen av type A"
     recognition: "«Sannsynligheten for at ingen av de `k` er defekte», «ingen ess i hånda». Uten tilbakelegging."
     steps:
-      - "Identifiser `N` (total populasjon), `K` (antall i kategori A), og `k` (antall trukket)"
-      - "Antall i 'ikke-A'-gruppen: `N − K` (f.eks. 52 − 13 = 39 ikke-hjerter)"
-      - "Antall gunstige (alle k velges fra ikke-A-gruppen): `C(N − K, k)`"
-      - "Antall mulige utvalg: `C(N, k)`"
-      - text: "Sannsynligheten:"
-        formula: "P(ingen av k er A) = C(N − K, k) / C(N, k)"
-      - text: "Eksempel — ingen hjerter blant 5 kort (`N = 52`, `K = 13`, `k = 5`):"
+      - text: "For denne formelen trenger du KUN tre tall: `N`, `M`, og `k`. Identifiser dem fra oppgaven:"
+        formula:
+          - "N  = total populasjon"
+          - "M  = antall IKKE i den uønskede kategorien (det du vil alle k skal komme fra)"
+          - "k  = antall du trekker"
+      - { text: "Tips: hvis oppgaven oppgir `A` (antall i kategori A) i stedet for `M`, regn `M = N − A`. F.eks. 52 kort med 13 hjerter ⇒ `M = 52 − 13 = 39` ikke-hjerter.", conditional: true }
+      - text: "Sannsynligheten (gunstige `C(M, k)` over mulige `C(N, k)`):"
+        formula: "P(ingen av k er A) = C(M, k) / C(N, k)"
+      - text: "Eksempel — ingen hjerter blant 5 kort (`N = 52`, `M = 39` ikke-hjerter, `k = 5`):"
         formula: "P = C(39, 5) / C(52, 5) = 575 757 / 2 598 960 ≈ 0.222"
         example: true
-      - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = K/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
+      - text: "Pass på: dette er IKKE `(1 − p)^k` med `p = A/N`, fordi sannsynlighetene endrer seg når det trekkes uten tilbakelegging. Bruk kombinasjonsformelen, ikke binomialformelen."
         conditional: true
-  - label: "Sannsynlighet: blanding (k₁ fra A og k₂ fra B)"
+  - label: "Eksakt x av type A"
+    recognition: "«Sannsynligheten for nøyaktig `x` av kategori A blant `k` trukne», «3 røde av 5 trekninger». Standard hypergeometrisk-formel. Generaliserer «Alle» (`x = k`) og «Ingen» (`x = 0`)."
+    steps:
+      - text: "For denne formelen trenger du fire tall: `N`, `A`, `k`, og `x`. Identifiser dem fra oppgaven:"
+        formula:
+          - "N  = total populasjon"
+          - "A  = antall i kategori A (suksesser i populasjonen)"
+          - "k  = antall du trekker"
+          - "x  = antall av kategori A du vil ha i utvalget"
+      - { text: "Definer også `M = N − A` (ikke-A-gruppen) for å gjøre formelen renere.", conditional: true }
+      - text: "Sannsynligheten:"
+        formula: "P(eksakt x av A) = C(A, x) · C(M, k − x) / C(N, k)"
+      - text: "Eksempel — trekk 5 kort fra 52, finn `P(eksakt 3 hjerter)` (`N = 52, A = 13, M = 39, k = 5, x = 3`):"
+        formula:
+          - "C(13, 3) = 286"
+          - "C(39, 2) = 741"
+          - "C(52, 5) = 2 598 960"
+          - "P = 286 · 741 / 2 598 960 ≈ 0.0815"
+        example: true
+      - { text: "Spesialtilfeller: `x = k` gir formelen i «Alle samme type»-fanen; `x = 0` gir formelen i «Ingen av type A»-fanen.", conditional: true }
+      - { text: "Identisk med hypergeometrisk-formelen `P(X = x) = C(K, x)·C(N − K, n − x)/C(N, n)` — bare med annet navn på variablene.", conditional: true }
+  - label: "Par-mønstre (m par)"
+    recognition: "«5 par sko/sokker/poser, trekk k poser — hva er sjansen for nøyaktig j par?». Når kategoriene er likeverdige par (hver av størrelse 2) er det ingen forhåndsbestemt «kategori A» — du må kombinere valg med multiplikasjonsprinsippet."
+    steps:
+      - text: "For disse formlene trenger du tre tall:"
+        formula:
+          - "m  = antall par"
+          - "N  = 2·m = totalt antall enkeltelementer"
+          - "k  = antall du trekker"
+      - text: "**Generell formel** — sannsynligheten for nøyaktig `j` komplette par i utvalget (`C(N, k)` er alltid nevneren):"
+        formula:
+          - "P(nøyaktig j par) = C(m, j) · C(m − j, k − 2j) · 2^(k − 2j) / C(N, k)"
+          - "Gyldig når: k − 2j ≥ 0  og  k − 2j ≤ m − j"
+      - text: "Tre vanlige spesialtilfeller (sett `j = 0, 1, 2` inn i den generelle):"
+        formula:
+          - "j=0  P(ingen par)       = C(m, k) · 2ᵏ              / C(N, k)"
+          - "j=1  P(nøyaktig 1 par)  = m · C(m−1, k−2) · 2^(k−2) / C(N, k)"
+          - "j=2  P(nøyaktig 2 par)  = C(m, 2) · C(m−2, k−4) · 2^(k−4) / C(N, k)"
+          - "     P(minst ett par)   = 1 − P(ingen par)"
+      - text: "Eksempel — `m = 5 par`, `N = 10`, `k = 4`:"
+        formula:
+          - "P(ingen par)      = C(5, 0)·C(5, 4)·2⁴ / C(10, 4) = 80/210 ≈ 0.381"
+          - "P(nøyaktig 1 par) = C(5, 1)·C(4, 2)·2² / C(10, 4) = 120/210 ≈ 0.571"
+          - "P(nøyaktig 2 par) = C(5, 2)·C(3, 0)·2⁰ / C(10, 4) = 10/210 ≈ 0.048"
+          - "Sjekk: 0.381 + 0.571 + 0.048 = 1.000 ✓"
+        example: true
+      - { text: "**For `k = 4`** er maks mulige par 2 (siden hvert par krever 2 plasser). For større `k`-verdier kan du få 3, 4, ... par — bare bruk samme generelle formel med `j = 3, 4, …` så lenge gyldighetsbetingelsene holder.", conditional: true }
+      - { text: "**Hvorfor passer ikke «alle k er A»-formelen?** Den krever én forhåndsbestemt kategori og at alle k kommer fra den. Med `k = 4` og parstørrelse 2 gir `C(2, 4) = 0` — alltid umulig. Her er det ikke ett par som er «kategorien», men hele systemet av m par.", conditional: true }
+
+  - label: "Blanding: k₁ fra A og k₂ fra B"
     recognition: "«Sannsynligheten for `k₁` røde og `k₂` blå i et utvalg av `k₁ + k₂`», «2 jenter og 3 gutter i komiteen». Hypergeometrisk-mønster."
     steps:
-      - "Identifiser `N` (total populasjon), `K_A` og `K_B` (antall i hver kategori), og `k₁`, `k₂` (antall trukket fra hver) der `k₁ + k₂ = k`"
-      - text: "Antall gunstige (uavhengige valg fra hver kategori, ganget sammen):"
-        formula: "C(K_A, k₁) · C(K_B, k₂)"
-      - "Antall mulige utvalg av `k`: `C(N, k)`"
-      - text: "Sannsynligheten:"
-        formula: "P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)"
+      - text: "For denne formelen trenger du fem tall: `N`, `A₁`, `A₂`, `k₁`, og `k₂`. Identifiser dem fra oppgaven:"
+        formula:
+          - "N   = total populasjon"
+          - "A₁  = antall i kategori 1 (røde, jenter, ...)"
+          - "A₂  = antall i kategori 2 (blå, gutter, ...) — typisk `A₂ = N − A₁`"
+          - "k₁  = antall du vil trekke fra kategori 1"
+          - "k₂  = antall du vil trekke fra kategori 2 (`k₁ + k₂ = k`)"
+      - text: "Sannsynligheten (gunstige = uavhengige valg fra hver kategori ganget sammen, over mulige `C(N, k)`):"
+        formula: "P = C(A₁, k₁) · C(A₂, k₂) / C(N, k)"
       - text: "Eksempel — komité med 2 jenter og 2 gutter fra klasse 10 J + 15 G:"
         formula: "P = C(10,2)·C(15,2) / C(25,4) = 45·105 / 12 650 ≈ 0.374"
         example: true
@@ -117,17 +180,20 @@ common_traps: |
   - **Gyldig område**: `0 ≤ k ≤ n`, og både `n` og `k` må være heltall.
     Ber oppgaven om `C(5, 7)` (`k > n`), er det `0` — eller en feillesning.
   - **Trekk uten tilbakelegging fra to kategorier**: bruk produktet
-    `C(K, k)·C(N − K, n − k)` for "nøyaktig `k` av type A blant `n` trukne",
-    delt på `C(N, n)`. Dette er hypergeometrisk sannsynlighet.
-  - **"Minst én"**: regn komplementet `1 − C(N − K, n)/C(N, n)` ("ingen
-    av type A"), ikke summer `P(1) + P(2) + …`. Vesentlig raskere.
+    `C(A₁, k₁)·C(A₂, k₂) / C(N, k)` for "nøyaktig `k₁` av type 1 og `k₂` av type 2
+    blant `k` trukne, `k₁ + k₂ = k`". Dette er hypergeometrisk sannsynlighet.
+  - **"Minst én"**: regn komplementet `1 − C(M, k)/C(N, k)` ("ingen av type A"),
+    ikke summer `P(1) + P(2) + …`. Vesentlig raskere.
   - **Symmetri**: `C(n, k) = C(n, n − k)`. Praktisk når `k` er nær `n` —
     f.eks. `C(20, 18) = C(20, 2) = 190`, slipper du å regne `20!/(18!·2!)` ut.
   - **Ikke bruk binomial**: når trekningen er uten tilbakelegging endrer `p`
-    seg underveis. Bruk hypergeometrisk/C-formel, ikke `(K/N)^k·(1−K/N)^(n−k)`.
+    seg underveis. Bruk hypergeometrisk/C-formel, ikke `(A/N)^k·(1−A/N)^(n−k)`.
+  - **Par-mønstre**: når populasjonen er `m` likeverdige par (sko, sokker,
+    batch-poser), bruk **par-fanen** — IKKE «alle k er A»-formelen (som gir
+    0 hvis `k > 2` fordi hvert par bare har 2 elementer).
 
 detailed_solution_variants:
-  - label: "Tell antall mulige utvalg"
+  - label: "Antall utvalg"
     solutions:
       - source: "Praksiseksempel · Lotto"
         question: "I norsk Lotto velger man 7 tall fra 34 mulige. På hvor mange måter kan dette gjøres?"
@@ -167,7 +233,7 @@ detailed_solution_variants:
               - { indent: "`= 2 598 960`" }
         result: "`C(52, 5) = 2 598 960` mulige hender"
 
-  - label: "Sannsynlighet: alle / ikke alle k er av samme type"
+  - label: "Alle (eller ikke alle) samme type"
     solutions:
       - source: "Praksis · sko i mørket"
         question: "I en mørk garderobe ligger det fem par sko i en haug. Du plukker tilfeldig opp to sko. Hva er sannsynligheten for at skoene du har plukket opp hører sammen (utgjør et par)?"
@@ -175,7 +241,7 @@ detailed_solution_variants:
           - label: "Identifisering"
             lines:
               - { text: "Totalt `N = 10` sko (5 par à 2). Vi plukker `k = 2`." }
-              - { text: "Hvert par utgjør en «kategori» med `K = 2` likeverdige sko. Det finnes 5 slike kategorier (parene)." }
+              - { text: "Hvert par utgjør en «kategori» med `A = 2` likeverdige sko. Det finnes 5 slike kategorier (parene)." }
               - { text: "«Skoene hører sammen» = begge fra SAMME par. Per par gjelder den vanlige formelen, og vi summerer over alle 5 parene." }
           - label: "Formel"
             lines:
@@ -194,21 +260,22 @@ detailed_solution_variants:
               - { comment: "Alternativt: plukk én sko (uansett), så er sjansen for matchende andre 1/9. Samme svar." }
         result: "`P(matchende par) = 1/9 ≈ 0.111` (11.1 %)"
 
-  - label: "Sannsynlighet: ingen av k er av en gitt type"
+  - label: "Ingen av type A"
     solutions:
       - source: "Praksiseksempel · ingen hjerter"
         question: "Vi trekker 5 kort fra en kortstokk med 52 kort, hvorav 13 er hjerter. Hva er sannsynligheten for at INGEN av de uttrukne er hjerter?"
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`N = 52` kort, `K = 13` hjerter (kategori A), `k = 5` trukne." }
-              - { text: "«Ingen hjerter» betyr at alle 5 kommer fra ikke-A-gruppen — de `N − K = 52 − 13 = 39` ikke-hjertene." }
+              - { text: "`N = 52` kort, `A = 13` hjerter (kategori A), `k = 5` trukne." }
+              - { text: "Antall IKKE i kategori A: `M = N − A = 52 − 13 = 39` ikke-hjerter." }
+              - { text: "«Ingen hjerter» betyr at alle 5 kommer fra `M`-gruppen." }
           - label: "Formel"
             lines:
-              - { text: "`P(ingen av k er A) = C(N − K, k) / C(N, k)`" }
+              - { text: "`P(ingen av k er A) = C(M, k) / C(N, k)`" }
           - label: "Innsatt"
             lines:
-              - { text: "Antall gunstige (5 valgt fra 39 ikke-hjerter):" }
+              - { text: "Antall gunstige (5 valgt fra `M = 39` ikke-hjerter):" }
               - { indent: "`C(39, 5) = 39! / (5! · 34!) = 575 757`" }
               - { text: "Antall mulige (5 kort blant 52):" }
               - { indent: "`C(52, 5) = 2 598 960`" }
@@ -217,19 +284,19 @@ detailed_solution_variants:
               - { comment: "Sjekk: dette er IKKE (1 − 13/52)^5 = 0.2373. Forskjellen kommer av at p endrer seg uten tilbakelegging." }
         result: "`P(ingen hjerter) ≈ 0.2215`"
 
-  - label: "Sannsynlighet: blanding fra to kategorier"
+  - label: "Blanding: k₁ fra A og k₂ fra B"
     solutions:
       - source: "Praksiseksempel · klassetilfeldighet"
         question: "En klasse har 25 studenter, hvorav 10 er jenter og 15 er gutter. Læreren skal velge tilfeldig en gruppe på 4 studenter til å presentere et prosjekt. Hva er sannsynligheten for at gruppen består av nøyaktig 2 jenter og 2 gutter?"
         sections:
           - label: "Identifisering"
             lines:
-              - { text: "`N = 25` studenter totalt, `K_A = 10` jenter, `K_B = 15` gutter." }
+              - { text: "`N = 25` studenter totalt, `A₁ = 10` jenter, `A₂ = 15` gutter." }
               - { text: "Vi velger `k = 4` studenter, der vi vil ha `k₁ = 2` jenter og `k₂ = 2` gutter (`k₁ + k₂ = k`)." }
               - { text: "Rekkefølgen spiller ingen rolle, og samme student kan ikke velges to ganger." }
           - label: "Formel"
             lines:
-              - { text: "`P = C(K_A, k₁) · C(K_B, k₂) / C(N, k)`" }
+              - { text: "`P = C(A₁, k₁) · C(A₂, k₂) / C(N, k)`" }
           - label: "Innsatt"
             lines:
               - { text: "Antall måter å velge 2 jenter blant 10:" }
@@ -254,7 +321,7 @@ detailed_solution_variants:
               - { text: "Vi må først velge HVILKEN valør som skal være firlingen (13 mulige valører), så telle utvalg." }
           - label: "Formel"
             lines:
-              - { text: "Per valg av valør: `C(K_A, k₁) · C(K_B, k₂)` med `K_A = 4` (kort av valøren), `k₁ = 4`, `K_B = 48` (alle andre kort), `k₂ = 1`." }
+              - { text: "Per valg av valør: `C(A₁, k₁) · C(A₂, k₂)` med `A₁ = 4` (kort av valøren), `k₁ = 4`, `A₂ = 48` (alle andre kort), `k₂ = 1`." }
               - { text: "Total gunstige: 13 · `C(4, 4) · C(48, 1)`" }
               - { text: "Sannsynlighet: `P = gunstige / C(N, k)`" }
           - label: "Innsatt"

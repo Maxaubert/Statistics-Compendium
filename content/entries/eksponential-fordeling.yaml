@@ -408,7 +408,9 @@ related:
   - { id: "poisson-fordeling",  kind: "entry" }
   - { id: "poisson-prosess",    kind: "glossary" }
   - { id: "normalfordeling",    kind: "entry" }
+  - { id: "geometrisk-fordeling", kind: "entry" }
   - { id: "komplementregelen",  kind: "entry" }
+  - { id: "hukommelsesloshet",  kind: "glossary" }
   - { id: "eksponentialvarians", kind: "glossary" }
   - { id: "lambda",             kind: "glossary" }
   - { id: "kumulativ",          kind: "glossary" }

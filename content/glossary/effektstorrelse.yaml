@@ -1,0 +1,54 @@
+id: effektstorrelse
+term_no: Effektstørrelse
+short_def: "Standardisert mål på hvor STOR forskjellen mellom grupper (eller fra null-hypotese) er, uavhengig av utvalgsstørrelse. Eks: Cohen's d = (μ₁ − μ₂)/σ."
+aliases:
+  - effektstørrelse
+  - effektstørrelsen
+  - effektstørrelser
+  - effektstørrelsene
+  - Cohen's d
+  - cohens d
+filters:
+  computes: [hypothesis_test, parameter_estimate]
+  structural_cues: [summary_stats_given]
+long_def: |
+  Effektstørrelse skiller seg fra p-verdi: p-verdi sier «er det signifikant»,
+  effektstørrelse sier «er det praktisk viktig».
+
+  ## Cohen's d (for to-utvalgs middel-forskjell)
+
+      d = (x̄_1 − x̄_2) / s_pooled
+
+  Standardene som ofte siteres (Cohen 1988):
+
+  | d | Tolkning |
+  |---|---|
+  | 0.2 | liten effekt |
+  | 0.5 | moderat |
+  | 0.8 | stor |
+
+  ## Hvorfor matter dette?
+
+  Med stort nok `n` blir TINY forskjeller statistisk signifikante. En
+  «signifikant» reduksjon i blodtrykk på 0.5 mmHg fra `n = 100 000`
+  pasienter er klinisk irrelevant. Effektstørrelsen avslører dette.
+
+  ## Effektstørrelser for andre tester
+
+  - **Korrelasjon**: `r` (Pearsons r er allerede en effektstørrelse — 0.1
+    liten, 0.3 moderat, 0.5 stor).
+  - **ANOVA**: `η²` (eta-squared) = `SSG/SST` — andel forklart varians.
+  - **Andelsforskjeller**: Cohen's h.
+  - **Kjikvadrat**: Cramér's V eller `φ` for 2×2-tabeller.
+
+  ## Bruk i styrkebergning
+
+  For å beregne nødvendig `n` for å oppdage en gitt effektstørrelse med
+  ønsket styrke (`1 − β`), trenger du å spesifisere d på forhånd. Større
+  effekt → mindre n nødvendig.
+see_also:
+  - { id: hypotesefeil-og-styrke, kind: entry }
+  - { id: pooled-varians, kind: glossary }
+  - { id: type-2-feil, kind: glossary }
+  - { id: styrkefunksjon, kind: glossary }
+  - { id: r-kvadrat, kind: glossary }
