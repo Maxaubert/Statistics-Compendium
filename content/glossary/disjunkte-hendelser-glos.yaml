@@ -52,5 +52,14 @@ aliases:
   - gjensidig utelukkende
 see_also:
   - { id: hendelse, kind: glossary }
-  - { id: unionssetningen, kind: entry }
   - { id: uavhengighet-glos, kind: glossary }
+  - { id: partisjon, kind: glossary }
+  - { id: komplement, kind: glossary }
+  - { id: mengdelaere, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: de-morgans-lov, kind: glossary }
+  - { id: unionssetningen, kind: entry }
+  - { id: produktregel, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: komplementregelen, kind: entry }

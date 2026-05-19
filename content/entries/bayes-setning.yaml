@@ -23,6 +23,7 @@ why_use: |
   og spam-klassifisering.
 
 recognition_cues:
+  - "**Hvilken regel?** Når oppgaven gir flere prosenter er det ofte én av disse fem reglene. Velg etter spørsmålet: «hva er `P(B)` totalt?» → [total sannsynlighet](/entry/total-sannsynlighet) · «gitt `B`, finn `P(A)`» → BAYES (denne) · «`P(A` og `B)`?» → [produktregel](/entry/produktregel) · «`P(A` eller `B)`?» → [unionssetningen](/entry/unionssetningen) · «minst én / ingen» → [komplementregelen](/entry/komplementregelen)."
   - "Oppgaven gir deg en betinget sannsynlighet i én retning (`P(B|A)`) og spør etter den motsatte (`P(A|B)`)"
   - "Ord som 'gitt at det spirer, hva er sannsynligheten for ringblomst?'"
   - "Diagnose- eller test-oppgaver: 'gitt at testen er positiv, hva er sannsynligheten for sykdom?'"
@@ -421,11 +422,20 @@ tags:
   - ringblomst
 
 related:
-  - { id: "produktregel",         kind: "entry" }
+  # Søsken-regler (de fire andre sannsynlighetsreglene)
   - { id: "total-sannsynlighet",  kind: "entry" }
+  - { id: "produktregel",         kind: "entry" }
+  - { id: "unionssetningen",      kind: "entry" }
+  - { id: "komplementregelen",    kind: "entry" }
+  # Sentrale glossary-begrep
   - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "uavhengighet-glos",    kind: "glossary" }
   - { id: "disjunkte-hendelser-glos", kind: "glossary" }
   - { id: "partisjon",            kind: "glossary" }
+  - { id: "komplement",           kind: "glossary" }
+  - { id: "mengdelaere",          kind: "glossary" }
+  - { id: "de-morgans-lov",       kind: "glossary" }
+  - { id: "hendelse",             kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, divisjon"

@@ -19,6 +19,7 @@ why_use: |
   og felles sannsynlighet.
 
 recognition_cues:
+  - "**Hvilken regel?** Når oppgaven gir flere prosenter er det ofte én av disse fem reglene. Velg etter spørsmålet: «hva er `P(B)` totalt?» → [total sannsynlighet](/entry/total-sannsynlighet) · «gitt `B`, finn `P(A)`» → [Bayes' setning](/entry/bayes-setning) · «`P(A` og `B)`?» → PRODUKTREGEL (denne) · «`P(A` eller `B)`?» → [unionssetningen](/entry/unionssetningen) · «minst én / ingen» → [komplementregelen](/entry/komplementregelen)."
   - "Sekvensielle hendelser, der den andre avhenger av den første"
   - "Spørsmålet involverer 'gitt at `A` inntreffer' eller 'først, så'"
   - "Du har `P(A)` og `P(B|A)`, eller du vil finne `P(B|A)` fra `P(A ∩ B)`"
@@ -281,12 +282,19 @@ detailed_solution_variants:
         result: "`P(A | B̄) = 0.10` — uendret av betingelsen siden hendelsene er uavhengige"
 
 related:
-  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
-  - { id: "uavhengighet-glos", kind: "glossary" }
+  # Søsken-regler
   - { id: "bayes-setning",          kind: "entry" }
   - { id: "total-sannsynlighet",    kind: "entry" }
   - { id: "unionssetningen",        kind: "entry" }
   - { id: "komplementregelen",      kind: "entry" }
+  # Sentrale glossary-begrep
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "uavhengighet-glos",      kind: "glossary" }
+  - { id: "disjunkte-hendelser-glos", kind: "glossary" }
+  - { id: "partisjon",              kind: "glossary" }
+  - { id: "komplement",             kind: "glossary" }
+  - { id: "mengdelaere",            kind: "glossary" }
+  - { id: "de-morgans-lov",         kind: "glossary" }
   - { id: "hendelse",               kind: "glossary" }
 
 tools:

@@ -20,6 +20,7 @@ why_use: |
   utregning.
 
 recognition_cues:
+  - "**Hvilken regel?** Når oppgaven gir flere prosenter er det ofte én av disse fem reglene. Velg etter spørsmålet: «hva er `P(B)` totalt?» → [total sannsynlighet](/entry/total-sannsynlighet) · «gitt `B`, finn `P(A)`» → [Bayes' setning](/entry/bayes-setning) · «`P(A` og `B)`?» → [produktregel](/entry/produktregel) · «`P(A` eller `B)`?» → [unionssetningen](/entry/unionssetningen) · «minst én / ingen» → KOMPLEMENTREGELEN (denne)."
   - "Spørsmålet inneholder ord som 'minst én', 'minst `k`', 'færre enn `k`', 'ingen', 'høyst `k`', 'ikke alle'"
   - "Direkte beregning av det som spørres etter ville kreve sum over mange utfall"
   - "Negasjonen (det motsatte) er enklere å beskrive enn det spørsmålet ber om"
@@ -354,11 +355,21 @@ detailed_solution_variants:
         result: "`n = 7`"
 
 related:
+  # Søsken-regler
   - { id: "unionssetningen",   kind: "entry" }
+  - { id: "produktregel",      kind: "entry" }
+  - { id: "bayes-setning",     kind: "entry" }
+  - { id: "total-sannsynlighet", kind: "entry" }
+  # Fordelinger der komplement er nyttig
   - { id: "binomial-fordeling", kind: "entry" }
   - { id: "poisson-fordeling", kind: "entry" }
+  # Glossary
   - { id: "komplement",        kind: "glossary" }
   - { id: "de-morgans-lov",    kind: "glossary" }
+  - { id: "mengdelaere",       kind: "glossary" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "uavhengighet-glos", kind: "glossary" }
+  - { id: "disjunkte-hendelser-glos", kind: "glossary" }
   - { id: "hendelse",          kind: "glossary" }
 
 tools:

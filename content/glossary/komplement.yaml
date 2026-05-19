@@ -19,5 +19,12 @@ long_def: |
       P(minst én treff) = 1 − P(null treff) = 1 − (1 − p)^n
 see_also:
   - { id: komplementregelen, kind: entry }
-  - { id: hendelse, kind: glossary }
   - { id: unionssetningen, kind: entry }
+  - { id: produktregel, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: hendelse, kind: glossary }
+  - { id: de-morgans-lov, kind: glossary }
+  - { id: mengdelaere, kind: glossary }
+  - { id: disjunkte-hendelser-glos, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }

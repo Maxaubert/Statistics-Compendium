@@ -27,4 +27,10 @@ aliases:
 see_also:
   - { id: total-sannsynlighet, kind: entry }
   - { id: bayes-setning, kind: entry }
+  - { id: produktregel, kind: entry }
+  - { id: unionssetningen, kind: entry }
+  - { id: komplementregelen, kind: entry }
   - { id: disjunkte-hendelser-glos, kind: glossary }
+  - { id: mengdelaere, kind: glossary }
+  - { id: komplement, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }

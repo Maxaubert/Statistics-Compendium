@@ -10,18 +10,39 @@ aliases:
   - de-morgans-lover
 long_def: |
   De Morgans to lover gir deg en måte å flytte et komplement inn eller
-  ut av et union/snitt-uttrykk:
+  ut av et union/snitt-uttrykk. Komplementet (overstreken) gjelder HELE
+  uttrykket på den ene siden:
 
-      A̅ ∩ B̅ = A ∪ B̅
+      «ikke (A eller B)»  =  «ikke A og ikke B»
+      «ikke (A og B)»     =  «ikke A eller ikke B»
 
-      A̅ ∪ B̅ = A ∩ B̅
+  Med komplement-notasjon:
+
+      (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ
+      (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ
 
   Brukes ofte for å forenkle uttrykk som "verken `A` eller `B`" eller
   "ikke begge". Sammen med komplementregelen gir det en kraftig måte å
   regne ut sammensatte sannsynligheter.
 
-  **Eksempel:** `P(M̅ ∩ F̅) = P(M ∪ F̅) = 1 − P(M ∪ F)`.
+  **Sannsynlighetsversjon** (anvend `P(Eᶜ) = 1 − P(E)`):
+
+      P(Aᶜ ∩ Bᶜ) = 1 − P(A ∪ B)        («ingen av delene»)
+      P(Aᶜ ∪ Bᶜ) = 1 − P(A ∩ B)        («ikke begge»)
+
+  **Eksempel** — «sannsynligheten for at en kunde verken bestiller
+  mat eller drikke», gitt `P(M) = 0.7`, `P(D) = 0.6`, `P(M ∩ D) = 0.5`:
+
+      P(M ∪ D) = 0.7 + 0.6 − 0.5 = 0.8
+      P(Mᶜ ∩ Dᶜ) = 1 − P(M ∪ D) = 1 − 0.8 = 0.2
 see_also:
   - { id: unionssetningen, kind: entry }
   - { id: komplementregelen, kind: entry }
+  - { id: produktregel, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: mengdelaere, kind: glossary }
+  - { id: komplement, kind: glossary }
+  - { id: betinget-sannsynlighet-glos, kind: glossary }
+  - { id: disjunkte-hendelser-glos, kind: glossary }
   - { id: hendelse, kind: glossary }

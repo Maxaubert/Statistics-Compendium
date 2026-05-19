@@ -18,6 +18,7 @@ why_use: |
   `P(A)`, `P(Ā)`, og spør etter `P(B)`. Også grunnsteinen i Bayes' setning.
 
 recognition_cues:
+  - "**Hvilken regel?** Når oppgaven gir flere prosenter er det ofte én av disse fem reglene. Velg etter spørsmålet: «hva er `P(B)` totalt?» → TOTAL SANNSYNLIGHET (denne) · «gitt `B`, finn `P(A)`» → [Bayes' setning](/entry/bayes-setning) · «`P(A` og `B)`?» → [produktregel](/entry/produktregel) · «`P(A` eller `B)`?» → [unionssetningen](/entry/unionssetningen) · «minst én / ingen» → [komplementregelen](/entry/komplementregelen)."
   - "Du er gitt betingede sannsynligheter `P(B|A)` og `P(B|Ā)`"
   - "Du vil finne den marginale (totale) sannsynligheten `P(B)`"
   - "Spørsmålet handler om 'hva er sjansen for `B` totalt sett?'"
@@ -161,12 +162,21 @@ detailed_solution_variants:
         result: "`P(+) = 0.0594` (5.94 %)"
 
 related:
-  - { id: "produktregel",          kind: "entry" }
-  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  # Søsken-regler (de fire andre sannsynlighetsreglene)
   - { id: "bayes-setning",         kind: "entry" }
+  - { id: "produktregel",          kind: "entry" }
+  - { id: "unionssetningen",       kind: "entry" }
+  - { id: "komplementregelen",     kind: "entry" }
+  # Sentrale glossary-begrep
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
   - { id: "partisjon",             kind: "glossary" }
+  - { id: "uavhengighet-glos",     kind: "glossary" }
   - { id: "disjunkte-hendelser-glos", kind: "glossary" }
+  - { id: "komplement",            kind: "glossary" }
+  - { id: "mengdelaere",           kind: "glossary" }
+  - { id: "de-morgans-lov",        kind: "glossary" }
   - { id: "total-sannsynlighet-glos", kind: "glossary" }
+  - { id: "hendelse",              kind: "glossary" }
 
 tools:
   - "Kalkulator: multiplikasjon, addisjon"

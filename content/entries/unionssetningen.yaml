@@ -18,6 +18,7 @@ why_use: |
   ekskludering for tre eller flere hendelser.
 
 recognition_cues:
+  - "**Hvilken regel?** Når oppgaven gir flere prosenter er det ofte én av disse fem reglene. Velg etter spørsmålet: «hva er `P(B)` totalt?» → [total sannsynlighet](/entry/total-sannsynlighet) · «gitt `B`, finn `P(A)`» → [Bayes' setning](/entry/bayes-setning) · «`P(A` og `B)`?» → [produktregel](/entry/produktregel) · «`P(A` eller `B)`?» → UNIONSSETNINGEN (denne) · «minst én / ingen» → [komplementregelen](/entry/komplementregelen)."
   - "Spørsmålet ber om `P(A ∪ B)`, '`A` eller `B`', eller 'minst én av to hendelser'"
   - "Du har `P(A)`, `P(B)`, og `P(A ∩ B)` (eventuelt `0` hvis disjunkte)"
   - "Venndiagram med to overlappende sirkler"
@@ -287,9 +288,18 @@ detailed_solution_variants:
         result: "`P(bare treningskort) = 0.20` (20 %)"
 
 related:
+  # Søsken-regler
   - { id: "komplementregelen",  kind: "entry" }
   - { id: "produktregel",       kind: "entry" }
+  - { id: "bayes-setning",      kind: "entry" }
+  - { id: "total-sannsynlighet", kind: "entry" }
+  # Glossary
   - { id: "disjunkte-hendelser-glos", kind: "glossary" }
+  - { id: "uavhengighet-glos",  kind: "glossary" }
+  - { id: "betinget-sannsynlighet-glos", kind: "glossary" }
+  - { id: "partisjon",          kind: "glossary" }
+  - { id: "komplement",         kind: "glossary" }
+  - { id: "mengdelaere",        kind: "glossary" }
   - { id: "de-morgans-lov",     kind: "glossary" }
   - { id: "hendelse",           kind: "glossary" }
 

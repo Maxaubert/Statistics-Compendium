@@ -1,0 +1,3 @@
+bootstrapping
+enveis-anova
+geometrisk-fordeling

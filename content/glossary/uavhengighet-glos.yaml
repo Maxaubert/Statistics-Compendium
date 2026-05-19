@@ -66,6 +66,12 @@ see_also:
   - { id: disjunkte-hendelser-glos, kind: glossary }
   - { id: betinget-sannsynlighet-glos, kind: glossary }
   - { id: mengdelaere, kind: glossary }
+  - { id: komplement, kind: glossary }
+  - { id: partisjon, kind: glossary }
+  - { id: de-morgans-lov, kind: glossary }
   - { id: produktregel, kind: entry }
   - { id: unionssetningen, kind: entry }
+  - { id: bayes-setning, kind: entry }
+  - { id: total-sannsynlighet, kind: entry }
+  - { id: komplementregelen, kind: entry }
   - { id: kovarians, kind: entry }
