@@ -1,325 +1,249 @@
-start: n_start
-nodes:
-  - id: n_start
-    question: "Hva slags oppgave er dette?"
-    options:
-      - label: "Sannsynlighetsregning – kombinere hendelser (P(A∪B), P(A|B), Bayes...)"
-        next: n_regler
-      - label: "Tilfeldig variabel med en kjent fordeling (poisson, binomial, normal...)"
-        next: n_fordeling
-      - label: "Simultanfordeling – tabell over P(X=x, Y=y)"
-        next: n_joint
-      - label: "Telle utfall – gunstige/mulige, kombinatorikk"
-        next: n_telling
-      - label: "Lineær regresjon – data med (x, y)-par"
-        next: n_regresjon
-      - label: "Hypotesetest eller konfidensintervall"
-        next: n_inferens
-      - label: "Beskrivende statistikk fra rådata (s², bootstrap, resampling)"
-        next: n_beskrivende
+version: 2
 
-  - id: n_regler
-    question: "Hva er du på jakt etter?"
-    options:
-      - label: "P(A ∪ B) – union, eller 'minst ett av flere'"
-        leads_to:
-          - { id: unionssetningen, kind: entry }
-      - label: "P(A ∩ B) – begge skjer, eller sekvensiell trekking"
-        leads_to:
-          - { id: produktregel, kind: entry }
-      - label: "P(A | B) – betinget sannsynlighet"
-        leads_to:
-          - { id: betinget-sannsynlighet-glos, kind: glossary }
-          - { id: produktregel, kind: entry }
-      - label: "P(Ā) – komplement, 'ikke A', eller 'minst én' via 1 − P(ingen)"
-        leads_to:
-          - { id: komplementregelen, kind: entry }
-      - label: "Total sannsynlighet (P(B|A_i) og P(A_i) gitt for flere i)"
-        leads_to:
-          - { id: total-sannsynlighet, kind: entry }
-      - label: "Bayes – snu en betinget sannsynlighet (gitt P(B|A), finn P(A|B))"
-        leads_to:
-          - { id: bayes-setning, kind: entry }
-      - label: "Sjekk om hendelser er uavhengige"
-        leads_to:
-          - { id: uavhengighet-glos, kind: glossary }
-      - label: "De Morgan – komplement av union eller snitt"
-        leads_to:
-          - { id: de-morgans-lov, kind: glossary }
-      - label: "Sjekk om hendelser er disjunkte (gjensidig utelukkende)"
-        leads_to:
-          - { id: disjunkte-hendelser-glos, kind: glossary }
+# Soft-scoring veiviser: hvert spørsmål akkumulerer poeng på entry-tags.
+# «Vet ikke» (skip: true) er alltid det siste alternativet og gir 0 poeng.
+# Topp 5 entries med høyest match-score vises til slutt.
+#
+# Tag-strukturen følger content/filters.yaml. Når du legger til nye
+# spørsmål, sjekk at tag-verdiene faktisk eksisterer der.
 
-  - id: n_fordeling
-    question: "Diskret eller kontinuerlig?"
-    options:
-      - label: "Diskret – jeg teller hendelser eller forsøk"
-        next: n_diskret
-      - label: "Kontinuerlig – målinger på en skala"
-        next: n_kontinuerlig
+questions:
+  # ===== Q1-Q3: brede sortering — utelukker ingenting =====
 
-  - id: n_diskret
-    question: "Hva karakteriserer oppgaven?"
+  - id: q_variable
+    text: "Hva slags variabel håndterer oppgaven?"
+    why: "Avgjør om vi snakker diskret fordeling (binomial, Poisson, hypergeom.) eller kontinuerlig (normal, eksponential)."
     options:
-      - label: "Fast antall n forsøk, hver med samme suksesssannsynlighet p"
-        next: n_diskret_fast_n
-      - label: "Antall forsøk til FØRSTE suksess, p gitt (geometrisk fordeling)"
-        leads_to:
-          - { id: geometrisk-fordeling, kind: entry }
-      - label: "Hendelser kommer som de kommer, rate λ gitt (poissonprosess)"
-        leads_to:
-          - { id: poisson-fordeling, kind: entry }
-          - { id: poisson-prosess, kind: glossary }
-      - label: "Trekker uten tilbakelegging fra endelig pott"
-        leads_to:
-          - { id: hypergeometrisk-fordeling, kind: entry }
-      - label: "Fordelingen er gitt som en tabell P(X=x_i) – ingen kjent navngitt fordeling"
-        leads_to:
-          - { id: diskret-stokastisk-variabel, kind: entry }
-      - label: "Spørsmålet sier 'minst én', 'ingen', 'ikke alle' eller 'færre enn k'"
-        leads_to:
-          - { id: komplementregelen, kind: entry }
-      - label: "Bare bla i OVERSIKT over E(X), Var(X), σ for diskrete fordelinger"
-        leads_to:
-          - { id: forventningsverdi-oversikt, kind: entry }
-          - { id: varians-oversikt, kind: entry }
-          - { id: standardavvik-oversikt, kind: entry }
+      - label: "Antall noe — teller suksesser, defekte, hendelser"
+        tags: { random_variable: [discrete_count] }
+      - label: "Måling på en skala — vekt, lengde, tid, temperatur"
+        tags: { random_variable: [continuous] }
+      - label: "Tid til neste hendelse / levetid"
+        tags:
+          random_variable: [time_until_event]
+          structural_cues: [time_until_first]
+      - label: "Gjennomsnitt eller sum av flere observasjoner"
+        tags: { random_variable: [mean_of_samples, sum_of_samples] }
+      - label: "Andel (X av n suksesser)"
+        tags: { random_variable: [proportion] }
+      - label: "Sammenheng mellom to variabler (x, y)"
+        tags:
+          random_variable: [slope_estimate]
+          setup: [linear_relationship]
+      - { skip: true }
 
-  - id: n_diskret_fast_n
-    question: "Med tilbakelegging?"
+  - id: q_goal
+    text: "Hva spør oppgaven om?"
+    why: "Skiller sannsynlighetsberegning fra inferens (test/KI) fra rene tellinger."
     options:
-      - label: "Ja (eller uavhengige forsøk)"
-        leads_to:
-          - { id: binomial-fordeling, kind: entry }
-      - label: "Nei (endelig pott)"
-        leads_to:
-          - { id: hypergeometrisk-fordeling, kind: entry }
+      - label: "Beregne en sannsynlighet (P(X = k), P(a < X < b), «minst én»)"
+        tags: { computes: [exact_probability, at_least_k, range_probability] }
+      - label: "Forventet verdi E[X]"
+        tags: { computes: [expected_value] }
+      - label: "Varians, standardavvik, kovarians eller korrelasjon"
+        tags: { computes: [std_dev, covariance, correlation] }
+      - label: "Hypotesetest"
+        tags: { computes: [hypothesis_test] }
+      - label: "Konfidensintervall"
+        tags: { computes: [confidence_interval] }
+      - label: "Telle antall muligheter (kombinatorikk)"
+        tags: { computes: [combinatorial_count] }
+      - label: "Snu en betinget sannsynlighet (jeg kjenner P(B|A), leter etter P(A|B))"
+        tags:
+          computes: [conditional_probability]
+          structural_cues: [andel_og_rate_per_gruppe]
+      - label: "P(A ∪ B) — «A eller B», eller sjekke om hendelser er DISJUNKTE"
+        tags:
+          computes: [union_probability]
+          structural_cues: [disjoint_events]
+      - label: "P(A ∩ B) — «A og B begge», eller sjekke om hendelser er UAVHENGIGE"
+        tags:
+          computes: [joint_probability, conditional_probability, test_independence]
+          structural_cues: [independent_events]
+      - label: "Beregne punktestimat (x̄, s², p̂, β̂) fra rådata"
+        tags:
+          computes: [parameter_estimate]
+          structural_cues: [data_as_list]
+      - { skip: true }
 
-  - id: n_kontinuerlig
-    question: "Hva slags variabel?"
+  - id: q_groups
+    text: "Hvor mange grupper eller utvalg er involvert?"
+    why: "Skiller én-utvalgs-tester fra to-utvalgs, paret, og ANOVA."
     options:
-      - label: "Tid TIL første hendelse, rate gitt"
-        leads_to:
-          - { id: eksponential-fordeling, kind: entry }
-      - label: "Normalfordeling antatt eller mistenkt"
-        next: n_normal
-      - label: "Sum av flere uavhengige normalfordelte (Y = X₁+X₂+...+Xₙ)"
-        leads_to:
-          - { id: sum-uavhengige-normaler, kind: entry }
+      - label: "Ett utvalg fra én populasjon"
+        tags: { setup: [single_population] }
+      - label: "To uavhengige grupper (forskjellige individer i hver)"
+        tags: { setup: [two_independent_samples] }
+      - label: "Parede observasjoner (samme individ målt to ganger, før/etter)"
+        tags: { setup: [paired_samples] }
+      - label: "Tre eller flere uavhengige grupper"
+        tags: { setup: [three_plus_samples] }
+      - label: "Ingen utvalg — bare hendelser eller en kjent fordeling"
+        tags: {}
+      - { skip: true }
 
-  - id: n_normal
-    question: "Hva spørres det om for X ~ N(μ, σ)?"
-    options:
-      - label: "Sannsynlighet for et område P(X<a), P(a<X<b), P(X>a)"
-        leads_to:
-          - { id: normalfordeling, kind: entry }
-          - { id: normalisering, kind: glossary }
-      - label: "Finn μ slik at en gitt sannsynlighet oppfylles (invers)"
-        leads_to:
-          - { id: normalfordeling, kind: entry }
-          - { id: normalisering, kind: glossary }
-      - label: "Konfidensintervall for μ – σ kjent"
-        leads_to:
-          - { id: ki-mu-og-varians, kind: entry }
-      - label: "Konfidensintervall for μ – σ ukjent"
-        leads_to:
-          - { id: ki-mu-og-varians, kind: entry }
-          - { id: utvalgsvarians-radata, kind: entry }
-      - label: "Hypotesetest om μ – σ kjent"
-        next: n_sidedness_z_mu
-      - label: "Hypotesetest om μ – σ ukjent"
-        next: n_sidedness_t_mu
-      - label: "Hypotesetest om median (ikke-parametrisk / ingen normalfordeling)"
-        leads_to:
-          - { id: wilcoxon-tegn-rang, kind: entry }
-          - { id: ikke-parametrisk, kind: glossary }
+  # ===== Q4+: skarpere — diskrimerer mellom tester/fordelinger =====
 
-  - id: n_sidedness_z_mu
-    question: "Tosidig eller ensidig test?"
+  - id: q_replacement
+    text: "Trekkes elementene med eller uten tilbakelegging?"
+    why: "Skiller binomial (med) fra hypergeometrisk (uten)."
     options:
-      - label: "Tosidig (H₁: μ ≠ μ₀)"
-        leads_to:
-          - { id: en-utvalg-z-test, kind: entry }
-      - label: "Ensidig (H₁: μ < μ₀ eller H₁: μ > μ₀)"
-        leads_to:
-          - { id: en-utvalg-z-test, kind: entry }
+      - label: "Med tilbakelegging — eller forsøkene er uavhengige"
+        tags:
+          setup: [with_replacement, fixed_n_trials]
+          structural_cues: [independent_events]
+      - label: "Uten tilbakelegging fra endelig pott"
+        tags:
+          setup: [without_replacement, finite_pool]
+          distribution_assumption: [hypergeometric]
+      - label: "Ikke relevant — det handler om rate eller måling"
+        tags: {}
+      - { skip: true }
 
-  - id: n_sidedness_t_mu
-    question: "Tosidig eller ensidig test? (σ må først estimeres via s² – se utvalgsvarians)"
+  - id: q_trial_structure
+    text: "Hvordan er forsøkene strukturert?"
+    why: "Skiller binomial (fast n) fra Poisson (rate i tidsvindu) fra geometrisk (til første)."
     options:
-      - label: "Tosidig (H₁: μ ≠ μ₀)"
-        leads_to:
-          - { id: en-utvalg-t-test, kind: entry }
-          - { id: utvalgsvarians-radata, kind: entry }
-      - label: "Ensidig (H₁: μ < μ₀ eller H₁: μ > μ₀)"
-        leads_to:
-          - { id: en-utvalg-t-test, kind: entry }
-          - { id: utvalgsvarians-radata, kind: entry }
+      - label: "Fast antall n forsøk, hver med samme p"
+        tags:
+          setup: [fixed_n_trials]
+          parameters_known: [success_p]
+          distribution_assumption: [binomial]
+      - label: "Hendelser kommer over tid med rate λ"
+        tags:
+          setup: [events_in_window]
+          parameters_known: [rate_lambda]
+          structural_cues: [process_over_time, counting_events]
+          distribution_assumption: [poisson]
+      - label: "Teller forsøk til FØRSTE suksess"
+        tags:
+          setup: [trials_until_event]
+          structural_cues: [time_until_first]
+          distribution_assumption: [geometric]
+      - label: "Ingen forsøk — kontinuerlig måling / oppgitt fordeling"
+        tags: {}
+      - { skip: true }
 
-  - id: n_joint
-    question: "Hva spørres det om fra simultanfordelingstabellen?"
+  - id: q_sigma_known
+    text: "Er populasjonens standardavvik σ kjent?"
+    why: "z-test/KI krever kjent σ. t-test brukes når vi bare har utvalgets s."
     options:
-      - label: "Marginalfordeling P(X=x) eller P(Y=y) – rad/kolonne-summer"
-        leads_to:
-          - { id: marginalfordeling, kind: entry }
-          - { id: simultanfordeling, kind: glossary }
-      - label: "Forventningsverdi E(X), E(Y), eller E(XY)"
-        leads_to:
-          - { id: diskret-stokastisk-variabel, kind: entry }
-      - label: "Varians eller standardavvik for X eller Y"
-        leads_to:
-          - { id: diskret-stokastisk-variabel, kind: entry }
-      - label: "Kovarians Cov(X, Y)"
-        leads_to:
-          - { id: kovarians, kind: entry }
-      - label: "Korrelasjon ρ(X, Y)"
-        leads_to:
-          - { id: korrelasjon-joint, kind: entry }
-      - label: "Er X og Y uavhengige? (sjekk om P(X=x, Y=y) = P(X=x)·P(Y=y) for alle celler)"
-        leads_to:
-          - { id: marginalfordeling, kind: entry }
-          - { id: uavhengighet-glos, kind: glossary }
+      - label: "Ja — σ er oppgitt i tekst eller via N(μ, σ)"
+        tags:
+          parameters_known: [population_variance_known]
+          distribution_assumption: [normal]
+      - label: "Nei — bare utvalgets s er beregnet/oppgitt"
+        tags:
+          parameters_known: [population_variance_unknown]
+          distribution_assumption: [t_distribution]
+      - label: "Ikke relevant — oppgaven handler ikke om μ"
+        tags: {}
+      - { skip: true }
 
-  - id: n_telling
-    question: "Hva slags telleproblem?"
+  - id: q_data_shape
+    text: "Hvordan er dataene presentert?"
+    why: "Skiller rådata-oppgaver fra summary-stats fra simultantabeller fra kontingenstabeller."
     options:
-      - label: "Trekker k objekter fra n UTEN tilbakelegging (uordnet, kortstokk-stil)"
-        leads_to:
-          - { id: uordnet-utvalg-uten-tilbakelegging, kind: entry }
-      - label: "Trekker k objekter fra n MED tilbakelegging (uordnet — multiset / kombinasjon med repetisjon)"
-        leads_to:
-          - { id: uordnet-utvalg-med-tilbakelegging, kind: entry }
-      - label: "Antall ordnede sekvenser med tilbakelegging (passord, PIN)"
-        leads_to:
-          - { id: ordnet-utvalg-med-tilbakelegging, kind: entry }
-      - label: "Antall ordnede sekvenser uten tilbakelegging (nPk)"
-        leads_to:
-          - { id: ordnet-utvalg-uten-tilbakelegging, kind: entry }
-      - label: "Beregne P som gunstige/mulige (uniform sannsynlighet)"
-        leads_to:
-          - { id: gunstige-pa-mulige, kind: entry }
+      - label: "Rå datalinje (x₁, x₂, …)"
+        tags: { structural_cues: [data_as_list] }
+      - label: "Oppsummeringstall (gj.snitt, s, n) er gitt"
+        tags: { structural_cues: [summary_stats_given] }
+      - label: "Simultantabell P(X = x, Y = y)"
+        tags: { computes: [joint_probability, marginal_probability] }
+      - label: "Kontingenstabell (rad × kolonne med observerte antall)"
+        tags:
+          computes: [test_independence]
+          distribution_assumption: [chi_squared]
+      - label: "Bare antall i tre eller flere kategorier"
+        tags:
+          structural_cues: [more_than_two_categories]
+          distribution_assumption: [chi_squared]
+      - label: "Ingen tabell — fortolkningsoppgave"
+        tags: {}
+      - { skip: true }
 
-  - id: n_regresjon
-    question: "Hva er du på jakt etter?"
+  - id: q_complement_wording
+    text: "Står det «minst én», «ingen», «høyst k» eller «ikke alle» i oppgaven?"
+    why: "Disse fraseringene løses lettest med komplementregelen."
     options:
-      - label: "Multippel regresjon — modellen har FLERE forklaringsvariabler (x₁, x₂, …, x_p)"
-        leads_to:
-          - { id: multippel-regresjon, kind: entry }
-      - label: "Estimere regresjonslinja (α̂, β̂) ut fra data"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Korrelasjonskoeffisient r"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Test om β = 0 (er det signifikant lineær sammenheng?)"
-        next: n_sidedness_regresjon
-      - label: "Prediksjonsintervall for ŷ ved gitt x"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Standardfeil for stigningstallet SE(β̂)"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Residualvarians S_E²"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Spredningsplott / visualisere data"
-        leads_to:
-          - { id: spredningsplott, kind: glossary }
+      - label: "Ja, en av disse fraseringene står der"
+        tags:
+          structural_cues: [complement_pattern]
+          computes: [at_least_k]
+      - label: "Nei — eksakt antall, område, eller annen formulering"
+        tags: {}
+      - { skip: true }
 
-  - id: n_sidedness_regresjon
-    question: "Tosidig eller ensidig test for β?"
+  - id: q_parameters_given
+    text: "Hvilke parametre er eksplisitt oppgitt i teksten?"
+    why: "Skiller f.eks. Poisson (λ) fra binomial (n, p) fra normal (μ, σ)."
     options:
-      - label: "Tosidig (H₁: β ≠ 0) – standard 'finnes det noen sammenheng?'"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
-      - label: "Ensidig (H₁: β < 0 eller H₁: β > 0) – retning oppgitt"
-        leads_to:
-          - { id: lineaer-regresjon, kind: entry }
+      - label: "Rate λ per tidsenhet (f.eks. «2 kunder per minutt»)"
+        tags:
+          parameters_known: [rate_lambda]
+          distribution_assumption: [poisson, exponential]
+      - label: "Sannsynlighet p per forsøk"
+        tags:
+          parameters_known: [success_p]
+          distribution_assumption: [binomial, geometric]
+      - label: "Forventning μ (og evt. σ) for en fordeling"
+        tags: { parameters_known: [mean_known] }
+      - label: "Stigningstall β̂ og standardfeil SE(β̂) for regresjonslinje"
+        tags:
+          parameters_known: [slope_se, regression_line_estimate]
+          setup: [linear_relationship]
+      - label: "Ingen parametre — bare rådata"
+        tags: { structural_cues: [data_as_list] }
+      - { skip: true }
 
-  - id: n_inferens
-    question: "Hva slags inferens?"
+  - id: q_test_sidedness
+    text: "Hvis det er hypotesetest — er den ensidig eller tosidig?"
+    why: "Påvirker p-verdi og kritisk verdi. Tosidig: H₁: ≠. Ensidig: H₁: < eller >."
     options:
-      - label: "Vis OVERSIKT over alle hypotesetester (klikkbare kort med 'når brukes hva')"
-        leads_to:
-          - { id: test-oversikt, kind: entry }
-      - label: "Test eller KI for gjennomsnitt μ"
-        next: n_normal
-      - label: "Test eller KI for andel p"
-        next: n_andel
-      - label: "KI for poissonrate λ"
-        leads_to:
-          - { id: ki-poissonrate, kind: entry }
-      - label: "KI for varians σ² eller standardavvik σ (ett utvalg)"
-        leads_to:
-          - { id: ki-mu-og-varians, kind: entry }
-      - label: "KI for differanse mellom to gjennomsnitt μ_X − μ_Y eller to andeler p_X − p_Y"
-        leads_to:
-          - { id: ki-to-utvalg, kind: entry }
-      - label: "Hypotesetest for VARIANS (én utvalg: σ² mot σ₀², eller to utvalg: σ_X² = σ_Y²)"
-        leads_to:
-          - { id: test-varians, kind: entry }
-      - label: "Test om to grupper har samme μ — UAVHENGIGE utvalg (to-utvalgs t-test)"
-        next: n_sidedness_to_utvalg
-      - label: "Test om to grupper har samme μ — PARETE observasjoner (samme individ målt før/etter, eller matchede par)"
-        leads_to:
-          - { id: paret-t-test, kind: entry }
-          - { id: paret-test, kind: glossary }
-      - label: "Test om TRE eller FLERE grupper har samme μ (enveis ANOVA, F-test)"
-        leads_to:
-          - { id: enveis-anova, kind: entry }
-      - label: "Test om to grupper er like — IKKE-parametrisk (ingen normalfordeling antatt)"
-        leads_to:
-          - { id: mann-whitney-wilcoxon, kind: entry }
-          - { id: ikke-parametrisk, kind: glossary }
-      - label: "Goodness-of-fit (passer dataene en gitt fordeling?)"
-        leads_to:
-          - { id: kjikvadrat-goodness-of-fit, kind: entry }
-      - label: "Kontingenstabell med observerte tall i kategorier – test for uavhengighet/sammenheng"
-        leads_to:
-          - { id: kjikvadrat-uavhengighet, kind: entry }
-      - label: "Hypotesetest om regresjons-stigningstall β = 0"
-        next: n_sidedness_regresjon
-      - label: "Type I-feil, Type II-feil eller test-styrke (β-funksjon, power)"
-        leads_to:
-          - { id: hypotesefeil-og-styrke, kind: entry }
-          - { id: type-1-feil, kind: glossary }
-          - { id: type-2-feil, kind: glossary }
+      - label: "Tosidig (H₁: ≠ μ₀, ≠ p₀, ≠ 0)"
+        tags: { structural_cues: [two_sided_alternative] }
+      - label: "Ensidig (H₁: < eller >)"
+        tags: { structural_cues: [one_sided_alternative] }
+      - label: "Ikke en hypotesetest"
+        tags: {}
+      - { skip: true }
 
-  - id: n_sidedness_to_utvalg
-    question: "Tosidig eller ensidig to-utvalgs t-test?"
+  - id: q_normal_assumed
+    text: "Antas dataene å være normalfordelt?"
+    why: "Normalantakelse låser opp z-test og t-test. Hvis ikke: ikke-parametriske alternativer."
     options:
-      - label: "Tosidig (H₁: μ₁ ≠ μ₂)"
-        leads_to:
-          - { id: to-utvalgs-t-test, kind: entry }
-      - label: "Ensidig (H₁: μ₁ < μ₂ eller H₁: μ₁ > μ₂)"
-        leads_to:
-          - { id: to-utvalgs-t-test, kind: entry }
+      - label: "Ja — oppgaven sier «normalfordelt» eller bruker N(μ, σ)"
+        tags:
+          structural_cues: [normal_assumed]
+          distribution_assumption: [normal, t_distribution]
+      - label: "Nei — oppgaven sier eksplisitt at de IKKE er normalfordelt"
+        tags:
+          distribution_assumption: [none_assumed]
+          structural_cues: [rank_based_data]
+      - label: "Ikke relevant / oppgaven sier ingenting om fordeling"
+        tags: {}
+      - { skip: true }
 
-  - id: n_andel
-    question: "Hva spørres det om for andelen p?"
+  - id: q_lookup_table
+    text: "Hvilken tabell (vedlegg E.1–E.8) ser det ut til å trenge?"
+    why: "Hvis du gjenkjenner tabellen, peker det rett på testtypen."
     options:
-      - label: "Konfidensintervall for p"
-        leads_to:
-          - { id: ki-andel-binomial, kind: entry }
-      - label: "Test om p = p₀"
-        next: n_sidedness_z_andel
-
-  - id: n_sidedness_z_andel
-    question: "Tosidig eller ensidig test for andel?"
-    options:
-      - label: "Tosidig (H₁: p ≠ p₀)"
-        leads_to:
-          - { id: en-utvalg-z-test-andel, kind: entry }
-      - label: "Ensidig (H₁: p < p₀ eller H₁: p > p₀)"
-        leads_to:
-          - { id: en-utvalg-z-test-andel, kind: entry }
-
-  - id: n_beskrivende
-    question: "Hva trenger du fra rådataene?"
-    options:
-      - label: "Utvalgsvarians s² eller utvalgsstandardavvik s fra en datarad"
-        leads_to:
-          - { id: utvalgsvarians-radata, kind: entry }
-      - label: "Bootstrap / resampling – estimere usikkerhet uten fordelingsantakelse"
-        leads_to:
-          - { id: bootstrapping, kind: entry }
+      - label: "E.1 binomialtabell — kumulativ P(X ≤ k)"
+        tags: { tooling: [cumulative_binomial_table_E1] }
+      - label: "E.2 poissontabell"
+        tags: { tooling: [cumulative_poisson_table_E2] }
+      - label: "E.3 standardnormal Z-tabell"
+        tags: { tooling: [standard_normal_table_E3] }
+      - label: "E.4 Z-kvantiltabell (z_α)"
+        tags: { tooling: [normal_quantile_table_E4] }
+      - label: "E.5 t-tabell"
+        tags: { tooling: [t_quantile_table_E5] }
+      - label: "E.6 kjikvadrattabell"
+        tags: { tooling: [chi_square_quantile_table_E6] }
+      - label: "E.7 Mann-Whitney U-tabell"
+        tags: { tooling: [mann_whitney_table_E7] }
+      - label: "E.8 F-tabell (ANOVA / varianslikhet)"
+        tags: { tooling: [f_quantile_table_E8] }
+      - label: "Ingen tabell — kalkulator/formel direkte"
+        tags: { tooling: [calculator_only] }
+      - { skip: true }

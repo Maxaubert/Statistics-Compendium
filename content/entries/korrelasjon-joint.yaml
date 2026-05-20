@@ -32,8 +32,9 @@ symbols:
   - { sym: "σ_X, σ_Y", means: "standardavvikene til X og Y" }
 
 filters:
-  computes: [correlation, covariance, std_dev]
+  computes: [correlation, covariance, std_dev, joint_probability, marginal_probability]
   random_variable: [discrete_count]
+  setup: [single_population]
   structural_cues: [summary_stats_given, linear_relationship_suspected]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]

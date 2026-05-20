@@ -1,0 +1,180 @@
+--- bayes-setning ---
+name_no: Betinget sannsynlighet — Bayes' setning
+filters: {'computes': ['conditional_probability', 'exact_probability', 'marginal_probability', 'joint_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['conditional_given', 'more_than_two_categories', 'independent_events', 'conditioning_on_complement', 'andel_og_rate_per_gruppe'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- binomial-fordeling ---
+name_no: Binomialfordeling
+filters: {'computes': ['exact_probability', 'at_least_k', 'range_probability', 'find_n_for_threshold', 'expected_value'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'fixed_n_trials', 'with_replacement'], 'structural_cues': ['two_outcomes_per_trial', 'independent_events', 'complement_pattern', 'counting_events', 'probability_threshold', 'no_occurrences', 'all_same_type'], 'parameters_known': ['success_p'], 'distribution_assumption': ['binomial'], 'tooling': ['cumulative_binomial_table_E1', 'standard_normal_table_E3', 'calculator_binomial_coef', 'calculator_sqrt']}
+
+--- bootstrapping ---
+name_no: Bootstrapping
+filters: {'computes': ['confidence_interval', 'parameter_estimate', 'std_dev'], 'random_variable': ['continuous', 'mean_of_samples'], 'setup': ['single_population', 'with_replacement'], 'structural_cues': ['data_as_list', 'summary_stats_given'], 'parameters_known': ['population_variance_unknown', 'confidence_level', 'sample_size_small_lt30'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- diskret-stokastisk-variabel ---
+name_no: Forventningsverdi, varians og standardavvik (diskret stokastisk variabel)
+filters: {'computes': ['expected_value', 'std_dev', 'marginal_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['summary_stats_given', 'data_as_list'], 'parameters_known': ['mean_known'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only', 'calculator_sqrt']}
+
+--- eksponential-fordeling ---
+name_no: Eksponentialfordeling
+filters: {'computes': ['exact_probability', 'range_probability', 'expected_value', 'find_x_for_threshold', 'conditional_probability'], 'random_variable': ['continuous', 'time_until_event'], 'setup': ['single_population', 'events_in_window'], 'structural_cues': ['process_over_time', 'independent_events', 'time_until_first', 'complement_pattern', 'no_occurrences', 'probability_threshold'], 'parameters_known': ['rate_lambda'], 'distribution_assumption': ['exponential'], 'tooling': ['calculator_exp']}
+
+--- en-utvalg-t-test ---
+name_no: Én-utvalg t-test
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['single_population'], 'structural_cues': ['normal_assumed', 'data_as_list', 'summary_stats_given', 'two_sided_alternative', 'one_sided_alternative'], 'parameters_known': ['population_variance_unknown', 'mean_known', 'sample_size_small_lt30', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['t_distribution', 'normal'], 'tooling': ['t_quantile_table_E5', 'calculator_sqrt']}
+
+--- en-utvalg-z-test ---
+name_no: Én-utvalg z-test
+filters: {'computes': ['hypothesis_test', 'find_x_for_threshold', 'find_n_for_threshold'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['single_population'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'two_sided_alternative', 'one_sided_alternative', 'probability_threshold'], 'parameters_known': ['population_variance_known', 'sample_size_large', 'mean_known', 'alpha_significance'], 'distribution_assumption': ['normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- en-utvalg-z-test-andel ---
+name_no: Z-test for andel p
+filters: {'computes': ['hypothesis_test', 'find_n_for_threshold'], 'random_variable': ['proportion', 'discrete_count'], 'setup': ['single_population', 'fixed_n_trials', 'with_replacement'], 'structural_cues': ['two_outcomes_per_trial', 'independent_events', 'summary_stats_given', 'two_sided_alternative', 'one_sided_alternative'], 'parameters_known': ['success_p', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['binomial', 'normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- enveis-anova ---
+name_no: Enveis variansanalyse (ANOVA, F-test for 3+ grupper)
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['three_plus_samples'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'data_as_list', 'one_sided_alternative'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['f_distribution', 'normal'], 'tooling': ['f_quantile_table_E8', 'calculator_sqrt']}
+
+--- forventningsverdi-oversikt ---
+name_no: Forventningsverdi (oversikt)
+filters: {'computes': ['expected_value'], 'random_variable': ['discrete_count', 'continuous'], 'setup': ['single_population'], 'structural_cues': ['data_as_list', 'summary_stats_given'], 'parameters_known': ['mean_known', 'rate_lambda'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- geometrisk-fordeling ---
+name_no: Geometrisk fordeling
+filters: {'computes': ['exact_probability', 'at_least_k', 'range_probability', 'expected_value', 'std_dev', 'find_n_for_threshold'], 'random_variable': ['discrete_count', 'time_until_event'], 'setup': ['single_population', 'trials_until_event', 'with_replacement'], 'structural_cues': ['independent_events', 'two_outcomes_per_trial', 'complement_pattern', 'probability_threshold', 'time_until_first', 'no_occurrences'], 'parameters_known': ['success_p'], 'distribution_assumption': ['geometric'], 'tooling': ['calculator_only']}
+
+--- gunstige-pa-mulige ---
+name_no: Gunstige på mulige (uniform sannsynlighetsfordeling)
+filters: {'computes': ['exact_probability', 'combinatorial_count'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'without_replacement', 'finite_pool'], 'structural_cues': ['independent_events'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only', 'calculator_binomial_coef']}
+
+--- hypergeometrisk-fordeling ---
+name_no: Hypergeometrisk fordeling
+filters: {'computes': ['exact_probability', 'at_least_k', 'range_probability', 'combinatorial_count', 'expected_value'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'without_replacement', 'finite_pool', 'fixed_n_trials'], 'structural_cues': ['two_outcomes_per_trial', 'complement_pattern', 'counting_events', 'mixed_categories', 'no_occurrences'], 'parameters_known': ['success_p'], 'distribution_assumption': ['hypergeometric'], 'tooling': ['calculator_binomial_coef']}
+
+--- hypotesefeil-og-styrke ---
+name_no: Hypotesefeil og styrke (Type I, Type II, γ(θ))
+filters: {'computes': ['hypothesis_test', 'find_n_for_threshold'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['single_population'], 'structural_cues': ['normal_assumed', 'probability_threshold', 'one_sided_alternative', 'two_sided_alternative'], 'parameters_known': ['population_variance_known', 'alpha_significance', 'mean_known', 'sample_size_large'], 'distribution_assumption': ['normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- ki-andel-binomial ---
+name_no: Konfidensintervall for andel p (binomial)
+filters: {'computes': ['confidence_interval', 'parameter_estimate', 'find_n_for_threshold'], 'random_variable': ['proportion', 'discrete_count'], 'setup': ['single_population', 'fixed_n_trials', 'with_replacement'], 'structural_cues': ['two_outcomes_per_trial', 'independent_events', 'summary_stats_given', 'probability_threshold'], 'parameters_known': ['success_p', 'sample_size_large', 'confidence_level'], 'distribution_assumption': ['binomial', 'normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- ki-mu-og-varians ---
+name_no: Konfidensintervall for μ, σ² og σ (ett utvalg)
+filters: {'computes': ['confidence_interval', 'parameter_estimate', 'find_n_for_threshold', 'std_dev', 'hypothesis_test'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['single_population'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'data_as_list', 'probability_threshold'], 'parameters_known': ['population_variance_known', 'population_variance_unknown', 'sample_size_small_lt30', 'sample_size_large', 'confidence_level'], 'distribution_assumption': ['normal', 't_distribution', 'chi_squared'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 't_quantile_table_E5', 'chi_square_quantile_table_E6', 'calculator_sqrt']}
+
+--- ki-poissonrate ---
+name_no: Konfidensintervall for poissonrate λ
+filters: {'computes': ['confidence_interval', 'parameter_estimate'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'events_in_window'], 'structural_cues': ['process_over_time', 'counting_events', 'summary_stats_given', 'independent_events'], 'parameters_known': ['rate_lambda', 'confidence_level', 'sample_size_large'], 'distribution_assumption': ['poisson', 'normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- ki-to-utvalg ---
+name_no: Konfidensintervall for to utvalg
+filters: {'computes': ['confidence_interval', 'parameter_estimate', 'find_n_for_threshold'], 'random_variable': ['difference_of_means', 'proportion', 'mean_of_samples', 'continuous'], 'setup': ['two_independent_samples'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'data_as_list', 'two_outcomes_per_trial'], 'parameters_known': ['population_variance_known', 'population_variance_unknown', 'sample_size_small_lt30', 'sample_size_large', 'confidence_level', 'success_p'], 'distribution_assumption': ['normal', 't_distribution', 'binomial'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 't_quantile_table_E5', 'calculator_sqrt']}
+
+--- kjikvadrat-goodness-of-fit ---
+name_no: Kjikvadrat-tilpasningstest
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['more_than_two_categories', 'summary_stats_given', 'counting_events'], 'parameters_known': ['alpha_significance', 'sample_size_large', 'rate_lambda'], 'distribution_assumption': ['chi_squared', 'poisson'], 'tooling': ['chi_square_quantile_table_E6']}
+
+--- kjikvadrat-uavhengighet ---
+name_no: Kjikvadrat-test for uavhengighet
+filters: {'computes': ['hypothesis_test', 'test_independence'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['more_than_two_categories', 'summary_stats_given', 'independent_events'], 'parameters_known': ['alpha_significance', 'sample_size_large'], 'distribution_assumption': ['chi_squared'], 'tooling': ['chi_square_quantile_table_E6']}
+
+--- komplementregelen ---
+name_no: Komplementregelen
+filters: {'computes': ['exact_probability', 'at_least_k', 'find_n_for_threshold'], 'random_variable': ['discrete_count', 'continuous', 'time_until_event'], 'setup': ['single_population'], 'structural_cues': ['complement_pattern', 'independent_events', 'time_until_first', 'no_occurrences', 'probability_threshold', 'all_same_type'], 'distribution_assumption': ['none_assumed', 'binomial', 'poisson', 'normal', 'exponential'], 'tooling': ['calculator_only']}
+
+--- korrelasjon-joint ---
+name_no: Korrelasjon ρ(X,Y) for fellesfordeling
+filters: {'computes': ['correlation', 'covariance', 'std_dev'], 'random_variable': ['discrete_count'], 'structural_cues': ['summary_stats_given', 'linear_relationship_suspected'], 'parameters_known': ['mean_known'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_sqrt']}
+
+--- kovarians ---
+name_no: Kovarians Cov(X,Y)
+filters: {'computes': ['covariance', 'expected_value', 'std_dev', 'test_independence'], 'random_variable': ['discrete_count'], 'structural_cues': ['summary_stats_given', 'independent_events'], 'parameters_known': ['mean_known'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- lineaer-regresjon ---
+name_no: Lineær regresjon og korrelasjon (Pearson r)
+filters: {'computes': ['parameter_estimate', 'std_dev', 'hypothesis_test', 'prediction_interval', 'correlation', 'find_x_for_threshold', 'confidence_interval', 'test_independence'], 'random_variable': ['slope_estimate', 'continuous'], 'setup': ['single_population', 'linear_relationship'], 'structural_cues': ['linear_relationship_suspected', 'data_as_list', 'summary_stats_given', 'normal_assumed', 'two_sided_alternative', 'one_sided_alternative'], 'parameters_known': ['slope_se', 'residual_variance', 'sum_xx_sxy', 'confidence_level', 'alpha_significance', 'population_variance_unknown', 'regression_line_estimate'], 'distribution_assumption': ['t_distribution', 'normal', 'none_assumed'], 'tooling': ['t_quantile_table_E5', 'calculator_sqrt', 'calculator_only']}
+
+--- mann-whitney-wilcoxon ---
+name_no: Mann-Whitney-Wilcoxon-test (uparet, ikke-parametrisk)
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['continuous', 'difference_of_means'], 'setup': ['two_independent_samples'], 'structural_cues': ['data_as_list', 'two_sided_alternative', 'one_sided_alternative', 'rank_based_data'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30', 'alpha_significance'], 'distribution_assumption': ['none_assumed'], 'tooling': ['mann_whitney_table_E7']}
+
+--- marginalfordeling ---
+name_no: Simultanfordeling: marginal, E/Var og ρ
+filters: {'computes': ['marginal_probability', 'exact_probability', 'expected_value', 'std_dev', 'covariance', 'correlation', 'test_independence'], 'random_variable': ['discrete_count'], 'structural_cues': ['summary_stats_given', 'linear_relationship_suspected', 'independent_events'], 'parameters_known': ['mean_known'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only', 'calculator_sqrt']}
+
+--- multippel-regresjon ---
+name_no: Multippel lineær regresjon
+filters: {'computes': ['parameter_estimate', 'hypothesis_test', 'confidence_interval', 'correlation'], 'random_variable': ['continuous', 'slope_estimate'], 'setup': ['single_population', 'linear_relationship'], 'structural_cues': ['linear_relationship_suspected', 'data_as_list', 'summary_stats_given', 'normal_assumed', 'two_sided_alternative'], 'parameters_known': ['slope_se', 'residual_variance', 'confidence_level', 'alpha_significance', 'regression_line_estimate'], 'distribution_assumption': ['t_distribution', 'normal', 'f_distribution'], 'tooling': ['t_quantile_table_E5', 'f_quantile_table_E8', 'calculator_sqrt']}
+
+--- normalfordeling ---
+name_no: Normalfordeling
+filters: {'computes': ['exact_probability', 'range_probability', 'find_mu_for_threshold', 'find_x_for_threshold', 'find_n_for_threshold'], 'random_variable': ['continuous', 'mean_of_samples'], 'setup': ['single_population'], 'structural_cues': ['normal_assumed', 'complement_pattern', 'probability_threshold'], 'parameters_known': ['population_variance_known', 'mean_known', 'sample_size_large'], 'distribution_assumption': ['normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- ordnet-utvalg-med-tilbakelegging ---
+name_no: Ordnet utvalg med tilbakelegging (telling + P)
+filters: {'computes': ['combinatorial_count', 'exact_probability'], 'random_variable': ['discrete_count'], 'setup': ['with_replacement', 'fixed_n_trials'], 'structural_cues': ['complement_pattern', 'independent_events', 'no_occurrences', 'all_same_type'], 'parameters_known': ['success_p'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- ordnet-utvalg-uten-tilbakelegging ---
+name_no: Ordnet utvalg uten tilbakelegging (permutasjoner, P(n,k))
+filters: {'computes': ['combinatorial_count', 'exact_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'without_replacement', 'finite_pool'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_factorial', 'calculator_only']}
+
+--- paret-t-test ---
+name_no: Paret t-test
+filters: {'computes': ['hypothesis_test', 'confidence_interval'], 'random_variable': ['mean_of_samples', 'continuous'], 'setup': ['paired_samples'], 'structural_cues': ['normal_assumed', 'data_as_list', 'summary_stats_given', 'two_sided_alternative', 'one_sided_alternative'], 'parameters_known': ['population_variance_unknown', 'mean_known', 'sample_size_small_lt30', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['t_distribution', 'normal'], 'tooling': ['t_quantile_table_E5', 'calculator_sqrt']}
+
+--- poisson-fordeling ---
+name_no: Poissonfordeling
+filters: {'computes': ['exact_probability', 'at_least_k', 'range_probability', 'expected_value', 'find_n_for_threshold'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'events_in_window'], 'structural_cues': ['process_over_time', 'independent_events', 'counting_events', 'complement_pattern', 'no_occurrences', 'probability_threshold'], 'parameters_known': ['rate_lambda'], 'distribution_assumption': ['poisson'], 'tooling': ['cumulative_poisson_table_E2', 'standard_normal_table_E3', 'calculator_exp', 'calculator_factorial', 'calculator_sqrt']}
+
+--- produktregel ---
+name_no: Produktregelen og betinget sannsynlighet
+filters: {'computes': ['exact_probability', 'conditional_probability', 'joint_probability', 'test_independence'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'without_replacement', 'with_replacement', 'finite_pool'], 'structural_cues': ['conditional_given', 'independent_events', 'conditioning_on_complement', 'andel_og_rate_per_gruppe'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- standardavvik-oversikt ---
+name_no: Standardavvik (oversikt)
+filters: {'computes': ['std_dev'], 'random_variable': ['discrete_count', 'continuous', 'mean_of_samples', 'sum_of_samples', 'proportion'], 'setup': ['single_population'], 'structural_cues': ['data_as_list', 'summary_stats_given'], 'parameters_known': ['population_variance_known', 'population_variance_unknown', 'success_p'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_sqrt']}
+
+--- sum-uavhengige-normaler ---
+name_no: Lineær kombinasjon av uavhengige normaler
+filters: {'computes': ['exact_probability', 'range_probability', 'expected_value', 'std_dev', 'find_x_for_threshold'], 'random_variable': ['sum_of_samples', 'mean_of_samples', 'continuous', 'difference_of_means'], 'setup': ['single_population', 'fixed_n_trials', 'two_independent_samples'], 'structural_cues': ['normal_assumed', 'independent_events'], 'parameters_known': ['mean_known', 'population_variance_known', 'sample_size_large'], 'distribution_assumption': ['normal'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 'calculator_sqrt']}
+
+--- test-oversikt ---
+name_no: Hypotesetester (oversikt)
+filters: {'computes': ['hypothesis_test'], 'setup': ['single_population', 'two_independent_samples', 'three_plus_samples', 'paired_samples', 'linear_relationship'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'one_sided_alternative', 'two_sided_alternative', 'rank_based_data'], 'distribution_assumption': ['normal', 't_distribution', 'chi_squared', 'f_distribution', 'none_assumed'], 'tooling': ['standard_normal_table_E3', 'normal_quantile_table_E4', 't_quantile_table_E5', 'chi_square_quantile_table_E6', 'mann_whitney_table_E7', 'f_quantile_table_E8']}
+
+--- test-varians ---
+name_no: Test for varians eller standardavvik (χ² for σ² og F-test for σ_X² = σ_Y²)
+filters: {'computes': ['hypothesis_test', 'std_dev'], 'random_variable': ['continuous'], 'setup': ['single_population', 'two_independent_samples'], 'structural_cues': ['normal_assumed', 'summary_stats_given', 'one_sided_alternative', 'two_sided_alternative'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['chi_squared', 'f_distribution', 'normal'], 'tooling': ['chi_square_quantile_table_E6', 'f_quantile_table_E8', 'calculator_sqrt']}
+
+--- to-utvalgs-t-test ---
+name_no: To-utvalgs t-test (uparet, pooled)
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['difference_of_means', 'mean_of_samples', 'continuous'], 'setup': ['two_independent_samples'], 'structural_cues': ['normal_assumed', 'data_as_list', 'summary_stats_given', 'two_sided_alternative', 'one_sided_alternative'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30', 'sample_size_large', 'alpha_significance'], 'distribution_assumption': ['t_distribution', 'normal'], 'tooling': ['t_quantile_table_E5', 'calculator_sqrt']}
+
+--- total-sannsynlighet ---
+name_no: Setningen om total sannsynlighet
+filters: {'computes': ['exact_probability', 'marginal_probability', 'conditional_probability', 'joint_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['conditional_given', 'more_than_two_categories', 'disjoint_events', 'conditioning_on_complement', 'andel_og_rate_per_gruppe'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- unionssetningen ---
+name_no: Unionssetningen
+filters: {'computes': ['exact_probability', 'union_probability', 'joint_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population'], 'structural_cues': ['disjoint_events', 'independent_events', 'complement_pattern', 'no_occurrences'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+
+--- uordnet-utvalg-med-tilbakelegging ---
+name_no: Uordnet utvalg med tilbakelegging (multimengder / stars and bars)
+filters: {'computes': ['combinatorial_count', 'exact_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'with_replacement'], 'structural_cues': ['counting_events'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_binomial_coef', 'calculator_factorial']}
+
+--- uordnet-utvalg-uten-tilbakelegging ---
+name_no: Uordnet utvalg uten tilbakelegging (telling + P)
+filters: {'computes': ['combinatorial_count', 'exact_probability'], 'random_variable': ['discrete_count'], 'setup': ['single_population', 'without_replacement', 'finite_pool'], 'structural_cues': ['complement_pattern', 'all_same_type', 'mixed_categories', 'no_occurrences'], 'distribution_assumption': ['none_assumed', 'hypergeometric'], 'tooling': ['calculator_binomial_coef', 'calculator_factorial']}
+
+--- utvalgsvarians-radata ---
+name_no: Utvalgsvarians fra rådata
+filters: {'computes': ['std_dev', 'parameter_estimate'], 'random_variable': ['discrete_count', 'continuous', 'mean_of_samples'], 'setup': ['single_population'], 'structural_cues': ['data_as_list', 'summary_stats_given'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_sqrt']}
+
+--- varians-oversikt ---
+name_no: Varians (oversikt)
+filters: {'computes': ['std_dev'], 'random_variable': ['discrete_count', 'continuous'], 'setup': ['single_population', 'two_independent_samples', 'linear_relationship'], 'structural_cues': ['data_as_list', 'summary_stats_given'], 'parameters_known': ['population_variance_unknown'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_sqrt']}
+
+--- wilcoxon-tegn-rang ---
+name_no: Wilcoxon tegn-rangtest (én-utvalg / paret, ikke-parametrisk)
+filters: {'computes': ['hypothesis_test'], 'random_variable': ['continuous', 'mean_of_samples'], 'setup': ['single_population', 'paired_samples'], 'structural_cues': ['data_as_list', 'two_sided_alternative', 'one_sided_alternative', 'rank_based_data'], 'parameters_known': ['population_variance_unknown', 'sample_size_small_lt30', 'alpha_significance'], 'distribution_assumption': ['none_assumed'], 'tooling': ['calculator_only']}
+

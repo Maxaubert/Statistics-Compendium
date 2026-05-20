@@ -211,31 +211,29 @@ describe("GlossaryTermSchema", () => {
   });
 });
 
-describe("WizardSchema", () => {
-  it("parses minimal valid tree", () => {
+describe("WizardSchema (v2)", () => {
+  it("parses minimal valid v2 config", () => {
     const r = WizardSchema.parse({
-      start: "n0",
-      nodes: [
+      version: 2,
+      questions: [
         {
-          id: "n0",
-          question: "Diskret eller kontinuerlig?",
+          id: "q_test",
+          text: "Diskret eller kontinuerlig?",
           options: [
-            { label: "Diskret", next: "n1" },
-            {
-              label: "Kontinuerlig",
-              leads_to: [{ id: "normalfordeling", kind: "entry" }],
-            },
-          ],
-        },
-        {
-          id: "n1",
-          question: "Fast antall forsøk?",
-          options: [
-            { label: "Ja", leads_to: [{ id: "binomial-fordeling", kind: "entry" }] },
+            { label: "Diskret", tags: { random_variable: ["discrete_count"] } },
+            { label: "Kontinuerlig", tags: { random_variable: ["continuous"] } },
+            { skip: true },
           ],
         },
       ],
     });
-    expect(r.nodes).toHaveLength(2);
+    expect(r.questions).toHaveLength(1);
+    expect(r.questions[0].options[2].skip).toBe(true);
+  });
+
+  it("rejects version 1 config (old wizard format)", () => {
+    expect(() =>
+      WizardSchema.parse({ start: "n0", nodes: [] }),
+    ).toThrow();
   });
 });

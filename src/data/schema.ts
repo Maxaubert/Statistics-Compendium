@@ -341,26 +341,42 @@ export const GlossaryTermSchema = z.object({
 });
 export type GlossaryTerm = z.infer<typeof GlossaryTermSchema>;
 
-// ============ Wizard ============
+// ============ Wizard (v2 — soft-scoring) ============
 
+/**
+ * One pickable answer in a wizard question. `tags` accumulates evidence
+ * across the existing entry filter dimensions (random_variable, setup,
+ * structural_cues, ...). `skip: true` marks the option as «Vet ikke» —
+ * it contributes no score and no max-score, so the user can answer
+ * partially without eliminating any candidates.
+ */
 export const WizardOptionSchema = z.object({
-  label: z.string(),
-  next: z.string().optional(),
-  leads_to: z.array(RelatedRefSchema).optional(),
+  label: z.string().optional(),
+  skip: z.boolean().optional(),
+  tags: z.record(z.string(), z.array(z.string())).optional(),
+  weight: z.number().positive().optional(),
 });
 
-export const WizardNodeSchema = z.object({
+export const WizardQuestionSchema = z.object({
   id: z.string(),
-  question: z.string(),
+  text: z.string(),
+  /** Optional one-line hint shown under the question, explaining why we ask. */
+  why: z.string().optional(),
   options: z.array(WizardOptionSchema),
 });
 
+/**
+ * Top-level v2 wizard config. Questions are answered one at a time but
+ * are otherwise independent — there is no branching tree. The final
+ * recommendation is the top-N entries by accumulated tag-match score.
+ */
 export const WizardSchema = z.object({
-  start: z.string(),
-  nodes: z.array(WizardNodeSchema),
+  version: z.literal(2),
+  questions: z.array(WizardQuestionSchema),
 });
+
 export type WizardOption = z.infer<typeof WizardOptionSchema>;
-export type WizardNode = z.infer<typeof WizardNodeSchema>;
+export type WizardQuestion = z.infer<typeof WizardQuestionSchema>;
 export type Wizard = z.infer<typeof WizardSchema>;
 
 export const FiltersSchema = z.object({

@@ -39,7 +39,7 @@ symbols:
 filters:
   computes: [exact_probability, at_least_k, find_n_for_threshold]
   random_variable: [discrete_count, continuous, time_until_event]
-  setup: [single_population]
+  setup: [single_population, without_replacement, finite_pool]
   structural_cues: [complement_pattern, independent_events, time_until_first, no_occurrences, probability_threshold, all_same_type]
   distribution_assumption: [none_assumed, binomial, poisson, normal, exponential]
   tooling: [calculator_only]
