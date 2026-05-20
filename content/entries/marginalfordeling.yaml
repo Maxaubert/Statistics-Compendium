@@ -42,8 +42,9 @@ symbols:
   - { sym: "P(Y = y)",        means: "marginalsannsynlighet for Y (kolonnesum)" }
 
 filters:
-  computes: [marginal_probability, exact_probability, expected_value, std_dev, covariance, correlation, test_independence]
+  computes: [marginal_probability, joint_probability, exact_probability, expected_value, std_dev, covariance, correlation, test_independence]
   random_variable: [discrete_count]
+  setup: [single_population]
   structural_cues: [summary_stats_given, linear_relationship_suspected, independent_events]
   parameters_known: [mean_known]
   distribution_assumption: [none_assumed]

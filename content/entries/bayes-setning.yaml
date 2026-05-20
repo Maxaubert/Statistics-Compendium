@@ -47,7 +47,7 @@ filters:
   computes: [conditional_probability, exact_probability, marginal_probability, joint_probability]
   random_variable: [discrete_count]
   setup: [single_population]
-  structural_cues: [conditional_given, more_than_two_categories, independent_events, conditioning_on_complement, andel_og_rate_per_gruppe, complement_pattern]
+  structural_cues: [conditional_given, more_than_two_categories, conditioning_on_complement, andel_og_rate_per_gruppe, complement_pattern]
   distribution_assumption: [none_assumed]
   tooling: [calculator_only]
 solution_variants:

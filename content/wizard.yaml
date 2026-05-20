@@ -185,7 +185,6 @@ questions:
       - label: "Sannsynlighet p per forsøk"
         tags:
           parameters_known: [success_p]
-          distribution_assumption: [binomial, geometric]
       - label: "Forventning μ (og evt. σ) for en fordeling"
         tags: { parameters_known: [mean_known] }
       - label: "Stigningstall β̂ og standardfeil SE(β̂) for regresjonslinje"

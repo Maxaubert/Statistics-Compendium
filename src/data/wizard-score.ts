@@ -24,6 +24,16 @@ export interface EntryMatch {
    * Lets specific-match entries beat broad-match entries.
    */
   coverage: number;
+  /**
+   * Inverse-filter-size weighted match. For each matched (dim, value),
+   * contributes 1 / |entry.filters[dim]|. Tie-break #3: rewards entries
+   * with NARROWER filter lists (more specialized). An entry with
+   * `computes: [parameter_estimate, std_dev]` (size 2) beats one with
+   * `computes: [parameter_estimate, std_dev, expected_value, ...]`
+   * (size 5) when both match the same value, because the first is more
+   * unambiguously about that concept.
+   */
+  specificity: number;
 }
 
 /**
@@ -36,12 +46,15 @@ export interface EntryMatch {
 function scoreOption(
   entry: Entry,
   option: WizardOption,
-): { score: number; max: number; coverage: number } {
-  if (option.skip || !option.tags) return { score: 0, max: 0, coverage: 0 };
+): { score: number; max: number; coverage: number; specificity: number } {
+  if (option.skip || !option.tags) {
+    return { score: 0, max: 0, coverage: 0, specificity: 0 };
+  }
   const weight = option.weight ?? 1;
   let score = 0;
   let max = 0;
   let coverage = 0;
+  let specificity = 0;
   for (const [dim, values] of Object.entries(option.tags)) {
     if (values.length === 0) continue;
     max += weight;
@@ -50,9 +63,10 @@ function scoreOption(
     if (overlap > 0) {
       score += weight;
       coverage += overlap;
+      specificity += overlap / entryValues.length;
     }
   }
-  return { score, max, coverage };
+  return { score, max, coverage, specificity };
 }
 
 /**
@@ -86,11 +100,13 @@ export function scoreEntries(
     let score = 0;
     let max = 0;
     let coverage = 0;
+    let specificity = 0;
     for (const option of resolvedOptions) {
       const r = scoreOption(entry, option);
       score += r.score;
       max += r.max;
       coverage += r.coverage;
+      specificity += r.specificity;
     }
     return {
       entry,
@@ -98,6 +114,7 @@ export function scoreEntries(
       maxScore: max,
       matchPct: max > 0 ? score / max : 0,
       coverage,
+      specificity,
     };
   });
 }
@@ -112,10 +129,14 @@ export function topMatches(matches: EntryMatch[], n: number = 5): EntryMatch[] {
     .filter((m) => m.score > 0)
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // Tie-break by per-value coverage so specific-match entries beat
-      // broad-match entries (e.g., unionssetningen beats binomial-fordeling
-      // when the user picked the union-specific Q2 option).
+      // Tie-break 1: per-value coverage — entries that cover MORE of the
+      // option's listed tag values win over ones that cover fewer.
       if (b.coverage !== a.coverage) return b.coverage - a.coverage;
+      // Tie-break 2: specificity — entries with NARROWER filter lists
+      // win (more focused entries score higher per-value). Catches the
+      // case where utvalgsvarians-radata (computes size 2) should beat
+      // ki-mu-og-varians (computes size 5) on a punktestimat question.
+      if (b.specificity !== a.specificity) return b.specificity - a.specificity;
       if (b.matchPct !== a.matchPct) return b.matchPct - a.matchPct;
       return a.entry.name_no.localeCompare(b.entry.name_no);
     })
