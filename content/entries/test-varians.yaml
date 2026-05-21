@@ -211,6 +211,32 @@ detailed_solution_variants:
               - { comment: "Variansen er signifikant større enn spesifisert; maskinen leverer for variabel dose." }
         result: "Forkast `H₀` på α = 0.05. Tablettpressen har for stor varians og må kalibreres."
 
+      - source: "Praksis · mer presis enn kravet (venstresidig)"
+        question: |
+          En produsent av motstander hevder at variansen i motstandsverdi er
+          `σ₀² = 0.25 Ω²`. En innkjøper vil bekrefte at en ny batch er MER
+          presis enn dette (`σ² < 0.25`). 20 målinger gir `s² = 0.12`. Test
+          på `α = 0.05` (venstresidig).
+        sections:
+          - label: "Hypoteser (venstresidig)"
+            lines:
+              - { text: "`H₀: σ² ≥ 0.25`" }
+              - { text: "`H₁: σ² < 0.25` (ny batch er mer presis)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = (n − 1)·s² / σ₀²`" }
+              - { indent: "`= 19 · 0.12 / 0.25`" }
+              - { indent: "`= 2.28 / 0.25 = 9.12`" }
+          - label: "Tabelloppslag (venstre hale)"
+            lines:
+              - { table_lookup: { ref: "E.6", text: "Venstresidig kritisk verdi: `χ²_(1−α, n−1) = χ²_(0.95, 19) ≈ 10.12`. Forkast H₀ hvis χ² < 10.12." } }
+              - { comment: "χ²-fordelingen er asymmetrisk: venstre-hale-grensen slås opp som 1−α-kvantilen, ikke −χ²_α." }
+          - label: "Konklusjon"
+            lines:
+              - { text: "`χ² = 9.12 < 10.12` ⇒ forkast `H₀`." }
+              - { comment: "Lav s² gir lav χ² — derfor forkaster venstresidig test når observatoren er liten nok." }
+        result: "Forkast `H₀` på α = 0.05. Den nye batchen har signifikant lavere varians — mer presis enn 0.25 Ω²."
+
   - label: "To utvalg — F-test for σ_X² = σ_Y²"
     solutions:
       - source: "Praksis · sammenlign to maskiner"

@@ -28,6 +28,8 @@ when_NOT_to_use:
   - "`n` er liten og normalapproksimasjon ikke gyldig – bruk eksakt [binomial](/entry/binomial-fordeling)"
   - "Du tester gjennomsnitt, ikke andel – bruk [z-test for μ](/entry/en-utvalg-z-test) eller [t-test for μ](/entry/en-utvalg-t-test) i stedet"
   - "Du vil estimere `p` med usikkerhet i stedet for å teste mot en gitt `p₀` → bruk [KI for andel](/entry/ki-andel-binomial)"
+  - "Du har 3 eller flere kategorier (ikke bare suksess/fiasko) → bruk [kjikvadrat goodness-of-fit](/entry/kjikvadrat-goodness-of-fit)"
+  - "Du sammenligner andelene i TO grupper → bruk [z-test for to andeler](/entry/to-utvalgs-z-test-andel)"
 
 symbols:
   - { sym: "X",   means: "antall suksesser observert i utvalget" }
@@ -44,24 +46,81 @@ filters:
   parameters_known: [success_p, sample_size_large, alpha_significance]
   distribution_assumption: [binomial, normal]
   tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
-recognition: "«Test om suksessraten/andelen `p` er lik `p₀`», «er andelen større/mindre enn 0.5?», eller «kan vi hevde at p ≠ p₀?». Du har `X` suksesser av `n` forsøk og en påstand om `p`."
+solution_variants:
+  - label: "H₁: p < p₀ (venstre)"
+    recognition: "«Er andelen `p` SIGNIFIKANT MINDRE enn `p₀`?», «er færre enn forventet defekte/syke?». Ensidig venstresidig — binært utfall (suksess/fiasko)."
+    description: "Ensidig venstresidig test for en andel. Forkast H₀ hvis Z < −z_α."
+    steps:
+      - text: "Formuler hypotesene (venstresidig). Streng form `H₀: p ≥ p₀`; forenklet `H₀: p = p₀` gir samme test:"
+        formula: "H₀: p ≥ p₀     mot     H₁: p < p₀"
+      - text: "Bekreft normalapproksimasjon (ellers bruk eksakt [binomial](/entry/binomial-fordeling)):"
+        formula: "n·p₀·(1−p₀) ≥ 5"
+      - text: "Beregn punktestimatet:"
+        formula: "p̂ = x/n"
+      - text: "Beregn testobservatoren. Variansen i nevneren bruker `p₀` (verdien fra `H₀`), IKKE `p̂`:"
+        formula: "Z = (x − n·p₀)/√(n·p₀·(1−p₀)) = (p̂ − p₀)/√(p₀(1−p₀)/n)"
+      - text: "Eksempel: `n = 200`, `x = 84`, `p₀ = 0.5` (`p̂ = 0.42`):"
+        formula: "Z = (0.42 − 0.5)/√(0.5·0.5/200) ≈ −2.26"
+        example: true
+      - "Slå opp `z_α` i **tabell E.4** (f.eks. `α = 0.05` ⇒ `z_0.05 = 1.645`)."
+      - text: "Forkastingsregel (kritisk verdi negativ):"
+        formula: "Forkast H₀ hvis Z < −z_α"
+      - { text: "Det finnes INGEN t-test for andel — standardfeilen kommer fra `p₀` selv, ikke fra et estimert `σ`. «Mangler du σ», forveksler du med z-test for `μ`.", conditional: true }
+      - "Konkluder i kontekst: hvis `Z < −z_α`, er det evidens for at andelen er lavere enn `p₀`."
 
-solution_template:
-  - { text: "**Pass på:** Denne testen krever IKKE en oppgitt populasjons-`σ`. Standardfeilen til `p̂` kommer fra `p₀` selv: `√(p₀(1−p₀)/n)`. Det finnes derfor heller INGEN «t-test for andel» — du trenger aldri å estimere `σ` separat for andeler. Hvis du synes du «mangler σ», er det fordi du forveksler med z-test for `μ`.", conditional: true }
-  - { text: "**Pass på:** Denne testen er for ÉN binær andel (suksess/fiasko). Har du 3 eller flere kategorier (f.eks. 'rød/blå/grønn/gul') eller en hel fordeling å teste, skal du bruke [kjikvadrat goodness-of-fit](/entry/kjikvadrat-goodness-of-fit) i stedet.", conditional: true }
-  - text: "Formuler hypotesene (én- eller tosidig):"
-    formula: "H₀: p = p₀     mot     H₁ (én- eller tosidig)"
-  - text: "Bekreft normalapproksimasjon:"
-    formula: "n·p̂·(1−p̂) ≥ 5"
-  - text: "Beregn punktestimatet:"
-    formula: "p̂ = x/n"
-  - text: "Beregn testobservatoren (eller den ekvivalente formen):"
-    formula: "z = (x − n·p₀) / √(n·p₀·(1−p₀)) = (p̂ − p₀) / √(p₀(1−p₀)/n)"
-  - text: "Eksempel: mynt med `n = 100`, `x = 60`, `p₀ = 0.5` (tester rettferdighet):"
-    formula: "Z = (60 − 50) / √(100·0.5·0.5) = 10 / 5 = 2.00"
-    example: true
-  - "Finn kvantil `z_α` (ensidig) eller `z_(α/2)` (tosidig) i **tabell E.4** (Z-kvantiltabell)"
-  - "Sammenlign og konkluder"
+  - label: "H₁: p > p₀ (høyre)"
+    recognition: "«Er andelen `p` SIGNIFIKANT STØRRE enn `p₀`?», «er flere enn påstått syke/defekte?». Ensidig høyresidig — binært utfall."
+    description: "Ensidig høyresidig test for en andel. Forkast H₀ hvis Z > +z_α."
+    steps:
+      - text: "Formuler hypotesene (høyresidig). Streng form `H₀: p ≤ p₀`; forenklet `H₀: p = p₀` gir samme test:"
+        formula: "H₀: p ≤ p₀     mot     H₁: p > p₀"
+      - text: "Bekreft normalapproksimasjon:"
+        formula: "n·p₀·(1−p₀) ≥ 5"
+      - text: "Beregn punktestimatet:"
+        formula: "p̂ = x/n"
+      - text: "Beregn testobservatoren (varians fra `p₀`):"
+        formula: "Z = (x − n·p₀)/√(n·p₀·(1−p₀)) = (p̂ − p₀)/√(p₀(1−p₀)/n)"
+      - text: "Eksempel: `n = 80`, `x = 23`, `p₀ = 0.20` (`p̂ = 0.2875`):"
+        formula: "Z = (0.2875 − 0.20)/√(0.20·0.80/80) ≈ 1.96"
+        example: true
+      - "Slå opp `z_α` i **tabell E.4** (f.eks. `α = 0.05` ⇒ `z_0.05 = 1.645`)."
+      - text: "Forkastingsregel (kritisk verdi positiv):"
+        formula: "Forkast H₀ hvis Z > +z_α"
+      - "Konkluder i kontekst: hvis `Z > +z_α`, er det evidens for at andelen er høyere enn `p₀`."
+
+  - label: "H₁: p ≠ p₀ (tosidig)"
+    recognition: "«Avviker andelen fra `p₀`?», «er mynten rettferdig?», «kan vi hevde at `p ≠ p₀`?». Tosidig — ingen retning oppgitt."
+    description: "Tosidig test for en andel. Forkast H₀ hvis |Z| > z_(α/2)."
+    steps:
+      - text: "Formuler hypotesene (tosidig):"
+        formula: "H₀: p = p₀     mot     H₁: p ≠ p₀"
+      - text: "Bekreft normalapproksimasjon:"
+        formula: "n·p₀·(1−p₀) ≥ 5"
+      - text: "Beregn punktestimatet:"
+        formula: "p̂ = x/n"
+      - text: "Beregn testobservatoren (fortegnet er likegyldig for tosidig — vi bruker absoluttverdien):"
+        formula: "Z = (x − n·p₀)/√(n·p₀·(1−p₀)) = (p̂ − p₀)/√(p₀(1−p₀)/n)"
+      - text: "Eksempel: mynt med `n = 100`, `x = 60`, `p₀ = 0.5`:"
+        formula: "Z = (60 − 50)/√(100·0.5·0.5) = 10/5 = 2.00"
+        example: true
+      - "Slå opp `z_(α/2)` i **tabell E.4** — del `α` på 2 (f.eks. `α = 0.05` ⇒ `z_0.025 = 1.96`, IKKE `z_0.05`)."
+      - text: "Forkastingsregel (begge haler):"
+        formula: "Forkast H₀ hvis |Z| > z_(α/2)"
+      - { text: "Vil du heller estimere `p` med usikkerhetsmargin enn å teste mot `p₀`, bruk [KI for andel](/entry/ki-andel-binomial) — den bruker `p̂` i standardfeilen, ikke `p₀`.", conditional: true }
+      - "Konkluder i kontekst: hvis `|Z| > z_(α/2)`, avviker andelen signifikant fra `p₀`."
+
+  - label: "Finn n (utvalgsstørrelse)"
+    recognition: "«Hvor mange må vi undersøke for at feilmarginen blir høyst `E`?», «hvor stort utvalg trengs?». Bestemmer `n` på forhånd ut fra ønsket presisjon."
+    description: "Sample-size-formelen for en andel: løs feilmarginen `E = z_(α/2)·√(p(1−p)/n)` for `n`."
+    steps:
+      - "Bestem ønsket feilmargin `E` og konfidensnivå (95 % ⇒ `z_(α/2) = 1.96`)."
+      - text: "Snu feilmarginen `E = z_(α/2)·√(p(1−p)/n)` og løs for `n`:"
+        formula: "n ≥ (z_(α/2)/E)² · p(1−p)"
+      - { text: "Har du ingen forhåndsverdi for `p`, bruk det verste tilfellet `p = 0.5` (gir størst `p(1−p) = 0.25` og dermed størst, tryggest `n`).", conditional: true }
+      - text: "Eksempel: feilmargin `E = 0.04` på 95 %-nivå, ukjent `p` (bruk `p = 0.5`):"
+        formula: "n ≥ (1.96/0.04)² · 0.25 = 2401 · 0.25 = 600.25 ⇒ n = 601"
+        example: true
+      - "Rund ALLTID opp til nærmeste heltall — et brøk-utvalg dekker ikke kravet."
 
 common_traps: |
   Variansen i nevneren bruker `p₀` (verdien fra `H₀`), IKKE `p̂`. Dette er
@@ -77,7 +136,55 @@ python_snippet: |
   z_crit = norm.ppf(1 - alpha/2)             # tosidig 1.96
 
 detailed_solution_variants:
-  - label: "Z-test for andel p"
+  - label: "H₁: p < p₀ (venstre)"
+    solutions:
+      - source: "Praksis · leveringspresisjon (venstresidig)"
+        question: "En leverandør hevder at minst 90 % av leveransene kommer i tide (`p ≥ 0.90`). Av `n = 150` leveranser var `126` i tide. Test på `α = 0.05` om andelen i tide er LAVERE enn 0.90."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p ≥ 0.90`  (leverandørens påstand holder)" }
+              - { text: "`H₁: p < 0.90`  (venstresidig — færre i tide enn påstått)" }
+          - label: "Forutsetninger"
+            lines:
+              - { text: "Normalapproksimasjon: `n·p₀·(1−p₀) = 150·0.90·0.10 = 13.5 ≥ 5` ✓" }
+              - { text: "`p̂ = 126/150 = 0.84`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { indent: "`= (0.84 − 0.90) / √(0.90·0.10/150)`" }
+              - { indent: "`= −0.06 / 0.024495 ≈ −2.449`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645` ⇒ venstresidig kritisk grense `−1.645`. Forkast H₀ hvis `Z < −1.645`." } }
+              - { text: "`Z = −2.449 < −1.645` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: andelen leveranser i tide er signifikant lavere enn 90 %."
+
+  - label: "H₁: p > p₀ (høyre)"
+    solutions:
+      - source: "Praksis · andel grantrær med sykdom (høyresidig)"
+        question: "En produsent påstår at høyst 20 % av grantrær har sykdom. Et utvalg på `n = 80` ga `23` syke. Test om andelen er HØYERE enn 20 % på 5 %-nivå."
+        sections:
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: p ≤ 0.20`  (produsentens påstand)" }
+              - { text: "`H₁: p > 0.20`  (høyresidig)" }
+          - label: "Forutsetninger"
+            lines:
+              - { text: "Normalapproksimasjon: `n·p₀·(1−p₀) = 80·0.20·0.80 = 12.8 ≥ 5` ✓" }
+              - { text: "`p̂ = 23/80 = 0.2875`" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
+              - { indent: "`= (0.2875 − 0.20) / √(0.20·0.80/80)`" }
+              - { indent: "`= 0.0875 / 0.04472 ≈ 1.957`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_α = z_(0.05) = 1.645` (ensidig kritisk verdi)." } }
+              - { text: "`Z = 1.957 > 1.645` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: utvalget tyder på at andelen syke trær er høyere enn 20 %."
+
+  - label: "H₁: p ≠ p₀ (tosidig)"
     solutions:
       - source: "Praksis · myntfairness (tosidig)"
         question: "En mynt er kastet `n = 100` ganger og gitt `60` kron. Test om mynten er rettferdig (`p = 0.5`) på signifikansnivå 5 %."
@@ -101,27 +208,27 @@ detailed_solution_variants:
               - { text: "`|Z| = 2.00 > 1.96` → forkast `H₀`." }
         result: "Forkast `H₀` på 5 %-nivå: tallene tyder på at mynten ikke er rettferdig."
 
-      - source: "Praksis · andel grantrær med sykdom (ensidig)"
-        question: "En produsent påstår at høyst 20 % av grantrær har sykdom. Et utvalg på `n = 80` ga `23` syke. Test om andelen er HØYERE enn 20 % på 5 %-nivå."
+  - label: "Finn n (utvalgsstørrelse)"
+    solutions:
+      - source: "Praksis · meningsmåling med feilmargin"
+        question: "En meningsmåling skal estimere oppslutningen om et parti med feilmargin høyst 3 prosentpoeng (`E = 0.03`) på 95 %-nivå. Et forhåndsanslag tilsier `p ≈ 0.40`. Hvor mange må spørres?"
         sections:
-          - label: "Hypoteser"
+          - label: "Identifisering"
             lines:
-              - { text: "`H₀: p ≤ 0.20`  (produsentens påstand)" }
-              - { text: "`H₁: p > 0.20`  (høyresidig)" }
-          - label: "Forutsetninger"
+              - { text: "Sample-size for andel. 95 % ⇒ `z_(α/2) = 1.96`, `E = 0.03`, forhåndsanslag `p = 0.40`." }
+          - label: "Formel"
             lines:
-              - { text: "Normalapproksimasjon: `n·p₀·(1−p₀) = 80·0.20·0.80 = 12.8 ≥ 5` ✓" }
-              - { text: "`p̂ = 23/80 = 0.2875`" }
-          - label: "Testobservator"
+              - { text: "`n ≥ (z_(α/2)/E)² · p(1−p)`" }
+          - label: "Innsetting"
             lines:
-              - { text: "`Z = (p̂ − p₀) / √(p₀(1−p₀)/n)`" }
-              - { indent: "`= (0.2875 − 0.20) / √(0.20·0.80/80)`" }
-              - { indent: "`= 0.0875 / 0.04472 ≈ 1.957`" }
+              - { text: "`n ≥ (1.96/0.03)² · 0.40·0.60`" }
+              - { indent: "`= (65.333)² · 0.24`" }
+              - { indent: "`= 4268.4 · 0.24 ≈ 1024.4`" }
+              - { comment: "Uten forhåndsanslag ville p = 0.5 (verste fall) gitt n ≥ 1068 — alltid trygt." }
           - label: "Konklusjon"
             lines:
-              - { table_lookup: { ref: "E.4", text: "`z_α = z_(0.05) = 1.645` (ensidig kritisk verdi)." } }
-              - { text: "`Z = 1.957 > 1.645` → forkast `H₀`." }
-        result: "Forkast `H₀` på 5 %-nivå: utvalget tyder på at andelen syke trær er høyere enn 20 %."
+              - { text: "Rund OPP: `n = 1025` respondenter." }
+        result: "`n = 1025` respondenter gir feilmargin ≤ 3 prosentpoeng på 95 %-nivå (med `p ≈ 0.40`)."
 
 related:
   - { id: "binomial-fordeling",      kind: "entry" }

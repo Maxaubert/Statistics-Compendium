@@ -12,9 +12,22 @@ filters:
   parameters_known: [alpha_significance]
   distribution_assumption: [normal]
 long_def: |
-  Sannsynligheten for type-I-feil er lik signifikansnivået `α`. Hvis du
-  setter `α = 0.05`, godtar du 5 % sjanse for falsk alarm.
+  En **type-I-feil** er å forkaste `H₀` når den faktisk er sann — en «falsk
+  alarm». Du konkluderer med en effekt selv om det ikke er noen.
 
-  **Avveining:** lavere `α` → mindre risiko for type-I, men større risiko for type-II.
+  - Sannsynligheten er nøyaktig signifikansnivået `α`, som du **velger selv**
+    (typisk `0.05` eller `0.01`). Setter du `α = 0.05`, godtar du 5 % sjanse for
+    falsk alarm.
+  - `α` er det eneste av feilsannsynlighetene du kontrollerer direkte.
+
+  **Avveiing:** lavere `α` gir mindre type-I-risiko, men flytter
+  forkastningsgrensa lenger unna og øker dermed risikoen for
+  [type-II-feil](glossary:type-2-feil). Begge kan reduseres samtidig kun ved å
+  øke utvalget `n`.
+
+  *Eksempel:* en brannvarsler som piper uten at det brenner gjør en type-I-feil.
 see_also:
+  - { id: hypotesefeil, kind: glossary }
+  - { id: type-2-feil, kind: glossary }
+  - { id: hypotesefeil-og-styrke, kind: entry }
   - { id: signifikansniva-glos, kind: glossary }

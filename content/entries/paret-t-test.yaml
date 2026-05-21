@@ -22,7 +22,7 @@ why_use: |
   Naturlig valg når oppgaven beskriver «før vs etter»-måling på samme person,
   matched pairs, eller to instrumenter brukt på samme prøve. Reduserer
   støy fra individuell variasjon — du tester på differansene, ikke på
-  rådata. Se også [paret-test](/glossary/paret-test).
+  rådata. Se også [paret-test](glossary:paret-test).
 
 recognition_cues:
   - "Hver rad i datasettet har `X_i` og `Y_i` som hører sammen parvis (samme person, samme dag, samme prøve)"

@@ -13,10 +13,23 @@ filters:
   distribution_assumption: [normal]
   structural_cues: [probability_threshold]
 long_def: |
-  Sannsynligheten for type-II-feil kalles `β`. **Teststyrke** = `1 − β`
-  er sjansen for å oppdage en effekt som finnes.
+  En **type-II-feil** er å beholde `H₀` når `H₁` faktisk er sann — du
+  **oppdaget ikke** en effekt som var der. Sannsynligheten kalles `β`.
 
-  Større `n`, større effekt eller høyere `α` gir lavere `β`
-  (men høyere `α` øker type-I-risikoen).
+  - `β` er **ikke ett fast tall**: den avhenger av hvor langt den sanne verdien
+    `θ` ligger fra `H₀`. Lite avvik ⇒ stor `β` (lett å bomme); stort avvik ⇒
+    liten `β`.
+  - [Hypotesestyrke](glossary:styrkefunksjon) `= 1 − β` er komplementet —
+    sjansen for å fange effekten.
+
+  **Slik reduserer du `β`:** større `n` (best), større effekt, eller høyere `α`
+  (men det øker [type-I-risikoen](glossary:type-1-feil)).
+
+  *Eksempel:* en brannvarsler som IKKE piper når det faktisk brenner gjør en
+  type-II-feil.
 see_also:
+  - { id: hypotesefeil, kind: glossary }
+  - { id: type-1-feil, kind: glossary }
+  - { id: styrkefunksjon, kind: glossary }
+  - { id: hypotesefeil-og-styrke, kind: entry }
   - { id: signifikansniva-glos, kind: glossary }

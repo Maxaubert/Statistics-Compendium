@@ -60,7 +60,7 @@ long_def: |
 
   ### 2. Sum/gjennomsnitt → normal (CLT for kontinuerlige eller mange forsøk)
 
-  Her er argumentet rent [sentralgrenseteoremet (CLT)](/glossary/sentralgrenseteoremet-glos):
+  Her er argumentet rent [sentralgrenseteoremet (CLT)](glossary:sentralgrenseteoremet-glos):
   for iid `X_1, …, X_n` med `E[X_i] = μ` og `Var(X_i) = σ²`,
 
       X̄ = (X_1 + … + X_n)/n  ≈  N(μ, σ²/n)   for stor `n`
@@ -95,7 +95,7 @@ long_def: |
   - **Poisson med liten `μ`** (< 10): bruk
     [eksakt poissontabell E.2](/table/E2-poisson-kumulativ) eller summer pmf.
   - **Liten `n` og ikke-normal underliggende fordeling**: bruk
-    [t-fordeling](/glossary/t-fordeling) (når `σ` er ukjent og `X_i` er normale),
+    [t-fordeling](glossary:t-fordeling) (når `σ` er ukjent og `X_i` er normale),
     [bootstrapping](/entry/bootstrapping), eller ikke-parametriske tester som
     [Mann-Whitney-Wilcoxon](/entry/mann-whitney-wilcoxon).
   - **Tunghale-fordelinger** med uendelig varians (Cauchy m.fl.): CLT gjelder

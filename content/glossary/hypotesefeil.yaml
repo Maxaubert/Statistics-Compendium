@@ -1,0 +1,44 @@
+id: hypotesefeil
+term_no: "Hypotesefeil (Type I og Type II)"
+short_def: "De to måtene en hypotesetest kan ta feil på: forkaste en sann `H₀` (Type I, sannsynlighet `α`) eller beholde en gal `H₀` (Type II, sannsynlighet `β`)."
+aliases:
+  - hypotesefeil
+  - hypotesefeilen
+  - feiltyper
+  - testfeil
+  - feil i hypotesetest
+  - type-feil
+filters:
+  computes: [hypothesis_test, find_n_for_threshold]
+  parameters_known: [alpha_significance]
+  distribution_assumption: [normal]
+  structural_cues: [probability_threshold, one_sided_alternative, two_sided_alternative]
+long_def: |
+  En hypotesetest konkluderer enten «forkast `H₀`» eller «behold `H₀`», og kan
+  bomme på to måter:
+
+  | Sannheten ↓ / Beslutning → | Behold H₀ | Forkast H₀ |
+  |---|---|---|
+  | **H₀ sann** | ✓ riktig | ✗ Type I-feil (sanns. `α`) |
+  | **H₁ sann** | ✗ Type II-feil (sanns. `β`) | ✓ riktig (styrke `1 − β`) |
+
+  - **[Type I-feil](glossary:type-1-feil)** — «falsk alarm»: forkaste `H₀` når
+    den er sann. Sannsynligheten er signifikansnivået `α`, som du velger selv (typisk 5 %).
+  - **[Type II-feil](glossary:type-2-feil)** — «bom»: beholde `H₀` når `H₁`
+    faktisk er sann. Sannsynligheten `β` avhenger av hvor stor den ekte effekten er.
+  - **[Hypotesestyrke](glossary:styrkefunksjon)** `= 1 − β` — sjansen for å fange
+    en effekt som faktisk finnes.
+
+  **Avveiing:** å senke `α` (færre falske alarmer) flytter forkastningsgrensa lenger
+  unna og ØKER `β` (flere bom) — med mindre du øker utvalget `n`, som forbedrer begge.
+
+  Full gjennomgang med formler og regneeksempler (`β(θ)`, styrkefunksjon, finn `n`):
+  [Hypotesefeil og styrke](/entry/hypotesefeil-og-styrke).
+see_also:
+  - { id: hypotesefeil-og-styrke, kind: entry }
+  - { id: type-1-feil, kind: glossary }
+  - { id: type-2-feil, kind: glossary }
+  - { id: styrkefunksjon, kind: glossary }
+  - { id: signifikansniva-glos, kind: glossary }
+  - { id: alpha, kind: glossary }
+  - { id: beta, kind: glossary }

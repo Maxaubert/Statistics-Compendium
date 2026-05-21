@@ -1,0 +1,131 @@
+id: velg-riktig-test
+term_no: "Hvilken hypotesetest? — oversikt"
+short_def: "Cheat-sheet for «hvilken test passer oppgaven?». Tre tabeller etter antall utvalg (ett / to / tre+). Strukturen i oppgaven avgjør — hva testes, hvor mange grupper, og hvilke krav holder."
+aliases:
+  - hvilken test
+  - hvilken hypotesetest
+  - hvilken test skal jeg bruke
+  - velg riktig test
+  - velg test
+  - finne riktig test
+  - finn riktig test
+  - test-oversikt
+  - hvilken test passer
+filters:
+  computes: [hypothesis_test]
+  setup: [single_population, two_independent_samples, three_plus_samples, paired_samples, linear_relationship]
+  structural_cues: [one_sided_alternative, two_sided_alternative, normal_assumed, rank_based_data]
+  distribution_assumption: [normal, t_distribution, chi_squared, f_distribution, none_assumed]
+long_def: |
+  Velg test ut fra STRUKTUREN i oppgaven, ikke ut fra navnet. Tre spørsmål
+  avgjør nesten alltid:
+
+  1. **Hva spør oppgaven om?** Gjennomsnitt `μ`, andel `p`, varians `σ²`/`σ`,
+     fordeling/kategorier, eller en sammenheng?
+  2. **Hvor mange grupper?** Ett utvalg, to (uavhengige eller parede), eller tre+?
+  3. **Hvilke krav holder?** Er `σ` kjent eller ukjent? Normalfordeling? Like varianser?
+
+  Tabellene under er sortert fra **mest til minst vanlig** på ITD20218-eksamen.
+  Finn raden som matcher kjennetegnene i oppgaven.
+
+  ## Ett utvalg
+
+  | Test | Hva testes | Kjennetegn / krav | Observator | Tabell |
+  |---|---|---|---|---|
+  | [Én-utvalg t-test](/entry/en-utvalg-t-test) | `μ` mot `μ₀` | `σ` UKJENT (kun `s`); normal eller `n ≥ 30` | `T = (x̄−μ₀)/(s/√n)`, ν=n−1 | E.5 |
+  | [Én-utvalg z-test](/entry/en-utvalg-z-test) | `μ` mot `μ₀` | `σ` KJENT (oppgitt eksplisitt) | `Z = (x̄−μ₀)/(σ/√n)` | E.4 / E.3 |
+  | [Z-test for andel](/entry/en-utvalg-z-test-andel) | andel `p` mot `p₀` | binær (suksess/fiasko); `n·p₀(1−p₀) ≥ 5` | `Z = (p̂−p₀)/√(p₀(1−p₀)/n)` | E.4 / E.3 |
+  | [χ²-test for varians](/entry/test-varians) | `σ²`/`σ` mot `σ₀²` | spørsmål om SPREDNING/presisjon; normal | `χ² = (n−1)s²/σ₀²`, ν=n−1 | E.6 |
+  | [Goodness-of-fit](/entry/kjikvadrat-goodness-of-fit) | fordeling over 3+ kategorier | tellinger per kategori mot forventet | `χ² = Σ(O−E)²/E`, ν=k−1−m | E.6 |
+  | [Test for Poisson-rate](/entry/poisson-rate-test) | rate `λ` mot `λ₀` | antall hendelser i tid/areal; `λ₀t ≳ 10` | `Z = (x−λ₀t)/√(λ₀t)` | E.4 / E.3 |
+  | [Wilcoxon tegn-rang](/entry/wilcoxon-tegn-rang) | median (ikke-param.) | normal IKKE antatt; lite/skjevt utvalg | `W = min(W₊, W₋)` | E.7 |
+
+  ## To utvalg
+
+  | Test | Hva testes | Kjennetegn / krav | Observator | Tabell |
+  |---|---|---|---|---|
+  | [To-utvalgs t-test (pooled)](/entry/to-utvalgs-t-test) | `μ_X` vs `μ_Y` | to UAVHENGIGE grupper; `σ` ukjent, antatt lik varians | `T = (x̄−ȳ)/(S_P·√(1/n_X+1/n_Y))`, ν=n_X+n_Y−2 | E.5 |
+  | [Paret t-test](/entry/paret-t-test) | `μ_D` (differanse) | SAMME enhet målt to ganger (før/etter, matchede par) | `T = D̄/(S_D/√n)`, ν=n−1 | E.5 |
+  | [Welch t-test](/entry/to-utvalgs-t-test) | `μ_X` vs `μ_Y` | to uavhengige, men ULIKE varianser | `T = (x̄−ȳ)/√(s_X²/n_X+s_Y²/n_Y)` | E.5 |
+  | [F-test for varians](/entry/test-varians) | `σ_X²` vs `σ_Y²` | sammenligne SPREDNING; forutsetnings-sjekk for pooled | `F = s_større²/s_mindre²` | E.8 |
+  | [Z-test for to andeler](/entry/to-utvalgs-z-test-andel) | `p_X` vs `p_Y` | to grupper, binært utfall | `Z = (p̂_X−p̂_Y)/√(p̂(1−p̂)(1/n_X+1/n_Y))` | E.4 / E.3 |
+  | [Kjikvadrat uavhengighet](/entry/kjikvadrat-uavhengighet) | sammenheng mellom to kategoriske | r×c kontingenstabell (to dimensjoner) | `χ² = Σ(O−E)²/E`, ν=(r−1)(c−1) | E.6 |
+  | [Mann-Whitney U](/entry/mann-whitney-wilcoxon) | median (ikke-param., uparet) | to uavhengige, normal ikke antatt | `U = R − n(n+1)/2` | E.7 |
+
+  ## Tre eller flere utvalg
+
+  | Test | Hva testes | Kjennetegn / krav | Observator | Tabell |
+  |---|---|---|---|---|
+  | [Enveis ANOVA](/entry/enveis-anova) | `μ₁ = μ₂ = … = μ_k` | 3+ UAVHENGIGE grupper; normal, felles `σ²` | `F = MSG/MSE`, ν=(k−1, n−k) | E.8 |
+  | [Goodness-of-fit](/entry/kjikvadrat-goodness-of-fit) | fordeling over k kategorier | én dimensjon, k ≥ 3 kategorier mot forventet | `χ² = Σ(O−E)²/E`, ν=k−1−m | E.6 |
+
+  ## Sammenheng mellom x og y (regresjon)
+
+  - [Test om stigningstall `β = 0`](/entry/lineaer-regresjon) — finnes det en signifikant
+    LINEÆR sammenheng mellom `x` og `y`? `T = β̂/SE(β̂)`, ν=n−2 (tabell E.5).
+  - [Multippel regresjon](/entry/multippel-regresjon) — flere forklaringsvariabler:
+    t-test per koeffisient (`β_j = 0`) og global F-test for hele modellen (E.5 + E.8).
+
+  ## Vanligste forvekslinger
+
+  - **t mot z (`μ`):** `σ` oppgitt kjent → z. `σ` estimert som `s` → t. (Det finnes
+    INGEN t-test for andel — andelens standardfeil kommer fra `p₀` selv.)
+  - **Andel mot kategorier:** ÉN binær andel → z-test for andel. 3+ kategorier i én
+    dimensjon → goodness-of-fit. To kategoriske dimensjoner (tabell) → uavhengighet.
+  - **Gjennomsnitt mot spredning:** «er snittet ulikt?» → t/z/ANOVA. «er spredningen/
+    presisjonen ulik?» → χ²- eller F-test for varians.
+  - **Paret mot uparet:** samme individ målt to ganger → paret. Forskjellige individer
+    i hver gruppe → to-utvalgs (uparet).
+  - **To grupper mot 3+:** to grupper → t-test. Tre eller flere → ANOVA (`F = T²` når k=2).
+  - **Parametrisk mot ikke-parametrisk:** normalfordeling rimelig → t-tester. Lite,
+    skjevt eller rang-data → Mann-Whitney (uparet) / Wilcoxon (paret).
+
+  ## Beslutningssekvens
+
+  1. Handler det om `μ`, `p`, `σ²`, en fordeling/kategorier, eller en sammenheng?
+  2. Tell gruppene: ett, to (paret/uparet), eller tre+?
+  3. Sjekk kravene: `σ` kjent? Normalfordelt? Like varianser? Binært utfall?
+  4. Slå opp raden i riktig tabell over og gå til entryen for full prosedyre.
+
+  ## Går på tvers av alle tester
+
+  Disse gjelder UANSETT hvilken test du velger — de er typiske deloppgaver, ikke
+  egne tester. Klikk lenkene for full forklaring og formler.
+
+  - **[Hypotesefeil og styrke](/entry/hypotesefeil-og-styrke):** [Type I-feil](glossary:type-1-feil)
+    er å forkaste en sann `H₀` (sannsynlighet = signifikansnivået `α`); [Type II-feil](glossary:type-2-feil)
+    er å beholde en gal `H₀` (sannsynlighet `β`). Testens **styrke** er `1 − β` — sjansen for
+    å oppdage en effekt som faktisk finnes. Brukes på spørsmål som «hva er styrken?» eller
+    «hvor stor `n` trengs for ønsket styrke?».
+  - **[p-verdi](glossary:p-verdi-glos) vs. [kritisk verdi](glossary:kritisk-verdi):** to
+    ekvivalente måter å konkludere på. Kritisk-verdi-metoden: forkast hvis observatoren er forbi
+    `z_α` / `t_α` / `χ²_α` / `F_α`. p-verdi-metoden: forkast hvis `p < α`. Samme svar — bruk den
+    oppgaven ber om.
+  - **[Konfidensintervall](glossary:konfidensintervall) ↔ test:** en tosidig test på nivå `α`
+    svarer NØYAKTIG til et `(1 − α)`-KI — ligger nullverdien UTENFOR intervallet, forkaster
+    testen (og omvendt). KI-sider: [KI for μ og σ²](/entry/ki-mu-og-varians),
+    [KI for andel](/entry/ki-andel-binomial), [KI for to utvalg](/entry/ki-to-utvalg),
+    [KI for poissonrate](/entry/ki-poissonrate).
+  - **[Bootstrap](/entry/bootstrapping):** fordelingsfri (resampling-basert) inferens når
+    normalantakelsen ikke holder og du ikke vil bruke en rang-test. Re-trekker fra dataene for
+    å lage KI og p-verdier uten å anta en bestemt fordeling.
+see_also:
+  - { id: test-oversikt,              kind: entry }
+  - { id: hypotesefeil-og-styrke,     kind: entry }
+  - { id: bootstrapping,              kind: entry }
+  - { id: ki-mu-og-varians,           kind: entry }
+  - { id: en-utvalg-t-test,           kind: entry }
+  - { id: en-utvalg-z-test,           kind: entry }
+  - { id: to-utvalgs-t-test,          kind: entry }
+  - { id: paret-t-test,               kind: entry }
+  - { id: enveis-anova,               kind: entry }
+  - { id: en-utvalg-z-test-andel,     kind: entry }
+  - { id: to-utvalgs-z-test-andel,    kind: entry }
+  - { id: test-varians,               kind: entry }
+  - { id: kjikvadrat-goodness-of-fit, kind: entry }
+  - { id: kjikvadrat-uavhengighet,    kind: entry }
+  - { id: mann-whitney-wilcoxon,      kind: entry }
+  - { id: wilcoxon-tegn-rang,         kind: entry }
+  - { id: lineaer-regresjon,          kind: entry }
+  - { id: poisson-rate-test,          kind: entry }
+  - { id: sannsynlighetsfordelinger-oversikt, kind: glossary }

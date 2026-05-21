@@ -207,6 +207,23 @@ solution_variants:
       - text: "Standard tolkning: hvis H₀ forkastes, finnes det MINST én gruppe som skiller seg ut — men ANOVA sier IKKE hvilken. Da trengs en post-hoc-test (Tukey, Bonferroni) som typisk er utenfor pensum."
         conditional: true
 
+  - label: "Estimat for σ² og KI for gruppemiddel"
+    recognition: "«Estimer den felles variansen σ²», «finn et konfidensintervall for gjennomsnittet i én gruppe». Typisk deloppgave ETTER selve F-testen — `MSE` er allerede regnet ut."
+    steps:
+      - text: "Etter ANOVA er `MSE` (innen-gruppe-variasjonen) det beste estimatet for den FELLES populasjonsvariansen `σ²`:"
+        formula: "σ̂² = MSE = SSE/(n − k)"
+      - text: "Residualstandardavviket (felles `σ`) er kvadratrota:"
+        formula: "σ̂ = √MSE"
+      - text: "KI for ETT gruppemiddel `μ_i` bruker `MSE` (pooled varians) og ANOVA-ens nevner-frihetsgrader `n − k` — IKKE `n_i − 1`:"
+        formula: "x̄_i ± t_(α/2, n−k) · √(MSE/n_i)"
+      - text: "Eksempel (leverandør-data: `MSE = 6.0`, `n − k = 12`, `x̄_A = 23.0`, `n_A = 5`, 95 %):"
+        formula: "23.0 ± 2.179·√(6.0/5) = 23.0 ± 2.39 = [20.61, 25.39]"
+        example: true
+      - text: "KI for DIFFERANSEN mellom to gruppemiddel `μ_i − μ_j` (når du vil se hvilke par som skiller seg etter at H₀ er forkastet):"
+        formula: "(x̄_i − x̄_j) ± t_(α/2, n−k) · √(MSE·(1/n_i + 1/n_j))"
+      - { text: "Hvorfor `n − k` frihetsgrader? `MSE` samler informasjon fra ALLE `k` gruppene, så estimatet er mer presist enn en enkelt gruppes `s_i²` (som ville gitt `n_i − 1`).", conditional: true }
+      - { text: "Et KI for differansen som IKKE inneholder 0 antyder at de to gruppene skiller seg — men for formell parvis testing trengs en post-hoc-korreksjon (Tukey/Bonferroni).", conditional: true }
+
 solution_template:
   - "Sjekk forutsetningene: `k ≥ 3` grupper, normalfordeling, felles `σ²`, uavhengige observasjoner."
   - text: "Formuler felles H₀ og H₁:"
@@ -542,6 +559,33 @@ detailed_solution_variants:
             lines:
               - { text: "`3.364 > 3.10` ⇒ forkast H₀ (såvidt)" }
         result: "Vi forkaster `H₀` på `α = 0.05` (marginalt). Det er evidens for at minst én av behandlingsmiddelene avviker fra de andre. Komplett ANOVA-tabell: `SSG = 55.5, SSE = 110.0, SST = 165.5, df = (3, 20, 23), MSG = 18.5, MSE = 5.5, F ≈ 3.36`."
+
+  - label: "Estimat for σ² og KI for gruppemiddel"
+    solutions:
+      - source: "Praksis · σ²-estimat og KI etter leverandør-ANOVA"
+        question: |
+          Bruk leverandør-ANOVA fra første fane: `k = 3`, `n = 15`,
+          `SSE = 72.0`, `MSE = 6.0`, `df₂ = n − k = 12`. Gruppe A hadde
+          `x̄_A = 23.0` med `n_A = 5`. (a) Estimer den felles variansen `σ²`
+          og standardavviket `σ`. (b) Lag et 95 % konfidensintervall for
+          leverandør A's forventede fasthet `μ_A`.
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Etter ANOVA er `MSE` estimatet for felles `σ²`. KI for ett gruppemiddel bruker `MSE` og `n − k = 12` frihetsgrader." }
+          - label: "a) σ²-estimat"
+            lines:
+              - { text: "`σ̂² = MSE = SSE/(n − k) = 72.0/12 = 6.0`" }
+              - { text: "`σ̂ = √MSE = √6.0 ≈ 2.449`" }
+          - label: "b) KI for μ_A"
+            lines:
+              - { text: "Formel: `x̄_A ± t_(α/2, n−k)·√(MSE/n_A)`" }
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 12) = 2.179`." } }
+              - { text: "`√(MSE/n_A) = √(6.0/5) = √1.2 ≈ 1.0954`" }
+              - { text: "`margin = 2.179 · 1.0954 ≈ 2.387`" }
+              - { indent: "`KI = 23.0 ± 2.39 = [20.61, 25.39]`" }
+              - { comment: "Bruker n − k = 12 df (hele ANOVA-ens error-df), ikke n_A − 1 = 4 — derfor smalere/sikrere enn et KI basert på gruppe A alene." }
+        result: "(a) `σ̂² = 6.0`, `σ̂ ≈ 2.449`. (b) 95 % KI for `μ_A`: `[20.61, 25.39]`."
 
 related:
   - { id: "to-utvalgs-t-test",      kind: "entry" }

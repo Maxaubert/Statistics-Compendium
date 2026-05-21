@@ -7,9 +7,22 @@ filters:
   tooling: [normal_quantile_table_E4, t_quantile_table_E5, chi_square_quantile_table_E6]
   distribution_assumption: [chi_squared, normal, t_distribution]
 long_def: |
-  Slå opp i z-, t-, eller χ²-tabellen med `α` (og `df` hvis nødvendig).
-  Hvis testobservatoren er mer ekstrem enn den kritiske verdien, ligger
-  den i forkastningsområdet og du forkaster `H₀`. Tosidig test: bruk `α/2`.
+  Den **kritiske verdien** er grensen testobservatoren må passere for at `H₀`
+  skal forkastes — den deler tallinja i et forkastningsområde og et akseptområde.
+
+  **Slik finner du den:**
+
+  1. Velg signifikansnivå `α`.
+  2. Slå opp i riktig tabell: **E.4** (z), **E.5** (t, med `df`), **E.6** (χ²)
+     eller **E.8** (F).
+  3. **Ensidig** test bruker `α`; **tosidig** bruker `α/2` (halve `α` i hver hale).
+
+  **Forkastningsregel:** forkast `H₀` når testobservatoren er mer ekstrem enn den
+  kritiske verdien — f.eks. `T > t_α` (høyresidig), `T < −t_α` (venstresidig)
+  eller `|Z| > z_(α/2)` (tosidig).
+
+  Alternativ vei til samme konklusjon: regn [p-verdien](glossary:p-verdi-glos) og
+  forkast hvis `p < α`.
 aliases:
   - kritisk verdi
   - kritiske verdi

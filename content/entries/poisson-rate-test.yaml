@@ -1,0 +1,231 @@
+id: poisson-rate-test
+name_no: "Test for Poisson-rate (λ = λ₀)"
+type: test
+category: hypothesis_test
+tagline: "Tester om en hendelsesrate `λ` er lik en gitt verdi `λ₀`, basert på antall hendelser `X` i et tids-/areal-vindu. Normalapproksimasjon av Poisson."
+
+formula_main: "Z = (X − λ₀·t) / √(λ₀·t);   X ~ Poisson(λ₀·t) under H₀"
+formula_latex: "Z = \\frac{X - \\lambda_0 t}{\\sqrt{\\lambda_0 t}}, \\quad X \\sim \\text{Poisson}(\\lambda_0 t) \\text{ under } H_0"
+
+what_it_does: |
+  Tester nullhypotesen om at hendelsesraten `λ` (per tidsenhet, lengde, areal
+  eller volum) i en poissonprosess er lik en påstandsverdi `λ₀`. Du har
+  observert `X` hendelser i et vindu av størrelse `t`. Under `H₀` er `X`
+  Poisson-fordelt med forventning `λ₀·t`, og siden `Var(X) = λ₀·t` blir
+  testobservatoren `Z = (X − λ₀t)/√(λ₀t)` tilnærmet standardnormal når
+  `λ₀t` er stor nok (`≳ 10`).
+
+why_use: |
+  Når oppgaven handler om en RATE — antall kunder per time, feil per meter,
+  ulykker per uke — og du vil teste om raten avviker fra en referanseverdi.
+  Parallellen til [z-test for andel](/entry/en-utvalg-z-test-andel): variansen
+  hentes fra nullverdien `λ₀` selv, så det trengs ingen separat `σ`.
+
+recognition_cues:
+  - "Data er et ANTALL hendelser i et fast tids-/areal-/lengdevindu (poissonprosess)"
+  - "Det finnes en påstands-rate `λ₀` («i gjennomsnitt 5 per time», «historisk 2 feil per meter»)"
+  - "Spørsmålet er om raten har endret seg / er høyere / lavere enn `λ₀`"
+  - "Forventet antall `λ₀·t` er stort nok til normalapproksimasjon (`≳ 10`)"
+
+when_NOT_to_use:
+  - "`λ₀·t` er liten (`< 10`) → bruk eksakt [Poisson-fordeling](/entry/poisson-fordeling) for p-verdien i stedet for normalapproksimasjon"
+  - "Du vil estimere `λ` med usikkerhetsmargin → bruk [KI for poissonrate](/entry/ki-poissonrate)"
+  - "Data er andeler (suksess/fiasko av `n` forsøk), ikke tellinger i et vindu → bruk [z-test for andel](/entry/en-utvalg-z-test-andel)"
+  - "Data er kontinuerlige målinger → bruk [z-test](/entry/en-utvalg-z-test) / [t-test](/entry/en-utvalg-t-test)"
+
+symbols:
+  - { sym: "X",   means: "observert antall hendelser i vinduet" }
+  - { sym: "λ",   means: "den ukjente sanne raten (per enhet tid/lengde/areal)" }
+  - { sym: "λ₀",  means: "påstands-raten i `H₀`" }
+  - { sym: "t",   means: "størrelsen på vinduet (tid, lengde, areal, volum, antall enheter)" }
+  - { sym: "λ₀·t", means: "forventet antall hendelser under `H₀` (= både forventning og varians)" }
+  - { sym: "Z",   means: "testobservatoren, standardnormalfordelt under `H₀`" }
+  - { sym: "α",   means: "signifikansnivå (typisk 0.05)" }
+
+filters:
+  computes: [hypothesis_test]
+  random_variable: [discrete_count]
+  setup: [single_population, events_in_window]
+  structural_cues: [counting_events, summary_stats_given, two_sided_alternative, one_sided_alternative]
+  parameters_known: [rate_lambda, sample_size_large, alpha_significance]
+  distribution_assumption: [poisson, normal]
+  tooling: [standard_normal_table_E3, normal_quantile_table_E4, calculator_sqrt]
+
+solution_variants:
+  - label: "H₁: λ < λ₀ (venstre)"
+    recognition: "«Er raten SIGNIFIKANT LAVERE enn λ₀?», «reduserte tiltaket antall feil/ulykker?». Ensidig venstresidig — telling i et vindu."
+    description: "Ensidig venstresidig test for en rate. Forkast H₀ hvis Z < −z_α."
+    steps:
+      - text: "Formuler hypotesene (venstresidig):"
+        formula: "H₀: λ ≥ λ₀     mot     H₁: λ < λ₀"
+      - text: "Regn forventet antall under H₀ (rate × vindu). Sjekk at det er stort nok for normalapproksimasjon:"
+        formula: "λ₀·t ≳ 10"
+      - text: "Beregn testobservatoren — variansen er `λ₀·t` (fra nullverdien, ikke fra dataene):"
+        formula: "Z = (X − λ₀·t) / √(λ₀·t)"
+      - text: "Eksempel: forventet `λ₀ = 3` feil/m, `t = 20` m (`λ₀t = 60`), observert `X = 42`:"
+        formula: "Z = (42 − 60)/√60 ≈ −2.32"
+        example: true
+      - "Slå opp `z_α` i **tabell E.4** (`α = 0.05` ⇒ `z_0.05 = 1.645`)."
+      - text: "Forkastingsregel (kritisk verdi negativ):"
+        formula: "Forkast H₀ hvis Z < −z_α"
+      - { text: "Er `λ₀·t < 10`, ikke stol på normalapproksimasjonen — regn p-verdien eksakt med [Poisson-fordelingen](/entry/poisson-fordeling).", conditional: true }
+      - "Konkluder i kontekst: hvis `Z < −z_α`, er raten signifikant lavere enn `λ₀`."
+
+  - label: "H₁: λ > λ₀ (høyre)"
+    recognition: "«Er raten SIGNIFIKANT HØYERE enn λ₀?», «kommer det flere kunder/feil enn forventet?». Ensidig høyresidig."
+    description: "Ensidig høyresidig test for en rate. Forkast H₀ hvis Z > +z_α."
+    steps:
+      - text: "Formuler hypotesene (høyresidig):"
+        formula: "H₀: λ ≤ λ₀     mot     H₁: λ > λ₀"
+      - text: "Regn forventet antall under H₀ og sjekk normalapproksimasjon:"
+        formula: "λ₀·t ≳ 10"
+      - text: "Beregn testobservatoren:"
+        formula: "Z = (X − λ₀·t) / √(λ₀·t)"
+      - text: "Eksempel: forventet `λ₀ = 5` anrop/time, `t = 8` timer (`λ₀t = 40`), observert `X = 56`:"
+        formula: "Z = (56 − 40)/√40 ≈ 2.53"
+        example: true
+      - "Slå opp `z_α` i **tabell E.4** (`α = 0.05` ⇒ `z_0.05 = 1.645`)."
+      - text: "Forkastingsregel (kritisk verdi positiv):"
+        formula: "Forkast H₀ hvis Z > +z_α"
+      - "Konkluder i kontekst: hvis `Z > +z_α`, er raten signifikant høyere enn `λ₀`."
+
+  - label: "H₁: λ ≠ λ₀ (tosidig)"
+    recognition: "«Har raten ENDRET seg fra λ₀?», «avviker antallet hendelser fra det forventede?». Tosidig — ingen retning oppgitt."
+    description: "Tosidig test for en rate. Forkast H₀ hvis |Z| > z_(α/2)."
+    steps:
+      - text: "Formuler hypotesene (tosidig):"
+        formula: "H₀: λ = λ₀     mot     H₁: λ ≠ λ₀"
+      - text: "Regn forventet antall under H₀ og sjekk normalapproksimasjon:"
+        formula: "λ₀·t ≳ 10"
+      - text: "Beregn testobservatoren (fortegnet er likegyldig — vi bruker |Z|):"
+        formula: "Z = (X − λ₀·t) / √(λ₀·t)"
+      - text: "Eksempel: forventet `λ₀ = 2` ulykker/uke, `t = 26` uker (`λ₀t = 52`), observert `X = 68`:"
+        formula: "Z = (68 − 52)/√52 ≈ 2.22"
+        example: true
+      - "Slå opp `z_(α/2)` i **tabell E.4** — del `α` på 2 (`α = 0.05` ⇒ `z_0.025 = 1.96`)."
+      - text: "Forkastingsregel (begge haler):"
+        formula: "Forkast H₀ hvis |Z| > z_(α/2)"
+      - "Konkluder i kontekst: hvis `|Z| > z_(α/2)`, har raten endret seg signifikant fra `λ₀`."
+
+common_traps: |
+  - **Variansen er `λ₀·t`, ikke `√λ₀`** — for Poisson er forventning og varians
+    begge lik `λ₀·t`, så standardfeilen i nevneren er `√(λ₀·t)`.
+  - **Husk vinduet `t`:** observerer du over `t = 8` timer med rate per time, er
+    forventet antall `λ₀·8`. Bruker du bare `λ₀` glemmer du eksponeringen.
+  - **Bruk nullverdien `λ₀` i nevneren**, ikke den observerte raten `X/t` — på
+    samme måte som z-test for andel bruker `p₀`, ikke `p̂`. (Konfidensintervallet
+    bruker derimot den observerte `X`.)
+  - **Liten `λ₀·t` (`< 10`):** normalapproksimasjonen er upålitelig. Regn da
+    p-verdien eksakt fra [Poisson-fordelingen](/entry/poisson-fordeling).
+
+python_snippet: |
+  from scipy.stats import norm, poisson
+  import math
+
+  X, lam0, t = 56, 5, 8        # 56 anrop på 8 timer, forventet rate 5/time
+  mu0 = lam0 * t                # 40
+  z = (X - mu0) / math.sqrt(mu0)            # 2.53
+  z_crit = norm.ppf(1 - 0.05)               # 1.645 (høyresidig)
+  reject = z > z_crit                        # True
+
+  # Eksakt p-verdi (høyresidig) hvis mu0 er liten:
+  p_exact = 1 - poisson.cdf(X - 1, mu0)
+
+detailed_solution_variants:
+  - label: "H₁: λ < λ₀ (venstre)"
+    solutions:
+      - source: "Praksis · færre feil etter prosessforbedring (venstresidig)"
+        question: "Et sveiserobot-anlegg hadde historisk `λ₀ = 3` feil per meter sveis. Etter en prosessforbedring inspiseres `t = 20` meter, og man finner `X = 42` feil. Test på `α = 0.05` om feilraten er REDUSERT (`λ < 3`)."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ₀ = 3` feil/m, `t = 20` m ⇒ forventet `λ₀·t = 60`. `60 ≳ 10` ✓ (normalapproksimasjon gyldig)." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: λ ≥ 3`" }
+              - { text: "`H₁: λ < 3` (forbedringen reduserte feilraten)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (X − λ₀t)/√(λ₀t) = (42 − 60)/√60`" }
+              - { indent: "`= −18/7.746 ≈ −2.32`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645` ⇒ venstresidig grense `−1.645`. Forkast H₀ hvis `Z < −1.645`." } }
+              - { text: "`Z = −2.32 < −1.645` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: feilraten er signifikant lavere enn 3 per meter etter forbedringen."
+
+  - label: "H₁: λ > λ₀ (høyre)"
+    solutions:
+      - source: "Praksis · flere anrop enn forventet (høyresidig)"
+        question: "Et kundesenter dimensjoneres for `λ₀ = 5` anrop per time. På en vakt over `t = 8` timer kom det `X = 56` anrop. Test på `α = 0.05` om anropsraten er HØYERE enn 5 per time."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ₀ = 5` anrop/time, `t = 8` timer ⇒ forventet `λ₀·t = 40`. `40 ≳ 10` ✓." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: λ ≤ 5`" }
+              - { text: "`H₁: λ > 5` (høyere pågang enn dimensjonert)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (56 − 40)/√40`" }
+              - { indent: "`= 16/6.325 ≈ 2.53`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "`z_(0.05) = 1.645` (ensidig). Forkast H₀ hvis `Z > 1.645`." } }
+              - { text: "`Z = 2.53 > 1.645` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: anropsraten er signifikant høyere enn 5 per time — senteret er underdimensjonert."
+
+  - label: "H₁: λ ≠ λ₀ (tosidig)"
+    solutions:
+      - source: "Praksis · endret ulykkesrate (tosidig)"
+        question: "En veistrekning hadde en historisk rate på `λ₀ = 2` ulykker per uke. Etter omlegging av fartsgrensene registreres `X = 68` ulykker over `t = 26` uker. Test på `α = 0.05` om ulykkesraten har ENDRET seg."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`λ₀ = 2` ulykker/uke, `t = 26` uker ⇒ forventet `λ₀·t = 52`. `52 ≳ 10` ✓." }
+          - label: "Hypoteser"
+            lines:
+              - { text: "`H₀: λ = 2`" }
+              - { text: "`H₁: λ ≠ 2` (tosidig)" }
+          - label: "Testobservator"
+            lines:
+              - { text: "`Z = (68 − 52)/√52`" }
+              - { indent: "`= 16/7.211 ≈ 2.22`" }
+          - label: "Konklusjon"
+            lines:
+              - { table_lookup: { ref: "E.4", text: "Tosidig: `z_(0.025) = 1.96`. Forkast H₀ hvis `|Z| > 1.96`." } }
+              - { text: "`|Z| = 2.22 > 1.96` → forkast `H₀`." }
+        result: "Forkast `H₀` på 5 %-nivå: ulykkesraten har endret seg signifikant (økt) fra 2 per uke."
+
+related:
+  - { id: "poisson-fordeling",       kind: "entry" }
+  - { id: "ki-poissonrate",          kind: "entry" }
+  - { id: "en-utvalg-z-test-andel",  kind: "entry" }
+  - { id: "en-utvalg-z-test",        kind: "entry" }
+  - { id: "p-verdi-glos",            kind: "glossary" }
+  - { id: "ensidig-test",            kind: "glossary" }
+  - { id: "tosidig-test",            kind: "glossary" }
+  - { id: "lambda",                  kind: "glossary" }
+  - { id: "poisson-prosess",         kind: "glossary" }
+  - { id: "normalapproksimasjon",    kind: "glossary" }
+  - { id: "nullhypotese",            kind: "glossary" }
+  - { id: "forkastningsomrade",      kind: "glossary" }
+  - { id: "velg-riktig-test",        kind: "glossary" }
+  - { id: "E4-z-kvantiltabell",      kind: "table" }
+
+tools:
+  - "Tabell E.4 – Standardnormalfordelingens kvantiltabell (Z-kvantiltabell)"
+  - "Tabell E.3 – Z-tabell (for p-verdi-utregning)"
+
+tags:
+  - poisson-rate test
+  - test for rate
+  - test lambda
+  - hendelsesrate
+  - rate per tidsenhet
+  - antall hendelser test
+  - poisson hypotesetest
+  - feil per meter
+  - kunder per time
+  - ulykker per uke

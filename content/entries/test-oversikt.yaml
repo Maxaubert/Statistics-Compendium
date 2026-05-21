@@ -85,6 +85,20 @@ form_sections:
         entry_links:
           - { id: kjikvadrat-goodness-of-fit, label: "Entry" }
 
+      - title: "Z-test for to andeler (p_X − p_Y)"
+        symbol: "Z"
+        formula: "Z = (p̂_X − p̂_Y) / √(p̂(1−p̂)(1/n_X + 1/n_Y))"
+        description: "To UAVHENGIGE grupper med binært utfall. Sammenligner andelene p_X og p_Y med pooled andel under H₀. (En 2×2-kontingenstabell gir samme svar via kjikvadrat-uavhengighet.)"
+        entry_links:
+          - { id: to-utvalgs-z-test-andel, label: "Entry" }
+
+      - title: "Test for Poisson-rate (λ)"
+        symbol: "Z"
+        formula: "Z = (X − λ₀·t) / √(λ₀·t)"
+        description: "Antall hendelser i et tids-/areal-vindu mot en påstandsrate λ₀ (feil per meter, kunder per time). Normalapproksimasjon av Poisson når λ₀·t ≳ 10."
+        entry_links:
+          - { id: poisson-rate-test, label: "Entry" }
+
   - title: "Tester i regresjon"
     description: "Tester knyttet til lineær regresjon — er sammenhengen mellom x og y signifikant?"
     forms:
@@ -175,7 +189,10 @@ related:
   - { id: "mann-whitney-wilcoxon",   kind: "entry" }
   - { id: "wilcoxon-tegn-rang",      kind: "entry" }
   - { id: "lineaer-regresjon",       kind: "entry" }
+  - { id: "to-utvalgs-z-test-andel", kind: "entry" }
+  - { id: "poisson-rate-test",       kind: "entry" }
   - { id: "hypotesefeil-og-styrke",  kind: "entry" }
+  - { id: "velg-riktig-test",        kind: "glossary" }
   - { id: "nullhypotese",            kind: "glossary" }
   - { id: "alternativhypotese",      kind: "glossary" }
   - { id: "p-verdi-glos",            kind: "glossary" }

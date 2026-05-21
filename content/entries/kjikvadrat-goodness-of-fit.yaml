@@ -141,6 +141,26 @@ solution_variants:
         example: true
       - { text: "**Pass på:** Hvis du estimerer `m` parametre fra DATAENE (f.eks. tilpasse en Poisson-fordeling med rate `λ̂` regnet fra observasjonene), faller frihetsgradene med `m`: `ν = k − 1 − m`. Oppgitte andeler er IKKE estimater, så `m = 0` der.", conditional: true }
 
+  - label: "Mot teoretisk fordeling med estimerte parametre (ν = k − 1 − m)"
+    recognition: "«Følger dataene en Poisson-/binomial-/normalfordeling?» der parameteren IKKE er oppgitt. Du må estimere `m` parametre fra dataene først — og da faller frihetsgradene med `m`."
+    steps:
+      - text: "H₀ sier at dataene følger en bestemt TEORETISK fordeling, men parameteren er ikke gitt. Estimer den fra dataene først."
+      - text: "Eksempel — antall feil per enhet, mistenkt Poisson. Estimer `λ` som gjennomsnittet:"
+        formula: "λ̂ = (Σ kᵢ·Oᵢ) / n     (gjennomsnittlig antall hendelser per enhet)"
+        example: true
+      - text: "Regn de forventede ANDELENE fra den tilpassede fordelingen, og deretter `E_i = n·p_i`. Slå sammen halekategorier (f.eks. «≥ 4») slik at alle `E_i ≥ 5`."
+        formula: "p_i = P(X = i)  fra fordelingen med estimert parameter,   E_i = n·p_i"
+      - text: "Beregn testobservatoren som vanlig:"
+        formula: "χ² = Σ (O_i − E_i)² / E_i"
+      - text: "**Frihetsgrader: trekk fra antall estimerte parametre `m`.** For Poisson estimerer du ett `λ`, så `m = 1`. For normal (`μ` og `σ`) er `m = 2`:"
+        formula: "ν = k − 1 − m"
+      - text: "Eksempel — `k = 5` kategorier, Poisson (`m = 1`):"
+        formula: "ν = 5 − 1 − 1 = 3"
+        example: true
+      - text: "Forkastningsregel (alltid høyresidig):"
+        formula: "Forkast H₀ hvis χ² > χ²_(α, ν)"
+      - { text: "**Vanligste feil:** å bruke `ν = k − 1` selv om du estimerte en parameter fra dataene. Det gir for STOR kritisk verdi og du beholder H₀ for sjelden/ofte. Oppgitte (kjente) andeler ⇒ `m = 0`; estimerte parametre ⇒ trekk fra.", conditional: true }
+
 solution_template:
   - "Skriv ned `H₀` (forventet fordeling) og `H₁` (avvik)"
   - "Regn forventede antall `E_i = n · p_i` under `H₀`"
@@ -310,6 +330,50 @@ detailed_solution_variants:
               - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 2) = 5.991`." } }
               - { text: "`χ² = 2.563 < 5.991` → behold `H₀`." }
         result: "Behold `H₀` på α = 0.05. Undersøkelsen er forenlig med 50/30/20-markedsandelen."
+
+  - label: "Mot teoretisk fordeling med estimerte parametre (ν = k − 1 − m)"
+    solutions:
+      - source: "Praksis · Poisson-tilpasning (estimert λ)"
+        question: |
+          Antall feil per produsert enhet registreres for `n = 200` enheter.
+          Mistanken er at antallet feil følger en Poisson-fordeling. Observert:
+
+          | Antall feil | Enheter (O) |
+          |---|---|
+          | 0 | 70 |
+          | 1 | 60 |
+          | 2 | 40 |
+          | 3 | 20 |
+          | ≥ 4 | 10 |
+
+          Test på `α = 0.05` om dataene er forenlige med en Poisson-fordeling.
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Poisson-parameteren `λ` er IKKE oppgitt — vi estimerer den fra dataene (`m = 1`)." }
+          - label: "Estimer λ"
+            lines:
+              - { text: "`λ̂ = (Σ kᵢ·Oᵢ)/n ≈ (0·70 + 1·60 + 2·40 + 3·20 + 4·10)/200`" }
+              - { indent: "`= 240/200 = 1.2`" }
+              - { comment: "≥4-kategorien tilnærmes med 4 i snittberegningen." }
+          - label: "Forventede antall (Poisson, λ = 1.2)"
+            lines:
+              - { text: "`P(0)=0.301, P(1)=0.361, P(2)=0.217, P(3)=0.087, P(≥4)=0.034`" }
+              - { text: "`E_i = n·p_i`: `60.24, 72.29, 43.37, 17.35, 6.76`" }
+              - { text: "Alle `E_i ≥ 5` ✓ (ingen kategorier trenger sammenslåing)." }
+          - label: "Testobservator"
+            lines:
+              - { text: "`χ² = Σ (O−E)²/E`" }
+              - { indent: "`= (70−60.24)²/60.24 + (60−72.29)²/72.29 + (40−43.37)²/43.37`" }
+              - { indent: "`+ (20−17.35)²/17.35 + (10−6.76)²/6.76`" }
+              - { indent: "`≈ 1.581 + 2.089 + 0.262 + 0.405 + 1.553 ≈ 5.89`" }
+          - label: "Konklusjon"
+            lines:
+              - { text: "Frihetsgrader: `ν = k − 1 − m = 5 − 1 − 1 = 3` (ett estimert `λ`)." }
+              - { table_lookup: { ref: "E.6", text: "`χ²_(0.05, 3) = 7.815`. Forkast H₀ hvis χ² > 7.815." } }
+              - { text: "`χ² = 5.89 < 7.815` → behold `H₀`." }
+              - { comment: "Hadde vi feilaktig brukt ν = k−1 = 4, ville χ²_(0.05,4) = 9.49 — også behold, men feil df straffer ofte i grensetilfeller." }
+        result: "Behold `H₀` på `α = 0.05`: feil-antallet er forenlig med en Poisson-fordeling (`λ̂ = 1.2`)."
 
 related:
   - { id: frihetsgrader-glos, kind: glossary }

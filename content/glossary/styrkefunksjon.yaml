@@ -1,13 +1,17 @@
 id: styrkefunksjon
-term_no: Styrkefunksjon γ(θ)
+term_no: "Hypotesestyrke (styrkefunksjon γ(θ))"
 short_def: "Sannsynligheten for å forkaste `H₀` som funksjon av den sanne parameterverdien `θ`, `γ(θ) = 1 − β(θ)`."
 filters:
   computes: [hypothesis_test, find_n_for_threshold]
   parameters_known: [alpha_significance, population_variance_known]
   distribution_assumption: [normal]
 aliases:
-  - styrkefunksjon
+  - hypotesestyrke
+  - styrke
+  - styrken til testen
   - teststyrke
+  - test-styrke
+  - styrkefunksjon
   - power function
   - γ(θ)
   - gamma av theta

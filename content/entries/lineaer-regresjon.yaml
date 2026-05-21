@@ -236,6 +236,21 @@ solution_variants:
         conditional: true
       - "Konkluder kontekstuelt: 'forkast H₀ ⇒ statistisk grunnlag for lineær sammenheng' eller 'kan ikke forkaste — ingen statistisk grunnlag'."
 
+  - label: "KI for β"
+    recognition: "«Lag et 95 % konfidensintervall for stigningstallet `β`», «hvor presist er `β` estimert?», «mellom hvilke verdier ligger sann stigning?». Samme byggeklosser som β-testen: `β̂`, `SE(β̂)`, `ν = n − 2`."
+    description: "Konfidensintervall for populasjonsstigningen `β` basert på t-fordelingen. Tett knyttet til den tosidige hypotesetesten for `β`."
+    steps:
+      - "Forutsetter `β̂` (fane «Estimere α̂ og β̂») og `SE(β̂)` (fane «Standardfeil»). Regn `SE(β̂) = √(S_E²/S_XX)` hvis det ikke er gitt."
+      - "Finn `α` fra konfidensnivået (95 % ⇒ `α = 0.05`, `α/2 = 0.025`) og slå opp `t_(α/2, n−2)` i **tabell E.5**."
+      - text: "Sett opp intervallet (samme form som ethvert t-basert KI: estimat ± kvantil · standardfeil):"
+        formula: "KI = β̂ ± t_(α/2, n−2) · SE(β̂)"
+      - text: "Eksempel: `β̂ = 6.63`, `SE(β̂) = 0.625`, `n = 10`, 95 % (`t_(0.025, 8) = 2.306`):"
+        formula: "6.63 ± 2.306·0.625 = 6.63 ± 1.44 = [5.19, 8.07]"
+        example: true
+      - text: "**Sammenheng med tosidig test:** ligger `β₀` (oftest 0) UTENFOR KI, forkaster den tosidige testen `H₀: β = β₀` på samme nivå. Ligger 0 innenfor, er det ingen signifikant sammenheng."
+        conditional: true
+      - "Konkluder i kontekst: «vi er `(1 − α)·100 %` sikre på at sann stigning ligger i `[nedre, øvre]`» — i `y`-enheter per `x`-enhet."
+
   - label: "KI for E(Y|x)"
     recognition: "«Finn et 95 % konfidensintervall for `E(Y|x)` når `x = x₀`», «forventet hvilepuls for 35-åringer», «gjennomsnittlig respons ved gitt `x`», eller «estimer forventningsverdien til `Y` ved `x = x₀`». Spør om GJENNOMSNITTET (forventningsverdien) — ikke én ny enkelt observasjon."
     steps:
@@ -714,6 +729,44 @@ detailed_solution_variants:
               - { text: "`|T| = 1.25 < 2.228` ✗ → kan IKKE forkaste `H₀`" }
               - { comment: "punktet ligger innenfor akseptanseområdet" }
         result: "Vi forkaster ikke `H₀`. Ingen statistisk grunnlag for å hevde at det finnes en lineær sammenheng."
+
+  - label: "KI for β"
+    solutions:
+      - source: "Eksamen mai25 · oppgave 5d (samme datasett)"
+        question: "Fra regresjonen er `β̂ = 6.63` og `SE(β̂) = 0.625` med `n = 10`. Lag et 95 % konfidensintervall for stigningstallet `β`, og avgjør om det er forenlig med `β = 0`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "KI for `β`, `ν = n − 2 = 8`. 95 % ⇒ `α = 0.05`, `α/2 = 0.025`." }
+          - label: "Kvantil"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 8) = 2.306`." } }
+          - label: "Margin"
+            lines:
+              - { text: "`margin = t_(α/2, n−2) · SE(β̂) = 2.306 · 0.625`" }
+              - { indent: "`≈ 1.441`" }
+          - label: "Intervall"
+            lines:
+              - { text: "`KI = β̂ ± margin = 6.63 ± 1.441`" }
+              - { indent: "`= [5.19, 8.07]`" }
+              - { text: "**0 ligger UTENFOR intervallet** ⇒ konsistent med at den tosidige testen forkaster `H₀: β = 0` på samme nivå." }
+        result: "95 % KI for `β`: `[5.19, 8.07]`. 0 ligger utenfor ⇒ signifikant lineær sammenheng."
+
+      - source: "Praksis · svak sammenheng (KI inneholder 0)"
+        question: "En regresjon med `n = 12` gir `β̂ = 0.35` og `SE(β̂) = 0.28`. Lag et 95 % KI for `β` og tolk."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`ν = n − 2 = 10`, 95 % ⇒ `α/2 = 0.025`." }
+          - label: "Kvantil"
+            lines:
+              - { table_lookup: { ref: "E.5", text: "`t_(0.025, 10) = 2.228`." } }
+          - label: "Margin og intervall"
+            lines:
+              - { text: "`margin = 2.228 · 0.28 ≈ 0.624`" }
+              - { text: "`KI = 0.35 ± 0.624 = [−0.27, 0.97]`" }
+              - { text: "**0 ligger INNENFOR intervallet** ⇒ kan ikke forkaste `H₀: β = 0`. Estimatet er for usikkert til å konkludere med en sammenheng." }
+        result: "95 % KI for `β`: `[−0.27, 0.97]`. 0 ligger innenfor ⇒ ingen signifikant sammenheng."
 
   - label: "KI for E(Y|x)"
     solutions:

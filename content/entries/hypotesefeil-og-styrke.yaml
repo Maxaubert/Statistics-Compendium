@@ -467,6 +467,7 @@ related:
   - { id: "type-1-feil",            kind: "glossary" }
   - { id: "type-2-feil",            kind: "glossary" }
   - { id: "styrkefunksjon",         kind: "glossary" }
+  - { id: "hypotesefeil",           kind: "glossary" }
   - { id: "alpha",                  kind: "glossary" }
   - { id: "beta",                   kind: "glossary" }
   - { id: "signifikansniva-glos",   kind: "glossary" }

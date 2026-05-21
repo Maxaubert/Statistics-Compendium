@@ -32,7 +32,7 @@ why_use: |
   - teste om modellen som helhet bidrar utover null-modellen (F-test),
   - velge en sparsommelig modell ved å fjerne ikke-signifikante prediktorer.
 
-  Se også [forutsetninger-regresjon](/glossary/forutsetninger-regresjon) for
+  Se også [forutsetninger-regresjon](glossary:forutsetninger-regresjon) for
   antakelsene som må holde for at p-verdier og KI skal være gyldige.
 
 recognition_cues:
@@ -286,7 +286,7 @@ solution_variants:
         formula: "ŷ_0 = −3.4872 − 0.0026·50 + 0.0014·15 + 0.1543·30 ≈ 0.969"
         example: true
       - { text: "Et fullt prediksjonsintervall krever `S_E` og designmatrisen — programvaren gir dette direkte; for hånd er det upraktisk når `k ≥ 2`.", conditional: true }
-      - { text: "**Ekstrapolering**: predikerer du langt utenfor observert x-område, blir intervallet bredt og modellen lite pålitelig — selv om punktestimatet ser fornuftig ut. Se [ekstrapolering](/glossary/ekstrapolering).", conditional: true }
+      - { text: "**Ekstrapolering**: predikerer du langt utenfor observert x-område, blir intervallet bredt og modellen lite pålitelig — selv om punktestimatet ser fornuftig ut. Se [ekstrapolering](glossary:ekstrapolering).", conditional: true }
 
 solution_template:
   - "Identifiser om oppgaven gir deg en ferdig regresjonsutskrift eller ber deg estimere fra rådata."
@@ -380,6 +380,27 @@ python_snippet: |
   y_hat0 = x_new @ beta_hat            # punktprediksjon
 
 detailed_solution_variants:
+  - label: "Estimere koeffisientene"
+    solutions:
+      - source: "Praksis · boligpris (2 prediktorer, les av output)"
+        question: "En multippel regresjon modellerer boligpris `y` (1000 kr) mot areal `x_1` (m²) og alder `x_2` (år). Programvaren gir koeffisienttabellen: konstant `β̂_0 = 850`, areal `β̂_1 = 22.4`, alder `β̂_2 = −9.1`. Skriv den estimerte modellen og tolk hver koeffisient."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`k = 2` forklaringsvariabler. Matriseløsningen `β̂ = (XᵀX)⁻¹Xᵀy` gjøres av programvaren — vi leser koeffisientene rett av kolonnen." }
+              - { text: "Rekkefølgen i kolonnen matcher kolonnene i designmatrisen: konstant først, så `x_1`, så `x_2`." }
+          - label: "Estimert modell"
+            lines:
+              - { text: "Sett koeffisientene inn i `ŷ = β̂_0 + β̂_1·x_1 + β̂_2·x_2`:" }
+              - { indent: "`ŷ = 850 + 22.4·x_1 − 9.1·x_2`" }
+          - label: "Tolkning (partielle effekter)"
+            lines:
+              - { text: "`β̂_1 = 22.4`: +1 m² gir `+22 400 kr` forventet pris, ALDER holdt konstant." }
+              - { text: "`β̂_2 = −9.1`: +1 år gir `−9 100 kr`, AREAL holdt konstant." }
+              - { text: "`β̂_0 = 850`: forventet pris når `x_1 = 0` og `x_2 = 0` — ren ekstrapolering, sjelden meningsfull alene." }
+              - { comment: "Enhetssjekk avslører ofte regnefeil: β̂_1 har enhet (1000 kr)/m²." }
+        result: "`ŷ = 850 + 22.4·x_1 − 9.1·x_2`. Hver `β̂_j` er en partiell effekt (øvrige variabler holdt konstant)."
+
   - label: "Tolke output (p-verdier og KI)"
     solutions:
       - source: "Eksamen mai21 · oppgave 6 (NOx-modell)"
@@ -410,6 +431,33 @@ detailed_solution_variants:
               - { text: "Modellen må refittes — `β̂_0_ny` og `β̂_1_ny` vil avvike noe fra `−3.4872` og `−0.0026`, fordi prediktorene som ble fjernet ikke lenger «trekker» variasjon." }
               - { text: "Sjekk i den reduserte utskriften at `x_1` fortsatt har `p < 0.05`, og at `R²_adj` ikke falt dramatisk." }
         result: "Behold luftfuktighet (`p = 0.001`); fjern temperatur (`p = 0.705`, `0 ∈ KI`) og trykk (`p = 0.147`). `R² = 0.800` ⇒ 80 % av variasjonen forklart. Redusert modell: `ŷ = β̂_0_ny + β̂_1_ny·x_1`."
+
+  - label: "R² og R²-adjusted"
+    solutions:
+      - source: "Praksis · R² og justert R² fra kvadratsummer"
+        question: "En modell med `k = 3` prediktorer på `n = 25` observasjoner gir `SST = 480` og `SSE = 96`. Finn `R²` og justert `R²`, og tolk."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "`n = 25`, `k = 3`. Vi har total kvadratsum `SST` og restkvadratsum `SSE`." }
+          - label: "Kvadratsummer"
+            lines:
+              - { text: "Forklart kvadratsum: `SSR = SST − SSE = 480 − 96 = 384`." }
+          - label: "R²"
+            lines:
+              - { text: "`R² = 1 − SSE/SST = 1 − 96/480`" }
+              - { indent: "`= 1 − 0.20 = 0.80`  (= `SSR/SST = 384/480`)" }
+          - label: "Justert R²"
+            lines:
+              - { text: "`R²_adj = 1 − (1 − R²)·(n − 1)/(n − k − 1)`" }
+              - { indent: "`= 1 − 0.20·24/21`" }
+              - { indent: "`= 1 − 0.2286 ≈ 0.771`" }
+          - label: "Tolkning"
+            lines:
+              - { text: "80 % av variasjonen i `y` forklares av modellen." }
+              - { text: "`R²_adj ≈ 0.771` er litt lavere fordi den straffer de 3 prediktorene — bruk DENNE når du sammenligner modeller med ulikt antall variabler." }
+              - { comment: "Legger du til en ren støy-variabel stiger R² (svakt), men R²_adj faller — et tegn på at variabelen ikke var verdt det." }
+        result: "`R² = 0.80`, `R²_adj ≈ 0.771`."
 
   - label: "F-test for hele modellen"
     solutions:
@@ -442,6 +490,44 @@ detailed_solution_variants:
               - { text: "Forkast `H₀` på `α = 0.05`." }
               - { text: "Modellen som helhet er statistisk signifikant — minst én forklaringsvariabel bidrar. (Hvilken/hvilke avgjøres av t-testene per koeffisient.)" }
         result: "`F ≈ 21.33 > F_(0.05, 3, 16) ≈ 3.24` ⇒ forkast `H₀`. Modellen som helhet er signifikant på `α = 0.05`."
+
+  - label: "Variabelseleksjon (hvilke fjernes?)"
+    solutions:
+      - source: "Praksis · bakovereliminasjon (4 prediktorer)"
+        question: "En modell for utbytte `y` har 4 prediktorer med p-verdier: `x_1: 0.002`, `x_2: 0.61`, `x_3: 0.04`, `x_4: 0.28`. På `α = 0.05`, hvilken variabel fjernes først, og hva er neste steg?"
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Bakovereliminasjon (backward elimination): fjern ÉN variabel av gangen — den med høyest p-verdi — og refit." }
+          - label: "Kandidater for fjerning"
+            lines:
+              - { text: "Ikke-signifikante (`p > 0.05`): `x_2` (`0.61`) og `x_4` (`0.28`)." }
+              - { text: "Signifikante (beholdes foreløpig): `x_1` (`0.002`) og `x_3` (`0.04`)." }
+          - label: "Steg 1 — fjern høyest p"
+            lines:
+              - { text: "Fjern `x_2` (`p = 0.61`, den mest overflødige). Refit modellen med `x_1, x_3, x_4`." }
+          - label: "Steg 2 — refit og vurder på nytt"
+            lines:
+              - { text: "Les de NYE p-verdiene — de endrer seg etter refit. Er `x_4` fortsatt `> 0.05`? Fjern den i så fall og refit igjen." }
+              - { text: "Stopp når alle gjenstående prediktorer har `p < 0.05`. Sjekk at `R²_adj` ikke stuper underveis." }
+              - { comment: "Ikke fjern x_2 og x_4 samtidig — en variabel kan bli signifikant etter at en annen er fjernet (særlig ved multikollinearitet)." }
+        result: "Fjern `x_2` (`p = 0.61`) først, refit, og gjenta til alle gjenstående har `p < α`."
+
+  - label: "Predikere ŷ for nye x-verdier"
+    solutions:
+      - source: "Praksis · prediksjon fra estimert modell"
+        question: "En modell for forventet leveringstid `y` (timer) er `ŷ = 2.0 + 0.5·x_1 + 1.2·x_2`, der `x_1` = avstand (10 km) og `x_2` = antall stopp. Predikér leveringstiden for en rute med `x_1 = 8` og `x_2 = 3`."
+        sections:
+          - label: "Identifisering"
+            lines:
+              - { text: "Punktprediksjon = innsetting i estimert modell. Sjekk at `x_1 = 8` og `x_2 = 3` ligger innenfor observert område (interpolering, ikke ekstrapolering)." }
+          - label: "Innsetting"
+            lines:
+              - { text: "`ŷ = 2.0 + 0.5·x_1 + 1.2·x_2`" }
+              - { indent: "`= 2.0 + 0.5·8 + 1.2·3`" }
+              - { indent: "`= 2.0 + 4.0 + 3.6 = 9.6`" }
+              - { comment: "Ekstrapolering (x-verdier utenfor data) gir upålitelig prediksjon selv om formelen gir et tall." }
+        result: "`ŷ = 9.6` timer."
 
 related:
   - { id: "lineaer-regresjon",          kind: "entry" }

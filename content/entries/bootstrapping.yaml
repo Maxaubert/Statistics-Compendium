@@ -1,7 +1,7 @@
 id: bootstrapping
-name_no: "Bootstrapping"
+name_no: "Bootstrapping (fordelingsfritt konfidensintervall)"
 type: method
-tagline: "Resample med tilbakelegging fra dataene for å estimere usikkerhet uten å anta normalfordeling."
+tagline: "Resample med tilbakelegging for å lage konfidensintervall (KI) og estimere usikkerhet UTEN å anta normalfordeling — det fordelingsfrie alternativet når z-/t-baserte KI ikke holder."
 
 what_it_means: |
   Bootstrapping estimerer usikkerheten i en statistikk (typisk gjennomsnitt
@@ -180,3 +180,20 @@ related:
 
 tools:
   - "Tabell E.4 – Z-kvantiltabell"
+
+tags:
+  - bootstrap
+  - bootstrapping
+  - konfidensintervall
+  - KI
+  - KI uten normalfordeling
+  - fordelingsfritt konfidensintervall
+  - fordelingsfri KI
+  - ikke-parametrisk KI
+  - alternativ til t-test
+  - alternativ til z-test
+  - fordelingsfri hypotesetest
+  - resampling
+  - usikkerhet uten normalfordeling
+  - standardfeil uten formel
+  - KI for median
